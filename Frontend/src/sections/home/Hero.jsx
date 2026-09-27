@@ -210,6 +210,8 @@ export default function Hero() {
                 className="w-full lg:w-auto mt-2 lg:mt-0 lg:ml-2 bg-[#2F3E35] text-white px-8 py-3.5 rounded-xl text-xs uppercase tracking-widest font-semibold hover:bg-[#1E2822] transition-colors flex items-center justify-center shadow-md cursor-pointer"
               >
                 Explore
+
+                
               </button>
             </form>
 

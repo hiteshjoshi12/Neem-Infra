@@ -59,7 +59,7 @@ export default function PurchasingAdvantage() {
             <motion.div variants={fadeUp} className="flex items-center gap-3 mb-6">
               <span className="w-8 h-[1px] bg-[#A89069]" />
               <span className="text-xs tracking-[0.25em] text-[#A89069] uppercase font-semibold">
-                The Neem Infra Advantage
+                The Saudagar Properties Advantage
               </span>
             </motion.div>
             

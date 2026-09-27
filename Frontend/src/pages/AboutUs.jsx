@@ -29,7 +29,7 @@ export default function AboutUs() {
           className="max-w-5xl mx-auto text-center"
         >
           <motion.span variants={fadeUp} className="block text-xs tracking-[0.3em] text-[#A89069] uppercase font-semibold mb-6">
-            About Neem Infra Realty
+            About Saudagar Properties Realty
           </motion.span>
           <motion.h1 variants={fadeUp} className="text-5xl md:text-6xl lg:text-7xl font-serif text-[#2C302E] leading-[1.1] mb-12">
             A boutique real estate advisory firm <span className="italic text-[#A89069] font-light">based in Gurgaon.</span>
@@ -59,7 +59,7 @@ export default function AboutUs() {
           className="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 max-w-5xl mx-auto text-[#5A605C] font-light text-lg leading-relaxed"
         >
           <motion.p variants={fadeUp}>
-            <strong className="font-medium text-[#2C302E]">Neem Infra Realty Pvt. Ltd.</strong> was founded with the vision of offering strategic, transparent, and relationship-driven property advisory services. With deep market understanding and years of experience in Gurgaon's dynamic real estate landscape, we help clients navigate property decisions with clarity and confidence.
+            <strong className="font-medium text-[#2C302E]">Saudagar Properties Realty Pvt. Ltd.</strong> was founded with the vision of offering strategic, transparent, and relationship-driven property advisory services. With deep market understanding and years of experience in Gurgaon's dynamic real estate landscape, we help clients navigate property decisions with clarity and confidence.
           </motion.p>
           <motion.div variants={fadeUp} className="space-y-6">
             <p>

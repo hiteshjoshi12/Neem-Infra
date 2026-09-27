@@ -22,7 +22,7 @@ export default function Footer() {
           {/* Footer Logo */}
           <Link to="/" className="flex flex-col items-center md:items-start">
             <span className="text-3xl font-serif tracking-widest uppercase leading-none text-white">
-              Neem<span className="text-[#A89069]">Infra</span>
+              Saudagar<span className="text-[#A89069]">Properties</span>
             </span>
           </Link>
           
@@ -56,9 +56,9 @@ export default function Footer() {
         
         {/* Column 1: Brand */}
         <div className="flex flex-col items-center md:items-start text-center md:text-left">
-          <span className="text-2xl font-serif tracking-widest uppercase leading-none text-white mb-6">
-            Neem<span className="text-[#A89069]">Infra</span>
-          </span>
+          {/* <span className="text-2xl font-serif tracking-widest uppercase leading-none text-white mb-6">
+            Saudagar<span className="text-[#A89069]">Properties</span>
+          </span> */}
           <p className="text-[#B5BCB7] text-sm font-light leading-relaxed mb-8">
             Your trusted partner for premium real estate, high-quality homes, and modern apartments in Gurgaon.
           </p>
@@ -114,11 +114,11 @@ export default function Footer() {
           <div className="space-y-3">
             <a href="tel:+919810422282" className="flex items-center gap-3 text-[#B5BCB7] text-sm hover:text-[#A89069] transition-colors font-light">
               <Phone size={16} className="text-[#A89069]" />
-              +91 98104 22282
+              +919718511207
             </a>
-            <a href="mailto:Rohit.bali@neeminfra.com" className="flex items-center gap-3 text-[#B5BCB7] text-sm hover:text-[#A89069] transition-colors font-light">
+            <a href="mailto:demo@gmail.com" className="flex items-center gap-3 text-[#B5BCB7] text-sm hover:text-[#A89069] transition-colors font-light">
               <Mail size={16} className="text-[#A89069]" />
-              Rohit.bali@neeminfra.com
+              Demo@gmail.com
             </a>
           </div>
         </div>
@@ -128,7 +128,7 @@ export default function Footer() {
       <div className="border-t border-[#4A574F] bg-[#27332C]">
         <div className="container mx-auto px-6 md:px-12 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-[#B5BCB7] text-xs font-light text-center md:text-left">
-            © {new Date().getFullYear()} Neem Infra Realty Pvt. Ltd. All rights reserved.
+            © {new Date().getFullYear()} Saudagar Properties Realty Pvt. Ltd. All rights reserved.
           </p>
           <div className="flex items-center gap-6 text-xs text-[#B5BCB7] font-light">
             <Link to="/privacy-policy" className="hover:text-[#A89069] transition-colors">Privacy Policy</Link>

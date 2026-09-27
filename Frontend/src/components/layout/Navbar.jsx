@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, Phone } from 'lucide-react';
-import logo from '../../assets/logo.png';
+import logo from '../../assets/cropped-logo.webp';
 
 const NAV_LINKS = [
   { label: "Ready To Move", href: "/ready-to-move" },
@@ -46,7 +46,7 @@ export default function Navbar() {
             <div className="py-1 px-2 rounded-lg transition-colors group-hover:bg-white/5">
               <img 
                 src={logo} 
-                alt="Neem Infra Realty" 
+                alt="Saudagar Properties Realty" 
                 className="h-8 md:h-10 w-auto object-contain"
               />
             </div>
@@ -69,7 +69,7 @@ export default function Navbar() {
           {/* Contact Button & Mobile Toggle */}
           <div className="flex items-center gap-4 z-50">
             <a 
-              href="tel:+919810422282" 
+              href="tel:+919811221207" 
               className="hidden lg:flex items-center gap-2 text-xs uppercase tracking-widest font-semibold text-white bg-white/10 border border-white/20 px-4 py-2 rounded-full hover:bg-white hover:text-[#2F3E35] transition-all duration-300 group"
             >
               <Phone size={13} className="text-[#A89069] group-hover:text-[#2F3E35] transition-colors" />
@@ -112,7 +112,7 @@ export default function Navbar() {
             <div className="absolute bottom-12 flex flex-col items-center gap-4">
               <span className="text-[0.65rem] tracking-[0.25em] text-[#A89069] uppercase font-semibold">Get in touch</span>
               <a href="tel:+919810422282" className="text-lg font-light text-white border-b border-white/20 pb-1">
-                +91 98104 22282
+                +919718511207
               </a>
             </div>
           </motion.div>

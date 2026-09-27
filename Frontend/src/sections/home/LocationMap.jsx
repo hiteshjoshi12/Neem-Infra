@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { MapPin, Navigation, Phone, ExternalLink } from 'lucide-react';
+import { MapPin, Navigation, ExternalLink } from 'lucide-react'; // removed unused 'Phone' to clean up warnings
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -72,7 +72,7 @@ export default function LocationMap() {
             viewport={{ once: true }}
           >
             <a 
-              href="https://maps.google.com/?q=Club+Patio+Sector+41+Gurugram" 
+              href="https://www.google.com/maps/place/Patel+Nagar,+Gurugram,+Haryana+122001" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center gap-3 bg-[#2F3E35] text-white px-8 py-4 rounded-full font-bold tracking-widest uppercase text-xs hover:bg-[#1E2822] transition-colors shadow-lg"
@@ -97,18 +97,17 @@ export default function LocationMap() {
           >
             
             {/* 
-              Embedded Google Map iframe with a custom CSS filter 
-              (grayscale/contrast adjustments to match the luxury pearl aesthetic)
+              FIXED: Using the embed-friendly Google Maps URL format
             */}
             <iframe 
-              title="Club Patio Location"
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3506.7720917296065!2d77.0463!3d28.4506!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390d1867c29bc979%3A0x5241477732607e1!2sClub%20Patio%2C%20South%20City%20I%2C%20Sector%2041%2C%20Gurugram%2C%20Haryana%20122003!5e0!3m2!1sen!2sin!4v1650000000000!5m2!1sen!2sin" 
+              title="Saudagar Properties Location"
+              src="https://maps.google.com/maps?q=Patel+Nagar,+Gurugram,+Haryana+122001&t=&z=15&ie=UTF8&iwloc=&output=embed"
               className="absolute inset-0 w-full h-full border-0 filter contrast-[1.05] opacity-90"
               allowFullScreen="" 
               loading="lazy" 
             />
 
-            {/* 3D Floating Address Card (Elevated on the Z-axis for depth) */}
+            {/* 3D Floating Address Card */}
             <motion.div 
               style={{ transform: "translateZ(60px)" }}
               className="absolute bottom-6 left-6 md:bottom-10 md:left-10 max-w-sm bg-white/95 backdrop-blur-md p-8 rounded-2xl border border-[#E5E0D8] shadow-2xl z-10"
@@ -118,15 +117,15 @@ export default function LocationMap() {
                 <span className="text-xs font-bold tracking-widest uppercase">Headquarters</span>
               </div>
               
-              <h3 className="text-2xl font-serif text-[#2C302E] mb-3">Club Patio</h3>
+              <h3 className="text-2xl font-serif text-[#2C302E] mb-3">Saudagar Properties</h3>
               
               <p className="text-[#5A605C] font-light text-sm leading-relaxed mb-6">
-                NH 8, near Huda City Metro Station, Block E, South City I, Sector 41, Gurugram, Haryana 122003, India
+              Gurugram, Haryana 122003, India
               </p>
 
               <div className="flex items-center gap-4 pt-4 border-t border-[#E5E0D8]">
                 <a 
-                  href="https://maps.google.com/?q=Club+Patio+Sector+41+Gurugram" 
+                  href="https://maps.google.com/?q=Patel+Nagar,+Gurugram,+Haryana+122001" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-[#2F3E35] hover:text-[#A89069] transition-colors"

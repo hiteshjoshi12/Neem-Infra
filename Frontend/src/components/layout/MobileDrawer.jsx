@@ -32,7 +32,7 @@ export default function MobileDrawer({ onClose }) {
       >
         {/* Header */}
         <div className="flex justify-between items-center p-6 border-b border-white/10">
-           <h2 className="text-xl font-serif tracking-widest uppercase">Neem Infra</h2>
+           <h2 className="text-xl font-serif tracking-widest uppercase">Saudagar Properties</h2>
            <button 
              onClick={onClose} 
              className="p-2 bg-white/5 hover:bg-white/10 rounded-full transition-colors"
@@ -43,7 +43,7 @@ export default function MobileDrawer({ onClose }) {
 
         {/* Scrollable Content */}
         <div className="flex-1 overflow-y-auto p-8 custom-scrollbar">
-          <h2 className="text-3xl font-serif mb-6 text-white">About Neem Infra Realty</h2>
+          <h2 className="text-3xl font-serif mb-6 text-white">About Saudagar Properties Realty</h2>
           <p className="text-sm text-gray-400 leading-loose mb-10 font-light">
             Founded with the vision of offering strategic, transparent, and relationship-driven property advisory services. With deep market understanding and years of experience in Gurgaon’s dynamic real estate landscape, we help clients navigate property decisions with clarity and confidence.
           </p>

@@ -24,10 +24,11 @@ export default function App() {
           <Suspense fallback={<PageLoader />}>
             <Routes>
               <Route path="/" element={<Home />} />
-              <Route path="/ready-to-move" element={<ReadyToMove />} />
-              <Route path="/new-launches" element={<NewLaunches />} />
-              <Route path="/under-construction" element={<UnderConstruction />} />
-              <Route path="/about" element={<AboutUs />} />
+              <Route path="/ready-to-move" element={<Home />} />
+              <Route path="/new-launches" element={<Home />} />
+              <Route path="/under-construction" element={<Home />} />
+              <Route path="/about" element={<Home />} />
+               <Route path="/developers" element={<Home />} />
               
               {/* Catch-all Route */}
               <Route path="*" element={<NotFound />} />
