@@ -37,7 +37,7 @@ export default function Hero() {
       {/* Premium Builder Floor Background Image (z-0 to sit directly above section background) */}
       <div className="absolute inset-0 z-0 overflow-hidden">
         <img 
-          src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2500&q=80" 
+          src={heroData.bgImage || "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2500&q=80"} 
           alt="Gurgaon Luxury Builder Floor" 
           className="w-full h-full object-cover filter brightness-[0.85] contrast-[1.05] transition-transform duration-[10s] ease-out hover:scale-105"
         />
@@ -87,7 +87,7 @@ export default function Hero() {
                     type="text" 
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search builder floors, DLF villas..." 
+                    placeholder={heroData.searchPlaceholder || "Search builder floors, DLF villas..."} 
                     className="w-full bg-transparent border-none outline-none text-[#1D263B] placeholder-[#9CA3AF] font-light text-sm"
                   />
                 </div>
@@ -100,7 +100,7 @@ export default function Hero() {
                     label="Location"
                     value={location}
                     onChange={setLocation}
-                    options={[
+                    options={heroData.locationOptions || [
                       { value: "golf-course", label: "Golf Course Ext" },
                       { value: "dlf-1", label: "DLF Phase 1" },
                       { value: "dlf-5", label: "DLF Phase 5" },
@@ -114,7 +114,7 @@ export default function Hero() {
                     label="Property Type"
                     value={propertyType}
                     onChange={setPropertyType}
-                    options={[
+                    options={heroData.propertyTypeOptions || [
                       { value: "builder-floor", label: "Luxury Builder Floor" },
                       { value: "villa", label: "Bespoke Villa" },
                       { value: "penthouse", label: "Penthouse" },
@@ -127,7 +127,7 @@ export default function Hero() {
                     label="Budget"
                     value={budget}
                     onChange={setBudget}
-                    options={[
+                    options={heroData.budgetOptions || [
                       { value: "under-5", label: "Under 5 Cr" },
                       { value: "5-to-10", label: "5 Cr - 10 Cr" },
                       { value: "above-10", label: "10 Cr+" }
@@ -141,15 +141,20 @@ export default function Hero() {
                   type="submit"
                   className="w-full lg:w-auto mt-2 lg:mt-0 lg:ml-2 bg-[#1D263B] text-white px-8 py-3.5 rounded-xl text-xs uppercase tracking-widest font-semibold hover:bg-[#111827] transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-xl cursor-pointer"
                 >
-                  Explore
+                  {heroData.searchButtonText || "Explore"}
                 </button>
               </form>
 
               {/* Trending Pills */}
               <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 relative z-10">
-                <span className="text-[#C5A880] text-xs font-semibold tracking-widest uppercase">Trending</span>
+                <span className="text-[#C5A880] text-xs font-semibold tracking-widest uppercase">
+                  {heroData.trendingLabel || "Trending"}
+                </span>
                 <div className="flex flex-wrap gap-2">
-                  {['DLF Phase 1 Floors', 'Sushant Lok Villas', 'Golf Course Ext.', 'Under 5 Cr'].map((tag) => (
+                  {(heroData.trendingTags && heroData.trendingTags.length > 0
+                    ? heroData.trendingTags
+                    : ['DLF Phase 1 Floors', 'Sushant Lok Villas', 'Golf Course Ext.', 'Under 5 Cr']
+                  ).map((tag) => (
                     <button 
                       key={tag}
                       type="button"
@@ -203,7 +208,9 @@ export default function Hero() {
 
               <div className="flex items-center justify-between pt-3 border-t border-white/15">
                 <div>
-                  <span className="block text-[9px] uppercase tracking-widest text-gray-400">Starting At</span>
+                  <span className="block text-[9px] uppercase tracking-widest text-gray-400">
+                    {heroData.spotlight?.startingAtLabel || "Starting At"}
+                  </span>
                   <span className="text-base font-semibold text-[#C5A880]">
                     {heroData.spotlight?.price || "₹6.75 Cr Onwards"}
                   </span>
@@ -212,7 +219,7 @@ export default function Hero() {
                   href={`tel:${heroData.spotlight?.phone || '+919811221207'}`}
                   className="px-4 py-2 rounded-full bg-white text-[#1D263B] text-[11px] font-bold uppercase tracking-wider hover:bg-[#C5A880] hover:text-white transition-colors shadow-md"
                 >
-                  Enquire
+                  {heroData.spotlight?.ctaText || "Enquire"}
                 </a>
               </div>
             </div>

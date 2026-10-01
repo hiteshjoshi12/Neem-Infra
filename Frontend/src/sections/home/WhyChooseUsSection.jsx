@@ -2,13 +2,13 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { ShieldCheck, Compass, TrendingUp, Layers, Sparkles, ArrowRight, CheckCircle2, Building2, Award } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useCms } from '../../context/CmsContext';
 
-const REASONS_DATA = [
+const DEFAULT_REASONS_DATA = [
   {
     id: "01",
     title: "Understanding Your Requirements",
     badge: "Personalized Discovery",
-    icon: Compass,
     description: "We begin by understanding what matters most to you: the location, budget, property type, and your purpose for buying, selling, or renting. Whether you're looking for a flat in Sushant Lok, a builder floor in DLF, or a commercial office in Udyog Vihar, we tailor our approach to match your goals.",
     tags: ["Goal Alignment", "Budget Optimization", "Prime Location Match"]
   },
@@ -16,7 +16,6 @@ const REASONS_DATA = [
     id: "02",
     title: "Experience in Real Estate Industry",
     badge: "25+ Years Market Insight",
-    icon: TrendingUp,
     description: "With deep insight into Gurgaon's property market, we understand local price trends, demand and supply dynamics, and what makes a location valuable. As an experienced top real estate consultant in DLF Gurugram, we guide you to the right property whether residential, commercial, or industrial with complete transparency and expertise.",
     tags: ["Micro-Market Mastery", "Price Trend Forecasting", "100% Transparency"]
   },
@@ -24,13 +23,32 @@ const REASONS_DATA = [
     id: "03",
     title: "Properties by Categories",
     badge: "Comprehensive Portfolio",
-    icon: Layers,
     description: "From luxury homes and builder floors to industrial warehouses and commercial spaces, we offer an extensive selection to fit your needs and budget. You'll find options that align perfectly with your lifestyle, investment goals, or business plans.",
     tags: ["DLF Floors & Plots", "Udyog Vihar Commercial", "Industrial Hubs"]
   }
 ];
 
+const REASON_ICONS = [Compass, TrendingUp, Layers];
+
 export default function WhyChooseUsSection() {
+  const { sections } = useCms();
+  const whyData = sections?.whyChooseUs || {};
+
+  const badge = whyData.badge || "The Saudagar Advantage";
+  const titleMain = whyData.titleMain || "Why Choose";
+  const titleItalic = whyData.titleItalic || "Our Company?";
+  const description = whyData.description || "Decades of unmatched local authority, ethical advisory, and client-first commitment across Gurgaon.";
+
+  const trustCard = whyData.trustCard || {
+    badge: "Trusted Partner",
+    title: "Property Dealers in Gurgaon You Can Trust",
+    p1: "We help customers buy, sell, and rent residential, commercial, and industrial properties across prime areas of Gurgaon and Gurugram, including DLF, Sushant Lok, and Udyog Vihar.",
+    p2: "We're your one-stop platform for smart property solutions combining local expertise with the best deals to match your needs and budget.",
+    bgImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80"
+  };
+
+  const reasons = whyData.reasons || DEFAULT_REASONS_DATA;
+
   return (
     <section className="relative w-full py-12 md:py-16 bg-[#FAF8F5] text-[#1D263B] overflow-hidden border-t border-[#EFECE6]">
       {/* Subtle Background Architectural Ambient Grid */}
@@ -46,15 +64,15 @@ export default function WhyChooseUsSection() {
           className="text-center max-w-3xl mx-auto mb-12 md:mb-18">
           <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white border border-[#C5A880]/40 shadow-sm text-[11px] font-bold tracking-[0.22em] text-[#A27B48] uppercase mb-4">
             <Sparkles size={13} className="text-[#C5A880]" />
-            <span>The Saudagar Advantage</span>
+            <span>{badge}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#1D263B] leading-[1.2] mb-4">
-            Why Choose <span className="italic font-light text-[#C5A880]">Our Company?</span>
+            {titleMain} <span className="italic font-light text-[#C5A880]">{titleItalic}</span>
           </h2>
 
           <p className="text-[#334155] text-sm sm:text-base font-normal leading-relaxed max-w-2xl mx-auto">
-            Decades of unmatched local authority, ethical advisory, and client-first commitment across Gurgaon.
+            {description}
           </p>
         </motion.div>
 
@@ -79,7 +97,7 @@ export default function WhyChooseUsSection() {
               {/* Architectural Image Background Overlay */}
               <div className="absolute inset-0 z-0">
                 <img
-                  src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80"
+                  src={trustCard.bgImage || "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80"}
                   alt="Modern Gurgaon Architecture"
                   className="w-full h-full object-cover opacity-20 group-hover:scale-105 transition-transform duration-700"
                 />
@@ -96,29 +114,29 @@ export default function WhyChooseUsSection() {
                 </div>
 
                 <span className="inline-block px-3 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-[#C5A880] text-[10px] font-bold tracking-[0.2em] uppercase mb-4">
-                  Trusted Partner
+                  {trustCard.badge || "Trusted Partner"}
                 </span>
 
                 <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white mb-6 leading-snug">
-                  Property Dealers in Gurgaon <span className="italic font-light text-[#C5A880]">You Can Trust</span>
+                  {trustCard.title || "Property Dealers in Gurgaon You Can Trust"}
                 </h3>
 
                 <p className="text-slate-200 text-xs sm:text-sm font-normal leading-relaxed mb-6">
-                  We help customers buy, sell, and rent residential, commercial, and industrial properties across prime areas of Gurgaon and Gurugram, including DLF, Sushant Lok, and Udyog Vihar.
+                  {trustCard.p1}
                 </p>
 
                 <p className="text-slate-300 text-xs sm:text-sm font-normal leading-relaxed mb-8">
-                  We're your one-stop platform for smart property solutions combining local expertise with the best deals to match your needs and budget.
+                  {trustCard.p2}
                 </p>
               </div>
 
               {/* CTA Action Button */}
               <div className="relative z-10 pt-6 border-t border-white/10">
                 <Link
-                  to="/about"
+                  to={trustCard.ctaLink || "/about"}
                   className="inline-flex items-center gap-3 px-6 py-3.5 rounded-full bg-[#C5A880] hover:bg-[#B5986D] text-[#1D263B] text-xs font-bold uppercase tracking-widest transition-all duration-300 shadow-[0_4px_15px_rgba(197,168,128,0.35)] group/link"
                 >
-                  <span>Learn More About Us</span>
+                  <span>{trustCard.ctaText || "Learn More About Us"}</span>
                   <ArrowRight size={14} className="group-hover/link:translate-x-1 transition-transform" />
                 </Link>
               </div>
@@ -128,8 +146,8 @@ export default function WhyChooseUsSection() {
 
           {/* ==================== RIGHT: 3 PILLAR CARDS ==================== */}
           <div className="lg:col-span-7 flex flex-col gap-6 justify-between">
-            {REASONS_DATA.map((item, idx) => {
-              const IconComp = item.icon;
+            {reasons.map((item, idx) => {
+              const IconComp = REASON_ICONS[idx % REASON_ICONS.length] || Compass;
               return (
                 <motion.div
                   key={item.id}

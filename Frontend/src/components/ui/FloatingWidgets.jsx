@@ -2,8 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa6';
+import { useCms } from '../../context/CmsContext';
 
 export default function FloatingWidgets() {
+  const { sections } = useCms();
+  const widgetData = sections?.floatingWidgets || {};
+
   const [showTopBtn, setShowTopBtn] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -35,10 +39,13 @@ export default function FloatingWidgets() {
     });
   };
 
-  // WhatsApp prefilled message
-  const whatsappUrl =
-    "https://wa.me/919718511207?text=" +
-    encodeURIComponent("Hello Saudagar Properties, I am interested in luxury properties in DLF Gurugram.");
+  const whatsappNumber = widgetData.whatsappNumber || "919718511207";
+  const whatsappPrefill = widgetData.whatsappPrefill || "Hello Saudagar Properties, I am interested in luxury properties in DLF Gurugram.";
+  const backToTopTooltip = widgetData.backToTopTooltip || "Back to top";
+  const whatsappTooltip = widgetData.whatsappTooltip || "Chat on WhatsApp";
+
+  // WhatsApp prefilled message url
+  const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/\D/g, '')}?text=${encodeURIComponent(whatsappPrefill)}`;
 
   // Circular progress calculations for 44px widget (radius 18)
   const radius = 18;
@@ -60,7 +67,7 @@ export default function FloatingWidgets() {
           >
             {/* Hover Tooltip */}
             <span className="hidden sm:block absolute right-full mr-3.5 px-3 py-1 rounded-full bg-[#1D263B]/90 backdrop-blur-md text-[11px] font-medium tracking-wide text-[#E2E8F0] shadow-lg border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
-              Back to top
+              {backToTopTooltip}
             </span>
 
             <button
@@ -116,7 +123,7 @@ export default function FloatingWidgets() {
         >
           <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
           <span className="text-xs font-semibold tracking-wide text-[#E2E8F0]">
-            Chat with DLF Advisory
+            {whatsappTooltip}
           </span>
         </a>
 
@@ -125,7 +132,7 @@ export default function FloatingWidgets() {
           href={whatsappUrl}
           target="_blank"
           rel="noopener noreferrer"
-          aria-label="Contact Saudagar Properties on WhatsApp at 919718511207"
+          aria-label={`Contact Saudagar Properties on WhatsApp at ${whatsappNumber}`}
           className="relative w-13 h-13 rounded-full bg-gradient-to-tr from-[#075E54] via-[#128C7E] to-[#25D366] text-white flex items-center justify-center shadow-[0_10px_25px_rgba(37,211,102,0.4)] hover:shadow-[0_15px_35px_rgba(37,211,102,0.6)] border-2 border-white/30 hover:border-white transition-all duration-300 hover:scale-108 active:scale-95 cursor-pointer"
         >
           {/* Subtle Ambient Pulse Ring */}

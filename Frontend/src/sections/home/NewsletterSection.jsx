@@ -86,17 +86,17 @@ export default function NewsletterSection() {
                     </div>
                     <div>
                       <h4 className="text-base font-serif font-bold text-white mb-1">
-                        Thank You for Subscribing!
+                        {newsData.successTitle || "Thank You for Subscribing!"}
                       </h4>
                       <p className="text-xs text-[#CBD5E1] font-light max-w-xs">
-                        You have been added to our private advisory list. Expect exclusive DLF & Gurgaon real estate insights in your inbox.
+                        {newsData.successMessage || "You have been added to our private advisory list. Expect exclusive DLF & Gurgaon real estate insights in your inbox."}
                       </p>
                     </div>
                     <button
                       onClick={() => setIsSubmitted(false)}
                       className="mt-2 text-[11px] text-[#C5A880] hover:underline uppercase tracking-wider font-semibold"
                     >
-                      Subscribe another email
+                      {newsData.subscribeAnotherText || "Subscribe another email"}
                     </button>
                   </motion.div>
                 ) : (
@@ -119,7 +119,7 @@ export default function NewsletterSection() {
                           required
                           value={email}
                           onChange={(e) => setEmail(e.target.value)}
-                          placeholder="Enter your email address..."
+                          placeholder={newsData.placeholder || "Enter your email address..."}
                           className="w-full bg-transparent border-none outline-none text-[#1D263B] placeholder-[#9CA3AF] text-sm font-light truncate"
                         />
                       </div>
@@ -134,7 +134,7 @@ export default function NewsletterSection() {
                           <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
                         ) : (
                           <>
-                            <span>Sign Up</span>
+                            <span>{newsData.buttonText || "Sign Up"}</span>
                             <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
                           </>
                         )}
@@ -144,7 +144,7 @@ export default function NewsletterSection() {
                     {/* Trust and Privacy Guarantee */}
                     <div className="flex items-center justify-center lg:justify-start gap-2 px-2 text-[11px] text-[#A0ABBB] font-light">
                       <ShieldCheck size={13} className="text-[#C5A880] flex-shrink-0" />
-                      <span>Zero spam. Complete confidentiality. Unsubscribe at any time.</span>
+                      <span>{newsData.disclaimer || "Zero spam. Complete confidentiality. Unsubscribe at any time."}</span>
                     </div>
                   </motion.form>
                 )}

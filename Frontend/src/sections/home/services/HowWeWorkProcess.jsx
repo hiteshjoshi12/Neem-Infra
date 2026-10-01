@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Compass, Users, CheckCircle2, RotateCw, ArrowUpRight, PhoneCall, Award, Check, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useCms } from '../../../context/CmsContext';
 
-const PROCESS_STEPS = [
+const DEFAULT_PROCESS_STEPS = [
   {
     step: "01",
     phase: "STEP 01",
@@ -11,7 +12,6 @@ const PROCESS_STEPS = [
     tagline: "Tailored to your budget & aspirations",
     shortDesc: "At Saudagar Properties, your trusted top real estate consultant in DLF Gurugram, we serve as a reliable platform to buy, rent, sell, or lease residential, commercial, and industrial properties.",
     fullDesc: "Whether you’re looking for a flat, villa, or kothi in Gurgaon or DLF Phase 2, or office space in Udyog Vihar, we are your one-stop solution to meet all your property needs within your budget and convenience.",
-    icon: Compass,
     highlights: ["Detailed requirement discovery", "Budget & location alignment", "Exclusive off-market inventory check"]
   },
   {
@@ -21,7 +21,6 @@ const PROCESS_STEPS = [
     tagline: "Direct consultation without middlemen",
     shortDesc: "Our dedicated team of professionals provides personalized guidance, answering all your queries and helping you avoid the hassle of middlemen like brokers and financers.",
     fullDesc: "We assist you in selecting the perfect property whether residential or commercial and handle the formalities efficiently, ensuring you stay within your budget.",
-    icon: Users,
     highlights: ["Direct consultation with directors", "Zero hidden broker fees", "Clear financial & legal roadmap"]
   },
   {
@@ -31,12 +30,22 @@ const PROCESS_STEPS = [
     tagline: "Transparent execution & smooth closing",
     shortDesc: "Once your needs are clear, our experts actively search for the best property options tailored to you. We pride ourselves on dedication and transparency.",
     fullDesc: "We ensure smooth coordination and keep you informed throughout the process. Reach out to us today, and let’s discuss how we can help you find your ideal property in DLF Gurugram.",
-    icon: CheckCircle2,
     highlights: ["Hand-picked property site tours", "Title verification & due diligence", "Seamless registration & handover"]
   }
 ];
 
+const STEP_ICONS = [Compass, Users, CheckCircle2];
+
 export default function HowWeWorkProcess() {
+  const { sections } = useCms();
+  const howData = sections?.services?.howWeWork || {};
+
+  const badge = howData.badge || "Process & Methodology";
+  const titleMain = howData.titleMain || "How Do We";
+  const titleItalic = howData.titleItalic || "Work?";
+  const description = howData.description || "Want to know how we get started with your property journey? Here’s a simple overview of our process:";
+  const steps = howData.steps || DEFAULT_PROCESS_STEPS;
+
   const [expandedCards, setExpandedCards] = useState({});
 
   const toggleCard = (stepNum) => {
@@ -59,24 +68,24 @@ export default function HowWeWorkProcess() {
         <div className="flex items-center justify-center gap-3 mb-4">
           <span className="w-8 h-[2px] bg-[#C5A880]" />
           <span className="text-xs md:text-sm font-semibold tracking-[0.25em] text-[#C5A880] uppercase">
-            Process & Methodology
+            {badge}
           </span>
           <span className="w-8 h-[2px] bg-[#C5A880]" />
         </div>
 
         <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif text-[#1D263B] leading-[1.15] mb-4">
-          How Do We <span className="italic font-light text-[#C5A880]">Work?</span>
+          {titleMain} <span className="italic font-light text-[#C5A880]">{titleItalic}</span>
         </h2>
 
         <p className="text-[#334155] text-sm sm:text-base font-normal leading-relaxed max-w-2xl mx-auto">
-          Want to know how we get started with your property journey? Here’s a simple overview of our process:
+          {description}
         </p>
       </motion.div>
 
       {/* Interactive 3D Step Cards Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 items-stretch mb-16">
-        {PROCESS_STEPS.map((step, idx) => {
-          const StepIcon = step.icon;
+        {steps.map((step, idx) => {
+          const StepIcon = STEP_ICONS[idx % STEP_ICONS.length] || Compass;
           const isExpanded = !!expandedCards[step.step];
 
           return (
@@ -125,12 +134,14 @@ export default function HowWeWorkProcess() {
 
                   {/* Interactive Highlights checklist */}
                   <div className="pt-4 border-t border-[#F1F5F9] space-y-2 mb-6">
-                    {step.highlights.map((h, i) => (
-                      <div key={i} className="flex items-start gap-2.5 text-xs text-[#1D263B]">
-                        <Check size={13} className="text-[#C5A880] shrink-0 mt-0.5" />
-                        <span className="font-medium">{h}</span>
-                      </div>
-                    ))}
+                    {(step.highlights || [])
+                      .filter(h => typeof h === 'string' && h.trim().length > 0)
+                      .map((h, i) => (
+                        <div key={i} className="flex items-start gap-2.5 text-xs text-[#1D263B]">
+                          <Check size={13} className="text-[#C5A880] shrink-0 mt-0.5" />
+                          <span className="font-medium">{h}</span>
+                        </div>
+                      ))}
                   </div>
                 </div>
 
@@ -141,7 +152,7 @@ export default function HowWeWorkProcess() {
                 >
                   <span className="flex items-center gap-2">
                     <RotateCw size={13} className={`text-[#C5A880] transition-transform duration-500 ${isExpanded ? 'rotate-180' : ''}`} />
-                    <span>{isExpanded ? 'Show Brief View' : 'Read Full Overview'}</span>
+                    <span>{isExpanded ? (howData.briefViewText || 'Show Brief View') : (howData.fullViewText || 'Read Full Overview')}</span>
                   </span>
                   <ChevronRight size={14} className="text-[#C5A880] group-hover/btn:translate-x-1 transition-transform" />
                 </button>

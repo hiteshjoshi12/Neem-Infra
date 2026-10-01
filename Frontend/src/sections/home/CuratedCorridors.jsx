@@ -197,11 +197,11 @@ export default function CuratedCorridors() {
       {/* Master Directory CTA */}
       <div className="container mx-auto px-5 md:px-12 mt-6 sm:mt-8 flex justify-center">
         <Link
-          to="/ready-to-move"
+          to={corridorData.ctaLink || "/ready-to-move"}
           className="group relative px-6 py-3.5 sm:px-8 sm:py-4 bg-[#1D263B] text-white overflow-hidden rounded-full flex items-center gap-3 sm:gap-4 shadow-lg hover:shadow-xl transition-all duration-300"
         >
           <span className="relative z-10 text-[11px] sm:text-xs font-semibold tracking-widest uppercase">
-            View Complete Featured Inventory
+            {corridorData.ctaText || "View Complete Featured Inventory"}
           </span>
           <div className="relative z-10 w-7 h-7 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-[#1D263B] transition-colors">
             <ArrowUpRight size={14} />

@@ -2,13 +2,14 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Building2, Briefcase, Factory, CheckCircle2, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useCms } from '../../../context/CmsContext';
 
-const SERVICES_DATA = [
+const DEFAULT_SERVICES_DATA = [
   {
     id: "01",
     category: "RESIDENTIAL REAL ESTATE",
     title: "Residential",
-    icon: Building2,
+    icon: "Building2",
     badge: "Plots • Builder Floors • Kothis • Apartments",
     description: "From residential plots and builder floors in DLF to apartments in Sushant Lok and premium kothis in Gurgaon, we specialize in properties that fit your lifestyle and your family’s future. Whether you're looking to buy or sell, we recommend options that combine comfort, location, and long-term value.",
     highlights: ["DLF Phase 1–5 Floors", "Sushant Lok & Golf Course", "Verified Legal Titles", "Luxury Kothis"],
@@ -19,7 +20,7 @@ const SERVICES_DATA = [
     id: "02",
     category: "COMMERCIAL REAL ESTATE",
     title: "Commercial",
-    icon: Briefcase,
+    icon: "Briefcase",
     badge: "Office Spaces • Retail • Corporate Hubs",
     description: "Great ideas need the right environment to thrive. Our team helps you find and lease office spaces in Gurgaon, including top locations like Udyog Vihar and Golf Course Road. With a deep understanding of commercial real estate in Gurugram, we streamline your search and provide tailored options that suit your business needs.",
     highlights: ["Udyog Vihar Offices", "Golf Course Road Hubs", "Corporate Lease", "High-Yield Assets"],
@@ -30,7 +31,7 @@ const SERVICES_DATA = [
     id: "03",
     category: "INDUSTRIAL REAL ESTATE",
     title: "Industrial",
-    icon: Factory,
+    icon: "Factory",
     badge: "Warehouses • Industrial Plots • Factories",
     description: "Whether you’re expanding or relocating, we offer smart, reliable options for industrial plots, warehouses, and factory leasing opportunities in Udyog Vihar and surrounding hubs. Our mission is to find industrial properties that support growth, productivity, and scalability for your business.",
     highlights: ["Industrial Warehouses", "Factory Land Leasing", "Scalable Outlets", "Prime Connectivity"],
@@ -39,11 +40,25 @@ const SERVICES_DATA = [
   }
 ];
 
+const ICON_MAP = {
+  residential: Building2,
+  commercial: Briefcase,
+  industrial: Factory,
+  building: Building2,
+  building2: Building2,
+  briefcase: Briefcase,
+  factory: Factory
+};
+
 export default function ServicesCardsGrid() {
+  const { sections } = useCms();
+  const servicesList = sections?.services?.cards || DEFAULT_SERVICES_DATA;
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-8 lg:gap-10 mb-16 md:mb-20">
-      {SERVICES_DATA.map((service, index) => {
-        const IconComponent = service.icon;
+      {servicesList.map((service, index) => {
+        const iconKey = (service.icon || service.title || 'building2').toLowerCase();
+        const IconComponent = ICON_MAP[iconKey] || Building2;
         return (
           <motion.div
             key={service.id}
@@ -106,10 +121,10 @@ export default function ServicesCardsGrid() {
 
               {/* Inquire Action Button */}
               <Link
-                to="/contact"
+                to={service.link || "/contact"}
                 className="w-full py-3.5 px-5 rounded-2xl bg-[#FAF8F5] hover:bg-[#1D263B] text-[#1D263B] hover:text-white border border-[#E8E2D8] hover:border-[#1D263B] text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 group/btn shadow-sm"
               >
-                <span>Inquire Service</span>
+                <span>{service.ctaText || "Inquire Service"}</span>
                 <ArrowRight size={14} className="text-[#C5A880] group-hover/btn:translate-x-1.5 transition-transform" />
               </Link>
             </div>

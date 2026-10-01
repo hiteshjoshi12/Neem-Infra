@@ -19,7 +19,7 @@ export default function AdminDashboard() {
     propertiesCount: 0,
     testimonialsCount: 0,
     inquiriesCount: 0,
-    sectionsCount: 7,
+    sectionsCount: 12,
   });
   const [recentInquiries, setRecentInquiries] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -41,7 +41,7 @@ export default function AdminDashboard() {
           propertiesCount: pCount,
           testimonialsCount: tCount,
           inquiriesCount: inqs.length,
-          sectionsCount: 7
+          sectionsCount: 12
         });
         setRecentInquiries(inqs.slice(0, 5));
       } catch (err) {
@@ -91,7 +91,7 @@ export default function AdminDashboard() {
 
   return (
     <div className="space-y-10">
-      
+
       {/* Welcome Banner */}
       <div className="relative rounded-3xl bg-gradient-to-r from-[#172033] via-[#121826] to-[#0F141F] p-8 sm:p-10 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.4)] overflow-hidden">
         <div className="absolute top-0 right-0 w-80 h-80 bg-[#C5A880]/15 rounded-full blur-3xl pointer-events-none" />
@@ -164,7 +164,7 @@ export default function AdminDashboard() {
 
       {/* Quick Actions & Recent Activity Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-        
+
         {/* Quick CMS Section Navigation */}
         <div className="lg:col-span-7 rounded-3xl bg-[#121724] border border-white/10 p-6 sm:p-8">
           <div className="flex items-center justify-between mb-6">
@@ -179,13 +179,18 @@ export default function AdminDashboard() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {[
-              { name: '1. Hero Section', desc: 'Title, tags, search bar & spotlight card', tab: 'hero' },
-              { name: '2. Top Consultant', desc: 'Copy, 3 categories, video walkthrough', tab: 'topConsultant' },
-              { name: '3. Curated Corridors', desc: 'Section header and corridor copy', tab: 'curatedCorridors' },
-              { name: '4. Our Services', desc: '25+ yrs counter, process steps, DLF desk', tab: 'services' },
-              { name: '5. Why Choose Us', desc: 'Trust card, advantage copy & pillars', tab: 'whyChooseUs' },
-              { name: '6. Location & Map', desc: 'Office address, Google Map pin & phones', tab: 'location' },
-              { name: '7. Newsletter Section', desc: 'Subscription banner & intelligence copy', tab: 'newsletter' }
+              { name: '1. Navbar & Header', desc: 'Logo, links, dropdowns, CTA & phones', tab: 'navbar' },
+              { name: '2. Hero Section', desc: 'Title, tags, search bar & spotlight card', tab: 'hero' },
+              { name: '3. Top Consultant', desc: 'Copy, 3 categories, video walkthrough', tab: 'topConsultant' },
+              { name: '4. Featured Properties', desc: 'Section header and corridor copy', tab: 'curatedCorridors' },
+              { name: '5. Our Services', desc: '3 core cards, 25+ yrs counter, process steps', tab: 'services' },
+              { name: '6. DLF Callout & Stats', desc: 'Dedicated DLF desk, phone, explore & 3 stats cards', tab: 'dlfCallout' },
+              { name: '7. Why Choose Us', desc: 'Trust card, advantage copy & pillars', tab: 'whyChooseUs' },
+              { name: '8. Testimonials Header', desc: 'Section title, gold badges & subtitle', tab: 'testimonials' },
+              { name: '9. Location & Map', desc: 'Office address, Google Map pin & phones', tab: 'location' },
+              { name: '10. Newsletter Section', desc: 'Subscription banner & intelligence copy', tab: 'newsletter' },
+              { name: '11. Footer & Socials', desc: 'About copy, addresses, phone list & socials', tab: 'footer' },
+              { name: '12. Floating Widgets', desc: 'WhatsApp number, prefill text & scroll-to-top', tab: 'floatingWidgets' }
             ].map((sec, i) => (
               <Link
                 key={i}

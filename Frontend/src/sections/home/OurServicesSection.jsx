@@ -5,8 +5,17 @@ import ServicesCardsGrid from './services/ServicesCardsGrid';
 import ExperienceCounter from './services/ExperienceCounter';
 import HowWeWorkProcess from './services/HowWeWorkProcess';
 import DlfPropertyCallout from './services/DlfPropertyCallout';
+import { useCms } from '../../context/CmsContext';
 
 export default function OurServicesSection() {
+  const { sections } = useCms();
+  const data = sections?.services || {};
+
+  const badge = data.badge || "Bespoke Property Solutions";
+  const titleMain = data.titleMain || "Our";
+  const titleItalic = data.titleItalic || "Services";
+  const description = data.description || "As the top real estate consultant in DLF Gurugram, let’s explore where our expertise lies and how it translates into real value for you.";
+
   return (
     <section className="relative w-full py-12 md:py-16 bg-[#FAF8F5] text-[#1D263B] overflow-hidden border-t border-[#EFECE6]">
       {/* Ambient Radial Subtle Pattern Layer */}
@@ -24,15 +33,15 @@ export default function OurServicesSection() {
         >
           <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white border border-[#C5A880]/40 shadow-sm text-[11px] font-bold tracking-[0.22em] text-[#A27B48] uppercase mb-4">
             <Sparkles size={13} className="text-[#C5A880]" />
-            <span>Bespoke Property Solutions</span>
+            <span>{badge}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#1D263B] leading-[1.2] mb-4">
-            Our <span className="italic font-light text-[#C5A880]">Services</span>
+            {titleMain} <span className="italic font-light text-[#C5A880]">{titleItalic}</span>
           </h2>
 
           <p className="text-[#334155] text-sm sm:text-base font-normal leading-relaxed max-w-2xl mx-auto">
-            As the top real estate consultant in DLF Gurugram, let’s explore where our expertise lies and how it translates into real value for you.
+            {description}
           </p>
         </motion.div>
 

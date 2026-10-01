@@ -7,34 +7,78 @@ import {
   FaLinkedinIn,
   FaYoutube
 } from 'react-icons/fa6';
-import { MapPin, Phone, Mail, ArrowUpRight, Sparkles } from 'lucide-react';
+import { MapPin, Phone, Mail, ArrowUpRight } from 'lucide-react';
 import logoImg from '../../assets/logo.png';
+import { useCms } from '../../context/CmsContext';
+
+const SOCIAL_ICONS_MAP = {
+  facebook: FaFacebookF,
+  instagram: FaInstagram,
+  pinterest: FaPinterestP,
+  linkedin: FaLinkedinIn,
+  youtube: FaYoutube
+};
 
 export default function Footer() {
-  const menuLinks = [
+  const { sections } = useCms();
+  const footerData = sections?.footer || {};
+
+  const officeTitle = footerData.officeTitle || "Corporate Office";
+  const officeName = footerData.officeName || "Address";
+  const officeAddress = footerData.officeAddress || "38, Akashneem Marg, DLF-II, Gurgaon-122002";
+
+  const phoneTitle = footerData.phoneTitle || "Direct Line";
+  const phoneSubtitle = footerData.phoneSubtitle || "Phone No";
+  const phones = footerData.phones || [
+    { number: "+91 97185 11207", label: "(IND)", href: "tel:+919718511207" },
+    { number: "+91 98112 21207", label: "(IND)", href: "tel:+919811221207" }
+  ];
+
+  const emailTitle = footerData.emailTitle || "Confidential Desk";
+  const emailSubtitle = footerData.emailSubtitle || "Email";
+  const email = footerData.email || "Saudagar.Properties@Yahoo.In";
+
+  const aboutText = footerData.aboutText || "Saudagar Properties helps clients— both families and corporates to find their dream home or commercial space that lives up to their needs and promises a high Return on Investment. Keeping customer satisfaction on top priority, we're highly trusted by our clients which has helped us to be the leaders and the best property dealers in Gurgaon.";
+
+  const menuTitle = footerData.menuTitle || "Menu";
+  const menuLinks = footerData.menuLinks || [
     { label: "Home", href: "/" },
     { label: "About Us", href: "/about" },
     { label: "Featured Property", href: "/#featured" },
     { label: "Our Team", href: "/about" },
     { label: "Blog", href: "/blogs" },
-    { label: "Contact Us", href: "/contact" },
+    { label: "Contact Us", href: "/contact" }
   ];
 
-  const serviceLinks = [
+  const servicesTitle = footerData.servicesTitle || "Services";
+  const serviceLinks = footerData.servicesLinks || [
     { label: "Property DLF Phase 1", href: "/services/dlf-phase-1" },
     { label: "Property DLF Phase 2", href: "/services/dlf-phase-2" },
     { label: "Property DLF Phase 3", href: "/services/dlf-phase-3" },
     { label: "Property DLF Phase 4", href: "/services/dlf-phase-4" },
     { label: "Property In Sushant Lok", href: "/services/sushant-lok" },
-    { label: "Property In Udyog Vihar", href: "/services/udyog-vihar" },
+    { label: "Property In Udyog Vihar", href: "/services/udyog-vihar" }
   ];
 
-  const socialLinks = [
-    { icon: FaFacebookF, href: "#", label: "Facebook" },
-    { icon: FaInstagram, href: "#", label: "Instagram" },
-    { icon: FaPinterestP, href: "#", label: "Pinterest" },
-    { icon: FaLinkedinIn, href: "#", label: "LinkedIn" },
-    { icon: FaYoutube, href: "#", label: "YouTube" },
+  const followTitle = footerData.followTitle || "Follow Us";
+  const followDesc = footerData.followDesc || "Connect with our senior partners for off-market builder floors & confidential acquisitions.";
+  const callCtaText = footerData.callCtaText || "Call Now";
+  const callCtaPhone = footerData.callCtaPhone || "+919718511207";
+
+  const rawSocials = footerData.socialLinks || [
+    { platform: "Facebook", href: "#" },
+    { platform: "Instagram", href: "#" },
+    { platform: "Pinterest", href: "#" },
+    { platform: "LinkedIn", href: "#" },
+    { platform: "YouTube", href: "#" }
+  ];
+
+  const copyright = footerData.copyright || "Copyright © Saudagar Properties";
+  const copyrightSuffix = footerData.copyrightSuffix || "All Right Reserved";
+  const legalLinks = footerData.legalLinks || [
+    { label: "Clients", href: "/clients" },
+    { label: "Term Of Service", href: "/terms" },
+    { label: "Privacy & Policy", href: "/privacy-policy" }
   ];
 
   return (
@@ -58,13 +102,13 @@ export default function Footer() {
               </div>
               <div className="space-y-1">
                 <span className="text-[11px] font-semibold text-[#C5A880] uppercase tracking-widest block">
-                  Corporate Office
+                  {officeTitle}
                 </span>
                 <h5 className="text-base font-serif font-bold text-white">
-                  Address
+                  {officeName}
                 </h5>
                 <p className="text-xs sm:text-sm text-[#E2E8F0] font-light leading-relaxed">
-                  38, Akashneem Marg, DLF-II, Gurgaon-122002
+                  {officeAddress}
                 </p>
               </div>
             </div>
@@ -78,18 +122,21 @@ export default function Footer() {
               </div>
               <div className="space-y-1">
                 <span className="text-[11px] font-semibold text-[#C5A880] uppercase tracking-widest block">
-                  Direct Line
+                  {phoneTitle}
                 </span>
                 <h5 className="text-base font-serif font-bold text-white">
-                  Phone No
+                  {phoneSubtitle}
                 </h5>
                 <div className="text-xs sm:text-sm text-[#E2E8F0] font-light flex flex-col gap-0.5">
-                  <a href="tel:+919718511207" className="hover:text-[#C5A880] transition-colors">
-                    +91 97185 11207 <span className="text-[10px] text-[#C5A880]">(IND)</span>
-                  </a>
-                  <a href="tel:+919811221207" className="hover:text-[#C5A880] transition-colors">
-                    +91 98112 21207 <span className="text-[10px] text-[#C5A880]">(IND)</span>
-                  </a>
+                  {phones.map((item, idx) => (
+                    <a
+                      key={idx}
+                      href={item.href || `tel:${item.number.replace(/\s+/g, '')}`}
+                      className="hover:text-[#C5A880] transition-colors"
+                    >
+                      {item.number} {item.label && <span className="text-[10px] text-[#C5A880]">{item.label}</span>}
+                    </a>
+                  ))}
                 </div>
               </div>
             </div>
@@ -103,16 +150,16 @@ export default function Footer() {
               </div>
               <div className="space-y-1">
                 <span className="text-[11px] font-semibold text-[#C5A880] uppercase tracking-widest block">
-                  Confidential Desk
+                  {emailTitle}
                 </span>
                 <h5 className="text-base font-serif font-bold text-white">
-                  Email
+                  {emailSubtitle}
                 </h5>
                 <a
-                  href="mailto:Saudagar.Properties@Yahoo.In"
+                  href={`mailto:${email}`}
                   className="text-xs sm:text-sm text-[#E2E8F0] font-light hover:text-[#C5A880] transition-colors block truncate"
                 >
-                  Saudagar.Properties@Yahoo.In
+                  {email}
                 </a>
               </div>
             </div>
@@ -131,7 +178,7 @@ export default function Footer() {
             <Link to="/" className="inline-block mb-6 group">
               <div className="p-3 sm:p-4 rounded-xl bg-white/95 border border-[#C5A880]/30 shadow-[0_8px_20px_rgba(0,0,0,0.5)] inline-block group-hover:border-[#C5A880] transition-colors">
                 <img
-                  src={logoImg}
+                  src={footerData.logoUrl || logoImg}
                   alt="Saudagar Properties Pvt Ltd"
                   className="h-10 sm:h-12 w-auto object-contain"
                 />
@@ -139,18 +186,19 @@ export default function Footer() {
             </Link>
 
             <p className="text-[#E2E8F0] text-sm font-light leading-relaxed mb-6">
-              Saudagar Properties helps clients— both families and corporates to find their dream home or commercial space that lives up to their needs and promises a high Return on Investment. Keeping customer satisfaction on top priority, we're highly trusted by our clients which has helped us to be the leaders and the best property dealers in Gurgaon.
+              {aboutText}
             </p>
 
             {/* Social Icons */}
             <div className="flex items-center gap-3">
-              {socialLinks.map((social, idx) => {
-                const IconComponent = social.icon;
+              {rawSocials.map((social, idx) => {
+                const key = (social.platform || '').toLowerCase();
+                const IconComponent = SOCIAL_ICONS_MAP[key] || FaFacebookF;
                 return (
                   <a
                     key={idx}
-                    href={social.href}
-                    aria-label={social.label}
+                    href={social.href || '#'}
+                    aria-label={social.platform || 'Social Link'}
                     className="w-10 h-10 rounded-xl bg-white/[0.05] border border-white/10 hover:border-[#C5A880] hover:bg-[#C5A880] text-[#CBD5E1] hover:text-[#111622] flex items-center justify-center transition-all duration-300 shadow-sm hover:scale-105"
                   >
                     <IconComponent size={14} />
@@ -165,7 +213,7 @@ export default function Footer() {
             <div className="flex items-center gap-2 mb-6">
               <span className="w-4 h-[1.5px] bg-[#C5A880]" />
               <h4 className="text-base font-serif font-bold text-white tracking-wide">
-                Menu
+                {menuTitle}
               </h4>
             </div>
             <ul className="space-y-3.5">
@@ -188,7 +236,7 @@ export default function Footer() {
             <div className="flex items-center gap-2 mb-6">
               <span className="w-4 h-[1.5px] bg-[#C5A880]" />
               <h4 className="text-base font-serif font-bold text-white tracking-wide">
-                Services
+                {servicesTitle}
               </h4>
             </div>
             <ul className="space-y-3.5">
@@ -212,22 +260,22 @@ export default function Footer() {
               <div className="flex items-center gap-2 mb-6">
                 <span className="w-4 h-[1.5px] bg-[#C5A880]" />
                 <h4 className="text-base font-serif font-bold text-white tracking-wide">
-                  Follow Us
+                  {followTitle}
                 </h4>
               </div>
 
               <p className="text-xs text-[#E2E8F0] font-light leading-relaxed mb-6">
-                Connect with our senior partners for off-market builder floors & confidential acquisitions.
+                {followDesc}
               </p>
             </div>
 
             {/* Premium Gold Button */}
             <a
-              href="tel:+919718511207"
+              href={`tel:${callCtaPhone.replace(/\s+/g, '')}`}
               className="inline-flex items-center justify-center gap-3 w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-[#C5A880] to-[#E2CEB1] text-[#111622] font-semibold text-xs tracking-widest uppercase hover:brightness-110 transition-all duration-300 shadow-[0_10px_25px_rgba(197,168,128,0.3)] active:scale-95 group"
             >
               <Phone size={14} className="text-[#111622] group-hover:rotate-12 transition-transform" />
-              <span>Call Now</span>
+              <span>{callCtaText}</span>
               <ArrowUpRight size={14} className="text-[#111622] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </a>
           </div>
@@ -238,21 +286,18 @@ export default function Footer() {
         <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#CBD5E1]">
 
           <p className="font-light text-center sm:text-left">
-            Copyright © Saudagar Properties {new Date().getFullYear()}, All Right Reserved
+            {copyright} {new Date().getFullYear()}, {copyrightSuffix}
           </p>
 
           <div className="flex items-center gap-6 font-light">
-            <Link to="/clients" className="hover:text-[#C5A880] transition-colors">
-              Clients
-            </Link>
-            <span className="w-1 h-1 rounded-full bg-slate-700" />
-            <Link to="/terms" className="hover:text-[#C5A880] transition-colors">
-              Term Of Service
-            </Link>
-            <span className="w-1 h-1 rounded-full bg-slate-700" />
-            <Link to="/privacy-policy" className="hover:text-[#C5A880] transition-colors">
-              Privacy & Policy
-            </Link>
+            {legalLinks.map((item, idx) => (
+              <React.Fragment key={idx}>
+                {idx > 0 && <span className="w-1 h-1 rounded-full bg-slate-700" />}
+                <Link to={item.href} className="hover:text-[#C5A880] transition-colors">
+                  {item.label}
+                </Link>
+              </React.Fragment>
+            ))}
           </div>
 
         </div>

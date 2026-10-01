@@ -1,42 +1,49 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { Award, ShieldCheck, Layers, CheckCircle2, TrendingUp, Sparkles, Building } from 'lucide-react';
+import { Award, ShieldCheck, Layers, CheckCircle2, TrendingUp } from 'lucide-react';
+import { useCms } from '../../../context/CmsContext';
 
-const STATS_DATA = [
+const DEFAULT_STATS_DATA = [
   {
-    icon: ShieldCheck,
     title: "100% Client Satisfaction",
     desc: "Putting client interests first with bespoke, personalized property advisory."
   },
   {
-    icon: Layers,
     title: "DLF Micro-Market Leaders",
     desc: "Unmatched expertise across DLF Phase 1–5, Sushant Lok, and Cybercity."
   },
   {
-    icon: CheckCircle2,
     title: "Verified Legal Titles",
     desc: "Comprehensive due diligence ensuring 100% safe and secure transactions."
   },
   {
-    icon: TrendingUp,
     title: "Discreet & Ethical Advisory",
     desc: "Trusted by India's top corporate executives and high-net-worth families."
   }
 ];
 
+const STAT_ICONS = [ShieldCheck, Layers, CheckCircle2, TrendingUp];
+
 export default function ExperienceCounter() {
+  const { sections } = useCms();
+  const expData = sections?.services?.experienceCounter || {};
+
   const containerRef = useRef(null);
   const isInView = useInView(containerRef, { once: true, margin: "-80px" });
   const [count, setCount] = useState(1);
+
+  const target = Number(expData.yearsCount) || 25;
+  const badge = expData.badge || `${target}+ Years of Unmatched Advisory`;
+  const headline = expData.headline || "Years of Experience as a Top Real Estate Consultant in DLF Gurugram";
+  const description = expData.description || "Our stellar team, trusted property dealers in Gurgaon and experts in commercial real estate in Gurugram, ensures you have a hassle-free experience finding the right property. We are committed to serving our clients with dedication, putting their needs above all else. Providing personalized solutions for all your property-related queries, we know that a satisfied customer is our greatest asset.";
+  const statsList = expData.statsList || DEFAULT_STATS_DATA;
 
   useEffect(() => {
     if (!isInView) return;
 
     let current = 1;
-    const target = 25;
     const duration = 1600; // ms
-    const intervalTime = Math.floor(duration / target);
+    const intervalTime = Math.max(16, Math.floor(duration / target));
 
     const timer = setInterval(() => {
       current += 1;
@@ -49,7 +56,7 @@ export default function ExperienceCounter() {
     }, intervalTime);
 
     return () => clearInterval(timer);
-  }, [isInView]);
+  }, [isInView, target]);
 
   return (
     <div ref={containerRef} className="relative my-16 md:my-24">
@@ -57,7 +64,7 @@ export default function ExperienceCounter() {
       <div className="absolute -top-6 -right-6 w-48 h-48 bg-[#C5A880]/15 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute -bottom-6 -left-6 w-48 h-48 bg-[#C5A880]/10 rounded-full blur-3xl pointer-events-none" />
 
-      {/* Luxury Porcelain 3D Container (No Image, No Heavy Dark Box) */}
+      {/* Luxury Porcelain 3D Container */}
       <motion.div
         initial={{ opacity: 0, y: 35 }}
         whileInView={{ opacity: 1, y: 0 }}
@@ -78,15 +85,15 @@ export default function ExperienceCounter() {
             <div className="lg:col-span-7 space-y-4">
               <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white border border-[#C5A880]/40 shadow-sm text-[11px] font-bold tracking-[0.2em] text-[#A27B48] uppercase">
                 <Award size={14} className="text-[#C5A880]" />
-                <span>25+ Years of Unmatched Advisory</span>
+                <span>{badge}</span>
               </div>
 
               <h3 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-[#1D263B] leading-[1.2]">
-                Years of Experience as a Top Real Estate Consultant in <span className="italic text-[#C5A880]">DLF Gurugram</span>
+                {headline}
               </h3>
 
               <p className="text-[#334155] text-xs sm:text-sm font-normal leading-relaxed">
-                Our stellar team, trusted property dealers in Gurgaon and experts in commercial real estate in Gurugram, ensures you have a hassle-free experience finding the right property. We are committed to serving our clients with dedication, putting their needs above all else. Providing personalized solutions for all your property-related queries, we know that a satisfied customer is our greatest asset.
+                {description}
               </p>
             </div>
 
@@ -104,10 +111,10 @@ export default function ExperienceCounter() {
               </div>
 
               <span className="text-xs sm:text-sm font-bold tracking-[0.22em] uppercase text-[#1D263B] mb-1">
-                Years of Authority
+                {expData.counterLabel || "Years of Authority"}
               </span>
               <span className="text-xs text-[#334155] font-medium max-w-xs">
-                Serving India's Most Discerning Families & Corporates in Gurgaon
+                {expData.counterSublabel || "Serving India's Most Discerning Families & Corporates in Gurgaon"}
               </span>
             </div>
 
@@ -115,8 +122,8 @@ export default function ExperienceCounter() {
 
           {/* Bottom 4 Metric Cards Grid */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-            {STATS_DATA.map((item, idx) => {
-              const IconComp = item.icon;
+            {statsList.map((item, idx) => {
+              const IconComp = STAT_ICONS[idx % STAT_ICONS.length] || ShieldCheck;
               return (
                 <div
                   key={idx}

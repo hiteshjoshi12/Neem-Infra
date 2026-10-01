@@ -3,28 +3,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, Phone, ArrowUpRight, Building2 } from 'lucide-react';
 import logo from '../../assets/logo.png';
-
-const NAV_LINKS = [
-  { label: "HOME", href: "/" },
-  { label: "ABOUT US", href: "/about" },
-  {
-    label: "SERVICES",
-    href: "#",
-    dropdown: [
-      { label: "Property In DLF Phase 1", href: "/services/dlf-phase-1", desc: "Ultra-luxury villas & floors" },
-      { label: "Property In DLF Phase 2", href: "/services/dlf-phase-2", desc: "Prime central estates" },
-      { label: "Property In DLF Phase 3", href: "/services/dlf-phase-3", desc: "Cybercity proximity residences" },
-      { label: "Property In DLF Phase 4", href: "/services/dlf-phase-4", desc: "Golf course adjacent homes" },
-      { label: "Property In Sushant Lok", href: "/services/sushant-lok", desc: "Serene bespoke properties" },
-      { label: "Property In Udyog Vihar", href: "/services/udyog-vihar", desc: "High-value commercial & assets" },
-    ]
-  },
-  { label: "FEATURED", href: "/ready-to-move" },
-  { label: "OUR TEAM", href: "/our-team" },
-  { label: "BLOG", href: "/blog" },
-];
+import { useCms } from '../../context/CmsContext';
 
 export default function Navbar() {
+  const { sections } = useCms();
+  const navData = sections?.navbar || {};
+  const navLinks = navData.links || [];
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
@@ -55,6 +40,14 @@ export default function Navbar() {
     }, 150);
   };
 
+  const displayPhone = navData.phone || "+91 98112 21207";
+  const rawPhone = navData.phoneRaw || displayPhone.replace(/\s+/g, '');
+  const ctaText = navData.ctaText || "Contact Us";
+  const ctaHref = navData.ctaHref || "/contact";
+  const corridorsBadge = navData.corridorsBadge || "Prime Corridors";
+  const mobileNavHeader = navData.mobileNavHeader || "Saudagar Properties";
+  const mobileConsultationTitle = navData.mobileConsultationTitle || "Private Consultation";
+
   return (
     <>
       {/* Morphing Navbar Container: Floating 3D Capsule at top -> Modern Sticky Header on scroll */}
@@ -69,14 +62,14 @@ export default function Navbar() {
                 : 'w-full max-w-5xl xl:max-w-6xl rounded-full py-2.5 px-5 md:px-7 border border-white/80 shadow-[0_20px_45px_-8px_rgba(20,25,35,0.1),_0_8px_20px_-4px_rgba(0,0,0,0.03),_inset_0_1px_1px_rgba(255,255,255,1)] ring-1 ring-black/[0.04]'
               }`}
           >
-            {/* Left: Clean Brand Logo (No background boxes) */}
+            {/* Left: Clean Brand Logo */}
             <Link
               to="/"
               className="flex items-center gap-3 group relative select-none flex-shrink-0"
               aria-label="Saudagar Properties Home"
             >
               <img
-                src={logo}
+                src={navData.logoUrl || logo}
                 alt="Saudagar Properties"
                 className={`w-auto object-contain transition-all duration-500 ${isScrolled ? 'h-9 md:h-11' : 'h-11 md:h-13'
                   }`}
@@ -85,10 +78,10 @@ export default function Navbar() {
 
             {/* Center: Desktop Navigation Links */}
             <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
-              {NAV_LINKS.map((link) => {
+              {navLinks.map((link) => {
                 const isActive = location.pathname === link.href;
 
-                if (link.dropdown) {
+                if (link.dropdown && link.dropdown.length > 0) {
                   return (
                     <div
                       key={link.label}
@@ -122,7 +115,7 @@ export default function Navbar() {
                           >
                             <div className="bg-white/98 backdrop-blur-2xl border border-[#EFECE6] rounded-2xl p-2.5 shadow-[0_20px_50px_-10px_rgba(20,25,35,0.18),_0_1px_2px_rgba(0,0,0,0.06),_inset_0_1px_0_rgba(255,255,255,1)] ring-1 ring-black/[0.03]">
                               <div className="px-3 pt-2 pb-1.5 border-b border-[#F4F1EA] mb-1.5 flex items-center justify-between">
-                                <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#A89069]">Prime Corridors</span>
+                                <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#A89069]">{corridorsBadge}</span>
                                 <Building2 size={13} className="text-[#A89069]" />
                               </div>
                               <div className="space-y-0.5">
@@ -141,9 +134,11 @@ export default function Navbar() {
                                         className="text-[#999] opacity-0 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:text-[#B5986D] transition-all duration-200"
                                       />
                                     </div>
-                                    <span className="text-[10px] text-[#7E8590] group-hover:text-[#5F6570] transition-colors mt-0.5">
-                                      {item.desc}
-                                    </span>
+                                    {item.desc && (
+                                      <span className="text-[10px] text-[#7E8590] group-hover:text-[#5F6570] transition-colors mt-0.5">
+                                        {item.desc}
+                                      </span>
+                                    )}
                                   </Link>
                                 ))}
                               </div>
@@ -180,22 +175,22 @@ export default function Navbar() {
             <div className="flex items-center gap-3">
               {/* Call Hotline (Desktop) */}
               <a
-                href="tel:+919811221207"
+                href={`tel:${rawPhone}`}
                 className="hidden xl:flex items-center gap-2 px-3 py-2 text-[11px] font-medium tracking-wider text-[#666] hover:text-[#1D263B] transition-colors"
                 title="Call Directly"
               >
                 <div className="w-7 h-7 rounded-full bg-[#F4F1EA] flex items-center justify-center text-[#B5986D] shadow-inner">
                   <Phone size={12} />
                 </div>
-                <span>+91 98112 21207</span>
+                <span>{displayPhone}</span>
               </a>
 
               {/* 3D Tactile CTA Button */}
               <Link
-                to="/contact"
+                to={ctaHref}
                 className="relative group hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#1D263B] text-white text-[11px] font-semibold tracking-[0.16em] uppercase overflow-hidden shadow-[0_4px_14px_rgba(29,38,59,0.25),_inset_0_1px_1px_rgba(255,255,255,0.2)] hover:shadow-[0_8px_22px_rgba(29,38,59,0.35),_inset_0_1px_1px_rgba(255,255,255,0.3)] hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-[0_2px_8px_rgba(29,38,59,0.25)] transition-all duration-300"
               >
-                <span className="relative z-10 text-white">Contact Us</span>
+                <span className="relative z-10 text-white">{ctaText}</span>
                 <ArrowUpRight
                   size={14}
                   className="relative z-10 text-[#C5A880] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -206,7 +201,7 @@ export default function Navbar() {
 
               {/* Mobile Phone Quick Action */}
               <a
-                href="tel:+919811221207"
+                href={`tel:${rawPhone}`}
                 className="flex sm:hidden w-9 h-9 rounded-full bg-[#F4F1EA] items-center justify-center text-[#1D263B] shadow-sm border border-[#E8E4DA]"
                 aria-label="Call Saudagar Properties"
               >
@@ -241,12 +236,12 @@ export default function Navbar() {
           >
             <div className="flex items-center justify-between pb-4 border-b border-[#F0ECE1]">
               <span className="text-[10px] font-bold tracking-[0.25em] text-[#B5986D] uppercase">Navigation</span>
-              <span className="text-[10px] tracking-wider text-[#888]">Saudagar Properties</span>
+              <span className="text-[10px] tracking-wider text-[#888]">{mobileNavHeader}</span>
             </div>
 
             <nav className="flex flex-col divide-y divide-[#F5F2EA] py-2">
-              {NAV_LINKS.map((link) => {
-                if (link.dropdown) {
+              {navLinks.map((link) => {
+                if (link.dropdown && link.dropdown.length > 0) {
                   return (
                     <div key={link.label} className="py-3">
                       <button
@@ -299,19 +294,19 @@ export default function Navbar() {
               })}
 
               <Link
-                to="/contact"
+                to={ctaHref}
                 className="py-3 text-sm font-semibold tracking-[0.12em] text-[#B5986D] uppercase hover:text-[#1D263B] transition-colors flex items-center justify-between"
               >
-                <span>CONTACT US</span>
+                <span>{ctaText.toUpperCase()}</span>
                 <ArrowUpRight size={14} className="text-[#B5986D]" />
               </Link>
             </nav>
 
             {/* Quick Contact Footnote */}
             <div className="mt-4 pt-4 border-t border-[#F0ECE1] flex flex-col gap-3 bg-[#FAF8F5] -mx-6 -mb-6 p-6 rounded-b-3xl">
-              <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#888]">Private Consultation</span>
+              <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#888]">{mobileConsultationTitle}</span>
               <a
-                href="tel:+919811221207"
+                href={`tel:${rawPhone}`}
                 className="flex items-center gap-3 text-sm font-semibold text-[#1D263B]"
               >
                 <div className="w-8 h-8 rounded-full bg-[#1D263B] text-white flex items-center justify-center">
@@ -319,7 +314,7 @@ export default function Navbar() {
                 </div>
                 <div>
                   <div className="text-[10px] text-[#999] uppercase">Call Direct</div>
-                  <div className="text-sm font-medium tracking-wide">+91 98112 21207</div>
+                  <div className="text-sm font-medium tracking-wide">{displayPhone}</div>
                 </div>
               </a>
             </div>

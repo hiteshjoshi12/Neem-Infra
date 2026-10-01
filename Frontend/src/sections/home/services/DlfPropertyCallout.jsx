@@ -1,7 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
-import { PhoneCall, Sparkles, TrendingUp, Users, Award, ArrowUpRight, ShieldCheck } from 'lucide-react';
+import { PhoneCall, Sparkles, TrendingUp, Users, Award, ArrowUpRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useCms } from '../../../context/CmsContext';
 
 function AnimatedCounter({ end, suffix = "+", duration = 1800 }) {
   const [val, setVal] = useState(1);
@@ -12,13 +13,14 @@ function AnimatedCounter({ end, suffix = "+", duration = 1800 }) {
     if (!isInView) return;
 
     let start = 1;
-    const stepTime = Math.max(16, Math.floor(duration / end));
-    const stepValue = Math.max(1, Math.floor(end / (duration / 16)));
+    const targetEnd = Number(end) || 100;
+    const stepTime = Math.max(16, Math.floor(duration / targetEnd));
+    const stepValue = Math.max(1, Math.floor(targetEnd / (duration / 16)));
 
     const timer = setInterval(() => {
       start += stepValue;
-      if (start >= end) {
-        setVal(end);
+      if (start >= targetEnd) {
+        setVal(targetEnd);
         clearInterval(timer);
       } else {
         setVal(start);
@@ -36,23 +38,20 @@ function AnimatedCounter({ end, suffix = "+", duration = 1800 }) {
   );
 }
 
-const STATS_CARDS = [
+const DEFAULT_STATS_CARDS = [
   {
-    icon: TrendingUp,
     number: 100,
     suffix: "+",
     label: "CR Saves In Property Investment",
     subtext: "Maximized financial yield & smart negotiation"
   },
   {
-    icon: Users,
     number: 1000,
     suffix: "+",
     label: "Happy Clients",
     subtext: "Discerning families & corporate enterprises"
   },
   {
-    icon: Award,
     number: 25,
     suffix: "+",
     label: "Years of Trust and Experience",
@@ -60,14 +59,26 @@ const STATS_CARDS = [
   }
 ];
 
+const STATS_ICONS = [TrendingUp, Users, Award];
+
 export default function DlfPropertyCallout() {
+  const { sections } = useCms();
+  const callout = sections?.dlfCallout || sections?.services?.dlfCallout || {};
+
+  const statsCards = callout.statsCards || DEFAULT_STATS_CARDS;
+  const badge = callout.badge || "DLF Gurgaon Dedicated Desk";
+  const headline = callout.headline || "Are you looking for a property in DLF Gurgaon? Simply connect with us!";
+  const description = callout.description || "Our expert team is ready to assist you with a wide range of residential, commercial, and industrial properties tailored to your preferences and convenience. Contact us to discuss your requirements and find the perfect property solution.";
+  const phone = callout.phone || "+91 98112 21207";
+  const phoneRaw = callout.phoneRaw || phone.replace(/\s+/g, '');
+
   return (
     <div className="relative mt-16 md:mt-24 space-y-12">
       
       {/* ==================== 1. 3D LUXURY ANIMATED STATS ROW ==================== */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-        {STATS_CARDS.map((stat, idx) => {
-          const IconComponent = stat.icon;
+        {statsCards.map((stat, idx) => {
+          const IconComponent = STATS_ICONS[idx % STATS_ICONS.length] || TrendingUp;
           return (
             <motion.div
               key={idx}
@@ -121,34 +132,33 @@ export default function DlfPropertyCallout() {
           <div className="space-y-4 max-w-2xl text-center lg:text-left">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-[10px] font-bold tracking-[0.2em] text-[#C5A880] uppercase">
               <Sparkles size={12} />
-              <span>DLF Gurgaon Dedicated Desk</span>
+              <span>{badge}</span>
             </div>
 
             <h3 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-white leading-tight">
-              Are you looking for a property in <span className="italic font-light text-[#C5A880]">DLF Gurgaon?</span> <br className="hidden sm:inline" />
-              Simply connect with us!
+              {headline}
             </h3>
 
             <p className="text-xs sm:text-sm text-slate-200 font-normal leading-relaxed">
-              Our expert team is ready to assist you with a wide range of residential, commercial, and industrial properties tailored to your preferences and convenience. Contact us to discuss your requirements and find the perfect property solution.
+              {description}
             </p>
           </div>
 
           {/* Right: Action Buttons */}
           <div className="flex flex-col sm:flex-row items-center gap-4 w-full lg:w-auto shrink-0 justify-center">
             <a
-              href="tel:+919811221207"
+              href={`tel:${phoneRaw}`}
               className="w-full sm:w-auto px-7 py-4 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-3 transition-all duration-300 shadow-sm hover:scale-105"
             >
               <PhoneCall size={15} className="text-[#C5A880]" />
-              <span>Call Us</span>
+              <span>{phone}</span>
             </a>
 
             <Link
-              to="/contact"
+              to={callout.ctaLink || "/contact"}
               className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#C5A880] hover:bg-[#B5986D] text-[#1D263B] text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_4px_20px_rgba(197,168,128,0.35)] hover:scale-105"
             >
-              <span>Explore Deals</span>
+              <span>{callout.ctaText || "Explore Deals"}</span>
               <ArrowUpRight size={16} />
             </Link>
           </div>

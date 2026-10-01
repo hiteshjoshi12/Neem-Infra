@@ -89,16 +89,16 @@ export default function TestimonialsSection() {
         >
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#C5A880]/40 shadow-sm text-[11px] font-bold tracking-[0.25em] text-[#A27B48] uppercase mb-4">
             <Sparkles size={12} className="text-[#C5A880]" />
-            <span>Client Perspectives</span>
+            <span>{testData.badge || "Client Perspectives"}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-[#1D263B] leading-[1.15] mb-4">
-            Words of <span className="italic font-light text-[#C5A880]">Distinction</span>
+            {testData.titleMain || "Words of"} <span className="italic font-light text-[#C5A880]">{testData.titleItalic || "Distinction"}</span>
           </h2>
 
           <div className="flex items-center justify-center gap-3">
             <span className="w-12 h-[1px] bg-[#C5A880]/60" />
-            <span className="text-xs tracking-[0.25em] text-[#C5A880] uppercase font-semibold">Testimonial</span>
+            <span className="text-xs tracking-[0.25em] text-[#C5A880] uppercase font-semibold">{testData.subBadge || "Testimonial"}</span>
             <span className="w-12 h-[1px] bg-[#C5A880]/60" />
           </div>
         </motion.div>

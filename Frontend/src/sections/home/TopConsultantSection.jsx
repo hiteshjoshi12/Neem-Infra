@@ -2,14 +2,53 @@ import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Building, Building2, Factory, ArrowUpRight, Play, Pause, ShieldCheck, Award, PhoneCall } from 'lucide-react';
+import { useCms } from '../../context/CmsContext';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
 };
 
+const CATEGORY_ICONS = {
+  building: Building,
+  building2: Building2,
+  factory: Factory
+};
+
 export default function TopConsultantSection() {
+  const { sections } = useCms();
+  const data = sections?.topConsultant || {};
+
   const [isPlaying, setIsPlaying] = useState(false);
+
+  const badge = data.badge || "Bespoke Real Estate Advisory";
+  const headlineMain = data.headlineMain || "Top Real Estate Consultant";
+  const headlineItalic = data.headlineItalic || "In DLF Gurugram";
+  const summaryQuote = data.summaryQuote || "Authorized advisor and trusted partner for DLF Phase 1–4, Sushant Lok, and Cybercity’s most exclusive residential & commercial estates.";
+  const cardBadge = data.cardBadge || "DLF Authorized & Verified";
+  const paragraph1 = data.paragraph1 || "At Saudagar Properties, we are proud to be recognized as the premier real estate consultant in DLF Gurugram. We provide personalized, end-to-end solutions across residential, commercial, and industrial sectors with maximum ROI.";
+  const paragraph2 = data.paragraph2 || "Whether you are seeking an ultra-luxury builder floor in DLF Phase 1–4, a high-street commercial office in Udyog Vihar, or an investment-ready plot, our veteran team guides you through transparent transactions and seamless legal title verification.";
+
+  const categories = data.categories || [
+    { title: "Residential", subtitle: "Floors & Villas", icon: "Building" },
+    { title: "Commercial", subtitle: "Offices & Retail", icon: "Building2" },
+    { title: "Industrial", subtitle: "Plots & Assets", icon: "Factory" }
+  ];
+
+  const videoTour = data.videoTour || {
+    badge: "Sushant Lok & DLF Tour",
+    title: "Exclusive DLF & Sushant Lok Walkthrough",
+    subtitle: "Experience Gurgaon's finest properties with curated virtual walkthroughs.",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80"
+  };
+
+  const ctaBanner = data.ctaBanner || {
+    title: "Ready to Invest or Buy in DLF Gurugram?",
+    description: "Get priority access to off-market inventory, bespoke site visits, and personalized ROI projections from our executive directors.",
+    phone: "+91 98112 21207",
+    buttonText: "Connect Now",
+    buttonHref: "/contact"
+  };
 
   return (
     <section className="relative w-full py-16 md:py-20 bg-[#FAF8F5] overflow-hidden">
@@ -30,17 +69,17 @@ export default function TopConsultantSection() {
             <div className="flex items-center gap-3 mb-4">
               <span className="w-10 h-[2px] bg-[#C5A880]" />
               <span className="text-xs md:text-sm font-semibold tracking-[0.25em] text-[#C5A880] uppercase">
-                Bespoke Real Estate Advisory
+                {badge}
               </span>
             </div>
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif text-[#1D263B] leading-[1.15]">
-              Top Real Estate Consultant <br />
-              <span className="italic font-light text-[#C5A880]">In DLF Gurugram</span>
+              {headlineMain} <br />
+              <span className="italic font-light text-[#C5A880]">{headlineItalic}</span>
             </h2>
           </div>
 
           <p className="text-sm md:text-base text-[#334155] font-normal max-w-md leading-relaxed border-l-2 border-[#C5A880] pl-4">
-            Authorized advisor and trusted partner for DLF Phase 1–4, Sushant Lok, and Cybercity’s most exclusive residential & commercial estates.
+            {summaryQuote}
           </p>
         </motion.div>
 
@@ -63,49 +102,35 @@ export default function TopConsultantSection() {
               <div>
                 <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FAF8F5] border border-[#E8E4D9] text-[11px] font-semibold tracking-widest text-[#1D263B] uppercase mb-6">
                   <ShieldCheck size={14} className="text-[#C5A880]" />
-                  <span>DLF Authorized & Verified</span>
+                  <span>{cardBadge}</span>
                 </div>
 
                 <p className="text-base md:text-lg text-[#1D263B] font-normal leading-relaxed mb-8">
-                  At <strong className="font-semibold text-[#1D263B]">Saudagar Properties</strong>, we are proud to be recognized as the premier real estate consultant in DLF Gurugram. We provide personalized, end-to-end solutions across residential, commercial, and industrial sectors with maximum ROI.
+                  {paragraph1}
                 </p>
 
                 <p className="text-sm md:text-base text-[#334155] font-normal leading-relaxed mb-10">
-                  Whether you are seeking an ultra-luxury builder floor in DLF Phase 1–4, a high-street commercial office in Udyog Vihar, or an investment-ready plot, our veteran team guides you through transparent transactions and seamless legal title verification.
+                  {paragraph2}
                 </p>
               </div>
 
               {/* 3 Categories Pill Grid */}
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-[#F0ECE1]">
-                <div className="flex items-center gap-3 p-3 rounded-2xl bg-[#FAF8F5] border border-[#EFECE6] hover:border-[#C5A880] transition-colors">
-                  <div className="w-10 h-10 rounded-xl bg-[#1D263B] text-[#C5A880] flex items-center justify-center flex-shrink-0 shadow-sm">
-                    <Building size={18} />
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-bold text-[#1D263B] uppercase tracking-wider">Residential</h4>
-                    <p className="text-[11px] text-[#475569] font-medium">Floors & Villas</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3 p-3 rounded-2xl bg-[#FAF8F5] border border-[#EFECE6] hover:border-[#C5A880] transition-colors">
-                  <div className="w-10 h-10 rounded-xl bg-[#1D263B] text-[#C5A880] flex items-center justify-center flex-shrink-0 shadow-sm">
-                    <Building2 size={18} />
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-bold text-[#1D263B] uppercase tracking-wider">Commercial</h4>
-                    <p className="text-[11px] text-[#475569] font-medium">Offices & Retail</p>
-                  </div>
-                </div>
-
-                <div className="flex items-center gap-3 p-3 rounded-2xl bg-[#FAF8F5] border border-[#EFECE6] hover:border-[#C5A880] transition-colors">
-                  <div className="w-10 h-10 rounded-xl bg-[#1D263B] text-[#C5A880] flex items-center justify-center flex-shrink-0 shadow-sm">
-                    <Factory size={18} />
-                  </div>
-                  <div>
-                    <h4 className="text-xs font-bold text-[#1D263B] uppercase tracking-wider">Industrial</h4>
-                    <p className="text-[11px] text-[#475569] font-medium">Plots & Assets</p>
-                  </div>
-                </div>
+                {categories.map((cat, idx) => {
+                  const iconKey = (cat.icon || 'building').toLowerCase();
+                  const IconComp = CATEGORY_ICONS[iconKey] || Building;
+                  return (
+                    <div key={idx} className="flex items-center gap-3 p-3 rounded-2xl bg-[#FAF8F5] border border-[#EFECE6] hover:border-[#C5A880] transition-colors">
+                      <div className="w-10 h-10 rounded-xl bg-[#1D263B] text-[#C5A880] flex items-center justify-center flex-shrink-0 shadow-sm">
+                        <IconComp size={18} />
+                      </div>
+                      <div>
+                        <h4 className="text-xs font-bold text-[#1D263B] uppercase tracking-wider">{cat.title}</h4>
+                        <p className="text-[11px] text-[#475569] font-medium">{cat.subtitle}</p>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </motion.div>
@@ -121,8 +146,8 @@ export default function TopConsultantSection() {
             <div className="relative flex-1 min-h-[360px] lg:min-h-full rounded-3xl overflow-hidden shadow-[0_25px_60px_-15px_rgba(20,25,35,0.2)] border border-[#EFECE6] bg-[#1D263B] group">
               {/* Background Luxury Architectural Image / Video Poster */}
               <img
-                src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80"
-                alt="Luxury Sushant Lok Estate"
+                src={videoTour.image || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80"}
+                alt={videoTour.title || "Luxury Sushant Lok Estate"}
                 className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-[0.75]"
               />
 
@@ -132,7 +157,7 @@ export default function TopConsultantSection() {
               {/* Top Badge */}
               <div className="absolute top-6 left-6 right-6 flex items-center justify-between z-20">
                 <span className="px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-md text-[10px] font-bold tracking-widest text-[#1D263B] uppercase shadow-md">
-                  Sushant Lok & DLF Tour
+                  {videoTour.badge}
                 </span>
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
               </div>
@@ -154,8 +179,8 @@ export default function TopConsultantSection() {
 
               {/* Bottom Details Banner */}
               <div className="absolute bottom-6 left-6 right-6 z-20 text-white">
-                <h3 className="text-xl font-serif mb-1">Exclusive DLF & Sushant Lok Walkthrough</h3>
-                <p className="text-xs text-[#D1D5DB] font-light">Experience Gurgaon's finest properties with curated virtual walkthroughs.</p>
+                <h3 className="text-xl font-serif mb-1">{videoTour.title}</h3>
+                <p className="text-xs text-[#D1D5DB] font-light">{videoTour.subtitle}</p>
               </div>
             </div>
           </motion.div>
@@ -179,28 +204,28 @@ export default function TopConsultantSection() {
             </div>
             <div>
               <h3 className="text-xl md:text-2xl font-serif text-white mb-1">
-                Ready to Invest or Buy in DLF Gurugram?
+                {ctaBanner.title}
               </h3>
               <p className="text-xs md:text-sm text-slate-200 font-normal max-w-xl">
-                Get priority access to off-market inventory, bespoke site visits, and personalized ROI projections from our executive directors.
+                {ctaBanner.description}
               </p>
             </div>
           </div>
 
           <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto flex-shrink-0 z-10">
             <a
-              href="tel:+919811221207"
+              href={`tel:${(ctaBanner.phone || '+919811221207').replace(/\s+/g, '')}`}
               className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2.5 transition-all duration-300"
             >
               <PhoneCall size={14} className="text-[#C5A880]" />
-              <span>+91 98112 21207</span>
+              <span>{ctaBanner.phone}</span>
             </a>
 
             <Link
-              to="/contact"
+              to={ctaBanner.buttonHref || "/contact"}
               className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-[#C5A880] hover:bg-[#B5986D] text-[#1D263B] text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_4px_15px_rgba(197,168,128,0.3)] hover:shadow-[0_6px_20px_rgba(197,168,128,0.4)]"
             >
-              <span>Connect Now</span>
+              <span>{ctaBanner.buttonText || "Connect Now"}</span>
               <ArrowUpRight size={15} />
             </Link>
           </div>
