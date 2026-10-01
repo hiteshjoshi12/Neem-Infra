@@ -30,6 +30,12 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// Connect to DB Middleware for Serverless
+app.use(async (req, res, next) => {
+  await connectDB();
+  next();
+});
+
 // API Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/sections', sectionRoutes);
@@ -48,12 +54,15 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-// Connect to DB and Start Server
+// Initialize DB and Seed once globally
 connectDB().then(async (conn) => {
   if (conn) {
-    // Automatically seed default content and admin if not yet seeded
     await seedDatabase();
   }
+});
+
+// Only start the server if not running in Vercel's serverless environment
+if (process.env.NODE_ENV !== 'production' && !process.env.VERCEL) {
   app.listen(PORT, () => {
     console.log(`===============================================`);
     console.log(` Saudagar Properties Backend Server Running   `);
@@ -61,4 +70,7 @@ connectDB().then(async (conn) => {
     console.log(` Environment: ${process.env.NODE_ENV || 'development'} `);
     console.log(`===============================================`);
   });
-});
+}
+
+// Export for serverless (Vercel)
+export default app;
