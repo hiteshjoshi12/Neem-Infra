@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Compass, Briefcase, Factory, ArrowUpRight, Sparkles, CheckCircle2 } from 'lucide-react';
+import { Compass, Briefcase, Factory, ArrowUpRight, Sparkles, CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export default function AboutProposition() {
@@ -99,14 +99,14 @@ export default function AboutProposition() {
           </p>
 
           {/* Interactive Pillar Selector Tabs */}
-          <div className="flex items-center justify-center gap-2 sm:gap-3 mt-8 p-1.5 rounded-2xl bg-white/[0.04] border border-white/10 max-w-lg mx-auto backdrop-blur-md">
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5 mt-8 p-1 sm:p-1.5 rounded-2xl bg-white/[0.04] border border-white/10 max-w-sm sm:max-w-lg mx-auto backdrop-blur-md">
             {pillars.map((p, idx) => {
               const isActive = activePillar === idx;
               return (
                 <button
                   key={p.id}
                   onClick={() => setActivePillar(idx)}
-                  className={`relative px-4 sm:px-6 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer flex items-center gap-2 ${
+                  className={`relative px-2 sm:px-6 py-2 sm:py-2.5 rounded-xl text-[11px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 sm:gap-2 ${
                     isActive ? 'text-[#0C101A]' : 'text-slate-400 hover:text-white'
                   }`}
                 >
@@ -117,8 +117,8 @@ export default function AboutProposition() {
                       transition={{ type: "spring", stiffness: 350, damping: 30 }}
                     />
                   )}
-                  <span className="relative z-10 font-mono text-[10px] opacity-75">{p.number}</span>
-                  <span className="relative z-10">{p.id}</span>
+                  <span className="relative z-10 font-mono text-[9px] sm:text-[10px] opacity-75">{p.number}</span>
+                  <span className="relative z-10 truncate">{p.id}</span>
                 </button>
               );
             })}
@@ -232,68 +232,136 @@ export default function AboutProposition() {
           })}
         </div>
 
-        {/* ================= MOBILE / TABLET VIEW CARDS ================= */}
-        <div className="lg:hidden space-y-6">
-          {pillars.map((p, idx) => {
-            const Icon = p.icon;
-            return (
-              <motion.div
-                key={p.id}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: idx * 0.1 }}
-                className="group relative rounded-3xl overflow-hidden border border-[#C5A880]/30 bg-slate-950 p-6 sm:p-8"
-              >
-                {/* Background Image */}
-                <div className="absolute inset-0">
-                  <img src={p.bgImage} alt={p.title} className="w-full h-full object-cover opacity-25" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/90 to-slate-950/70" />
-                </div>
+        {/* ================= MOBILE / TABLET VIEW: DYNAMIC INTERACTIVE SHOWCASE ================= */}
+        <div className="lg:hidden">
+          <AnimatePresence mode="wait">
+            {(() => {
+              const currentPillar = pillars[activePillar];
+              const Icon = currentPillar.icon;
 
-                <div className="relative z-10 space-y-4">
-                  <div className="flex items-center justify-between">
-                    <div className="w-11 h-11 rounded-2xl bg-white/10 text-[#C5A880] flex items-center justify-center border border-white/20">
-                      <Icon size={20} />
+              return (
+                <motion.div
+                  key={currentPillar.id}
+                  initial={{ opacity: 0, y: 16, scale: 0.98 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -16, scale: 0.98 }}
+                  transition={{ duration: 0.35, ease: "easeOut" }}
+                  drag="x"
+                  dragConstraints={{ left: 0, right: 0 }}
+                  dragElastic={0.2}
+                  onDragEnd={(_, { offset }) => {
+                    if (offset.x < -40) {
+                      setActivePillar((prev) => (prev + 1) % pillars.length);
+                    } else if (offset.x > 40) {
+                      setActivePillar((prev) => (prev - 1 + pillars.length) % pillars.length);
+                    }
+                  }}
+                  className="relative rounded-3xl overflow-hidden border border-[#C5A880]/30 bg-gradient-to-b from-[#131926] via-[#0E131E] to-[#0A0D14] shadow-[0_20px_50px_rgba(0,0,0,0.6)] touch-pan-y"
+                >
+                  {/* Visual Architectural Image Header */}
+                  <div className="relative h-44 sm:h-52 w-full overflow-hidden">
+                    <img
+                      src={currentPillar.bgImage}
+                      alt={currentPillar.title}
+                      className="w-full h-full object-cover"
+                    />
+                    {/* Atmospheric Overlays */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#131926] via-[#131926]/40 to-black/60" />
+
+                    {/* Top Badges */}
+                    <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
+                      <span className="px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-[#C5A880]/40 text-[#C5A880] text-[10px] font-bold tracking-widest uppercase">
+                        {currentPillar.tag}
+                      </span>
+                      <span className="px-2.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-mono text-[11px] font-bold">
+                        {currentPillar.number} / 03
+                      </span>
                     </div>
-                    <span className="px-3 py-1 rounded-full bg-slate-900 border border-[#C5A880]/40 text-[#C5A880] text-[10px] font-bold tracking-widest uppercase">
-                      {p.tag}
-                    </span>
                   </div>
 
-                  <h3 className="text-xl sm:text-2xl font-serif font-bold text-white leading-snug">
-                    {p.title}
-                  </h3>
-
-                  <p className="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
-                    {p.quote}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    {p.keyPoints.map((pt, ptIdx) => (
-                      <div
-                        key={ptIdx}
-                        className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white/10 border border-white/15 text-[11px] text-white"
-                      >
-                        <CheckCircle2 size={12} className="text-[#C5A880]" />
-                        <span>{pt}</span>
+                  {/* Body Content */}
+                  <div className="p-5 sm:p-6 pt-0 space-y-3.5">
+                    {/* Floating Luxury Icon Squircle - Positioned smoothly over image seam */}
+                    <div className="-mt-6 mb-2 relative z-20">
+                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#C5A880] to-[#9E825B] text-[#0C101A] flex items-center justify-center shadow-[0_8px_20px_rgba(197,168,128,0.4)] border-2 border-[#131926]">
+                        <Icon size={22} className="stroke-[2.2]" />
                       </div>
-                    ))}
-                  </div>
+                    </div>
 
-                  <div className="pt-2">
-                    <Link
-                      to={p.ctaLink}
-                      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#C5A880] to-[#B39366] text-[#0C101A] font-bold text-xs uppercase tracking-wider"
-                    >
-                      <span>{p.ctaText}</span>
-                      <ArrowUpRight size={13} />
-                    </Link>
+                    <div className="space-y-1.5">
+                      <h3 className="text-xl sm:text-2xl font-serif font-bold text-white leading-snug">
+                        {currentPillar.title}
+                      </h3>
+                      <p className="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
+                        {currentPillar.quote}
+                      </p>
+                    </div>
+
+                    {/* Key Highlights Grid - 2 columns for compact thumb-friendly mobile scanning */}
+                    <div className="grid grid-cols-2 gap-2 pt-1">
+                      {currentPillar.keyPoints.map((pt, ptIdx) => (
+                        <div
+                          key={ptIdx}
+                          className="flex items-start gap-1.5 p-2 rounded-xl bg-white/[0.04] border border-white/10 text-slate-200"
+                        >
+                          <CheckCircle2 size={13} className="text-[#C5A880] shrink-0 mt-0.5" />
+                          <span className="font-medium text-[11px] leading-snug">{pt}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    {/* CTA Button */}
+                    <div className="pt-1">
+                      <Link
+                        to={currentPillar.ctaLink}
+                        className="w-full flex items-center justify-center gap-2 py-3 px-5 rounded-xl bg-gradient-to-r from-[#C5A880] to-[#B39366] text-[#0C101A] font-bold text-xs uppercase tracking-wider shadow-[0_6px_20px_rgba(197,168,128,0.3)] active:scale-[0.99] transition-transform"
+                      >
+                        <span>{currentPillar.ctaText}</span>
+                        <ArrowUpRight size={14} />
+                      </Link>
+                    </div>
+
+                    {/* Bottom Navigation & Thumb Controls */}
+                    <div className="flex items-center justify-between pt-3 border-t border-white/10">
+                      <button
+                        onClick={() => setActivePillar((prev) => (prev - 1 + pillars.length) % pillars.length)}
+                        className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-slate-300 hover:text-white text-xs font-medium active:bg-white/10 transition-colors"
+                        aria-label="Previous proposition"
+                      >
+                        <ChevronLeft size={15} />
+                        <span className="text-[11px]">Prev</span>
+                      </button>
+
+                      {/* Dot Step Indicators */}
+                      <div className="flex items-center gap-1.5">
+                        {pillars.map((_, dotIdx) => (
+                          <button
+                            key={dotIdx}
+                            onClick={() => setActivePillar(dotIdx)}
+                            className={`h-1.5 rounded-full transition-all duration-300 ${
+                              activePillar === dotIdx
+                                ? 'w-5 bg-[#C5A880]'
+                                : 'w-1.5 bg-white/20 hover:bg-white/40'
+                            }`}
+                            aria-label={`Go to slide ${dotIdx + 1}`}
+                          />
+                        ))}
+                      </div>
+
+                      <button
+                        onClick={() => setActivePillar((prev) => (prev + 1) % pillars.length)}
+                        className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-slate-300 hover:text-white text-xs font-medium active:bg-white/10 transition-colors"
+                        aria-label="Next proposition"
+                      >
+                        <span className="text-[11px]">Next</span>
+                        <ChevronRight size={15} />
+                      </button>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            );
-          })}
+                </motion.div>
+              );
+            })()}
+          </AnimatePresence>
         </div>
 
       </div>
