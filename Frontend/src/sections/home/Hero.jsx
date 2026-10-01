@@ -16,8 +16,12 @@ const staggerContainer = {
 };
 
 import CustomSelect from '../../components/ui/CustomSelect';
+import { useCms } from '../../context/CmsContext';
 
 export default function Hero() {
+  const { sections } = useCms();
+  const heroData = sections?.hero || {};
+
   const [location, setLocation] = useState("");
   const [propertyType, setPropertyType] = useState("");
   const [budget, setBudget] = useState("");
@@ -55,17 +59,19 @@ export default function Hero() {
             <motion.div variants={fadeUp} className="mb-6 flex items-center gap-4">
               <span className="w-8 h-[1px] bg-[#C5A880]"></span>
               <span className="text-xs md:text-sm tracking-[0.25em] text-[#C5A880] uppercase font-semibold">
-                Luxury Builder Floors & Estates
+                {heroData.badge || "Luxury Builder Floors & Estates"}
               </span>
             </motion.div>
             
             <motion.h1 variants={fadeUp} className="text-5xl md:text-7xl font-serif text-white leading-[1.1] mb-6 drop-shadow-sm">
-              Gurgaon's Premier <br />
-              <span className="italic text-[#C5A880] font-light">Real Estate</span> Partner.
+              {heroData.headlinePrefix || "Gurgaon's Premier"} <br />
+              <span className="italic text-[#C5A880] font-light">
+                {heroData.headlineHighlight || "Real Estate"}
+              </span> {heroData.headlineSuffix || "Partner."}
             </motion.h1>
 
             <motion.p variants={fadeUp} className="text-[#E2E8F0] text-lg font-light max-w-xl mb-12 leading-relaxed drop-shadow-sm">
-              Discover an exclusive portfolio of luxury builder floors, high-rise penthouses, and bespoke villas in DLF Phase 1–4, Sushant Lok & Golf Course Ext.
+              {heroData.description || "Discover an exclusive portfolio of luxury builder floors, high-rise penthouses, and bespoke villas in DLF Phase 1–4, Sushant Lok & Golf Course Ext."}
             </motion.p>
 
             <motion.div variants={fadeUp} className="w-full max-w-5xl relative">
@@ -168,32 +174,42 @@ export default function Hero() {
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-[#C5A880] animate-pulse" />
-                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#C5A880]">Spotlight Property</span>
+                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#C5A880]">
+                    {heroData.spotlight?.badge || "Spotlight Property"}
+                  </span>
                 </div>
-                <span className="px-2.5 py-1 rounded-full bg-white/10 text-[10px] uppercase tracking-wider text-gray-200">DLF Phase 1</span>
+                <span className="px-2.5 py-1 rounded-full bg-white/10 text-[10px] uppercase tracking-wider text-gray-200">
+                  {heroData.spotlight?.tag || "DLF Phase 1"}
+                </span>
               </div>
 
               <div className="relative h-44 rounded-2xl overflow-hidden mb-4 border border-white/10">
                 <img 
-                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80" 
+                  src={heroData.spotlight?.image || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"} 
                   alt="Gurgaon Builder Floor Interior" 
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[10px] font-medium">
-                  Independent Terrace Floor
+                  {heroData.spotlight?.tag || "Independent Terrace Floor"}
                 </div>
               </div>
 
-              <h4 className="text-lg font-serif text-white mb-1">Ultra-Luxury Independent Floor</h4>
-              <p className="text-xs text-gray-300 font-light mb-4">4 BHK • 500 Sq. Yds • Private Stilt Parking & Elevator</p>
+              <h4 className="text-lg font-serif text-white mb-1">
+                {heroData.spotlight?.title || "Ultra-Luxury Independent Floor"}
+              </h4>
+              <p className="text-xs text-gray-300 font-light mb-4">
+                {heroData.spotlight?.specs || "4 BHK • 500 Sq. Yds • Private Stilt Parking & Elevator"}
+              </p>
 
               <div className="flex items-center justify-between pt-3 border-t border-white/15">
                 <div>
                   <span className="block text-[9px] uppercase tracking-widest text-gray-400">Starting At</span>
-                  <span className="text-base font-semibold text-[#C5A880]">₹6.75 Cr Onwards</span>
+                  <span className="text-base font-semibold text-[#C5A880]">
+                    {heroData.spotlight?.price || "₹6.75 Cr Onwards"}
+                  </span>
                 </div>
                 <a
-                  href="tel:+919811221207"
+                  href={`tel:${heroData.spotlight?.phone || '+919811221207'}`}
                   className="px-4 py-2 rounded-full bg-white text-[#1D263B] text-[11px] font-bold uppercase tracking-wider hover:bg-[#C5A880] hover:text-white transition-colors shadow-md"
                 >
                   Enquire

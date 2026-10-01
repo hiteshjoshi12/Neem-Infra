@@ -50,16 +50,26 @@ const fadeUp = {
   }
 };
 
+import { useCms } from '../../context/CmsContext';
+
 export default function TestimonialsSection() {
+  const { testimonials, sections } = useCms();
+  const list = testimonials && testimonials.length > 0 ? testimonials : TESTIMONIALS;
+  const testData = sections?.testimonials || {};
+
   const [activeIndex, setActiveIndex] = useState(0);
 
   const handleNext = () => {
-    setActiveIndex((prev) => (prev + 1) % TESTIMONIALS.length);
+    if (list.length === 0) return;
+    setActiveIndex((prev) => (prev + 1) % list.length);
   };
 
   const handlePrev = () => {
-    setActiveIndex((prev) => (prev - 1 + TESTIMONIALS.length) % TESTIMONIALS.length);
+    if (list.length === 0) return;
+    setActiveIndex((prev) => (prev - 1 + list.length) % list.length);
   };
+
+  const currentItem = list[activeIndex] || list[0] || {};
 
   return (
     <section className="relative w-full py-12 md:py-20 bg-[#FAF8F5] text-[#1D263B] overflow-hidden border-t border-[#EFECE6]">
@@ -94,10 +104,11 @@ export default function TestimonialsSection() {
         </motion.div>
 
         {/* ===================== DESKTOP 3D GRID (md and up) ===================== */}
+        {/* ===================== DESKTOP 3D GRID (md and up) ===================== */}
         <div className="hidden md:grid md:grid-cols-3 gap-7 lg:gap-8 perspective-[1200px] items-stretch">
-          {TESTIMONIALS.map((item, index) => (
+          {list.map((item, index) => (
             <motion.div
-              key={item.id}
+              key={item._id || item.id}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -121,14 +132,14 @@ export default function TestimonialsSection() {
                 {/* Top Badge & Rating Row */}
                 <div className="flex items-center justify-between gap-3 mb-6">
                   <div className="flex items-center gap-1 text-[#C5A880]">
-                    {[...Array(item.rating)].map((_, i) => (
+                    {[...Array(item.rating || 5)].map((_, i) => (
                       <Star key={i} size={15} fill="#C5A880" className="text-[#C5A880]" />
                     ))}
                   </div>
 
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#FAF8F5] border border-[#E8E2D8] text-[10px] font-semibold text-[#8B7355] uppercase tracking-wider">
                     <ShieldCheck size={12} className="text-[#C5A880]" />
-                    <span>Verified</span>
+                    <span>{item.tag || 'Verified'}</span>
                   </span>
                 </div>
 
@@ -184,21 +195,21 @@ export default function TestimonialsSection() {
               <div>
                 <div className="flex items-center justify-between gap-3 mb-5 pt-1">
                   <div className="flex items-center gap-1 text-[#C5A880]">
-                    {[...Array(TESTIMONIALS[activeIndex].rating)].map((_, i) => (
+                    {[...Array(currentItem.rating || 5)].map((_, i) => (
                       <Star key={i} size={15} fill="#C5A880" className="text-[#C5A880]" />
                     ))}
                   </div>
 
                   <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#FAF8F5] border border-[#E8E2D8] text-[10px] font-semibold text-[#8B7355] uppercase tracking-wider">
                     <ShieldCheck size={12} className="text-[#C5A880]" />
-                    <span>Verified</span>
+                    <span>{currentItem.tag || 'Verified'}</span>
                   </span>
                 </div>
 
                 <div className="relative mb-5">
                   <Quote size={36} className="text-[#C5A880]/20 absolute -top-3 -left-1" />
                   <p className="relative z-10 text-[#1E293B] text-sm font-normal leading-relaxed pt-2">
-                    "{TESTIMONIALS[activeIndex].quote}"
+                    "{currentItem.quote}"
                   </p>
                 </div>
               </div>
@@ -206,18 +217,18 @@ export default function TestimonialsSection() {
               <div className="pt-5 mt-4 border-t border-[#F0ECE1] flex items-center gap-4">
                 <div className="relative w-12 h-12 rounded-full p-[2px] bg-[#C5A880] flex-shrink-0 shadow-sm">
                   <img
-                    src={TESTIMONIALS[activeIndex].avatar}
-                    alt={TESTIMONIALS[activeIndex].name}
+                    src={currentItem.avatar}
+                    alt={currentItem.name}
                     className="w-full h-full rounded-full object-cover"
                   />
                 </div>
 
                 <div className="flex-grow min-w-0">
                   <h4 className="text-base font-serif font-bold text-[#1D263B] truncate">
-                    {TESTIMONIALS[activeIndex].name}
+                    {currentItem.name}
                   </h4>
                   <p className="text-xs text-[#C5A880] font-medium tracking-wide">
-                    {TESTIMONIALS[activeIndex].role}, {TESTIMONIALS[activeIndex].location}
+                    {currentItem.role}, {currentItem.location}
                   </p>
                 </div>
               </div>
@@ -227,7 +238,7 @@ export default function TestimonialsSection() {
           {/* Mobile Carousel Controls & Progress Dots */}
           <div className="flex items-center justify-between mt-6 px-2">
             <div className="flex items-center gap-2">
-              {TESTIMONIALS.map((_, idx) => (
+              {list.map((_, idx) => (
                 <button
                   key={idx}
                   onClick={() => setActiveIndex(idx)}

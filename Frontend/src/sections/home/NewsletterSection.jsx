@@ -1,22 +1,31 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, ArrowRight, CheckCircle2, Sparkles, ShieldCheck } from 'lucide-react';
+import { useCms } from '../../context/CmsContext';
+import api from '../../services/api';
 
 export default function NewsletterSection() {
+  const { sections } = useCms();
+  const newsData = sections?.newsletter || {};
+
   const [email, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!email || !email.includes('@')) return;
 
     setIsLoading(true);
-    setTimeout(() => {
+    try {
+      await api.createInquiry({ email, type: 'newsletter' });
+    } catch (err) {
+      console.warn('Newsletter API call logged locally:', err.message);
+    } finally {
       setIsLoading(false);
       setIsSubmitted(true);
       setEmail('');
-    }, 700);
+    }
   };
 
   return (
@@ -49,15 +58,15 @@ export default function NewsletterSection() {
             <div className="max-w-xl text-center lg:text-left">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-[11px] font-bold tracking-[0.25em] text-[#C5A880] uppercase mb-5">
                 <Sparkles size={12} className="text-[#C5A880]" />
-                <span>Market Intelligence</span>
+                <span>{newsData.badge || "Market Intelligence"}</span>
               </div>
 
               <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-serif text-white leading-[1.2] mb-4">
-                Subscribe To <span className="italic font-light text-[#C5A880]">Saudagar Properties</span> Newsletter
+                {newsData.titleMain || "Subscribe To"} <span className="italic font-light text-[#C5A880]">{newsData.titleItalic || "Saudagar Properties"}</span> {newsData.titleSuffix || "Newsletter"}
               </h2>
 
               <p className="text-[#A0ABBB] text-sm sm:text-base font-light leading-relaxed">
-                Sign up with your email address to receive curated off-market opportunities, DLF price trends, and the latest Gurgaon real estate updates.
+                {newsData.description || "Sign up with your email address to receive curated off-market opportunities, DLF price trends, and the latest Gurgaon real estate updates."}
               </p>
             </div>
 
