@@ -1,9 +1,43 @@
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+const isBrowser = typeof window !== 'undefined';
+const isLocalhost =
+  isBrowser &&
+  (window.location.hostname === 'localhost' ||
+    window.location.hostname === '127.0.0.1' ||
+    window.location.hostname.endsWith('.local'));
+
+const envApiUrl = import.meta.env.VITE_API_URL;
+
+// Determine safe API base URL
+let API_BASE_URL = '';
+
+if (envApiUrl) {
+  // If envApiUrl is defined but points to localhost on a remote host (e.g. vercel.app),
+  // ignore localhost to prevent Chrome's "Access other apps and services on this device" (Private Network Access) prompt.
+  if (!isLocalhost && (envApiUrl.includes('localhost') || envApiUrl.includes('127.0.0.1'))) {
+    API_BASE_URL = '';
+  } else {
+    API_BASE_URL = envApiUrl.replace(/\/+$/, '');
+  }
+} else if (isLocalhost) {
+  // Local development default: connect to local Node backend
+  API_BASE_URL = 'http://localhost:5000/api';
+} else {
+  // In production without an explicitly deployed backend URL, leave empty.
+  // We NEVER probe http://localhost from a public domain (like vercel.app),
+  // which prevents Chrome from displaying the Private Network Access security prompt.
+  API_BASE_URL = '';
+}
 
 /**
  * Helper to make API requests with Authorization header
  */
 async function request(endpoint, options = {}) {
+  // If no API URL is configured (e.g. production site without deployed backend URL),
+  // reject cleanly without making an unauthorized cross-network request.
+  if (!API_BASE_URL) {
+    throw new Error('API server not configured in this environment.');
+  }
+
   const token = localStorage.getItem('saudagar_admin_token');
 
   const headers = {
@@ -24,7 +58,9 @@ async function request(endpoint, options = {}) {
     }
     return data;
   } catch (error) {
-    console.warn(`[API] Error on ${endpoint}:`, error.message);
+    if (isLocalhost) {
+      console.warn(`[API] Error on ${endpoint}:`, error.message);
+    }
     throw error;
   }
 }

@@ -1,13 +1,13 @@
 import React from 'react';
-import Hero from '../sections/home/Hero';
-import TopConsultantSection from '../sections/home/TopConsultantSection';
-import CuratedCorridors from '../sections/home/CuratedCorridors';
-import OurServicesSection from '../sections/home/OurServicesSection';
-import WhyChooseUsSection from '../sections/home/WhyChooseUsSection';
-import TestimonialsSection from '../sections/home/TestimonialsSection';
+import Hero from '../../sections/home/Hero';
+import TopConsultantSection from '../../sections/home/TopConsultantSection';
+import CuratedCorridors from '../../sections/home/CuratedCorridors';
+import OurServicesSection from '../../sections/home/OurServicesSection';
+import WhyChooseUsSection from '../../sections/home/WhyChooseUsSection';
+import TestimonialsSection from '../../sections/home/TestimonialsSection';
 
-import LocationMap from '../sections/home/LocationMap';
-import NewsletterSection from '../sections/home/NewsletterSection';
+import LocationMap from '../../sections/home/LocationMap';
+import NewsletterSection from '../../sections/home/NewsletterSection';
 
 export default function Home() {
   return (

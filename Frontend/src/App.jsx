@@ -13,8 +13,8 @@ import AdminLayout from './layouts/AdminLayout';
 import ProtectedRoute from './components/admin/ProtectedRoute';
 
 // Public Pages (Lazy loaded)
-const Home = lazy(() => import('./pages/Home'));
-const About = lazy(() => import('./pages/About'));
+const Home = lazy(() => import('./pages/User/Home'));
+const About = lazy(() => import('./pages/User/About'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Admin Pages (Lazy loaded)

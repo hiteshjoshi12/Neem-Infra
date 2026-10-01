@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
-import AboutHero from '../sections/about/AboutHero';
-import AboutVideoShowcase from '../sections/about/AboutVideoShowcase';
-import AboutOfferings from '../sections/about/AboutOfferings';
-import AboutProposition from '../sections/about/AboutProposition';
-import AboutLeadership from '../sections/about/AboutLeadership';
-import AboutConsultationCta from '../sections/about/AboutConsultationCta';
-import LocationMap from '../sections/home/LocationMap';
+import AboutHero from '../../sections/about/AboutHero';
+import AboutVideoShowcase from '../../sections/about/AboutVideoShowcase';
+import AboutOfferings from '../../sections/about/AboutOfferings';
+import AboutProposition from '../../sections/about/AboutProposition';
+import AboutLeadership from '../../sections/about/AboutLeadership';
+import AboutConsultationCta from '../../sections/about/AboutConsultationCta';
+import LocationMap from '../../sections/home/LocationMap';
 
 export default function About() {
   useEffect(() => {
