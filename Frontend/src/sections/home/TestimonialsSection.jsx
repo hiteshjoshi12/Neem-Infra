@@ -8,9 +8,8 @@ const TESTIMONIALS = [
     name: "Deepak Arora",
     role: "Investor",
     location: "Dubai, UAE",
-    propertyType: "DLF Phase 2 Luxury Floor",
     rating: 5,
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=400&q=80",
+    avatar: "https://saudagarproperties.com/wp-content/uploads/2021/01/c3.jpg",
     quote:
       "Selecting a best real estate consultant in Gurugram, especially one who is trustworthy, experienced, and honest, is the basic pillar of investment. From their before sales to after sales service, I can definitely say that customer satisfaction is in the company's DNA. Extremely happy to approach them for my investment decisions and will look up to the same in future too.",
     tag: "NRI Investment Advisory"
@@ -20,9 +19,8 @@ const TESTIMONIALS = [
     name: "Kedarnath Gupta",
     role: "Investor",
     location: "Dubai, UAE",
-    propertyType: "Sushant Lok 1 Villa Estate",
     rating: 5,
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=400&q=80",
+    avatar: "https://saudagarproperties.com/wp-content/uploads/2021/01/c2.jpg",
     quote:
       "Choosing the right home is a very important aspect of any individual's life. With their decade-long experience in the Gurgaon real estate market, Saudagar Properties Pvt. Ltd. played a key role in ensuring that I was making the right decision while choosing my dream home by providing the right push when needed, and cautioning me when necessary. I owe the team a huge part of my dream.",
     tag: "High-Value Transaction"
@@ -31,10 +29,9 @@ const TESTIMONIALS = [
     id: "03",
     name: "Saravjit Dasaan",
     role: "Investor & End User",
-    location: "Gurugram, India",
-    propertyType: "Golf Course Ext. Duplex",
+    location: "India",
     rating: 5,
-    avatar: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80",
+    avatar: "https://saudagarproperties.com/wp-content/uploads/2021/01/c1.jpg",
     quote:
       "The team seamlessly took over everything, from research, visit, paperwork to maintenance. Amidst a plethora of options, Saudagar Properties shortlisted the best residential properties in Gurgaon according to my needs and comfort. It has been a delight working with the highly-qualified and seasoned team. I would recommend their services to all my friends and acquaintances.",
     tag: "End-to-End Concierge"
@@ -156,20 +153,30 @@ export default function TestimonialsSection() {
               </div>
 
               {/* Author Info Footer */}
-              <div className="pt-6 mt-6 border-t border-[#F0ECE1] flex items-center gap-4">
-                <div className="relative w-13 h-13 rounded-full p-[2px] bg-gradient-to-tr from-[#C5A880] via-[#EFECE6] to-[#C5A880] flex-shrink-0 shadow-md group-hover:scale-105 transition-transform duration-300">
-                  <img
-                    src={item.avatar}
-                    alt={item.name}
-                    className="w-full h-full rounded-full object-cover"
-                  />
+              <div className="pt-6 mt-6 border-t border-[#F0ECE1] flex items-center gap-4 sm:gap-5">
+                {/* Elevated Luxury Client Portrait */}
+                <div className="relative flex-shrink-0">
+                  <div className="relative w-20 h-20 lg:w-22 lg:h-22 rounded-2xl p-[2.5px] bg-gradient-to-tr from-[#C5A880] via-[#FAF8F5] to-[#B39366] shadow-[0_10px_25px_-5px_rgba(197,168,128,0.35)] group-hover:shadow-[0_14px_32px_-4px_rgba(197,168,128,0.45)] group-hover:scale-105 transition-all duration-300">
+                    <img
+                      src={item.avatar}
+                      alt={item.name}
+                      className="w-full h-full rounded-[14px] object-cover object-top"
+                    />
+                  </div>
+                  {/* Verified Shield Badge on Portrait */}
+                  <div
+                    className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-[#1D263B] border-2 border-white text-[#C5A880] flex items-center justify-center shadow-md"
+                    title="Verified Saudagar Properties Client"
+                  >
+                    <ShieldCheck size={12} className="stroke-[2.5]" />
+                  </div>
                 </div>
 
                 <div className="flex-grow min-w-0">
-                  <h4 className="text-base font-serif font-bold text-[#1D263B] truncate group-hover:text-[#A27B48] transition-colors">
+                  <h4 className="text-lg lg:text-xl font-serif font-bold text-[#1D263B] truncate group-hover:text-[#A27B48] transition-colors leading-tight">
                     {item.name}
                   </h4>
-                  <p className="text-xs text-[#C5A880] font-medium tracking-wide">
+                  <p className="text-xs text-[#8B7355] font-semibold tracking-wide uppercase mt-1">
                     {item.role}, {item.location}
                   </p>
                 </div>
@@ -214,20 +221,29 @@ export default function TestimonialsSection() {
                 </div>
               </div>
 
-              <div className="pt-5 mt-4 border-t border-[#F0ECE1] flex items-center gap-4">
-                <div className="relative w-12 h-12 rounded-full p-[2px] bg-[#C5A880] flex-shrink-0 shadow-sm">
-                  <img
-                    src={currentItem.avatar}
-                    alt={currentItem.name}
-                    className="w-full h-full rounded-full object-cover"
-                  />
+              <div className="pt-5 mt-5 border-t border-[#F0ECE1] flex items-center gap-4">
+                {/* Elevated Mobile Client Portrait */}
+                <div className="relative flex-shrink-0">
+                  <div className="relative w-18 h-18 sm:w-20 sm:h-20 rounded-2xl p-[2.5px] bg-gradient-to-tr from-[#C5A880] via-[#FAF8F5] to-[#B39366] shadow-[0_8px_20px_rgba(197,168,128,0.3)]">
+                    <img
+                      src={currentItem.avatar}
+                      alt={currentItem.name}
+                      className="w-full h-full rounded-[14px] object-cover object-top"
+                    />
+                  </div>
+                  <div
+                    className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#1D263B] border-2 border-white text-[#C5A880] flex items-center justify-center shadow-sm"
+                    title="Verified Saudagar Properties Client"
+                  >
+                    <ShieldCheck size={11} className="stroke-[2.5]" />
+                  </div>
                 </div>
 
                 <div className="flex-grow min-w-0">
-                  <h4 className="text-base font-serif font-bold text-[#1D263B] truncate">
+                  <h4 className="text-base sm:text-lg font-serif font-bold text-[#1D263B] truncate">
                     {currentItem.name}
                   </h4>
-                  <p className="text-xs text-[#C5A880] font-medium tracking-wide">
+                  <p className="text-xs text-[#8B7355] font-semibold tracking-wide uppercase mt-0.5">
                     {currentItem.role}, {currentItem.location}
                   </p>
                 </div>
