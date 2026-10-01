@@ -38,7 +38,7 @@ export default function LocationMap() {
   };
 
   return (
-    <section className="w-full bg-[#F9F8F4] py-32 overflow-hidden border-t border-[#E5E0D8]">
+    <section className="w-full bg-[#F9F8F4] py-16 md:py-20 overflow-hidden border-t border-[#E5E0D8]">
       <div className="container mx-auto px-6 md:px-12">
         
         {/* Section Header */}
@@ -61,7 +61,7 @@ export default function LocationMap() {
               Where to <span className="italic text-[#A89069] font-light">Find Us</span>
             </h2>
             
-            <p className="text-[#5A605C] font-light text-base md:text-lg leading-relaxed">
+            <p className="text-[#334155] font-normal text-base md:text-lg leading-relaxed">
               Drop by our headquarters for a private, one-on-one consultation regarding Gurgaon's premier luxury properties.
             </p>
           </motion.div>
@@ -72,7 +72,7 @@ export default function LocationMap() {
             viewport={{ once: true }}
           >
             <a 
-              href="https://www.google.com/maps/place/Patel+Nagar,+Gurugram,+Haryana+122001" 
+              href="https://www.google.com/maps/place/Saudagar+Properties+Pvt.Ltd/@28.4847851,77.0842655,17z/data=!3m1!4b1!4m6!3m5!1s0x390d193a8eabbb6b:0x3d99d3fce74198d5!8m2!3d28.4847851!4d77.0842655!16s%2Fg%2F11f03pch1x" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center gap-3 bg-[#2F3E35] text-white px-8 py-4 rounded-full font-bold tracking-widest uppercase text-xs hover:bg-[#1E2822] transition-colors shadow-lg"
@@ -96,12 +96,10 @@ export default function LocationMap() {
             className="relative w-full h-[500px] md:h-[600px] rounded-3xl overflow-hidden border border-[#E5E0D8] shadow-[0_30px_90px_rgba(44,48,46,0.1)] bg-white"
           >
             
-            {/* 
-              FIXED: Using the embed-friendly Google Maps URL format
-            */}
+            {/* Embedded Google Maps Pinning Saudagar Properties Pvt. Ltd */}
             <iframe 
               title="Saudagar Properties Location"
-              src="https://maps.google.com/maps?q=Patel+Nagar,+Gurugram,+Haryana+122001&t=&z=15&ie=UTF8&iwloc=&output=embed"
+              src="https://maps.google.com/maps?q=Saudagar+Properties+Pvt.Ltd,+Akashneem+Marg,+DLF+Phase+2,+Gurugram&t=&z=16&ie=UTF8&iwloc=&output=embed"
               className="absolute inset-0 w-full h-full border-0 filter contrast-[1.05] opacity-90"
               allowFullScreen="" 
               loading="lazy" 
@@ -117,15 +115,15 @@ export default function LocationMap() {
                 <span className="text-xs font-bold tracking-widest uppercase">Headquarters</span>
               </div>
               
-              <h3 className="text-2xl font-serif text-[#2C302E] mb-3">Saudagar Properties</h3>
+              <h3 className="text-2xl font-serif text-[#2C302E] mb-3">Saudagar Properties Pvt. Ltd</h3>
               
-              <p className="text-[#5A605C] font-light text-sm leading-relaxed mb-6">
-              Gurugram, Haryana 122003, India
+              <p className="text-[#334155] font-medium text-sm leading-relaxed mb-6">
+                38, Akashneem Marg, DLF Phase 2, Gurugram, Haryana 122002
               </p>
 
               <div className="flex items-center gap-4 pt-4 border-t border-[#E5E0D8]">
                 <a 
-                  href="https://maps.google.com/?q=Patel+Nagar,+Gurugram,+Haryana+122001" 
+                  href="https://www.google.com/maps/place/Saudagar+Properties+Pvt.Ltd/@28.4847851,77.0842655,17z/data=!3m1!4b1!4m6!3m5!1s0x390d193a8eabbb6b:0x3d99d3fce74198d5!8m2!3d28.4847851!4d77.0842655!16s%2Fg%2F11f03pch1x" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 text-xs font-bold tracking-widest uppercase text-[#2F3E35] hover:text-[#A89069] transition-colors"

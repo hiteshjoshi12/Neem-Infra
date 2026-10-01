@@ -1,111 +1,103 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, ArrowUpRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowUpRight, BedDouble, Maximize, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const CORRIDOR_DATA = [
-  {
-    id: "01",
-    tag: "ULTRA LUXURY",
-    title: "Luxury Projects Under ₹25 Cr",
-    desc: "Expansive bespoke estates and penthouse living in Gurgaon's most elite pin codes.",
-    link: "/properties?category=under-25cr",
-    img: "https://neeminfra.com/wp-content/uploads/2026/07/8mefqs8_1776783054_747237784_optOrig-1170x785.webp"
-  },
-  {
-    id: "02",
-    tag: "PREMIUM HIGH-RISE",
-    title: "Luxury Apartments Under ₹10 Cr",
-    desc: "Sophisticated residences offering panoramic city views and world class clubhouses.",
-    link: "/properties?category=under-10cr",
-    img: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    id: "03",
-    tag: "HIGH VALUE",
-    title: "Best Projects Under ₹5 Crore",
-    desc: "Curated living spaces balancing luxury lifestyle amenities with exceptional ROI potential.",
-    link: "/properties?category=under-5cr",
-    img: "https://neeminfra.com/wp-content/uploads/2026/07/zbpnxoe_1737625589_563701883_optOrig-1170x785.webp"
-  },
-  {
-    id: "04",
-    tag: "PRIME LOCATION",
-    title: "Golf Course Road New Launches",
-    desc: "The pinnacle of corporate and residential prestige, surrounded by elite social infrastructure.",
-    link: "/properties?location=golf-course-road",
-    img: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80"
-  },
-  {
-    id: "05",
-    tag: "GROWTH CORRIDOR",
-    title: "Sohna Road New Launches",
-    desc: "Fast developing luxury hubs offering seamless connectivity via the elevated corridor.",
-    link: "/properties?location=sohna-road",
-    img: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80"
-  }
-];
+import { FEATURED_PROPERTIES_DATA } from '../../constants';
 
 export default function CuratedCorridors() {
-  const [currentIndex, setCurrentIndex] = useState(2);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+
+  // Auto-slide effect every 5 seconds (5000ms)
+  useEffect(() => {
+    if (isPaused) return;
+
+    const timer = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % FEATURED_PROPERTIES_DATA.length);
+    }, 5000);
+
+    return () => clearInterval(timer);
+  }, [isPaused]);
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % CORRIDOR_DATA.length);
+    setCurrentIndex((prev) => (prev + 1) % FEATURED_PROPERTIES_DATA.length);
   };
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev - 1 + CORRIDOR_DATA.length) % CORRIDOR_DATA.length);
+    setCurrentIndex((prev) => (prev - 1 + FEATURED_PROPERTIES_DATA.length) % FEATURED_PROPERTIES_DATA.length);
   };
 
   return (
-    <section className="relative w-full bg-[#F9F8F4] py-32 overflow-hidden border-t border-[#E5E0D8]">
+    <section 
+      className="relative w-full bg-[#FAF8F5] pt-12 pb-8 md:pt-16 md:pb-12 overflow-hidden border-t border-[#EFECE6]"
+      onMouseEnter={() => setIsPaused(true)}
+      onMouseLeave={() => setIsPaused(false)}
+    >
       
-      {/* Updated Header Section */}
-      <div className="container mx-auto px-6 md:px-12 relative z-10 mb-16 flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+      {/* Header Section */}
+      <div className="container mx-auto px-5 md:px-12 relative z-10 mb-10 md:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
         
-        {/* Left Side: Titles and Text */}
+        {/* Left Side: Titles and Description */}
         <div className="max-w-2xl">
-          <div className="flex items-center gap-3 mb-4">
-            <span className="w-8 h-[1px] bg-[#A89069]" />
-            <span className="text-xs tracking-[0.25em] text-[#A89069] uppercase font-semibold">
-              Portfolio Index
+          <div className="flex items-center gap-3 mb-3">
+            <span className="w-8 h-[1px] bg-[#C5A880]" />
+            <span className="text-[11px] sm:text-xs tracking-[0.25em] text-[#C5A880] uppercase font-semibold">
+              Featured Portfolio
             </span>
           </div>
           
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#2C302E] leading-tight mb-6">
-            Curated Luxury <span className="italic text-[#A89069] font-light">Corridors</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-[#1D263B] leading-tight mb-4">
+            Featured <span className="italic text-[#C5A880] font-light">Properties</span>
           </h2>
           
-          {/* Added the descriptive text here */}
-          <p className="text-[#5A605C] font-light text-lg leading-relaxed">
-            Explore Gurgaon’s most premier residential landmarks and investment opportunities, categorized by prime location and investment scale.
+          <p className="text-[#334155] font-normal text-sm sm:text-base md:text-lg leading-relaxed">
+            Handpicked luxury builder floors and independent villas in DLF Phase 1–4 & Sushant Lok, updated every 5 seconds.
           </p>
         </div>
 
-        {/* Right Side: Custom Navigation Arrows */}
-        <div className="flex gap-4 lg:pb-2">
-          <button 
-            onClick={handlePrev}
-            className="w-14 h-14 rounded-full border border-[#E5E0D8] bg-white flex items-center justify-center text-[#2C302E] hover:border-[#A89069] hover:text-[#A89069] transition-all duration-300"
-          >
-            <ChevronLeft strokeWidth={1.5} />
-          </button>
-          <button 
-            onClick={handleNext}
-            className="w-14 h-14 rounded-full border border-[#E5E0D8] bg-white flex items-center justify-center text-[#2C302E] hover:border-[#A89069] hover:text-[#A89069] transition-all duration-300"
-          >
-            <ChevronRight strokeWidth={1.5} />
-          </button>
+        {/* Right Side: Auto Rotation Status & Navigation Arrows */}
+        <div className="flex items-center justify-between sm:justify-start gap-4 sm:gap-6 lg:pb-2">
+          {/* Progress dots / Auto Timer status */}
+          <div className="flex items-center gap-1.5 sm:gap-2">
+            {FEATURED_PROPERTIES_DATA.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setCurrentIndex(idx)}
+                className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
+                  currentIndex === idx ? 'w-6 sm:w-8 bg-[#C5A880]' : 'w-2 bg-[#D1D5DB]'
+                }`}
+                aria-label={`Go to slide ${idx + 1}`}
+              />
+            ))}
+          </div>
+
+          <div className="flex gap-2.5">
+            <button 
+              onClick={handlePrev}
+              className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border border-[#E8E4DA] bg-white flex items-center justify-center text-[#1D263B] hover:border-[#C5A880] hover:text-[#C5A880] transition-all duration-300 shadow-sm cursor-pointer"
+              aria-label="Previous Property"
+            >
+              <ChevronLeft strokeWidth={1.8} size={18} />
+            </button>
+            <button 
+              onClick={handleNext}
+              className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border border-[#E8E4DA] bg-white flex items-center justify-center text-[#1D263B] hover:border-[#C5A880] hover:text-[#C5A880] transition-all duration-300 shadow-sm cursor-pointer"
+              aria-label="Next Property"
+            >
+              <ChevronRight strokeWidth={1.8} size={18} />
+            </button>
+          </div>
         </div>
       </div>
 
       {/* 3D Stage Area */}
-      <div className="relative w-full h-[600px] flex items-center justify-center perspective-[1200px]">
+      <div className="relative w-full h-[470px] sm:h-[530px] md:h-[580px] flex items-center justify-center perspective-[1200px]">
         <AnimatePresence mode="popLayout">
-          {CORRIDOR_DATA.map((item, index) => {
+          {FEATURED_PROPERTIES_DATA.map((item, index) => {
             let offset = index - currentIndex;
-            if (offset < -2) offset += CORRIDOR_DATA.length;
-            if (offset > 2) offset -= CORRIDOR_DATA.length;
+            if (offset < -2) offset += FEATURED_PROPERTIES_DATA.length;
+            if (offset > 2) offset -= FEATURED_PROPERTIES_DATA.length;
 
             const isCenter = offset === 0;
             const isVisible = Math.abs(offset) <= 2;
@@ -118,62 +110,78 @@ export default function CuratedCorridors() {
                 layout
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{
-                  x: `${offset * 60}%`,
-                  z: isCenter ? 0 : -Math.abs(offset) * 150,
-                  rotateY: offset * -15,
-                  scale: isCenter ? 1 : 0.85,
-                  opacity: isCenter ? 1 : 0.4,
-                  filter: isCenter ? "blur(0px)" : "blur(4px)",
+                  x: `${offset * 48}%`,
+                  z: isCenter ? 0 : -Math.abs(offset) * 120,
+                  rotateY: offset * -12,
+                  scale: isCenter ? 1 : 0.88,
+                  opacity: isCenter ? 1 : 0.35,
+                  filter: isCenter ? "blur(0px)" : "blur(3px)",
                   zIndex: 10 - Math.abs(offset),
                 }}
                 transition={{
                   duration: 0.8,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className={`absolute w-[85%] md:w-[60%] max-w-[600px] h-[500px] rounded-2xl overflow-hidden shadow-2xl ${
+                className={`absolute w-[92%] sm:w-[80%] md:w-[60%] max-w-[620px] h-[410px] sm:h-[450px] md:h-[480px] rounded-3xl overflow-hidden shadow-[0_20px_50px_-10px_rgba(20,25,35,0.25)] border border-white/40 ${
                   isCenter ? 'cursor-default' : 'cursor-pointer'
                 }`}
                 onClick={() => {
                   if (!isCenter) setCurrentIndex(index);
                 }}
               >
+                {/* Background Property Image */}
                 <img 
                   src={item.img} 
                   alt={item.title} 
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                 />
                 
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+                {/* Dark Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/50 to-transparent" />
 
+                {/* Content Overlay */}
                 <motion.div 
-                  className="absolute inset-x-0 bottom-0 p-8 md:p-10"
+                  className="absolute inset-x-0 bottom-0 p-5 sm:p-7 md:p-10 flex flex-col justify-end text-white"
                   animate={{ opacity: isCenter ? 1 : 0, y: isCenter ? 0 : 20 }}
-                  transition={{ duration: 0.4, delay: isCenter ? 0.2 : 0 }}
+                  transition={{ duration: 0.4, delay: isCenter ? 0.15 : 0 }}
                 >
-                  <div className="flex items-center gap-4 mb-4">
-                    <span className="font-mono text-xs tracking-widest text-white/50">
-                      {item.id}
-                    </span>
-                    <span className="px-3 py-1 rounded bg-[#A89069] text-[0.65rem] font-bold tracking-[0.2em] uppercase text-white">
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+                    <span className="px-2.5 py-1 rounded-full bg-[#C5A880] text-[9px] sm:text-[10px] font-bold tracking-[0.16em] uppercase text-white shadow-sm">
                       {item.tag}
+                    </span>
+                    <span className="text-lg sm:text-xl md:text-2xl font-serif text-[#C5A880] font-bold">
+                      {item.price}
                     </span>
                   </div>
                   
-                  <h3 className="text-3xl md:text-4xl font-serif text-white leading-tight mb-4">
+                  <h3 className="text-xl sm:text-2xl md:text-4xl font-serif text-white leading-tight mb-2">
                     {item.title}
                   </h3>
+
+                  <div className="flex items-center gap-1.5 sm:gap-2 text-[#CBD5E1] text-[10px] sm:text-xs mb-2 md:mb-3">
+                    <MapPin size={12} className="text-[#C5A880] flex-shrink-0" />
+                    <span className="truncate">{item.location}</span>
+                    <span className="mx-0.5">•</span>
+                    <span className="truncate">{item.specs}</span>
+                  </div>
                   
-                  <p className="text-gray-300 font-light text-sm md:text-base leading-relaxed mb-8 max-w-sm">
+                  <p className="text-slate-200 font-normal text-[11px] sm:text-xs md:text-sm leading-relaxed mb-4 line-clamp-2">
                     {item.desc}
                   </p>
 
-                  <Link
-                    to={item.link}
-                    className="inline-flex items-center gap-3 bg-white text-[#2C302E] px-6 py-3 rounded-lg text-xs font-bold tracking-widest uppercase hover:bg-[#A89069] hover:text-white transition-all duration-300 group"
-                  >
-                    Explore Collection
-                    <ArrowUpRight size={16} className="transform group-hover:translate-x-1 transition-transform" />
-                  </Link>
+                  <div className="flex items-center justify-between pt-3 border-t border-white/15">
+                    <Link
+                      to={item.link}
+                      className="inline-flex items-center gap-2 bg-white text-[#1D263B] px-4 py-2 sm:px-6 sm:py-2.5 rounded-full text-[10px] sm:text-xs font-bold tracking-widest uppercase hover:bg-[#C5A880] hover:text-white transition-all duration-300 shadow-md group"
+                    >
+                      <span>View Details</span>
+                      <ArrowUpRight size={14} className="transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                    </Link>
+
+                    <div className="text-[9px] sm:text-[10px] text-gray-300 font-mono tracking-wider uppercase">
+                      0{currentIndex + 1} / 0{FEATURED_PROPERTIES_DATA.length}
+                    </div>
+                  </div>
                 </motion.div>
               </motion.div>
             );
@@ -182,20 +190,20 @@ export default function CuratedCorridors() {
       </div>
 
       {/* Master Directory CTA */}
-      <div className="container mx-auto px-6 md:px-12 mt-12 flex justify-center">
+      <div className="container mx-auto px-5 md:px-12 mt-6 sm:mt-8 flex justify-center">
         <Link 
-          to="/new-launches"
-          className="group relative px-8 py-4 bg-[#2F3E35] text-white overflow-hidden rounded-full flex items-center gap-4 hover:shadow-xl transition-all duration-300"
+          to="/ready-to-move"
+          className="group relative px-6 py-3.5 sm:px-8 sm:py-4 bg-[#1D263B] text-white overflow-hidden rounded-full flex items-center gap-3 sm:gap-4 shadow-lg hover:shadow-xl transition-all duration-300"
         >
-          <span className="relative z-10 text-sm font-semibold tracking-widest uppercase">
-            View Complete Master Directory
+          <span className="relative z-10 text-[11px] sm:text-xs font-semibold tracking-widest uppercase">
+            View Complete Featured Inventory
           </span>
-          <div className="relative z-10 w-8 h-8 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-[#2F3E35] transition-colors">
-            <ArrowUpRight size={16} />
+          <div className="relative z-10 w-7 h-7 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-[#1D263B] transition-colors">
+            <ArrowUpRight size={14} />
           </div>
-          <div className="absolute inset-0 w-0 bg-[#1E2822] transition-all duration-500 ease-out group-hover:w-full z-0" />
+          <div className="absolute inset-0 w-0 bg-[#111827] transition-all duration-500 ease-out group-hover:w-full z-0" />
         </Link>
       </div>
     </section>
   );
-}
+}

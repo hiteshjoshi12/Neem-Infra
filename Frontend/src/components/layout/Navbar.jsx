@@ -1,118 +1,326 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Phone } from 'lucide-react';
-import logo from '../../assets/cropped-logo.webp';
+import { Menu, X, ChevronDown, Phone, ArrowUpRight, Building2 } from 'lucide-react';
+import logo from '../../assets/logo.png';
 
 const NAV_LINKS = [
-  { label: "Ready To Move", href: "/ready-to-move" },
-  { label: "New Launches", href: "/new-launches" },
-  { label: "Under Construction", href: "/under-construction" },
-  { label: "Developers", href: "/developers" },
-  { label: "About Us", href: "/about" },
+  { label: "HOME", href: "/" },
+  { label: "ABOUT US", href: "/about" },
+  {
+    label: "SERVICES",
+    href: "#",
+    dropdown: [
+      { label: "Property In DLF Phase 1", href: "/services/dlf-phase-1", desc: "Ultra-luxury villas & floors" },
+      { label: "Property In DLF Phase 2", href: "/services/dlf-phase-2", desc: "Prime central estates" },
+      { label: "Property In DLF Phase 3", href: "/services/dlf-phase-3", desc: "Cybercity proximity residences" },
+      { label: "Property In DLF Phase 4", href: "/services/dlf-phase-4", desc: "Golf course adjacent homes" },
+      { label: "Property In Sushant Lok", href: "/services/sushant-lok", desc: "Serene bespoke properties" },
+      { label: "Property In Udyog Vihar", href: "/services/udyog-vihar", desc: "High-value commercial & assets" },
+    ]
+  },
+  { label: "FEATURED", href: "/ready-to-move" },
+  { label: "OUR TEAM", href: "/our-team" },
+  { label: "BLOG", href: "/blog" },
 ];
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeDropdown, setActiveDropdown] = useState(null);
   const location = useLocation();
+  const dropdownTimerRef = useRef(null);
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
+    setActiveDropdown(null);
   }, [location.pathname]);
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 30);
-    window.addEventListener('scroll', handleScroll);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 25);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleMouseEnter = (label) => {
+    if (dropdownTimerRef.current) clearTimeout(dropdownTimerRef.current);
+    setActiveDropdown(label);
+  };
+
+  const handleMouseLeave = () => {
+    dropdownTimerRef.current = setTimeout(() => {
+      setActiveDropdown(null);
+    }, 150);
+  };
+
   return (
     <>
+      {/* Morphing Navbar Container: Floating 3D Capsule at top -> Modern Sticky Header on scroll */}
       <header
-        className={`fixed left-0 right-0 z-50 flex justify-center transition-all duration-500 ease-out ${
-          isScrolled ? 'top-4 px-4' : 'top-0 px-0'
-        }`}
-      >
-        <div 
-          className={`w-full flex justify-between items-center transition-all duration-500 ease-out ${
-            isScrolled 
-              ? 'max-w-6xl mx-auto rounded-full py-3 px-8 backdrop-blur-md bg-[#282828]/85 border border-white/15 shadow-[0_15px_35px_rgba(0,0,0,0.3)]' 
-              : 'max-w-none rounded-none py-6 px-6 md:px-12 bg-transparent border-b border-transparent'
+        className={`fixed top-0 left-0 right-0 z-50 pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${isScrolled ? 'pt-0 px-0' : 'pt-3 md:pt-5 px-3 md:px-8'
           }`}
-        >
-          {/* Logo Area */}
-          <Link to="/" className="flex items-center z-50 group">
-            <div className="py-1 px-2 rounded-lg transition-colors group-hover:bg-white/5">
-              <img 
-                src={logo} 
-                alt="Saudagar Properties Realty" 
-                className="h-8 md:h-10 w-auto object-contain"
+      >
+        <div className="w-full flex justify-center pointer-events-auto">
+          <div
+            className={`relative flex items-center justify-between transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] bg-white/95 backdrop-blur-xl ${isScrolled
+                ? 'w-full max-w-full rounded-none py-3 px-6 md:px-12 border-b border-black/[0.06] shadow-[0_10px_30px_-10px_rgba(20,25,35,0.08)] ring-0'
+                : 'w-full max-w-5xl xl:max-w-6xl rounded-full py-2.5 px-5 md:px-7 border border-white/80 shadow-[0_20px_45px_-8px_rgba(20,25,35,0.1),_0_8px_20px_-4px_rgba(0,0,0,0.03),_inset_0_1px_1px_rgba(255,255,255,1)] ring-1 ring-black/[0.04]'
+              }`}
+          >
+            {/* Left: Clean Brand Logo (No background boxes) */}
+            <Link
+              to="/"
+              className="flex items-center gap-3 group relative select-none flex-shrink-0"
+              aria-label="Saudagar Properties Home"
+            >
+              <img
+                src={logo}
+                alt="Saudagar Properties"
+                className={`w-auto object-contain transition-all duration-500 ${isScrolled ? 'h-9 md:h-11' : 'h-11 md:h-13'
+                  }`}
               />
-            </div>
-          </Link>
+            </Link>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-6 xl:gap-8">
-            {NAV_LINKS.map((link) => (
-              <Link 
-                key={link.label} 
-                to={link.href}
-                className="text-xs text-gray-200 hover:text-white font-medium tracking-[0.12em] uppercase transition-colors relative group py-1"
+            {/* Center: Desktop Navigation Links */}
+            <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
+              {NAV_LINKS.map((link) => {
+                const isActive = location.pathname === link.href;
+
+                if (link.dropdown) {
+                  return (
+                    <div
+                      key={link.label}
+                      className="relative"
+                      onMouseEnter={() => handleMouseEnter(link.label)}
+                      onMouseLeave={handleMouseLeave}
+                    >
+                      <button
+                        className={`flex items-center gap-1.5 px-3.5 py-2 text-[11px] xl:text-[12px] font-semibold tracking-[0.16em] uppercase rounded-full transition-all duration-300 ${activeDropdown === link.label
+                          ? 'text-[#B5986D] bg-[#B5986D]/10 shadow-[inset_0_1px_2px_rgba(0,0,0,0.05)]'
+                          : 'text-[#1D263B] hover:text-[#B5986D] hover:bg-neutral-100/60'
+                          }`}
+                      >
+                        <span>{link.label}</span>
+                        <ChevronDown
+                          size={13}
+                          className={`transition-transform duration-300 ${activeDropdown === link.label ? 'rotate-180 text-[#B5986D]' : 'opacity-70'
+                            }`}
+                        />
+                      </button>
+
+                      {/* 3D Dropdown Menu */}
+                      <AnimatePresence>
+                        {activeDropdown === link.label && (
+                          <motion.div
+                            initial={{ opacity: 0, y: 12, scale: 0.96 }}
+                            animate={{ opacity: 1, y: 0, scale: 1 }}
+                            exit={{ opacity: 0, y: 8, scale: 0.96 }}
+                            transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
+                            className="absolute left-0 top-[calc(100%+8px)] w-80 z-50 pt-1"
+                          >
+                            <div className="bg-white/98 backdrop-blur-2xl border border-[#EFECE6] rounded-2xl p-2.5 shadow-[0_20px_50px_-10px_rgba(20,25,35,0.18),_0_1px_2px_rgba(0,0,0,0.06),_inset_0_1px_0_rgba(255,255,255,1)] ring-1 ring-black/[0.03]">
+                              <div className="px-3 pt-2 pb-1.5 border-b border-[#F4F1EA] mb-1.5 flex items-center justify-between">
+                                <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#A89069]">Prime Corridors</span>
+                                <Building2 size={13} className="text-[#A89069]" />
+                              </div>
+                              <div className="space-y-0.5">
+                                {link.dropdown.map((item) => (
+                                  <Link
+                                    key={item.label}
+                                    to={item.href}
+                                    className="group flex flex-col px-3.5 py-2.5 rounded-xl hover:bg-[#F9F8F5] transition-all duration-200"
+                                  >
+                                    <div className="flex items-center justify-between">
+                                      <span className="text-xs font-medium text-[#1D263B] group-hover:text-[#B5986D] transition-colors">
+                                        {item.label}
+                                      </span>
+                                      <ArrowUpRight
+                                        size={13}
+                                        className="text-[#999] opacity-0 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:text-[#B5986D] transition-all duration-200"
+                                      />
+                                    </div>
+                                    <span className="text-[10px] text-[#7E8590] group-hover:text-[#5F6570] transition-colors mt-0.5">
+                                      {item.desc}
+                                    </span>
+                                  </Link>
+                                ))}
+                              </div>
+                            </div>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                }
+
+                return (
+                  <Link
+                    key={link.label}
+                    to={link.href}
+                    className={`relative px-3.5 py-2 text-[11px] xl:text-[12px] font-semibold tracking-[0.16em] uppercase rounded-full transition-all duration-300 ${isActive
+                      ? 'text-[#1D263B] bg-[#F4F1EA]/80 font-bold shadow-[inset_0_1px_2px_rgba(0,0,0,0.06)]'
+                      : 'text-[#1D263B] hover:text-[#B5986D] hover:bg-neutral-100/60'
+                      }`}
+                  >
+                    <span>{link.label}</span>
+                    {isActive && (
+                      <motion.span
+                        layoutId="activePill"
+                        className="absolute bottom-1 left-1/2 -translate-x-1/2 w-3 h-0.5 bg-[#B5986D] rounded-full"
+                      />
+                    )}
+                  </Link>
+                );
+              })}
+            </nav>
+
+            {/* Right: 3D Contact CTA & Mobile Menu Toggle */}
+            <div className="flex items-center gap-3">
+              {/* Call Hotline (Desktop) */}
+              <a
+                href="tel:+919811221207"
+                className="hidden xl:flex items-center gap-2 px-3 py-2 text-[11px] font-medium tracking-wider text-[#666] hover:text-[#1D263B] transition-colors"
+                title="Call Directly"
               >
-                {link.label}
-                <span className="absolute bottom-0 left-0 w-0 h-[1.5px] bg-[#A89069] transition-all duration-300 group-hover:w-full"></span>
+                <div className="w-7 h-7 rounded-full bg-[#F4F1EA] flex items-center justify-center text-[#B5986D] shadow-inner">
+                  <Phone size={12} />
+                </div>
+                <span>+91 98112 21207</span>
+              </a>
+
+              {/* 3D Tactile CTA Button */}
+              <Link
+                to="/contact"
+                className="relative group hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#1D263B] text-white text-[11px] font-semibold tracking-[0.16em] uppercase overflow-hidden shadow-[0_4px_14px_rgba(29,38,59,0.25),_inset_0_1px_1px_rgba(255,255,255,0.2)] hover:shadow-[0_8px_22px_rgba(29,38,59,0.35),_inset_0_1px_1px_rgba(255,255,255,0.3)] hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-[0_2px_8px_rgba(29,38,59,0.25)] transition-all duration-300"
+              >
+                <span className="relative z-10 text-white">Contact Us</span>
+                <ArrowUpRight
+                  size={14}
+                  className="relative z-10 text-[#C5A880] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
+                {/* Subtle highlight sheen */}
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
               </Link>
-            ))}
-          </nav>
 
-          {/* Contact Button & Mobile Toggle */}
-          <div className="flex items-center gap-4 z-50">
-            <a 
-              href="tel:+919811221207" 
-              className="hidden lg:flex items-center gap-2 text-xs uppercase tracking-widest font-semibold text-white bg-white/10 border border-white/20 px-4 py-2 rounded-full hover:bg-white hover:text-[#2F3E35] transition-all duration-300 group"
-            >
-              <Phone size={13} className="text-[#A89069] group-hover:text-[#2F3E35] transition-colors" />
-              <span>Let's Talk</span>
-            </a>
+              {/* Mobile Phone Quick Action */}
+              <a
+                href="tel:+919811221207"
+                className="flex sm:hidden w-9 h-9 rounded-full bg-[#F4F1EA] items-center justify-center text-[#1D263B] shadow-sm border border-[#E8E4DA]"
+                aria-label="Call Saudagar Properties"
+              >
+                <Phone size={14} className="text-[#B5986D]" />
+              </a>
 
-            <button 
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 text-white hover:bg-white/10 rounded-full transition-colors"
-              aria-label="Toggle Menu"
-            >
-              {isMobileMenuOpen ? <X strokeWidth={1.5} size={24} /> : <Menu strokeWidth={1.5} size={24} />}
-            </button>
+              {/* Mobile Menu Hamburger Button */}
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className={`flex lg:hidden items-center justify-center w-10 h-10 rounded-full transition-all duration-300 ${isMobileMenuOpen
+                  ? 'bg-[#1D263B] text-white shadow-md'
+                  : 'bg-[#F4F1EA] text-[#1D263B] hover:bg-[#EAE5DA] shadow-[inset_0_1px_1px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.06)]'
+                  }`}
+                aria-label="Toggle Navigation Menu"
+              >
+                {isMobileMenuOpen ? <X size={18} /> : <Menu size={18} />}
+              </button>
+            </div>
           </div>
         </div>
       </header>
 
-      {/* Mobile Fullscreen Menu */}
+      {/* Luxury Mobile Menu Overlay */}
       <AnimatePresence>
         {isMobileMenuOpen && (
-          <motion.div 
-            initial={{ opacity: 0, y: -20 }}
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-40 bg-[#1A231E] flex flex-col justify-center items-center lg:hidden px-6"
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-x-3 top-20 z-40 max-h-[85vh] overflow-y-auto rounded-3xl bg-white/98 backdrop-blur-2xl border border-white/80 shadow-[0_25px_60px_-15px_rgba(20,25,35,0.25)] p-6 flex flex-col ring-1 ring-black/[0.05]"
           >
-            <nav className="flex flex-col items-center gap-8">
-              {NAV_LINKS.map((link) => (
-                <Link 
-                  key={link.label} 
-                  to={link.href}
-                  className="text-2xl font-serif text-white hover:text-[#A89069] transition-colors"
-                >
-                  {link.label}
-                </Link>
-              ))}
+            <div className="flex items-center justify-between pb-4 border-b border-[#F0ECE1]">
+              <span className="text-[10px] font-bold tracking-[0.25em] text-[#B5986D] uppercase">Navigation</span>
+              <span className="text-[10px] tracking-wider text-[#888]">Saudagar Properties</span>
+            </div>
+
+            <nav className="flex flex-col divide-y divide-[#F5F2EA] py-2">
+              {NAV_LINKS.map((link) => {
+                if (link.dropdown) {
+                  return (
+                    <div key={link.label} className="py-3">
+                      <button
+                        onClick={() => setActiveDropdown(activeDropdown === link.label ? null : link.label)}
+                        className="w-full flex items-center justify-between text-sm font-semibold tracking-[0.12em] text-[#1D263B] uppercase"
+                      >
+                        <span>{link.label}</span>
+                        <ChevronDown
+                          size={16}
+                          className={`text-[#B5986D] transition-transform duration-300 ${activeDropdown === link.label ? 'rotate-180' : ''
+                            }`}
+                        />
+                      </button>
+
+                      <AnimatePresence>
+                        {activeDropdown === link.label && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25 }}
+                            className="overflow-hidden mt-3 pl-3 space-y-2 border-l-2 border-[#B5986D]/30"
+                          >
+                            {link.dropdown.map((sub) => (
+                              <Link
+                                key={sub.label}
+                                to={sub.href}
+                                className="block py-1.5 text-xs text-[#555] hover:text-[#B5986D] transition-colors"
+                              >
+                                {sub.label}
+                              </Link>
+                            ))}
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
+                  );
+                }
+
+                return (
+                  <Link
+                    key={link.label}
+                    to={link.href}
+                    className="py-3 text-sm font-semibold tracking-[0.12em] text-[#1D263B] uppercase hover:text-[#B5986D] transition-colors flex items-center justify-between"
+                  >
+                    <span>{link.label}</span>
+                    <ArrowUpRight size={14} className="text-[#CCC]" />
+                  </Link>
+                );
+              })}
+
+              <Link
+                to="/contact"
+                className="py-3 text-sm font-semibold tracking-[0.12em] text-[#B5986D] uppercase hover:text-[#1D263B] transition-colors flex items-center justify-between"
+              >
+                <span>CONTACT US</span>
+                <ArrowUpRight size={14} className="text-[#B5986D]" />
+              </Link>
             </nav>
 
-            <div className="absolute bottom-12 flex flex-col items-center gap-4">
-              <span className="text-[0.65rem] tracking-[0.25em] text-[#A89069] uppercase font-semibold">Get in touch</span>
-              <a href="tel:+919810422282" className="text-lg font-light text-white border-b border-white/20 pb-1">
-                +919718511207
+            {/* Quick Contact Footnote */}
+            <div className="mt-4 pt-4 border-t border-[#F0ECE1] flex flex-col gap-3 bg-[#FAF8F5] -mx-6 -mb-6 p-6 rounded-b-3xl">
+              <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#888]">Private Consultation</span>
+              <a
+                href="tel:+919811221207"
+                className="flex items-center gap-3 text-sm font-semibold text-[#1D263B]"
+              >
+                <div className="w-8 h-8 rounded-full bg-[#1D263B] text-white flex items-center justify-center">
+                  <Phone size={14} />
+                </div>
+                <div>
+                  <div className="text-[10px] text-[#999] uppercase">Call Direct</div>
+                  <div className="text-sm font-medium tracking-wide">+91 98112 21207</div>
+                </div>
               </a>
             </div>
           </motion.div>
@@ -121,3 +329,5 @@ export default function Navbar() {
     </>
   );
 }
+
+

@@ -8,10 +8,6 @@ import PageLoader from './components/ui/PageLoader';
 
 // Pages (Lazy loaded for optimal bundle splitting)
 const Home = lazy(() => import('./pages/Home'));
-const ReadyToMove = lazy(() => import('./pages/ReadyToMove'));
-const NewLaunches = lazy(() => import('./pages/NewLaunches'));
-const UnderConstruction = lazy(() => import('./pages/UnderConstruction'));
-const AboutUs = lazy(() => import('./pages/AboutUs'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 export default function App() {
