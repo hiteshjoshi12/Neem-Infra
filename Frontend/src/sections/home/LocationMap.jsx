@@ -33,29 +33,40 @@ export default function LocationMap() {
   const rotateX = useTransform(mouseY, [-0.5, 0.5], ["6deg", "-6deg"]);
   const rotateY = useTransform(mouseX, [-0.5, 0.5], ["-6deg", "6deg"]);
 
+  const rectCacheRef = useRef(null);
+
+  const handleMouseEnter = () => {
+    if (cardRef.current) {
+      rectCacheRef.current = cardRef.current.getBoundingClientRect();
+    }
+  };
+
   const handleMouseMove = (e) => {
-    if (!cardRef.current) return;
-    const rect = cardRef.current.getBoundingClientRect();
-    const width = rect.width;
-    const height = rect.height;
+    if (!rectCacheRef.current && cardRef.current) {
+      rectCacheRef.current = cardRef.current.getBoundingClientRect();
+    }
+    const rect = rectCacheRef.current;
+    if (!rect) return;
+
     const mouseXPos = e.clientX - rect.left;
     const mouseYPos = e.clientY - rect.top;
 
-    x.set(mouseXPos / width - 0.5);
-    y.set(mouseYPos / height - 0.5);
+    x.set(mouseXPos / rect.width - 0.5);
+    y.set(mouseYPos / rect.height - 0.5);
   };
 
   const handleMouseLeave = () => {
+    rectCacheRef.current = null;
     x.set(0);
     y.set(0);
   };
 
   return (
-    <section className="w-full bg-[#F9F8F4] py-16 md:py-20 overflow-hidden border-t border-[#E5E0D8]">
+    <section className="w-full bg-[#F9F8F4] py-12 md:py-16 overflow-hidden border-t border-[#E5E0D8]">
       <div className="container mx-auto px-6 md:px-12">
         
         {/* Section Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-10">
           <motion.div 
             initial="hidden"
             whileInView="visible"
@@ -99,6 +110,7 @@ export default function LocationMap() {
         {/* 3D Interactive Map Container */}
         <motion.div 
           ref={cardRef}
+          onMouseEnter={handleMouseEnter}
           onMouseMove={handleMouseMove}
           onMouseLeave={handleMouseLeave}
           style={{ perspective: 1200 }}

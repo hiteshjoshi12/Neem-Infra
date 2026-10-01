@@ -14,6 +14,7 @@ import ProtectedRoute from './components/admin/ProtectedRoute';
 
 // Public Pages (Lazy loaded)
 const Home = lazy(() => import('./pages/Home'));
+const About = lazy(() => import('./pages/About'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Admin Pages (Lazy loaded)
@@ -38,7 +39,7 @@ export default function App() {
                 <Route path="/ready-to-move" element={<Home />} />
                 <Route path="/new-launches" element={<Home />} />
                 <Route path="/under-construction" element={<Home />} />
-                <Route path="/about" element={<Home />} />
+                <Route path="/about" element={<About />} />
                 <Route path="/developers" element={<Home />} />
               </Route>
 

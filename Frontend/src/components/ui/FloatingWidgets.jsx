@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa6';
@@ -9,28 +9,40 @@ export default function FloatingWidgets() {
   const widgetData = sections?.floatingWidgets || {};
 
   const [showTopBtn, setShowTopBtn] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const progressCircleRef = useRef(null);
+
+  // Circular progress dimensions for 44px widget (radius 18)
+  const radius = 18;
+  const circumference = 2 * Math.PI * radius;
 
   useEffect(() => {
+    let ticking = false;
+
     const handleScroll = () => {
-      const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
-      const currentScroll = window.scrollY;
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          const currentScroll = window.scrollY;
+          const totalScroll = document.documentElement.scrollHeight - window.innerHeight;
 
-      if (totalScroll > 0) {
-        setScrollProgress((currentScroll / totalScroll) * 100);
-      }
+          if (progressCircleRef.current && totalScroll > 0) {
+            const progress = Math.min(Math.max(currentScroll / totalScroll, 0), 1);
+            const offset = circumference - progress * circumference;
+            progressCircleRef.current.style.strokeDashoffset = `${offset}px`;
+          }
 
-      if (currentScroll > 320) {
-        setShowTopBtn(true);
-      } else {
-        setShowTopBtn(false);
+          const shouldShow = currentScroll > 320;
+          setShowTopBtn((prev) => (prev !== shouldShow ? shouldShow : prev));
+
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [circumference]);
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -47,14 +59,9 @@ export default function FloatingWidgets() {
   // WhatsApp prefilled message url
   const whatsappUrl = `https://wa.me/${whatsappNumber.replace(/\D/g, '')}?text=${encodeURIComponent(whatsappPrefill)}`;
 
-  // Circular progress calculations for 44px widget (radius 18)
-  const radius = 18;
-  const circumference = 2 * Math.PI * radius;
-  const strokeDashoffset = circumference - (scrollProgress / 100) * circumference;
-
   return (
     <aside aria-label="Quick Actions" className="fixed bottom-6 right-5 sm:right-7 z-50 flex flex-col items-end gap-3 pointer-events-none">
-      
+
       {/* 1. Luxury Go To Top Widget with Scroll Progress Ring */}
       <AnimatePresence>
         {showTopBtn && (
@@ -62,7 +69,7 @@ export default function FloatingWidgets() {
             initial={{ opacity: 0, scale: 0.6, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.6, y: 20 }}
-            transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
             className="pointer-events-auto group relative flex items-center"
           >
             {/* Hover Tooltip */}
@@ -86,13 +93,14 @@ export default function FloatingWidgets() {
                   fill="none"
                 />
                 <circle
+                  ref={progressCircleRef}
                   cx="22"
                   cy="22"
                   r={radius}
-                  className="stroke-[#C5A880] transition-all duration-150"
+                  className="stroke-[#C5A880]"
                   strokeWidth="2.5"
                   strokeDasharray={circumference}
-                  strokeDashoffset={strokeDashoffset}
+                  strokeDashoffset={circumference}
                   strokeLinecap="round"
                   fill="none"
                 />

@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { Building, Building2, Factory, ArrowUpRight, Play, Pause, ShieldCheck, Award, PhoneCall } from 'lucide-react';
+import { Building, Building2, Factory, ArrowUpRight, ShieldCheck, Award, PhoneCall, Sparkles, MapPin } from 'lucide-react';
 import { useCms } from '../../context/CmsContext';
+import Tilt3DCard from '../../components/ui/Tilt3DCard';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -18,8 +19,6 @@ const CATEGORY_ICONS = {
 export default function TopConsultantSection() {
   const { sections } = useCms();
   const data = sections?.topConsultant || {};
-
-  const [isPlaying, setIsPlaying] = useState(false);
 
   const badge = data.badge || "Bespoke Real Estate Advisory";
   const headlineMain = data.headlineMain || "Top Real Estate Consultant";
@@ -56,7 +55,7 @@ export default function TopConsultantSection() {
       <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#1D263B_1px,transparent_1px)] [background-size:24px_24px]" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
-        
+
         {/* Section Header */}
         <motion.div
           initial="hidden"
@@ -85,7 +84,7 @@ export default function TopConsultantSection() {
 
         {/* Main 3D Feature Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch mb-20">
-          
+
           {/* Left Column: Signature 3D Gold Framed Content Card */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -135,7 +134,7 @@ export default function TopConsultantSection() {
             </div>
           </motion.div>
 
-          {/* Right Column: Cinematic Video Showcase Card */}
+          {/* Right Column: Signature Architectural Photo Showcase */}
           <motion.div
             initial={{ opacity: 0, x: 30 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -143,46 +142,53 @@ export default function TopConsultantSection() {
             transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
             className="lg:col-span-5 relative flex flex-col"
           >
-            <div className="relative flex-1 min-h-[360px] lg:min-h-full rounded-3xl overflow-hidden shadow-[0_25px_60px_-15px_rgba(20,25,35,0.2)] border border-[#EFECE6] bg-[#1D263B] group">
-              {/* Background Luxury Architectural Image / Video Poster */}
-              <img
-                src={videoTour.image || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80"}
-                alt={videoTour.title || "Luxury Sushant Lok Estate"}
-                className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-[0.75]"
-              />
+            <Tilt3DCard maxTilt={8} className="h-full">
+              <div
+                className="relative flex-1 min-h-[380px] lg:min-h-full rounded-3xl overflow-hidden shadow-[0_25px_60px_-15px_rgba(20,25,35,0.25)] border border-[#EFECE6] bg-[#1D263B] group flex flex-col justify-between"
+                style={{ transformStyle: 'preserve-3d' }}
+              >
+                {/* Background Luxury Architectural Image */}
+                <img
+                  src={videoTour.image || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80"}
+                  alt={videoTour.title || "Luxury Sushant Lok Estate"}
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-[0.82]"
+                />
 
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-t from-[#1D263B] via-[#1D263B]/30 to-transparent" />
+                {/* Layered Luxury Vignette Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#1D263B] via-[#1D263B]/25 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#1D263B]/50 via-transparent to-transparent pointer-events-none" />
 
-              {/* Top Badge */}
-              <div className="absolute top-6 left-6 right-6 flex items-center justify-between z-20">
-                <span className="px-3.5 py-1.5 rounded-full bg-white/90 backdrop-blur-md text-[10px] font-bold tracking-widest text-[#1D263B] uppercase shadow-md">
-                  {videoTour.badge}
-                </span>
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-              </div>
-
-              {/* Center Play CTA */}
-              <div className="absolute inset-0 flex items-center justify-center z-20">
-                <button
-                  onClick={() => setIsPlaying(!isPlaying)}
-                  className="w-16 h-16 md:w-20 md:h-20 rounded-full bg-white/95 backdrop-blur-xl text-[#1D263B] flex items-center justify-center shadow-[0_15px_35px_rgba(0,0,0,0.3)] hover:scale-110 hover:bg-[#C5A880] hover:text-white transition-all duration-300 cursor-pointer group/btn"
-                  aria-label="Play Property Tour Video"
+                {/* Top Badge (translateZ 35px) */}
+                <div
+                  className="relative p-6 flex items-center justify-between z-20"
+                  style={{ transform: 'translateZ(35px)' }}
                 >
-                  {isPlaying ? (
-                    <Pause size={28} className="translate-x-0" />
-                  ) : (
-                    <Play size={28} className="translate-x-0.5" />
-                  )}
-                </button>
-              </div>
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-950/85 backdrop-blur-md border border-[#C5A880]/40 text-[#C5A880] text-[10px] font-bold font-mono tracking-widest uppercase shadow-md">
+                    <Sparkles size={11} className="text-[#C5A880]" />
+                    <span>{videoTour.badge || "Signature Collection"}</span>
+                  </div>
+                </div>
 
-              {/* Bottom Details Banner */}
-              <div className="absolute bottom-6 left-6 right-6 z-20 text-white">
-                <h3 className="text-xl font-serif mb-1">{videoTour.title}</h3>
-                <p className="text-xs text-[#D1D5DB] font-light">{videoTour.subtitle}</p>
+                {/* Bottom Details Banner (translateZ 40px) */}
+                <div
+                  className="relative p-6 sm:p-8 z-20 text-white"
+                  style={{ transform: 'translateZ(40px)' }}
+                >
+                  <div className="inline-flex items-center gap-1.5 text-[10px] uppercase font-mono tracking-widest text-[#C5A880] mb-1">
+                    <MapPin size={11} className="text-[#C5A880]" />
+                    <span>DLF Phase 1–4 & Sushant Lok</span>
+                  </div>
+
+                  <h3 className="text-xl sm:text-2xl font-serif font-bold text-white mb-1.5 leading-snug drop-shadow-md">
+                    {videoTour.title || "Exclusive DLF & Sushant Lok Walkthrough"}
+                  </h3>
+
+                  <p className="text-xs sm:text-sm text-slate-200 font-light leading-relaxed">
+                    {videoTour.subtitle || "Experience Gurgaon's finest properties with curated virtual walkthroughs."}
+                  </p>
+                </div>
               </div>
-            </div>
+            </Tilt3DCard>
           </motion.div>
 
         </div>
@@ -195,8 +201,11 @@ export default function TopConsultantSection() {
           transition={{ duration: 0.8 }}
           className="rounded-3xl bg-[#1D263B] text-white p-8 md:p-12 shadow-[0_20px_50px_rgba(29,38,59,0.2)] flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden"
         >
-          {/* Subtle Ambient Sheen */}
-          <div className="absolute -right-20 -bottom-20 w-80 h-80 bg-[#C5A880]/10 rounded-full blur-3xl pointer-events-none" />
+          {/* Subtle Ambient Sheen (0 blur radial gradient) */}
+          <div
+            className="absolute -right-20 -bottom-20 w-80 h-80 rounded-full pointer-events-none"
+            style={{ background: 'radial-gradient(circle, rgba(197,168,128,0.15) 0%, transparent 70%)' }}
+          />
 
           <div className="flex items-center gap-6 z-10">
             <div className="w-14 h-14 rounded-2xl bg-[#C5A880]/20 border border-[#C5A880]/40 text-[#C5A880] flex items-center justify-center flex-shrink-0">
