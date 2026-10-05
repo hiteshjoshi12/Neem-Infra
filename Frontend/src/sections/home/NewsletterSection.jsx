@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Mail, ArrowRight, CheckCircle2, Sparkles, ShieldCheck } from 'lucide-react';
+import { useState } from 'react';
+import { Mail, ArrowUpRight, CheckCircle2, ShieldCheck } from 'lucide-react';
 import { useCms } from '../../context/CmsContext';
 import api from '../../services/api';
 
@@ -14,13 +13,18 @@ export default function NewsletterSection() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!email || !email.includes('@')) return;
+
+    if (!email.trim() || !email.includes('@')) return;
 
     setIsLoading(true);
+
     try {
-      await api.createInquiry({ email, type: 'newsletter' });
+      await api.createInquiry({
+        email: email.trim(),
+        type: 'newsletter',
+      });
     } catch (err) {
-      console.warn('Newsletter API call logged locally:', err.message);
+      console.warn('Newsletter API error:', err?.message);
     } finally {
       setIsLoading(false);
       setIsSubmitted(true);
@@ -29,131 +33,123 @@ export default function NewsletterSection() {
   };
 
   return (
-    <section className="relative w-full py-12 md:py-16 bg-[#FAF8F5] overflow-hidden border-t border-[#EFECE6]">
-      {/* Background Architectural Ambient Elements */}
-      <div className="absolute inset-0 opacity-[0.035] pointer-events-none bg-[radial-gradient(#1D263B_1px,transparent_1px)] [background-size:28px_28px]" />
-      <div className="absolute -bottom-24 left-1/2 -translate-x-1/2 w-[650px] h-[300px] bg-[#C5A880]/15 rounded-full blur-3xl pointer-events-none" />
+    <section
+      aria-labelledby="newsletter-heading"
+      className="w-full bg-[#F9F7F4] py-10 md:py-12"
+    >
+      <div className="mx-auto max-w-5xl px-5 sm:px-8">
 
-      <div className="max-w-6xl mx-auto px-5 sm:px-8 md:px-12 relative z-10">
+        <div className="relative overflow-hidden rounded-2xl bg-[#182345] px-6 py-7 md:px-9 md:py-8">
 
-        {/* 3D Glassmorphic Container Card */}
-        <motion.div
-          initial={{ opacity: 0, y: 35 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="relative rounded-3xl bg-[#1D263B] text-white p-8 sm:p-12 md:p-16 shadow-[0_25px_60px_-15px_rgba(29,38,59,0.35)] border border-white/10 overflow-hidden"
-        >
-          {/* Subtle Outer Corner Decorative Accents */}
-          <div className="absolute top-4 left-4 w-10 h-10 border-t border-l border-[#C5A880]/50 rounded-tl-xl pointer-events-none" />
-          <div className="absolute bottom-4 right-4 w-10 h-10 border-b border-r border-[#C5A880]/50 rounded-br-xl pointer-events-none" />
+          {/* subtle gold accent */}
+          <div className="absolute left-0 top-0 h-full w-[2px] bg-[#D09A16]" />
 
-          {/* Ambient Gold Radial Sheen */}
-          <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-[#C5A880]/20 to-transparent rounded-full blur-2xl pointer-events-none" />
-          <div className="absolute -bottom-10 -left-10 w-60 h-60 bg-[#C5A880]/10 rounded-full blur-2xl pointer-events-none" />
+          <div className="relative z-10 flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
 
-          <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-14">
+            {/* Content */}
+            <div className="max-w-lg">
+              <div className="mb-2 flex items-center gap-2">
+                <span className="h-px w-5 bg-[#D09A16]" />
 
-            {/* Left Content Area */}
-            <div className="max-w-xl text-center lg:text-left">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-[11px] font-bold tracking-[0.25em] text-[#C5A880] uppercase mb-5">
-                <Sparkles size={12} className="text-[#C5A880]" />
-                <span>{newsData.badge || "Market Intelligence"}</span>
+                <span className="text-[9px] font-semibold uppercase tracking-[0.25em] text-[#D09A16]">
+                  {newsData.badge || 'Market Intelligence'}
+                </span>
               </div>
 
-              <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-[40px] font-serif text-white leading-[1.2] mb-4">
-                {newsData.titleMain || "Subscribe To"} <span className="italic font-light text-[#C5A880]">{newsData.titleItalic || "Saudagar Properties"}</span> {newsData.titleSuffix || "Newsletter"}
+              <h2
+                id="newsletter-heading"
+                className="font-serif text-2xl leading-tight text-white sm:text-[28px]"
+              >
+                {newsData.titleMain || 'Stay ahead with'}{' '}
+                <span className="italic font-light text-[#D09A16]">
+                  {newsData.titleItalic || 'Saudagar Properties'}
+                </span>
               </h2>
 
-              <p className="text-[#A0ABBB] text-sm sm:text-base font-light leading-relaxed">
-                {newsData.description || "Sign up with your email address to receive curated off-market opportunities, DLF price trends, and the latest Gurgaon real estate updates."}
+              <p className="mt-2 text-xs leading-5 text-white/50 sm:text-sm">
+                {newsData.description ||
+                  'Curated property opportunities and Gurgaon market insights, delivered directly to your inbox.'}
               </p>
             </div>
 
-            {/* Right Interactive Form Area */}
-            <div className="w-full lg:max-w-md">
-              <AnimatePresence mode="wait">
-                {isSubmitted ? (
-                  <motion.div
-                    key="success"
-                    initial={{ opacity: 0, scale: 0.95, y: 10 }}
-                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                    exit={{ opacity: 0, scale: 0.95, y: -10 }}
-                    className="rounded-2xl bg-white/10 backdrop-blur-xl border border-[#C5A880]/40 p-6 text-center flex flex-col items-center justify-center gap-3 shadow-lg"
-                  >
-                    <div className="w-12 h-12 rounded-full bg-[#C5A880]/20 border border-[#C5A880] text-[#C5A880] flex items-center justify-center">
-                      <CheckCircle2 size={26} />
+            {/* Form */}
+            <div className="w-full lg:max-w-[390px]">
+              {!isSubmitted ? (
+                <form onSubmit={handleSubmit}>
+                  <label htmlFor="newsletter-email" className="sr-only">
+                    Email address
+                  </label>
+
+                  <div className="flex overflow-hidden rounded-xl bg-white p-1">
+                    <div className="flex min-w-0 flex-1 items-center gap-2 px-3">
+                      <Mail
+                        size={15}
+                        className="flex-shrink-0 text-[#D09A16]"
+                      />
+
+                      <input
+                        id="newsletter-email"
+                        name="email"
+                        type="email"
+                        required
+                        autoComplete="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        placeholder={
+                          newsData.placeholder || 'Your email address'
+                        }
+                        className="min-w-0 w-full bg-transparent text-xs text-[#182345] outline-none placeholder:text-[#182345]/35"
+                      />
                     </div>
-                    <div>
-                      <h4 className="text-base font-serif font-bold text-white mb-1">
-                        {newsData.successTitle || "Thank You for Subscribing!"}
-                      </h4>
-                      <p className="text-xs text-[#CBD5E1] font-light max-w-xs">
-                        {newsData.successMessage || "You have been added to our private advisory list. Expect exclusive DLF & Gurgaon real estate insights in your inbox."}
-                      </p>
-                    </div>
+
                     <button
-                      onClick={() => setIsSubmitted(false)}
-                      className="mt-2 text-[11px] text-[#C5A880] hover:underline uppercase tracking-wider font-semibold"
+                      type="submit"
+                      disabled={isLoading}
+                      className="flex items-center gap-1.5 rounded-lg bg-[#D09A16] px-4 py-3 text-[9px] font-bold uppercase tracking-wider text-[#182345] transition hover:bg-[#E0AD36] disabled:opacity-60"
                     >
-                      {newsData.subscribeAnotherText || "Subscribe another email"}
+                      {isLoading ? (
+                        <span className="h-3.5 w-3.5 animate-spin rounded-full border-2 border-[#182345] border-t-transparent" />
+                      ) : (
+                        <>
+                          {newsData.buttonText || 'Subscribe'}
+                          <ArrowUpRight size={12} />
+                        </>
+                      )}
                     </button>
-                  </motion.div>
-                ) : (
-                  <motion.form
-                    key="form"
-                    onSubmit={handleSubmit}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    className="flex flex-col gap-3"
-                  >
-                    {/* Input Container with 3D Luxury Elevation */}
-                    <div className="relative flex flex-col sm:flex-row items-stretch gap-2 sm:gap-0 bg-white/95 backdrop-blur-xl rounded-2xl p-2 border border-white/40 shadow-[0_15px_35px_rgba(0,0,0,0.25)] focus-within:ring-2 focus-within:ring-[#C5A880] transition-all duration-300">
+                  </div>
 
-                      {/* Email Input Field */}
-                      <div className="flex items-center gap-3 px-4 py-3 sm:py-2 flex-grow min-w-0">
-                        <Mail className="text-[#C5A880] w-5 h-5 flex-shrink-0" />
-                        <input
-                          type="email"
-                          required
-                          value={email}
-                          onChange={(e) => setEmail(e.target.value)}
-                          placeholder={newsData.placeholder || "Enter your email address..."}
-                          className="w-full bg-transparent border-none outline-none text-[#1D263B] placeholder-[#9CA3AF] text-sm font-light truncate"
-                        />
-                      </div>
+                  <div className="mt-2 flex items-center gap-1.5 px-1">
+                    <ShieldCheck size={11} className="text-[#D09A16]" />
 
-                      {/* Sign Up Action Button */}
-                      <button
-                        type="submit"
-                        disabled={isLoading}
-                        className="px-7 py-3.5 sm:py-3 rounded-xl bg-[#1D263B] hover:bg-[#C5A880] text-white hover:text-[#1D263B] font-semibold text-xs uppercase tracking-widest transition-all duration-300 flex items-center justify-center gap-2 flex-shrink-0 cursor-pointer shadow-md active:scale-95 group/btn disabled:opacity-70"
-                      >
-                        {isLoading ? (
-                          <span className="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin" />
-                        ) : (
-                          <>
-                            <span>{newsData.buttonText || "Sign Up"}</span>
-                            <ArrowRight size={14} className="group-hover/btn:translate-x-1 transition-transform" />
-                          </>
-                        )}
-                      </button>
-                    </div>
+                    <span className="text-[9px] text-white/35">
+                      {newsData.disclaimer ||
+                        'No spam. Unsubscribe anytime.'}
+                    </span>
+                  </div>
+                </form>
+              ) : (
+                <div className="flex items-center gap-3 rounded-xl border border-[#D09A16]/20 bg-white/[0.06] px-4 py-3">
+                  <CheckCircle2
+                    size={22}
+                    className="flex-shrink-0 text-[#D09A16]"
+                  />
 
-                    {/* Trust and Privacy Guarantee */}
-                    <div className="flex items-center justify-center lg:justify-start gap-2 px-2 text-[11px] text-[#A0ABBB] font-light">
-                      <ShieldCheck size={13} className="text-[#C5A880] flex-shrink-0" />
-                      <span>{newsData.disclaimer || "Zero spam. Complete confidentiality. Unsubscribe at any time."}</span>
-                    </div>
-                  </motion.form>
-                )}
-              </AnimatePresence>
+                  <div>
+                    <p className="text-xs font-semibold text-white">
+                      {newsData.successTitle || 'You’re subscribed.'}
+                    </p>
+
+                    <p className="mt-0.5 text-[10px] text-white/45">
+                      {newsData.successMessage ||
+                        'Exclusive property insights are on their way.'}
+                    </p>
+                  </div>
+                </div>
+              )}
             </div>
 
           </div>
-        </motion.div>
-
+        </div>
       </div>
     </section>
   );

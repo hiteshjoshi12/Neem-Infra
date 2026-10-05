@@ -59,7 +59,7 @@ export default function TopConsultantEditor({ formData, updateField }) {
 
       {/* Video Tour Showcase Card */}
       <div className="pt-6 border-t border-white/10">
-        <h4 className="text-sm font-serif font-bold text-[#C5A880] mb-4">
+        <h4 className="text-sm font-serif font-bold text-[#D09A16] mb-4">
           Cinematic Video Walkthrough Showcase Card
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -88,7 +88,7 @@ export default function TopConsultantEditor({ formData, updateField }) {
 
       {/* Bottom CTA Banner */}
       <div className="pt-6 border-t border-white/10">
-        <h4 className="text-sm font-serif font-bold text-[#C5A880] mb-4">
+        <h4 className="text-sm font-serif font-bold text-[#D09A16] mb-4">
           Bottom Trust & Action Banner
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

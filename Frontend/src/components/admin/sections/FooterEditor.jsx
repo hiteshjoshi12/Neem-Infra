@@ -108,7 +108,7 @@ export default function FooterEditor({ formData, updateField }) {
       {/* Direct Phone Numbers List */}
       <div className="pt-6 border-t border-white/10 space-y-4">
         <div className="flex items-center justify-between">
-          <h4 className="text-sm font-serif font-bold text-[#C5A880]">
+          <h4 className="text-sm font-serif font-bold text-[#D09A16]">
             Direct Telephone Lines
           </h4>
           <button
@@ -149,7 +149,7 @@ export default function FooterEditor({ formData, updateField }) {
       {/* Social Media Links */}
       <div className="pt-6 border-t border-white/10 space-y-4">
         <div className="flex items-center justify-between">
-          <h4 className="text-sm font-serif font-bold text-[#C5A880]">
+          <h4 className="text-sm font-serif font-bold text-[#D09A16]">
             Social Media Profiles
           </h4>
           <button

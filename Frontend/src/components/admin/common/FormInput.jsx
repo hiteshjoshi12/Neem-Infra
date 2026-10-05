@@ -22,7 +22,7 @@ export default function FormInput({
         value={value || ''}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full bg-white/[0.05] border border-white/10 focus:border-[#C5A880] rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition-colors"
+        className="w-full bg-white/[0.05] border border-white/10 focus:border-[#D09A16] rounded-xl px-4 py-3 text-sm text-white placeholder-slate-500 outline-none transition-colors"
       />
     </div>
   );

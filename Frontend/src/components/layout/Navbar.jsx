@@ -201,7 +201,7 @@ export default function Navbar() {
                 <span className="relative z-10 text-white">{ctaText}</span>
                 <ArrowUpRight
                   size={14}
-                  className="relative z-10 text-[#C5A880] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  className="relative z-10 text-[#D09A16] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                 />
                 {/* Subtle highlight sheen */}
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />

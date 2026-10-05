@@ -61,7 +61,7 @@ export default function AdminDashboard() {
       subtext: 'Hero, Consultant, Services, Location...',
       icon: Layers,
       link: '/admin/sections',
-      color: '#C5A880'
+      color: '#D09A16'
     },
     {
       title: 'Managed Properties',
@@ -94,11 +94,11 @@ export default function AdminDashboard() {
 
       {/* Welcome Banner */}
       <div className="relative rounded-3xl bg-gradient-to-r from-[#172033] via-[#121826] to-[#0F141F] p-8 sm:p-10 border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.4)] overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-[#C5A880]/15 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-[#D09A16]/15 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-2">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold tracking-[0.2em] text-[#C5A880] uppercase">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold tracking-[0.2em] text-[#D09A16] uppercase">
               <Sparkles size={12} />
               <span>Saudagar Properties Control Center</span>
             </div>
@@ -113,7 +113,7 @@ export default function AdminDashboard() {
           <div className="flex flex-wrap items-center gap-3">
             <Link
               to="/admin/sections"
-              className="px-6 py-3 rounded-xl bg-[#C5A880] hover:bg-[#B5986D] text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-md active:scale-95"
+              className="px-6 py-3 rounded-xl bg-[#D09A16] hover:bg-[#B5986D] text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all duration-300 shadow-md active:scale-95"
             >
               <span>Edit Sections CMS</span>
               <ArrowUpRight size={15} />
@@ -136,7 +136,7 @@ export default function AdminDashboard() {
             <Link
               key={idx}
               to={item.link}
-              className="group p-6 rounded-3xl bg-[#121724] border border-white/10 hover:border-[#C5A880]/60 transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.2)] hover:-translate-y-1 block"
+              className="group p-6 rounded-3xl bg-[#121724] border border-white/10 hover:border-[#D09A16]/60 transition-all duration-300 shadow-[0_10px_30px_rgba(0,0,0,0.2)] hover:-translate-y-1 block"
             >
               <div className="flex items-center justify-between mb-4">
                 <div
@@ -172,7 +172,7 @@ export default function AdminDashboard() {
               <h3 className="text-lg font-serif font-bold text-white">Homepage Section Editors</h3>
               <p className="text-xs text-slate-400">Quickly jump into any section to edit copy & media</p>
             </div>
-            <Link to="/admin/sections" className="text-xs text-[#C5A880] hover:underline font-semibold">
+            <Link to="/admin/sections" className="text-xs text-[#D09A16] hover:underline font-semibold">
               Open All →
             </Link>
           </div>
@@ -195,13 +195,13 @@ export default function AdminDashboard() {
               <Link
                 key={i}
                 to={`/admin/sections?tab=${sec.tab}`}
-                className="p-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 hover:border-[#C5A880]/40 transition-all duration-300 flex flex-col justify-between group"
+                className="p-4 rounded-2xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/5 hover:border-[#D09A16]/40 transition-all duration-300 flex flex-col justify-between group"
               >
                 <div className="flex items-center justify-between mb-1">
-                  <h4 className="text-xs font-bold text-white group-hover:text-[#C5A880] transition-colors">
+                  <h4 className="text-xs font-bold text-white group-hover:text-[#D09A16] transition-colors">
                     {sec.name}
                   </h4>
-                  <ArrowUpRight size={13} className="text-slate-500 group-hover:text-[#C5A880]" />
+                  <ArrowUpRight size={13} className="text-slate-500 group-hover:text-[#D09A16]" />
                 </div>
                 <p className="text-[11px] text-slate-400 font-light leading-relaxed">
                   {sec.desc}
@@ -218,7 +218,7 @@ export default function AdminDashboard() {
               <h3 className="text-lg font-serif font-bold text-white">Recent Inquiries</h3>
               <p className="text-xs text-slate-400">Newsletter and property lead captures</p>
             </div>
-            <Link to="/admin/inquiries" className="text-xs text-[#C5A880] hover:underline font-semibold">
+            <Link to="/admin/inquiries" className="text-xs text-[#D09A16] hover:underline font-semibold">
               View All
             </Link>
           </div>

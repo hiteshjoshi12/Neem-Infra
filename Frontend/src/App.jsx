@@ -15,6 +15,9 @@ import ProtectedRoute from './components/admin/ProtectedRoute';
 // Public Pages (Lazy loaded)
 const Home = lazy(() => import('./pages/User/Home'));
 const About = lazy(() => import('./pages/User/About'));
+const Contact = lazy(() => import('./pages/User/Contact'));
+const Terms = lazy(() => import('./pages/User/Terms'));
+const PrivacyPolicy = lazy(() => import('./pages/User/PrivacyPolicy'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
 // Admin Pages (Lazy loaded)
@@ -40,7 +43,10 @@ export default function App() {
                 <Route path="/new-launches" element={<Home />} />
                 <Route path="/under-construction" element={<Home />} />
                 <Route path="/about" element={<About />} />
+                <Route path="/contact" element={<Contact />} />
                 <Route path="/developers" element={<Home />} />
+                <Route path="/terms" element={<Terms />} />
+                <Route path="/privacy-policy" element={<PrivacyPolicy />} />
               </Route>
 
               {/* Admin Authentication */}

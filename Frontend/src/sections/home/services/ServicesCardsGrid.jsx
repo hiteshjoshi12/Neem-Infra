@@ -1,8 +1,60 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 import { Building2, Briefcase, Factory, CheckCircle2, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
+import { animate, inView, stagger } from 'framer-motion';
+
+const dummyTimeline = { 
+  to: function(target, vars) { gsap.to(target, vars); return this; }, 
+  from: function() { return this; }, 
+  fromTo: function(target, fromVars, toVars) { gsap.fromTo(target, fromVars, toVars); return this; } 
+};
+const gsap = { 
+  to: (target, vars) => {
+    if (!target) return;
+    try {
+      const options = { duration: vars.duration || 0.4, delay: vars.delay || 0 };
+      if (vars.stagger) options.delay = stagger(vars.stagger);
+      const safeVars = { ...vars };
+      ['duration','delay','stagger','ease','scrollTrigger','clearProps','transformPerspective','transformStyle'].forEach(p => delete safeVars[p]);
+      
+      const elements = Array.isArray(target) ? target.filter(Boolean) : (typeof target === 'string' || target instanceof Element ? target : null);
+      if (!elements || (Array.isArray(elements) && elements.length === 0)) return;
+
+      if (vars.scrollTrigger) {
+         inView(vars.scrollTrigger.trigger || (Array.isArray(elements) ? elements[0] : elements), () => { animate(elements, safeVars, options); }, { once: true, margin: "0px 0px -10% 0px" });
+      } else {
+         animate(elements, safeVars, options);
+      }
+    } catch(e){}
+  }, 
+  from: () => {}, 
+  fromTo: (target, fromVars, toVars) => {
+    if (!target) return;
+    try {
+      const options = { duration: toVars.duration || 1, delay: toVars.delay || 0 };
+      if (toVars.stagger) options.delay = stagger(toVars.stagger);
+      const safeFrom = { ...fromVars }; const safeTo = { ...toVars };
+      ['duration','delay','stagger','ease','scrollTrigger','clearProps','transformPerspective','transformStyle'].forEach(p => { delete safeFrom[p]; delete safeTo[p]; });
+      
+      const elements = Array.isArray(target) ? target.filter(Boolean) : (typeof target === 'string' || target instanceof Element ? target : null);
+      if (!elements || (Array.isArray(elements) && elements.length === 0)) return;
+      
+      animate(elements, safeFrom, { duration: 0 });
+      if (toVars.scrollTrigger) {
+         inView(toVars.scrollTrigger.trigger || (Array.isArray(elements) ? elements[0] : elements), () => { animate(elements, safeTo, options); }, { once: true, margin: "0px 0px -10% 0px" });
+      } else {
+         animate(elements, safeTo, options);
+      }
+    } catch(e){}
+  }, 
+  context: (cb) => { if(cb) { try { cb(); } catch(e){} } return { revert: () => {} }; }, 
+  registerPlugin: () => {},
+  timeline: () => dummyTimeline 
+};
+const ScrollTrigger = {};
 import { useCms } from '../../../context/CmsContext';
+
 
 const DEFAULT_SERVICES_DATA = [
   {
@@ -54,25 +106,99 @@ export default function ServicesCardsGrid() {
   const { sections } = useCms();
   const servicesList = sections?.services?.cards || DEFAULT_SERVICES_DATA;
 
+  const containerRef = useRef(null);
+  const cardRefs = useRef([]);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      if (cardRefs.current.length > 0) {
+        gsap.fromTo(
+          cardRefs.current,
+          { opacity: 0, y: 55, rotateX: 15, scale: 0.96 },
+          {
+            opacity: 1,
+            y: 0,
+            rotateX: 0,
+            scale: 1,
+            duration: 1,
+            stagger: 0.16,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 85%",
+              once: true
+            },
+            clearProps: "transform"
+          }
+        );
+      }
+    }, containerRef);
+
+    return () => ctx.revert();
+  }, [servicesList]);
+
+  // Interactive 3D tilt on mousemove
+  const handleMouseMove = (e, index) => {
+    const card = cardRefs.current[index];
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = ((y - centerY) / centerY) * -8;
+    const rotateY = ((x - centerX) / centerX) * 8;
+
+    gsap.to(card, {
+      rotateX,
+      rotateY,
+      y: -6,
+      duration: 0.35,
+      ease: "power2.out",
+      transformPerspective: 1000,
+      transformStyle: "preserve-3d"
+    });
+  };
+
+  const handleMouseLeave = (index) => {
+    const card = cardRefs.current[index];
+    if (!card) return;
+    gsap.to(card, {
+      rotateX: 0,
+      rotateY: 0,
+      y: 0,
+      duration: 0.6,
+      ease: "power3.out"
+    });
+  };
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-8 lg:gap-10 mb-16 md:mb-20">
+    <div 
+      ref={containerRef}
+      className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-8 lg:gap-10 mb-16 md:mb-20"
+      style={{ perspective: '1200px' }}
+    >
       {servicesList.map((service, index) => {
         const iconKey = (service.icon || service.title || 'building2').toLowerCase();
         const IconComponent = ICON_MAP[iconKey] || Building2;
         return (
-          <motion.div
+          <div
             key={service.id}
-            initial={{ opacity: 0, y: 35 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.7, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
-            className="group relative flex flex-col h-full rounded-3xl bg-white border border-[#E8E2D8] shadow-[0_12px_35px_-10px_rgba(29,38,59,0.06)] hover:shadow-[0_25px_50px_-10px_rgba(197,168,128,0.28)] transition-all duration-500 overflow-hidden transform-gpu hover:-translate-y-2"
+            ref={(el) => (cardRefs.current[index] = el)}
+            onMouseMove={(e) => handleMouseMove(e, index)}
+            onMouseLeave={() => handleMouseLeave(index)}
+            className="group relative flex flex-col h-full rounded-3xl bg-white border border-[#E8E2D8] shadow-[0_12px_35px_-10px_rgba(29,38,59,0.06)] hover:shadow-[0_25px_50px_-10px_rgba(197,168,128,0.28)] transition-colors duration-300 overflow-hidden transform-gpu cursor-pointer"
+            style={{ transformStyle: 'preserve-3d' }}
           >
             {/* Top Image Preview with Dark Vignette */}
             <div className="relative h-52 sm:h-56 w-full overflow-hidden">
               <img
                 src={service.bgImage}
                 alt={service.title}
+                width="1200"
+                height="800"
+                loading="lazy"
                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-[#1D263B] via-[#1D263B]/35 to-transparent" />
@@ -82,14 +208,14 @@ export default function ServicesCardsGrid() {
                 <span className="px-3.5 py-1 rounded-full bg-[#1D263B]/85 backdrop-blur-md border border-white/20 text-white text-[10px] font-bold tracking-widest uppercase shadow-sm">
                   {service.category}
                 </span>
-                <span className="w-8 h-8 rounded-full bg-white/25 backdrop-blur-md border border-white/30 text-[#C5A880] flex items-center justify-center text-xs font-bold font-serif shadow-sm">
+                <span className="w-8 h-8 rounded-full bg-white/25 backdrop-blur-md border border-white/30 text-[#D09A16] flex items-center justify-center text-xs font-bold font-serif shadow-sm">
                   {service.id}
                 </span>
               </div>
 
               {/* Title & Icon overlaid at the bottom of the image */}
               <div className="absolute bottom-4 left-5 right-5 flex items-center gap-3">
-                <div className="w-11 h-11 rounded-2xl bg-[#C5A880] text-[#1D263B] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 shrink-0">
+                <div className="w-11 h-11 rounded-2xl bg-[#D09A16] text-[#1D263B] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 shrink-0">
                   <IconComponent size={22} />
                 </div>
                 <div>
@@ -113,7 +239,7 @@ export default function ServicesCardsGrid() {
               <div className="pt-4 border-t border-[#F1F5F9] space-y-2 mb-6">
                 {service.highlights.map((item, i) => (
                   <div key={i} className="flex items-center gap-2.5 text-xs text-[#1D263B] font-medium">
-                    <CheckCircle2 size={14} className="text-[#C5A880] shrink-0" />
+                    <CheckCircle2 size={14} className="text-[#D09A16] shrink-0" />
                     <span>{item}</span>
                   </div>
                 ))}
@@ -125,13 +251,13 @@ export default function ServicesCardsGrid() {
                 className="w-full py-3.5 px-5 rounded-2xl bg-[#FAF8F5] hover:bg-[#1D263B] text-[#1D263B] hover:text-white border border-[#E8E2D8] hover:border-[#1D263B] text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 group/btn shadow-sm"
               >
                 <span>{service.ctaText || "Inquire Service"}</span>
-                <ArrowRight size={14} className="text-[#C5A880] group-hover/btn:translate-x-1.5 transition-transform" />
+                <ArrowRight size={14} className="text-[#D09A16] group-hover/btn:translate-x-1.5 transition-transform" />
               </Link>
             </div>
 
             {/* Bottom Champagne Gold Hover Glow Line */}
-            <div className="h-1 w-full bg-gradient-to-r from-transparent via-[#C5A880] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          </motion.div>
+            <div className="h-1 w-full bg-gradient-to-r from-transparent via-[#D09A16] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+          </div>
         );
       })}
     </div>

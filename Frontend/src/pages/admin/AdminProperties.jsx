@@ -130,7 +130,7 @@ export default function AdminProperties() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold tracking-[0.2em] text-[#C5A880] uppercase mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold tracking-[0.2em] text-[#D09A16] uppercase mb-2">
             <Building size={12} />
             <span>Inventory Management</span>
           </div>
@@ -144,7 +144,7 @@ export default function AdminProperties() {
 
         <button
           onClick={openCreateModal}
-          className="px-6 py-3.5 rounded-xl bg-[#C5A880] hover:bg-[#B5986D] text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_6px_20px_rgba(197,168,128,0.3)] active:scale-95 cursor-pointer"
+          className="px-6 py-3.5 rounded-xl bg-[#D09A16] hover:bg-[#B5986D] text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_6px_20px_rgba(197,168,128,0.3)] active:scale-95 cursor-pointer"
         >
           <Plus size={16} />
           <span>Add New Property</span>
@@ -162,7 +162,7 @@ export default function AdminProperties() {
       {/* Properties Grid */}
       {loading ? (
         <div className="py-20 text-center text-slate-400 text-xs flex flex-col items-center justify-center gap-3">
-          <RefreshCw size={24} className="animate-spin text-[#C5A880]" />
+          <RefreshCw size={24} className="animate-spin text-[#D09A16]" />
           <span>Loading luxury portfolio...</span>
         </div>
       ) : properties.length === 0 ? (
@@ -170,7 +170,7 @@ export default function AdminProperties() {
           <p className="text-sm text-slate-300 mb-4">No properties listed yet.</p>
           <button
             onClick={openCreateModal}
-            className="px-5 py-2.5 rounded-xl bg-[#C5A880] text-[#0C101A] text-xs font-bold uppercase tracking-wider"
+            className="px-5 py-2.5 rounded-xl bg-[#D09A16] text-[#0C101A] text-xs font-bold uppercase tracking-wider"
           >
             Create First Listing
           </button>
@@ -180,7 +180,7 @@ export default function AdminProperties() {
           {properties.map((prop) => (
             <div
               key={prop._id}
-              className="rounded-3xl bg-[#121724] border border-white/10 overflow-hidden shadow-lg flex flex-col justify-between group hover:border-[#C5A880]/50 transition-all duration-300"
+              className="rounded-3xl bg-[#121724] border border-white/10 overflow-hidden shadow-lg flex flex-col justify-between group hover:border-[#D09A16]/50 transition-all duration-300"
             >
               {/* Image Preview with Badges */}
               <div className="relative h-48 w-full overflow-hidden bg-slate-900">
@@ -190,7 +190,7 @@ export default function AdminProperties() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute top-3 left-3 flex gap-2">
-                  <span className="px-2.5 py-1 rounded-full bg-[#1D263B]/90 backdrop-blur-md text-[10px] font-bold text-[#C5A880] uppercase tracking-wider border border-white/10">
+                  <span className="px-2.5 py-1 rounded-full bg-[#1D263B]/90 backdrop-blur-md text-[10px] font-bold text-[#D09A16] uppercase tracking-wider border border-white/10">
                     {prop.tag || 'Luxury'}
                   </span>
                   <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
@@ -199,7 +199,7 @@ export default function AdminProperties() {
                     {prop.isActive ? 'Active' : 'Draft'}
                   </span>
                 </div>
-                <div className="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-[#C5A880] font-serif font-bold text-sm">
+                <div className="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-[#D09A16] font-serif font-bold text-sm">
                   {prop.price}
                 </div>
               </div>
@@ -211,7 +211,7 @@ export default function AdminProperties() {
                     {prop.title}
                   </h3>
                   <div className="flex items-center gap-1.5 text-slate-400 text-xs mb-2">
-                    <MapPin size={13} className="text-[#C5A880] shrink-0" />
+                    <MapPin size={13} className="text-[#D09A16] shrink-0" />
                     <span className="truncate">{prop.location}</span>
                   </div>
                   <p className="text-[11px] text-slate-300 font-light line-clamp-2 leading-relaxed">
@@ -226,7 +226,7 @@ export default function AdminProperties() {
                   <div className="flex items-center gap-1.5">
                     <button
                       onClick={() => openEditModal(prop)}
-                      className="p-2 rounded-lg bg-white/5 hover:bg-[#C5A880] hover:text-[#0C101A] text-slate-300 transition-colors cursor-pointer"
+                      className="p-2 rounded-lg bg-white/5 hover:bg-[#D09A16] hover:text-[#0C101A] text-slate-300 transition-colors cursor-pointer"
                       title="Edit"
                     >
                       <Pencil size={14} />
@@ -275,7 +275,7 @@ export default function AdminProperties() {
                       value={formData.title}
                       onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                       placeholder="DLF Phase 2 Luxury Floor"
-                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#C5A880]"
+                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
                     />
                   </div>
 
@@ -287,7 +287,7 @@ export default function AdminProperties() {
                       value={formData.price}
                       onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                       placeholder="₹5.75 Cr"
-                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#C5A880]"
+                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
                     />
                   </div>
 
@@ -299,7 +299,7 @@ export default function AdminProperties() {
                       value={formData.location}
                       onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                       placeholder="DLF Phase 2, Gurugram"
-                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#C5A880]"
+                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
                     />
                   </div>
 
@@ -311,7 +311,7 @@ export default function AdminProperties() {
                       value={formData.specs}
                       onChange={(e) => setFormData({ ...formData, specs: e.target.value })}
                       placeholder="4 BHK • 3,200 Sq.Ft • Park Facing"
-                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#C5A880]"
+                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
                     />
                   </div>
 
@@ -320,7 +320,7 @@ export default function AdminProperties() {
                     <select
                       value={formData.category}
                       onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                      className="w-full bg-[#121724] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#C5A880]"
+                      className="w-full bg-[#121724] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
                     >
                       <option value="residential">Residential Floor/Plot</option>
                       <option value="villa">Luxury Villa</option>
@@ -337,7 +337,7 @@ export default function AdminProperties() {
                       value={formData.tag}
                       onChange={(e) => setFormData({ ...formData, tag: e.target.value })}
                       placeholder="Exclusive Floor"
-                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#C5A880]"
+                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
                     />
                   </div>
                 </div>
@@ -350,7 +350,7 @@ export default function AdminProperties() {
                     value={formData.img}
                     onChange={(e) => setFormData({ ...formData, img: e.target.value })}
                     placeholder="https://images.unsplash.com/..."
-                    className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#C5A880]"
+                    className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
                   />
                 </div>
 
@@ -362,7 +362,7 @@ export default function AdminProperties() {
                     value={formData.desc}
                     onChange={(e) => setFormData({ ...formData, desc: e.target.value })}
                     placeholder="Architect-designed luxury floor with high-end fixtures..."
-                    className="w-full bg-white/[0.05] border border-white/15 rounded-xl p-3 text-white outline-none focus:border-[#C5A880]"
+                    className="w-full bg-white/[0.05] border border-white/15 rounded-xl p-3 text-white outline-none focus:border-[#D09A16]"
                   />
                 </div>
 
@@ -372,7 +372,7 @@ export default function AdminProperties() {
                       type="checkbox"
                       checked={formData.isActive}
                       onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
-                      className="w-4 h-4 accent-[#C5A880]"
+                      className="w-4 h-4 accent-[#D09A16]"
                     />
                     <span>Active & Visible on Website</span>
                   </label>
@@ -382,7 +382,7 @@ export default function AdminProperties() {
                       type="checkbox"
                       checked={formData.isFeatured}
                       onChange={(e) => setFormData({ ...formData, isFeatured: e.target.checked })}
-                      className="w-4 h-4 accent-[#C5A880]"
+                      className="w-4 h-4 accent-[#D09A16]"
                     />
                     <span>Highlight in 3D Slider</span>
                   </label>
@@ -399,7 +399,7 @@ export default function AdminProperties() {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="px-6 py-2.5 rounded-xl bg-[#C5A880] hover:bg-[#B5986D] text-[#0C101A] font-bold uppercase tracking-wider transition-colors disabled:opacity-60"
+                    className="px-6 py-2.5 rounded-xl bg-[#D09A16] hover:bg-[#B5986D] text-[#0C101A] font-bold uppercase tracking-wider transition-colors disabled:opacity-60"
                   >
                     {submitting ? 'Saving...' : editingId ? 'Update Property' : 'Create Listing'}
                   </button>

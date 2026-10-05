@@ -87,7 +87,7 @@ export default function DlfCalloutEditor({ formData, updateField }) {
       <div className="pt-6 border-t border-white/10 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h4 className="text-sm font-serif font-bold text-[#C5A880]">
+            <h4 className="text-sm font-serif font-bold text-[#D09A16]">
               3D Animated Metric Stat Cards ({statsCards.length})
             </h4>
             <p className="text-xs text-slate-400">

@@ -21,7 +21,7 @@ export default function FormTextarea({
         value={value || ''}
         onChange={onChange}
         placeholder={placeholder}
-        className="w-full bg-white/[0.05] border border-white/10 focus:border-[#C5A880] rounded-xl p-4 text-sm text-white placeholder-slate-500 outline-none transition-colors"
+        className="w-full bg-white/[0.05] border border-white/10 focus:border-[#D09A16] rounded-xl p-4 text-sm text-white placeholder-slate-500 outline-none transition-colors"
       />
       {subtext && (
         <p className="text-[11px] text-slate-400 mt-1">

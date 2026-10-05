@@ -49,7 +49,7 @@ export default function WhyChooseUsEditor({ formData, updateField }) {
 
       {/* Left Featured Trust Card */}
       <div className="pt-6 border-t border-white/10 space-y-4">
-        <h4 className="text-sm font-serif font-bold text-[#C5A880]">
+        <h4 className="text-sm font-serif font-bold text-[#D09A16]">
           Featured Trust Card (Left Side)
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -92,7 +92,7 @@ export default function WhyChooseUsEditor({ formData, updateField }) {
 
       {/* 3 Pillar Reasons */}
       <div className="pt-6 border-t border-white/10 space-y-4">
-        <h4 className="text-sm font-serif font-bold text-[#C5A880]">
+        <h4 className="text-sm font-serif font-bold text-[#D09A16]">
           Three Value Pillars (Right Side)
         </h4>
         <div className="space-y-4">
@@ -102,7 +102,7 @@ export default function WhyChooseUsEditor({ formData, updateField }) {
                 <span className="text-xs font-bold text-white uppercase tracking-wider">
                   Pillar #{reason.id || rIdx + 1}: {reason.title}
                 </span>
-                <span className="text-[10px] text-[#C5A880] uppercase tracking-widest">{reason.badge}</span>
+                <span className="text-[10px] text-[#D09A16] uppercase tracking-widest">{reason.badge}</span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <FormInput

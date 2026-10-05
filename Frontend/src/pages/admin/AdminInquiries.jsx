@@ -43,7 +43,7 @@ export default function AdminInquiries() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold tracking-[0.2em] text-[#C5A880] uppercase mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold tracking-[0.2em] text-[#D09A16] uppercase mb-2">
             <Inbox size={12} />
             <span>Lead Captures & Subscriptions</span>
           </div>
@@ -76,7 +76,7 @@ export default function AdminInquiries() {
       <div className="rounded-3xl bg-[#121724] border border-white/10 overflow-hidden shadow-xl">
         {loading ? (
           <div className="py-20 text-center text-slate-400 text-xs flex flex-col items-center justify-center gap-3">
-            <RefreshCw size={24} className="animate-spin text-[#C5A880]" />
+            <RefreshCw size={24} className="animate-spin text-[#D09A16]" />
             <span>Fetching lead captures...</span>
           </div>
         ) : inquiries.length === 0 ? (
@@ -100,7 +100,7 @@ export default function AdminInquiries() {
                   <tr key={inq._id} className="hover:bg-white/[0.02] transition-colors">
                     <td className="p-4 pl-6">
                       <div className="flex items-center gap-2.5">
-                        <div className="w-8 h-8 rounded-lg bg-[#C5A880]/15 text-[#C5A880] flex items-center justify-center shrink-0">
+                        <div className="w-8 h-8 rounded-lg bg-[#D09A16]/15 text-[#D09A16] flex items-center justify-center shrink-0">
                           <Mail size={14} />
                         </div>
                         <div>
@@ -112,7 +112,7 @@ export default function AdminInquiries() {
                     </td>
 
                     <td className="p-4">
-                      <span className="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-semibold uppercase tracking-wider text-[#C5A880]">
+                      <span className="px-2.5 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-semibold uppercase tracking-wider text-[#D09A16]">
                         {inq.type.replace('_', ' ')}
                       </span>
                     </td>

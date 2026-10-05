@@ -6,15 +6,20 @@ import AboutProposition from '../../sections/about/AboutProposition';
 import AboutLeadership from '../../sections/about/AboutLeadership';
 import AboutConsultationCta from '../../sections/about/AboutConsultationCta';
 import LocationMap from '../../sections/home/LocationMap';
+import SEOHead from '../../components/seo/SEOHead';
+import BreadcrumbJsonLd from '../../components/seo/BreadcrumbJsonLd';
+import { PAGE_SEO, BREADCRUMBS } from '../../lib/seo/seoConfig';
 
 export default function About() {
   useEffect(() => {
-    document.title = "About Us — Saudagar Properties | Premier Real Estate in DLF Gurugram";
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   return (
-    <div className="min-h-screen bg-white text-[#1D263B] selection:bg-[#C5A880]/30 selection:text-[#0C101A]">
+    <div className="min-h-screen bg-white text-[#1D263B] selection:bg-[#D09A16]/30 selection:text-[#0C101A]">
+      <SEOHead {...PAGE_SEO['/about']} />
+      <BreadcrumbJsonLd items={BREADCRUMBS['/about']} />
+      
       {/* 1. Hero Section & Mission Statement */}
       <AboutHero />
 

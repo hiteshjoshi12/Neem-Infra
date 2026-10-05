@@ -60,7 +60,7 @@ export default function CuratedCorridorsEditor({ formData, updateField }) {
         </div>
         <Link
           to="/admin/properties"
-          className="px-4 py-2 rounded-xl bg-[#C5A880] text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 shrink-0 hover:brightness-110 transition-colors"
+          className="px-4 py-2 rounded-xl bg-[#D09A16] text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 shrink-0 hover:brightness-110 transition-colors"
         >
           <span>Open Properties Manager</span>
           <ArrowUpRight size={14} />

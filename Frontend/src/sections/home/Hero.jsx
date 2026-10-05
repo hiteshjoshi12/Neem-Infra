@@ -1,20 +1,6 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Search, MapPin, Building2, Wallet, ChevronDown } from 'lucide-react';
-
-const fadeUp = {
-  hidden: { opacity: 0, y: 40 },
-  visible: { opacity: 1, y: 0, transition: { duration: 1, ease: [0.16, 1, 0.3, 1] } }
-};
-
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.15, delayChildren: 0.2 }
-  }
-};
-
+import { useState, useRef, useEffect } from 'react';
+import { animate, useInView, stagger, useScroll, useTransform, motion } from 'framer-motion';
+import { Search, MapPin, Building2, Wallet } from 'lucide-react';
 import CustomSelect from '../../components/ui/CustomSelect';
 import { useCms } from '../../context/CmsContext';
 
@@ -27,75 +13,139 @@ export default function Hero() {
   const [budget, setBudget] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
 
+  const heroRef = useRef(null);
+  const bgImageRef = useRef(null);
+  const contentRef = useRef(null);
+  const spotlightCardRef = useRef(null);
+
+  const isInView = useInView(heroRef, { once: true });
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"]
+  });
+
+  const yBg = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
+  const scaleBg = useTransform(scrollYProgress, [0, 1], [1, 1.06]);
+
+  useEffect(() => {
+    if (isInView) {
+      // 1. Staggered Cinematic Text & Search Bar Entrance
+      // We set initial opacity to 0 in CSS or handle it here
+      animate(".hero-anim-item",
+        { opacity: [0, 1], y: [35, 0] },
+        { duration: 1, delay: stagger(0.15, { startDelay: 0.1 }), ease: "easeOut" }
+      );
+
+      // 2. 3D Spotlight Card Entrance
+      if (spotlightCardRef.current) {
+        animate(spotlightCardRef.current,
+          { opacity: [0, 1], scale: [0.9, 1], x: [40, 0], rotateY: [-15, 0] },
+          { duration: 1.2, delay: 0.3, ease: "easeOut" }
+        ).then(() => {
+          animate(spotlightCardRef.current,
+            { y: ["0px", "-8px"], rotateZ: [0, 0.5] },
+            { duration: 3.5, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }
+          );
+        });
+      }
+    }
+  }, [isInView]);
+
+  const handleCardMouseMove = (e) => {
+    const card = spotlightCardRef.current;
+    if (!card) return;
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    const rotateX = ((y - centerY) / centerY) * -10;
+    const rotateY = ((x - centerX) / centerX) * 10;
+
+    animate(card, { rotateX, rotateY, transformPerspective: 1000, transformStyle: "preserve-3d" }, { duration: 0.4, ease: "easeOut" });
+  };
+
+  const handleCardMouseLeave = () => {
+    const card = spotlightCardRef.current;
+    if (!card) return;
+    animate(card, { rotateX: 0, rotateY: 0 }, { duration: 0.6, ease: "easeOut" });
+  };
+
   const handleSearch = (e) => {
     e.preventDefault();
   };
 
   return (
-    <section className="relative w-full min-h-screen flex flex-col justify-center pt-28 pb-12 overflow-visible bg-slate-950">
-      
-      {/* Premium Builder Floor Background Image (z-0 to sit directly above section background) */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
-        <img 
-          src={heroData.bgImage || "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2500&q=80"} 
-          alt="Gurgaon Luxury Builder Floor" 
-          className="w-full h-full object-cover filter brightness-[0.85] contrast-[1.05] transition-transform duration-[10s] ease-out hover:scale-105"
+    <section
+      ref={heroRef}
+      className="relative w-full min-h-screen flex flex-col justify-center pt-28 pb-12 overflow-hidden bg-slate-950"
+    >
+      {/* Premium Builder Floor Background Image with GSAP Parallax */}
+      <motion.div style={{ y: yBg, scale: scaleBg }} className="absolute inset-0 z-0 overflow-hidden">
+        <img
+          ref={bgImageRef}
+          src={heroData.bgImage || "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2500&q=80"}
+          alt="Gurgaon Luxury Builder Floor"
+          width="1920"
+          height="1080"
+          fetchpriority="high"
+          className="w-full h-full object-cover filter brightness-[0.85] contrast-[1.05]"
         />
-      </div>
+      </motion.div>
 
-      {/* Balanced Vignette Gradients (z-10) */}
+      {/* Balanced Vignette Gradients */}
       <div className="absolute inset-0 z-10 bg-gradient-to-r from-slate-950/90 via-slate-950/50 to-transparent pointer-events-none" />
       <div className="absolute inset-0 z-10 bg-gradient-to-t from-slate-950/90 via-transparent to-black/30 pointer-events-none" />
 
       <div className="container mx-auto px-6 md:px-12 relative z-20 h-full flex flex-col justify-center">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
-          
-          <motion.div 
-            variants={staggerContainer}
-            initial="hidden"
-            animate="visible"
-            className="max-w-3xl w-full"
-          >
-            <motion.div variants={fadeUp} className="mb-6 flex items-center gap-4">
-              <span className="w-8 h-[1px] bg-[#C5A880]"></span>
-              <span className="text-xs md:text-sm tracking-[0.25em] text-[#C5A880] uppercase font-semibold">
+
+          <div ref={contentRef} className="max-w-3xl w-full">
+
+            {/* Top Badge */}
+            <div className="hero-anim-item opacity-0 mb-6 flex items-center gap-4">
+              <span className="w-8 h-[1px] bg-[#D09A16]"></span>
+              <span className="text-xs md:text-sm tracking-[0.25em] text-[#D09A16] uppercase font-semibold">
                 {heroData.badge || "Luxury Builder Floors & Estates"}
               </span>
-            </motion.div>
-            
-            <motion.h1 variants={fadeUp} className="text-5xl md:text-7xl font-serif text-white leading-[1.1] mb-6 drop-shadow-sm">
+            </div>
+
+            {/* H1 SEO Headline */}
+            <h1 className="hero-anim-item opacity-0 text-5xl md:text-7xl font-serif text-white leading-[1.1] mb-6 drop-shadow-sm">
               {heroData.headlinePrefix || "Gurgaon's Premier"} <br />
-              <span className="italic text-[#C5A880] font-light">
+              <span className="italic text-[#D09A16] font-light">
                 {heroData.headlineHighlight || "Real Estate"}
               </span> {heroData.headlineSuffix || "Partner."}
-            </motion.h1>
+            </h1>
 
-            <motion.p variants={fadeUp} className="text-[#E2E8F0] text-lg font-light max-w-xl mb-12 leading-relaxed drop-shadow-sm">
+            {/* Subtext */}
+            <p className="hero-anim-item opacity-0 text-[#E2E8F0] text-lg font-light max-w-xl mb-12 leading-relaxed drop-shadow-sm">
               {heroData.description || "Discover an exclusive portfolio of luxury builder floors, high-rise penthouses, and bespoke villas in DLF Phase 1–4, Sushant Lok & Golf Course Ext."}
-            </motion.p>
+            </p>
 
-            <motion.div variants={fadeUp} className="w-full max-w-5xl relative">
-              {/* Search Bar Container */}
-              <form 
+            {/* Search Bar Container */}
+            <div className="hero-anim-item opacity-0 w-full max-w-5xl relative">
+              <form
                 onSubmit={handleSearch}
                 className="bg-white/95 backdrop-blur-xl border border-white/80 rounded-2xl p-3 shadow-[0_25px_60px_rgba(0,0,0,0.35)] flex flex-col lg:flex-row gap-3 lg:gap-0 items-center relative z-30"
               >
                 {/* Text Search Input */}
                 <div className="flex-1 w-full flex items-center gap-3 px-4 py-3 lg:py-2 lg:border-r border-[#E5E0D8]">
-                  <Search className="text-[#C5A880] w-5 h-5 flex-shrink-0" />
-                  <input 
-                    type="text" 
+                  <Search className="text-[#D09A16] w-5 h-5 flex-shrink-0" />
+                  <input
+                    type="text"
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder={heroData.searchPlaceholder || "Search builder floors, DLF villas..."} 
+                    placeholder={heroData.searchPlaceholder || "Search builder floors, DLF villas..."}
                     className="w-full bg-transparent border-none outline-none text-[#1D263B] placeholder-[#9CA3AF] font-light text-sm"
                   />
                 </div>
 
                 {/* Custom Dropdown Filters Container */}
                 <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-3 lg:gap-0 divide-y sm:divide-y-0 sm:divide-x divide-[#E5E0D8] relative">
-                  
-                  <CustomSelect 
+
+                  <CustomSelect
                     icon={MapPin}
                     label="Location"
                     value={location}
@@ -109,7 +159,7 @@ export default function Hero() {
                     ]}
                   />
 
-                  <CustomSelect 
+                  <CustomSelect
                     icon={Building2}
                     label="Property Type"
                     value={propertyType}
@@ -122,7 +172,7 @@ export default function Hero() {
                     ]}
                   />
 
-                  <CustomSelect 
+                  <CustomSelect
                     icon={Wallet}
                     label="Budget"
                     value={budget}
@@ -137,9 +187,9 @@ export default function Hero() {
                 </div>
 
                 {/* Action Button */}
-                <button 
+                <button
                   type="submit"
-                  className="w-full lg:w-auto mt-2 lg:mt-0 lg:ml-2 bg-[#1D263B] text-white px-8 py-3.5 rounded-xl text-xs uppercase tracking-widest font-semibold hover:bg-[#111827] transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-xl cursor-pointer"
+                  className="w-full lg:w-auto mt-2 lg:mt-0 lg:ml-2 bg-[#1D263B] hover:bg-[#D09A16] text-white hover:text-[#1D263B] px-8 py-3.5 rounded-xl text-xs uppercase tracking-widest font-semibold transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-xl cursor-pointer"
                 >
                   {heroData.searchButtonText || "Explore"}
                 </button>
@@ -147,7 +197,7 @@ export default function Hero() {
 
               {/* Trending Pills */}
               <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 relative z-10">
-                <span className="text-[#C5A880] text-xs font-semibold tracking-widest uppercase">
+                <span className="text-[#D09A16] text-xs font-semibold tracking-widest uppercase">
                   {heroData.trendingLabel || "Trending"}
                 </span>
                 <div className="flex flex-wrap gap-2">
@@ -155,31 +205,32 @@ export default function Hero() {
                     ? heroData.trendingTags
                     : ['DLF Phase 1 Floors', 'Sushant Lok Villas', 'Golf Course Ext.', 'Under 5 Cr']
                   ).map((tag) => (
-                    <button 
+                    <button
                       key={tag}
                       type="button"
-                      className="px-4 py-1.5 rounded-full border border-white/25 text-white text-xs font-medium hover:border-[#C5A880] hover:bg-white/20 transition-all duration-300 bg-black/40 backdrop-blur-md shadow-sm cursor-pointer"
+                      className="px-4 py-1.5 rounded-full border border-white/25 text-white text-xs font-medium hover:border-[#D09A16] hover:bg-white/20 transition-all duration-300 bg-black/40 backdrop-blur-md shadow-sm cursor-pointer"
                     >
                       {tag}
                     </button>
                   ))}
                 </div>
               </div>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
 
-          {/* Right Side: 3D Floating Builder Floor Highlight Card */}
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9, x: 30 }}
-            animate={{ opacity: 1, scale: 1, x: 0 }}
-            transition={{ delay: 0.4, duration: 0.8 }}
-            className="hidden lg:flex flex-col gap-4 max-w-sm w-full z-20"
+          {/* Right Side: 3D Floating Spotlight Property Card */}
+          <div
+            ref={spotlightCardRef}
+            onMouseMove={handleCardMouseMove}
+            onMouseLeave={handleCardMouseLeave}
+            className="hidden lg:flex flex-col gap-4 max-w-sm w-full z-20 cursor-pointer opacity-0"
+            style={{ transformStyle: 'preserve-3d' }}
           >
-            <div className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 text-white shadow-[0_30px_70px_rgba(0,0,0,0.4)] relative overflow-hidden group hover:border-[#C5A880]/60 transition-all duration-500">
+            <div className="bg-white/10 backdrop-blur-2xl border border-white/20 rounded-3xl p-6 text-white shadow-[0_30px_70px_rgba(0,0,0,0.4)] relative overflow-hidden group hover:border-[#D09A16]/60 transition-all duration-500">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full bg-[#C5A880] animate-pulse" />
-                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#C5A880]">
+                  <span className="w-2.5 h-2.5 rounded-full bg-[#D09A16] shadow-[0_0_10px_#D09A16]" />
+                  <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#D09A16]">
                     {heroData.spotlight?.badge || "Spotlight Property"}
                   </span>
                 </div>
@@ -189,9 +240,11 @@ export default function Hero() {
               </div>
 
               <div className="relative h-44 rounded-2xl overflow-hidden mb-4 border border-white/10">
-                <img 
-                  src={heroData.spotlight?.image || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"} 
-                  alt="Gurgaon Builder Floor Interior" 
+                <img
+                  src={heroData.spotlight?.image || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"}
+                  alt="Gurgaon Builder Floor Interior"
+                  width="800"
+                  height="500"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-white text-[10px] font-medium">
@@ -211,22 +264,22 @@ export default function Hero() {
                   <span className="block text-[9px] uppercase tracking-widest text-gray-400">
                     {heroData.spotlight?.startingAtLabel || "Starting At"}
                   </span>
-                  <span className="text-base font-semibold text-[#C5A880]">
+                  <span className="text-base font-semibold text-[#D09A16]">
                     {heroData.spotlight?.price || "₹6.75 Cr Onwards"}
                   </span>
                 </div>
                 <a
                   href={`tel:${heroData.spotlight?.phone || '+919811221207'}`}
-                  className="px-4 py-2 rounded-full bg-white text-[#1D263B] text-[11px] font-bold uppercase tracking-wider hover:bg-[#C5A880] hover:text-white transition-colors shadow-md"
+                  className="px-4 py-2 rounded-full bg-white text-[#1D263B] text-[11px] font-bold uppercase tracking-wider hover:bg-[#D09A16] hover:text-white transition-colors shadow-md"
                 >
                   {heroData.spotlight?.ctaText || "Enquire"}
                 </a>
               </div>
             </div>
-          </motion.div>
+          </div>
 
         </div>
       </div>
     </section>
   );
-}
+}

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import { useRef, useEffect } from 'react';
 
 export default function Tilt3DCard({ children, className = "", maxTilt = 8 }) {
   const cardRef = useRef(null);
@@ -10,20 +10,47 @@ export default function Tilt3DCard({ children, className = "", maxTilt = 8 }) {
     const glare = glareRef.current;
     if (!card) return;
 
-    let bounds = null;
+    let isHovered = false;
+
+    const resetCard = (smooth = true) => {
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+      card.style.transition = smooth
+        ? 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)'
+        : 'none';
+      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+      if (glare) {
+        glare.style.opacity = '0';
+      }
+    };
 
     const handleMouseEnter = () => {
-      bounds = card.getBoundingClientRect();
+      isHovered = true;
       card.style.transition = 'transform 0.15s ease-out';
     };
 
     const handleMouseMove = (e) => {
-      if (!bounds) bounds = card.getBoundingClientRect();
+      if (!isHovered) return;
+      const clientX = e.clientX;
+      const clientY = e.clientY;
 
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       rafRef.current = requestAnimationFrame(() => {
-        const x = e.clientX - bounds.left;
-        const y = e.clientY - bounds.top;
+        if (!card) return;
+        const bounds = card.getBoundingClientRect();
+
+        // If cursor is outside bounding rect during rapid movement or scroll
+        if (
+          clientX < bounds.left ||
+          clientX > bounds.right ||
+          clientY < bounds.top ||
+          clientY > bounds.bottom
+        ) {
+          resetCard(true);
+          return;
+        }
+
+        const x = clientX - bounds.left;
+        const y = clientY - bounds.top;
 
         const centerX = bounds.width / 2;
         const centerY = bounds.height / 2;
@@ -31,6 +58,7 @@ export default function Tilt3DCard({ children, className = "", maxTilt = 8 }) {
         const rotateX = ((y - centerY) / centerY) * -maxTilt;
         const rotateY = ((x - centerX) / centerX) * maxTilt;
 
+        card.style.transition = 'transform 0.12s ease-out';
         card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) scale3d(1.015, 1.015, 1.015)`;
 
         if (glare) {
@@ -41,24 +69,27 @@ export default function Tilt3DCard({ children, className = "", maxTilt = 8 }) {
     };
 
     const handleMouseLeave = () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current);
-      bounds = null;
-      card.style.transition = 'transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
-      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
-      if (glare) {
-        glare.style.opacity = '0';
+      isHovered = false;
+      resetCard(true);
+    };
+
+    const handleWindowScroll = () => {
+      if (isHovered) {
+        resetCard(true);
       }
     };
 
     card.addEventListener('mouseenter', handleMouseEnter, { passive: true });
     card.addEventListener('mousemove', handleMouseMove, { passive: true });
     card.addEventListener('mouseleave', handleMouseLeave, { passive: true });
+    window.addEventListener('scroll', handleWindowScroll, { passive: true });
 
     return () => {
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       card.removeEventListener('mouseenter', handleMouseEnter);
       card.removeEventListener('mousemove', handleMouseMove);
       card.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('scroll', handleWindowScroll);
     };
   }, [maxTilt]);
 

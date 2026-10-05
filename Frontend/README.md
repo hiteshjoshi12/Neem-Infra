@@ -20,7 +20,7 @@ The **Frontend** of Saudagar Properties delivers an editorial, high-end experien
 Built with **React 19**, **Tailwind CSS v4**, **Framer Motion**, and **Vite**, the interface features:
 - **100% Dynamic Content Sync**: Managed through `CmsContext` fetching from the Node.js / MongoDB Atlas backend.
 - **Interactive 3D Stages**: Dynamic rotating carousel of featured builder floors and penthouses.
-- **Editorial Typography & Color Palette**: Tailored `#C5A880` luxury gold, rich navy slates, and high-contrast readable type.
+- **Editorial Typography & Color Palette**: Tailored `#D09A16` luxury gold, rich navy slates, and high-contrast readable type.
 - **Modular Admin Architecture**: Form controls and 12 individual section editors cleanly separated for maintainability.
 
 ---
@@ -103,7 +103,7 @@ From the `Frontend/` directory:
 
 ## 🎨 Color Tokens
 
-- **Gold Accent**: `#C5A880`
+- **Gold Accent**: `#D09A16`
 - **Dark Gold**: `#B39366`
 - **Navy Slate (Dark)**: `#0C101A`
 - **Card Dark Charcoal**: `#121724`

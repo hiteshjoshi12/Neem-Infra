@@ -5,9 +5,15 @@ import {
   FaInstagram,
   FaPinterestP,
   FaLinkedinIn,
-  FaYoutube
+  FaYoutube,
 } from 'react-icons/fa6';
-import { MapPin, Phone, Mail, ArrowUpRight } from 'lucide-react';
+import {
+  MapPin,
+  Phone,
+  Mail,
+  ArrowUpRight,
+} from 'lucide-react';
+
 import logoImg from '../../assets/logo.png';
 import { useCms } from '../../context/CmsContext';
 
@@ -16,294 +22,351 @@ const SOCIAL_ICONS_MAP = {
   instagram: FaInstagram,
   pinterest: FaPinterestP,
   linkedin: FaLinkedinIn,
-  youtube: FaYoutube
+  youtube: FaYoutube,
 };
 
 export default function Footer() {
   const { sections } = useCms();
   const footerData = sections?.footer || {};
 
-  const officeTitle = footerData.officeTitle || "Corporate Office";
-  const officeName = footerData.officeName || "Address";
-  const officeAddress = footerData.officeAddress || "38, Akashneem Marg, DLF-II, Gurgaon-122002";
+  const officeTitle = footerData.officeTitle || 'Corporate Office';
+  const officeName = footerData.officeName || 'Saudagar Properties';
+  const officeAddress =
+    footerData.officeAddress ||
+    '38, Akashneem Marg, DLF-II, Gurgaon-122002';
 
-  const phoneTitle = footerData.phoneTitle || "Direct Line";
-  const phoneSubtitle = footerData.phoneSubtitle || "Phone No";
+  const phoneTitle = footerData.phoneTitle || 'Direct Line';
+  const phoneSubtitle = footerData.phoneSubtitle || 'Phone';
   const phones = footerData.phones || [
-    { number: "+91 97185 11207", label: "(IND)", href: "tel:+919718511207" },
-    { number: "+91 98112 21207", label: "(IND)", href: "tel:+919811221207" }
+    {
+      number: '+91 97185 11207',
+      label: '(IND)',
+      href: 'tel:+919718511207',
+    },
+    {
+      number: '+91 98112 21207',
+      label: '(IND)',
+      href: 'tel:+919811221207',
+    },
   ];
 
-  const emailTitle = footerData.emailTitle || "Confidential Desk";
-  const emailSubtitle = footerData.emailSubtitle || "Email";
-  const email = footerData.email || "Saudagar.Properties@Yahoo.In";
+  const emailTitle = footerData.emailTitle || 'Confidential Desk';
+  const emailSubtitle = footerData.emailSubtitle || 'Email';
+  const email =
+    footerData.email || 'Saudagar.Properties@Yahoo.In';
 
-  const aboutText = footerData.aboutText || "Saudagar Properties helps clients— both families and corporates to find their dream home or commercial space that lives up to their needs and promises a high Return on Investment. Keeping customer satisfaction on top priority, we're highly trusted by our clients which has helped us to be the leaders and the best property dealers in Gurgaon.";
+  const aboutText =
+    footerData.aboutText ||
+    "Saudagar Properties helps clients— both families and corporates to find their dream home or commercial space that lives up to their needs and promises a high Return on Investment. Keeping customer satisfaction on top priority, we're highly trusted by our clients which has helped us to be the leaders and the best property dealers in Gurgaon.";
 
-  const menuTitle = footerData.menuTitle || "Menu";
+  const menuTitle = footerData.menuTitle || 'Explore';
+
   const menuLinks = footerData.menuLinks || [
-    { label: "Home", href: "/" },
-    { label: "About Us", href: "/about" },
-    { label: "Featured Property", href: "/#featured" },
-    { label: "Our Team", href: "/about" },
-    { label: "Blog", href: "/blogs" },
-    { label: "Contact Us", href: "/contact" }
+    { label: 'Home', href: '/' },
+    { label: 'About Us', href: '/about' },
+    { label: 'Featured Property', href: '/#featured' },
+    { label: 'Our Team', href: '/about' },
+    { label: 'Blog', href: '/blogs' },
+    { label: 'Contact Us', href: '/contact' },
   ];
 
-  const servicesTitle = footerData.servicesTitle || "Services";
+  const servicesTitle = footerData.servicesTitle || 'Locations';
+
   const serviceLinks = footerData.servicesLinks || [
-    { label: "Property DLF Phase 1", href: "/services/dlf-phase-1" },
-    { label: "Property DLF Phase 2", href: "/services/dlf-phase-2" },
-    { label: "Property DLF Phase 3", href: "/services/dlf-phase-3" },
-    { label: "Property DLF Phase 4", href: "/services/dlf-phase-4" },
-    { label: "Property In Sushant Lok", href: "/services/sushant-lok" },
-    { label: "Property In Udyog Vihar", href: "/services/udyog-vihar" }
+    { label: 'Property DLF Phase 1', href: '/services/dlf-phase-1' },
+    { label: 'Property DLF Phase 2', href: '/services/dlf-phase-2' },
+    { label: 'Property DLF Phase 3', href: '/services/dlf-phase-3' },
+    { label: 'Property DLF Phase 4', href: '/services/dlf-phase-4' },
+    { label: 'Property In Sushant Lok', href: '/services/sushant-lok' },
+    { label: 'Property In Udyog Vihar', href: '/services/udyog-vihar' },
   ];
 
-  const followTitle = footerData.followTitle || "Follow Us";
-  const followDesc = footerData.followDesc || "Connect with our senior partners for off-market builder floors & confidential acquisitions.";
-  const callCtaText = footerData.callCtaText || "Call Now";
-  const callCtaPhone = footerData.callCtaPhone || "+919718511207";
+  const followTitle = footerData.followTitle || 'Private Advisory';
+
+  const followDesc =
+    footerData.followDesc ||
+    'Connect with our senior partners for off-market builder floors and confidential acquisitions.';
+
+  const callCtaText = footerData.callCtaText || 'Speak With Us';
+  const callCtaPhone =
+    footerData.callCtaPhone || '+919718511207';
 
   const rawSocials = footerData.socialLinks || [
-    { platform: "Facebook", href: "#" },
-    { platform: "Instagram", href: "#" },
-    { platform: "Pinterest", href: "#" },
-    { platform: "LinkedIn", href: "#" },
-    { platform: "YouTube", href: "#" }
+    { platform: 'Facebook', href: '#' },
+    { platform: 'Instagram', href: '#' },
+    { platform: 'Pinterest', href: '#' },
+    { platform: 'LinkedIn', href: '#' },
+    { platform: 'YouTube', href: '#' },
   ];
 
-  const copyright = footerData.copyright || "Copyright © Saudagar Properties";
-  const copyrightSuffix = footerData.copyrightSuffix || "All Right Reserved";
+  const copyright =
+    footerData.copyright || 'Copyright © Saudagar Properties';
+
+  const copyrightSuffix =
+    footerData.copyrightSuffix || 'All Right Reserved';
+
   const legalLinks = footerData.legalLinks || [
-    { label: "Clients", href: "/clients" },
-    { label: "Term Of Service", href: "/terms" },
-    { label: "Privacy & Policy", href: "/privacy-policy" }
+    { label: 'Clients', href: '/clients' },
+    { label: 'Term Of Service', href: '/terms' },
+    { label: 'Privacy & Policy', href: '/privacy-policy' },
   ];
 
   return (
-    <footer className="relative w-full bg-[#111622] text-[#E2E8F0] pt-20 pb-10 overflow-hidden border-t border-[#C5A880]/20">
+    <footer
+      className="relative overflow-hidden bg-[#182345] text-white"
+      aria-label="Saudagar Properties footer"
+    >
+      {/* =====================================================
+          SUBTLE BACKGROUND
+      ====================================================== */}
 
-      {/* Background Architectural Ambient Lighting */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#C5A880_1px,transparent_1px)] [background-size:32px_32px]" />
-      <div className="absolute top-0 left-1/4 w-[500px] h-[350px] bg-[#C5A880]/10 rounded-full blur-[120px] pointer-events-none" />
-      <div className="absolute bottom-10 right-1/4 w-[400px] h-[300px] bg-slate-800/40 rounded-full blur-[100px] pointer-events-none" />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+      >
+        <div className="absolute inset-0 opacity-[0.025] bg-[linear-gradient(#D09A16_1px,transparent_1px),linear-gradient(90deg,#D09A16_1px,transparent_1px)] [background-size:50px_50px]" />
 
-      <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
+        <div className="absolute -right-32 -top-32 h-[400px] w-[400px] rounded-full bg-[#D09A16]/[0.045] blur-[110px]" />
 
-        {/* ================= 1. PREMIUM 3D CONTACT CARDS ================= */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5 lg:gap-6 mb-18">
+        <div className="absolute -bottom-40 left-1/3 h-[350px] w-[350px] rounded-full bg-black/20 blur-[100px]" />
+      </div>
 
-          {/* Card 1: Address */}
-          <div className="group relative rounded-2xl bg-white/[0.04] backdrop-blur-xl border border-white/10 p-6 sm:p-7 hover:border-[#C5A880]/60 transition-all duration-500 shadow-[0_15px_35px_rgba(0,0,0,0.25)] hover:-translate-y-1">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#C5A880]/15 border border-[#C5A880]/40 text-[#C5A880] flex items-center justify-center flex-shrink-0 group-hover:bg-[#C5A880] group-hover:text-[#111622] transition-all duration-300 shadow-sm">
-                <MapPin size={22} />
+      <div className="relative z-10 mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
+
+        {/* =====================================================
+            TOP CONTACT BAR
+        ====================================================== */}
+
+        <div className="border-b border-white/10 py-7">
+          <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-0">
+
+            {/* Office */}
+            <div className="flex items-start gap-3 md:border-r md:border-white/10 md:pr-8">
+              <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-[#D09A16]/25 bg-[#D09A16]/[0.07] text-[#D09A16]">
+                <MapPin size={15} strokeWidth={1.5} />
               </div>
-              <div className="space-y-1">
-                <span className="text-[11px] font-semibold text-[#C5A880] uppercase tracking-widest block">
+
+              <div className="min-w-0">
+                <p className="text-[8px] font-semibold uppercase tracking-[0.25em] text-[#D09A16]">
                   {officeTitle}
-                </span>
-                <h5 className="text-base font-serif font-bold text-white">
-                  {officeName}
-                </h5>
-                <p className="text-xs sm:text-sm text-[#E2E8F0] font-light leading-relaxed">
-                  {officeAddress}
                 </p>
+
+                <p className="mt-1 text-xs font-medium text-white">
+                  {officeName}
+                </p>
+
+                <address className="mt-0.5 max-w-xs not-italic text-[10px] leading-4 text-white/45">
+                  {officeAddress}
+                </address>
               </div>
             </div>
-          </div>
 
-          {/* Card 2: Phone */}
-          <div className="group relative rounded-2xl bg-white/[0.04] backdrop-blur-xl border border-white/10 p-6 sm:p-7 hover:border-[#C5A880]/60 transition-all duration-500 shadow-[0_15px_35px_rgba(0,0,0,0.25)] hover:-translate-y-1">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#C5A880]/15 border border-[#C5A880]/40 text-[#C5A880] flex items-center justify-center flex-shrink-0 group-hover:bg-[#C5A880] group-hover:text-[#111622] transition-all duration-300 shadow-sm">
-                <Phone size={20} />
+            {/* Phone */}
+            <div className="flex items-start gap-3 md:px-8">
+              <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-[#D09A16]/25 bg-[#D09A16]/[0.07] text-[#D09A16]">
+                <Phone size={14} strokeWidth={1.5} />
               </div>
-              <div className="space-y-1">
-                <span className="text-[11px] font-semibold text-[#C5A880] uppercase tracking-widest block">
+
+              <div>
+                <p className="text-[8px] font-semibold uppercase tracking-[0.25em] text-[#D09A16]">
                   {phoneTitle}
-                </span>
-                <h5 className="text-base font-serif font-bold text-white">
+                </p>
+
+                <p className="mt-1 text-xs font-medium text-white">
                   {phoneSubtitle}
-                </h5>
-                <div className="text-xs sm:text-sm text-[#E2E8F0] font-light flex flex-col gap-0.5">
+                </p>
+
+                <div className="mt-0.5 flex flex-wrap gap-x-3">
                   {phones.map((item, idx) => (
                     <a
                       key={idx}
-                      href={item.href || `tel:${item.number.replace(/\s+/g, '')}`}
-                      className="hover:text-[#C5A880] transition-colors"
+                      href={
+                        item.href ||
+                        `tel:${item.number.replace(/\s+/g, '')}`
+                      }
+                      className="text-[10px] text-white/50 transition-colors hover:text-[#D09A16]"
                     >
-                      {item.number} {item.label && <span className="text-[10px] text-[#C5A880]">{item.label}</span>}
+                      {item.number}
                     </a>
                   ))}
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Card 3: Email */}
-          <div className="group relative rounded-2xl bg-white/[0.04] backdrop-blur-xl border border-white/10 p-6 sm:p-7 hover:border-[#C5A880]/60 transition-all duration-500 shadow-[0_15px_35px_rgba(0,0,0,0.25)] hover:-translate-y-1">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-[#C5A880]/15 border border-[#C5A880]/40 text-[#C5A880] flex items-center justify-center flex-shrink-0 group-hover:bg-[#C5A880] group-hover:text-[#111622] transition-all duration-300 shadow-sm">
-                <Mail size={20} />
+            {/* Email */}
+            <div className="flex items-start gap-3 md:border-l md:border-white/10 md:pl-8">
+              <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-[#D09A16]/25 bg-[#D09A16]/[0.07] text-[#D09A16]">
+                <Mail size={14} strokeWidth={1.5} />
               </div>
-              <div className="space-y-1">
-                <span className="text-[11px] font-semibold text-[#C5A880] uppercase tracking-widest block">
+
+              <div className="min-w-0">
+                <p className="text-[8px] font-semibold uppercase tracking-[0.25em] text-[#D09A16]">
                   {emailTitle}
-                </span>
-                <h5 className="text-base font-serif font-bold text-white">
+                </p>
+
+                <p className="mt-1 text-xs font-medium text-white">
                   {emailSubtitle}
-                </h5>
+                </p>
+
                 <a
                   href={`mailto:${email}`}
-                  className="text-xs sm:text-sm text-[#E2E8F0] font-light hover:text-[#C5A880] transition-colors block truncate"
+                  className="mt-0.5 block truncate text-[10px] text-white/50 transition-colors hover:text-[#D09A16]"
                 >
                   {email}
                 </a>
               </div>
             </div>
-          </div>
 
+          </div>
         </div>
 
-        {/* Subtle Horizontal Divider */}
-        <div className="w-full h-px bg-gradient-to-r from-transparent via-[#C5A880]/30 to-transparent mb-16" />
+        {/* =====================================================
+            MAIN FOOTER
+        ====================================================== */}
 
-        {/* ================= 2. MAIN 4-COLUMN LUXURY GRID ================= */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 mb-16">
+        <div className="grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
 
-          {/* Column 1: Brand & Legacy (5 Cols on lg) */}
-          <div className="lg:col-span-5 flex flex-col items-start pr-0 lg:pr-6">
-            <Link to="/" className="inline-block mb-6 group">
-              <div className="p-3 sm:p-4 rounded-xl bg-white/95 border border-[#C5A880]/30 shadow-[0_8px_20px_rgba(0,0,0,0.5)] inline-block group-hover:border-[#C5A880] transition-colors">
+          {/* BRAND */}
+          <div className="lg:col-span-5 lg:pr-12">
+
+            <Link
+              to="/"
+              aria-label="Saudagar Properties home"
+              className="inline-block"
+            >
+              <div className="rounded-lg bg-white px-3 py-2">
                 <img
                   src={footerData.logoUrl || logoImg}
-                  alt="Saudagar Properties Pvt Ltd"
-                  className="h-10 sm:h-12 w-auto object-contain"
+                  alt="Saudagar Properties"
+                  className="h-9 w-auto object-contain"
                 />
               </div>
             </Link>
 
-            <p className="text-[#E2E8F0] text-sm font-light leading-relaxed mb-6">
+            <p className="mt-5 max-w-md text-[11px] leading-5 text-white/45">
               {aboutText}
             </p>
 
-            {/* Social Icons */}
-            <div className="flex items-center gap-3">
+            {/* Socials */}
+            <div className="mt-6 flex items-center gap-2">
               {rawSocials.map((social, idx) => {
                 const key = (social.platform || '').toLowerCase();
-                const IconComponent = SOCIAL_ICONS_MAP[key] || FaFacebookF;
+                const IconComponent =
+                  SOCIAL_ICONS_MAP[key] || FaFacebookF;
+
                 return (
                   <a
                     key={idx}
                     href={social.href || '#'}
                     aria-label={social.platform || 'Social Link'}
-                    className="w-10 h-10 rounded-xl bg-white/[0.05] border border-white/10 hover:border-[#C5A880] hover:bg-[#C5A880] text-[#CBD5E1] hover:text-[#111622] flex items-center justify-center transition-all duration-300 shadow-sm hover:scale-105"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex h-7 w-7 items-center justify-center rounded-md border border-white/10 text-white/45 transition-all hover:border-[#D09A16]/50 hover:bg-[#D09A16] hover:text-[#182345]"
                   >
-                    <IconComponent size={14} />
+                    <IconComponent size={11} />
                   </a>
                 );
               })}
             </div>
           </div>
 
-          {/* Column 2: Menu (2 Cols on lg) */}
+          {/* EXPLORE */}
           <div className="lg:col-span-2">
-            <div className="flex items-center gap-2 mb-6">
-              <span className="w-4 h-[1.5px] bg-[#C5A880]" />
-              <h4 className="text-base font-serif font-bold text-white tracking-wide">
-                {menuTitle}
-              </h4>
-            </div>
-            <ul className="space-y-3.5">
+            <h2 className="mb-5 text-[9px] font-semibold uppercase tracking-[0.25em] text-[#D09A16]">
+              {menuTitle}
+            </h2>
+
+            <ul className="space-y-2.5">
               {menuLinks.map((item, idx) => (
                 <li key={idx}>
                   <Link
                     to={item.href}
-                    className="group inline-flex items-center gap-2 text-xs sm:text-sm text-[#E2E8F0] hover:text-white transition-colors"
+                    className="group inline-flex items-center gap-1.5 text-[11px] text-white/45 transition-colors hover:text-white"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#C5A880]/60 group-hover:bg-[#C5A880] group-hover:scale-125 transition-all" />
-                    <span className="font-light">{item.label}</span>
+                    <span className="h-1 w-1 rounded-full bg-[#D09A16]/50 transition-transform group-hover:scale-125" />
+                    {item.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Column 3: Services (3 Cols on lg) */}
+          {/* LOCATIONS */}
           <div className="lg:col-span-3">
-            <div className="flex items-center gap-2 mb-6">
-              <span className="w-4 h-[1.5px] bg-[#C5A880]" />
-              <h4 className="text-base font-serif font-bold text-white tracking-wide">
-                {servicesTitle}
-              </h4>
-            </div>
-            <ul className="space-y-3.5">
+            <h2 className="mb-5 text-[9px] font-semibold uppercase tracking-[0.25em] text-[#D09A16]">
+              {servicesTitle}
+            </h2>
+
+            <ul className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-1">
               {serviceLinks.map((item, idx) => (
                 <li key={idx}>
                   <Link
                     to={item.href}
-                    className="group inline-flex items-center gap-2 text-xs sm:text-sm text-[#E2E8F0] hover:text-white transition-colors"
+                    className="group inline-flex items-center gap-1.5 text-[11px] text-white/45 transition-colors hover:text-white"
                   >
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#C5A880]/60 group-hover:bg-[#C5A880] group-hover:scale-125 transition-all" />
-                    <span className="font-light">{item.label}</span>
+                    <span className="h-1 w-1 rounded-full bg-[#D09A16]/50 transition-transform group-hover:scale-125" />
+                    {item.label}
                   </Link>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Column 4: Private Consultation & Call Now (2 Cols on lg) */}
-          <div className="lg:col-span-2 flex flex-col justify-between">
-            <div>
-              <div className="flex items-center gap-2 mb-6">
-                <span className="w-4 h-[1.5px] bg-[#C5A880]" />
-                <h4 className="text-base font-serif font-bold text-white tracking-wide">
-                  {followTitle}
-                </h4>
-              </div>
+          {/* PRIVATE ADVISORY */}
+          <div className="lg:col-span-2">
+            <h2 className="mb-5 text-[9px] font-semibold uppercase tracking-[0.25em] text-[#D09A16]">
+              {followTitle}
+            </h2>
 
-              <p className="text-xs text-[#E2E8F0] font-light leading-relaxed mb-6">
-                {followDesc}
-              </p>
-            </div>
+            <p className="text-[11px] leading-5 text-white/45">
+              {followDesc}
+            </p>
 
-            {/* Premium Gold Button */}
             <a
               href={`tel:${callCtaPhone.replace(/\s+/g, '')}`}
-              className="inline-flex items-center justify-center gap-3 w-full py-3.5 px-5 rounded-2xl bg-gradient-to-r from-[#C5A880] to-[#E2CEB1] text-[#111622] font-semibold text-xs tracking-widest uppercase hover:brightness-110 transition-all duration-300 shadow-[0_10px_25px_rgba(197,168,128,0.3)] active:scale-95 group"
+              className="group mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#D09A16] px-4 py-3 text-[9px] font-bold uppercase tracking-[0.18em] text-[#182345] transition-all hover:bg-[#E0AD36]"
             >
-              <Phone size={14} className="text-[#111622] group-hover:rotate-12 transition-transform" />
+              <Phone size={12} />
+
               <span>{callCtaText}</span>
-              <ArrowUpRight size={14} className="text-[#111622] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+
+              <ArrowUpRight
+                size={12}
+                className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
+              />
             </a>
           </div>
-
         </div>
 
-        {/* ================= 3. BOTTOM COPYRIGHT & LEGAL STRIP ================= */}
-        <div className="pt-8 border-t border-white/10 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#CBD5E1]">
+        {/* =====================================================
+            BOTTOM BAR
+        ====================================================== */}
 
-          <p className="font-light text-center sm:text-left">
+        <div className="flex flex-col gap-3 border-t border-white/10 py-5 sm:flex-row sm:items-center sm:justify-between">
+
+          <p className="text-[9px] text-white/30">
             {copyright} {new Date().getFullYear()}, {copyrightSuffix}
           </p>
 
-          <div className="flex items-center gap-6 font-light">
+          <div className="flex flex-wrap items-center gap-4">
             {legalLinks.map((item, idx) => (
               <React.Fragment key={idx}>
-                {idx > 0 && <span className="w-1 h-1 rounded-full bg-slate-700" />}
-                <Link to={item.href} className="hover:text-[#C5A880] transition-colors">
+                <Link
+                  to={item.href}
+                  className="text-[9px] text-white/30 transition-colors hover:text-[#D09A16]"
+                >
                   {item.label}
                 </Link>
+
+                {idx < legalLinks.length - 1 && (
+                  <span className="h-0.5 w-0.5 rounded-full bg-white/20" />
+                )}
               </React.Fragment>
             ))}
           </div>
-
         </div>
 
       </div>
-
     </footer>
   );
 }

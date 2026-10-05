@@ -1,62 +1,273 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import { useEffect, useRef } from 'react';
 import { Sparkles } from 'lucide-react';
+
+import { animate, inView, stagger } from 'framer-motion';
+
+const dummyTimeline = { 
+  to: function(target, vars) { gsap.to(target, vars); return this; }, 
+  from: function() { return this; }, 
+  fromTo: function(target, fromVars, toVars) { gsap.fromTo(target, fromVars, toVars); return this; } 
+};
+const gsap = { 
+  to: (target, vars) => {
+    if (!target) return;
+    try {
+      const options = { duration: vars.duration || 0.4, delay: vars.delay || 0 };
+      if (vars.stagger) options.delay = stagger(vars.stagger);
+      const safeVars = { ...vars };
+      ['duration','delay','stagger','ease','scrollTrigger','clearProps','transformPerspective','transformStyle'].forEach(p => delete safeVars[p]);
+      
+      const elements = Array.isArray(target) ? target.filter(Boolean) : (typeof target === 'string' || target instanceof Element ? target : null);
+      if (!elements || (Array.isArray(elements) && elements.length === 0)) return;
+
+      if (vars.scrollTrigger) {
+         inView(vars.scrollTrigger.trigger || (Array.isArray(elements) ? elements[0] : elements), () => { animate(elements, safeVars, options); }, { once: true, margin: "0px 0px -10% 0px" });
+      } else {
+         animate(elements, safeVars, options);
+      }
+    } catch(e){}
+  }, 
+  from: () => {}, 
+  fromTo: (target, fromVars, toVars) => {
+    if (!target) return;
+    try {
+      const options = { duration: toVars.duration || 1, delay: toVars.delay || 0 };
+      if (toVars.stagger) options.delay = stagger(toVars.stagger);
+      const safeFrom = { ...fromVars }; const safeTo = { ...toVars };
+      ['duration','delay','stagger','ease','scrollTrigger','clearProps','transformPerspective','transformStyle'].forEach(p => { delete safeFrom[p]; delete safeTo[p]; });
+      
+      const elements = Array.isArray(target) ? target.filter(Boolean) : (typeof target === 'string' || target instanceof Element ? target : null);
+      if (!elements || (Array.isArray(elements) && elements.length === 0)) return;
+      
+      animate(elements, safeFrom, { duration: 0 });
+      if (toVars.scrollTrigger) {
+         inView(toVars.scrollTrigger.trigger || (Array.isArray(elements) ? elements[0] : elements), () => { animate(elements, safeTo, options); }, { once: true, margin: "0px 0px -10% 0px" });
+      } else {
+         animate(elements, safeTo, options);
+      }
+    } catch(e){}
+  }, 
+  context: (cb) => { if(cb) { try { cb(); } catch(e){} } return { revert: () => {} }; }, 
+  registerPlugin: () => {},
+  timeline: () => dummyTimeline 
+};
+const ScrollTrigger = {};
+
 import ServicesCardsGrid from './services/ServicesCardsGrid';
 import ExperienceCounter from './services/ExperienceCounter';
 import HowWeWorkProcess from './services/HowWeWorkProcess';
 import DlfPropertyCallout from './services/DlfPropertyCallout';
 import { useCms } from '../../context/CmsContext';
 
+
 export default function OurServicesSection() {
   const { sections } = useCms();
   const data = sections?.services || {};
 
-  const badge = data.badge || "Bespoke Property Solutions";
-  const titleMain = data.titleMain || "Our";
-  const titleItalic = data.titleItalic || "Services";
-  const description = data.description || "As the top real estate consultant in DLF Gurugram, let’s explore where our expertise lies and how it translates into real value for you.";
+  const badge = data.badge || 'Bespoke Property Solutions';
+  const titleMain = data.titleMain || 'Our';
+  const titleItalic = data.titleItalic || 'Services';
+
+  const description =
+    data.description ||
+    'As the top real estate consultant in DLF Gurugram, let’s explore where our expertise lies and how it translates into real value for you.';
+
+  const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+  const lineRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        headerRef.current,
+        {
+          opacity: 0,
+          y: 24,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.75,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: headerRef.current,
+            start: 'top 88%',
+            once: true,
+          },
+        }
+      );
+
+      gsap.fromTo(
+        lineRef.current,
+        {
+          scaleX: 0,
+          transformOrigin: 'center',
+        },
+        {
+          scaleX: 1,
+          duration: 0.8,
+          delay: 0.15,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: headerRef.current,
+            start: 'top 88%',
+            once: true,
+          },
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   return (
-    <section className="relative w-full py-12 md:py-16 bg-[#FAF8F5] text-[#1D263B] overflow-hidden border-t border-[#EFECE6]">
-      {/* Ambient Radial Subtle Pattern Layer */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#1D263B_1px,transparent_1px)] [background-size:32px_32px]" />
+    <section
+      ref={sectionRef}
+      id="services"
+      aria-labelledby="services-heading"
+      className="
+        relative
+        w-full
+        overflow-hidden
+        bg-[#F9F7F4]
+        text-[#182345]
+        py-14
+        sm:py-16
+        md:py-20
+      "
+    >
+      {/* =====================================================
+          SUBTLE ARCHITECTURAL BACKGROUND
+      ====================================================== */}
 
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 md:px-12 relative z-10">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+      >
+        {/* very subtle radial texture */}
+        <div
+          className="
+            absolute
+            inset-0
+            opacity-[0.012]
+            bg-[radial-gradient(#182345_1px,transparent_1px)]
+            [background-size:40px_40px]
+          "
+        />
 
-        {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-60px" }}
-          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="text-center max-w-3xl mx-auto mb-14 md:mb-18"
+        {/* soft gold ambient light */}
+        <div
+          className="
+            absolute
+            -right-40
+            top-[20%]
+            h-[420px]
+            w-[420px]
+            rounded-full
+            bg-[#D09A16]/[0.035]
+            blur-[110px]
+          "
+        />
+
+        <div
+          className="
+            absolute
+            -left-40
+            bottom-[15%]
+            h-[350px]
+            w-[350px]
+            rounded-full
+            bg-[#182345]/[0.025]
+            blur-[100px]
+          "
+        />
+      </div>
+
+      <div className="relative z-10 mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
+
+        {/* =====================================================
+            SECTION INTRO
+        ====================================================== */}
+
+        <header
+          ref={headerRef}
+          className="mx-auto mb-12 max-w-3xl text-center md:mb-14"
         >
-          <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white border border-[#C5A880]/40 shadow-sm text-[11px] font-bold tracking-[0.22em] text-[#A27B48] uppercase mb-4">
-            <Sparkles size={13} className="text-[#C5A880]" />
-            <span>{badge}</span>
+          {/* Eyebrow */}
+          <div className="mb-4 inline-flex items-center gap-2">
+            <span className="h-px w-7 bg-[#D09A16]" />
+
+            <Sparkles
+              size={12}
+              strokeWidth={1.7}
+              className="text-[#D09A16]"
+            />
+
+            <span className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#182345]/60">
+              {badge}
+            </span>
+
+            <span className="h-px w-7 bg-[#D09A16]" />
           </div>
 
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif text-[#1D263B] leading-[1.2] mb-4">
-            {titleMain} <span className="italic font-light text-[#C5A880]">{titleItalic}</span>
+          {/* Heading */}
+          <h2
+            id="services-heading"
+            className="
+              font-serif
+              text-[32px]
+              leading-[1.1]
+              tracking-[-0.02em]
+              text-[#182345]
+              sm:text-[38px]
+              md:text-[44px]
+            "
+          >
+            {titleMain}{' '}
+            <span className="font-light italic text-[#D09A16]">
+              {titleItalic}
+            </span>
           </h2>
 
-          <p className="text-[#334155] text-sm sm:text-base font-normal leading-relaxed max-w-2xl mx-auto">
+          {/* Description */}
+          <p className="mx-auto mt-4 max-w-2xl text-[13px] leading-6 text-[#182345]/60 sm:text-sm">
             {description}
           </p>
-        </motion.div>
 
-        {/* 1. Core Services 3D Cards Grid (Residential, Commercial, Industrial) */}
-        <ServicesCardsGrid />
+          {/* Decorative line */}
+          <div
+            ref={lineRef}
+            className="mx-auto mt-6 h-px w-16 bg-[#D09A16]/50"
+          />
+        </header>
 
-        {/* 2. 25+ Years Experience Counter Spotlight (Animated 1-25+ counter, Porcelain & Gold luxury theme) */}
-        <ExperienceCounter />
+        {/* =====================================================
+            SERVICES
+        ====================================================== */}
 
-        {/* 3. How Do We Work? Interactive Process Steps */}
-        <HowWeWorkProcess />
+        <div className="space-y-12 md:space-y-16">
 
-        {/* 4. DLF Gurgaon Property Callout with 100+ Cr, 1,000+ Clients, 25+ Years stats */}
-        <DlfPropertyCallout />
+          {/* Core Services */}
+          <div>
+            <ServicesCardsGrid />
+          </div>
 
+          {/* Experience */}
+          <div>
+            <ExperienceCounter />
+          </div>
+
+          {/* Process */}
+          <div>
+            <HowWeWorkProcess />
+          </div>
+
+          {/* DLF Callout */}
+          <div>
+            <DlfPropertyCallout />
+          </div>
+
+        </div>
       </div>
     </section>
   );

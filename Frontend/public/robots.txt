@@ -1,0 +1,11 @@
+# Saudagar Properties — robots.txt
+# https://www.saudagarproperties.com/robots.txt
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://www.saudagarproperties.com/sitemap.xml

@@ -120,7 +120,7 @@ export default function ServicesEditor({ formData, updateField, onNavigateTab })
 
       {/* Sub-section 1: Service Cards */}
       <div className="pt-6 border-t border-white/10 space-y-4">
-        <h4 className="text-sm font-serif font-bold text-[#C5A880]">
+        <h4 className="text-sm font-serif font-bold text-[#D09A16]">
           1. Three Core Service Pillars (Residential, Commercial, Industrial)
         </h4>
         <div className="space-y-4">
@@ -130,7 +130,7 @@ export default function ServicesEditor({ formData, updateField, onNavigateTab })
                 <span className="text-xs font-bold text-white uppercase tracking-wider">
                   Card #{cIdx + 1}: {card.title} ({card.category})
                 </span>
-                <span className="text-[10px] text-[#C5A880] uppercase tracking-widest">{card.id}</span>
+                <span className="text-[10px] text-[#D09A16] uppercase tracking-widest">{card.id}</span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <FormInput
@@ -175,7 +175,7 @@ export default function ServicesEditor({ formData, updateField, onNavigateTab })
 
       {/* Sub-section 2: Experience Counter Spotlight */}
       <div className="pt-6 border-t border-white/10 space-y-4">
-        <h4 className="text-sm font-serif font-bold text-[#C5A880]">
+        <h4 className="text-sm font-serif font-bold text-[#D09A16]">
           2. 25+ Years Experience Counter Spotlight
         </h4>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -214,7 +214,7 @@ export default function ServicesEditor({ formData, updateField, onNavigateTab })
       <div className="pt-6 border-t border-white/10 space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h4 className="text-sm font-serif font-bold text-[#C5A880]">
+            <h4 className="text-sm font-serif font-bold text-[#D09A16]">
               3. How Do We Work? Process Methodology ({steps.length} Steps)
             </h4>
             <p className="text-xs text-slate-400">
@@ -282,7 +282,7 @@ export default function ServicesEditor({ formData, updateField, onNavigateTab })
               <div key={sIdx} className="p-5 rounded-2xl bg-white/[0.03] border border-white/5 space-y-4 relative group">
                 <div className="flex items-center justify-between border-b border-white/5 pb-3">
                   <div className="flex items-center gap-2">
-                    <span className="px-2.5 py-0.5 rounded-full bg-[#C5A880]/15 text-[#C5A880] text-[10px] font-bold tracking-wider uppercase">
+                    <span className="px-2.5 py-0.5 rounded-full bg-[#D09A16]/15 text-[#D09A16] text-[10px] font-bold tracking-wider uppercase">
                       {st.phase || `STEP ${sIdx + 1}`}
                     </span>
                     <span className="text-xs font-bold text-white">
@@ -356,14 +356,14 @@ export default function ServicesEditor({ formData, updateField, onNavigateTab })
       {/* Sub-section 4: DLF Property Callout Banner Link */}
       <div className="pt-6 border-t border-white/10 space-y-4">
         <div className="flex items-center justify-between">
-          <h4 className="text-sm font-serif font-bold text-[#C5A880]">
+          <h4 className="text-sm font-serif font-bold text-[#D09A16]">
             4. DLF Property Callout Banner & Stats
           </h4>
           {onNavigateTab && (
             <button
               type="button"
               onClick={() => onNavigateTab('dlfCallout')}
-              className="px-3 py-1.5 rounded-lg bg-[#C5A880] text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 shrink-0 cursor-pointer hover:brightness-110"
+              className="px-3 py-1.5 rounded-lg bg-[#D09A16] text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 shrink-0 cursor-pointer hover:brightness-110"
             >
               <span>Open Tab 6: DLF Callout & Stats</span>
               <ArrowUpRight size={13} />

@@ -3,6 +3,7 @@ import { Outlet } from 'react-router-dom';
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
 import FloatingWidgets from '../components/ui/FloatingWidgets';
+import OrganizationJsonLd from '../components/seo/OrganizationJsonLd';
 
 export default function PublicLayout() {
   return (
@@ -13,6 +14,7 @@ export default function PublicLayout() {
       </main>
       <Footer />
       <FloatingWidgets />
+      <OrganizationJsonLd />
     </div>
   );
 }

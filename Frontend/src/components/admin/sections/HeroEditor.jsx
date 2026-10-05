@@ -88,7 +88,7 @@ export default function HeroEditor({ formData, updateField }) {
 
       {/* Floating Spotlight Card */}
       <div className="pt-6 border-t border-white/10">
-        <h4 className="text-sm font-serif font-bold text-[#C5A880] mb-4">
+        <h4 className="text-sm font-serif font-bold text-[#D09A16] mb-4">
           Floating Spotlight Card (Right Side on Hero)
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

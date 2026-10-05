@@ -1,7 +1,60 @@
-import React, { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useState, useRef, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Compass, Briefcase, Factory, ArrowUpRight, Sparkles, CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
+import { animate, inView, stagger } from 'framer-motion';
+
+const dummyTimeline = { 
+  to: function(target, vars) { gsap.to(target, vars); return this; }, 
+  from: function() { return this; }, 
+  fromTo: function(target, fromVars, toVars) { gsap.fromTo(target, fromVars, toVars); return this; } 
+};
+const gsap = { 
+  to: (target, vars) => {
+    if (!target) return;
+    try {
+      const options = { duration: vars.duration || 0.4, delay: vars.delay || 0 };
+      if (vars.stagger) options.delay = stagger(vars.stagger);
+      const safeVars = { ...vars };
+      ['duration','delay','stagger','ease','scrollTrigger','clearProps','transformPerspective','transformStyle'].forEach(p => delete safeVars[p]);
+      
+      const elements = Array.isArray(target) ? target.filter(Boolean) : (typeof target === 'string' || target instanceof Element ? target : null);
+      if (!elements || (Array.isArray(elements) && elements.length === 0)) return;
+
+      if (vars.scrollTrigger) {
+         inView(vars.scrollTrigger.trigger || (Array.isArray(elements) ? elements[0] : elements), () => { animate(elements, safeVars, options); }, { once: true, margin: "0px 0px -10% 0px" });
+      } else {
+         animate(elements, safeVars, options);
+      }
+    } catch(e){}
+  }, 
+  from: () => {}, 
+  fromTo: (target, fromVars, toVars) => {
+    if (!target) return;
+    try {
+      const options = { duration: toVars.duration || 1, delay: toVars.delay || 0 };
+      if (toVars.stagger) options.delay = stagger(toVars.stagger);
+      const safeFrom = { ...fromVars }; const safeTo = { ...toVars };
+      ['duration','delay','stagger','ease','scrollTrigger','clearProps','transformPerspective','transformStyle'].forEach(p => { delete safeFrom[p]; delete safeTo[p]; });
+      
+      const elements = Array.isArray(target) ? target.filter(Boolean) : (typeof target === 'string' || target instanceof Element ? target : null);
+      if (!elements || (Array.isArray(elements) && elements.length === 0)) return;
+      
+      animate(elements, safeFrom, { duration: 0 });
+      if (toVars.scrollTrigger) {
+         inView(toVars.scrollTrigger.trigger || (Array.isArray(elements) ? elements[0] : elements), () => { animate(elements, safeTo, options); }, { once: true, margin: "0px 0px -10% 0px" });
+      } else {
+         animate(elements, safeTo, options);
+      }
+    } catch(e){}
+  }, 
+  context: (cb) => { if(cb) { try { cb(); } catch(e){} } return { revert: () => {} }; }, 
+  registerPlugin: () => {},
+  timeline: () => dummyTimeline 
+};
+const ScrollTrigger = {};
+
 
 export default function AboutProposition() {
   const [activePillar, setActivePillar] = useState(0);
@@ -63,9 +116,60 @@ export default function AboutProposition() {
     }
   ];
 
+  const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+  const stageRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // 1. Header Reveal
+      gsap.fromTo(
+        headerRef.current,
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: headerRef.current,
+            start: "top 85%",
+            once: true
+          },
+          clearProps: "transform"
+        }
+      );
+
+      // 2. Stage Reveal
+      gsap.fromTo(
+        stageRef.current,
+        { opacity: 0, y: 45, scale: 0.97 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 1.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: stageRef.current,
+            start: "top 85%",
+            once: true
+          },
+          clearProps: "transform"
+        }
+      );
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <section id="proposition" className="relative py-12 md:py-16 bg-[#0C101A] text-white overflow-hidden">
-      {/* Ambient Lighting (0 blur, 0 rasterization overhead) */}
+    <section 
+      ref={sectionRef}
+      id="proposition" 
+      className="relative py-16 md:py-24 bg-[#0C101A] text-white overflow-hidden"
+    >
+      {/* Ambient Lighting */}
       <div
         className="absolute top-0 left-1/4 w-[600px] h-[350px] rounded-full pointer-events-none"
         style={{ background: 'radial-gradient(ellipse at center, rgba(197,168,128,0.18) 0%, rgba(197,168,128,0) 70%)' }}
@@ -78,20 +182,17 @@ export default function AboutProposition() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center max-w-3xl mx-auto mb-10"
+        <div
+          ref={headerRef}
+          className="text-center max-w-3xl mx-auto mb-12 md:mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[#C5A880] text-xs font-bold tracking-[0.25em] uppercase mb-4">
-            <Sparkles size={13} className="text-[#C5A880]" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[#D09A16] text-xs font-bold tracking-[0.25em] uppercase mb-4">
+            <Sparkles size={13} className="text-[#D09A16]" />
             <span>Our Proposition</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-4 leading-tight">
-            Where Our <span className="italic font-light text-[#C5A880]">Expertise Lies</span>
+            Where Our <span className="italic font-light text-[#D09A16]">Expertise Lies</span>
           </h2>
 
           <p className="text-sm sm:text-base text-slate-300 font-normal leading-relaxed">
@@ -113,7 +214,7 @@ export default function AboutProposition() {
                   {isActive && (
                     <motion.div
                       layoutId="activePillarTab"
-                      className="absolute inset-0 bg-gradient-to-r from-[#C5A880] to-[#E2CEB4] rounded-xl shadow-[0_4px_20px_rgba(197,168,128,0.4)]"
+                      className="absolute inset-0 bg-gradient-to-r from-[#D09A16] to-[#E2CEB4] rounded-xl shadow-[0_4px_20px_rgba(197,168,128,0.4)]"
                       transition={{ type: "spring", stiffness: 350, damping: 30 }}
                     />
                   )}
@@ -123,10 +224,13 @@ export default function AboutProposition() {
               );
             })}
           </div>
-        </motion.div>
+        </div>
 
         {/* ================= INTERACTIVE 3D EXPANDING SHOWCASE STAGE ================= */}
-        <div className="hidden lg:flex gap-4 h-[560px] items-stretch">
+        <div 
+          ref={stageRef}
+          className="hidden lg:flex gap-4 h-[560px] items-stretch"
+        >
           {pillars.map((p, idx) => {
             const isExpanded = activePillar === idx;
             const Icon = p.icon;
@@ -138,10 +242,10 @@ export default function AboutProposition() {
                 onMouseEnter={() => setActivePillar(idx)}
                 layout
                 transition={{ type: "spring", stiffness: 220, damping: 26 }}
-                className={`relative rounded-3xl overflow-hidden cursor-pointer transition-all duration-500 border ${
+                className={`relative rounded-3xl overflow-hidden cursor-pointer transition-colors duration-300 border ${
                   isExpanded
-                    ? 'flex-[3.5] border-[#C5A880] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8),0_0_40px_rgba(197,168,128,0.25)]'
-                    : 'flex-[1] border-white/10 hover:border-[#C5A880]/50 hover:brightness-110'
+                    ? 'flex-[3.5] border-[#D09A16] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8),0_0_40px_rgba(197,168,128,0.25)]'
+                    : 'flex-[1] border-white/10 hover:border-[#D09A16]/50 hover:brightness-110'
                 }`}
               >
                 {/* Background Image with Zoom on Active */}
@@ -149,6 +253,9 @@ export default function AboutProposition() {
                   <img
                     src={p.bgImage}
                     alt={p.title}
+                    width="1400"
+                    height="900"
+                    loading="lazy"
                     className={`w-full h-full object-cover transition-transform duration-1000 ${
                       isExpanded ? 'scale-105' : 'scale-100 filter grayscale brightness-50'
                     }`}
@@ -165,11 +272,11 @@ export default function AboutProposition() {
                 <div className="relative h-full p-8 flex flex-col justify-between z-10">
                   {/* Top Bar */}
                   <div className="flex items-center justify-between">
-                    <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-[#C5A880] flex items-center justify-center shadow-md">
+                    <div className="w-12 h-12 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 text-[#D09A16] flex items-center justify-center shadow-md">
                       <Icon size={22} />
                     </div>
 
-                    <span className="px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-md border border-[#C5A880]/40 text-[#C5A880] text-[10px] font-bold tracking-widest uppercase">
+                    <span className="px-3 py-1 rounded-full bg-slate-900/80 backdrop-blur-md border border-[#D09A16]/40 text-[#D09A16] text-[10px] font-bold tracking-widest uppercase">
                       {p.tag}
                     </span>
                   </div>
@@ -198,7 +305,7 @@ export default function AboutProposition() {
                               key={ptIdx}
                               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 backdrop-blur-md border border-white/15 text-xs text-white"
                             >
-                              <CheckCircle2 size={13} className="text-[#C5A880]" />
+                              <CheckCircle2 size={13} className="text-[#D09A16]" />
                               <span className="font-medium text-[11px]">{pt}</span>
                             </div>
                           ))}
@@ -208,7 +315,7 @@ export default function AboutProposition() {
                         <div className="pt-3">
                           <Link
                             to={p.ctaLink}
-                            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#C5A880] to-[#B39366] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider transition-all shadow-[0_6px_20px_rgba(197,168,128,0.3)] hover:-translate-y-0.5"
+                            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#D09A16] to-[#B39366] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider transition-all shadow-[0_6px_20px_rgba(197,168,128,0.3)] hover:-translate-y-0.5"
                           >
                             <span>{p.ctaText}</span>
                             <ArrowUpRight size={14} />
@@ -216,13 +323,13 @@ export default function AboutProposition() {
                         </div>
                       </motion.div>
                     ) : (
-                      // Collapsed Preview Bar
                       <div className="space-y-2">
-                        <span className="text-xs font-mono text-[#C5A880] tracking-widest">{p.number}</span>
-                        <h4 className="text-lg font-serif font-bold text-white uppercase tracking-wider">
-                          {p.id}
-                        </h4>
-                        <p className="text-[11px] text-slate-400 font-medium">Click to explore</p>
+                        <div className="text-xs font-mono text-[#D09A16] uppercase tracking-wider">
+                          Phase {p.number}
+                        </div>
+                        <h3 className="text-lg font-serif font-bold text-white line-clamp-1">
+                          {p.title}
+                        </h3>
                       </div>
                     )}
                   </div>
@@ -232,136 +339,69 @@ export default function AboutProposition() {
           })}
         </div>
 
-        {/* ================= MOBILE / TABLET VIEW: DYNAMIC INTERACTIVE SHOWCASE ================= */}
-        <div className="lg:hidden">
-          <AnimatePresence mode="wait">
-            {(() => {
-              const currentPillar = pillars[activePillar];
-              const Icon = currentPillar.icon;
-
-              return (
-                <motion.div
-                  key={currentPillar.id}
-                  initial={{ opacity: 0, y: 16, scale: 0.98 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -16, scale: 0.98 }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
-                  drag="x"
-                  dragConstraints={{ left: 0, right: 0 }}
-                  dragElastic={0.2}
-                  onDragEnd={(_, { offset }) => {
-                    if (offset.x < -40) {
-                      setActivePillar((prev) => (prev + 1) % pillars.length);
-                    } else if (offset.x > 40) {
-                      setActivePillar((prev) => (prev - 1 + pillars.length) % pillars.length);
-                    }
-                  }}
-                  className="relative rounded-3xl overflow-hidden border border-[#C5A880]/30 bg-gradient-to-b from-[#131926] via-[#0E131E] to-[#0A0D14] shadow-[0_20px_50px_rgba(0,0,0,0.6)] touch-pan-y"
-                >
-                  {/* Visual Architectural Image Header */}
-                  <div className="relative h-44 sm:h-52 w-full overflow-hidden">
-                    <img
-                      src={currentPillar.bgImage}
-                      alt={currentPillar.title}
-                      className="w-full h-full object-cover"
-                    />
-                    {/* Atmospheric Overlays */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#131926] via-[#131926]/40 to-black/60" />
-
-                    {/* Top Badges */}
-                    <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
-                      <span className="px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-[#C5A880]/40 text-[#C5A880] text-[10px] font-bold tracking-widest uppercase">
-                        {currentPillar.tag}
-                      </span>
-                      <span className="px-2.5 py-1 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white font-mono text-[11px] font-bold">
-                        {currentPillar.number} / 03
-                      </span>
-                    </div>
+        {/* Mobile View (below lg) */}
+        <div className="lg:hidden mt-8">
+          {(() => {
+            const current = pillars[activePillar];
+            const Icon = current.icon;
+            return (
+              <div className="relative rounded-3xl overflow-hidden border border-[#D09A16]/50 bg-slate-900 p-6 shadow-2xl">
+                <div className="relative h-48 rounded-2xl overflow-hidden mb-6">
+                  <img
+                    src={current.bgImage}
+                    alt={current.title}
+                    width="800"
+                    height="500"
+                    loading="lazy"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent" />
+                  <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-slate-950/80 text-[#D09A16] text-[10px] font-bold uppercase tracking-wider flex items-center gap-1.5">
+                    <Icon size={12} />
+                    <span>{current.tag}</span>
                   </div>
+                </div>
 
-                  {/* Body Content */}
-                  <div className="p-5 sm:p-6 pt-0 space-y-3.5">
-                    {/* Floating Luxury Icon Squircle - Positioned smoothly over image seam */}
-                    <div className="-mt-6 mb-2 relative z-20">
-                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-[#C5A880] to-[#9E825B] text-[#0C101A] flex items-center justify-center shadow-[0_8px_20px_rgba(197,168,128,0.4)] border-2 border-[#131926]">
-                        <Icon size={22} className="stroke-[2.2]" />
-                      </div>
-                    </div>
+                <h3 className="text-xl font-serif font-bold text-white mb-2">{current.title}</h3>
+                <p className="text-xs text-slate-300 leading-relaxed mb-4">{current.quote}</p>
 
-                    <div className="space-y-1.5">
-                      <h3 className="text-xl sm:text-2xl font-serif font-bold text-white leading-snug">
-                        {currentPillar.title}
-                      </h3>
-                      <p className="text-xs sm:text-sm text-slate-300 font-light leading-relaxed">
-                        {currentPillar.quote}
-                      </p>
-                    </div>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {current.keyPoints.map((pt, i) => (
+                    <span key={i} className="text-[11px] px-2.5 py-1 rounded-lg bg-white/10 text-white flex items-center gap-1.5">
+                      <CheckCircle2 size={12} className="text-[#D09A16]" />
+                      <span>{pt}</span>
+                    </span>
+                  ))}
+                </div>
 
-                    {/* Key Highlights Grid - 2 columns for compact thumb-friendly mobile scanning */}
-                    <div className="grid grid-cols-2 gap-2 pt-1">
-                      {currentPillar.keyPoints.map((pt, ptIdx) => (
-                        <div
-                          key={ptIdx}
-                          className="flex items-start gap-1.5 p-2 rounded-xl bg-white/[0.04] border border-white/10 text-slate-200"
-                        >
-                          <CheckCircle2 size={13} className="text-[#C5A880] shrink-0 mt-0.5" />
-                          <span className="font-medium text-[11px] leading-snug">{pt}</span>
-                        </div>
-                      ))}
-                    </div>
+                <div className="flex items-center justify-between pt-4 border-t border-white/10">
+                  <Link
+                    to={current.ctaLink}
+                    className="px-5 py-2.5 rounded-xl bg-[#D09A16] text-[#0C101A] font-bold text-xs uppercase tracking-wider"
+                  >
+                    {current.ctaText}
+                  </Link>
 
-                    {/* CTA Button */}
-                    <div className="pt-1">
-                      <Link
-                        to={currentPillar.ctaLink}
-                        className="w-full flex items-center justify-center gap-2 py-3 px-5 rounded-xl bg-gradient-to-r from-[#C5A880] to-[#B39366] text-[#0C101A] font-bold text-xs uppercase tracking-wider shadow-[0_6px_20px_rgba(197,168,128,0.3)] active:scale-[0.99] transition-transform"
-                      >
-                        <span>{currentPillar.ctaText}</span>
-                        <ArrowUpRight size={14} />
-                      </Link>
-                    </div>
-
-                    {/* Bottom Navigation & Thumb Controls */}
-                    <div className="flex items-center justify-between pt-3 border-t border-white/10">
-                      <button
-                        onClick={() => setActivePillar((prev) => (prev - 1 + pillars.length) % pillars.length)}
-                        className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-slate-300 hover:text-white text-xs font-medium active:bg-white/10 transition-colors"
-                        aria-label="Previous proposition"
-                      >
-                        <ChevronLeft size={15} />
-                        <span className="text-[11px]">Prev</span>
-                      </button>
-
-                      {/* Dot Step Indicators */}
-                      <div className="flex items-center gap-1.5">
-                        {pillars.map((_, dotIdx) => (
-                          <button
-                            key={dotIdx}
-                            onClick={() => setActivePillar(dotIdx)}
-                            className={`h-1.5 rounded-full transition-all duration-300 ${
-                              activePillar === dotIdx
-                                ? 'w-5 bg-[#C5A880]'
-                                : 'w-1.5 bg-white/20 hover:bg-white/40'
-                            }`}
-                            aria-label={`Go to slide ${dotIdx + 1}`}
-                          />
-                        ))}
-                      </div>
-
-                      <button
-                        onClick={() => setActivePillar((prev) => (prev + 1) % pillars.length)}
-                        className="flex items-center gap-1 px-3 py-1.5 rounded-lg bg-white/5 border border-white/10 text-slate-300 hover:text-white text-xs font-medium active:bg-white/10 transition-colors"
-                        aria-label="Next proposition"
-                      >
-                        <span className="text-[11px]">Next</span>
-                        <ChevronRight size={15} />
-                      </button>
-                    </div>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => setActivePillar((prev) => (prev - 1 + pillars.length) % pillars.length)}
+                      className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-white"
+                      aria-label="Previous proposition"
+                    >
+                      <ChevronLeft size={16} />
+                    </button>
+                    <button
+                      onClick={() => setActivePillar((prev) => (prev + 1) % pillars.length)}
+                      className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center text-white"
+                      aria-label="Next proposition"
+                    >
+                      <ChevronRight size={16} />
+                    </button>
                   </div>
-                </motion.div>
-              );
-            })()}
-          </AnimatePresence>
+                </div>
+              </div>
+            );
+          })()}
         </div>
 
       </div>

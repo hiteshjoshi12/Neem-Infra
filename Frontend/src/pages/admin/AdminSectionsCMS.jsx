@@ -181,7 +181,7 @@ export default function AdminSectionsCMS() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold tracking-[0.2em] text-[#C5A880] uppercase mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold tracking-[0.2em] text-[#D09A16] uppercase mb-2">
             <Layers size={12} />
             <span>Complete Website CMS Portal</span>
           </div>
@@ -199,7 +199,7 @@ export default function AdminSectionsCMS() {
             onClick={handleJsonToggle}
             className={`px-4 py-3 rounded-xl border text-xs font-semibold flex items-center gap-2 transition-all cursor-pointer ${
               jsonMode
-                ? 'bg-[#C5A880]/20 border-[#C5A880] text-[#C5A880]'
+                ? 'bg-[#D09A16]/20 border-[#D09A16] text-[#D09A16]'
                 : 'bg-white/5 hover:bg-white/10 border-white/10 text-slate-300'
             }`}
           >
@@ -210,7 +210,7 @@ export default function AdminSectionsCMS() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#C5A880] to-[#B39366] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_6px_20px_rgba(197,168,128,0.3)] active:scale-95 cursor-pointer disabled:opacity-60"
+            className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#D09A16] to-[#B39366] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_6px_20px_rgba(197,168,128,0.3)] active:scale-95 cursor-pointer disabled:opacity-60"
           >
             {saving ? (
               <RefreshCw size={14} className="animate-spin" />
@@ -233,7 +233,7 @@ export default function AdminSectionsCMS() {
               onClick={() => handleTabChange(tab.id)}
               className={`px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer flex items-center gap-2 ${
                 isActive
-                  ? 'bg-[#C5A880] text-[#0C101A] shadow-md'
+                  ? 'bg-[#D09A16] text-[#0C101A] shadow-md'
                   : 'bg-white/5 hover:bg-white/10 text-slate-300'
               }`}
             >
@@ -267,7 +267,7 @@ export default function AdminSectionsCMS() {
           <div className="space-y-4">
             <div className="flex items-center justify-between">
               <h3 className="text-sm font-serif font-bold text-white flex items-center gap-2">
-                <Code size={16} className="text-[#C5A880]" />
+                <Code size={16} className="text-[#D09A16]" />
                 <span>Raw JSON Editor for '{activeTab}'</span>
               </h3>
               <span className="text-[11px] text-slate-400">Direct schema access for complete CRUD customization</span>
@@ -283,7 +283,7 @@ export default function AdminSectionsCMS() {
               rows={22}
               value={jsonText}
               onChange={(e) => setJsonText(e.target.value)}
-              className="w-full font-mono text-xs bg-slate-950/80 border border-white/10 focus:border-[#C5A880] rounded-2xl p-4 text-emerald-400 outline-none leading-relaxed"
+              className="w-full font-mono text-xs bg-slate-950/80 border border-white/10 focus:border-[#D09A16] rounded-2xl p-4 text-emerald-400 outline-none leading-relaxed"
             />
           </div>
         ) : (
@@ -299,7 +299,7 @@ export default function AdminSectionsCMS() {
           <button
             type="submit"
             disabled={saving}
-            className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#C5A880] to-[#B39366] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-[0_6px_20px_rgba(197,168,128,0.3)] active:scale-95 cursor-pointer disabled:opacity-60"
+            className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#D09A16] to-[#B39366] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-[0_6px_20px_rgba(197,168,128,0.3)] active:scale-95 cursor-pointer disabled:opacity-60"
           >
             {saving ? <RefreshCw size={14} className="animate-spin" /> : <Save size={15} />}
             <span>{saving ? 'Publishing Changes...' : 'Save & Publish Live'}</span>

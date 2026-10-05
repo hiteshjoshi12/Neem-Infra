@@ -1,6 +1,27 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Quote, Star, ShieldCheck, ChevronLeft, ChevronRight, Sparkles } from 'lucide-react';
+import { useEffect, useRef, useState } from "react";
+import {
+  Quote,
+  Star,
+  ShieldCheck,
+  ChevronLeft,
+  ChevronRight,
+  Sparkles,
+  ArrowUpRight,
+} from "lucide-react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useCms } from "../../context/CmsContext";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger);
+}
+
+
+/* =========================================================
+   DEFAULT TESTIMONIALS
+   ---------------------------------------------------------
+   CMS remains the primary source.
+========================================================= */
 
 const TESTIMONIALS = [
   {
@@ -9,10 +30,11 @@ const TESTIMONIALS = [
     role: "Investor",
     location: "Dubai, UAE",
     rating: 5,
-    avatar: "https://saudagarproperties.com/wp-content/uploads/2021/01/c3.jpg",
+    avatar:
+      "https://saudagarproperties.com/wp-content/uploads/2021/01/c3.jpg",
     quote:
       "Selecting a best real estate consultant in Gurugram, especially one who is trustworthy, experienced, and honest, is the basic pillar of investment. From their before sales to after sales service, I can definitely say that customer satisfaction is in the company's DNA. Extremely happy to approach them for my investment decisions and will look up to the same in future too.",
-    tag: "NRI Investment Advisory"
+    tag: "NRI Investment Advisory",
   },
   {
     id: "02",
@@ -20,10 +42,11 @@ const TESTIMONIALS = [
     role: "Investor",
     location: "Dubai, UAE",
     rating: 5,
-    avatar: "https://saudagarproperties.com/wp-content/uploads/2021/01/c2.jpg",
+    avatar:
+      "https://saudagarproperties.com/wp-content/uploads/2021/01/c2.jpg",
     quote:
       "Choosing the right home is a very important aspect of any individual's life. With their decade-long experience in the Gurgaon real estate market, Saudagar Properties Pvt. Ltd. played a key role in ensuring that I was making the right decision while choosing my dream home by providing the right push when needed, and cautioning me when necessary. I owe the team a huge part of my dream.",
-    tag: "High-Value Transaction"
+    tag: "High-Value Transaction",
   },
   {
     id: "03",
@@ -31,260 +54,1365 @@ const TESTIMONIALS = [
     role: "Investor & End User",
     location: "India",
     rating: 5,
-    avatar: "https://saudagarproperties.com/wp-content/uploads/2021/01/c1.jpg",
+    avatar:
+      "https://saudagarproperties.com/wp-content/uploads/2021/01/c1.jpg",
     quote:
       "The team seamlessly took over everything, from research, visit, paperwork to maintenance. Amidst a plethora of options, Saudagar Properties shortlisted the best residential properties in Gurgaon according to my needs and comfort. It has been a delight working with the highly-qualified and seasoned team. I would recommend their services to all my friends and acquaintances.",
-    tag: "End-to-End Concierge"
-  }
+    tag: "End-to-End Concierge",
+  },
 ];
 
-const fadeUp = {
-  hidden: { opacity: 0, y: 35 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
-  }
-};
 
-import { useCms } from '../../context/CmsContext';
+/* =========================================================
+   STAR RATING
+========================================================= */
 
-export default function TestimonialsSection() {
-  const { testimonials, sections } = useCms();
-  const list = testimonials && testimonials.length > 0 ? testimonials : TESTIMONIALS;
-  const testData = sections?.testimonials || {};
+function Rating({ rating = 5 }) {
+  return (
+    <div
+      className="flex items-center gap-1"
+      aria-label={`${rating} out of 5 stars`}
+    >
+      {Array.from({ length: rating }).map((_, index) => (
+        <Star
+          key={index}
+          size={13}
+          fill="currentColor"
+          className="text-[#D09A16]"
+          aria-hidden="true"
+        />
+      ))}
+    </div>
+  );
+}
 
-  const [activeIndex, setActiveIndex] = useState(0);
 
-  const handleNext = () => {
-    if (list.length === 0) return;
-    setActiveIndex((prev) => (prev + 1) % list.length);
-  };
+/* =========================================================
+   LOCATION LABEL
+========================================================= */
 
-  const handlePrev = () => {
-    if (list.length === 0) return;
-    setActiveIndex((prev) => (prev - 1 + list.length) % list.length);
-  };
-
-  const currentItem = list[activeIndex] || list[0] || {};
+function LocationLabel({ location }) {
+  if (!location) return null;
 
   return (
-    <section className="relative w-full py-12 md:py-20 bg-[#FAF8F5] text-[#1D263B] overflow-hidden border-t border-[#EFECE6]">
-      {/* Background Architectural Ambient Grid & Subtle Glow */}
-      <div className="absolute inset-0 opacity-[0.035] pointer-events-none bg-[radial-gradient(#1D263B_1px,transparent_1px)] [background-size:28px_28px]" />
-      <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-[#C5A880]/10 rounded-full blur-3xl pointer-events-none" />
+    <span
+      className="
+        inline-flex
+        items-center
+        rounded-full
+        border
+        border-[#182345]/[0.08]
+        bg-[#F9F7F4]
+        px-2.5
+        py-1
+        text-[7px]
+        font-semibold
+        uppercase
+        tracking-[0.15em]
+        text-[#182345]/55
+      "
+    >
+      {location}
+    </span>
+  );
+}
 
-      <div className="max-w-7xl mx-auto px-5 sm:px-8 md:px-12 relative z-10">
 
-        {/* Section Header */}
-        <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
-          variants={fadeUp}
-          className="text-center max-w-2xl mx-auto mb-14 md:mb-20"
+/* =========================================================
+   FEATURED TESTIMONIAL
+========================================================= */
+
+function FeaturedTestimonial({ item }) {
+  if (!item) return null;
+
+  return (
+    <article
+      itemScope
+      itemType="https://schema.org/Review"
+      className="
+        group
+        relative
+        overflow-hidden
+        rounded-[28px]
+        border
+        border-[#182345]/10
+        bg-[#182345]
+        p-7
+        shadow-[0_25px_70px_rgba(24,35,69,0.12)]
+        sm:p-9
+        lg:p-10
+      "
+    >
+
+      {/* =====================================================
+          ATMOSPHERIC BACKGROUND
+      ===================================================== */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          -right-28
+          -top-28
+          h-[330px]
+          w-[330px]
+          rounded-full
+          bg-[#D09A16]/10
+          blur-[80px]
+          transition-all
+          duration-700
+          group-hover:bg-[#D09A16]/15
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          bottom-0
+          left-0
+          h-[220px]
+          w-[220px]
+          rounded-full
+          bg-white/[0.02]
+          blur-[70px]
+        "
+      />
+
+
+      {/* Architectural line */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          right-[18%]
+          top-0
+          h-full
+          w-px
+          bg-white/[0.045]
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          right-[32%]
+          top-0
+          h-full
+          w-px
+          bg-white/[0.025]
+        "
+      />
+
+
+      {/* =====================================================
+          CONTENT
+      ===================================================== */}
+
+      <div className="relative z-10">
+
+        {/* Top row */}
+
+        <div
+          className="
+            flex
+            flex-wrap
+            items-center
+            justify-between
+            gap-4
+          "
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white border border-[#C5A880]/40 shadow-sm text-[11px] font-bold tracking-[0.25em] text-[#A27B48] uppercase mb-4">
-            <Sparkles size={12} className="text-[#C5A880]" />
-            <span>{testData.badge || "Client Perspectives"}</span>
+
+          <div
+            className="
+              inline-flex
+              items-center
+              gap-2
+              text-[7px]
+              font-bold
+              uppercase
+              tracking-[0.22em]
+              text-[#D09A16]
+            "
+          >
+            <ShieldCheck size={12} />
+
+            Client Perspective
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-[#1D263B] leading-[1.15] mb-4">
-            {testData.titleMain || "Words of"} <span className="italic font-light text-[#C5A880]">{testData.titleItalic || "Distinction"}</span>
-          </h2>
 
-          <div className="flex items-center justify-center gap-3">
-            <span className="w-12 h-[1px] bg-[#C5A880]/60" />
-            <span className="text-xs tracking-[0.25em] text-[#C5A880] uppercase font-semibold">{testData.subBadge || "Testimonial"}</span>
-            <span className="w-12 h-[1px] bg-[#C5A880]/60" />
-          </div>
-        </motion.div>
-
-        {/* ===================== DESKTOP 3D GRID (md and up) ===================== */}
-        {/* ===================== DESKTOP 3D GRID (md and up) ===================== */}
-        <div className="hidden md:grid md:grid-cols-3 gap-7 lg:gap-8 perspective-[1200px] items-stretch">
-          {list.map((item, index) => (
-            <motion.div
-              key={item._id || item.id}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, delay: index * 0.15, ease: [0.16, 1, 0.3, 1] }}
-              whileHover={{
-                y: -10,
-                rotateX: 3,
-                rotateY: index === 0 ? 3 : index === 2 ? -3 : 0,
-                transition: { duration: 0.3 }
-              }}
-              className="group relative rounded-3xl bg-white border border-[#E8E2D8] p-8 lg:p-9 flex flex-col justify-between shadow-[0_15px_40px_-15px_rgba(29,38,59,0.07)] hover:shadow-[0_30px_60px_-12px_rgba(197,168,128,0.22)] hover:border-[#C5A880] transition-all duration-500 transform-gpu"
+          <div
+            className="
+              rounded-full
+              border
+              border-white/10
+              bg-white/[0.05]
+              px-3
+              py-1.5
+            "
+          >
+            <span
+              className="
+                text-[7px]
+                font-bold
+                uppercase
+                tracking-[0.15em]
+                text-white/55
+              "
             >
-              {/* Subtle 3D Glass Gold Bevel Accent */}
-              <div className="absolute top-0 left-8 right-8 h-[2px] bg-gradient-to-r from-transparent via-[#C5A880]/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              {item.tag || "Client Experience"}
+            </span>
+          </div>
 
-              {/* Corner Architectural Bracket Accents on Hover */}
-              <div className="absolute top-3 left-3 w-4 h-4 border-t-2 border-l-2 border-[#C5A880] rounded-tl-lg opacity-0 group-hover:opacity-100 transition-all duration-300" />
-              <div className="absolute bottom-3 right-3 w-4 h-4 border-b-2 border-r-2 border-[#C5A880] rounded-br-lg opacity-0 group-hover:opacity-100 transition-all duration-300" />
-
-              <div>
-                {/* Top Badge & Rating Row */}
-                <div className="flex items-center justify-between gap-3 mb-6">
-                  <div className="flex items-center gap-1 text-[#C5A880]">
-                    {[...Array(item.rating || 5)].map((_, i) => (
-                      <Star key={i} size={15} fill="#C5A880" className="text-[#C5A880]" />
-                    ))}
-                  </div>
-
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#FAF8F5] border border-[#E8E2D8] text-[10px] font-semibold text-[#8B7355] uppercase tracking-wider">
-                    <ShieldCheck size={12} className="text-[#C5A880]" />
-                    <span>{item.tag || 'Verified'}</span>
-                  </span>
-                </div>
-
-                {/* Floating 3D Quote Watermark */}
-                <div className="relative mb-5">
-                  <Quote
-                    size={42}
-                    className="text-[#C5A880]/20 absolute -top-4 -left-2 pointer-events-none group-hover:text-[#C5A880]/35 transition-colors duration-500"
-                  />
-                  <p className="relative z-10 text-[#1E293B] text-sm lg:text-[14.5px] font-normal leading-relaxed tracking-normal pt-2">
-                    "{item.quote}"
-                  </p>
-                </div>
-              </div>
-
-              {/* Author Info Footer */}
-              <div className="pt-6 mt-6 border-t border-[#F0ECE1] flex items-center gap-4 sm:gap-5">
-                {/* Elevated Luxury Client Portrait */}
-                <div className="relative flex-shrink-0">
-                  <div className="relative w-20 h-20 lg:w-22 lg:h-22 rounded-2xl p-[2.5px] bg-gradient-to-tr from-[#C5A880] via-[#FAF8F5] to-[#B39366] shadow-[0_10px_25px_-5px_rgba(197,168,128,0.35)] group-hover:shadow-[0_14px_32px_-4px_rgba(197,168,128,0.45)] group-hover:scale-105 transition-all duration-300">
-                    <img
-                      src={item.avatar}
-                      alt={item.name}
-                      className="w-full h-full rounded-[14px] object-cover object-top"
-                    />
-                  </div>
-                  {/* Verified Shield Badge on Portrait */}
-                  <div
-                    className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-[#1D263B] border-2 border-white text-[#C5A880] flex items-center justify-center shadow-md"
-                    title="Verified Saudagar Properties Client"
-                  >
-                    <ShieldCheck size={12} className="stroke-[2.5]" />
-                  </div>
-                </div>
-
-                <div className="flex-grow min-w-0">
-                  <h4 className="text-lg lg:text-xl font-serif font-bold text-[#1D263B] truncate group-hover:text-[#A27B48] transition-colors leading-tight">
-                    {item.name}
-                  </h4>
-                  <p className="text-xs text-[#8B7355] font-semibold tracking-wide uppercase mt-1">
-                    {item.role}, {item.location}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          ))}
         </div>
 
-        {/* ===================== MOBILE-FIRST INTERACTIVE 3D CAROUSEL (< md) ===================== */}
-        <div className="md:hidden">
-          <div className="relative overflow-hidden perspective-[1000px] pb-4">
-            <motion.div
-              key={activeIndex}
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: -20 }}
-              transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
-              className="relative rounded-3xl bg-white border border-[#E8E2D8] p-7 shadow-[0_20px_45px_-12px_rgba(29,38,59,0.12)] flex flex-col justify-between"
+
+        {/* Quote */}
+
+        <div className="relative mt-8">
+
+          <Quote
+            size={58}
+            strokeWidth={1}
+            className="
+              absolute
+              -left-2
+              -top-6
+              text-[#D09A16]/15
+            "
+            aria-hidden="true"
+          />
+
+
+          <blockquote
+            itemProp="reviewBody"
+            className="
+              relative
+              max-w-3xl
+              font-serif
+              text-xl
+              font-normal
+              leading-[1.55]
+              tracking-[-0.015em]
+              text-white
+              sm:text-2xl
+              lg:text-[27px]
+            "
+          >
+            “{item.quote}”
+          </blockquote>
+
+        </div>
+
+
+        {/* Divider */}
+
+        <div
+          className="
+            my-8
+            h-px
+            w-full
+            bg-white/[0.09]
+          "
+        />
+
+
+        {/* Author */}
+
+        <div
+          className="
+            flex
+            items-center
+            justify-between
+            gap-5
+          "
+        >
+
+          <div className="flex items-center gap-4">
+
+            {/* Avatar */}
+
+            <div
+              className="
+                h-14
+                w-14
+                shrink-0
+                rounded-2xl
+                bg-gradient-to-br
+                from-[#D09A16]
+                via-[#F9F7F4]
+                to-[#A87505]
+                p-[2px]
+                shadow-[0_8px_25px_rgba(208,154,22,0.20)]
+              "
             >
-              {/* Gold Top Accent Line */}
-              <div className="absolute top-0 left-6 right-6 h-[2.5px] bg-[#C5A880]" />
 
-              <div>
-                <div className="flex items-center justify-between gap-3 mb-5 pt-1">
-                  <div className="flex items-center gap-1 text-[#C5A880]">
-                    {[...Array(currentItem.rating || 5)].map((_, i) => (
-                      <Star key={i} size={15} fill="#C5A880" className="text-[#C5A880]" />
-                    ))}
-                  </div>
+              <img
+                src={item.avatar}
+                alt={`${item.name} — Saudagar Properties client`}
+                width="56"
+                height="56"
+                loading="lazy"
+                decoding="async"
+                itemProp="image"
+                className="
+                  h-full
+                  w-full
+                  rounded-[13px]
+                  object-cover
+                  object-top
+                "
+              />
 
-                  <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-[#FAF8F5] border border-[#E8E2D8] text-[10px] font-semibold text-[#8B7355] uppercase tracking-wider">
-                    <ShieldCheck size={12} className="text-[#C5A880]" />
-                    <span>{currentItem.tag || 'Verified'}</span>
-                  </span>
-                </div>
-
-                <div className="relative mb-5">
-                  <Quote size={36} className="text-[#C5A880]/20 absolute -top-3 -left-1" />
-                  <p className="relative z-10 text-[#1E293B] text-sm font-normal leading-relaxed pt-2">
-                    "{currentItem.quote}"
-                  </p>
-                </div>
-              </div>
-
-              <div className="pt-5 mt-5 border-t border-[#F0ECE1] flex items-center gap-4">
-                {/* Elevated Mobile Client Portrait */}
-                <div className="relative flex-shrink-0">
-                  <div className="relative w-18 h-18 sm:w-20 sm:h-20 rounded-2xl p-[2.5px] bg-gradient-to-tr from-[#C5A880] via-[#FAF8F5] to-[#B39366] shadow-[0_8px_20px_rgba(197,168,128,0.3)]">
-                    <img
-                      src={currentItem.avatar}
-                      alt={currentItem.name}
-                      className="w-full h-full rounded-[14px] object-cover object-top"
-                    />
-                  </div>
-                  <div
-                    className="absolute -bottom-1 -right-1 w-5 h-5 rounded-full bg-[#1D263B] border-2 border-white text-[#C5A880] flex items-center justify-center shadow-sm"
-                    title="Verified Saudagar Properties Client"
-                  >
-                    <ShieldCheck size={11} className="stroke-[2.5]" />
-                  </div>
-                </div>
-
-                <div className="flex-grow min-w-0">
-                  <h4 className="text-base sm:text-lg font-serif font-bold text-[#1D263B] truncate">
-                    {currentItem.name}
-                  </h4>
-                  <p className="text-xs text-[#8B7355] font-semibold tracking-wide uppercase mt-0.5">
-                    {currentItem.role}, {currentItem.location}
-                  </p>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-
-          {/* Mobile Carousel Controls & Progress Dots */}
-          <div className="flex items-center justify-between mt-6 px-2">
-            <div className="flex items-center gap-2">
-              {list.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setActiveIndex(idx)}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${activeIndex === idx ? 'w-7 bg-[#C5A880]' : 'w-2 bg-[#D1D5DB]'
-                    }`}
-                  aria-label={`Go to testimonial ${idx + 1}`}
-                />
-              ))}
             </div>
 
-            <div className="flex gap-2">
-              <button
-                onClick={handlePrev}
-                className="w-10 h-10 rounded-full border border-[#E8E4DA] bg-white flex items-center justify-center text-[#1D263B] active:scale-95 shadow-sm"
-                aria-label="Previous testimonial"
+
+            <div>
+
+              <cite
+                itemProp="author"
+                itemScope
+                itemType="https://schema.org/Person"
+                className="not-italic"
               >
-                <ChevronLeft size={18} />
-              </button>
-              <button
-                onClick={handleNext}
-                className="w-10 h-10 rounded-full border border-[#E8E4DA] bg-white flex items-center justify-center text-[#1D263B] active:scale-95 shadow-sm"
-                aria-label="Next testimonial"
+
+                <span
+                  itemProp="name"
+                  className="
+                    block
+                    font-serif
+                    text-lg
+                    font-normal
+                    text-white
+                  "
+                >
+                  {item.name}
+                </span>
+
+              </cite>
+
+
+              <div
+                className="
+                  mt-1
+                  flex
+                  flex-wrap
+                  items-center
+                  gap-2
+                "
               >
-                <ChevronRight size={18} />
-              </button>
+
+                <span
+                  className="
+                    text-[7px]
+                    font-bold
+                    uppercase
+                    tracking-[0.17em]
+                    text-[#D09A16]
+                  "
+                >
+                  {item.role}
+                </span>
+
+                <span className="h-1 w-1 rounded-full bg-white/20" />
+
+                <span
+                  className="
+                    text-[7px]
+                    font-medium
+                    uppercase
+                    tracking-[0.14em]
+                    text-white/40
+                  "
+                  itemProp="locationCreated"
+                >
+                  {item.location}
+                </span>
+
+              </div>
+
             </div>
+
           </div>
+
+
+          {/* Rating */}
+
+          <div
+            itemProp="reviewRating"
+            itemScope
+            itemType="https://schema.org/Rating"
+            className="hidden sm:block"
+          >
+
+            <meta
+              itemProp="ratingValue"
+              content={String(item.rating || 5)}
+            />
+
+            <meta
+              itemProp="bestRating"
+              content="5"
+            />
+
+            <Rating rating={item.rating || 5} />
+
+          </div>
+
         </div>
 
       </div>
+
+    </article>
+  );
+}
+
+
+/* =========================================================
+   COMPACT TESTIMONIAL CARD
+========================================================= */
+
+function CompactTestimonial({ item, index, onSelect, active }) {
+
+  return (
+    <article
+      itemScope
+      itemType="https://schema.org/Review"
+      className={`
+        group
+        relative
+        min-w-[280px]
+        snap-start
+        overflow-hidden
+        rounded-[22px]
+        border
+        bg-white
+        p-5
+        transition-all
+        duration-400
+        sm:min-w-0
+        ${active
+          ? "border-[#D09A16]/45 shadow-[0_15px_45px_rgba(24,35,69,0.08)]"
+          : "border-[#182345]/[0.08] shadow-[0_8px_30px_rgba(24,35,69,0.04)]"
+        }
+      `}
+    >
+
+      {/* Gold accent */}
+
+      <div
+        className="
+          absolute
+          left-5
+          right-5
+          top-0
+          h-[2px]
+          origin-left
+          bg-[#D09A16]
+          transition-transform
+          duration-500
+          scale-x-0
+          group-hover:scale-x-100
+        "
+      />
+
+
+      {/* Header */}
+
+      <div
+        className="
+          flex
+          items-center
+          justify-between
+          gap-3
+        "
+      >
+
+        <Rating rating={item.rating || 5} />
+
+        <span
+          className="
+            text-[7px]
+            font-bold
+            uppercase
+            tracking-[0.18em]
+            text-[#182345]/25
+          "
+        >
+          {item.id || `0${index + 1}`}
+        </span>
+
+      </div>
+
+
+      {/* Quote preview */}
+
+      <blockquote
+        itemProp="reviewBody"
+        className="
+          mt-5
+          line-clamp-4
+          text-[11px]
+          leading-6
+          text-[#4F5A70]
+        "
+      >
+        “{item.quote}”
+      </blockquote>
+
+
+      {/* Author */}
+
+      <div
+        className="
+          mt-5
+          flex
+          items-center
+          justify-between
+          gap-3
+          border-t
+          border-[#182345]/[0.07]
+          pt-4
+        "
+      >
+
+        <div className="flex min-w-0 items-center gap-3">
+
+          <img
+            src={item.avatar}
+            alt={`${item.name} — Saudagar Properties client`}
+            width="42"
+            height="42"
+            loading="lazy"
+            decoding="async"
+            itemProp="image"
+            className="
+              h-10
+              w-10
+              shrink-0
+              rounded-xl
+              object-cover
+              object-top
+              ring-1
+              ring-[#D09A16]/25
+            "
+          />
+
+
+          <div className="min-w-0">
+
+            <cite
+              itemProp="author"
+              itemScope
+              itemType="https://schema.org/Person"
+              className="not-italic"
+            >
+
+              <span
+                itemProp="name"
+                className="
+                  block
+                  truncate
+                  font-serif
+                  text-sm
+                  text-[#182345]
+                "
+              >
+                {item.name}
+              </span>
+
+            </cite>
+
+
+            <span
+              className="
+                mt-0.5
+                block
+                truncate
+                text-[7px]
+                font-semibold
+                uppercase
+                tracking-[0.12em]
+                text-[#A87505]
+              "
+            >
+              {item.role}
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <button
+          type="button"
+          onClick={() => onSelect(index)}
+          aria-label={`Read testimonial from ${item.name}`}
+          className="
+            flex
+            h-8
+            w-8
+            shrink-0
+            items-center
+            justify-center
+            rounded-full
+            border
+            border-[#D09A16]/25
+            text-[#D09A16]
+            transition-all
+            duration-300
+            hover:bg-[#D09A16]
+            hover:text-white
+          "
+        >
+          <ArrowUpRight size={13} />
+        </button>
+
+      </div>
+
+
+      {/* Hidden semantic location */}
+
+      <meta
+        itemProp="locationCreated"
+        content={item.location || ""}
+      />
+
+    </article>
+  );
+}
+
+
+/* =========================================================
+   MAIN COMPONENT
+========================================================= */
+
+export default function TestimonialsSection() {
+
+  const { testimonials, sections } = useCms();
+
+
+  /*
+   * IMPORTANT:
+   * CMS remains the primary source.
+   */
+
+  const list =
+    testimonials &&
+      testimonials.length > 0
+      ? testimonials
+      : TESTIMONIALS;
+
+
+  const testData =
+    sections?.testimonials || {};
+
+
+  const [activeIndex, setActiveIndex] =
+    useState(0);
+
+
+  const sectionRef =
+    useRef(null);
+
+
+  const headerRef =
+    useRef(null);
+
+
+  const featuredRef =
+    useRef(null);
+
+
+  const railRef =
+    useRef(null);
+
+
+  const currentItem =
+    list[activeIndex] ||
+    list[0] ||
+    {};
+
+
+  /* =====================================================
+     SELECT TESTIMONIAL
+  ===================================================== */
+
+  const handleSelect = (index) => {
+
+    setActiveIndex(index);
+
+    if (
+      featuredRef.current
+    ) {
+
+      gsap.fromTo(
+        featuredRef.current,
+        {
+          opacity: 0.45,
+          y: 8,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.45,
+          ease: "power2.out",
+        }
+      );
+
+    }
+
+  };
+
+
+  const handleNext = () => {
+
+    if (!list.length) return;
+
+    handleSelect(
+      (activeIndex + 1) %
+      list.length
+    );
+
+  };
+
+
+  const handlePrev = () => {
+
+    if (!list.length) return;
+
+    handleSelect(
+      (activeIndex - 1 + list.length) %
+      list.length
+    );
+
+  };
+
+
+  /* =====================================================
+     ENTRANCE ANIMATION
+     -----------------------------------------------------
+     Short reveal only.
+     No pinned scroll animation.
+  ===================================================== */
+
+  useEffect(() => {
+
+    const ctx = gsap.context(() => {
+
+      const reduceMotion =
+        window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+
+      if (reduceMotion) return;
+
+
+      if (headerRef.current) {
+
+        gsap.fromTo(
+          headerRef.current,
+          {
+            opacity: 0,
+            y: 18,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            ease: "power3.out",
+
+            scrollTrigger: {
+              trigger: headerRef.current,
+              start: "top 88%",
+              once: true,
+            },
+          }
+        );
+
+      }
+
+
+      if (featuredRef.current) {
+
+        gsap.fromTo(
+          featuredRef.current,
+          {
+            opacity: 0,
+            y: 25,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            delay: 0.1,
+            ease: "power3.out",
+
+            scrollTrigger: {
+              trigger: featuredRef.current,
+              start: "top 90%",
+              once: true,
+            },
+          }
+        );
+
+      }
+
+
+      if (railRef.current) {
+
+        gsap.fromTo(
+          railRef.current,
+          {
+            opacity: 0,
+            y: 20,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.7,
+            delay: 0.2,
+            ease: "power3.out",
+
+            scrollTrigger: {
+              trigger: railRef.current,
+              start: "top 92%",
+              once: true,
+            },
+          }
+        );
+
+      }
+
+    }, sectionRef);
+
+
+    return () => ctx.revert();
+
+  }, [list.length]);
+
+
+  /* =====================================================
+     EMPTY STATE
+  ===================================================== */
+
+  if (!list.length) {
+    return null;
+  }
+
+
+  return (
+
+    <section
+      ref={sectionRef}
+      aria-labelledby="client-testimonials-heading"
+      className="
+        relative
+        w-full
+        overflow-hidden
+        border-t
+        border-[#182345]/[0.06]
+        bg-[#F9F7F4]
+        py-16
+        sm:py-20
+        lg:py-24
+      "
+    >
+
+      {/* ===================================================
+          BACKGROUND
+      =================================================== */}
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          right-[-180px]
+          top-[-160px]
+          h-[430px]
+          w-[430px]
+          rounded-full
+          bg-[#D09A16]/[0.035]
+          blur-[110px]
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          left-[-150px]
+          bottom-[-200px]
+          h-[400px]
+          w-[400px]
+          rounded-full
+          bg-[#182345]/[0.02]
+          blur-[100px]
+        "
+      />
+
+      <div
+        className="
+          pointer-events-none
+          absolute
+          inset-0
+          opacity-[0.018]
+          [background-image:linear-gradient(to_right,#182345_1px,transparent_1px),linear-gradient(to_bottom,#182345_1px,transparent_1px)]
+          [background-size:100px_100px]
+        "
+      />
+
+
+      {/* ===================================================
+          CONTAINER
+      =================================================== */}
+
+      <div
+        className="
+          relative
+          z-10
+          mx-auto
+          max-w-6xl
+          px-5
+          sm:px-7
+          lg:px-8
+        "
+      >
+
+        {/* =================================================
+            HEADER
+        ================================================= */}
+
+        <div
+          ref={headerRef}
+          className="
+            mb-10
+            flex
+            flex-col
+            gap-6
+            lg:mb-12
+            lg:flex-row
+            lg:items-end
+            lg:justify-between
+          "
+        >
+
+          <div className="max-w-2xl">
+
+            {/* Badge */}
+
+            <div
+              className="
+                mb-4
+                inline-flex
+                items-center
+                gap-2
+                rounded-full
+                border
+                border-[#D09A16]/25
+                bg-white/70
+                px-3.5
+                py-1.5
+                text-[7px]
+                font-bold
+                uppercase
+                tracking-[0.23em]
+                text-[#A87505]
+                shadow-sm
+              "
+            >
+
+              <Sparkles
+                size={10}
+                className="text-[#D09A16]"
+              />
+
+              {testData.badge ||
+                "Client Perspectives"}
+
+            </div>
+
+
+            {/* SEO/AEO heading */}
+
+            <h2
+              id="client-testimonials-heading"
+              className="
+                font-serif
+                text-4xl
+                font-normal
+                leading-[1.05]
+                tracking-[-0.04em]
+                text-[#182345]
+                sm:text-5xl
+                lg:text-6xl
+              "
+            >
+
+              {testData.titleMain ||
+                "Words of"}
+
+              <span
+                className="
+                  ml-2
+                  italic
+                  font-light
+                  text-[#D09A16]
+                "
+              >
+                {testData.titleItalic ||
+                  "Distinction"}
+              </span>
+
+            </h2>
+
+
+            {/* Local semantic copy */}
+
+            <p
+              className="
+                mt-4
+                max-w-xl
+                text-xs
+                leading-6
+                text-[#5D667D]
+                sm:text-sm
+              "
+            >
+              {testData.description ||
+                "Hear directly from clients who have worked with Saudagar Properties for residential, commercial and investment property requirements in Gurgaon and Gurugram."}
+            </p>
+
+          </div>
+
+
+          {/* Right context */}
+
+          <div
+            className="
+              flex
+              shrink-0
+              items-center
+              gap-3
+              lg:pb-1
+            "
+          >
+
+            <div
+              className="
+                flex
+                h-10
+                w-10
+                items-center
+                justify-center
+                rounded-full
+                border
+                border-[#D09A16]/25
+                bg-white
+                text-[#D09A16]
+                shadow-sm
+              "
+            >
+              <ShieldCheck size={16} />
+            </div>
+
+
+            <div>
+
+              <span
+                className="
+                  block
+                  text-[6px]
+                  font-bold
+                  uppercase
+                  tracking-[0.22em]
+                  text-[#182345]/30
+                "
+              >
+                CLIENT EXPERIENCE
+              </span>
+
+              <span
+                className="
+                  mt-1
+                  block
+                  font-serif
+                  text-base
+                  text-[#182345]
+                "
+              >
+                Gurgaon · Gurugram
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        {/* =================================================
+            FEATURED TESTIMONIAL
+        ================================================= */}
+
+        <div
+          ref={featuredRef}
+          className="
+            [perspective:1200px]
+          "
+        >
+
+          <FeaturedTestimonial
+            item={currentItem}
+          />
+
+        </div>
+
+
+        {/* =================================================
+            TESTIMONIAL NAVIGATION
+        ================================================= */}
+
+        <div
+          ref={railRef}
+          className="mt-5"
+        >
+
+          {/* Desktop / tablet */}
+
+          <div
+            className="
+              hidden
+              grid-cols-3
+              gap-4
+              md:grid
+            "
+          >
+
+            {list.map(
+              (item, index) => (
+
+                <CompactTestimonial
+                  key={
+                    item._id ||
+                    item.id ||
+                    index
+                  }
+                  item={item}
+                  index={index}
+                  active={
+                    index === activeIndex
+                  }
+                  onSelect={handleSelect}
+                />
+
+              )
+            )}
+
+          </div>
+
+
+          {/* Mobile horizontal rail */}
+
+          <div
+            className="
+              flex
+              snap-x
+              snap-mandatory
+              gap-3
+              overflow-x-auto
+              pb-2
+              [-ms-overflow-style:none]
+              [scrollbar-width:none]
+              [&::-webkit-scrollbar]:hidden
+              md:hidden
+            "
+          >
+
+            {list.map(
+              (item, index) => (
+
+                <CompactTestimonial
+                  key={
+                    item._id ||
+                    item.id ||
+                    index
+                  }
+                  item={item}
+                  index={index}
+                  active={
+                    index === activeIndex
+                  }
+                  onSelect={handleSelect}
+                />
+
+              )
+            )}
+
+          </div>
+
+
+          {/* =================================================
+              MOBILE / SMALL CONTROLS
+          ================================================= */}
+
+          <div
+            className="
+              mt-4
+              flex
+              items-center
+              justify-between
+              md:hidden
+            "
+          >
+
+            <div className="flex items-center gap-2">
+
+              <button
+                type="button"
+                onClick={handlePrev}
+                aria-label="Previous client testimonial"
+                className="
+                  flex
+                  h-9
+                  w-9
+                  items-center
+                  justify-center
+                  rounded-full
+                  border
+                  border-[#182345]/10
+                  bg-white
+                  text-[#182345]
+                  transition-all
+                  hover:border-[#D09A16]
+                  hover:text-[#D09A16]
+                "
+              >
+                <ChevronLeft size={16} />
+              </button>
+
+
+              <button
+                type="button"
+                onClick={handleNext}
+                aria-label="Next client testimonial"
+                className="
+                  flex
+                  h-9
+                  w-9
+                  items-center
+                  justify-center
+                  rounded-full
+                  border
+                  border-[#182345]/10
+                  bg-white
+                  text-[#182345]
+                  transition-all
+                  hover:border-[#D09A16]
+                  hover:text-[#D09A16]
+                "
+              >
+                <ChevronRight size={16} />
+              </button>
+
+            </div>
+
+
+            <span
+              className="
+                text-[7px]
+                font-bold
+                uppercase
+                tracking-[0.2em]
+                text-[#182345]/30
+              "
+            >
+              {activeIndex + 1} / {list.length}
+            </span>
+
+          </div>
+
+        </div>
+
+
+        {/* =================================================
+            BOTTOM SEO / TRUST CONTEXT
+        ================================================= */}
+
+        <div
+          className="
+            mt-8
+            flex
+            flex-wrap
+            items-center
+            justify-center
+            gap-x-4
+            gap-y-2
+            text-center
+          "
+        >
+
+          <span
+            className="
+              text-[6px]
+              font-bold
+              uppercase
+              tracking-[0.22em]
+              text-[#182345]/25
+            "
+          >
+            Residential Property
+          </span>
+
+          <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
+
+          <span
+            className="
+              text-[6px]
+              font-bold
+              uppercase
+              tracking-[0.22em]
+              text-[#182345]/25
+            "
+          >
+            Commercial Property
+          </span>
+
+          <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
+
+          <span
+            className="
+              text-[6px]
+              font-bold
+              uppercase
+              tracking-[0.22em]
+              text-[#182345]/25
+            "
+          >
+            Property Investment
+          </span>
+
+          <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
+
+          <span
+            className="
+              text-[6px]
+              font-bold
+              uppercase
+              tracking-[0.22em]
+              text-[#182345]/25
+            "
+          >
+            Gurgaon & Gurugram
+          </span>
+
+        </div>
+
+      </div>
+
     </section>
   );
 }

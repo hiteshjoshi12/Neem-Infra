@@ -26,14 +26,14 @@ export default function CustomSelect({ icon: Icon, label, options, value, onChan
         className="flex items-center justify-between gap-3 px-4 py-3 lg:py-2 cursor-pointer select-none group"
       >
         <div className="flex items-center gap-3 overflow-hidden">
-          <Icon className="text-[#C5A880] w-4 h-4 flex-shrink-0" />
+          <Icon className="text-[#D09A16] w-4 h-4 flex-shrink-0" />
           <span className={`text-sm truncate ${value ? 'text-[#1D263B] font-medium' : 'text-[#334155] font-normal'}`}>
             {selectedLabel}
           </span>
         </div>
         <ChevronDown 
           size={14} 
-          className={`text-[#C5A880] transition-transform duration-300 flex-shrink-0 ${isOpen ? 'rotate-180' : ''}`} 
+          className={`text-[#D09A16] transition-transform duration-300 flex-shrink-0 ${isOpen ? 'rotate-180' : ''}`} 
         />
       </div>
 
@@ -65,12 +65,12 @@ export default function CustomSelect({ icon: Icon, label, options, value, onChan
                 }}
                 className={`px-4 py-3 text-sm transition-colors cursor-pointer flex items-center justify-between ${
                   value === opt.value 
-                    ? 'bg-[#C5A880]/10 text-[#1D263B] font-semibold' 
+                    ? 'bg-[#D09A16]/10 text-[#1D263B] font-semibold' 
                     : 'text-[#334155] font-normal hover:bg-[#F9F8F4] hover:text-[#1D263B]'
                 }`}
               >
                 <span>{opt.label}</span>
-                {value === opt.value && <span className="w-1.5 h-1.5 rounded-full bg-[#C5A880]" />}
+                {value === opt.value && <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16]" />}
               </li>
             ))}
           </motion.ul>

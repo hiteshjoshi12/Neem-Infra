@@ -1,10 +1,62 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, ArrowUpRight, BedDouble, Maximize, MapPin } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowUpRight, MapPin } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+import { animate, inView, stagger } from 'framer-motion';
+
+const dummyTimeline = { 
+  to: function(target, vars) { gsap.to(target, vars); return this; }, 
+  from: function() { return this; }, 
+  fromTo: function(target, fromVars, toVars) { gsap.fromTo(target, fromVars, toVars); return this; } 
+};
+const gsap = { 
+  to: (target, vars) => {
+    if (!target) return;
+    try {
+      const options = { duration: vars.duration || 0.4, delay: vars.delay || 0 };
+      if (vars.stagger) options.delay = stagger(vars.stagger);
+      const safeVars = { ...vars };
+      ['duration','delay','stagger','ease','scrollTrigger','clearProps','transformPerspective','transformStyle'].forEach(p => delete safeVars[p]);
+      
+      const elements = Array.isArray(target) ? target.filter(Boolean) : (typeof target === 'string' || target instanceof Element ? target : null);
+      if (!elements || (Array.isArray(elements) && elements.length === 0)) return;
+
+      if (vars.scrollTrigger) {
+         inView(vars.scrollTrigger.trigger || (Array.isArray(elements) ? elements[0] : elements), () => { animate(elements, safeVars, options); }, { once: true, margin: "0px 0px -10% 0px" });
+      } else {
+         animate(elements, safeVars, options);
+      }
+    } catch(e){}
+  }, 
+  from: () => {}, 
+  fromTo: (target, fromVars, toVars) => {
+    if (!target) return;
+    try {
+      const options = { duration: toVars.duration || 1, delay: toVars.delay || 0 };
+      if (toVars.stagger) options.delay = stagger(toVars.stagger);
+      const safeFrom = { ...fromVars }; const safeTo = { ...toVars };
+      ['duration','delay','stagger','ease','scrollTrigger','clearProps','transformPerspective','transformStyle'].forEach(p => { delete safeFrom[p]; delete safeTo[p]; });
+      
+      const elements = Array.isArray(target) ? target.filter(Boolean) : (typeof target === 'string' || target instanceof Element ? target : null);
+      if (!elements || (Array.isArray(elements) && elements.length === 0)) return;
+      
+      animate(elements, safeFrom, { duration: 0 });
+      if (toVars.scrollTrigger) {
+         inView(toVars.scrollTrigger.trigger || (Array.isArray(elements) ? elements[0] : elements), () => { animate(elements, safeTo, options); }, { once: true, margin: "0px 0px -10% 0px" });
+      } else {
+         animate(elements, safeTo, options);
+      }
+    } catch(e){}
+  }, 
+  context: (cb) => { if(cb) { try { cb(); } catch(e){} } return { revert: () => {} }; }, 
+  registerPlugin: () => {},
+  timeline: () => dummyTimeline 
+};
+const ScrollTrigger = {};
 import { FEATURED_PROPERTIES_DATA } from '../../constants';
 import { useCms } from '../../context/CmsContext';
+
 
 export default function CuratedCorridors() {
   const { properties, sections } = useCms();
@@ -13,6 +65,11 @@ export default function CuratedCorridors() {
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
+
+  const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+  const stageRef = useRef(null);
+  const ctaRef = useRef(null);
 
   // Auto-slide effect every 5 seconds (5000ms)
   useEffect(() => {
@@ -35,27 +92,92 @@ export default function CuratedCorridors() {
     setCurrentIndex((prev) => (prev - 1 + propertyList.length) % propertyList.length);
   };
 
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      // 1. Header Reveal
+      gsap.fromTo(
+        headerRef.current,
+        { opacity: 0, y: 35 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: headerRef.current,
+            start: "top 85%",
+            once: true
+          },
+          clearProps: "transform"
+        }
+      );
+
+      // 2. Stage Area Reveal
+      gsap.fromTo(
+        stageRef.current,
+        { opacity: 0, scale: 0.95, y: 40 },
+        {
+          opacity: 1,
+          scale: 1,
+          y: 0,
+          duration: 1.1,
+          ease: "power3.out",
+          scrollTrigger: {
+            trigger: stageRef.current,
+            start: "top 85%",
+            once: true
+          },
+          clearProps: "transform"
+        }
+      );
+
+      // 3. CTA Button Reveal
+      if (ctaRef.current) {
+        gsap.fromTo(
+          ctaRef.current,
+          { opacity: 0, y: 25 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+            ease: "power3.out",
+            scrollTrigger: {
+              trigger: ctaRef.current,
+              start: "top 90%",
+              once: true
+            },
+            clearProps: "transform"
+          }
+        );
+      }
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section
-      className="relative w-full bg-[#FAF8F5] pt-12 pb-8 md:pt-16 md:pb-12 overflow-hidden border-t border-[#EFECE6]"
+      ref={sectionRef}
+      className="relative w-full bg-[#FAF8F5] pt-8 pb-6 md:pt-10 md:pb-8 overflow-hidden border-t border-[#EFECE6]"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
-
       {/* Header Section */}
-      <div className="container mx-auto px-5 md:px-12 relative z-10 mb-10 md:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6">
-
+      <div 
+        ref={headerRef}
+        className="container mx-auto px-5 md:px-12 relative z-10 mb-10 md:mb-16 flex flex-col md:flex-row md:items-end justify-between gap-6"
+      >
         {/* Left Side: Titles and Description */}
         <div className="max-w-2xl">
           <div className="flex items-center gap-3 mb-3">
-            <span className="w-8 h-[1px] bg-[#C5A880]" />
-            <span className="text-[11px] sm:text-xs tracking-[0.25em] text-[#C5A880] uppercase font-semibold">
+            <span className="w-8 h-[1px] bg-[#D09A16]" />
+            <span className="text-[11px] sm:text-xs tracking-[0.25em] text-[#D09A16] uppercase font-semibold">
               {corridorData.badge || "Featured Portfolio"}
             </span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-[#1D263B] leading-tight mb-4">
-            {corridorData.titleMain || "Featured"} <span className="italic text-[#C5A880] font-light">{corridorData.titleItalic || "Properties"}</span>
+            {corridorData.titleMain || "Featured"} <span className="italic text-[#D09A16] font-light">{corridorData.titleItalic || "Properties"}</span>
           </h2>
 
           <p className="text-[#334155] font-normal text-sm sm:text-base md:text-lg leading-relaxed">
@@ -65,14 +187,15 @@ export default function CuratedCorridors() {
 
         {/* Right Side: Auto Rotation Status & Navigation Arrows */}
         <div className="flex items-center justify-between sm:justify-start gap-4 sm:gap-6 lg:pb-2">
-          {/* Progress dots / Auto Timer status */}
+          {/* Progress dots */}
           <div className="flex items-center gap-1.5 sm:gap-2">
             {propertyList.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setCurrentIndex(idx)}
-                className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${currentIndex === idx ? 'w-6 sm:w-8 bg-[#C5A880]' : 'w-2 bg-[#D1D5DB]'
-                  }`}
+                className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${
+                  currentIndex === idx ? 'w-6 sm:w-8 bg-[#D09A16]' : 'w-2 bg-[#D1D5DB]'
+                }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
             ))}
@@ -81,14 +204,14 @@ export default function CuratedCorridors() {
           <div className="flex gap-2.5">
             <button
               onClick={handlePrev}
-              className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border border-[#E8E4DA] bg-white flex items-center justify-center text-[#1D263B] hover:border-[#C5A880] hover:text-[#C5A880] transition-all duration-300 shadow-sm cursor-pointer"
+              className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border border-[#E8E4DA] bg-white flex items-center justify-center text-[#1D263B] hover:border-[#D09A16] hover:text-[#D09A16] transition-colors duration-300 shadow-sm cursor-pointer"
               aria-label="Previous Property"
             >
               <ChevronLeft strokeWidth={1.8} size={18} />
             </button>
             <button
               onClick={handleNext}
-              className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border border-[#E8E4DA] bg-white flex items-center justify-center text-[#1D263B] hover:border-[#C5A880] hover:text-[#C5A880] transition-all duration-300 shadow-sm cursor-pointer"
+              className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border border-[#E8E4DA] bg-white flex items-center justify-center text-[#1D263B] hover:border-[#D09A16] hover:text-[#D09A16] transition-colors duration-300 shadow-sm cursor-pointer"
               aria-label="Next Property"
             >
               <ChevronRight strokeWidth={1.8} size={18} />
@@ -98,7 +221,10 @@ export default function CuratedCorridors() {
       </div>
 
       {/* 3D Stage Area */}
-      <div className="relative w-full h-[470px] sm:h-[530px] md:h-[580px] flex items-center justify-center perspective-[1200px]">
+      <div 
+        ref={stageRef}
+        className="relative w-full h-[470px] sm:h-[530px] md:h-[580px] flex items-center justify-center perspective-[1200px]"
+      >
         <AnimatePresence mode="popLayout">
           {propertyList.map((item, index) => {
             let offset = index - currentIndex;
@@ -128,8 +254,9 @@ export default function CuratedCorridors() {
                   duration: 0.8,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className={`absolute w-[92%] sm:w-[80%] md:w-[60%] max-w-[620px] h-[410px] sm:h-[450px] md:h-[480px] rounded-3xl overflow-hidden shadow-[0_20px_50px_-10px_rgba(20,25,35,0.25)] border border-white/40 ${isCenter ? 'cursor-default' : 'cursor-pointer'
-                  }`}
+                className={`absolute w-[92%] sm:w-[80%] md:w-[60%] max-w-[620px] h-[410px] sm:h-[450px] md:h-[480px] rounded-3xl overflow-hidden shadow-[0_20px_50px_-10px_rgba(20,25,35,0.25)] border border-white/40 ${
+                  isCenter ? 'cursor-default' : 'cursor-pointer'
+                }`}
                 onClick={() => {
                   if (!isCenter) setCurrentIndex(index);
                 }}
@@ -138,6 +265,9 @@ export default function CuratedCorridors() {
                 <img
                   src={item.img}
                   alt={item.title}
+                  width="1200"
+                  height="800"
+                  loading="lazy"
                   className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 hover:scale-105"
                 />
 
@@ -151,10 +281,10 @@ export default function CuratedCorridors() {
                   transition={{ duration: 0.4, delay: isCenter ? 0.15 : 0 }}
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                    <span className="px-2.5 py-1 rounded-full bg-[#C5A880] text-[9px] sm:text-[10px] font-bold tracking-[0.16em] uppercase text-white shadow-sm">
+                    <span className="px-2.5 py-1 rounded-full bg-[#D09A16] text-[9px] sm:text-[10px] font-bold tracking-[0.16em] uppercase text-white shadow-sm">
                       {item.tag}
                     </span>
-                    <span className="text-lg sm:text-xl md:text-2xl font-serif text-[#C5A880] font-bold">
+                    <span className="text-lg sm:text-xl md:text-2xl font-serif text-[#D09A16] font-bold">
                       {item.price}
                     </span>
                   </div>
@@ -164,7 +294,7 @@ export default function CuratedCorridors() {
                   </h3>
 
                   <div className="flex items-center gap-1.5 sm:gap-2 text-[#CBD5E1] text-[10px] sm:text-xs mb-2 md:mb-3">
-                    <MapPin size={12} className="text-[#C5A880] flex-shrink-0" />
+                    <MapPin size={12} className="text-[#D09A16] flex-shrink-0" />
                     <span className="truncate">{item.location}</span>
                     <span className="mx-0.5">•</span>
                     <span className="truncate">{item.specs}</span>
@@ -177,7 +307,7 @@ export default function CuratedCorridors() {
                   <div className="flex items-center justify-between pt-3 border-t border-white/15">
                     <Link
                       to={item.link}
-                      className="inline-flex items-center gap-2 bg-white text-[#1D263B] px-4 py-2 sm:px-6 sm:py-2.5 rounded-full text-[10px] sm:text-xs font-bold tracking-widest uppercase hover:bg-[#C5A880] hover:text-white transition-all duration-300 shadow-md group"
+                      className="inline-flex items-center gap-2 bg-white text-[#1D263B] px-4 py-2 sm:px-6 sm:py-2.5 rounded-full text-[10px] sm:text-xs font-bold tracking-widest uppercase hover:bg-[#D09A16] hover:text-white transition-colors duration-300 shadow-md group"
                     >
                       <span>View Details</span>
                       <ArrowUpRight size={14} className="transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -195,7 +325,7 @@ export default function CuratedCorridors() {
       </div>
 
       {/* Master Directory CTA */}
-      <div className="container mx-auto px-5 md:px-12 mt-6 sm:mt-8 flex justify-center">
+      <div ref={ctaRef} className="container mx-auto px-5 md:px-12 mt-6 sm:mt-8 flex justify-center">
         <Link
           to={corridorData.ctaLink || "/ready-to-move"}
           className="group relative px-6 py-3.5 sm:px-8 sm:py-4 bg-[#1D263B] text-white overflow-hidden rounded-full flex items-center gap-3 sm:gap-4 shadow-lg hover:shadow-xl transition-all duration-300"

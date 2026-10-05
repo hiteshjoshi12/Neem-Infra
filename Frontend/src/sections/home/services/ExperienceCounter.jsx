@@ -1,152 +1,351 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { Award, ShieldCheck, Layers, CheckCircle2, TrendingUp } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import {
+  Award,
+  ShieldCheck,
+  Layers,
+  CheckCircle2,
+  TrendingUp,
+  ArrowUpRight,
+} from 'lucide-react';
+
+import { animate, useInView, stagger } from 'framer-motion';
 import { useCms } from '../../../context/CmsContext';
+
 
 const DEFAULT_STATS_DATA = [
   {
-    title: "100% Client Satisfaction",
-    desc: "Putting client interests first with bespoke, personalized property advisory."
+    title: '100% Client Satisfaction',
+    desc: 'Putting client interests first with bespoke, personalized property advisory.',
   },
   {
-    title: "DLF Micro-Market Leaders",
-    desc: "Unmatched expertise across DLF Phase 1–5, Sushant Lok, and Cybercity."
+    title: 'DLF Micro-Market Leaders',
+    desc: 'Unmatched expertise across DLF Phase 1–5, Sushant Lok, and Cybercity.',
   },
   {
-    title: "Verified Legal Titles",
-    desc: "Comprehensive due diligence ensuring 100% safe and secure transactions."
+    title: 'Verified Legal Titles',
+    desc: 'Comprehensive due diligence ensuring safe and secure transactions.',
   },
   {
-    title: "Discreet & Ethical Advisory",
-    desc: "Trusted by India's top corporate executives and high-net-worth families."
-  }
+    title: 'Discreet & Ethical Advisory',
+    desc: "Trusted by India's top corporate executives and high-net-worth families.",
+  },
 ];
 
-const STAT_ICONS = [ShieldCheck, Layers, CheckCircle2, TrendingUp];
+const STAT_ICONS = [
+  ShieldCheck,
+  Layers,
+  CheckCircle2,
+  TrendingUp,
+];
 
 export default function ExperienceCounter() {
   const { sections } = useCms();
   const expData = sections?.services?.experienceCounter || {};
 
-  const containerRef = useRef(null);
-  const isInView = useInView(containerRef, { once: true, margin: "-80px" });
-  const [count, setCount] = useState(1);
-
   const target = Number(expData.yearsCount) || 25;
-  const badge = expData.badge || `${target}+ Years of Unmatched Advisory`;
-  const headline = expData.headline || "Years of Experience as a Top Real Estate Consultant in DLF Gurugram";
-  const description = expData.description || "Our stellar team, trusted property dealers in Gurgaon and experts in commercial real estate in Gurugram, ensures you have a hassle-free experience finding the right property. We are committed to serving our clients with dedication, putting their needs above all else. Providing personalized solutions for all your property-related queries, we know that a satisfied customer is our greatest asset.";
+
+  const badge =
+    expData.badge || `${target}+ Years of Unmatched Advisory`;
+
+  const headline =
+    expData.headline ||
+    'Years of Experience as a Top Real Estate Consultant in DLF Gurugram';
+
+  const description =
+    expData.description ||
+    'Our stellar team, trusted property dealers in Gurgaon and experts in commercial real estate in Gurugram, ensures you have a hassle-free experience finding the right property. We are committed to serving our clients with dedication, putting their needs above all else. Providing personalized solutions for all your property-related queries, we know that a satisfied customer is our greatest asset.';
+
   const statsList = expData.statsList || DEFAULT_STATS_DATA;
 
+  const [count, setCount] = useState(1);
+
+  const containerRef = useRef(null);
+  const counterRef = useRef(null);
+  const contentRef = useRef(null);
+  const statRefs = useRef([]);
+
+  const isInView = useInView(containerRef, { once: true, margin: "-10%" });
+
   useEffect(() => {
-    if (!isInView) return;
+    if (isInView) {
+      animate(contentRef.current, { opacity: [0, 1], y: [25, 0] }, { duration: 0.8, ease: "easeOut" });
+      
+      animate(1, target, {
+        duration: 1.6,
+        ease: "easeOut",
+        onUpdate: (latest) => setCount(Math.round(latest))
+      });
 
-    let current = 1;
-    const duration = 1600; // ms
-    const intervalTime = Math.max(16, Math.floor(duration / target));
-
-    const timer = setInterval(() => {
-      current += 1;
-      if (current >= target) {
-        setCount(target);
-        clearInterval(timer);
-      } else {
-        setCount(current);
+      if (statRefs.current.length) {
+        animate(statRefs.current, { opacity: [0, 1], y: [18, 0] }, { duration: 0.6, delay: stagger(0.1), ease: "easeOut" });
       }
-    }, intervalTime);
-
-    return () => clearInterval(timer);
+    }
   }, [isInView, target]);
 
   return (
-    <div ref={containerRef} className="relative my-16 md:my-24">
-      {/* Decorative Gold Ambient Background Glows */}
-      <div className="absolute -top-6 -right-6 w-48 h-48 bg-[#C5A880]/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute -bottom-6 -left-6 w-48 h-48 bg-[#C5A880]/10 rounded-full blur-3xl pointer-events-none" />
-
-      {/* Luxury Porcelain 3D Container */}
-      <motion.div
-        initial={{ opacity: 0, y: 35 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="relative rounded-3xl bg-gradient-to-br from-white via-[#FAF8F5] to-[#F5EFE6] p-8 sm:p-12 md:p-16 border border-[#E8E2D8] shadow-[0_20px_50px_-15px_rgba(197,168,128,0.22)] overflow-hidden"
+    <section
+      ref={containerRef}
+      aria-labelledby="experience-heading"
+      className="relative my-14 md:my-18"
+    >
+      <div
+        ref={contentRef}
+        className="
+          relative
+          opacity-0
+          overflow-hidden
+          rounded-[26px]
+          border
+          border-[#182345]/10
+          bg-white
+          shadow-[0_20px_60px_-35px_rgba(24,35,69,0.3)]
+        "
       >
-        {/* Outer Hairline Gold Border Glow */}
-        <div className="absolute inset-0 rounded-3xl border border-[#C5A880]/30 pointer-events-none" />
-        <div className="absolute top-0 right-0 w-64 h-64 bg-gradient-to-bl from-[#C5A880]/15 to-transparent rounded-bl-full pointer-events-none" />
+        {/* =====================================================
+            TOP GOLD LINE
+        ====================================================== */}
 
-        <div className="relative z-10">
-          
-          {/* Top Section Header & Animated Counter Grid */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-12 pb-10 border-b border-[#E8E2D8]">
-            
-            {/* Left: Heading & Badge */}
-            <div className="lg:col-span-7 space-y-4">
-              <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-white border border-[#C5A880]/40 shadow-sm text-[11px] font-bold tracking-[0.2em] text-[#A27B48] uppercase">
-                <Award size={14} className="text-[#C5A880]" />
-                <span>{badge}</span>
+        <div
+          aria-hidden="true"
+          className="
+            absolute
+            left-0
+            right-0
+            top-0
+            h-[2px]
+            bg-gradient-to-r
+            from-transparent
+            via-[#D09A16]
+            to-transparent
+          "
+        />
+
+        {/* =====================================================
+            MAIN AUTHORITY AREA
+        ====================================================== */}
+
+        <div className="relative grid lg:grid-cols-[0.85fr_1.15fr]">
+
+          {/* -----------------------------------------------
+              COUNTER
+          ------------------------------------------------ */}
+
+          <div
+            ref={counterRef}
+            className="
+              relative
+              flex
+              min-h-[260px]
+              items-center
+              justify-center
+              overflow-hidden
+              bg-[#182345]
+              px-8
+              py-10
+              sm:px-12
+              lg:min-h-[300px]
+              lg:px-10
+            "
+          >
+            {/* Architectural circles */}
+            <div
+              aria-hidden="true"
+              className="
+                absolute
+                -right-20
+                -top-20
+                h-56
+                w-56
+                rounded-full
+                border
+                border-[#D09A16]/10
+              "
+            />
+
+            <div
+              aria-hidden="true"
+              className="
+                absolute
+                -right-8
+                -top-8
+                h-32
+                w-32
+                rounded-full
+                border
+                border-[#D09A16]/10
+              "
+            />
+
+            <div className="relative text-center">
+              <div className="mb-3 flex items-center justify-center gap-2">
+                <span className="h-px w-6 bg-[#D09A16]" />
+
+                <Award
+                  size={13}
+                  strokeWidth={1.6}
+                  className="text-[#D09A16]"
+                />
+
+                <span className="h-px w-6 bg-[#D09A16]" />
               </div>
 
-              <h3 className="text-2xl sm:text-3xl lg:text-4xl font-serif text-[#1D263B] leading-[1.2]">
-                {headline}
-              </h3>
-
-              <p className="text-[#334155] text-xs sm:text-sm font-normal leading-relaxed">
-                {description}
-              </p>
-            </div>
-
-            {/* Right: Big 3D Counter Display Box */}
-            <div className="lg:col-span-5 flex flex-col items-center justify-center p-8 rounded-3xl bg-white/90 backdrop-blur-md border border-[#E8E2D8] shadow-[0_10px_30px_rgba(197,168,128,0.18)] text-center relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-20 h-20 bg-[#C5A880]/10 rounded-bl-full pointer-events-none" />
-              
-              <div className="flex items-baseline justify-center mb-2">
-                <span className="text-6xl sm:text-7xl lg:text-8xl font-serif font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#1D263B] via-[#8C6D40] to-[#C5A880] tabular-nums tracking-tight">
+              <div className="flex items-baseline justify-center">
+                <span className="font-serif text-[82px] leading-none tracking-[-0.05em] text-white sm:text-[92px]">
                   {count}
                 </span>
-                <span className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-[#C5A880] ml-1">
+
+                <span className="ml-1 font-serif text-4xl text-[#D09A16] sm:text-5xl">
                   +
                 </span>
               </div>
 
-              <span className="text-xs sm:text-sm font-bold tracking-[0.22em] uppercase text-[#1D263B] mb-1">
-                {expData.counterLabel || "Years of Authority"}
-              </span>
-              <span className="text-xs text-[#334155] font-medium max-w-xs">
-                {expData.counterSublabel || "Serving India's Most Discerning Families & Corporates in Gurgaon"}
+              <p className="mt-3 text-[9px] font-semibold uppercase tracking-[0.28em] text-[#D09A16]">
+                {expData.counterLabel || 'Years of Authority'}
+              </p>
+
+              <p className="mx-auto mt-2 max-w-[230px] text-[10px] leading-5 text-white/45">
+                {expData.counterSublabel ||
+                  "Serving India's Most Discerning Families & Corporates in Gurgaon"}
+              </p>
+            </div>
+          </div>
+
+          {/* -----------------------------------------------
+              EDITORIAL CONTENT
+          ------------------------------------------------ */}
+
+          <div className="relative px-7 py-9 sm:px-10 sm:py-10 md:px-12">
+
+            {/* Badge */}
+            <div className="mb-4 flex items-center gap-2">
+              <span className="h-px w-6 bg-[#D09A16]" />
+
+              <span className="text-[9px] font-semibold uppercase tracking-[0.25em] text-[#182345]/55">
+                {badge}
               </span>
             </div>
 
-          </div>
+            <h3
+              id="experience-heading"
+              className="
+                max-w-xl
+                font-serif
+                text-[26px]
+                leading-[1.15]
+                tracking-[-0.02em]
+                text-[#182345]
+                sm:text-[31px]
+                md:text-[35px]
+              "
+            >
+              {headline}
+            </h3>
 
-          {/* Bottom 4 Metric Cards Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            <p className="mt-4 max-w-2xl text-[12px] leading-6 text-[#182345]/60 sm:text-sm">
+              {description}
+            </p>
+
+            {/* Small authority indicator */}
+            <div className="mt-6 flex items-center gap-2 text-[9px] font-semibold uppercase tracking-[0.2em] text-[#182345]/45">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#D09A16]" />
+              Trusted Property Advisory
+            </div>
+          </div>
+        </div>
+
+        {/* =====================================================
+            PROOF POINTS
+        ====================================================== */}
+
+        <div className="border-t border-[#182345]/10 bg-[#F9F7F4]">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+
             {statsList.map((item, idx) => {
-              const IconComp = STAT_ICONS[idx % STAT_ICONS.length] || ShieldCheck;
+              const IconComp =
+                STAT_ICONS[idx % STAT_ICONS.length] || ShieldCheck;
+
               return (
-                <div
+                <article
                   key={idx}
-                  className="p-5 rounded-2xl bg-white/85 backdrop-blur-sm border border-[#E8E2D8] shadow-sm hover:shadow-md hover:border-[#C5A880]/60 transition-all duration-300 flex flex-col justify-between"
+                  ref={(el) => {
+                    statRefs.current[idx] = el;
+                  }}
+                  className="
+                    group
+                    relative
+                    opacity-0
+                    border-b
+                    border-[#182345]/10
+                    px-6
+                    py-6
+                    transition-colors
+                    duration-300
+                    hover:bg-white
+                    sm:nth-[odd]:border-r
+                    lg:border-b-0
+                    lg:border-r
+                    lg:last:border-r-0
+                  "
                 >
-                  <div className="w-10 h-10 rounded-xl bg-[#FAF8F5] border border-[#E8E2D8] text-[#1D263B] flex items-center justify-center mb-3 shadow-xs">
-                    <IconComp size={18} className="text-[#C5A880]" />
+                  <div className="flex items-start gap-3">
+
+                    {/* Icon */}
+                    <div
+                      className="
+                        flex
+                        h-8
+                        w-8
+                        flex-shrink-0
+                        items-center
+                        justify-center
+                        rounded-lg
+                        border
+                        border-[#D09A16]/25
+                        bg-white
+                        text-[#D09A16]
+                        transition-all
+                        duration-300
+                        group-hover:border-[#D09A16]
+                        group-hover:bg-[#D09A16]
+                        group-hover:text-[#182345]
+                      "
+                    >
+                      <IconComp size={14} strokeWidth={1.6} />
+                    </div>
+
+                    <div className="min-w-0">
+                      <h4 className="text-[11px] font-semibold leading-4 text-[#182345]">
+                        {item.title}
+                      </h4>
+
+                      <p className="mt-1.5 text-[10px] leading-4 text-[#182345]/50">
+                        {item.desc}
+                      </p>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-sm font-serif font-bold text-[#1D263B] mb-1">
-                      {item.title}
-                    </h4>
-                    <p className="text-xs text-[#334155] font-normal leading-relaxed">
-                      {item.desc}
-                    </p>
-                  </div>
-                </div>
+
+                  {/* hover arrow */}
+                  <ArrowUpRight
+                    size={12}
+                    className="
+                      absolute
+                      right-5
+                      top-5
+                      text-[#D09A16]/0
+                      transition-all
+                      duration-300
+                      group-hover:text-[#D09A16]
+                      group-hover:-translate-y-0.5
+                      group-hover:translate-x-0.5
+                    "
+                  />
+                </article>
               );
             })}
-          </div>
 
+          </div>
         </div>
-      </motion.div>
-    </div>
+      </div>
+    </section>
   );
 }

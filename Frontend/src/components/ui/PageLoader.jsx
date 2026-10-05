@@ -97,13 +97,13 @@ export default function PageLoader() {
         {/* Orbital Gold Rings (Floor Horizon) */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div
-            className="w-44 h-44 rounded-full border border-[#C5A880]/30 anim-orbit-ring"
+            className="w-44 h-44 rounded-full border border-[#D09A16]/30 anim-orbit-ring"
             style={{ transformStyle: 'preserve-3d' }}
           >
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#C5A880] shadow-[0_0_12px_#C5A880]" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#D09A16] shadow-[0_0_12px_#D09A16]" />
           </div>
           <div
-            className="w-32 h-32 rounded-full border border-dashed border-[#C5A880]/20 anim-orbit-ring-rev"
+            className="w-32 h-32 rounded-full border border-dashed border-[#D09A16]/20 anim-orbit-ring-rev"
             style={{ transformStyle: 'preserve-3d' }}
           >
             <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-amber-400" />
@@ -120,7 +120,7 @@ export default function PageLoader() {
         >
           {/* Internal Glowing Gold Core */}
           <div
-            className="absolute inset-x-2 inset-y-4 rounded-xl bg-gradient-to-t from-[#C5A880] to-amber-300 opacity-75 blur-md"
+            className="absolute inset-x-2 inset-y-4 rounded-xl bg-gradient-to-t from-[#D09A16] to-amber-300 opacity-75 blur-md"
             style={{
               transform: 'translateZ(0px)',
               animation: 'pulseGlow 2.5s ease-in-out infinite'
@@ -129,13 +129,13 @@ export default function PageLoader() {
 
           {/* FRONT FACE (Glass Curtain Wall) */}
           <div
-            className="absolute inset-0 rounded-lg border border-[#C5A880]/60 bg-gradient-to-b from-[#151C2C]/90 via-[#0E1420]/90 to-[#070A11]/95 backdrop-blur-md overflow-hidden p-1.5 flex flex-col justify-between shadow-[0_0_15px_rgba(197,168,128,0.3)]"
+            className="absolute inset-0 rounded-lg border border-[#D09A16]/60 bg-gradient-to-b from-[#151C2C]/90 via-[#0E1420]/90 to-[#070A11]/95 backdrop-blur-md overflow-hidden p-1.5 flex flex-col justify-between shadow-[0_0_15px_rgba(197,168,128,0.3)]"
             style={{ transform: 'translateZ(32px)' }}
           >
             {/* Windows Pattern */}
             <div className="grid grid-cols-2 gap-1 h-full">
               {[...Array(8)].map((_, i) => (
-                <div key={i} className="rounded-xs bg-[#C5A880]/15 border border-[#C5A880]/25" />
+                <div key={i} className="rounded-xs bg-[#D09A16]/15 border border-[#D09A16]/25" />
               ))}
             </div>
             {/* Floor separator lines */}
@@ -144,24 +144,24 @@ export default function PageLoader() {
 
           {/* BACK FACE */}
           <div
-            className="absolute inset-0 rounded-lg border border-[#C5A880]/40 bg-[#0C101A]/90 backdrop-blur-md overflow-hidden p-1.5 flex flex-col justify-between"
+            className="absolute inset-0 rounded-lg border border-[#D09A16]/40 bg-[#0C101A]/90 backdrop-blur-md overflow-hidden p-1.5 flex flex-col justify-between"
             style={{ transform: 'rotateY(180deg) translateZ(32px)' }}
           >
             <div className="grid grid-cols-2 gap-1 h-full">
               {[...Array(8)].map((_, i) => (
-                <div key={i} className="rounded-xs bg-[#C5A880]/10 border border-[#C5A880]/20" />
+                <div key={i} className="rounded-xs bg-[#D09A16]/10 border border-[#D09A16]/20" />
               ))}
             </div>
           </div>
 
           {/* RIGHT FACE */}
           <div
-            className="absolute inset-0 rounded-lg border border-[#C5A880]/50 bg-gradient-to-b from-[#101524]/90 via-[#0A0E18]/90 to-[#070A11]/95 backdrop-blur-md overflow-hidden p-1.5 flex flex-col justify-between"
+            className="absolute inset-0 rounded-lg border border-[#D09A16]/50 bg-gradient-to-b from-[#101524]/90 via-[#0A0E18]/90 to-[#070A11]/95 backdrop-blur-md overflow-hidden p-1.5 flex flex-col justify-between"
             style={{ transform: 'rotateY(90deg) translateZ(32px)' }}
           >
             <div className="grid grid-cols-2 gap-1 h-full">
               {[...Array(8)].map((_, i) => (
-                <div key={i} className="rounded-xs bg-[#C5A880]/15 border border-[#C5A880]/25" />
+                <div key={i} className="rounded-xs bg-[#D09A16]/15 border border-[#D09A16]/25" />
               ))}
             </div>
             <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_11px,rgba(197,168,128,0.25)_12px)] bg-[size:100%_12px] pointer-events-none" />
@@ -169,19 +169,19 @@ export default function PageLoader() {
 
           {/* LEFT FACE */}
           <div
-            className="absolute inset-0 rounded-lg border border-[#C5A880]/40 bg-[#0C101A]/90 backdrop-blur-md overflow-hidden p-1.5 flex flex-col justify-between"
+            className="absolute inset-0 rounded-lg border border-[#D09A16]/40 bg-[#0C101A]/90 backdrop-blur-md overflow-hidden p-1.5 flex flex-col justify-between"
             style={{ transform: 'rotateY(-90deg) translateZ(32px)' }}
           >
             <div className="grid grid-cols-2 gap-1 h-full">
               {[...Array(8)].map((_, i) => (
-                <div key={i} className="rounded-xs bg-[#C5A880]/10 border border-[#C5A880]/20" />
+                <div key={i} className="rounded-xs bg-[#D09A16]/10 border border-[#D09A16]/20" />
               ))}
             </div>
           </div>
 
           {/* TOP FACE (Penthouse Terrace / Spire) */}
           <div
-            className="absolute inset-x-0 top-0 h-16 rounded-md border border-[#C5A880]/80 bg-gradient-to-br from-[#C5A880]/40 to-amber-400/20 backdrop-blur-md flex items-center justify-center shadow-lg"
+            className="absolute inset-x-0 top-0 h-16 rounded-md border border-[#D09A16]/80 bg-gradient-to-br from-[#D09A16]/40 to-amber-400/20 backdrop-blur-md flex items-center justify-center shadow-lg"
             style={{
               transform: 'rotateX(90deg) translateZ(16px)',
               transformOrigin: 'top'
@@ -203,28 +203,28 @@ export default function PageLoader() {
 
         {/* 3D Blueprint Foundation Platform */}
         <div
-          className="absolute -bottom-4 w-36 h-36 rounded-2xl border border-[#C5A880]/30 bg-gradient-to-tr from-[#C5A880]/10 to-transparent pointer-events-none"
+          className="absolute -bottom-4 w-36 h-36 rounded-2xl border border-[#D09A16]/30 bg-gradient-to-tr from-[#D09A16]/10 to-transparent pointer-events-none"
           style={{
             transform: 'rotateX(72deg) rotateZ(45deg)',
             transformStyle: 'preserve-3d',
             boxShadow: '0 0 35px rgba(197,168,128,0.2)'
           }}
         >
-          <div className="absolute inset-2 border border-dashed border-[#C5A880]/30 rounded-xl" />
+          <div className="absolute inset-2 border border-dashed border-[#D09A16]/30 rounded-xl" />
         </div>
       </div>
 
       {/* ================= BRANDING & EDITORIAL DETAILS ================= */}
       <div className="text-center space-y-3 z-10 max-w-sm px-4">
         {/* Prestige Pill */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-[#C5A880]/35 text-[#C5A880] text-[10px] font-bold font-mono tracking-[0.25em] uppercase shadow-sm">
-          <Sparkles size={11} className="text-[#C5A880]" />
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-[#D09A16]/35 text-[#D09A16] text-[10px] font-bold font-mono tracking-[0.25em] uppercase shadow-sm">
+          <Sparkles size={11} className="text-[#D09A16]" />
           <span>Saudagar Properties • Est. 1999</span>
         </div>
 
         {/* Brand Headline */}
         <h2 className="text-xl sm:text-2xl font-serif tracking-wide text-white leading-tight">
-          Pioneering <span className="italic font-light text-[#C5A880]">DLF Gurugram</span> Real Estate
+          Pioneering <span className="italic font-light text-[#D09A16]">DLF Gurugram</span> Real Estate
         </h2>
 
         {/* Status Text Ticker */}
@@ -239,21 +239,21 @@ export default function PageLoader() {
           <div className="relative w-full h-1.5 rounded-full bg-white/10 overflow-hidden border border-white/5">
             {/* Animated Fill Bar */}
             <div
-              className="h-full rounded-full bg-gradient-to-r from-[#C5A880] via-[#E6D5BC] to-[#B39366] transition-all duration-300 shadow-[0_0_12px_#C5A880]"
+              className="h-full rounded-full bg-gradient-to-r from-[#D09A16] via-[#E6D5BC] to-[#B39366] transition-all duration-300 shadow-[0_0_12px_#D09A16]"
               style={{ width: `${progress}%` }}
             />
           </div>
 
           <div className="flex items-center justify-between text-[10px] font-mono text-slate-500">
             <span>VIP EXPERIENCE</span>
-            <span className="text-[#C5A880] font-bold">{progress}%</span>
+            <span className="text-[#D09A16] font-bold">{progress}%</span>
           </div>
         </div>
       </div>
 
       {/* Bottom Coordinates & Credibility */}
       <div className="absolute bottom-6 flex items-center gap-2 text-[10px] font-mono text-slate-600 tracking-widest uppercase">
-        <Compass size={11} className="text-[#C5A880]/60" />
+        <Compass size={11} className="text-[#D09A16]/60" />
         <span>DLF Phase 2 • 28.4595° N, 77.0266° E</span>
       </div>
     </div>

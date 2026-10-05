@@ -42,12 +42,12 @@ export default function AdminLayout() {
         {/* Brand Header */}
         <div className="p-6 border-b border-white/10 flex items-center justify-between">
           <Link to="/admin/dashboard" className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-white/95 border border-[#C5A880]/40 shadow-sm">
+            <div className="p-2 rounded-xl bg-white/95 border border-[#D09A16]/40 shadow-sm">
               <img src={logoImg} alt="Saudagar Properties" className="h-7 w-auto object-contain" />
             </div>
             <div>
               <span className="block text-sm font-serif font-bold text-white tracking-wide">Saudagar</span>
-              <span className="block text-[10px] text-[#C5A880] font-semibold uppercase tracking-widest">CMS Control</span>
+              <span className="block text-[10px] text-[#D09A16] font-semibold uppercase tracking-widest">CMS Control</span>
             </div>
           </Link>
         </div>
@@ -67,7 +67,7 @@ export default function AdminLayout() {
                 className={({ isActive }) =>
                   `flex items-center gap-3.5 px-4 py-3 rounded-2xl text-xs font-semibold tracking-wide transition-all duration-300 ${
                     isActive
-                      ? 'bg-gradient-to-r from-[#C5A880] to-[#B39366] text-[#0C101A] shadow-[0_4px_15px_rgba(197,168,128,0.3)]'
+                      ? 'bg-gradient-to-r from-[#D09A16] to-[#B39366] text-[#0C101A] shadow-[0_4px_15px_rgba(197,168,128,0.3)]'
                       : 'text-slate-300 hover:text-white hover:bg-white/[0.06]'
                   }`
                 }
@@ -83,12 +83,12 @@ export default function AdminLayout() {
         <div className="p-4 border-t border-white/10 space-y-3 bg-[#0F141F]">
           <div className="flex items-center justify-between p-3 rounded-2xl bg-white/[0.04] border border-white/10">
             <div className="flex items-center gap-3 min-w-0">
-              <div className="w-9 h-9 rounded-xl bg-[#C5A880]/20 border border-[#C5A880]/40 text-[#C5A880] flex items-center justify-center font-bold text-xs shrink-0">
+              <div className="w-9 h-9 rounded-xl bg-[#D09A16]/20 border border-[#D09A16]/40 text-[#D09A16] flex items-center justify-center font-bold text-xs shrink-0">
                 <Shield size={16} />
               </div>
               <div className="min-w-0">
                 <p className="text-xs font-bold text-white truncate">{admin?.name || 'Administrator'}</p>
-                <p className="text-[10px] text-[#C5A880] truncate">{admin?.email || 'admin@saudagar.com'}</p>
+                <p className="text-[10px] text-[#D09A16] truncate">{admin?.email || 'admin@saudagar.com'}</p>
               </div>
             </div>
           </div>
@@ -148,7 +148,7 @@ export default function AdminLayout() {
                   className={({ isActive }) =>
                     `flex items-center gap-3 px-4 py-3.5 rounded-2xl text-sm font-semibold transition-all ${
                       isActive
-                        ? 'bg-[#C5A880] text-[#0C101A]'
+                        ? 'bg-[#D09A16] text-[#0C101A]'
                         : 'text-slate-300 hover:bg-white/5'
                     }`
                   }
@@ -184,7 +184,7 @@ export default function AdminLayout() {
         {/* Top Announcement Bar */}
         <header className="hidden md:flex items-center justify-between px-8 py-4 border-b border-white/10 bg-[#121724]/60 backdrop-blur-md">
           <div className="flex items-center gap-2 text-xs text-slate-300">
-            <Sparkles size={14} className="text-[#C5A880]" />
+            <Sparkles size={14} className="text-[#D09A16]" />
             <span>Saudagar Properties Content Management Engine</span>
           </div>
 
@@ -196,7 +196,7 @@ export default function AdminLayout() {
               className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/15 text-xs text-[#CBD5E1] hover:text-white transition-colors"
             >
               <span>View Live Website</span>
-              <ExternalLink size={12} className="text-[#C5A880]" />
+              <ExternalLink size={12} className="text-[#D09A16]" />
             </a>
           </div>
         </header>

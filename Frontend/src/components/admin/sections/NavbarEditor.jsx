@@ -82,7 +82,7 @@ export default function NavbarEditor({ formData, updateField }) {
       {/* Navigation Links Array Manager */}
       <div className="pt-6 border-t border-white/10 space-y-4">
         <div className="flex items-center justify-between">
-          <h4 className="text-sm font-serif font-bold text-[#C5A880]">
+          <h4 className="text-sm font-serif font-bold text-[#D09A16]">
             Navigation Links ({links.length})
           </h4>
           <button
