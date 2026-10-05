@@ -5,6 +5,7 @@ import { Search, MapPin, Building2, Wallet } from 'lucide-react';
 import Image from 'next/image';
 import CustomSelect from '../../components/ui/CustomSelect';
 import { useCms } from '../../context/CmsContext';
+import { motion } from 'framer-motion';
 
 const unsplashLoader = ({ src, width, quality }) => {
   const baseUrl = src.split('?')[0];
@@ -76,28 +77,48 @@ export default function Hero() {
           <div className="max-w-3xl w-full">
 
             {/* Top Badge */}
-            <div className="mb-6 flex items-center gap-4">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              className="mb-6 flex items-center gap-4"
+            >
               <span className="w-8 h-[1px] bg-[#D09A16]"></span>
               <span className="text-xs md:text-sm tracking-[0.25em] text-[#D09A16] uppercase font-semibold">
                 {heroData.badge || "Luxury Builder Floors & Estates"}
               </span>
-            </div>
+            </motion.div>
 
             {/* H1 SEO Headline — Immediate render without paint-blocking layout transforms */}
-            <h1 className="text-5xl md:text-7xl font-serif text-white leading-[1.1] mb-6 drop-shadow-sm">
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+              className="text-5xl md:text-7xl font-serif text-white leading-[1.1] mb-6 drop-shadow-sm"
+            >
               {heroData.headlinePrefix || "Gurgaon's Premier"} <br />
               <span className="italic text-[#D09A16] font-light">
                 {heroData.headlineHighlight || "Real Estate"}
               </span> {heroData.headlineSuffix || "Partner."}
-            </h1>
+            </motion.h1>
 
             {/* Subtext */}
-            <p className="text-[#E2E8F0] text-lg font-light max-w-xl mb-12 leading-relaxed drop-shadow-sm">
+            <motion.p
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+              className="text-[#E2E8F0] text-lg font-light max-w-xl mb-12 leading-relaxed drop-shadow-sm"
+            >
               {heroData.description || "Discover an exclusive portfolio of luxury builder floors, high-rise penthouses, and bespoke villas in DLF Phase 1–4, Sushant Lok & Golf Course Ext."}
-            </p>
+            </motion.p>
 
             {/* Search Bar Container */}
-            <div className="w-full max-w-5xl relative">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+              className="w-full max-w-5xl relative"
+            >
               <form
                 onSubmit={handleSearch}
                 className="bg-white/95 backdrop-blur-xl border border-white/80 rounded-2xl p-3 shadow-[0_25px_60px_rgba(0,0,0,0.35)] flex flex-col lg:flex-row gap-3 lg:gap-0 items-center relative z-30"
@@ -170,7 +191,12 @@ export default function Hero() {
               </form>
 
               {/* Trending Pills */}
-              <div className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 relative z-10">
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.8, delay: 0.6 }}
+                className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 relative z-10"
+              >
                 <span className="text-[#D09A16] text-xs font-semibold tracking-widest uppercase">
                   {heroData.trendingLabel || "Trending"}
                 </span>
@@ -189,12 +215,15 @@ export default function Hero() {
                     </button>
                   ))}
                 </div>
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
           </div>
 
           {/* Right Side: 3D Floating Spotlight Property Card */}
-          <div
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9, rotateY: 15 }}
+            animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
             ref={spotlightCardRef}
             onMouseMove={handleCardMouseMove}
             onMouseLeave={handleCardMouseLeave}
@@ -255,7 +284,7 @@ export default function Hero() {
                 </a>
               </div>
             </div>
-          </div>
+          </motion.div>
 
         </div>
       </div>

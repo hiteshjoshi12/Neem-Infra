@@ -72,8 +72,8 @@ export default function Navbar() {
         <div className="w-full flex justify-center pointer-events-auto">
           <div
             className={`relative flex items-center justify-between transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] bg-white/95 backdrop-blur-xl ${isScrolled
-                ? 'w-full max-w-full rounded-none py-3 px-6 md:px-12 border-b border-black/[0.06] shadow-[0_10px_30px_-10px_rgba(20,25,35,0.08)] ring-0'
-                : 'w-full max-w-5xl xl:max-w-6xl rounded-full py-2.5 px-5 md:px-7 border border-white/80 shadow-[0_20px_45px_-8px_rgba(20,25,35,0.1),_0_8px_20px_-4px_rgba(0,0,0,0.03),_inset_0_1px_1px_rgba(255,255,255,1)] ring-1 ring-black/[0.04]'
+              ? 'w-full max-w-full rounded-none py-3 px-6 md:px-12 border-b border-black/[0.06] shadow-[0_10px_30px_-10px_rgba(20,25,35,0.08)] ring-0'
+              : 'w-full max-w-5xl xl:max-w-6xl rounded-full py-2.5 px-5 md:px-7 border border-white/80 shadow-[0_20px_45px_-8px_rgba(20,25,35,0.1),_0_8px_20px_-4px_rgba(0,0,0,0.03),_inset_0_1px_1px_rgba(255,255,255,1)] ring-1 ring-black/[0.04]'
               }`}
           >
             {/* Left: Clean Brand Logo */}
@@ -85,7 +85,7 @@ export default function Navbar() {
                 width={200}
                 height={55}
                 priority
-                src={navData.logoUrl || '/logo.png'}
+                src={logoImg}
                 alt="Saudagar Properties"
                 className={`w-auto object-contain transition-all duration-500 ${isScrolled ? 'h-9 md:h-11' : 'h-11 md:h-13'
                   }`}

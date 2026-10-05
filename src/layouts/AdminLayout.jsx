@@ -42,7 +42,7 @@ export default function AdminLayout({ children }) {
     <div className="min-h-screen bg-[#0C101A] text-slate-100 flex flex-col md:flex-row">
       {/* ===================== SIDEBAR (Desktop) ===================== */}
       <aside className="hidden md:flex flex-col w-72 bg-[#121724] border-r border-white/10 shrink-0 select-none">
-        
+
         {/* Brand Header */}
         <div className="p-6 border-b border-white/10 flex items-center justify-between">
           <Link href="/admin/dashboard" className="flex items-center gap-3">
