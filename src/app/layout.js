@@ -1,0 +1,63 @@
+import { Playfair_Display, Plus_Jakarta_Sans } from "next/font/google";
+import "./globals.css";
+import Providers from "../components/Providers";
+
+const playfair = Playfair_Display({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-serif",
+  weight: ["400", "500", "600", "700"],
+});
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-sans",
+  weight: ["300", "400", "500", "600", "700"],
+});
+
+export const metadata = {
+  metadataBase: new URL("https://www.saudagarproperties.com"),
+  title: {
+    default: "Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram",
+    template: "%s | Saudagar Properties",
+  },
+  description:
+    "Find your dream luxury builder floor, independent villa, penthouse, or commercial office in DLF Phase 1–5, Sushant Lok & Golf Course Road. 25+ years of trusted advisory in Gurugram.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram",
+    description: "25+ years of trusted real estate advisory in DLF Phase 1–5, Sushant Lok & Golf Course Road.",
+    url: "https://www.saudagarproperties.com",
+    siteName: "Saudagar Properties",
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram",
+    description: "25+ years of trusted real estate advisory in DLF Phase 1–5, Sushant Lok & Golf Course Road.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+};
+
+export default function RootLayout({ children }) {
+  return (
+    <html lang="en" className={`${playfair.variable} ${jakarta.variable} h-full antialiased`}>
+      <head>
+        <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
+      </head>
+      <body className="min-h-full flex flex-col font-sans">
+        <Providers>
+          {children}
+        </Providers>
+      </body>
+    </html>
+  );
+}
+
