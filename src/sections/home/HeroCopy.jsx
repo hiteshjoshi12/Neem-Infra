@@ -136,7 +136,7 @@ export default function HeroCopy() {
       <div className="pt-24 sm:pt-28" />
 
       {/* ================= MAIN EDITORIAL HERO CONTENT (MAX-W 980PX, ELEVATED Z-50) ================= */}
-      <div className="w-full max-w-[980px] mx-auto px-6 sm:px-8 relative z-50 flex flex-col items-center text-center my-auto py-2 sm:py-4">
+      <div className="w-full max-w-[980px] mx-auto px-6 sm:px-8 relative z-50 flex flex-col items-center text-center mt-auto mb-10 md:my-auto py-2 sm:py-4">
         
         {/* Eyebrow: Subtle Brand Badge */}
         <motion.div
@@ -158,7 +158,7 @@ export default function HeroCopy() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
-          className="text-[clamp(2.15rem,4.2vw,4.25rem)] font-serif text-[#F7F5EF] leading-[1.12] tracking-tight max-w-[920px] mb-3.5 sm:mb-4 drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)]"
+          className="text-2xl md:text-[clamp(2.15rem,4.2vw,4.25rem)] font-serif text-[#F7F5EF] leading-[1.12] tracking-tight max-w-[920px] mb-2 md:mb-3.5 sm:mb-4 drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)]"
         >
           <span className="block">Gurgaon&apos;s Premier</span>
           <span className="block">
@@ -171,7 +171,7 @@ export default function HeroCopy() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          className="text-[#CBD5E1] text-sm sm:text-base md:text-[17px] font-light max-w-[680px] mb-6 sm:mb-7 leading-[1.58] drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]"
+          className="text-[#CBD5E1] text-xs sm:text-base md:text-[17px] font-light max-w-[680px] mb-4 md:mb-6 sm:mb-7 leading-[1.58] drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]"
         >
           {heroData.description || "Discover an exclusive portfolio of luxury builder floors, high-rise penthouses, and bespoke villas across DLF Phase 1–4, Sushant Lok & Golf Course Ext."}
         </motion.p>
@@ -277,97 +277,40 @@ export default function HeroCopy() {
             </button>
           </form>
 
-          {/* Mobile Search Card (Clean Stacked Layout) */}
+          {/* Mobile Search Card (Minimal Inline Layout) */}
           <form
             onSubmit={handleSearch}
-            className="flex lg:hidden flex-col bg-white border border-[#E2DDD5] rounded-2xl p-3 shadow-2xl relative z-50 divide-y divide-[#EBE7DF] text-left"
+            className="flex lg:hidden items-center bg-white border border-[#E2DDD5] rounded-full p-1.5 shadow-2xl relative z-50 w-full"
           >
-            {/* Mobile Keyword Input */}
-            <div className="flex items-center gap-2.5 pb-2.5">
+            <div className="flex-1 flex items-center gap-2 pl-3">
               <Search className="text-[#C6A24A] w-4 h-4 flex-shrink-0" />
-              <div className="flex flex-col flex-1 min-w-0">
-                <span className="text-[10px] font-semibold uppercase tracking-wider text-[#8A95A7]">
-                  Search Destination
-                </span>
-                <input
-                  type="text"
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="DLF floors, villas, penthouses..."
-                  className="w-full bg-transparent border-none outline-none text-[#17213D] placeholder-[#94A3B8] font-medium text-xs mt-0.5"
-                />
-              </div>
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => setSearchQuery("")}
-                  className="text-xs text-[#94A3B8] px-1"
-                >
-                  ✕
-                </button>
-              )}
-            </div>
-
-            {/* Mobile Location */}
-            <div className="py-1">
-              <CustomSelect
-                icon={MapPin}
-                label="Location"
-                value={location}
-                onChange={setLocation}
-                options={heroData.locationOptions || [
-                  { value: "golf-course", label: "Golf Course Ext" },
-                  { value: "dlf-1", label: "DLF Phase 1" },
-                  { value: "dlf-5", label: "DLF Phase 5" },
-                  { value: "sushant-lok", label: "Sushant Lok 1" },
-                  { value: "dwarka-expy", label: "Dwarka Expressway" }
-                ]}
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Search DLF floors, villas..."
+                className="w-full bg-transparent border-none outline-none text-[#17213D] placeholder-[#94A3B8] font-medium text-xs sm:text-sm"
               />
             </div>
-
-            {/* Mobile Property Type */}
-            <div className="py-1">
-              <CustomSelect
-                icon={Building2}
-                label="Property Type"
-                value={propertyType}
-                onChange={setPropertyType}
-                options={heroData.propertyTypeOptions || [
-                  { value: "builder-floor", label: "Luxury Builder Floor" },
-                  { value: "villa", label: "Bespoke Villa" },
-                  { value: "penthouse", label: "Penthouse" },
-                  { value: "apartment", label: "High-Rise Apartment" }
-                ]}
-              />
-            </div>
-
-            {/* Mobile Budget */}
-            <div className="py-1">
-              <CustomSelect
-                icon={Wallet}
-                label="Budget"
-                value={budget}
-                onChange={setBudget}
-                options={heroData.budgetOptions || [
-                  { value: "under-5", label: "Under 5 Cr" },
-                  { value: "5-to-10", label: "5 Cr - 10 Cr" },
-                  { value: "above-10", label: "10 Cr+" }
-                ]}
-              />
-            </div>
-
-            {/* Mobile Explore Button */}
+            {searchQuery && (
+              <button
+                type="button"
+                onClick={() => setSearchQuery("")}
+                className="text-xs text-[#94A3B8] px-2"
+              >
+                ✕
+              </button>
+            )}
             <button
               type="submit"
-              className="mt-2.5 w-full bg-[#C6A24A] hover:bg-[#D4B258] text-[#0E162B] py-3 rounded-xl text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 shadow-md cursor-pointer"
+              className="bg-[#C6A24A] hover:bg-[#D4B258] text-[#0E162B] px-4 py-2.5 rounded-full text-[10px] uppercase tracking-widest font-bold flex items-center justify-center shadow-md ml-1"
             >
-              <span>{heroData.searchButtonText || "Explore Portfolio"}</span>
-              <ArrowUpRight size={14} />
+              Explore
             </button>
           </form>
 
           {/* Interactive Trending Capsule Buttons */}
-          <div className="mt-3.5 sm:mt-4 flex flex-wrap items-center justify-center gap-2">
+          <div className="mt-3.5 sm:mt-4 hidden md:flex flex-wrap items-center justify-center gap-2">
             <span className="text-[10px] uppercase tracking-widest text-[#C6A24A] font-semibold mr-1 flex items-center gap-1">
               <Sparkles className="w-3 h-3" />
               Trending:
@@ -434,7 +377,7 @@ export default function HeroCopy() {
         <div
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          className="w-full md:w-auto"
+          className="hidden md:block w-full md:w-auto"
         >
           <AnimatePresence mode="wait">
             <motion.div
