@@ -3,6 +3,41 @@
 @theme {
   --font-serif: var(--font-serif), Georgia, Cambria, "Times New Roman", Times, serif;
   --font-sans: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  
+  --color-brand-navy: #17213D;
+  --color-brand-navy-deep: #0E162B;
+  --color-brand-navy-surface: #202B4A;
+  
+  --color-brand-gold: #C6A24A;
+  --color-brand-gold-light: #D8BD73;
+  --color-brand-gold-pale: #E9D9A8;
+
+  --color-brand-ivory: #F7F5EF;
+  --color-brand-cream: #EFEBE1;
+  --color-brand-white: #FFFFFF;
+
+  --color-text-primary: #17213D;
+  --color-text-secondary: #566078;
+  --color-text-on-dark: #F7F5EF;
+  --color-text-on-dark-muted: #C9CED9;
+
+  --color-border-light: rgba(23, 33, 61, 0.12);
+  --color-border-gold: rgba(198, 162, 74, 0.35);
+}
+
+:root {
+  --brand-navy: #17213D;
+  --brand-navy-deep: #0E162B;
+  --brand-navy-surface: #202B4A;
+  --brand-gold: #C6A24A;
+  --brand-gold-light: #D8BD73;
+  --brand-gold-pale: #E9D9A8;
+  --brand-ivory: #F7F5EF;
+  --brand-cream: #EFEBE1;
+  --text-primary: #17213D;
+  --text-secondary: #566078;
+  --text-on-dark: #F7F5EF;
+  --text-on-dark-muted: #C9CED9;
 }
 
 html {
@@ -15,4 +50,84 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+/* ========================================================
+   SEMANTIC REUSABLE CLASSES FOR DUAL-TONE REAL ESTATE SYSTEM
+======================================================== */
+
+.section-light {
+  background-color: #F7F5EF;
+  color: #17213D;
+}
+
+.section-cream {
+  background-color: #EFEBE1;
+  color: #17213D;
+}
+
+.section-dark {
+  background-color: #0E162B;
+  color: #F7F5EF;
+}
+
+.section-navy {
+  background-color: #17213D;
+  color: #F7F5EF;
+}
+
+.card-light {
+  background-color: #FFFFFF;
+  color: #17213D;
+  border: 1px solid rgba(23, 33, 61, 0.08);
+  box-shadow: 0 20px 45px -10px rgba(23, 33, 61, 0.06);
+}
+
+.card-dark {
+  background-color: #202B4A;
+  color: #F7F5EF;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4);
+}
+
+.text-brand {
+  color: #17213D;
+}
+
+.text-gold {
+  color: #C6A24A;
+}
+
+.text-light {
+  color: #F7F5EF;
+}
+
+.border-gold {
+  border-color: rgba(198, 162, 74, 0.35);
+}
+
+.border-light {
+  border-color: rgba(23, 33, 61, 0.12);
+}
+
+.btn-gold {
+  background-color: #C6A24A;
+  color: #0E162B;
+  font-weight: 700;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-gold:hover {
+  background-color: #D8BD73;
+}
+
+.btn-navy {
+  background-color: #17213D;
+  color: #F7F5EF;
+  border: 1px solid rgba(198, 162, 74, 0.4);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-navy:hover {
+  background-color: #202B4A;
+  border-color: #C6A24A;
+}
+
 

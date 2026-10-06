@@ -74,19 +74,22 @@ export default function OurServicesSection() {
   }, []);
 
   return (
-    <section
-      ref={sectionRef}
+    <>
+      <section
+        ref={sectionRef}
       id="services"
       aria-labelledby="services-heading"
       className="
         relative
         w-full
         overflow-hidden
-        bg-[#F9F7F4]
-        text-[#182345]
-        py-14
-        sm:py-16
-        md:py-20
+        bg-[#EFEBE1]
+        text-[#17213D]
+        py-16
+        sm:py-20
+        md:py-24
+        border-t
+        border-[#17213D]/[0.08]
       "
     >
       {/* =====================================================
@@ -144,23 +147,23 @@ export default function OurServicesSection() {
 
         <header
           ref={headerRef}
-          className="mx-auto mb-12 max-w-3xl text-center md:mb-14"
+          className="mx-auto mb-12 max-w-3xl text-center md:mb-16"
         >
           {/* Eyebrow */}
-          <div className="mb-4 inline-flex items-center gap-2">
-            <span className="h-px w-7 bg-[#D09A16]" />
+          <div className="mb-4 inline-flex items-center gap-2.5">
+            <span className="h-px w-8 bg-[#C6A24A]" />
 
             <Sparkles
               size={12}
               strokeWidth={1.7}
-              className="text-[#D09A16]"
+              className="text-[#C6A24A]"
             />
 
-            <span className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#182345]/60">
+            <span className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#182345]/70 sm:text-[10px]">
               {badge}
             </span>
 
-            <span className="h-px w-7 bg-[#D09A16]" />
+            <span className="h-px w-8 bg-[#C6A24A]" />
           </div>
 
           {/* Heading */}
@@ -168,29 +171,31 @@ export default function OurServicesSection() {
             id="services-heading"
             className="
               font-serif
-              text-[32px]
-              leading-[1.1]
-              tracking-[-0.02em]
+              text-3xl
+              sm:text-4xl
+              md:text-5xl
+              lg:text-6xl
+              font-normal
+              leading-[1.08]
+              tracking-tight
               text-[#182345]
-              sm:text-[38px]
-              md:text-[44px]
             "
           >
             {titleMain}{' '}
-            <span className="font-light italic text-[#D09A16]">
+            <span className="font-light italic text-[#C6A24A]">
               {titleItalic}
             </span>
           </h2>
 
           {/* Description */}
-          <p className="mx-auto mt-4 max-w-2xl text-[13px] leading-6 text-[#182345]/60 sm:text-sm">
+          <p className="mx-auto mt-4 max-w-2xl text-sm sm:text-base md:text-lg leading-relaxed text-[#566078] font-normal">
             {description}
           </p>
 
           {/* Decorative line */}
           <div
             ref={lineRef}
-            className="mx-auto mt-6 h-px w-16 bg-[#D09A16]/50"
+            className="mx-auto mt-6 h-px w-20 bg-[#C6A24A]/60"
           />
         </header>
 
@@ -210,18 +215,15 @@ export default function OurServicesSection() {
             <ExperienceCounter />
           </div>
 
-          {/* Process */}
-          <div>
-            <HowWeWorkProcess />
-          </div>
-
-          {/* DLF Callout */}
-          <div>
-            <DlfPropertyCallout />
-          </div>
-
         </div>
       </div>
     </section>
-  );
+
+    {/* Process: How We Work - Full Screen / Full Width Section (Light Shade) */}
+    <HowWeWorkProcess />
+
+    {/* DLF Gurugram Callout - Full Width Edge-to-Edge */}
+    <DlfPropertyCallout />
+  </>
+);
 }

@@ -145,6 +145,24 @@ export const PAGE_SEO = {
     canonical: '/privacy-policy',
     ogType: 'website',
   },
+  '/services/residential': {
+    title: 'Luxury Residential Properties in DLF Gurugram | Builder Floors & Villas | Saudagar Properties',
+    description: 'Discover Gurgaon’s finest portfolio of luxury independent builder floors, kothis, penthouses, and bespoke villas in DLF Phase 1–5, Sushant Lok & Golf Course Ext.',
+    canonical: '/services/residential',
+    ogType: 'website',
+  },
+  '/services/commercial': {
+    title: 'Commercial Real Estate in DLF Gurugram | Office Spaces & Retail | Saudagar Properties',
+    description: 'Premier commercial real estate consultancy in Gurgaon. Explore Grade-A office spaces, high-street retail, pre-leased investment assets, and corporate hubs in Cybercity & Golf Course Road.',
+    canonical: '/services/commercial',
+    ogType: 'website',
+  },
+  '/services/industrial': {
+    title: 'Industrial Real Estate in Gurugram & Udyog Vihar | Warehouses & Plots | Saudagar Properties',
+    description: 'Specialized industrial real estate advisory in Gurgaon and Manesar. Warehouses, factory leasing, industrial plots, and build-to-suit logistics facilities in Udyog Vihar & IMT Manesar.',
+    canonical: '/services/industrial',
+    ogType: 'website',
+  },
 };
 
 // ─── Breadcrumb Configuration ───────────────────────────────────────────
@@ -181,5 +199,20 @@ export const BREADCRUMBS = {
   '/privacy-policy': [
     { name: 'Home', url: '/' },
     { name: 'Privacy Policy', url: '/privacy-policy' },
+  ],
+  '/services/residential': [
+    { name: 'Home', url: '/' },
+    { name: 'Services', url: '/#services' },
+    { name: 'Residential Real Estate', url: '/services/residential' },
+  ],
+  '/services/commercial': [
+    { name: 'Home', url: '/' },
+    { name: 'Services', url: '/#services' },
+    { name: 'Commercial Real Estate', url: '/services/commercial' },
+  ],
+  '/services/industrial': [
+    { name: 'Home', url: '/' },
+    { name: 'Services', url: '/#services' },
+    { name: 'Industrial Real Estate', url: '/services/industrial' },
   ],
 };

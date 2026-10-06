@@ -132,15 +132,15 @@ function AIEngineCard({ engine, index, cardRef }) {
         overflow-hidden
         rounded-[22px]
         border
-        border-[#182345]/[0.09]
+        border-[#17213D]/10
         bg-white
-        p-5
-        shadow-[0_10px_35px_rgba(24,35,69,0.045)]
+        p-6
+        shadow-[0_10px_35px_rgba(23,33,61,0.04)]
         transition-all
         duration-500
         hover:-translate-y-1.5
-        hover:border-[#D09A16]/40
-        hover:shadow-[0_20px_55px_rgba(24,35,69,0.10)]
+        hover:border-[#C6A24A]/40
+        hover:shadow-[0_20px_55px_rgba(23,33,61,0.09)]
       "
     >
 
@@ -157,7 +157,7 @@ function AIEngineCard({ engine, index, cardRef }) {
           h-[2px]
           origin-left
           scale-x-0
-          bg-[#D09A16]
+          bg-[#C6A24A]
           transition-transform
           duration-500
           group-hover:scale-x-100
@@ -178,10 +178,10 @@ function AIEngineCard({ engine, index, cardRef }) {
           font-serif
           text-[90px]
           leading-none
-          text-[#182345]/[0.025]
+          text-[#17213D]/[0.03]
           transition-colors
           duration-500
-          group-hover:text-[#D09A16]/[0.055]
+          group-hover:text-[#C6A24A]/[0.08]
         "
       >
         0{index + 1}
@@ -205,15 +205,15 @@ function AIEngineCard({ engine, index, cardRef }) {
             justify-center
             rounded-2xl
             border
-            border-[#182345]/10
-            bg-[#F9F7F4]
-            text-[#182345]
+            border-[#17213D]/10
+            bg-[#F7F5EF]
+            text-[#17213D]
             transition-all
             duration-500
             group-hover:scale-105
-            group-hover:border-[#D09A16]/40
-            group-hover:bg-[#D09A16]
-            group-hover:text-white
+            group-hover:border-[#C6A24A]
+            group-hover:bg-[#C6A24A]
+            group-hover:text-[#0E162B]
           "
         >
           {engine.icon}
@@ -226,15 +226,15 @@ function AIEngineCard({ engine, index, cardRef }) {
           className="
             rounded-full
             border
-            border-[#182345]/[0.08]
-            bg-[#F9F7F4]
+            border-[#C6A24A]/25
+            bg-[#F7F5EF]
             px-2.5
             py-1
-            text-[6px]
+            text-[7px]
             font-bold
             uppercase
             tracking-[0.18em]
-            text-[#182345]/45
+            text-[#C6A24A]
           "
         >
           {engine.badge}
@@ -252,10 +252,10 @@ function AIEngineCard({ engine, index, cardRef }) {
         <h3
           className="
             font-serif
-            text-[25px]
+            text-[24px]
             font-normal
             tracking-[-0.025em]
-            text-[#182345]
+            text-[#17213D]
           "
         >
           {engine.name}
@@ -265,11 +265,11 @@ function AIEngineCard({ engine, index, cardRef }) {
         <p
           className="
             mt-1
-            text-[7px]
+            text-[8px]
             font-bold
             uppercase
             tracking-[0.2em]
-            text-[#A87505]
+            text-[#C6A24A]
           "
         >
           {engine.subtitle}
@@ -278,11 +278,11 @@ function AIEngineCard({ engine, index, cardRef }) {
 
         <p
           className="
-            mt-4
+            mt-3.5
             min-h-[48px]
-            text-[10px]
+            text-xs
             leading-5
-            text-[#5D667D]
+            text-[#566078]
           "
         >
           {engine.description}
@@ -304,18 +304,20 @@ function AIEngineCard({ engine, index, cardRef }) {
           items-center
           justify-between
           border-t
-          border-[#182345]/[0.07]
+          border-[#17213D]/[0.08]
           pt-4
         "
       >
 
         <span
           className="
-            text-[7px]
+            text-[8px]
             font-bold
             uppercase
             tracking-[0.18em]
-            text-[#182345]
+            text-[#17213D]
+            transition-colors
+            group-hover:text-[#C6A24A]
           "
         >
           Ask {engine.name}
@@ -331,13 +333,13 @@ function AIEngineCard({ engine, index, cardRef }) {
             justify-center
             rounded-full
             border
-            border-[#D09A16]/25
-            text-[#D09A16]
+            border-[#C6A24A]/30
+            text-[#C6A24A]
             transition-all
             duration-300
-            group-hover:border-[#D09A16]
-            group-hover:bg-[#D09A16]
-            group-hover:text-white
+            group-hover:border-[#C6A24A]
+            group-hover:bg-[#C6A24A]
+            group-hover:text-[#0E162B]
           "
         >
           <ArrowUpRight
@@ -436,8 +438,8 @@ export default function AiShowcaseSection() {
         w-full
         overflow-hidden
         border-t
-        border-[#182345]/[0.06]
-        bg-[#F9F7F4]
+        border-[#17213D]/[0.08]
+        bg-[#F7F5EF]
         py-16
         sm:py-20
         lg:py-24
@@ -457,7 +459,7 @@ export default function AiShowcaseSection() {
           h-[450px]
           w-[450px]
           rounded-full
-          bg-[#D09A16]/[0.035]
+          bg-[#C6A24A]/[0.04]
           blur-[100px]
         "
       />
@@ -469,7 +471,7 @@ export default function AiShowcaseSection() {
           absolute
           inset-0
           opacity-[0.018]
-          [background-image:linear-gradient(to_right,#182345_1px,transparent_1px),linear-gradient(to_bottom,#182345_1px,transparent_1px)]
+          [background-image:linear-gradient(to_right,#17213D_1px,transparent_1px),linear-gradient(to_bottom,#17213D_1px,transparent_1px)]
           [background-size:100px_100px]
         "
       />
@@ -515,22 +517,22 @@ export default function AiShowcaseSection() {
               gap-2
               rounded-full
               border
-              border-[#D09A16]/25
-              bg-white/70
+              border-[#C6A24A]/30
+              bg-white
               px-3.5
               py-1.5
-              text-[7px]
+              text-[8px]
               font-bold
               uppercase
               tracking-[0.22em]
-              text-[#A87505]
+              text-[#C6A24A]
               shadow-sm
             "
           >
 
             <Sparkles
-              size={10}
-              className="text-[#D09A16]"
+              size={11}
+              className="text-[#C6A24A]"
             />
 
             AI Authority Check
@@ -547,7 +549,7 @@ export default function AiShowcaseSection() {
               font-normal
               leading-[1.05]
               tracking-[-0.04em]
-              text-[#182345]
+              text-[#17213D]
               sm:text-5xl
             "
           >
@@ -558,7 +560,7 @@ export default function AiShowcaseSection() {
                 ml-2
                 italic
                 font-light
-                text-[#D09A16]
+                text-[#C6A24A]
               "
             >
               sees us.
@@ -576,7 +578,7 @@ export default function AiShowcaseSection() {
               max-w-xl
               text-xs
               leading-6
-              text-[#5D667D]
+              text-[#566078]
               sm:text-sm
             "
           >
@@ -601,17 +603,17 @@ export default function AiShowcaseSection() {
               className="
                 h-px
                 w-8
-                bg-[#D09A16]/40
+                bg-[#C6A24A]/40
               "
             />
 
             <span
               className="
-                text-[6px]
+                text-[7px]
                 font-bold
                 uppercase
                 tracking-[0.22em]
-                text-[#182345]/30
+                text-[#17213D]/40
               "
             >
               RERA · REPUTATION · LOCAL AUTHORITY
@@ -621,7 +623,7 @@ export default function AiShowcaseSection() {
               className="
                 h-px
                 w-8
-                bg-[#D09A16]/40
+                bg-[#C6A24A]/40
               "
             />
 
@@ -638,7 +640,7 @@ export default function AiShowcaseSection() {
           className="
             grid
             grid-cols-1
-            gap-4
+            gap-5
             sm:grid-cols-3
           "
         >
@@ -667,7 +669,7 @@ export default function AiShowcaseSection() {
 
         <div
           className="
-            mt-7
+            mt-8
             flex
             items-center
             justify-center
@@ -676,17 +678,17 @@ export default function AiShowcaseSection() {
         >
 
           <ShieldCheck
-            size={11}
-            className="text-[#D09A16]"
+            size={13}
+            className="text-[#C6A24A]"
           />
 
           <span
             className="
-              text-[6px]
+              text-[8px]
               font-bold
               uppercase
               tracking-[0.22em]
-              text-[#182345]/25
+              text-[#17213D]/40
             "
           >
             One verified query · Three independent AI engines

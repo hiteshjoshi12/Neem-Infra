@@ -1,5 +1,7 @@
 import dynamic from 'next/dynamic';
-import Hero from '@/sections/home/Hero';
+// Toggle between original Hero and Option 1 Split-Screen Focus (HeroCopy)
+import Hero from '@/sections/home/HeroCopy';
+// import Hero from '@/sections/home/Hero';
 import TopConsultantSection from '@/sections/home/TopConsultantSection';
 import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
 import { PAGE_SEO, BREADCRUMBS } from '@/lib/seo/seoConfig';
@@ -10,7 +12,6 @@ const WhyChooseUsSection = dynamic(() => import('@/sections/home/WhyChooseUsSect
 const AiShowcaseSection = dynamic(() => import('@/sections/home/AiShowcaseSection'), { ssr: true });
 const TestimonialsSection = dynamic(() => import('@/sections/home/TestimonialsSection'), { ssr: true });
 const LocationMap = dynamic(() => import('@/sections/home/LocationMap'), { ssr: true });
-const NewsletterSection = dynamic(() => import('@/sections/home/NewsletterSection'), { ssr: true });
 
 export async function generateMetadata() {
   const seoData = PAGE_SEO['/'];
@@ -27,7 +28,7 @@ export default function Home() {
   const breadcrumbs = BREADCRUMBS['/'];
 
   return (
-    <div className="w-full flex flex-col min-h-screen bg-[#FAF8F5]">
+    <div className="w-full flex flex-col min-h-screen bg-[#F7F5EF] text-[#17213D] selection:bg-[#C6A24A] selection:text-[#0E162B]">
       <BreadcrumbJsonLd items={breadcrumbs} />
         
       {/* 1. Hero Section */}
@@ -51,11 +52,8 @@ export default function Home() {
       {/* 6. Testimonials Section */}
       <TestimonialsSection />
 
-      {/* 7. Location Map Section */}
+      {/* 7. Location Map & Market Intelligence Section */}
       <LocationMap />
-
-      {/* 8. Newsletter Subscription Section */}
-      <NewsletterSection />
     </div>
   );
 }

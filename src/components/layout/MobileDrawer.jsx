@@ -30,31 +30,32 @@ export default function MobileDrawer({ onClose }) {
         animate={{ x: 0 }}
         exit={{ x: "100%" }}
         transition={{ type: "tween", duration: 0.4, ease: "easeInOut" }}
-        className="relative w-full max-w-md h-full bg-[#111111] text-white shadow-2xl flex flex-col"
+        className="relative w-full max-w-md h-full bg-[#0E162B] text-[#F7F5EF] shadow-2xl flex flex-col border-l border-white/10"
       >
         {/* Header */}
         <div className="flex justify-between items-center p-6 border-b border-white/10">
-           <h2 className="text-xl font-serif tracking-widest uppercase">Saudagar Properties</h2>
+           <h2 className="text-xl font-serif tracking-widest uppercase text-white">Saudagar Properties</h2>
            <button 
              onClick={onClose} 
-             className="p-2 bg-white/5 hover:bg-white/10 rounded-full transition-colors"
+             className="p-2 bg-white/5 hover:bg-white/10 rounded-full transition-colors text-[#C6A24A]"
+             aria-label="Close menu"
            >
-             <X size={20} className="text-gray-300" />
+             <X size={20} />
            </button>
         </div>
 
         {/* Scrollable Content */}
         <div className="flex-1 overflow-y-auto p-8 custom-scrollbar">
-          <h2 className="text-3xl font-serif mb-6 text-white">About Saudagar Properties Realty</h2>
-          <p className="text-sm text-gray-400 leading-loose mb-10 font-light">
+          <h2 className="text-2xl sm:text-3xl font-serif mb-6 text-white">About Saudagar Properties Realty</h2>
+          <p className="text-sm text-[#C9CED9] leading-loose mb-10 font-light">
             Founded with the vision of offering strategic, transparent, and relationship-driven property advisory services. With deep market understanding and years of experience in Gurgaon’s dynamic real estate landscape, we help clients navigate property decisions with clarity and confidence.
           </p>
 
-          <h3 className="text-xl font-serif mb-6 border-b border-white/10 pb-2">Our Core Services</h3>
-          <ul className="space-y-5 text-sm text-gray-300 font-light mb-10">
+          <h3 className="text-xl font-serif mb-6 border-b border-white/10 pb-2 text-[#C6A24A]">Our Core Services</h3>
+          <ul className="space-y-5 text-sm text-[#F7F5EF] font-light mb-10">
             {CORE_SERVICES.map((service, idx) => (
               <li key={idx} className="flex items-center gap-3">
-                <span className="w-1 h-1 bg-white rounded-full"></span>
+                <span className="w-1.5 h-1.5 bg-[#C6A24A] rounded-full"></span>
                 {service}
               </li>
             ))}
@@ -62,18 +63,13 @@ export default function MobileDrawer({ onClose }) {
         </div>
 
         {/* Footer Area */}
-        <div className="p-8 bg-black/50 border-t border-white/10">
-          <button className="w-full py-4 mb-6 bg-white text-black text-sm uppercase tracking-widest font-medium hover:bg-gray-200 transition-colors">
+        <div className="p-8 bg-[#17213D] border-t border-white/10">
+          <button className="w-full py-4 mb-6 bg-[#C6A24A] text-[#0E162B] text-xs uppercase tracking-widest font-bold hover:bg-[#D8BD73] transition-colors rounded-xl shadow-lg">
             Get A Free Consultation
           </button>
           
-          <div className="flex items-center justify-between text-gray-400">
-            <span className="text-sm font-light">Follow us</span>
-            <div className="flex gap-4">
-              {/* <a href="#" className="hover:text-white transition-colors"><Facebook size={18} /></a>
-              <a href="#" className="hover:text-white transition-colors"><Instagram size={18} /></a>
-              <a href="#" className="hover:text-white transition-colors"><Linkedin size={18} /></a> */}
-            </div>
+          <div className="flex items-center justify-between text-[#C9CED9]/60">
+            <span className="text-xs font-light">DLF Phase 2 · Gurugram</span>
           </div>
         </div>
       </motion.div>

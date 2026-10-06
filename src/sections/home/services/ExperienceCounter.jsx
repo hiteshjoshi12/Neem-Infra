@@ -8,12 +8,14 @@ import {
   CheckCircle2,
   TrendingUp,
   ArrowUpRight,
+  Sparkles,
 } from 'lucide-react';
-
-import { animate, useInView, stagger } from 'framer-motion';
+import { motion, animate, useInView, stagger, useReducedMotion } from 'framer-motion';
 import { useCms } from '../../../context/CmsContext';
 
-
+/* =========================================================
+   DEFAULT STATS DATA (PRESERVED)
+========================================================= */
 const DEFAULT_STATS_DATA = [
   {
     title: '100% Client Satisfaction',
@@ -58,58 +60,118 @@ export default function ExperienceCounter() {
     'Our stellar team, trusted property dealers in Gurgaon and experts in commercial real estate in Gurugram, ensures you have a hassle-free experience finding the right property. We are committed to serving our clients with dedication, putting their needs above all else. Providing personalized solutions for all your property-related queries, we know that a satisfied customer is our greatest asset.';
 
   const statsList = expData.statsList || DEFAULT_STATS_DATA;
+  const counterLabel = expData.counterLabel || 'Years of Authority';
+  const counterSublabel =
+    expData.counterSublabel ||
+    "Serving India's Most Discerning Families & Corporates in Gurugram";
 
   const [count, setCount] = useState(1);
+  const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
 
   const containerRef = useRef(null);
-  const counterRef = useRef(null);
   const contentRef = useRef(null);
   const statRefs = useRef([]);
 
   const isInView = useInView(containerRef, { once: true, margin: "-10%" });
+  const prefersReducedMotion = useReducedMotion();
 
+  /* =========================================================
+     COUNTER & ENTRANCE ANIMATION (PRESERVED)
+  ========================================================= */
   useEffect(() => {
     if (isInView) {
-      animate(contentRef.current, { opacity: [0, 1], y: [25, 0] }, { duration: 0.8, ease: "easeOut" });
-      
+      if (contentRef.current) {
+        animate(
+          contentRef.current,
+          { opacity: [0, 1], y: [24, 0] },
+          { duration: 0.8, ease: "easeOut" }
+        );
+      }
+
       animate(1, target, {
-        duration: 1.6,
+        duration: 1.8,
         ease: "easeOut",
-        onUpdate: (latest) => setCount(Math.round(latest))
+        onUpdate: (latest) => setCount(Math.round(latest)),
       });
 
-      if (statRefs.current.length) {
-        animate(statRefs.current, { opacity: [0, 1], y: [18, 0] }, { duration: 0.6, delay: stagger(0.1), ease: "easeOut" });
+      const activeStatEls = statRefs.current.filter(Boolean);
+      if (activeStatEls.length) {
+        animate(
+          activeStatEls,
+          { opacity: [0, 1], y: [18, 0] },
+          { duration: 0.6, delay: stagger(0.08), ease: "easeOut" }
+        );
       }
     }
   }, [isInView, target]);
 
+  /* =========================================================
+     SUBTLE MOUSE PARALLAX ON BLUEPRINT (DESKTOP ONLY)
+  ========================================================= */
+  const handleMouseMove = (e) => {
+    if (prefersReducedMotion) return;
+    if (typeof window !== 'undefined' && !window.matchMedia('(pointer: fine)').matches) return;
+    const rect = containerRef.current?.getBoundingClientRect();
+    if (!rect) return;
+    const x = ((e.clientX - rect.left) / rect.width - 0.5) * 10;
+    const y = ((e.clientY - rect.top) / rect.height - 0.5) * 10;
+    setMouseOffset({ x, y });
+  };
+
+  const handleMouseLeave = () => {
+    setMouseOffset({ x: 0, y: 0 });
+  };
+
   return (
     <section
       ref={containerRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
       aria-labelledby="experience-heading"
-      className="relative my-14 md:my-18"
+      className="relative my-10 w-full md:my-14"
     >
+      {/* =====================================================
+          MAIN ARCHITECTURAL AUTHORITY FRAME
+          Optimized compact vertical height
+      ====================================================== */}
       <div
         ref={contentRef}
         className="
           relative
-          opacity-0
           overflow-hidden
-          rounded-[26px]
+          rounded-[28px]
           border
-          border-[#182345]/10
-          bg-white
-          shadow-[0_20px_60px_-35px_rgba(24,35,69,0.3)]
+          border-[#C6A24A]/25
+          bg-[#0E162B]
+          text-[#F7F5EF]
+          shadow-[0_25px_80px_-25px_rgba(14,22,43,0.85)]
+          transition-all
+          duration-700
+          sm:rounded-[36px]
         "
       >
         {/* =====================================================
-            TOP GOLD LINE
+            LAYER 1: ARCHITECTURAL BLUEPRINT BACKGROUND & GLOWS
         ====================================================== */}
 
+        {/* Blueprint Grid Overlay */}
         <div
           aria-hidden="true"
           className="
+            pointer-events-none
+            absolute
+            inset-0
+            opacity-[0.03]
+            [background-image:linear-gradient(to_right,#C6A24A_1px,transparent_1px),linear-gradient(to_bottom,#C6A24A_1px,transparent_1px)]
+            [background-size:60px_60px]
+          "
+        />
+
+        {/* Top Gold Horizon Beam */}
+        <div
+          aria-hidden="true"
+          className="
+            pointer-events-none
             absolute
             left-0
             right-0
@@ -117,150 +179,277 @@ export default function ExperienceCounter() {
             h-[2px]
             bg-gradient-to-r
             from-transparent
-            via-[#D09A16]
+            via-[#C6A24A]
             to-transparent
           "
         />
 
-        {/* =====================================================
-            MAIN AUTHORITY AREA
-        ====================================================== */}
+        {/* Subtle Radial Ambient Lighting */}
+        <div
+          aria-hidden="true"
+          className="
+            pointer-events-none
+            absolute
+            -left-32
+            -top-32
+            h-[420px]
+            w-[420px]
+            rounded-full
+            bg-[radial-gradient(circle,rgba(198,162,74,0.12)_0%,transparent_70%)]
+            blur-[90px]
+          "
+        />
 
-        <div className="relative grid lg:grid-cols-[0.85fr_1.15fr]">
+        <div
+          aria-hidden="true"
+          className="
+            pointer-events-none
+            absolute
+            -bottom-32
+            -right-32
+            h-[450px]
+            w-[450px]
+            rounded-full
+            bg-[radial-gradient(circle,rgba(32,43,74,0.45)_0%,transparent_70%)]
+            blur-[90px]
+          "
+        />
 
-          {/* -----------------------------------------------
-              COUNTER
-          ------------------------------------------------ */}
-
+        {/* Floating Parallax Blueprint Geometry */}
+        <motion.div
+          aria-hidden="true"
+          animate={{ x: mouseOffset.x, y: mouseOffset.y }}
+          transition={{ type: "spring", stiffness: 120, damping: 20 }}
+          className="pointer-events-none absolute inset-0"
+        >
+          {/* Large Architectural Drafting Arc */}
           <div
-            ref={counterRef}
             className="
-              relative
-              flex
-              min-h-[260px]
-              items-center
-              justify-center
-              overflow-hidden
-              bg-[#182345]
-              px-8
-              py-10
-              sm:px-12
-              lg:min-h-[300px]
-              lg:px-10
+              absolute
+              -left-16
+              top-10
+              h-[420px]
+              w-[420px]
+              rounded-full
+              border
+              border-[#C6A24A]/[0.07]
             "
-          >
-            {/* Architectural circles */}
-            <div
-              aria-hidden="true"
-              className="
-                absolute
-                -right-20
-                -top-20
-                h-56
-                w-56
-                rounded-full
-                border
-                border-[#D09A16]/10
-              "
-            />
+          />
 
-            <div
-              aria-hidden="true"
-              className="
-                absolute
-                -right-8
-                -top-8
-                h-32
-                w-32
-                rounded-full
-                border
-                border-[#D09A16]/10
-              "
-            />
-
-            <div className="relative text-center">
-              <div className="mb-3 flex items-center justify-center gap-2">
-                <span className="h-px w-6 bg-[#D09A16]" />
-
-                <Award
-                  size={13}
-                  strokeWidth={1.6}
-                  className="text-[#D09A16]"
-                />
-
-                <span className="h-px w-6 bg-[#D09A16]" />
-              </div>
-
-              <div className="flex items-baseline justify-center">
-                <span className="font-serif text-[82px] leading-none tracking-[-0.05em] text-white sm:text-[92px]">
-                  {count}
-                </span>
-
-                <span className="ml-1 font-serif text-4xl text-[#D09A16] sm:text-5xl">
-                  +
-                </span>
-              </div>
-
-              <p className="mt-3 text-[9px] font-semibold uppercase tracking-[0.28em] text-[#D09A16]">
-                {expData.counterLabel || 'Years of Authority'}
-              </p>
-
-              <p className="mx-auto mt-2 max-w-[230px] text-[10px] leading-5 text-white/45">
-                {expData.counterSublabel ||
-                  "Serving India's Most Discerning Families & Corporates in Gurgaon"}
-              </p>
-            </div>
+          {/* Blueprint Drafting Coordinate Tags */}
+          <div className="absolute left-7 top-6 select-none font-mono text-[8px] font-semibold tracking-[0.25em] text-[#C6A24A]/40 sm:left-10 sm:top-7">
+            + DLF-PHASE-II // LAT: 28.4848° N
           </div>
 
-          {/* -----------------------------------------------
-              EDITORIAL CONTENT
-          ------------------------------------------------ */}
-
-          <div className="relative px-7 py-9 sm:px-10 sm:py-10 md:px-12">
-
-            {/* Badge */}
-            <div className="mb-4 flex items-center gap-2">
-              <span className="h-px w-6 bg-[#D09A16]" />
-
-              <span className="text-[9px] font-semibold uppercase tracking-[0.25em] text-[#182345]/55">
-                {badge}
-              </span>
-            </div>
-
-            <h3
-              id="experience-heading"
-              className="
-                max-w-xl
-                font-serif
-                text-[26px]
-                leading-[1.15]
-                tracking-[-0.02em]
-                text-[#182345]
-                sm:text-[31px]
-                md:text-[35px]
-              "
-            >
-              {headline}
-            </h3>
-
-            <p className="mt-4 max-w-2xl text-[12px] leading-6 text-[#182345]/60 sm:text-sm">
-              {description}
-            </p>
-
-            {/* Small authority indicator */}
-            <div className="mt-6 flex items-center gap-2 text-[9px] font-semibold uppercase tracking-[0.2em] text-[#182345]/45">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#D09A16]" />
-              Trusted Property Advisory
-            </div>
+          <div className="absolute right-7 top-6 select-none font-mono text-[8px] font-semibold tracking-[0.25em] text-[#C6A24A]/40 sm:right-10 sm:top-7">
+            ELEV: 220M // EST. 1999 +
           </div>
-        </div>
+        </motion.div>
 
         {/* =====================================================
-            PROOF POINTS
+            MAIN CONTENT COMPOSITION
+            Compact architectural layout
         ====================================================== */}
+        <div className="relative z-10 p-6 sm:p-9 lg:p-12">
 
-        <div className="border-t border-[#182345]/10 bg-[#F9F7F4]">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
+          {/* ---------------------------------------------------
+              SECTION EYEBROW
+          ---------------------------------------------------- */}
+          <div className="mb-6 flex items-center gap-3 sm:mb-8">
+            <span className="h-px w-8 bg-[#C6A24A] sm:w-10" />
+
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#C6A24A]/30 bg-[#202B4A]/60 px-3 py-1 text-[8px] font-bold uppercase tracking-[0.22em] text-[#D8BD73] shadow-sm sm:text-[9px]">
+              <Sparkles size={11} className="text-[#C6A24A]" />
+              <span>THE SAUDAGAR ADVANTAGE</span>
+            </div>
+
+            <span className="h-px flex-1 max-w-[60px] bg-[#C6A24A]/30" />
+          </div>
+
+          {/* ---------------------------------------------------
+              TOP TIER: SIDE-BY-SIDE COMPOSITION
+              LEFT: COMPACT 3D NUMBER HERO
+              RIGHT: EDITORIAL HEADLINE & DESCRIPTION
+          ---------------------------------------------------- */}
+          <div className="grid grid-cols-1 items-center gap-7 lg:grid-cols-12 lg:gap-10">
+
+            {/* =================================================
+                LEFT: 3D EXPERIENCE NUMBER HERO (4 COLS)
+            ================================================== */}
+            <div className="lg:col-span-4">
+              <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-[#C6A24A]/20 bg-[#17213D]/70 px-6 py-6 text-center backdrop-blur-md sm:px-8 sm:py-7">
+
+                {/* Corner Crosshairs */}
+                <div aria-hidden="true" className="pointer-events-none absolute left-2.5 top-2.5 select-none font-mono text-[8px] text-[#C6A24A]/30">
+                  +
+                </div>
+                <div aria-hidden="true" className="pointer-events-none absolute right-2.5 top-2.5 select-none font-mono text-[8px] text-[#C6A24A]/30">
+                  +
+                </div>
+                <div aria-hidden="true" className="pointer-events-none absolute bottom-2.5 left-2.5 select-none font-mono text-[8px] text-[#C6A24A]/30">
+                  +
+                </div>
+                <div aria-hidden="true" className="pointer-events-none absolute bottom-2.5 right-2.5 select-none font-mono text-[8px] text-[#C6A24A]/30">
+                  +
+                </div>
+
+                {/* Concentric Architectural Orbit Ring */}
+                <motion.div
+                  aria-hidden="true"
+                  animate={prefersReducedMotion ? {} : { rotate: 360 }}
+                  transition={{ duration: 32, repeat: Infinity, ease: "linear" }}
+                  className="
+                    pointer-events-none
+                    absolute
+                    h-[210px]
+                    w-[210px]
+                    rounded-full
+                    border
+                    border-dashed
+                    border-[#C6A24A]/25
+                    sm:h-[240px]
+                    sm:w-[240px]
+                  "
+                >
+                  <div className="absolute -top-1 left-1/2 h-2.5 w-2.5 -translate-x-1/2 rounded-full border border-[#C6A24A] bg-[#0E162B] shadow-[0_0_10px_rgba(198,162,74,0.9)]" />
+                </motion.div>
+
+                {/* 3D Numerical Typography Composition */}
+                <div className="relative z-10 flex flex-col items-center">
+                  <div className="mb-2 inline-flex items-center gap-1.5">
+                    <span className="h-px w-4 bg-[#C6A24A]" />
+                    <Award size={13} className="text-[#C6A24A]" />
+                    <span className="h-px w-4 bg-[#C6A24A]" />
+                  </div>
+
+                  {/* Multi-layered 3D Number */}
+                  <div className="relative inline-flex items-baseline justify-center">
+                    {/* Shadow layer */}
+                    <span
+                      aria-hidden="true"
+                      className="
+                        pointer-events-none
+                        absolute
+                        -bottom-2
+                        -right-2
+                        select-none
+                        font-serif
+                        text-[82px]
+                        font-bold
+                        leading-none
+                        tracking-[-0.08em]
+                        text-[#C6A24A]/10
+                        blur-[1px]
+                        sm:text-[98px]
+                        lg:text-[112px]
+                      "
+                    >
+                      {count}
+                    </span>
+
+                    {/* Foreground number */}
+                    <span
+                      className="
+                        relative
+                        z-10
+                        font-serif
+                        text-[82px]
+                        font-bold
+                        leading-none
+                        tracking-[-0.08em]
+                        text-[#F7F5EF]
+                        drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)]
+                        sm:text-[98px]
+                        lg:text-[112px]
+                      "
+                    >
+                      {count}
+                    </span>
+
+                    {/* Gold + sign */}
+                    <span
+                      className="
+                        relative
+                        z-10
+                        ml-1
+                        font-serif
+                        text-4xl
+                        font-light
+                        text-[#C6A24A]
+                        drop-shadow-[0_8px_16px_rgba(198,162,74,0.45)]
+                        sm:text-5xl
+                        lg:text-6xl
+                      "
+                    >
+                      +
+                    </span>
+                  </div>
+
+                  {/* Authority Label */}
+                  <p className="mt-2 font-serif text-xs font-semibold uppercase tracking-[0.25em] text-[#C6A24A] sm:text-sm">
+                    {counterLabel}
+                  </p>
+
+                  <div className="my-2 h-px w-12 bg-gradient-to-r from-transparent via-[#C6A24A]/40 to-transparent" />
+
+                  <p className="max-w-[220px] text-[11px] leading-4 text-[#C9CED9]/70">
+                    {counterSublabel}
+                  </p>
+                </div>
+
+              </div>
+            </div>
+
+            {/* =================================================
+                RIGHT: EDITORIAL HEADLINE & DESCRIPTION (8 COLS)
+            ================================================== */}
+            <div className="flex flex-col justify-center lg:col-span-8">
+              <div className="inline-flex items-center gap-2">
+                <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#D8BD73]">
+                  {badge}
+                </span>
+              </div>
+
+              <h3
+                id="experience-heading"
+                className="
+                  mt-2
+                  font-serif
+                  text-2xl
+                  font-normal
+                  leading-[1.15]
+                  tracking-[-0.025em]
+                  text-white
+                  sm:text-3xl
+                  lg:text-[38px]
+                "
+              >
+                {headline}
+              </h3>
+
+              <p className="mt-3.5 max-w-2xl text-xs leading-relaxed text-[#C9CED9] sm:text-[13px] sm:leading-6">
+                {description}
+              </p>
+
+              {/* Authority tag line */}
+              <div className="mt-4 flex items-center gap-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-[#C9CED9]/50">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#C6A24A]" />
+                <span>Premier Real Estate Consultancy · DLF Gurugram</span>
+              </div>
+            </div>
+
+          </div>
+
+          {/* ---------------------------------------------------
+              DIVIDER LINE BETWEEN TIERS
+          ---------------------------------------------------- */}
+          <div className="my-7 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent sm:my-8" />
+
+          {/* ---------------------------------------------------
+              BOTTOM TIER: 4 PROOF BOXES IN 1 HORIZONTAL ROW
+              Prevents vertical growth by using lg:grid-cols-4
+          ---------------------------------------------------- */}
+          <div className="grid grid-cols-1 gap-3.5 sm:grid-cols-2 lg:grid-cols-4 sm:gap-4">
 
             {statsList.map((item, idx) => {
               const IconComp =
@@ -272,73 +461,121 @@ export default function ExperienceCounter() {
                   ref={(el) => {
                     statRefs.current[idx] = el;
                   }}
+                  tabIndex={0}
                   className="
                     group
                     relative
-                    opacity-0
-                    border-b
-                    border-[#182345]/10
-                    px-6
-                    py-6
-                    transition-colors
-                    duration-300
-                    hover:bg-white
-                    sm:nth-[odd]:border-r
-                    lg:border-b-0
-                    lg:border-r
-                    lg:last:border-r-0
+                    flex
+                    flex-col
+                    justify-between
+                    overflow-hidden
+                    rounded-2xl
+                    border
+                    border-[#C6A24A]/20
+                    bg-[#202B4A]/80
+                    p-4.5
+                    backdrop-blur-md
+                    shadow-[0_15px_40px_-20px_rgba(0,0,0,0.6)]
+                    transition-all
+                    duration-400
+                    hover:-translate-y-1.5
+                    hover:border-[#C6A24A]/55
+                    hover:bg-[#202B4A]/95
+                    hover:shadow-[0_20px_50px_-15px_rgba(198,162,74,0.2)]
+                    focus:outline-none
+                    focus:ring-1
+                    focus:ring-[#C6A24A]
+                    sm:p-5
                   "
                 >
-                  <div className="flex items-start gap-3">
-
-                    {/* Icon */}
-                    <div
-                      className="
-                        flex
-                        h-8
-                        w-8
-                        flex-shrink-0
-                        items-center
-                        justify-center
-                        rounded-lg
-                        border
-                        border-[#D09A16]/25
-                        bg-white
-                        text-[#D09A16]
-                        transition-all
-                        duration-300
-                        group-hover:border-[#D09A16]
-                        group-hover:bg-[#D09A16]
-                        group-hover:text-[#182345]
-                      "
-                    >
-                      <IconComp size={14} strokeWidth={1.6} />
-                    </div>
-
-                    <div className="min-w-0">
-                      <h4 className="text-[11px] font-semibold leading-4 text-[#182345]">
-                        {item.title}
-                      </h4>
-
-                      <p className="mt-1.5 text-[10px] leading-4 text-[#182345]/50">
-                        {item.desc}
-                      </p>
-                    </div>
-                  </div>
-
-                  {/* hover arrow */}
-                  <ArrowUpRight
-                    size={12}
+                  {/* Subtle Corner Bracket */}
+                  <div
+                    aria-hidden="true"
                     className="
+                      pointer-events-none
                       absolute
-                      right-5
-                      top-5
-                      text-[#D09A16]/0
+                      right-0
+                      top-0
+                      h-3.5
+                      w-3.5
+                      border-r
+                      border-t
+                      border-[#C6A24A]/30
                       transition-all
                       duration-300
-                      group-hover:text-[#D09A16]
-                      group-hover:-translate-y-0.5
-                      group-hover:translate-x-0.5
+                      group-hover:h-5
+                      group-hover:w-5
+                      group-hover:border-[#C6A24A]
+                    "
+                  />
+
+                  <div>
+                    {/* Header Row: Icon + Index + Arrow */}
+                    <div className="flex items-center justify-between gap-3">
+                      <div
+                        className="
+                          flex
+                          h-10
+                          w-10
+                          flex-shrink-0
+                          items-center
+                          justify-center
+                          rounded-xl
+                          border
+                          border-[#C6A24A]/30
+                          bg-[#C6A24A]/10
+                          text-[#D8BD73]
+                          transition-all
+                          duration-400
+                          group-hover:scale-105
+                          group-hover:border-[#C6A24A]
+                          group-hover:bg-[#C6A24A]
+                          group-hover:text-[#0E162B]
+                        "
+                      >
+                        <IconComp size={16} strokeWidth={1.6} />
+                      </div>
+
+                      <div className="flex items-center gap-1.5">
+                        <span className="font-mono text-[9px] font-semibold tracking-wider text-[#C6A24A]/50">
+                          0{idx + 1}
+                        </span>
+                        <ArrowUpRight
+                          size={13}
+                          className="
+                            text-[#C6A24A]/40
+                            transition-transform
+                            duration-300
+                            group-hover:-translate-y-0.5
+                            group-hover:translate-x-0.5
+                            group-hover:text-[#C6A24A]
+                          "
+                        />
+                      </div>
+                    </div>
+
+                    {/* Card Title */}
+                    <h4 className="mt-3 font-serif text-[15px] font-normal tracking-[-0.01em] text-white transition-colors group-hover:text-[#F7F5EF] sm:text-base">
+                      {item.title}
+                    </h4>
+
+                    {/* Card Description */}
+                    <p className="mt-1.5 text-[11px] leading-relaxed text-[#C9CED9]/75 sm:text-xs">
+                      {item.desc}
+                    </p>
+                  </div>
+
+                  {/* Subtle Bottom Gold Trace */}
+                  <div
+                    aria-hidden="true"
+                    className="
+                      mt-3.5
+                      h-[1px]
+                      w-full
+                      bg-white/5
+                      transition-colors
+                      duration-400
+                      group-hover:bg-[#C6A24A]/40
                     "
                   />
                 </article>
@@ -346,6 +583,25 @@ export default function ExperienceCounter() {
             })}
 
           </div>
+
+          {/* ---------------------------------------------------
+              BOTTOM ARCHITECTURAL GROUNDING RIBBON
+          ---------------------------------------------------- */}
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-5 sm:mt-9 sm:pt-6">
+            <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5 text-[8.5px] font-semibold uppercase tracking-[0.2em] text-[#C9CED9]/50">
+              <span>DLF PHASE 1–5 SPECIALISTS</span>
+              <span className="h-1 w-1 rounded-full bg-[#C6A24A]" />
+              <span>RERA COMPLIANT ADVISORY</span>
+              <span className="h-1 w-1 rounded-full bg-[#C6A24A]" />
+              <span>CONFIDENTIAL TRANSACTIONS</span>
+            </div>
+
+            <div className="flex items-center gap-2 text-[8.5px] font-semibold uppercase tracking-[0.2em] text-[#D8BD73]">
+              <Award size={12} className="text-[#C6A24A]" />
+              <span>SAUDAGAR PROPERTIES PVT LTD</span>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>

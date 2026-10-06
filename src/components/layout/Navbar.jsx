@@ -72,8 +72,8 @@ export default function Navbar() {
         <div className="w-full flex justify-center pointer-events-auto">
           <div
             className={`relative flex items-center justify-between transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] bg-white/95 backdrop-blur-xl ${isScrolled
-              ? 'w-full max-w-full rounded-none py-3 px-6 md:px-12 border-b border-black/[0.06] shadow-[0_10px_30px_-10px_rgba(20,25,35,0.08)] ring-0'
-              : 'w-full max-w-5xl xl:max-w-6xl rounded-full py-2.5 px-5 md:px-7 border border-white/80 shadow-[0_20px_45px_-8px_rgba(20,25,35,0.1),_0_8px_20px_-4px_rgba(0,0,0,0.03),_inset_0_1px_1px_rgba(255,255,255,1)] ring-1 ring-black/[0.04]'
+              ? 'w-full max-w-full rounded-none py-3 px-6 md:px-12 border-b border-[#17213D]/[0.08] shadow-[0_10px_30px_-10px_rgba(14,22,43,0.08)] ring-0'
+              : 'w-full max-w-5xl xl:max-w-6xl rounded-full py-2.5 px-5 md:px-7 border border-white/90 shadow-[0_20px_45px_-8px_rgba(14,22,43,0.12),_inset_0_1px_1px_rgba(255,255,255,1)] ring-1 ring-[#17213D]/[0.06]'
               }`}
           >
             {/* Left: Clean Brand Logo */}
@@ -92,7 +92,7 @@ export default function Navbar() {
               />
             </Link>
 
-            {/* Center: Desktop Navigation s */}
+            {/* Center: Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
               {navs.map((link) => {
                 const isActive = pathname === link.href;
@@ -107,14 +107,14 @@ export default function Navbar() {
                     >
                       <button
                         className={`flex items-center gap-1.5 px-3.5 py-2 text-[11px] xl:text-[12px] font-semibold tracking-[0.16em] uppercase rounded-full transition-all duration-300 ${activeDropdown === link.label
-                          ? 'text-[#B5986D] bg-[#B5986D]/10 shadow-[inset_0_1px_2px_rgba(0,0,0,0.05)]'
-                          : 'text-[#1D263B] hover:text-[#B5986D] hover:bg-neutral-100/60'
+                          ? 'text-[#C6A24A] bg-[#C6A24A]/10 shadow-[inset_0_1px_2px_rgba(0,0,0,0.05)]'
+                          : 'text-[#17213D] hover:text-[#C6A24A] hover:bg-[#F7F5EF]'
                           }`}
                       >
                         <span>{link.label}</span>
                         <ChevronDown
                           size={13}
-                          className={`transition-transform duration-300 ${activeDropdown === link.label ? 'rotate-180 text-[#B5986D]' : 'opacity-70'
+                          className={`transition-transform duration-300 ${activeDropdown === link.label ? 'rotate-180 text-[#C6A24A]' : 'opacity-70'
                             }`}
                         />
                       </button>
@@ -129,28 +129,28 @@ export default function Navbar() {
                             transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }}
                             className="absolute left-0 top-[calc(100%+8px)] w-80 z-50 pt-1"
                           >
-                            <div className="bg-white/98 backdrop-blur-2xl border border-[#EFECE6] rounded-2xl p-2.5 shadow-[0_20px_50px_-10px_rgba(20,25,35,0.18),_0_1px_2px_rgba(0,0,0,0.06),_inset_0_1px_0_rgba(255,255,255,1)] ring-1 ring-black/[0.03]">
-                              <div className="px-3 pt-2 pb-1.5 border-b border-[#F4F1EA] mb-1.5 flex items-center justify-between">
-                                <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#A89069]">{corridorsBadge}</span>
-                                <Building2 size={13} className="text-[#A89069]" />
+                            <div className="bg-white/98 backdrop-blur-2xl border border-[#17213D]/10 rounded-2xl p-2.5 shadow-[0_20px_50px_-10px_rgba(14,22,43,0.18)] ring-1 ring-[#17213D]/[0.04]">
+                              <div className="px-3 pt-2 pb-1.5 border-b border-[#17213D]/[0.08] mb-1.5 flex items-center justify-between">
+                                <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#C6A24A]">{corridorsBadge}</span>
+                                <Building2 size={13} className="text-[#C6A24A]" />
                               </div>
                               <div className="space-y-0.5">
                                 {link.dropdown.map((item) => (
                                   <Link key={item.label}
                                     href={item.href}
-                                    className="group flex flex-col px-3.5 py-2.5 rounded-xl hover:bg-[#F9F8F5] transition-all duration-200"
+                                    className="group flex flex-col px-3.5 py-2.5 rounded-xl hover:bg-[#F7F5EF] transition-all duration-200"
                                   >
                                     <div className="flex items-center justify-between">
-                                      <span className="text-xs font-medium text-[#1D263B] group-hover:text-[#B5986D] transition-colors">
+                                      <span className="text-xs font-medium text-[#17213D] group-hover:text-[#C6A24A] transition-colors">
                                         {item.label}
                                       </span>
                                       <ArrowUpRight
                                         size={13}
-                                        className="text-[#999] opacity-0 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:text-[#B5986D] transition-all duration-200"
+                                        className="text-[#999] opacity-0 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:text-[#C6A24A] transition-all duration-200"
                                       />
                                     </div>
                                     {item.desc && (
-                                      <span className="text-[10px] text-[#7E8590] group-hover:text-[#5F6570] transition-colors mt-0.5">
+                                      <span className="text-[10px] text-[#566078] group-hover:text-[#17213D] transition-colors mt-0.5">
                                         {item.desc}
                                       </span>
                                     )}
@@ -169,15 +169,15 @@ export default function Navbar() {
                   <Link key={link.label}
                     href={link.href}
                     className={`relative px-3.5 py-2 text-[11px] xl:text-[12px] font-semibold tracking-[0.16em] uppercase rounded-full transition-all duration-300 ${isActive
-                      ? 'text-[#1D263B] bg-[#F4F1EA]/80 font-bold shadow-[inset_0_1px_2px_rgba(0,0,0,0.06)]'
-                      : 'text-[#1D263B] hover:text-[#B5986D] hover:bg-neutral-100/60'
+                      ? 'text-[#17213D] bg-[#F7F5EF] font-bold shadow-[inset_0_1px_2px_rgba(0,0,0,0.06)]'
+                      : 'text-[#17213D] hover:text-[#C6A24A] hover:bg-[#F7F5EF]'
                       }`}
                   >
                     <span>{link.label}</span>
                     {isActive && (
                       <motion.span
                         layoutId="activePill"
-                        className="absolute bottom-1 left-1/2 -translate-x-1/2 w-3 h-0.5 bg-[#B5986D] rounded-full"
+                        className="absolute bottom-1 left-1/2 -translate-x-1/2 w-3 h-0.5 bg-[#C6A24A] rounded-full"
                       />
                     )}
                   </Link>
@@ -190,10 +190,10 @@ export default function Navbar() {
               {/* Call Hotline (Desktop) */}
               <a
                 href={`tel:${rawPhone}`}
-                className="hidden xl:flex items-center gap-2 px-3 py-2 text-[11px] font-medium tracking-wider text-[#666] hover:text-[#1D263B] transition-colors"
+                className="hidden xl:flex items-center gap-2 px-3 py-2 text-[11px] font-medium tracking-wider text-[#566078] hover:text-[#17213D] transition-colors"
                 title="Call Directly"
               >
-                <div className="w-7 h-7 rounded-full bg-[#F4F1EA] flex items-center justify-center text-[#B5986D] shadow-inner">
+                <div className="w-7 h-7 rounded-full bg-[#F7F5EF] border border-[#C6A24A]/25 flex items-center justify-center text-[#C6A24A] shadow-inner">
                   <Phone size={12} />
                 </div>
                 <span>{displayPhone}</span>
@@ -201,32 +201,32 @@ export default function Navbar() {
 
               {/* 3D Tactile CTA Button */}
               <Link href={ctaHref}
-                className="relative group hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#1D263B] text-white text-[11px] font-semibold tracking-[0.16em] uppercase overflow-hidden shadow-[0_4px_14px_rgba(29,38,59,0.25),_inset_0_1px_1px_rgba(255,255,255,0.2)] hover:shadow-[0_8px_22px_rgba(29,38,59,0.35),_inset_0_1px_1px_rgba(255,255,255,0.3)] hover:-translate-y-0.5 active:translate-y-0.5 active:shadow-[0_2px_8px_rgba(29,38,59,0.25)] transition-all duration-300"
+                className="relative group hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#C6A24A] text-[#0E162B] text-[11px] font-bold tracking-[0.16em] uppercase overflow-hidden shadow-[0_4px_14px_rgba(198,162,74,0.3)] hover:bg-[#D8BD73] hover:shadow-[0_8px_22px_rgba(198,162,74,0.4)] hover:-translate-y-0.5 active:translate-y-0.5 transition-all duration-300"
               >
-                <span className="relative z-10 text-white">{ctaText}</span>
+                <span className="relative z-10 text-[#0E162B] font-bold">{ctaText}</span>
                 <ArrowUpRight
                   size={14}
-                  className="relative z-10 text-[#D09A16] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  className="relative z-10 text-[#0E162B] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
                 />
                 {/* Subtle highlight sheen */}
-                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
+                <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/25 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-out" />
               </Link>
 
               {/* Mobile Phone Quick Action */}
               <a
                 href={`tel:${rawPhone}`}
-                className="flex sm:hidden w-9 h-9 rounded-full bg-[#F4F1EA] items-center justify-center text-[#1D263B] shadow-sm border border-[#E8E4DA]"
+                className="flex sm:hidden w-9 h-9 rounded-full bg-[#F7F5EF] items-center justify-center text-[#17213D] shadow-sm border border-[#17213D]/10"
                 aria-label="Call Saudagar Properties"
               >
-                <Phone size={14} className="text-[#B5986D]" />
+                <Phone size={14} className="text-[#C6A24A]" />
               </a>
 
               {/* Mobile Menu Hamburger Button */}
               <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                 className={`flex lg:hidden items-center justify-center w-10 h-10 rounded-full transition-all duration-300 ${isMobileMenuOpen
-                  ? 'bg-[#1D263B] text-white shadow-md'
-                  : 'bg-[#F4F1EA] text-[#1D263B] hover:bg-[#EAE5DA] shadow-[inset_0_1px_1px_rgba(255,255,255,0.8),_0_2px_6px_rgba(0,0,0,0.06)]'
+                  ? 'bg-[#17213D] text-[#F7F5EF] shadow-md'
+                  : 'bg-[#F7F5EF] text-[#17213D] hover:bg-[#EFEBE1] border border-[#17213D]/10'
                   }`}
                 aria-label="Toggle Navigation Menu"
               >
@@ -245,26 +245,26 @@ export default function Navbar() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
             transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-x-3 top-20 z-40 max-h-[85vh] overflow-y-auto rounded-3xl bg-white/98 backdrop-blur-2xl border border-white/80 shadow-[0_25px_60px_-15px_rgba(20,25,35,0.25)] p-6 flex flex-col ring-1 ring-black/[0.05]"
+            className="fixed inset-x-3 top-20 z-40 max-h-[85vh] overflow-y-auto rounded-3xl bg-white/98 backdrop-blur-2xl border border-white/80 shadow-[0_25px_60px_-15px_rgba(14,22,43,0.25)] p-6 flex flex-col ring-1 ring-[#17213D]/[0.06]"
           >
-            <div className="flex items-center justify-between pb-4 border-b border-[#F0ECE1]">
-              <span className="text-[10px] font-bold tracking-[0.25em] text-[#B5986D] uppercase">Navigation</span>
-              <span className="text-[10px] tracking-wider text-[#888]">{mobileNavHeader}</span>
+            <div className="flex items-center justify-between pb-4 border-b border-[#17213D]/[0.08]">
+              <span className="text-[10px] font-bold tracking-[0.25em] text-[#C6A24A] uppercase">Navigation</span>
+              <span className="text-[10px] tracking-wider text-[#566078]">{mobileNavHeader}</span>
             </div>
 
-            <nav className="flex flex-col divide-y divide-[#F5F2EA] py-2">
+            <nav className="flex flex-col divide-y divide-[#17213D]/[0.06] py-2">
               {navs.map((link) => {
                 if (link.dropdown && link.dropdown.length > 0) {
                   return (
                     <div key={link.label} className="py-3">
                       <button
                         onClick={() => setActiveDropdown(activeDropdown === link.label ? null : link.label)}
-                        className="w-full flex items-center justify-between text-sm font-semibold tracking-[0.12em] text-[#1D263B] uppercase"
+                        className="w-full flex items-center justify-between text-sm font-semibold tracking-[0.12em] text-[#17213D] uppercase"
                       >
                         <span>{link.label}</span>
                         <ChevronDown
                           size={16}
-                          className={`text-[#B5986D] transition-transform duration-300 ${activeDropdown === link.label ? 'rotate-180' : ''
+                          className={`text-[#C6A24A] transition-transform duration-300 ${activeDropdown === link.label ? 'rotate-180' : ''
                             }`}
                         />
                       </button>
@@ -276,12 +276,12 @@ export default function Navbar() {
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.25 }}
-                            className="overflow-hidden mt-3 pl-3 space-y-2 border-l-2 border-[#B5986D]/30"
+                            className="overflow-hidden mt-3 pl-3 space-y-2 border-l-2 border-[#C6A24A]/40"
                           >
                             {link.dropdown.map((sub) => (
                               <Link key={sub.label}
                                 href={sub.href}
-                                className="block py-1.5 text-xs text-[#555] hover:text-[#B5986D] transition-colors"
+                                className="block py-1.5 text-xs text-[#566078] hover:text-[#C6A24A] transition-colors"
                               >
                                 {sub.label}
                               </Link>
@@ -296,34 +296,34 @@ export default function Navbar() {
                 return (
                   <Link key={link.label}
                     href={link.href}
-                    className="py-3 text-sm font-semibold tracking-[0.12em] text-[#1D263B] uppercase hover:text-[#B5986D] transition-colors flex items-center justify-between"
+                    className="py-3 text-sm font-semibold tracking-[0.12em] text-[#17213D] uppercase hover:text-[#C6A24A] transition-colors flex items-center justify-between"
                   >
                     <span>{link.label}</span>
-                    <ArrowUpRight size={14} className="text-[#CCC]" />
+                    <ArrowUpRight size={14} className="text-[#C6A24A]/50" />
                   </Link>
                 );
               })}
 
               <Link href={ctaHref}
-                className="py-3 text-sm font-semibold tracking-[0.12em] text-[#B5986D] uppercase hover:text-[#1D263B] transition-colors flex items-center justify-between"
+                className="py-3 text-sm font-semibold tracking-[0.12em] text-[#C6A24A] uppercase hover:text-[#17213D] transition-colors flex items-center justify-between"
               >
                 <span>{ctaText.toUpperCase()}</span>
-                <ArrowUpRight size={14} className="text-[#B5986D]" />
+                <ArrowUpRight size={14} className="text-[#C6A24A]" />
               </Link>
             </nav>
 
             {/* Quick Contact Footnote */}
-            <div className="mt-4 pt-4 border-t border-[#F0ECE1] flex flex-col gap-3 bg-[#FAF8F5] -mx-6 -mb-6 p-6 rounded-b-3xl">
-              <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#888]">{mobileConsultationTitle}</span>
+            <div className="mt-4 pt-4 border-t border-[#17213D]/[0.08] flex flex-col gap-3 bg-[#F7F5EF] -mx-6 -mb-6 p-6 rounded-b-3xl">
+              <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#566078]">{mobileConsultationTitle}</span>
               <a
                 href={`tel:${rawPhone}`}
-                className="flex items-center gap-3 text-sm font-semibold text-[#1D263B]"
+                className="flex items-center gap-3 text-sm font-semibold text-[#17213D]"
               >
-                <div className="w-8 h-8 rounded-full bg-[#1D263B] text-white flex items-center justify-center">
+                <div className="w-8 h-8 rounded-full bg-[#17213D] text-[#F7F5EF] flex items-center justify-center">
                   <Phone size={14} />
                 </div>
                 <div>
-                  <div className="text-[10px] text-[#999] uppercase">Call Direct</div>
+                  <div className="text-[10px] text-[#566078] uppercase">Call Direct</div>
                   <div className="text-sm font-medium tracking-wide">{displayPhone}</div>
                 </div>
               </a>

@@ -137,9 +137,9 @@ export default function TopConsultantSection() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative w-full py-10 md:py-16 bg-[#FAF8F5] overflow-hidden">
+    <section ref={sectionRef} className="relative w-full py-12 md:py-20 bg-[#F7F5EF] text-[#17213D] overflow-hidden border-t border-[#17213D]/[0.06]">
       {/* Background Architectural Accent lines */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#1D263B_1px,transparent_1px)] [background-size:24px_24px]" />
+      <div className="absolute inset-0 opacity-[0.035] pointer-events-none bg-[radial-gradient(#17213D_1px,transparent_1px)] [background-size:24px_24px]" />
 
       <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
 
@@ -150,18 +150,18 @@ export default function TopConsultantSection() {
         >
           <div>
             <div className="flex items-center gap-3 mb-4">
-              <span className="w-10 h-[2px] bg-[#D09A16]" />
-              <span className="text-xs md:text-sm font-semibold tracking-[0.25em] text-[#D09A16] uppercase">
+              <span className="w-10 h-[2px] bg-[#C6A24A]" />
+              <span className="text-xs md:text-sm font-semibold tracking-[0.25em] text-[#C6A24A] uppercase">
                 {badge}
               </span>
             </div>
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif text-[#1D263B] leading-[1.15]">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif text-[#17213D] leading-[1.15]">
               {headlineMain} <br />
-              <span className="italic font-light text-[#D09A16]">{headlineItalic}</span>
+              <span className="italic font-light text-[#C6A24A]">{headlineItalic}</span>
             </h2>
           </div>
 
-          <p className="text-sm md:text-base text-[#334155] font-normal max-w-md leading-relaxed border-l-2 border-[#D09A16] pl-4">
+          <p className="text-sm md:text-base text-[#566078] font-normal max-w-md leading-relaxed border-l-2 border-[#C6A24A] pl-4">
             {summaryQuote}
           </p>
         </div>
@@ -176,38 +176,38 @@ export default function TopConsultantSection() {
             style={{ transformStyle: 'preserve-3d' }}
           >
             {/* Outer Decorative Double-Gold Frame Corner */}
-            <div className="absolute -top-3 -left-3 w-20 h-20 border-t-2 border-l-2 border-[#D09A16] rounded-tl-2xl pointer-events-none z-20 group-hover:scale-105 transition-transform duration-500" />
-            <div className="absolute -bottom-3 -right-3 w-20 h-20 border-b-2 border-r-2 border-[#D09A16] rounded-br-2xl pointer-events-none z-20 group-hover:scale-105 transition-transform duration-500" />
+            <div className="absolute -top-3 -left-3 w-20 h-20 border-t-2 border-l-2 border-[#C6A24A] rounded-tl-2xl pointer-events-none z-20 group-hover:scale-105 transition-transform duration-500" />
+            <div className="absolute -bottom-3 -right-3 w-20 h-20 border-b-2 border-r-2 border-[#C6A24A] rounded-br-2xl pointer-events-none z-20 group-hover:scale-105 transition-transform duration-500" />
 
-            <div className="h-full bg-white rounded-3xl p-8 md:p-12 shadow-[0_20px_50px_-10px_rgba(20,25,35,0.08)] border border-[#EFECE6] flex flex-col justify-between relative z-10 transition-shadow duration-500 group-hover:shadow-[0_30px_60px_-15px_rgba(20,25,35,0.12)]">
+            <div className="h-full bg-white rounded-3xl p-8 md:p-12 shadow-[0_20px_50px_-10px_rgba(23,33,61,0.07)] border border-[#17213D]/[0.08] flex flex-col justify-between relative z-10 transition-shadow duration-500 group-hover:shadow-[0_30px_60px_-15px_rgba(23,33,61,0.12)]">
               <div>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-[#FAF8F5] border border-[#E8E4D9] text-[11px] font-semibold tracking-widest text-[#1D263B] uppercase mb-6">
-                  <ShieldCheck size={14} className="text-[#D09A16]" />
+                <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F7F5EF] border border-[#17213D]/10 text-[11px] font-semibold tracking-widest text-[#17213D] uppercase mb-6">
+                  <ShieldCheck size={14} className="text-[#C6A24A]" />
                   <span>{cardBadge}</span>
                 </div>
 
-                <p className="text-base md:text-lg text-[#1D263B] font-normal leading-relaxed mb-8">
+                <p className="text-base md:text-lg text-[#17213D] font-normal leading-relaxed mb-8">
                   {paragraph1}
                 </p>
 
-                <p className="text-sm md:text-base text-[#334155] font-normal leading-relaxed mb-10">
+                <p className="text-sm md:text-base text-[#566078] font-normal leading-relaxed mb-10">
                   {paragraph2}
                 </p>
               </div>
 
               {/* 3 Categories Pill Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-[#F0ECE1]">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6 border-t border-[#17213D]/[0.08]">
                 {categories.map((cat, idx) => {
                   const iconKey = (cat.icon || 'building').toLowerCase();
                   const IconComp = CATEGORY_ICONS[iconKey] || Building;
                   return (
-                    <div key={idx} className="flex items-center gap-3 p-3 rounded-2xl bg-[#FAF8F5] border border-[#EFECE6] hover:border-[#D09A16] transition-colors">
-                      <div className="w-10 h-10 rounded-xl bg-[#1D263B] text-[#D09A16] flex items-center justify-center flex-shrink-0 shadow-sm">
+                    <div key={idx} className="flex items-center gap-3 p-3.5 rounded-2xl bg-[#F7F5EF] border border-[#17213D]/[0.08] hover:border-[#C6A24A] transition-colors">
+                      <div className="w-10 h-10 rounded-xl bg-[#17213D] text-[#C6A24A] flex items-center justify-center flex-shrink-0 shadow-sm">
                         <IconComp size={18} />
                       </div>
                       <div>
-                        <h3 className="text-xs font-bold text-[#1D263B] uppercase tracking-wider">{cat.title}</h3>
-                        <p className="text-[11px] text-[#475569] font-medium">{cat.subtitle}</p>
+                        <h3 className="text-xs font-bold text-[#17213D] uppercase tracking-wider">{cat.title}</h3>
+                        <p className="text-[11px] text-[#566078] font-medium">{cat.subtitle}</p>
                       </div>
                     </div>
                   );
@@ -224,7 +224,7 @@ export default function TopConsultantSection() {
           >
             <Tilt3DCard maxTilt={8} className="h-full">
               <div
-                className="relative flex-1 min-h-[380px] lg:min-h-full rounded-3xl overflow-hidden shadow-[0_25px_60px_-15px_rgba(20,25,35,0.25)] border border-[#EFECE6] bg-[#1D263B] group flex flex-col justify-between"
+                className="relative flex-1 min-h-[380px] lg:min-h-full rounded-3xl overflow-hidden shadow-[0_25px_60px_-15px_rgba(23,33,61,0.25)] border border-[#17213D]/10 bg-[#17213D] group flex flex-col justify-between"
                 style={{ transformStyle: 'preserve-3d' }}
               >
                 {/* Background Luxury Architectural Image */}
@@ -235,20 +235,20 @@ export default function TopConsultantSection() {
                   height={900}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
                   loading="lazy"
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-[0.82]"
+                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 filter brightness-[0.80]"
                 />
 
                 {/* Layered Luxury Vignette Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#1D263B] via-[#1D263B]/25 to-transparent pointer-events-none" />
-                <div className="absolute inset-0 bg-gradient-to-r from-[#1D263B]/50 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0E162B] via-[#0E162B]/40 to-transparent pointer-events-none" />
+                <div className="absolute inset-0 bg-gradient-to-r from-[#0E162B]/60 via-transparent to-transparent pointer-events-none" />
 
                 {/* Top Badge */}
                 <div
                   className="relative p-6 flex items-center justify-between z-20"
                   style={{ transform: 'translateZ(35px)' }}
                 >
-                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-950/85 backdrop-blur-md border border-[#D09A16]/40 text-[#D09A16] text-[10px] font-bold font-mono tracking-widest uppercase shadow-md">
-                    <Sparkles size={11} className="text-[#D09A16]" />
+                  <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0E162B]/85 backdrop-blur-md border border-[#C6A24A]/40 text-[#C6A24A] text-[10px] font-bold font-mono tracking-widest uppercase shadow-md">
+                    <Sparkles size={11} className="text-[#C6A24A]" />
                     <span>{videoTour.badge || "Signature Collection"}</span>
                   </div>
                 </div>
@@ -258,8 +258,8 @@ export default function TopConsultantSection() {
                   className="relative p-6 sm:p-8 z-20 text-white"
                   style={{ transform: 'translateZ(40px)' }}
                 >
-                  <div className="inline-flex items-center gap-1.5 text-[10px] uppercase font-mono tracking-widest text-[#D09A16] mb-1">
-                    <MapPin size={11} className="text-[#D09A16]" />
+                  <div className="inline-flex items-center gap-1.5 text-[10px] uppercase font-mono tracking-widest text-[#C6A24A] mb-1">
+                    <MapPin size={11} className="text-[#C6A24A]" />
                     <span>DLF Phase 1–4 & Sushant Lok</span>
                   </div>
 
@@ -267,7 +267,7 @@ export default function TopConsultantSection() {
                     {videoTour.title || "Exclusive DLF & Sushant Lok Walkthrough"}
                   </h3>
 
-                  <p className="text-xs sm:text-sm text-slate-200 font-light leading-relaxed">
+                  <p className="text-xs sm:text-sm text-[#C9CED9] font-light leading-relaxed">
                     {videoTour.subtitle || "Experience Gurgaon's finest properties with curated virtual walkthroughs."}
                   </p>
                 </div>
@@ -280,23 +280,23 @@ export default function TopConsultantSection() {
         {/* Bottom Trust & Action Banner */}
         <div
           ref={ctaBannerRef}
-          className="rounded-3xl bg-[#1D263B] text-white p-8 md:p-12 shadow-[0_20px_50px_rgba(29,38,59,0.2)] flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden"
+          className="rounded-3xl bg-[#17213D] text-white p-8 md:p-12 shadow-[0_20px_50px_rgba(23,33,61,0.25)] border border-[#C6A24A]/30 flex flex-col md:flex-row items-center justify-between gap-8 relative overflow-hidden"
         >
           {/* Subtle Ambient Sheen */}
           <div
             className="absolute -right-20 -bottom-20 w-80 h-80 rounded-full pointer-events-none"
-            style={{ background: 'radial-gradient(circle, rgba(197,168,128,0.15) 0%, transparent 70%)' }}
+            style={{ background: 'radial-gradient(circle, rgba(198,162,74,0.15) 0%, transparent 70%)' }}
           />
 
           <div className="flex items-center gap-6 z-10">
-            <div className="w-14 h-14 rounded-2xl bg-[#D09A16]/20 border border-[#D09A16]/40 text-[#D09A16] flex items-center justify-center flex-shrink-0">
+            <div className="w-14 h-14 rounded-2xl bg-[#C6A24A]/20 border border-[#C6A24A]/40 text-[#C6A24A] flex items-center justify-center flex-shrink-0">
               <Award size={28} />
             </div>
             <div>
               <h3 className="text-xl md:text-2xl font-serif text-white mb-1">
                 {ctaBanner.title}
               </h3>
-              <p className="text-xs md:text-sm text-slate-200 font-normal max-w-xl">
+              <p className="text-xs md:text-sm text-[#C9CED9] font-normal max-w-xl">
                 {ctaBanner.description}
               </p>
             </div>
@@ -307,12 +307,12 @@ export default function TopConsultantSection() {
               href={`tel:${(ctaBanner.phone || '+919811221207').replace(/\s+/g, '')}`}
               className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2.5 transition-colors duration-300"
             >
-              <PhoneCall size={14} className="text-[#D09A16]" />
+              <PhoneCall size={14} className="text-[#C6A24A]" />
               <span>{ctaBanner.phone}</span>
             </a>
 
             <Link href={ctaBanner.buttonHref || "/contact"}
-              className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-[#D09A16] hover:bg-[#B5986D] text-[#1D263B] text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_4px_15px_rgba(197,168,128,0.3)] hover:shadow-[0_6px_20px_rgba(197,168,128,0.4)]"
+              className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-[#C6A24A] hover:bg-[#D8BD73] text-[#0E162B] text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_4px_15px_rgba(198,162,74,0.3)] hover:shadow-[0_6px_20px_rgba(198,162,74,0.4)]"
             >
               <span>{ctaBanner.buttonText || "Connect Now"}</span>
               <ArrowUpRight size={15} />

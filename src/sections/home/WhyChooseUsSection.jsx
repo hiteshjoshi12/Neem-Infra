@@ -214,13 +214,14 @@ function TrustCard({ trustCard }) {
         overflow-hidden
         rounded-[30px]
         border
-        border-[#182345]/10
-        bg-[#182345]
-        shadow-[0_25px_80px_rgba(24,35,69,0.13)]
+        border-white/15
+        bg-[#17213D]
+        shadow-[0_25px_80px_rgba(0,0,0,0.5)]
         transition-all
         duration-700
         hover:-translate-y-1
-        hover:shadow-[0_35px_100px_rgba(24,35,69,0.18)]
+        hover:shadow-[0_35px_100px_rgba(0,0,0,0.6)]
+        hover:border-[#C6A24A]/40
       "
     >
 
@@ -398,7 +399,7 @@ function TrustCard({ trustCard }) {
               rounded-full
               border
               border-white/10
-              bg-white/[0.06]
+              bg-[#1a2744]/[0.06]
               px-3
               py-1.5
               text-[8px]
@@ -591,19 +592,19 @@ function TrustCard({ trustCard }) {
                 justify-center
                 gap-3
                 rounded-full
-                bg-[#D09A16]
+                bg-[#C6A24A]
                 px-6
                 py-3.5
                 text-[8px]
                 font-bold
                 uppercase
                 tracking-[0.18em]
-                text-[#182345]
-                shadow-[0_8px_25px_rgba(208,154,22,0.2)]
+                text-[#0E162B]
+                shadow-[0_8px_25px_rgba(198,162,74,0.3)]
                 transition-all
                 duration-300
                 hover:-translate-y-1
-                hover:bg-white
+                hover:bg-[#D8BD73]
               "
             >
 
@@ -686,15 +687,16 @@ function ReasonCard({
         overflow-hidden
         rounded-[26px]
         border
-        border-[#182345]/[0.09]
-        bg-white
+        border-white/10
+        bg-[#202B4A]
         p-6
-        shadow-[0_12px_40px_rgba(24,35,69,0.045)]
+        shadow-[0_15px_45px_rgba(0,0,0,0.35)]
         transition-all
         duration-500
         hover:-translate-y-1.5
-        hover:border-[#D09A16]/35
-        hover:shadow-[0_25px_65px_rgba(24,35,69,0.09)]
+        hover:border-[#C6A24A]/40
+        hover:bg-[#253256]
+        hover:shadow-[0_25px_65px_rgba(0,0,0,0.5)]
         sm:p-7
       "
     >
@@ -712,10 +714,10 @@ function ReasonCard({
           font-serif
           text-[120px]
           leading-none
-          text-[#182345]/[0.035]
+          text-white/[0.04]
           transition-all
           duration-700
-          group-hover:text-[#D09A16]/[0.07]
+          group-hover:text-[#C6A24A]/[0.08]
           group-hover:-translate-y-1
         "
       >
@@ -733,7 +735,7 @@ function ReasonCard({
           top-0
           h-[2px]
           w-8
-          bg-[#D09A16]
+          bg-[#C6A24A]
           transition-all
           duration-500
           group-hover:w-20
@@ -767,15 +769,15 @@ function ReasonCard({
             justify-center
             rounded-2xl
             border
-            border-[#182345]/10
-            bg-[#F9F7F4]
-            text-[#182345]
+            border-white/10
+            bg-[#17213D]
+            text-[#C6A24A]
             shadow-sm
             transition-all
             duration-500
-            group-hover:border-[#D09A16]
-            group-hover:bg-[#D09A16]
-            group-hover:text-white
+            group-hover:border-[#C6A24A]
+            group-hover:bg-[#C6A24A]
+            group-hover:text-[#0E162B]
             group-hover:rotate-[-4deg]
           "
         >
@@ -803,15 +805,15 @@ function ReasonCard({
               inline-flex
               rounded-full
               border
-              border-[#D09A16]/20
-              bg-[#D09A16]/[0.045]
+              border-[#C6A24A]/30
+              bg-[#C6A24A]/10
               px-2.5
               py-1
               text-[7px]
               font-bold
               uppercase
               tracking-[0.16em]
-              text-[#A87505]
+              text-[#C6A24A]
             "
           >
             {item.badge}
@@ -827,7 +829,7 @@ function ReasonCard({
               font-normal
               leading-[1.15]
               tracking-[-0.025em]
-              text-[#182345]
+              text-white
               sm:text-[22px]
             "
           >
@@ -850,7 +852,7 @@ function ReasonCard({
           mt-5
           text-[11px]
           leading-6
-          text-[#5D667D]
+          text-[#C9CED9]
           sm:text-xs
           sm:leading-6
         "
@@ -884,22 +886,22 @@ function ReasonCard({
                 gap-1.5
                 rounded-lg
                 border
-                border-[#182345]/[0.07]
-                bg-[#F9F7F4]
+                border-white/10
+                bg-[#17213D]
                 px-2.5
                 py-1.5
                 text-[8px]
                 font-medium
-                text-[#182345]/75
+                text-[#C9CED9]
                 transition-all
                 duration-300
-                group-hover:border-[#D09A16]/20
+                group-hover:border-[#C6A24A]/30
               "
             >
 
               <CheckCircle2
                 size={11}
-                className="text-[#D09A16]"
+                className="text-[#C6A24A]"
               />
 
               {tag}
@@ -924,7 +926,7 @@ function ReasonCard({
           items-center
           justify-between
           border-t
-          border-[#182345]/[0.07]
+          border-white/10
           pt-4
         "
       >
@@ -935,7 +937,7 @@ function ReasonCard({
             font-bold
             uppercase
             tracking-[0.22em]
-            text-[#182345]/25
+            text-[#C6A24A]/70
           "
         >
           SAUDAGAR ADVANTAGE
@@ -1180,11 +1182,11 @@ export default function WhyChooseUsSection() {
         w-full
         overflow-hidden
         border-t
-        border-[#182345]/[0.06]
-        bg-[#F9F7F4]
-        py-12
-        text-[#182345]
-        lg:py-20
+        border-white/[0.08]
+        bg-[#0E162B]
+        py-16
+        text-[#F7F5EF]
+        lg:py-24
       "
     >
 
@@ -1228,15 +1230,15 @@ export default function WhyChooseUsSection() {
               gap-2
               rounded-full
               border
-              border-[#D09A16]/25
-              bg-white/70
+              border-[#C6A24A]/30
+              bg-[#202B4A]
               px-4
               py-2
               text-[8px]
               font-bold
               uppercase
               tracking-[0.25em]
-              text-[#A87505]
+              text-[#C6A24A]
               shadow-sm
               backdrop-blur-sm
             "
@@ -1244,7 +1246,7 @@ export default function WhyChooseUsSection() {
 
             <Sparkles
               size={11}
-              className="text-[#D09A16]"
+              className="text-[#C6A24A]"
             />
 
             {badge}
@@ -1268,7 +1270,7 @@ export default function WhyChooseUsSection() {
               className="
                 h-px
                 w-10
-                bg-[#D09A16]/50
+                bg-[#C6A24A]/50
               "
             />
 
@@ -1277,7 +1279,7 @@ export default function WhyChooseUsSection() {
                 h-1.5
                 w-1.5
                 rounded-full
-                bg-[#D09A16]
+                bg-[#C6A24A]
               "
             />
 
@@ -1285,7 +1287,7 @@ export default function WhyChooseUsSection() {
               className="
                 h-px
                 w-10
-                bg-[#D09A16]/50
+                bg-[#C6A24A]/50
               "
             />
 
@@ -1301,7 +1303,7 @@ export default function WhyChooseUsSection() {
               font-normal
               leading-none
               tracking-[-0.045em]
-              text-[#182345]
+              text-[#F7F5EF]
               sm:text-6xl
               lg:text-7xl
             "
@@ -1313,7 +1315,7 @@ export default function WhyChooseUsSection() {
               className="
                 italic
                 font-light
-                text-[#D09A16]
+                text-[#C6A24A]
               "
             >
               {titleItalic}
@@ -1331,7 +1333,7 @@ export default function WhyChooseUsSection() {
               max-w-2xl
               text-sm
               leading-7
-              text-[#5D667D]
+              text-[#C9CED9]
               sm:text-base
             "
           >

@@ -112,10 +112,13 @@ export default function CuratedCorridors() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-[#FAF8F5] pt-8 pb-6 md:pt-10 md:pb-8 overflow-hidden border-t border-[#EFECE6]"
+      className="relative w-full bg-[#0E162B] text-[#F7F5EF] pt-12 pb-10 md:pt-16 md:pb-14 overflow-hidden border-t border-white/[0.08]"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
+      {/* Background Architectural Glow */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#C6A24A_1px,transparent_1px)] [background-size:32px_32px]" />
+
       {/* Header Section */}
       <div
         ref={headerRef}
@@ -124,17 +127,17 @@ export default function CuratedCorridors() {
         {/* Left Side: Titles and Description */}
         <div className="max-w-2xl">
           <div className="flex items-center gap-3 mb-3">
-            <span className="w-8 h-[1px] bg-[#D09A16]" />
-            <span className="text-[11px] sm:text-xs tracking-[0.25em] text-[#D09A16] uppercase font-semibold">
+            <span className="w-8 h-[1px] bg-[#C6A24A]" />
+            <span className="text-[11px] sm:text-xs tracking-[0.25em] text-[#C6A24A] uppercase font-semibold">
               {corridorData.badge || "Featured Portfolio"}
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-[#1D263B] leading-tight mb-4">
-            {corridorData.titleMain || "Featured"} <span className="italic text-[#D09A16] font-light">{corridorData.titleItalic || "Properties"}</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-[#F7F5EF] leading-tight mb-4">
+            {corridorData.titleMain || "Featured"} <span className="italic text-[#C6A24A] font-light">{corridorData.titleItalic || "Properties"}</span>
           </h2>
 
-          <p className="text-[#334155] font-normal text-sm sm:text-base md:text-lg leading-relaxed">
+          <p className="text-[#C9CED9] font-normal text-sm sm:text-base md:text-lg leading-relaxed">
             {corridorData.description || "Handpicked luxury builder floors and independent villas in DLF Phase 1–4, Sushant Lok & Udyog Vihar."}
           </p>
         </div>
@@ -147,7 +150,7 @@ export default function CuratedCorridors() {
               <button
                 key={idx}
                 onClick={() => setCurrentIndex(idx)}
-                className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${currentIndex === idx ? 'w-6 sm:w-8 bg-[#D09A16]' : 'w-2 bg-[#D1D5DB]'
+                className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${currentIndex === idx ? 'w-6 sm:w-8 bg-[#C6A24A]' : 'w-2 bg-white/20'
                   }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
@@ -157,14 +160,14 @@ export default function CuratedCorridors() {
           <div className="flex gap-2.5">
             <button
               onClick={handlePrev}
-              className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border border-[#E8E4DA] bg-white flex items-center justify-center text-[#1D263B] hover:border-[#D09A16] hover:text-[#D09A16] transition-colors duration-300 shadow-sm cursor-pointer"
+              className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border border-white/10 bg-[#202B4A] flex items-center justify-center text-white hover:border-[#C6A24A] hover:text-[#C6A24A] transition-colors duration-300 shadow-md cursor-pointer"
               aria-label="Previous Property"
             >
               <ChevronLeft strokeWidth={1.8} size={18} />
             </button>
             <button
               onClick={handleNext}
-              className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border border-[#E8E4DA] bg-white flex items-center justify-center text-[#1D263B] hover:border-[#D09A16] hover:text-[#D09A16] transition-colors duration-300 shadow-sm cursor-pointer"
+              className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border border-white/10 bg-[#202B4A] flex items-center justify-center text-white hover:border-[#C6A24A] hover:text-[#C6A24A] transition-colors duration-300 shadow-md cursor-pointer"
               aria-label="Next Property"
             >
               <ChevronRight strokeWidth={1.8} size={18} />
@@ -207,7 +210,7 @@ export default function CuratedCorridors() {
                   duration: 0.8,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className={`absolute w-[92%] sm:w-[80%] md:w-[60%] max-w-[620px] h-[410px] sm:h-[450px] md:h-[480px] rounded-3xl overflow-hidden shadow-[0_20px_50px_-10px_rgba(20,25,35,0.25)] border border-white/40 ${isCenter ? 'cursor-default' : 'cursor-pointer'
+                className={`absolute w-[92%] sm:w-[80%] md:w-[60%] max-w-[620px] h-[410px] sm:h-[450px] md:h-[480px] rounded-3xl overflow-hidden shadow-[0_25px_60px_-10px_rgba(0,0,0,0.6)] border border-white/20 bg-[#202B4A] ${isCenter ? 'cursor-default' : 'cursor-pointer'
                   }`}
                 onClick={() => {
                   if (!isCenter) setCurrentIndex(index);
@@ -225,7 +228,7 @@ export default function CuratedCorridors() {
                 />
 
                 {/* Dark Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-950/95 via-slate-950/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0E162B] via-[#0E162B]/50 to-transparent" />
 
                 {/* Content Overlay */}
                 <motion.div
@@ -234,10 +237,10 @@ export default function CuratedCorridors() {
                   transition={{ duration: 0.4, delay: isCenter ? 0.15 : 0 }}
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                    <span className="px-2.5 py-1 rounded-full bg-[#D09A16] text-[9px] sm:text-[10px] font-bold tracking-[0.16em] uppercase text-white shadow-sm">
+                    <span className="px-2.5 py-1 rounded-full bg-[#C6A24A] text-[9px] sm:text-[10px] font-bold tracking-[0.16em] uppercase text-[#0E162B] shadow-sm">
                       {item.tag}
                     </span>
-                    <span className="text-lg sm:text-xl md:text-2xl font-serif text-[#D09A16] font-bold">
+                    <span className="text-lg sm:text-xl md:text-2xl font-serif text-[#C6A24A] font-bold">
                       {item.price}
                     </span>
                   </div>
@@ -247,19 +250,19 @@ export default function CuratedCorridors() {
                   </h3>
 
                   <div className="flex items-center gap-1.5 sm:gap-2 text-[#CBD5E1] text-[10px] sm:text-xs mb-2 md:mb-3">
-                    <MapPin size={12} className="text-[#D09A16] flex-shrink-0" />
+                    <MapPin size={12} className="text-[#C6A24A] flex-shrink-0" />
                     <span className="truncate">{item.location}</span>
                     <span className="mx-0.5">•</span>
                     <span className="truncate">{item.specs}</span>
                   </div>
 
-                  <p className="text-slate-200 font-normal text-[11px] sm:text-xs md:text-sm leading-relaxed mb-4 line-clamp-2">
+                  <p className="text-[#C9CED9] font-normal text-[11px] sm:text-xs md:text-sm leading-relaxed mb-4 line-clamp-2">
                     {item.desc}
                   </p>
 
                   <div className="flex items-center justify-between pt-3 border-t border-white/15">
                     <Link href={item.link}
-                      className="inline-flex items-center gap-2 bg-white text-[#1D263B] px-4 py-2 sm:px-6 sm:py-2.5 rounded-full text-[10px] sm:text-xs font-bold tracking-widest uppercase hover:bg-[#D09A16] hover:text-white transition-colors duration-300 shadow-md group"
+                      className="inline-flex items-center gap-2 bg-[#C6A24A] hover:bg-[#D8BD73] text-[#0E162B] px-4 py-2 sm:px-6 sm:py-2.5 rounded-full text-[10px] sm:text-xs font-bold tracking-widest uppercase transition-colors duration-300 shadow-md group"
                     >
                       <span>View Details</span>
                       <ArrowUpRight size={14} className="transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -279,15 +282,14 @@ export default function CuratedCorridors() {
       {/* Master Directory CTA */}
       <div ref={ctaRef} className="container mx-auto px-5 md:px-12 mt-6 sm:mt-8 flex justify-center">
         <Link href={corridorData.ctaLink || "/ready-to-move"}
-          className="group relative px-6 py-3.5 sm:px-8 sm:py-4 bg-[#1D263B] text-white overflow-hidden rounded-full flex items-center gap-3 sm:gap-4 shadow-lg hover:shadow-xl transition-all duration-300"
+          className="group relative px-6 py-3.5 sm:px-8 sm:py-4 bg-[#202B4A] hover:bg-[#273459] text-white border border-[#C6A24A]/40 hover:border-[#C6A24A] overflow-hidden rounded-full flex items-center gap-3 sm:gap-4 shadow-lg hover:shadow-xl transition-all duration-300"
         >
-          <span className="relative z-10 text-[11px] sm:text-xs font-semibold tracking-widest uppercase">
+          <span className="relative z-10 text-[11px] sm:text-xs font-semibold tracking-widest uppercase text-[#F7F5EF]">
             {corridorData.ctaText || "View Complete Featured Inventory"}
           </span>
-          <div className="relative z-10 w-7 h-7 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-[#1D263B] transition-colors">
+          <div className="relative z-10 w-7 h-7 rounded-full bg-[#C6A24A] text-[#0E162B] flex items-center justify-center transition-transform group-hover:scale-105">
             <ArrowUpRight size={14} />
           </div>
-          <div className="absolute inset-0 w-0 bg-[#111827] transition-all duration-500 ease-out group-hover:w-full z-0" />
         </Link>
       </div>
     </section>
