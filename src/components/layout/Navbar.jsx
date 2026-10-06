@@ -66,14 +66,14 @@ export default function Navbar() {
     <>
       {/* Morphing Navbar Container: Floating 3D Capsule at top -> Modern Sticky Header on scroll */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${isScrolled ? 'pt-0 px-0' : 'pt-3 md:pt-5 px-3 md:px-8'
+        className={`fixed top-0 left-0 right-0 z-50 pointer-events-none transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] ${isScrolled ? 'pt-0 px-0' : 'pt-2 md:pt-3 px-3 md:px-6'
           }`}
       >
         <div className="w-full flex justify-center pointer-events-auto">
           <div
             className={`relative flex items-center justify-between transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] bg-white/95 backdrop-blur-xl ${isScrolled
-              ? 'w-full max-w-full rounded-none py-3 px-6 md:px-12 border-b border-[#17213D]/[0.08] shadow-[0_10px_30px_-10px_rgba(14,22,43,0.08)] ring-0'
-              : 'w-full max-w-5xl xl:max-w-6xl rounded-full py-2.5 px-5 md:px-7 border border-white/90 shadow-[0_20px_45px_-8px_rgba(14,22,43,0.12),_inset_0_1px_1px_rgba(255,255,255,1)] ring-1 ring-[#17213D]/[0.06]'
+              ? 'w-full max-w-full rounded-none py-1.5 px-4 md:px-8 border-b border-[#17213D]/[0.08] shadow-[0_10px_30px_-10px_rgba(14,22,43,0.08)] ring-0'
+              : 'w-full lg:w-fit lg:gap-4 xl:gap-8 rounded-full py-1 px-3 md:px-4 border border-white/90 shadow-[0_20px_45px_-8px_rgba(14,22,43,0.12),_inset_0_1px_1px_rgba(255,255,255,1)] ring-1 ring-[#17213D]/[0.06]'
               }`}
           >
             {/* Left: Clean Brand Logo */}
@@ -82,12 +82,12 @@ export default function Navbar() {
               aria-label="Saudagar Properties Home"
             >
               <Image
-                width={200}
-                height={55}
+                width={140}
+                height={40}
                 priority
                 src={logoImg}
                 alt="Saudagar Properties"
-                className={`w-auto object-contain transition-all duration-500 ${isScrolled ? 'h-9 md:h-11' : 'h-11 md:h-13'
+                className={`w-auto object-contain transition-all duration-500 ${isScrolled ? 'h-6 md:h-7' : 'h-7 md:h-8'
                   }`}
               />
             </Link>
@@ -106,7 +106,7 @@ export default function Navbar() {
                       onMouseLeave={handleMouseLeave}
                     >
                       <button
-                        className={`flex items-center gap-1.5 px-3.5 py-2 text-[11px] xl:text-[12px] font-semibold tracking-[0.16em] uppercase rounded-full transition-all duration-300 ${activeDropdown === link.label
+                        className={`flex items-center gap-1 px-2.5 py-1 text-[10px] xl:text-[11px] font-semibold tracking-[0.16em] uppercase rounded-full transition-all duration-300 ${activeDropdown === link.label
                           ? 'text-[#C6A24A] bg-[#C6A24A]/10 shadow-[inset_0_1px_2px_rgba(0,0,0,0.05)]'
                           : 'text-[#17213D] hover:text-[#C6A24A] hover:bg-[#F7F5EF]'
                           }`}
@@ -168,7 +168,7 @@ export default function Navbar() {
                 return (
                   <Link key={link.label}
                     href={link.href}
-                    className={`relative px-3.5 py-2 text-[11px] xl:text-[12px] font-semibold tracking-[0.16em] uppercase rounded-full transition-all duration-300 ${isActive
+                    className={`relative px-2.5 py-1 text-[10px] xl:text-[11px] font-semibold tracking-[0.16em] uppercase rounded-full transition-all duration-300 ${isActive
                       ? 'text-[#17213D] bg-[#F7F5EF] font-bold shadow-[inset_0_1px_2px_rgba(0,0,0,0.06)]'
                       : 'text-[#17213D] hover:text-[#C6A24A] hover:bg-[#F7F5EF]'
                       }`}
@@ -190,20 +190,21 @@ export default function Navbar() {
               {/* Call Hotline (Desktop) */}
               <a
                 href={`tel:${rawPhone}`}
-                className="hidden xl:flex items-center gap-2 px-3 py-2 text-[11px] font-medium tracking-wider text-[#566078] hover:text-[#17213D] transition-colors"
+                className="hidden xl:flex items-center gap-1.5 px-2 py-1 text-[10px] font-medium tracking-wider text-[#566078] hover:text-[#17213D] transition-colors"
                 title="Call Directly"
               >
-                <div className="w-7 h-7 rounded-full bg-[#F7F5EF] border border-[#C6A24A]/25 flex items-center justify-center text-[#C6A24A] shadow-inner">
-                  <Phone size={12} />
+                <div className="w-6 h-6 rounded-full bg-[#F7F5EF] border border-[#C6A24A]/25 flex items-center justify-center text-[#C6A24A] shadow-inner">
+                  <Phone size={10} />
                 </div>
                 <span>{displayPhone}</span>
               </a>
 
-              {/* 3D Tactile CTA Button */}
+              {/* 3D Tactile CTA Button (Icon Only) */}
               <Link href={ctaHref}
-                className="relative group hidden sm:inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#C6A24A] text-[#0E162B] text-[11px] font-bold tracking-[0.16em] uppercase overflow-hidden shadow-[0_4px_14px_rgba(198,162,74,0.3)] hover:bg-[#D8BD73] hover:shadow-[0_8px_22px_rgba(198,162,74,0.4)] hover:-translate-y-0.5 active:translate-y-0.5 transition-all duration-300"
+                aria-label={ctaText}
+                className="relative group hidden sm:inline-flex items-center justify-center w-7 h-7 rounded-full bg-[#C6A24A] text-[#0E162B] overflow-hidden shadow-[0_4px_14px_rgba(198,162,74,0.3)] hover:bg-[#D8BD73] hover:shadow-[0_8px_22px_rgba(198,162,74,0.4)] hover:-translate-y-0.5 active:translate-y-0.5 transition-all duration-300"
+                title={ctaText}
               >
-                <span className="relative z-10 text-[#0E162B] font-bold">{ctaText}</span>
                 <ArrowUpRight
                   size={14}
                   className="relative z-10 text-[#0E162B] transition-transform duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"

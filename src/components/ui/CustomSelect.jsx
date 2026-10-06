@@ -26,19 +26,19 @@ export default function CustomSelect({ icon: Icon, label, options, value, onChan
       {/* Trigger Button with Two-Tier Editorial Luxury Hierarchy */}
       <div 
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-between gap-2 px-3 sm:px-4 py-2 cursor-pointer select-none group rounded-xl hover:bg-[#F9F8F4] transition-colors"
+        className="flex items-center justify-between gap-2 px-3 sm:px-3 py-1.5 cursor-pointer select-none group rounded-xl hover:bg-[#F9F8F4] transition-colors"
       >
-        <div className="flex items-center gap-2.5 overflow-hidden text-left min-w-0">
+        <div className="flex items-center gap-2 overflow-hidden text-left min-w-0">
           {Icon && (
-            <div className="w-7 h-7 rounded-lg bg-[#C6A24A]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#C6A24A]/20 transition-colors">
-              <Icon className="text-[#C6A24A] w-3.5 h-3.5 flex-shrink-0" />
+            <div className="w-6 h-6 rounded-lg bg-[#C6A24A]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#C6A24A]/20 transition-colors">
+              <Icon className="text-[#C6A24A] w-3 h-3 flex-shrink-0" />
             </div>
           )}
           <div className="flex flex-col min-w-0">
-            <span className="text-[10px] font-semibold uppercase tracking-wider text-[#8A95A7] leading-none mb-0.5">
+            <span className="text-[9px] font-semibold uppercase tracking-wider text-[#8A95A7] leading-none mb-0.5">
               {label}
             </span>
-            <span className={`text-xs sm:text-[13px] truncate font-medium leading-tight ${value ? 'text-[#17213D] font-semibold' : 'text-[#64748B]'}`}>
+            <span className={`text-xs truncate font-medium leading-tight ${value ? 'text-[#17213D] font-semibold' : 'text-[#64748B]'}`}>
               {displayValue}
             </span>
           </div>
