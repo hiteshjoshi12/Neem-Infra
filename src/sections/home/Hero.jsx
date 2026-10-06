@@ -74,7 +74,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative z-30 w-full min-h-[90vh] lg:min-h-screen flex flex-col justify-center pt-28 pb-20 lg:pb-32 overflow-visible bg-[#0E162B]"
+      className="relative z-30 w-full min-h-[90vh] lg:min-h-screen flex flex-col justify-center pt-28 pb-20 lg:pb-32 overflow-visible bg-[#070B16]"
     >
       {/* Production Cinematic Remotion Hero Video Background Layer with Built-in Luxury Controls */}
       <CinematicHeroBackground showControls={true} />

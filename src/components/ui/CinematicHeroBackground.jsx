@@ -192,7 +192,7 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
               if (onMuteChange) onMuteChange(muted);
             }
           }}
-          className={`w-full h-full object-cover transition-opacity duration-1000 ${
+          className={`w-full h-full object-cover transition-opacity duration-1000 filter brightness-[1.03] contrast-[1.02] saturate-[1.03] ${
             isVideoLoaded ? "opacity-100" : "opacity-0"
           }`}
         >
@@ -213,10 +213,18 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
         </video>
       )}
 
-      {/* 3. Luxury Midnight Vignette Overlays */}
-      <div className="absolute inset-0 bg-gradient-to-r from-[#0E162B]/90 via-[#0E162B]/50 to-transparent pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#0E162B] via-transparent to-[#0E162B]/40 pointer-events-none" />
-      <div className="absolute inset-0 bg-black/15 pointer-events-none" />
+      {/* 3. Subtle Neutral Vignette Overlays (Significantly reduced blue tint to let vibrant video shine) */}
+      {/* Light ambient film tint to keep sunny daylight while ensuring text readability */}
+      <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+
+      {/* Soft directional gradient for editorial headline clarity (neutral, non-blue) */}
+      <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-black/10 to-transparent pointer-events-none" />
+
+      {/* Delicate top vignette for floating navbar readability */}
+      <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/60 via-black/20 to-transparent pointer-events-none" />
+
+      {/* Delicate bottom vignette for dock & section transition */}
+      <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#070B16]/80 via-[#070B16]/20 to-transparent pointer-events-none" />
 
       {/* 4. Optional Built-in Floating Discreet Video Controls */}
       {showControls && (
