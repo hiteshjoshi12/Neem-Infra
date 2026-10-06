@@ -1,17 +1,29 @@
 import PublicLayout from '@/layouts/PublicLayout';
+import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   return {
     title: `${slug.replace(/-/g, ' ')} | Saudagar Properties Blog`,
+    alternates: {
+      canonical: `/blog/${slug}`,
+    },
   };
 }
 
 export default async function BlogPostPage({ params }) {
   const { slug } = await params;
+  const title = slug.replace(/-/g, ' ');
 
   return (
     <PublicLayout>
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Home', url: '/' },
+          { name: 'Blog', url: '/blog' },
+          { name: title, url: `/blog/${slug}` }
+        ]}
+      />
       <div className="w-full min-h-screen bg-[#FAF8F5] pt-32 pb-16 px-4">
         <div className="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-[#E8E4DA] text-center">
           <h1 className="text-3xl md:text-5xl font-serif font-bold text-[#1D263B] mb-8 capitalize">{slug.replace(/-/g, ' ')}</h1>

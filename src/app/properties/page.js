@@ -2,10 +2,14 @@ import { getProperties } from '@/services/propertyService';
 import PublicLayout from '@/layouts/PublicLayout';
 import Link from 'next/link';
 import Image from 'next/image';
+import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
 
 export const metadata = {
   title: 'All Properties | Saudagar Properties',
   description: 'Browse all luxury properties, builder floors, and commercial spaces in DLF Gurugram.',
+  alternates: {
+    canonical: '/properties',
+  },
 };
 
 export default async function PropertiesPage() {
@@ -13,6 +17,7 @@ export default async function PropertiesPage() {
 
   return (
     <PublicLayout>
+      <BreadcrumbJsonLd items={[{ name: 'Home', url: '/' }, { name: 'Properties', url: '/properties' }]} />
       <div className="w-full min-h-screen bg-[#FAF8F5] pt-32 pb-16 px-4">
         <div className="max-w-7xl mx-auto">
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-[#1D263B] mb-8">All Properties</h1>

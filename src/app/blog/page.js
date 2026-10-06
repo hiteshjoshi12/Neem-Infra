@@ -1,17 +1,27 @@
 import PublicLayout from '@/layouts/PublicLayout';
-import { PAGE_SEO } from '@/lib/seo/seoConfig';
+import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
+import { PAGE_SEO, BREADCRUMBS } from '@/lib/seo/seoConfig';
 
 export async function generateMetadata() {
   const seoData = PAGE_SEO['/blog'] || { title: 'Blog | Saudagar Properties', description: 'Real estate insights and news.' };
   return {
     title: seoData.title,
     description: seoData.description,
+    alternates: {
+      canonical: seoData.canonical || '/blog',
+    },
   };
 }
 
 export default function BlogIndexPage() {
+  const breadcrumbs = BREADCRUMBS['/blog'] || [
+    { name: 'Home', url: '/' },
+    { name: 'Blog', url: '/blog' }
+  ];
+
   return (
     <PublicLayout>
+      <BreadcrumbJsonLd items={breadcrumbs} />
       <div className="w-full min-h-screen bg-[#FAF8F5] pt-32 pb-16 px-4 flex items-center justify-center">
         <div className="text-center max-w-2xl">
           <h1 className="text-4xl md:text-5xl font-serif font-bold text-[#1D263B] mb-6">Real Estate Insights</h1>

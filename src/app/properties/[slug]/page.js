@@ -17,6 +17,9 @@ export async function generateMetadata({ params }) {
   return {
     title: `${property.title} | Saudagar Properties`,
     description: property.desc.substring(0, 160),
+    alternates: {
+      canonical: `/properties/${slug}`,
+    },
     openGraph: {
       images: [property.img],
     }
