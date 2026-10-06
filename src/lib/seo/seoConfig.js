@@ -163,6 +163,12 @@ export const PAGE_SEO = {
     canonical: '/services/industrial',
     ogType: 'website',
   },
+  '/blog': {
+    title: 'The Gurugram Real Estate Journal | Saudagar Properties DLF Advisory',
+    description: 'Expert commentary, luxury builder floor guides, and micro-market analysis across DLF Phase 1–5, Sushant Lok, and Golf Course Road Gurugram.',
+    canonical: '/blog',
+    ogType: 'website',
+  },
 };
 
 // ─── Breadcrumb Configuration ───────────────────────────────────────────
@@ -214,5 +220,9 @@ export const BREADCRUMBS = {
     { name: 'Home', url: '/' },
     { name: 'Services', url: '/#services' },
     { name: 'Industrial Real Estate', url: '/services/industrial' },
+  ],
+  '/blog': [
+    { name: 'Home', url: '/' },
+    { name: 'Blog', url: '/blog' },
   ],
 };

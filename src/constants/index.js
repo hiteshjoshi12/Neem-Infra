@@ -5,7 +5,7 @@ export const NAV_LINKS = [
   { label: "Under Construction", href: "/under-construction" },
   { label: "Developers", href: "/developers" },
   { label: "About Us", href: "/about" },
-  { label: "Blogs", href: "/blogs" },
+  { label: "Blog", href: "/blog" },
 ];
 
 export const CORE_SERVICES = [

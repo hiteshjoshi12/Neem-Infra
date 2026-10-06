@@ -4,13 +4,15 @@ import Link from 'next/link';
 import Image from 'next/image';
 import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
 
-export const metadata = {
-  title: 'All Properties | Saudagar Properties',
-  description: 'Browse all luxury properties, builder floors, and commercial spaces in DLF Gurugram.',
-  alternates: {
-    canonical: '/properties',
-  },
-};
+import { buildPageMetadata } from '@/lib/seo/metadataHelper';
+
+export const metadata = buildPageMetadata({
+  title: 'Luxury Properties & Builder Floors DLF Gurugram',
+  description: 'Explore verified ready-to-move luxury builder floors, kothis, and commercial spaces across DLF Phase 1–5, Sushant Lok, and Golf Course Road.',
+  path: '/properties',
+  canonical: '/properties',
+  keywords: ['Luxury Builder Floors', 'DLF Phase 1-5', 'Gurugram Properties', 'Ready to Move', 'Saudagar Properties'],
+});
 
 export default async function PropertiesPage() {
   const properties = await getProperties({ all: false });

@@ -1,46 +1,109 @@
 import React from 'react';
 import Link from 'next/link';
-import { Home, ArrowRight } from 'lucide-react';
+import { Home, BookOpen, Building2, Phone, Compass } from 'lucide-react';
 
 export const metadata = {
-  title: 'Page Not Found — Saudagar Properties',
+  title: 'Page Not Found | Saudagar Properties',
+  description: 'The requested luxury real estate page could not be located. Browse our Gurugram portfolio or editorial journal.',
   robots: {
     index: false,
     follow: false,
-  }
+    nocache: true,
+  },
 };
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-[#FAF8F5] flex flex-col items-center justify-center p-6 text-center">
-      <div className="text-[#D09A16] text-sm font-bold tracking-[0.3em] uppercase mb-4">
-        Error 404
-      </div>
-      
-      <h1 className="text-4xl md:text-6xl font-serif text-[#1D263B] mb-6">
-        Page Not Found
-      </h1>
-      
-      <p className="text-[#555] max-w-md mx-auto mb-10 leading-relaxed">
-        The page you are looking for might have been removed, had its name changed, or is temporarily unavailable. Let&apos;s get you back on track.
-      </p>
-      
-      <div className="flex flex-col sm:flex-row items-center gap-4">
-        <Link 
-          href="/"
-          className="flex items-center gap-2 px-8 py-3.5 bg-[#1D263B] text-white rounded-full text-xs font-semibold tracking-widest uppercase hover:bg-[#B5986D] transition-colors"
-        >
-          <Home size={16} />
-          <span>Return Home</span>
-        </Link>
+    <div className="min-h-screen bg-[#0E162B] text-[#F7F5EF] flex flex-col items-center justify-center p-6 text-center relative overflow-hidden selection:bg-[#C6A24A] selection:text-[#0E162B]">
+      {/* Subtle architectural backdrop */}
+      <div 
+        aria-hidden="true" 
+        className="pointer-events-none absolute inset-0 opacity-[0.03] bg-[linear-gradient(#C6A24A_1px,transparent_1px),linear-gradient(90deg,#C6A24A_1px,transparent_1px)] [background-size:40px_40px]" 
+      />
+      <div 
+        aria-hidden="true"
+        className="pointer-events-none absolute w-96 h-96 rounded-full bg-[#C6A24A]/10 blur-[120px]"
+      />
+
+      <div className="relative z-10 max-w-xl mx-auto">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/5 border border-[#C6A24A]/30 text-[#C6A24A] text-xs font-semibold uppercase tracking-[0.25em] mb-6">
+          <Compass size={13} />
+          <span>Error 404 • Destination Not Found</span>
+        </div>
         
-        <Link 
-          href="/about"
-          className="flex items-center gap-2 px-8 py-3.5 border border-[#E8E4DA] text-[#1D263B] rounded-full text-xs font-semibold tracking-widest uppercase hover:border-[#B5986D] hover:text-[#B5986D] transition-colors"
-        >
-          <span>About Us</span>
-          <ArrowRight size={16} />
-        </Link>
+        <h1 className="text-4xl sm:text-6xl font-serif font-bold text-[#F7F5EF] mb-4 tracking-tight">
+          Page Not Located
+        </h1>
+        
+        <p className="text-sm sm:text-base text-[#C9CED9] mb-10 leading-relaxed font-sans">
+          The property listing, editorial dispatch, or link you requested is unavailable or has been relocated to our updated platform.
+        </p>
+        
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-left">
+          <Link 
+            href="/"
+            className="flex items-center gap-3 p-4 rounded-2xl bg-[#17213D] border border-white/10 hover:border-[#C6A24A] transition-all group"
+          >
+            <Home size={18} className="text-[#C6A24A]" />
+            <div>
+              <span className="block text-xs font-bold text-white group-hover:text-[#C6A24A] transition-colors">
+                Return to Homepage
+              </span>
+              <span className="text-[11px] text-[#9DA6B8]">
+                Explore prime corridors & services
+              </span>
+            </div>
+          </Link>
+
+          <Link 
+            href="/blog"
+            className="flex items-center gap-3 p-4 rounded-2xl bg-[#17213D] border border-white/10 hover:border-[#C6A24A] transition-all group"
+          >
+            <BookOpen size={18} className="text-[#C6A24A]" />
+            <div>
+              <span className="block text-xs font-bold text-white group-hover:text-[#C6A24A] transition-colors">
+                Real Estate Journal
+              </span>
+              <span className="text-[11px] text-[#9DA6B8]">
+                Read luxury builder floor analyses
+              </span>
+            </div>
+          </Link>
+
+          <Link 
+            href="/properties"
+            className="flex items-center gap-3 p-4 rounded-2xl bg-[#17213D] border border-white/10 hover:border-[#C6A24A] transition-all group"
+          >
+            <Building2 size={18} className="text-[#C6A24A]" />
+            <div>
+              <span className="block text-xs font-bold text-white group-hover:text-[#C6A24A] transition-colors">
+                Ready-to-Move Residences
+              </span>
+              <span className="text-[11px] text-[#9DA6B8]">
+                Vetted DLF Phase 1–5 builder floors
+              </span>
+            </div>
+          </Link>
+
+          <Link 
+            href="/contact"
+            className="flex items-center gap-3 p-4 rounded-2xl bg-[#17213D] border border-white/10 hover:border-[#C6A24A] transition-all group"
+          >
+            <Phone size={18} className="text-[#C6A24A]" />
+            <div>
+              <span className="block text-xs font-bold text-white group-hover:text-[#C6A24A] transition-colors">
+                Private Consultation
+              </span>
+              <span className="text-[11px] text-[#9DA6B8]">
+                Speak directly with senior partners
+              </span>
+            </div>
+          </Link>
+        </div>
+
+        <p className="text-xs text-[#8892A6]">
+          Saudagar Properties Pvt. Ltd. • DLF Phase 2, Gurugram
+        </p>
       </div>
     </div>
   );

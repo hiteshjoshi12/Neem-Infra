@@ -4,26 +4,30 @@ import { notFound } from 'next/navigation';
 import PropertyJsonLd from '@/components/seo/PropertyJsonLd';
 import Image from 'next/image';
 
+import { buildPageMetadata } from '@/lib/seo/metadataHelper';
+
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const property = await getPropertyBySlug(slug);
   
   if (!property) {
-    return {
+    return buildPageMetadata({
       title: 'Property Not Found',
-    };
+      description: 'The requested luxury property could not be located in our portfolio.',
+      path: '/properties',
+      noindex: true,
+    });
   }
 
-  return {
-    title: `${property.title} | Saudagar Properties`,
-    description: property.desc.substring(0, 160),
-    alternates: {
-      canonical: `/properties/${slug}`,
-    },
-    openGraph: {
-      images: [property.img],
-    }
-  };
+  return buildPageMetadata({
+    title: `${property.title} in ${property.location || 'DLF Gurugram'}`,
+    description: property.desc,
+    path: `/properties/${slug}`,
+    canonical: `/properties/${slug}`,
+    image: property.img,
+    imageAlt: property.title,
+    keywords: [property.title, property.location, property.category, 'DLF Gurugram Luxury Real Estate'].filter(Boolean),
+  });
 }
 
 export default async function PropertyDetailPage({ params }) {

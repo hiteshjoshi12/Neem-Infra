@@ -58,6 +58,74 @@ const nextConfig = {
       },
     ];
   },
+  trailingSlash: false,
+  async redirects() {
+    return [
+      // Blog aliases
+      {
+        source: '/blogs',
+        destination: '/blog',
+        permanent: true,
+      },
+      {
+        source: '/blogs/:slug*',
+        destination: '/blog/:slug*',
+        permanent: true,
+      },
+      {
+        source: '/post/:slug*',
+        destination: '/blog/:slug*',
+        permanent: true,
+      },
+      {
+        source: '/article/:slug*',
+        destination: '/blog/:slug*',
+        permanent: true,
+      },
+      // Team and clients aliases
+      {
+        source: '/our-team',
+        destination: '/about',
+        permanent: true,
+      },
+      {
+        source: '/clients',
+        destination: '/about',
+        permanent: true,
+      },
+      // Legacy service/corridor routes to dedicated destination
+      {
+        source: '/services/dlf-phase-1',
+        destination: '/blog/location/dlf-phase-1-5',
+        permanent: true,
+      },
+      {
+        source: '/services/dlf-phase-2',
+        destination: '/blog/location/dlf-phase-1-5',
+        permanent: true,
+      },
+      {
+        source: '/services/dlf-phase-3',
+        destination: '/blog/location/dlf-phase-1-5',
+        permanent: true,
+      },
+      {
+        source: '/services/dlf-phase-4',
+        destination: '/blog/location/dlf-phase-1-5',
+        permanent: true,
+      },
+      {
+        source: '/services/sushant-lok',
+        destination: '/blog/location/sushant-lok-1',
+        permanent: true,
+      },
+      {
+        source: '/services/udyog-vihar',
+        destination: '/services/industrial',
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;

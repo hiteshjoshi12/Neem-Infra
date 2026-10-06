@@ -127,7 +127,35 @@ export const api = {
 
   deleteInquiry: (id) =>
     request(`/inquiries/${id}`, {
+    }),
+
+  // Blog CRUD
+  getBlogs: (params = {}) => {
+    const query = new URLSearchParams(params).toString();
+    return request(`/blog${query ? `?${query}` : ''}`);
+  },
+  getBlog: (id) => request(`/blog/${id}`),
+  createBlog: (blogData) =>
+    request('/blog', {
+      method: 'POST',
+      body: JSON.stringify(blogData)
+    }),
+  updateBlog: (id, blogData) =>
+    request(`/blog/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(blogData)
+    }),
+  deleteBlog: (id) =>
+    request(`/blog/${id}`, {
       method: 'DELETE'
+    }),
+
+  // Taxonomies
+  getTaxonomies: () => request('/taxonomies'),
+  createTag: (tagData) =>
+    request('/taxonomies/tags', {
+      method: 'POST',
+      body: JSON.stringify(tagData)
     })
 };
 

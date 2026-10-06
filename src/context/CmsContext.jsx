@@ -56,7 +56,7 @@ const DEFAULT_SECTIONS = {
       { label: "About Us", href: "/about" },
       { label: "Featured Property", href: "/#featured" },
       { label: "Our Team", href: "/about" },
-      { label: "Blog", href: "/blogs" },
+      { label: "Blog", href: "/blog" },
       { label: "Contact Us", href: "/contact" }
     ],
     servicesTitle: "Services",

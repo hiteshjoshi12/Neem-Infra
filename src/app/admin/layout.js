@@ -1,25 +1,17 @@
-"use client";
+import AdminClientLayout from './AdminClientLayout';
 
-import { usePathname } from 'next/navigation';
-import { AuthProvider } from '@/context/AuthContext';
-import AdminLayout from '@/layouts/AdminLayout';
-import ProtectedRoute from '@/components/admin/ProtectedRoute';
+export const metadata = {
+  robots: {
+    index: false,
+    follow: false,
+    nocache: true,
+    googleBot: {
+      index: false,
+      follow: false,
+    },
+  },
+};
 
 export default function AdminRootLayout({ children }) {
-  const pathname = usePathname();
-
-  return (
-    <AuthProvider>
-      {pathname === '/admin/login' ? (
-        children
-      ) : (
-        <ProtectedRoute>
-          <AdminLayout>
-            {children}
-          </AdminLayout>
-        </ProtectedRoute>
-      )}
-    </AuthProvider>
-  );
+  return <AdminClientLayout>{children}</AdminClientLayout>;
 }
-
