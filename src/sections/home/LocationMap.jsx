@@ -271,7 +271,7 @@ export default function LocationMap() {
           h-[500px]
           w-[500px]
           rounded-full
-          bg-[#C6A24A]/[0.035]
+          bg-[#D09A16]/[0.035]
           blur-[110px]
         "
       />
@@ -357,7 +357,7 @@ export default function LocationMap() {
                 gap-2
                 rounded-full
                 border
-                border-[#C6A24A]/30
+                border-[#D09A16]/30
                 bg-white
                 px-3.5
                 py-1.5
@@ -365,14 +365,14 @@ export default function LocationMap() {
                 font-bold
                 uppercase
                 tracking-[0.23em]
-                text-[#C6A24A]
+                text-[#D09A16]
                 shadow-sm
               "
             >
 
               <Sparkles
                 size={11}
-                className="text-[#C6A24A]"
+                className="text-[#D09A16]"
               />
 
               {badge}
@@ -403,7 +403,7 @@ export default function LocationMap() {
                   ml-2
                   italic
                   font-light
-                  text-[#C6A24A]
+                  text-[#D09A16]
                 "
               >
                 {titleItalic}
@@ -458,7 +458,7 @@ export default function LocationMap() {
               transition-all
               duration-300
               hover:-translate-y-1
-              hover:bg-[#C6A24A]
+              hover:bg-[#D09A16]
               hover:text-[#0E162B]
               md:self-end
             "
@@ -606,7 +606,7 @@ export default function LocationMap() {
                       inline-flex
                       items-center
                       gap-2
-                      text-[#C6A24A]
+                      text-[#D09A16]
                     "
                   >
 
@@ -658,9 +658,9 @@ export default function LocationMap() {
                     justify-center
                     rounded-full
                     border
-                    border-[#C6A24A]/30
+                    border-[#D09A16]/30
                     bg-[#F7F5EF]
-                    text-[#C6A24A]
+                    text-[#D09A16]
                     sm:flex
                   "
                 >
@@ -740,7 +740,7 @@ export default function LocationMap() {
                     DLF Phase 2
                   </span>
 
-                  <span className="h-1 w-1 rounded-full bg-[#C6A24A]" />
+                  <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
 
                   <span
                     className="
@@ -754,7 +754,7 @@ export default function LocationMap() {
                     Gurugram
                   </span>
 
-                  <span className="h-1 w-1 rounded-full bg-[#C6A24A]" />
+                  <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
 
                   <span
                     className="
@@ -787,7 +787,7 @@ export default function LocationMap() {
                     font-bold
                     uppercase
                     tracking-[0.16em]
-                    text-[#C6A24A]
+                    text-[#D09A16]
                     transition-colors
                     hover:text-[#17213D]
                   "
@@ -859,7 +859,7 @@ export default function LocationMap() {
             Luxury Real Estate
           </span>
 
-          <span className="h-1 w-1 rounded-full bg-[#C6A24A]" />
+          <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
 
           <span
             className="
@@ -873,7 +873,7 @@ export default function LocationMap() {
             DLF Phase 2
           </span>
 
-          <span className="h-1 w-1 rounded-full bg-[#C6A24A]" />
+          <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
 
           <span
             className="
@@ -887,7 +887,7 @@ export default function LocationMap() {
             Gurugram
           </span>
 
-          <span className="h-1 w-1 rounded-full bg-[#C6A24A]" />
+          <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
 
           <span
             className="
@@ -903,23 +903,6 @@ export default function LocationMap() {
 
         </div>
 
-        {/* ===================================================
-            ARCHITECTURAL BRIDGE: PHYSICAL OFFICE TO DIGITAL DESK
-        =================================================== */}
-        <div className="my-14 sm:my-18 flex items-center justify-center gap-4">
-          <span className="h-px flex-1 max-w-[120px] bg-[#17213D]/15" />
-          <div className="flex items-center gap-2 text-[8px] font-bold uppercase tracking-[0.25em] text-[#C6A24A]">
-            <span className="h-1 w-1 rounded-full bg-[#C6A24A]" />
-            <span>HEADQUARTERS & MARKET INTELLIGENCE DESK</span>
-            <span className="h-1 w-1 rounded-full bg-[#C6A24A]" />
-          </div>
-          <span className="h-px flex-1 max-w-[120px] bg-[#17213D]/15" />
-        </div>
-
-        {/* ===================================================
-            MERGED MARKET INTELLIGENCE & NEWSLETTER DESK
-        =================================================== */}
-        <NewsletterSection isEmbedded={true} />
 
       </div>
 

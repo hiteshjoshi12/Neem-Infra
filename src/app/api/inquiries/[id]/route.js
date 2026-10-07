@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import Inquiry from '@/models/Inquiry';
+import { requireAdmin } from '@/lib/auth/authGuard';
 
 export async function PUT(req, { params }) {
   try {
+    await requireAdmin(req);
     await connectDB();
     const { id } = await params;
     const body = await req.json();
@@ -23,12 +25,14 @@ export async function PUT(req, { params }) {
       data: inquiry
     });
   } catch (error) {
-    return NextResponse.json({ success: false, message: error.message }, { status: 400 });
+    const status = error.status || (error.name === 'ValidationError' ? 400 : 500);
+    return NextResponse.json({ success: false, message: error.message }, { status });
   }
 }
 
 export async function DELETE(req, { params }) {
   try {
+    await requireAdmin(req);
     await connectDB();
     const { id } = await params;
     const inquiry = await Inquiry.findByIdAndDelete(id);
@@ -42,6 +46,7 @@ export async function DELETE(req, { params }) {
       message: 'Inquiry deleted successfully'
     });
   } catch (error) {
-    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
+    const status = error.status || 500;
+    return NextResponse.json({ success: false, message: error.message }, { status });
   }
 }

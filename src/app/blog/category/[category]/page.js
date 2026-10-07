@@ -53,14 +53,14 @@ export default async function BlogCategoryPage({ params }) {
     <PublicLayout asMain={false}>
       <BreadcrumbJsonLd items={breadcrumbs} />
 
-      <main className="w-full bg-[#FAF8F5] pt-28 md:pt-36 pb-20 selection:bg-[#C6A24A] selection:text-[#0E162B]">
+      <main className="w-full bg-[#FAF8F5] pt-28 md:pt-36 pb-20 selection:bg-[#D09A16] selection:text-[#0E162B]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb Navigation */}
           <Breadcrumbs items={breadcrumbs} />
 
           {/* Category Header */}
           <header className="mb-12 pb-8 border-b border-[#17213D]/10">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-[#C6A24A]/10 text-[#C6A24A] border border-[#C6A24A]/30 mb-4">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-[#D09A16]/10 text-[#D09A16] border border-[#D09A16]/30 mb-4">
               <Sparkles size={12} />
               <span>Topic Category</span>
             </div>
@@ -76,7 +76,7 @@ export default async function BlogCategoryPage({ params }) {
           <div className="flex items-center gap-2 overflow-x-auto pb-6 mb-8 scrollbar-none text-xs">
             <Link
               href="/blog"
-              className="px-3.5 py-1.5 rounded-full border border-[#17213D]/10 hover:border-[#C6A24A] bg-white text-[#17213D] font-medium transition-colors"
+              className="px-3.5 py-1.5 rounded-full border border-[#17213D]/10 hover:border-[#D09A16] bg-white text-[#17213D] font-medium transition-colors"
             >
               All Articles
             </Link>
@@ -87,7 +87,7 @@ export default async function BlogCategoryPage({ params }) {
                 className={`px-3.5 py-1.5 rounded-full font-medium transition-colors flex-shrink-0 ${
                   c.slug === category
                     ? 'bg-[#17213D] text-[#F7F5EF] shadow-xs'
-                    : 'border border-[#17213D]/10 hover:border-[#C6A24A] bg-white text-[#17213D]'
+                    : 'border border-[#17213D]/10 hover:border-[#D09A16] bg-white text-[#17213D]'
                 }`}
               >
                 {c.name}
@@ -101,7 +101,7 @@ export default async function BlogCategoryPage({ params }) {
               {posts.map((post) => (
                 <article
                   key={post._id || post.slug}
-                  className="bg-white rounded-2xl overflow-hidden border border-[#17213D]/10 group hover:border-[#C6A24A]/50 transition-all shadow-xs flex flex-col justify-between"
+                  className="bg-white rounded-2xl overflow-hidden border border-[#17213D]/10 group hover:border-[#D09A16]/50 transition-all shadow-xs flex flex-col justify-between"
                 >
                   <div>
                     {post.featuredImage && (
@@ -116,7 +116,7 @@ export default async function BlogCategoryPage({ params }) {
                       </div>
                     )}
                     <div className="p-6">
-                      <h2 className="font-serif font-bold text-xl text-[#17213D] group-hover:text-[#C6A24A] transition-colors leading-snug line-clamp-2 mb-3">
+                      <h2 className="font-serif font-bold text-xl text-[#17213D] group-hover:text-[#D09A16] transition-colors leading-snug line-clamp-2 mb-3">
                         <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                       </h2>
                       <p className="text-sm text-[#566078] line-clamp-2 leading-relaxed mb-4">
@@ -127,12 +127,12 @@ export default async function BlogCategoryPage({ params }) {
 
                   <div className="px-6 pb-6 pt-3 border-t border-[#17213D]/5 flex items-center justify-between text-xs text-[#8892A6]">
                     <div className="flex items-center gap-1.5">
-                      <Clock size={13} className="text-[#C6A24A]" />
+                      <Clock size={13} className="text-[#D09A16]" />
                       <span>{post.readingTime || 5} min read</span>
                     </div>
                     <Link
                       href={`/blog/${post.slug}`}
-                      className="inline-flex items-center gap-1 font-bold text-[#17213D] group-hover:text-[#C6A24A] transition-colors"
+                      className="inline-flex items-center gap-1 font-bold text-[#17213D] group-hover:text-[#D09A16] transition-colors"
                     >
                       <span>Read</span>
                       <ArrowRight size={13} />

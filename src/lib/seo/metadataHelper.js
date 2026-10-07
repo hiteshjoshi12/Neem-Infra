@@ -1,4 +1,5 @@
-import { SITE_URL, SITE_NAME, DEFAULT_META } from '@/lib/seo/seoConfig';
+import { SITE_URL, SITE_NAME, DEFAULT_META } from './seoConfig.js';
+import { getSocialImageUrl } from './imageSeoHelper.js';
 
 /**
  * Normalizes a URL path:
@@ -62,6 +63,8 @@ export function buildPageMetadata({
   publishedTime,
   modifiedTime,
   authors,
+  section,
+  tags,
   keywords = [],
   extra = {}
 }) {
@@ -86,6 +89,9 @@ export function buildPageMetadata({
     : {
         index: true,
         follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
         googleBot: {
           index: true,
           follow: true,
@@ -96,7 +102,9 @@ export function buildPageMetadata({
       };
 
   return {
-    title: formattedTitle,
+    title: {
+      absolute: formattedTitle,
+    },
     description: formattedDescription,
     alternates: {
       canonical,
@@ -122,6 +130,8 @@ export function buildPageMetadata({
         publishedTime,
         modifiedTime,
         authors: Array.isArray(authors) ? authors : authors ? [authors] : undefined,
+        section,
+        tags: Array.isArray(tags) && tags.length > 0 ? tags : undefined,
       }),
     },
     twitter: {
@@ -164,14 +174,22 @@ export function buildArticleMetadata(post) {
   const modifiedDate = isModified ? new Date(post.updatedAt).toISOString() : publishedDate;
 
   const authorName = post.author?.name || 'Saudagar Properties';
-  const image = post.socialImage || post.featuredImage || DEFAULT_META.ogImage;
+  const authorProfileUrl = post.author?.slug 
+    ? `${SITE_URL}/blog/author/${post.author.slug}` 
+    : authorName;
+
+  // Dedicated social image with Discover & OG 1200x630 resolution
+  const image = getSocialImageUrl(post);
   const imageAlt = post.featuredImageAlt || post.title;
+
+  const categoryName = post.category?.name || 'Real Estate Advisory';
+  const tagNames = (post.tags || []).map(t => (typeof t === 'string' ? t : t.name)).filter(Boolean);
 
   const keywords = [
     post.focusKeyword,
     ...(post.secondaryKeywords || []),
-    ...(post.tags || []).map(t => (typeof t === 'string' ? t : t.name)),
-    post.category?.name,
+    ...tagNames,
+    categoryName,
     'DLF Gurugram',
     'Luxury Real Estate'
   ].filter(Boolean);
@@ -189,7 +207,9 @@ export function buildArticleMetadata(post) {
     noindex: !isPublished,
     publishedTime: publishedDate,
     modifiedTime: modifiedDate,
-    authors: [authorName],
+    authors: [authorProfileUrl],
+    section: categoryName,
+    tags: tagNames,
     keywords,
   });
 }

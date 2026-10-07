@@ -16,7 +16,7 @@ const LocationMap = dynamic(() => import('@/sections/home/LocationMap'), { ssr: 
 export async function generateMetadata() {
   const seoData = PAGE_SEO['/'];
   return {
-    title: seoData.title,
+    title: { absolute: seoData.title },
     description: seoData.description,
     alternates: {
       canonical: seoData.canonical,
@@ -28,9 +28,9 @@ export default function Home() {
   const breadcrumbs = BREADCRUMBS['/'];
 
   return (
-    <div className="w-full flex flex-col min-h-screen bg-[#F7F5EF] text-[#17213D] selection:bg-[#C6A24A] selection:text-[#0E162B]">
+    <div className="w-full flex flex-col min-h-screen bg-[#F7F5EF] text-[#17213D] selection:bg-[#D09A16] selection:text-[#0E162B]">
       <BreadcrumbJsonLd items={breadcrumbs} />
-        
+
       {/* 1. Hero Section */}
       <Hero />
 
@@ -47,7 +47,7 @@ export default function Home() {
       <WhyChooseUsSection />
 
       {/* 5.5 AI / AEO Showcase Section */}
-      <AiShowcaseSection />
+      {/* <AiShowcaseSection /> */}
 
       {/* 6. Testimonials Section */}
       <TestimonialsSection />

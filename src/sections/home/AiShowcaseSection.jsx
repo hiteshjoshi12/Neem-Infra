@@ -139,7 +139,7 @@ function AIEngineCard({ engine, index, cardRef }) {
         transition-all
         duration-500
         hover:-translate-y-1.5
-        hover:border-[#C6A24A]/40
+        hover:border-[#D09A16]/40
         hover:shadow-[0_20px_55px_rgba(23,33,61,0.09)]
       "
     >
@@ -157,7 +157,7 @@ function AIEngineCard({ engine, index, cardRef }) {
           h-[2px]
           origin-left
           scale-x-0
-          bg-[#C6A24A]
+          bg-[#D09A16]
           transition-transform
           duration-500
           group-hover:scale-x-100
@@ -181,7 +181,7 @@ function AIEngineCard({ engine, index, cardRef }) {
           text-[#17213D]/[0.03]
           transition-colors
           duration-500
-          group-hover:text-[#C6A24A]/[0.08]
+          group-hover:text-[#D09A16]/[0.08]
         "
       >
         0{index + 1}
@@ -211,8 +211,8 @@ function AIEngineCard({ engine, index, cardRef }) {
             transition-all
             duration-500
             group-hover:scale-105
-            group-hover:border-[#C6A24A]
-            group-hover:bg-[#C6A24A]
+            group-hover:border-[#D09A16]
+            group-hover:bg-[#D09A16]
             group-hover:text-[#0E162B]
           "
         >
@@ -226,7 +226,7 @@ function AIEngineCard({ engine, index, cardRef }) {
           className="
             rounded-full
             border
-            border-[#C6A24A]/25
+            border-[#D09A16]/25
             bg-[#F7F5EF]
             px-2.5
             py-1
@@ -234,7 +234,7 @@ function AIEngineCard({ engine, index, cardRef }) {
             font-bold
             uppercase
             tracking-[0.18em]
-            text-[#C6A24A]
+            text-[#D09A16]
           "
         >
           {engine.badge}
@@ -269,7 +269,7 @@ function AIEngineCard({ engine, index, cardRef }) {
             font-bold
             uppercase
             tracking-[0.2em]
-            text-[#C6A24A]
+            text-[#D09A16]
           "
         >
           {engine.subtitle}
@@ -317,7 +317,7 @@ function AIEngineCard({ engine, index, cardRef }) {
             tracking-[0.18em]
             text-[#17213D]
             transition-colors
-            group-hover:text-[#C6A24A]
+            group-hover:text-[#D09A16]
           "
         >
           Ask {engine.name}
@@ -333,12 +333,12 @@ function AIEngineCard({ engine, index, cardRef }) {
             justify-center
             rounded-full
             border
-            border-[#C6A24A]/30
-            text-[#C6A24A]
+            border-[#D09A16]/30
+            text-[#D09A16]
             transition-all
             duration-300
-            group-hover:border-[#C6A24A]
-            group-hover:bg-[#C6A24A]
+            group-hover:border-[#D09A16]
+            group-hover:bg-[#D09A16]
             group-hover:text-[#0E162B]
           "
         >
@@ -459,7 +459,7 @@ export default function AiShowcaseSection() {
           h-[450px]
           w-[450px]
           rounded-full
-          bg-[#C6A24A]/[0.04]
+          bg-[#D09A16]/[0.04]
           blur-[100px]
         "
       />
@@ -517,7 +517,7 @@ export default function AiShowcaseSection() {
               gap-2
               rounded-full
               border
-              border-[#C6A24A]/30
+              border-[#D09A16]/30
               bg-white
               px-3.5
               py-1.5
@@ -525,14 +525,14 @@ export default function AiShowcaseSection() {
               font-bold
               uppercase
               tracking-[0.22em]
-              text-[#C6A24A]
+              text-[#D09A16]
               shadow-sm
             "
           >
 
             <Sparkles
               size={11}
-              className="text-[#C6A24A]"
+              className="text-[#D09A16]"
             />
 
             AI Authority Check
@@ -560,7 +560,7 @@ export default function AiShowcaseSection() {
                 ml-2
                 italic
                 font-light
-                text-[#C6A24A]
+                text-[#D09A16]
               "
             >
               sees us.
@@ -603,7 +603,7 @@ export default function AiShowcaseSection() {
               className="
                 h-px
                 w-8
-                bg-[#C6A24A]/40
+                bg-[#D09A16]/40
               "
             />
 
@@ -623,7 +623,7 @@ export default function AiShowcaseSection() {
               className="
                 h-px
                 w-8
-                bg-[#C6A24A]/40
+                bg-[#D09A16]/40
               "
             />
 
@@ -679,7 +679,7 @@ export default function AiShowcaseSection() {
 
           <ShieldCheck
             size={13}
-            className="text-[#C6A24A]"
+            className="text-[#D09A16]"
           />
 
           <span

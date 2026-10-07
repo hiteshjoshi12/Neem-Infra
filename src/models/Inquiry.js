@@ -4,7 +4,7 @@ const inquirySchema = new mongoose.Schema(
   {
     type: {
       type: String,
-      enum: ['newsletter', 'property_inquiry', 'general_contact'],
+      enum: ['newsletter', 'property_inquiry', 'general_contact', 'contact_form', 'consultation'],
       default: 'newsletter'
     },
     email: {

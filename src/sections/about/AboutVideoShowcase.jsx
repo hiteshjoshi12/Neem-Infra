@@ -149,16 +149,12 @@ export default function AboutVideoShowcase() {
     <section
       ref={sectionRef}
       id="video-tour"
-      className="relative py-16 md:py-24 bg-[#0C101A] text-white overflow-hidden"
+      className="relative py-16 md:py-24 bg-[#F7F5EF] text-[#17213D] overflow-hidden border-t border-[#17213D]/10"
     >
-      {/* Ambient Glows */}
+      {/* Ambient Lighting */}
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at center, rgba(197,168,128,0.18) 0%, rgba(197,168,128,0) 70%)' }}
-      />
-      <div
-        className="absolute bottom-0 right-0 w-[400px] h-[400px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at center, rgba(179,147,102,0.12) 0%, rgba(179,147,102,0) 70%)' }}
+        style={{ background: 'radial-gradient(ellipse at center, rgba(208, 154, 22,0.08) 0%, rgba(208, 154, 22,0) 70%)' }}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -168,17 +164,17 @@ export default function AboutVideoShowcase() {
           ref={headerRef}
           className="text-center max-w-3xl mx-auto mb-12 md:mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[#D09A16] text-xs font-bold tracking-[0.25em] uppercase mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[#D09A16] text-xs font-bold tracking-[0.25em] uppercase mb-4">
             <Film size={13} className="text-[#D09A16]" />
-            <span>Cinematic Film & Legacy</span>
+            <span>Cinematic Film &amp; Legacy</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-4 leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#17213D] mb-4 leading-tight">
             Inside Saudagar Properties: <br />
-            <span className="italic font-light text-[#D09A16]">Two Decades of Excellence</span>
+            <span className="italic font-serif text-[#D09A16]">Two Decades of Excellence</span>
           </h2>
 
-          <p className="text-sm sm:text-base text-slate-300 font-normal leading-relaxed">
+          <p className="text-sm sm:text-base text-[#566078] font-normal leading-relaxed">
             Take an exclusive inside look at our bespoke advisory, hands-on founder dedication, and turnkey property acquisitions across DLF Gurugram.
           </p>
         </div>
@@ -193,7 +189,7 @@ export default function AboutVideoShowcase() {
             ref={containerRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={() => isPlaying && setShowControls(false)}
-            className="group relative rounded-3xl sm:rounded-[36px] overflow-hidden border border-[#D09A16]/30 bg-slate-950 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8),0_0_50px_rgba(197,168,128,0.2)] aspect-video flex items-center justify-center cursor-pointer select-none"
+            className="group relative rounded-3xl sm:rounded-[36px] overflow-hidden border border-[#D09A16]/30 bg-slate-950 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8),0_0_50px_rgba(208, 154, 22,0.2)] aspect-video flex items-center justify-center cursor-pointer select-none"
             onClick={togglePlay}
           >
             {/* The Video Element */}
@@ -225,7 +221,7 @@ export default function AboutVideoShowcase() {
                     className="absolute -inset-4 rounded-full bg-[#D09A16]/40 pointer-events-none"
                   />
                 )}
-                <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#D09A16] text-[#0C101A] flex items-center justify-center shadow-[0_0_40px_rgba(197,168,128,0.6)] transform transition-transform group-hover:scale-105 active:scale-95">
+                <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#D09A16] text-[#0C101A] flex items-center justify-center shadow-[0_0_40px_rgba(208, 154, 22,0.6)] transform transition-transform group-hover:scale-105 active:scale-95">
                   {isPlaying ? (
                     <Pause size={34} className="fill-[#0C101A]" />
                   ) : (

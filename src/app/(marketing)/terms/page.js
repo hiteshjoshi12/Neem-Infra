@@ -1,10 +1,11 @@
+import Link from 'next/link';
 import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
 import { PAGE_SEO, BREADCRUMBS } from '@/lib/seo/seoConfig';
 
 export async function generateMetadata() {
   const seoData = PAGE_SEO['/terms'];
   return {
-    title: seoData.title,
+    title: { absolute: seoData.title },
     description: seoData.description,
     alternates: {
       canonical: seoData.canonical,
@@ -19,6 +20,16 @@ export default function Terms() {
     <div className="w-full flex flex-col min-h-screen bg-[#FAF8F5] pt-32 pb-16 px-4">
       <BreadcrumbJsonLd items={breadcrumbs} />
       <div className="max-w-4xl mx-auto bg-white p-8 md:p-12 rounded-3xl shadow-sm border border-[#E8E4DA]">
+        {/* Illuminated Breadcrumb Navigation */}
+        <div className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-[#566078] mb-6">
+          <Link href="/" className="hover:text-[#D09A16] transition-colors">Home</Link>
+          <span className="text-[#8892A6]">/</span>
+          <span className="text-[#D09A16] flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16] shadow-[0_0_8px_#D09A16]" />
+            <span>Terms of Service</span>
+          </span>
+        </div>
+
         <h1 className="text-3xl md:text-5xl font-serif font-bold text-[#1D263B] mb-8">Terms of Service</h1>
         
         <div className="prose prose-lg text-[#475569]">

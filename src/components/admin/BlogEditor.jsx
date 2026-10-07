@@ -158,12 +158,12 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
           <select 
             value={formData.status} 
             onChange={e => handleChange('status', e.target.value)}
-            className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-xs text-white outline-none focus:border-[#D09A16]"
+            className="bg-[#121724] border border-white/20 rounded-lg px-3 py-2 text-xs text-white outline-none focus:border-[#D09A16] [&>option]:bg-[#121724] [&>option]:text-white"
           >
-            <option value="draft">Draft</option>
-            <option value="scheduled">Scheduled</option>
-            <option value="published">Published</option>
-            <option value="archived">Archived</option>
+            <option value="draft" className="bg-[#121724] text-white">Draft</option>
+            <option value="scheduled" className="bg-[#121724] text-white">Scheduled</option>
+            <option value="published" className="bg-[#121724] text-white">Published</option>
+            <option value="archived" className="bg-[#121724] text-white">Archived</option>
           </select>
           <button
             onClick={() => handleSave(false)}
@@ -288,16 +288,16 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
               <h3 className="text-sm font-bold text-white mb-2 flex items-center gap-2"><Layout size={14} /> Organization</h3>
               <div>
                 <label className="block text-xs text-slate-400 mb-1">Author</label>
-                <select value={formData.author} onChange={e => handleChange('author', e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-lg p-2 text-xs text-white">
-                  <option value="">Select Author...</option>
-                  {taxonomies.authors.map(a => <option key={a._id} value={a._id}>{a.name}</option>)}
+                <select value={formData.author} onChange={e => handleChange('author', e.target.value)} className="w-full bg-[#121724] border border-white/20 rounded-lg p-2 text-xs text-white outline-none focus:border-[#D09A16] [&>option]:bg-[#121724] [&>option]:text-white">
+                  <option value="" className="bg-[#121724] text-white">Select Author...</option>
+                  {taxonomies.authors.map(a => <option key={a._id} value={a._id} className="bg-[#121724] text-white">{a.name}</option>)}
                 </select>
               </div>
               <div>
                 <label className="block text-xs text-slate-400 mb-1">Category</label>
-                <select value={formData.category} onChange={e => handleChange('category', e.target.value)} className="w-full bg-white/5 border border-white/10 rounded-lg p-2 text-xs text-white">
-                  <option value="">Select Category...</option>
-                  {taxonomies.categories.map(c => <option key={c._id} value={c._id}>{c.name}</option>)}
+                <select value={formData.category} onChange={e => handleChange('category', e.target.value)} className="w-full bg-[#121724] border border-white/20 rounded-lg p-2 text-xs text-white outline-none focus:border-[#D09A16] [&>option]:bg-[#121724] [&>option]:text-white">
+                  <option value="" className="bg-[#121724] text-white">Select Category...</option>
+                  {taxonomies.categories.map(c => <option key={c._id} value={c._id} className="bg-[#121724] text-white">{c.name}</option>)}
                 </select>
               </div>
               <div>
@@ -305,8 +305,8 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                 <select multiple value={formData.location} onChange={e => {
                   const vals = Array.from(e.target.selectedOptions, option => option.value);
                   handleChange('location', vals);
-                }} className="w-full bg-white/5 border border-white/10 rounded-lg p-2 text-xs text-white h-24">
-                  {taxonomies.locations.map(l => <option key={l._id} value={l._id}>{l.name}</option>)}
+                }} className="w-full bg-[#121724] border border-white/20 rounded-lg p-2 text-xs text-white h-24 outline-none focus:border-[#D09A16] [&>option]:bg-[#121724] [&>option]:text-white">
+                  {taxonomies.locations.map(l => <option key={l._id} value={l._id} className="bg-[#121724] text-white">{l.name}</option>)}
                 </select>
               </div>
               <div>
@@ -314,8 +314,8 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                 <select multiple value={formData.propertyType} onChange={e => {
                   const vals = Array.from(e.target.selectedOptions, option => option.value);
                   handleChange('propertyType', vals);
-                }} className="w-full bg-white/5 border border-white/10 rounded-lg p-2 text-xs text-white h-24">
-                  {taxonomies.propertyTypes.map(p => <option key={p._id} value={p._id}>{p.name}</option>)}
+                }} className="w-full bg-[#121724] border border-white/20 rounded-lg p-2 text-xs text-white h-24 outline-none focus:border-[#D09A16] [&>option]:bg-[#121724] [&>option]:text-white">
+                  {taxonomies.propertyTypes.map(p => <option key={p._id} value={p._id} className="bg-[#121724] text-white">{p.name}</option>)}
                 </select>
               </div>
             </div>

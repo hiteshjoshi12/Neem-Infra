@@ -38,7 +38,7 @@ export default function CuratedCorridorsEditor({ formData, updateField }) {
         />
         <FormInput
           label="Bottom CTA Link Destination"
-          placeholder="/ready-to-move"
+          placeholder="/properties"
           value={formData.ctaLink}
           onChange={(e) => updateField('ctaLink', e.target.value)}
         />

@@ -21,7 +21,7 @@ export default function AuthorCard({ author }) {
   return (
     <div className="bg-[#FAF8F5] border border-[#17213D]/10 rounded-3xl p-6 sm:p-8 my-10 shadow-xs">
       <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6">
-        <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden flex-shrink-0 border-2 border-[#C6A24A] bg-[#17213D]/5">
+        <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full overflow-hidden flex-shrink-0 border-2 border-[#D09A16] bg-[#17213D]/5">
           {author.image ? (
             <Image
               src={author.image}
@@ -39,7 +39,7 @@ export default function AuthorCard({ author }) {
 
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 mb-1">
-            <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.2em] text-[#C6A24A]">
+            <span className="inline-flex items-center gap-1 text-[11px] font-bold uppercase tracking-[0.2em] text-[#D09A16]">
               <Award size={13} />
               Editorial Expert
             </span>
@@ -48,7 +48,7 @@ export default function AuthorCard({ author }) {
           <h3 className="font-serif font-bold text-xl sm:text-2xl text-[#17213D] mb-1">
             <Link 
               href={`/blog/author/${author.slug}`} 
-              className="hover:text-[#C6A24A] transition-colors"
+              className="hover:text-[#D09A16] transition-colors"
             >
               {author.name}
             </Link>
@@ -84,7 +84,7 @@ export default function AuthorCard({ author }) {
                   href={author.socialProfiles.linkedin}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-[#C6A24A] transition-colors"
+                  className="hover:text-[#D09A16] transition-colors"
                   aria-label={`${author.name} on LinkedIn`}
                 >
                   <LinkedinIcon />
@@ -95,7 +95,7 @@ export default function AuthorCard({ author }) {
                   href={author.socialProfiles.twitter}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-[#C6A24A] transition-colors"
+                  className="hover:text-[#D09A16] transition-colors"
                   aria-label={`${author.name} on Twitter`}
                 >
                   <TwitterIcon />
@@ -105,7 +105,7 @@ export default function AuthorCard({ author }) {
 
             <Link
               href={`/blog/author/${author.slug}`}
-              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#17213D] hover:text-[#C6A24A] transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#17213D] hover:text-[#D09A16] transition-colors"
             >
               <span>All Articles</span>
               <ArrowRight size={13} />

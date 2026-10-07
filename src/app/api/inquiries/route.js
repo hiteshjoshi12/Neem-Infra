@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import Inquiry from '@/models/Inquiry';
+import { requireAdmin } from '@/lib/auth/authGuard';
 
 export async function POST(request) {
   try {
@@ -26,13 +27,14 @@ export async function POST(request) {
 }
 
 export async function GET(request) {
-  // TODO: Add Auth check here
   try {
+    await requireAdmin(request);
     await connectDB();
     const inquiries = await Inquiry.find().sort({ createdAt: -1 });
     return NextResponse.json({ success: true, count: inquiries.length, data: inquiries });
   } catch (error) {
-    return NextResponse.json({ success: false, message: 'Internal Server Error' }, { status: 500 });
+    const status = error.status || 500;
+    return NextResponse.json({ success: false, message: error.message }, { status });
   }
 }
 

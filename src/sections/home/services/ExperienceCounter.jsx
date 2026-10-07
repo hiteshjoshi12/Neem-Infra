@@ -141,7 +141,7 @@ export default function ExperienceCounter() {
           overflow-hidden
           rounded-[28px]
           border
-          border-[#C6A24A]/25
+          border-[#D09A16]/25
           bg-[#0E162B]
           text-[#F7F5EF]
           shadow-[0_25px_80px_-25px_rgba(14,22,43,0.85)]
@@ -162,7 +162,7 @@ export default function ExperienceCounter() {
             absolute
             inset-0
             opacity-[0.03]
-            [background-image:linear-gradient(to_right,#C6A24A_1px,transparent_1px),linear-gradient(to_bottom,#C6A24A_1px,transparent_1px)]
+            [background-image:linear-gradient(to_right,#D09A16_1px,transparent_1px),linear-gradient(to_bottom,#D09A16_1px,transparent_1px)]
             [background-size:60px_60px]
           "
         />
@@ -179,7 +179,7 @@ export default function ExperienceCounter() {
             h-[2px]
             bg-gradient-to-r
             from-transparent
-            via-[#C6A24A]
+            via-[#D09A16]
             to-transparent
           "
         />
@@ -195,7 +195,7 @@ export default function ExperienceCounter() {
             h-[420px]
             w-[420px]
             rounded-full
-            bg-[radial-gradient(circle,rgba(198,162,74,0.12)_0%,transparent_70%)]
+            bg-[radial-gradient(circle,rgba(208, 154, 22,0.12)_0%,transparent_70%)]
             blur-[90px]
           "
         />
@@ -232,16 +232,16 @@ export default function ExperienceCounter() {
               w-[420px]
               rounded-full
               border
-              border-[#C6A24A]/[0.07]
+              border-[#D09A16]/[0.07]
             "
           />
 
           {/* Blueprint Drafting Coordinate Tags */}
-          <div className="absolute left-7 top-6 select-none font-mono text-[8px] font-semibold tracking-[0.25em] text-[#C6A24A]/40 sm:left-10 sm:top-7">
+          <div className="absolute left-7 top-6 select-none font-mono text-[8px] font-semibold tracking-[0.25em] text-[#D09A16]/40 sm:left-10 sm:top-7">
             + DLF-PHASE-II // LAT: 28.4848° N
           </div>
 
-          <div className="absolute right-7 top-6 select-none font-mono text-[8px] font-semibold tracking-[0.25em] text-[#C6A24A]/40 sm:right-10 sm:top-7">
+          <div className="absolute right-7 top-6 select-none font-mono text-[8px] font-semibold tracking-[0.25em] text-[#D09A16]/40 sm:right-10 sm:top-7">
             ELEV: 220M // EST. 1999 +
           </div>
         </motion.div>
@@ -256,14 +256,14 @@ export default function ExperienceCounter() {
               SECTION EYEBROW
           ---------------------------------------------------- */}
           <div className="mb-6 flex items-center gap-3 sm:mb-8">
-            <span className="h-px w-8 bg-[#C6A24A] sm:w-10" />
+            <span className="h-px w-8 bg-[#D09A16] sm:w-10" />
 
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#C6A24A]/30 bg-[#202B4A]/60 px-3 py-1 text-[8px] font-bold uppercase tracking-[0.22em] text-[#D8BD73] shadow-sm sm:text-[9px]">
-              <Sparkles size={11} className="text-[#C6A24A]" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-[#D09A16]/30 bg-[#202B4A]/60 px-3 py-1 text-[8px] font-bold uppercase tracking-[0.22em] text-[#D09A16] shadow-sm sm:text-[9px]">
+              <Sparkles size={11} className="text-[#D09A16]" />
               <span>THE SAUDAGAR ADVANTAGE</span>
             </div>
 
-            <span className="h-px flex-1 max-w-[60px] bg-[#C6A24A]/30" />
+            <span className="h-px flex-1 max-w-[60px] bg-[#D09A16]/30" />
           </div>
 
           {/* ---------------------------------------------------
@@ -277,19 +277,19 @@ export default function ExperienceCounter() {
                 LEFT: 3D EXPERIENCE NUMBER HERO (4 COLS)
             ================================================== */}
             <div className="lg:col-span-4">
-              <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-[#C6A24A]/20 bg-[#17213D]/70 px-6 py-6 text-center backdrop-blur-md sm:px-8 sm:py-7">
+              <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-[#D09A16]/20 bg-[#17213D]/70 px-6 py-6 text-center backdrop-blur-md sm:px-8 sm:py-7">
 
                 {/* Corner Crosshairs */}
-                <div aria-hidden="true" className="pointer-events-none absolute left-2.5 top-2.5 select-none font-mono text-[8px] text-[#C6A24A]/30">
+                <div aria-hidden="true" className="pointer-events-none absolute left-2.5 top-2.5 select-none font-mono text-[8px] text-[#D09A16]/30">
                   +
                 </div>
-                <div aria-hidden="true" className="pointer-events-none absolute right-2.5 top-2.5 select-none font-mono text-[8px] text-[#C6A24A]/30">
+                <div aria-hidden="true" className="pointer-events-none absolute right-2.5 top-2.5 select-none font-mono text-[8px] text-[#D09A16]/30">
                   +
                 </div>
-                <div aria-hidden="true" className="pointer-events-none absolute bottom-2.5 left-2.5 select-none font-mono text-[8px] text-[#C6A24A]/30">
+                <div aria-hidden="true" className="pointer-events-none absolute bottom-2.5 left-2.5 select-none font-mono text-[8px] text-[#D09A16]/30">
                   +
                 </div>
-                <div aria-hidden="true" className="pointer-events-none absolute bottom-2.5 right-2.5 select-none font-mono text-[8px] text-[#C6A24A]/30">
+                <div aria-hidden="true" className="pointer-events-none absolute bottom-2.5 right-2.5 select-none font-mono text-[8px] text-[#D09A16]/30">
                   +
                 </div>
 
@@ -306,20 +306,20 @@ export default function ExperienceCounter() {
                     rounded-full
                     border
                     border-dashed
-                    border-[#C6A24A]/25
+                    border-[#D09A16]/25
                     sm:h-[240px]
                     sm:w-[240px]
                   "
                 >
-                  <div className="absolute -top-1 left-1/2 h-2.5 w-2.5 -translate-x-1/2 rounded-full border border-[#C6A24A] bg-[#0E162B] shadow-[0_0_10px_rgba(198,162,74,0.9)]" />
+                  <div className="absolute -top-1 left-1/2 h-2.5 w-2.5 -translate-x-1/2 rounded-full border border-[#D09A16] bg-[#0E162B] shadow-[0_0_10px_rgba(208, 154, 22,0.9)]" />
                 </motion.div>
 
                 {/* 3D Numerical Typography Composition */}
                 <div className="relative z-10 flex flex-col items-center">
                   <div className="mb-2 inline-flex items-center gap-1.5">
-                    <span className="h-px w-4 bg-[#C6A24A]" />
-                    <Award size={13} className="text-[#C6A24A]" />
-                    <span className="h-px w-4 bg-[#C6A24A]" />
+                    <span className="h-px w-4 bg-[#D09A16]" />
+                    <Award size={13} className="text-[#D09A16]" />
+                    <span className="h-px w-4 bg-[#D09A16]" />
                   </div>
 
                   {/* Multi-layered 3D Number */}
@@ -338,7 +338,7 @@ export default function ExperienceCounter() {
                         font-bold
                         leading-none
                         tracking-[-0.08em]
-                        text-[#C6A24A]/10
+                        text-[#D09A16]/10
                         blur-[1px]
                         sm:text-[98px]
                         lg:text-[112px]
@@ -375,8 +375,8 @@ export default function ExperienceCounter() {
                         font-serif
                         text-4xl
                         font-light
-                        text-[#C6A24A]
-                        drop-shadow-[0_8px_16px_rgba(198,162,74,0.45)]
+                        text-[#D09A16]
+                        drop-shadow-[0_8px_16px_rgba(208, 154, 22,0.45)]
                         sm:text-5xl
                         lg:text-6xl
                       "
@@ -386,11 +386,11 @@ export default function ExperienceCounter() {
                   </div>
 
                   {/* Authority Label */}
-                  <p className="mt-2 font-serif text-xs font-semibold uppercase tracking-[0.25em] text-[#C6A24A] sm:text-sm">
+                  <p className="mt-2 font-serif text-xs font-semibold uppercase tracking-[0.25em] text-[#D09A16] sm:text-sm">
                     {counterLabel}
                   </p>
 
-                  <div className="my-2 h-px w-12 bg-gradient-to-r from-transparent via-[#C6A24A]/40 to-transparent" />
+                  <div className="my-2 h-px w-12 bg-gradient-to-r from-transparent via-[#D09A16]/40 to-transparent" />
 
                   <p className="max-w-[220px] text-[11px] leading-4 text-[#C9CED9]/70">
                     {counterSublabel}
@@ -405,7 +405,7 @@ export default function ExperienceCounter() {
             ================================================== */}
             <div className="flex flex-col justify-center lg:col-span-8">
               <div className="inline-flex items-center gap-2">
-                <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#D8BD73]">
+                <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#D09A16]">
                   {badge}
                 </span>
               </div>
@@ -433,7 +433,7 @@ export default function ExperienceCounter() {
 
               {/* Authority tag line */}
               <div className="mt-4 flex items-center gap-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-[#C9CED9]/50">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#C6A24A]" />
+                <span className="h-1.5 w-1.5 rounded-full bg-[#D09A16]" />
                 <span>Premier Real Estate Consultancy · DLF Gurugram</span>
               </div>
             </div>
@@ -471,7 +471,7 @@ export default function ExperienceCounter() {
                     overflow-hidden
                     rounded-2xl
                     border
-                    border-[#C6A24A]/20
+                    border-[#D09A16]/20
                     bg-[#202B4A]/80
                     p-4.5
                     backdrop-blur-md
@@ -479,12 +479,12 @@ export default function ExperienceCounter() {
                     transition-all
                     duration-400
                     hover:-translate-y-1.5
-                    hover:border-[#C6A24A]/55
+                    hover:border-[#D09A16]/55
                     hover:bg-[#202B4A]/95
-                    hover:shadow-[0_20px_50px_-15px_rgba(198,162,74,0.2)]
+                    hover:shadow-[0_20px_50px_-15px_rgba(208, 154, 22,0.2)]
                     focus:outline-none
                     focus:ring-1
-                    focus:ring-[#C6A24A]
+                    focus:ring-[#D09A16]
                     sm:p-5
                   "
                 >
@@ -500,12 +500,12 @@ export default function ExperienceCounter() {
                       w-3.5
                       border-r
                       border-t
-                      border-[#C6A24A]/30
+                      border-[#D09A16]/30
                       transition-all
                       duration-300
                       group-hover:h-5
                       group-hover:w-5
-                      group-hover:border-[#C6A24A]
+                      group-hover:border-[#D09A16]
                     "
                   />
 
@@ -522,14 +522,14 @@ export default function ExperienceCounter() {
                           justify-center
                           rounded-xl
                           border
-                          border-[#C6A24A]/30
-                          bg-[#C6A24A]/10
-                          text-[#D8BD73]
+                          border-[#D09A16]/30
+                          bg-[#D09A16]/10
+                          text-[#D09A16]
                           transition-all
                           duration-400
                           group-hover:scale-105
-                          group-hover:border-[#C6A24A]
-                          group-hover:bg-[#C6A24A]
+                          group-hover:border-[#D09A16]
+                          group-hover:bg-[#D09A16]
                           group-hover:text-[#0E162B]
                         "
                       >
@@ -537,18 +537,18 @@ export default function ExperienceCounter() {
                       </div>
 
                       <div className="flex items-center gap-1.5">
-                        <span className="font-mono text-[9px] font-semibold tracking-wider text-[#C6A24A]/50">
+                        <span className="font-mono text-[9px] font-semibold tracking-wider text-[#D09A16]/50">
                           0{idx + 1}
                         </span>
                         <ArrowUpRight
                           size={13}
                           className="
-                            text-[#C6A24A]/40
+                            text-[#D09A16]/40
                             transition-transform
                             duration-300
                             group-hover:-translate-y-0.5
                             group-hover:translate-x-0.5
-                            group-hover:text-[#C6A24A]
+                            group-hover:text-[#D09A16]
                           "
                         />
                       </div>
@@ -575,7 +575,7 @@ export default function ExperienceCounter() {
                       bg-white/5
                       transition-colors
                       duration-400
-                      group-hover:bg-[#C6A24A]/40
+                      group-hover:bg-[#D09A16]/40
                     "
                   />
                 </article>
@@ -590,14 +590,14 @@ export default function ExperienceCounter() {
           <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-5 sm:mt-9 sm:pt-6">
             <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5 text-[8.5px] font-semibold uppercase tracking-[0.2em] text-[#C9CED9]/50">
               <span>DLF PHASE 1–5 SPECIALISTS</span>
-              <span className="h-1 w-1 rounded-full bg-[#C6A24A]" />
+              <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
               <span>RERA COMPLIANT ADVISORY</span>
-              <span className="h-1 w-1 rounded-full bg-[#C6A24A]" />
+              <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
               <span>CONFIDENTIAL TRANSACTIONS</span>
             </div>
 
-            <div className="flex items-center gap-2 text-[8.5px] font-semibold uppercase tracking-[0.2em] text-[#D8BD73]">
-              <Award size={12} className="text-[#C6A24A]" />
+            <div className="flex items-center gap-2 text-[8.5px] font-semibold uppercase tracking-[0.2em] text-[#D09A16]">
+              <Award size={12} className="text-[#D09A16]" />
               <span>SAUDAGAR PROPERTIES PVT LTD</span>
             </div>
           </div>

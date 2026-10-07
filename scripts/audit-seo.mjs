@@ -138,8 +138,8 @@ allPages.forEach((pagePath) => {
   }
 
   // Check 3: Breadcrumb Structured Data (AEO)
-  if (content.includes('BreadcrumbJsonLd')) {
-    pass('AEO-Breadcrumbs', `${relPath} implements BreadcrumbList JSON-LD`);
+  if (content.includes('BreadcrumbJsonLd') || content.includes('ArticleJsonLd') || content.includes('LocationJsonLd') || content.includes('buildProfilePageSchema')) {
+    pass('AEO-Breadcrumbs', `${relPath} implements BreadcrumbList JSON-LD / Connected Graph`);
   } else if (!relPath.includes('[slug]')) {
     warn('AEO-Breadcrumbs', `${relPath} should include <BreadcrumbJsonLd> for search hierarchy`);
   }

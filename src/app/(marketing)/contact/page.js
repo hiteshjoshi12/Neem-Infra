@@ -6,7 +6,7 @@ import { PAGE_SEO, BREADCRUMBS } from '@/lib/seo/seoConfig';
 export async function generateMetadata() {
   const seoData = PAGE_SEO['/contact'];
   return {
-    title: seoData.title,
+    title: { absolute: seoData.title },
     description: seoData.description,
     alternates: {
       canonical: seoData.canonical,

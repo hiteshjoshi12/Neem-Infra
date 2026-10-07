@@ -74,7 +74,7 @@ export default function AboutConsultationCta() {
         {/* Main Consultation Chassis */}
         <div
           ref={chassisRef}
-          className="relative rounded-3xl sm:rounded-[36px] p-8 sm:p-12 lg:p-14 bg-gradient-to-br from-[#101522]/95 via-[#0C101A]/95 to-[#080B12]/98 border border-[#D09A16]/35 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85),0_0_50px_rgba(197,168,128,0.15)] backdrop-blur-2xl overflow-hidden"
+          className="relative rounded-3xl sm:rounded-[36px] p-8 sm:p-12 lg:p-14 bg-gradient-to-br from-[#101522]/95 via-[#0C101A]/95 to-[#080B12]/98 border border-[#D09A16]/35 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85),0_0_50px_rgba(208, 154, 22,0.15)] backdrop-blur-2xl overflow-hidden"
         >
           {/* Subtle Golden Radial Glow */}
           <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#D09A16]/15 rounded-full blur-3xl pointer-events-none" />
@@ -87,7 +87,7 @@ export default function AboutConsultationCta() {
               {/* Headline */}
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-white leading-[1.15]">
                 Request a Private <br />
-                <span className="italic font-light text-[#D09A16] drop-shadow-[0_0_30px_rgba(197,168,128,0.35)]">
+                <span className="italic font-light text-[#D09A16] drop-shadow-[0_0_30px_rgba(208, 154, 22,0.35)]">
                   Executive Consultation
                 </span>
               </h2>
@@ -121,7 +121,7 @@ export default function AboutConsultationCta() {
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-3">
                 <a
                   href="tel:+919811221207"
-                  className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-[#D09A16] to-[#B39366] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-[0.16em] flex items-center gap-2.5 transition-all shadow-[0_10px_30px_rgba(197,168,128,0.35)] hover:-translate-y-0.5 cursor-pointer"
+                  className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-[#D09A16] to-[#D09A16] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-[0.16em] flex items-center gap-2.5 transition-all shadow-[0_10px_30px_rgba(208, 154, 22,0.35)] hover:-translate-y-0.5 cursor-pointer"
                 >
                   <Phone size={15} />
                   <span>Call Direct: +91 98112 21207</span>

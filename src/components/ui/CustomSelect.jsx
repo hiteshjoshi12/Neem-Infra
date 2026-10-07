@@ -30,8 +30,8 @@ export default function CustomSelect({ icon: Icon, label, options, value, onChan
       >
         <div className="flex items-center gap-2 overflow-hidden text-left min-w-0">
           {Icon && (
-            <div className="w-6 h-6 rounded-lg bg-[#C6A24A]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#C6A24A]/20 transition-colors">
-              <Icon className="text-[#C6A24A] w-3 h-3 flex-shrink-0" />
+            <div className="w-6 h-6 rounded-lg bg-[#D09A16]/10 flex items-center justify-center flex-shrink-0 group-hover:bg-[#D09A16]/20 transition-colors">
+              <Icon className="text-[#D09A16] w-3 h-3 flex-shrink-0" />
             </div>
           )}
           <div className="flex flex-col min-w-0">
@@ -45,7 +45,7 @@ export default function CustomSelect({ icon: Icon, label, options, value, onChan
         </div>
         <ChevronDown 
           size={14} 
-          className={`text-[#8A95A7] group-hover:text-[#C6A24A] transition-transform duration-300 flex-shrink-0 ml-1 ${isOpen ? 'rotate-180 text-[#C6A24A]' : ''}`} 
+          className={`text-[#8A95A7] group-hover:text-[#D09A16] transition-transform duration-300 flex-shrink-0 ml-1 ${isOpen ? 'rotate-180 text-[#D09A16]' : ''}`} 
         />
       </div>
 
@@ -64,7 +64,7 @@ export default function CustomSelect({ icon: Icon, label, options, value, onChan
                 setIsOpen(false);
               }}
               className={`px-4 py-2 text-xs transition-colors cursor-pointer border-b border-[#F1EFE9] mb-1 font-medium ${
-                !value ? 'text-[#C6A24A] font-semibold bg-[#C6A24A]/5' : 'text-[#64748B] hover:bg-[#F9F8F4]'
+                !value ? 'text-[#D09A16] font-semibold bg-[#D09A16]/5' : 'text-[#64748B] hover:bg-[#F9F8F4]'
               }`}
             >
               All {label}s
@@ -79,12 +79,12 @@ export default function CustomSelect({ icon: Icon, label, options, value, onChan
                 }}
                 className={`px-4 py-2 text-xs sm:text-[13px] transition-colors cursor-pointer flex items-center justify-between ${
                   value === opt.value 
-                    ? 'bg-[#C6A24A]/10 text-[#17213D] font-semibold' 
+                    ? 'bg-[#D09A16]/10 text-[#17213D] font-semibold' 
                     : 'text-[#475569] font-normal hover:bg-[#F9F8F4] hover:text-[#17213D]'
                 }`}
               >
                 <span>{opt.label}</span>
-                {value === opt.value && <span className="w-1.5 h-1.5 rounded-full bg-[#C6A24A]" />}
+                {value === opt.value && <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16]" />}
               </li>
             ))}
           </motion.ul>

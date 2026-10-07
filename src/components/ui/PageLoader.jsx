@@ -74,7 +74,7 @@ export default function PageLoader() {
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, rgba(197,168,128,0.12) 0%, rgba(197,168,128,0.02) 50%, transparent 70%)'
+          background: 'radial-gradient(circle, rgba(208, 154, 22,0.12) 0%, rgba(208, 154, 22,0.02) 50%, transparent 70%)'
         }}
       />
       <div
@@ -88,7 +88,7 @@ export default function PageLoader() {
       <div
         className="absolute inset-0 opacity-[0.035] pointer-events-none"
         style={{
-          backgroundImage: `linear-gradient(to right, rgba(197,168,128,0.3) 1px, transparent 1px), linear-gradient(to bottom, rgba(197,168,128,0.3) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(to right, rgba(208, 154, 22,0.3) 1px, transparent 1px), linear-gradient(to bottom, rgba(208, 154, 22,0.3) 1px, transparent 1px)`,
           backgroundSize: '40px 40px'
         }}
       />
@@ -131,7 +131,7 @@ export default function PageLoader() {
 
           {/* FRONT FACE (Glass Curtain Wall) */}
           <div
-            className="absolute inset-0 rounded-lg border border-[#D09A16]/60 bg-gradient-to-b from-[#151C2C]/90 via-[#0E1420]/90 to-[#070A11]/95 backdrop-blur-md overflow-hidden p-1.5 flex flex-col justify-between shadow-[0_0_15px_rgba(197,168,128,0.3)]"
+            className="absolute inset-0 rounded-lg border border-[#D09A16]/60 bg-gradient-to-b from-[#151C2C]/90 via-[#0E1420]/90 to-[#070A11]/95 backdrop-blur-md overflow-hidden p-1.5 flex flex-col justify-between shadow-[0_0_15px_rgba(208, 154, 22,0.3)]"
             style={{ transform: 'translateZ(32px)' }}
           >
             {/* Windows Pattern */}
@@ -141,7 +141,7 @@ export default function PageLoader() {
               ))}
             </div>
             {/* Floor separator lines */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_11px,rgba(197,168,128,0.3)_12px)] bg-[size:100%_12px] pointer-events-none" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_11px,rgba(208, 154, 22,0.3)_12px)] bg-[size:100%_12px] pointer-events-none" />
           </div>
 
           {/* BACK FACE */}
@@ -166,7 +166,7 @@ export default function PageLoader() {
                 <div key={i} className="rounded-xs bg-[#D09A16]/15 border border-[#D09A16]/25" />
               ))}
             </div>
-            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_11px,rgba(197,168,128,0.25)_12px)] bg-[size:100%_12px] pointer-events-none" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_11px,rgba(208, 154, 22,0.25)_12px)] bg-[size:100%_12px] pointer-events-none" />
           </div>
 
           {/* LEFT FACE */}
@@ -209,7 +209,7 @@ export default function PageLoader() {
           style={{
             transform: 'rotateX(72deg) rotateZ(45deg)',
             transformStyle: 'preserve-3d',
-            boxShadow: '0 0 35px rgba(197,168,128,0.2)'
+            boxShadow: '0 0 35px rgba(208, 154, 22,0.2)'
           }}
         >
           <div className="absolute inset-2 border border-dashed border-[#D09A16]/30 rounded-xl" />
@@ -241,7 +241,7 @@ export default function PageLoader() {
           <div className="relative w-full h-1.5 rounded-full bg-white/10 overflow-hidden border border-white/5">
             {/* Animated Fill Bar */}
             <div
-              className="h-full rounded-full bg-gradient-to-r from-[#D09A16] via-[#E6D5BC] to-[#B39366] transition-all duration-300 shadow-[0_0_12px_#D09A16]"
+              className="h-full rounded-full bg-gradient-to-r from-[#D09A16] via-[#E6D5BC] to-[#D09A16] transition-all duration-300 shadow-[0_0_12px_#D09A16]"
               style={{ width: `${progress}%` }}
             />
           </div>

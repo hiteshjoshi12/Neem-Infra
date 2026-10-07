@@ -35,7 +35,7 @@ export default function Footer() {
   const officeName = footerData.officeName || 'Saudagar Properties';
   const officeAddress =
     footerData.officeAddress ||
-    '38, Akashneem Marg, DLF-II, Gurgaon-122002';
+    '38, Akashneem Marg, DLF Phase 2, Gurugram, Haryana 122002';
 
   const phoneTitle = footerData.phoneTitle || 'Direct Line';
   const phoneSubtitle = footerData.phoneSubtitle || 'Phone';
@@ -67,20 +67,22 @@ export default function Footer() {
     { label: 'Home', href: '/' },
     { label: 'About Us', href: '/about' },
     { label: 'Featured Property', href: '/#featured' },
-    { label: 'Our Team', href: '/about' },
-    { label: 'Blog', href: '/blogs' },
+    { label: 'Our Team', href: '/team' },
+    { label: 'Blog', href: '/blog' },
     { label: 'Contact Us', href: '/contact' },
   ];
 
   const servicesTitle = footerData.servicesTitle || 'Locations';
 
   const serviceLinks = footerData.servicesLinks || [
-    { label: 'Property DLF Phase 1', href: '/services/dlf-phase-1' },
-    { label: 'Property DLF Phase 2', href: '/services/dlf-phase-2' },
-    { label: 'Property DLF Phase 3', href: '/services/dlf-phase-3' },
-    { label: 'Property DLF Phase 4', href: '/services/dlf-phase-4' },
-    { label: 'Property In Sushant Lok', href: '/services/sushant-lok' },
-    { label: 'Property In Udyog Vihar', href: '/services/udyog-vihar' },
+    { label: 'DLF Phase 1', href: '/blog/location/dlf-phase-1' },
+    { label: 'DLF Phase 2', href: '/blog/location/dlf-phase-2' },
+    { label: 'DLF Phase 3', href: '/blog/location/dlf-phase-3' },
+    { label: 'DLF Phase 4', href: '/blog/location/dlf-phase-4' },
+    { label: 'DLF Phase 5', href: '/blog/location/dlf-phase-5' },
+    { label: 'Golf Course Road', href: '/blog/location/golf-course-road' },
+    { label: 'Sushant Lok 1', href: '/blog/location/sushant-lok-1' },
+    { label: 'Cyber City', href: '/blog/location/cyber-city' },
   ];
 
   const followTitle = footerData.followTitle || 'Private Advisory';
@@ -126,9 +128,9 @@ export default function Footer() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 opacity-[0.025] bg-[linear-gradient(#C6A24A_1px,transparent_1px),linear-gradient(90deg,#C6A24A_1px,transparent_1px)] [background-size:50px_50px]" />
+        <div className="absolute inset-0 opacity-[0.025] bg-[linear-gradient(#D09A16_1px,transparent_1px),linear-gradient(90deg,#D09A16_1px,transparent_1px)] [background-size:50px_50px]" />
 
-        <div className="absolute -right-32 -top-32 h-[400px] w-[400px] rounded-full bg-[#C6A24A]/[0.045] blur-[110px]" />
+        <div className="absolute -right-32 -top-32 h-[400px] w-[400px] rounded-full bg-[#D09A16]/[0.045] blur-[110px]" />
 
         <div className="absolute -bottom-40 left-1/3 h-[350px] w-[350px] rounded-full bg-black/40 blur-[100px]" />
       </div>
@@ -144,12 +146,12 @@ export default function Footer() {
 
             {/* Office */}
             <div className="flex items-start gap-3 md:border-r md:border-white/10 md:pr-8">
-              <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-[#C6A24A]/30 bg-[#202B4A] text-[#C6A24A]">
+              <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-[#D09A16]/30 bg-[#202B4A] text-[#D09A16]">
                 <MapPin size={15} strokeWidth={1.5} />
               </div>
 
               <div className="min-w-0">
-                <p className="text-[8px] font-semibold uppercase tracking-[0.25em] text-[#C6A24A]">
+                <p className="text-[8px] font-semibold uppercase tracking-[0.25em] text-[#D09A16]">
                   {officeTitle}
                 </p>
 
@@ -165,12 +167,12 @@ export default function Footer() {
 
             {/* Phone */}
             <div className="flex items-start gap-3 md:px-8">
-              <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-[#C6A24A]/30 bg-[#202B4A] text-[#C6A24A]">
+              <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-[#D09A16]/30 bg-[#202B4A] text-[#D09A16]">
                 <Phone size={14} strokeWidth={1.5} />
               </div>
 
               <div>
-                <p className="text-[8px] font-semibold uppercase tracking-[0.25em] text-[#C6A24A]">
+                <p className="text-[8px] font-semibold uppercase tracking-[0.25em] text-[#D09A16]">
                   {phoneTitle}
                 </p>
 
@@ -186,7 +188,7 @@ export default function Footer() {
                         item.href ||
                         `tel:${item.number.replace(/\s+/g, '')}`
                       }
-                      className="text-[10px] text-[#C9CED9]/70 transition-colors hover:text-[#C6A24A]"
+                      className="text-[10px] text-[#C9CED9]/70 transition-colors hover:text-[#D09A16]"
                     >
                       {item.number}
                     </a>
@@ -197,12 +199,12 @@ export default function Footer() {
 
             {/* Email */}
             <div className="flex items-start gap-3 md:border-l md:border-white/10 md:pl-8">
-              <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-[#C6A24A]/30 bg-[#202B4A] text-[#C6A24A]">
+              <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-[#D09A16]/30 bg-[#202B4A] text-[#D09A16]">
                 <Mail size={14} strokeWidth={1.5} />
               </div>
 
               <div className="min-w-0">
-                <p className="text-[8px] font-semibold uppercase tracking-[0.25em] text-[#C6A24A]">
+                <p className="text-[8px] font-semibold uppercase tracking-[0.25em] text-[#D09A16]">
                   {emailTitle}
                 </p>
 
@@ -212,7 +214,7 @@ export default function Footer() {
 
                 <a
                   href={`mailto:${email}`}
-                  className="mt-0.5 block truncate text-[10px] text-[#C9CED9]/70 transition-colors hover:text-[#C6A24A]"
+                  className="mt-0.5 block truncate text-[10px] text-[#C9CED9]/70 transition-colors hover:text-[#D09A16]"
                 >
                   {email}
                 </a>
@@ -265,7 +267,7 @@ export default function Footer() {
                     aria-label={social.platform || 'Social Link'}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-7 w-7 items-center justify-center rounded-md border border-white/10 text-[#C9CED9] transition-all hover:border-[#C6A24A]/60 hover:bg-[#C6A24A] hover:text-[#0E162B]"
+                    className="flex h-7 w-7 items-center justify-center rounded-md border border-white/10 text-[#C9CED9] transition-all hover:border-[#D09A16]/60 hover:bg-[#D09A16] hover:text-[#0E162B]"
                   >
                     <IconComponent size={11} />
                   </a>
@@ -276,7 +278,7 @@ export default function Footer() {
 
           {/* EXPLORE */}
           <div className="lg:col-span-2">
-            <h2 className="mb-5 text-[9px] font-semibold uppercase tracking-[0.25em] text-[#C6A24A]">
+            <h2 className="mb-5 text-[9px] font-semibold uppercase tracking-[0.25em] text-[#D09A16]">
               {menuTitle}
             </h2>
 
@@ -286,7 +288,7 @@ export default function Footer() {
                   <Link href={item.href}
                     className="group inline-flex items-center gap-1.5 text-[11px] text-[#C9CED9]/70 transition-colors hover:text-white"
                   >
-                    <span className="h-1 w-1 rounded-full bg-[#C6A24A]/50 transition-transform group-hover:scale-125" />
+                    <span className="h-1 w-1 rounded-full bg-[#D09A16]/50 transition-transform group-hover:scale-125" />
                     {item.label}
                   </Link>
                 </li>
@@ -296,7 +298,7 @@ export default function Footer() {
 
           {/* LOCATIONS */}
           <div className="lg:col-span-3">
-            <h2 className="mb-5 text-[9px] font-semibold uppercase tracking-[0.25em] text-[#C6A24A]">
+            <h2 className="mb-5 text-[9px] font-semibold uppercase tracking-[0.25em] text-[#D09A16]">
               {servicesTitle}
             </h2>
 
@@ -306,7 +308,7 @@ export default function Footer() {
                   <Link href={item.href}
                     className="group inline-flex items-center gap-1.5 text-[11px] text-[#C9CED9]/70 transition-colors hover:text-white"
                   >
-                    <span className="h-1 w-1 rounded-full bg-[#C6A24A]/50 transition-transform group-hover:scale-125" />
+                    <span className="h-1 w-1 rounded-full bg-[#D09A16]/50 transition-transform group-hover:scale-125" />
                     {item.label}
                   </Link>
                 </li>
@@ -316,7 +318,7 @@ export default function Footer() {
 
           {/* PRIVATE ADVISORY */}
           <div className="lg:col-span-2">
-            <h2 className="mb-5 text-[9px] font-semibold uppercase tracking-[0.25em] text-[#C6A24A]">
+            <h2 className="mb-5 text-[9px] font-semibold uppercase tracking-[0.25em] text-[#D09A16]">
               {followTitle}
             </h2>
 
@@ -326,7 +328,7 @@ export default function Footer() {
 
             <a
               href={`tel:${callCtaPhone.replace(/\s+/g, '')}`}
-              className="group mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#C6A24A] px-4 py-3 text-[9px] font-bold uppercase tracking-[0.18em] text-[#0E162B] transition-all hover:bg-[#D8BD73]"
+              className="group mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#D09A16] px-4 py-3 text-[9px] font-bold uppercase tracking-[0.18em] text-[#0E162B] transition-all hover:bg-[#D09A16]"
             >
               <Phone size={12} />
 
@@ -354,7 +356,7 @@ export default function Footer() {
             {legalLinks.map((item, idx) => (
               <React.Fragment key={idx}>
                 <Link href={item.href}
-                  className="text-[9px] text-[#C9CED9]/40 transition-colors hover:text-[#C6A24A]"
+                  className="text-[9px] text-[#C9CED9]/40 transition-colors hover:text-[#D09A16]"
                 >
                   {item.label}
                 </Link>

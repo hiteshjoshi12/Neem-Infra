@@ -14,19 +14,19 @@ export const metadata = {
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-[#0E162B] text-[#F7F5EF] flex flex-col items-center justify-center p-6 text-center relative overflow-hidden selection:bg-[#C6A24A] selection:text-[#0E162B]">
+    <div className="min-h-screen bg-[#0E162B] text-[#F7F5EF] flex flex-col items-center justify-center p-6 text-center relative overflow-hidden selection:bg-[#D09A16] selection:text-[#0E162B]">
       {/* Subtle architectural backdrop */}
       <div 
         aria-hidden="true" 
-        className="pointer-events-none absolute inset-0 opacity-[0.03] bg-[linear-gradient(#C6A24A_1px,transparent_1px),linear-gradient(90deg,#C6A24A_1px,transparent_1px)] [background-size:40px_40px]" 
+        className="pointer-events-none absolute inset-0 opacity-[0.03] bg-[linear-gradient(#D09A16_1px,transparent_1px),linear-gradient(90deg,#D09A16_1px,transparent_1px)] [background-size:40px_40px]" 
       />
       <div 
         aria-hidden="true"
-        className="pointer-events-none absolute w-96 h-96 rounded-full bg-[#C6A24A]/10 blur-[120px]"
+        className="pointer-events-none absolute w-96 h-96 rounded-full bg-[#D09A16]/10 blur-[120px]"
       />
 
       <div className="relative z-10 max-w-xl mx-auto">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/5 border border-[#C6A24A]/30 text-[#C6A24A] text-xs font-semibold uppercase tracking-[0.25em] mb-6">
+        <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-white/5 border border-[#D09A16]/30 text-[#D09A16] text-xs font-semibold uppercase tracking-[0.25em] mb-6">
           <Compass size={13} />
           <span>Error 404 • Destination Not Found</span>
         </div>
@@ -42,11 +42,11 @@ export default function NotFound() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-8 text-left">
           <Link 
             href="/"
-            className="flex items-center gap-3 p-4 rounded-2xl bg-[#17213D] border border-white/10 hover:border-[#C6A24A] transition-all group"
+            className="flex items-center gap-3 p-4 rounded-2xl bg-[#17213D] border border-white/10 hover:border-[#D09A16] transition-all group"
           >
-            <Home size={18} className="text-[#C6A24A]" />
+            <Home size={18} className="text-[#D09A16]" />
             <div>
-              <span className="block text-xs font-bold text-white group-hover:text-[#C6A24A] transition-colors">
+              <span className="block text-xs font-bold text-white group-hover:text-[#D09A16] transition-colors">
                 Return to Homepage
               </span>
               <span className="text-[11px] text-[#9DA6B8]">
@@ -57,11 +57,11 @@ export default function NotFound() {
 
           <Link 
             href="/blog"
-            className="flex items-center gap-3 p-4 rounded-2xl bg-[#17213D] border border-white/10 hover:border-[#C6A24A] transition-all group"
+            className="flex items-center gap-3 p-4 rounded-2xl bg-[#17213D] border border-white/10 hover:border-[#D09A16] transition-all group"
           >
-            <BookOpen size={18} className="text-[#C6A24A]" />
+            <BookOpen size={18} className="text-[#D09A16]" />
             <div>
-              <span className="block text-xs font-bold text-white group-hover:text-[#C6A24A] transition-colors">
+              <span className="block text-xs font-bold text-white group-hover:text-[#D09A16] transition-colors">
                 Real Estate Journal
               </span>
               <span className="text-[11px] text-[#9DA6B8]">
@@ -72,11 +72,11 @@ export default function NotFound() {
 
           <Link 
             href="/properties"
-            className="flex items-center gap-3 p-4 rounded-2xl bg-[#17213D] border border-white/10 hover:border-[#C6A24A] transition-all group"
+            className="flex items-center gap-3 p-4 rounded-2xl bg-[#17213D] border border-white/10 hover:border-[#D09A16] transition-all group"
           >
-            <Building2 size={18} className="text-[#C6A24A]" />
+            <Building2 size={18} className="text-[#D09A16]" />
             <div>
-              <span className="block text-xs font-bold text-white group-hover:text-[#C6A24A] transition-colors">
+              <span className="block text-xs font-bold text-white group-hover:text-[#D09A16] transition-colors">
                 Ready-to-Move Residences
               </span>
               <span className="text-[11px] text-[#9DA6B8]">
@@ -87,11 +87,11 @@ export default function NotFound() {
 
           <Link 
             href="/contact"
-            className="flex items-center gap-3 p-4 rounded-2xl bg-[#17213D] border border-white/10 hover:border-[#C6A24A] transition-all group"
+            className="flex items-center gap-3 p-4 rounded-2xl bg-[#17213D] border border-white/10 hover:border-[#D09A16] transition-all group"
           >
-            <Phone size={18} className="text-[#C6A24A]" />
+            <Phone size={18} className="text-[#D09A16]" />
             <div>
-              <span className="block text-xs font-bold text-white group-hover:text-[#C6A24A] transition-colors">
+              <span className="block text-xs font-bold text-white group-hover:text-[#D09A16] transition-colors">
                 Private Consultation
               </span>
               <span className="text-[11px] text-[#9DA6B8]">

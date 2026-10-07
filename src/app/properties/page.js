@@ -1,10 +1,9 @@
+import { Suspense } from 'react';
 import { getProperties } from '@/services/propertyService';
 import PublicLayout from '@/layouts/PublicLayout';
-import Link from 'next/link';
-import Image from 'next/image';
 import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
-
 import { buildPageMetadata } from '@/lib/seo/metadataHelper';
+import PropertiesCatalogClient from '@/components/properties/PropertiesCatalogClient';
 
 export const metadata = buildPageMetadata({
   title: 'Luxury Properties & Builder Floors DLF Gurugram',
@@ -14,53 +13,43 @@ export const metadata = buildPageMetadata({
   keywords: ['Luxury Builder Floors', 'DLF Phase 1-5', 'Gurugram Properties', 'Ready to Move', 'Saudagar Properties'],
 });
 
+function PropertiesCatalogSkeleton() {
+  return (
+    <div className="w-full min-h-screen bg-[#F7F5EF] pt-28 pb-20 animate-pulse">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="h-4 w-40 bg-gray-200 rounded mb-4" />
+        <div className="h-10 w-96 bg-gray-300 rounded mb-4" />
+        <div className="h-5 w-full max-w-2xl bg-gray-200 rounded mb-10" />
+        <div className="flex gap-2 mb-8">
+          {[1, 2, 3, 4, 5].map((i) => (
+            <div key={i} className="h-8 w-28 bg-gray-200 rounded-xl" />
+          ))}
+        </div>
+        <div className="h-20 bg-white rounded-2xl border border-gray-200 mb-8" />
+        <div className="space-y-6">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="h-72 bg-white rounded-3xl border border-gray-200" />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default async function PropertiesPage() {
   const properties = await getProperties({ all: false });
 
   return (
     <PublicLayout>
-      <BreadcrumbJsonLd items={[{ name: 'Home', url: '/' }, { name: 'Properties', url: '/properties' }]} />
-      <div className="w-full min-h-screen bg-[#FAF8F5] pt-32 pb-16 px-4">
-        <div className="max-w-7xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-serif font-bold text-[#1D263B] mb-8">All Properties</h1>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {properties.map(property => (
-              <div key={property._id} className="bg-white rounded-2xl shadow-sm border border-[#E8E4DA] overflow-hidden group hover:shadow-md transition-shadow">
-                <div className="aspect-[4/3] bg-gray-100 relative overflow-hidden">
-                  <Image
-                    src={property.img} 
-                    alt={property.title}
-                    width={600}
-                    height={450}
-                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                  />
-                  {property.tag && (
-                    <div className="absolute top-4 left-4 bg-[#D09A16] text-white px-3 py-1 rounded-md text-xs font-bold uppercase tracking-wider">
-                      {property.tag}
-                    </div>
-                  )}
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-[#1D263B] mb-2">{property.title}</h3>
-                  <p className="text-[#475569] text-sm mb-4">{property.location}</p>
-                  <div className="flex justify-between items-center mb-6">
-                    <span className="text-[#D09A16] font-bold text-lg">{property.price}</span>
-                    <span className="text-sm font-medium text-slate-500 bg-slate-100 px-3 py-1 rounded-full">{property.category}</span>
-                  </div>
-                  <Link 
-                    href={property.slug ? `/properties/${property.slug}` : property.link || '#'}
-                    className="block w-full text-center py-3 rounded-xl border border-[#D09A16] text-[#D09A16] font-semibold hover:bg-[#D09A16] hover:text-white transition-colors"
-                  >
-                    View Details
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
+      <BreadcrumbJsonLd
+        items={[
+          { name: 'Home', url: '/' },
+          { name: 'Properties', url: '/properties' }
+        ]}
+      />
+      <Suspense fallback={<PropertiesCatalogSkeleton />}>
+        <PropertiesCatalogClient initialProperties={properties} />
+      </Suspense>
     </PublicLayout>
   );
 }

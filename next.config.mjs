@@ -85,7 +85,7 @@ const nextConfig = {
       // Team and clients aliases
       {
         source: '/our-team',
-        destination: '/about',
+        destination: '/team',
         permanent: true,
       },
       {
@@ -93,25 +93,25 @@ const nextConfig = {
         destination: '/about',
         permanent: true,
       },
-      // Legacy service/corridor routes to dedicated destination
+      // Legacy service/corridor routes to dedicated 1-to-1 destination
       {
         source: '/services/dlf-phase-1',
-        destination: '/blog/location/dlf-phase-1-5',
+        destination: '/blog/location/dlf-phase-1',
         permanent: true,
       },
       {
         source: '/services/dlf-phase-2',
-        destination: '/blog/location/dlf-phase-1-5',
+        destination: '/blog/location/dlf-phase-2',
         permanent: true,
       },
       {
         source: '/services/dlf-phase-3',
-        destination: '/blog/location/dlf-phase-1-5',
+        destination: '/blog/location/dlf-phase-3',
         permanent: true,
       },
       {
         source: '/services/dlf-phase-4',
-        destination: '/blog/location/dlf-phase-1-5',
+        destination: '/blog/location/dlf-phase-4',
         permanent: true,
       },
       {
@@ -122,6 +122,27 @@ const nextConfig = {
       {
         source: '/services/udyog-vihar',
         destination: '/services/industrial',
+        permanent: true,
+      },
+      // Legacy property catalog routes redirected to active counterparts
+      {
+        source: '/ready-to-move',
+        destination: '/properties',
+        permanent: true,
+      },
+      {
+        source: '/new-launches',
+        destination: '/properties',
+        permanent: true,
+      },
+      {
+        source: '/under-construction',
+        destination: '/properties',
+        permanent: true,
+      },
+      {
+        source: '/developers',
+        destination: '/about',
         permanent: true,
       },
     ];

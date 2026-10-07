@@ -151,19 +151,19 @@ export default function OurServicesSection() {
         >
           {/* Eyebrow */}
           <div className="mb-4 inline-flex items-center gap-2.5">
-            <span className="h-px w-8 bg-[#C6A24A]" />
+            <span className="h-px w-8 bg-[#D09A16]" />
 
             <Sparkles
               size={12}
               strokeWidth={1.7}
-              className="text-[#C6A24A]"
+              className="text-[#D09A16]"
             />
 
             <span className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#182345]/70 sm:text-[10px]">
               {badge}
             </span>
 
-            <span className="h-px w-8 bg-[#C6A24A]" />
+            <span className="h-px w-8 bg-[#D09A16]" />
           </div>
 
           {/* Heading */}
@@ -182,7 +182,7 @@ export default function OurServicesSection() {
             "
           >
             {titleMain}{' '}
-            <span className="font-light italic text-[#C6A24A]">
+            <span className="font-light italic text-[#D09A16]">
               {titleItalic}
             </span>
           </h2>
@@ -195,7 +195,7 @@ export default function OurServicesSection() {
           {/* Decorative line */}
           <div
             ref={lineRef}
-            className="mx-auto mt-6 h-px w-20 bg-[#C6A24A]/60"
+            className="mx-auto mt-6 h-px w-20 bg-[#D09A16]/60"
           />
         </header>
 

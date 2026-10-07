@@ -1,17 +1,17 @@
-import { connectDB } from '@/lib/mongodb';
-import BlogPost from '@/models/BlogPost';
-import Author from '@/models/Author';
-import Category from '@/models/Category';
-import Location from '@/models/Location';
-import Tag from '@/models/Tag';
-import PropertyType from '@/models/PropertyType';
+import { connectDB } from '../lib/mongodb.js';
+import BlogPost from '../models/BlogPost.js';
+import Author from '../models/Author.js';
+import Category from '../models/Category.js';
+import Location from '../models/Location.js';
+import Tag from '../models/Tag.js';
+import PropertyType from '../models/PropertyType.js';
 import { 
   INITIAL_POSTS, 
   INITIAL_AUTHORS, 
   INITIAL_CATEGORIES, 
   INITIAL_LOCATIONS, 
   INITIAL_TAGS 
-} from '@/constants/blogData';
+} from '../constants/blogData.js';
 
 // In-memory cache with 60s TTL to eliminate database roundtrips and make page navigation instant
 const memoryCache = new Map();
@@ -49,9 +49,15 @@ function getHydratedFallbackPosts() {
     category: catMap[p.categorySlug] || { name: 'Real Estate Advisory', slug: 'real-estate-advisory' },
     location: (p.locationSlugs || []).map(s => locMap[s]).filter(Boolean),
     tags: (p.tagsSlugs || []).map(s => tagMap[s]).filter(Boolean),
+    isPillar: !!p.isPillar,
+    topicCluster: p.topicCluster || 'dlf-gurugram',
+    parentPillarSlug: p.parentPillarSlug || null,
+    childArticlesSlugs: p.childArticlesSlugs || [],
+    relatedPostsSlugs: p.relatedPostsSlugs || [],
+    relatedPosts: p.relatedPostsSlugs || [],
     publishedAt: p.publishedAt,
     createdAt: p.publishedAt,
-    updatedAt: p.publishedAt
+    updatedAt: p.updatedAt || p.publishedAt
   }));
 }
 
@@ -122,6 +128,7 @@ export async function getBlogPosts(options = {}) {
       .populate('tags')
       .populate('location')
       .populate('propertyType')
+      .populate('relatedPosts')
       .sort({ publishedAt: -1, createdAt: -1 });
 
     if (limit) {
@@ -188,6 +195,8 @@ export async function getBlogPostBySlug(slug) {
       .populate('tags')
       .populate('location')
       .populate('propertyType')
+      .populate('parentPillar')
+      .populate('childArticles')
       .populate({
         path: 'relatedPosts',
         populate: { path: 'author category' }
@@ -202,13 +211,62 @@ export async function getBlogPostBySlug(slug) {
       const fallback = getHydratedFallbackPosts().find(p => p.slug === slug);
       result = fallback || null;
     }
-    if (result) setCached(cacheKey, result);
+
+    if (result) {
+      // Resolve parentPillar if not populated but slug exists
+      if (result.parentPillarSlug && (!result.parentPillar || typeof result.parentPillar === 'string')) {
+        const parentDoc = await BlogPost.findOne({ slug: result.parentPillarSlug, status: 'published' }).lean().exec()
+          || getHydratedFallbackPosts().find(p => p.slug === result.parentPillarSlug);
+        if (parentDoc) {
+          result.parentPillar = {
+            title: parentDoc.title,
+            slug: parentDoc.slug,
+            excerpt: parentDoc.excerpt
+          };
+        }
+      }
+
+      // Resolve childArticles if pillar
+      if (result.isPillar && (!result.childArticles || result.childArticles.length === 0)) {
+        const allPosts = await getBlogPosts();
+        result.childArticles = allPosts
+          .filter(p => p.slug !== result.slug && (p.parentPillarSlug === result.slug || result.childArticlesSlugs?.includes(p.slug)))
+          .map(c => ({
+            title: c.title,
+            slug: c.slug,
+            excerpt: c.excerpt,
+            readingTime: c.readingTime || 5,
+            featuredImage: c.featuredImage
+          }));
+      }
+
+      setCached(cacheKey, result);
+    }
     return result;
   } catch (error) {
     console.warn('[blogService] getBlogPostBySlug error:', error?.message);
     const fallback = getHydratedFallbackPosts().find(p => p.slug === slug);
-    const result = fallback || null;
-    if (result) setCached(cacheKey, result);
+    let result = fallback || null;
+    if (result) {
+      if (result.parentPillarSlug && !result.parentPillar) {
+        const parentDoc = getHydratedFallbackPosts().find(p => p.slug === result.parentPillarSlug);
+        if (parentDoc) {
+          result.parentPillar = { title: parentDoc.title, slug: parentDoc.slug, excerpt: parentDoc.excerpt };
+        }
+      }
+      if (result.isPillar && (!result.childArticles || result.childArticles.length === 0)) {
+        result.childArticles = getHydratedFallbackPosts()
+          .filter(p => p.slug !== result.slug && (p.parentPillarSlug === result.slug || result.childArticlesSlugs?.includes(p.slug)))
+          .map(c => ({
+            title: c.title,
+            slug: c.slug,
+            excerpt: c.excerpt,
+            readingTime: c.readingTime || 5,
+            featuredImage: c.featuredImage
+          }));
+      }
+      setCached(cacheKey, result);
+    }
     return result;
   }
 }
@@ -375,31 +433,255 @@ export async function getAuthorBySlug(slug) {
   }
 }
 
+/**
+ * Intelligent Topical Authority & Relevance Scoring Algorithm
+ * Factors:
+ * 1. Topic Cluster & Pillar relationship (Weight: +5.0)
+ * 2. Category Match (Weight: +3.5)
+ * 3. Location Overlap (Weight: +2.5 per match)
+ * 4. Tag Overlap (Weight: +2.0 per match)
+ * 5. Property Type Match (Weight: +1.5 per match)
+ * 6. Focus & Secondary Keywords Match (Weight: +2.0)
+ */
+export function calculateRelevanceScore(currentPost, candidate) {
+  if (!currentPost || !candidate || currentPost.slug === candidate.slug) return -1;
+  let score = 0;
+
+  // 1. Topic Cluster & Pillar Hierarchy
+  if (currentPost.isPillar && (candidate.parentPillarSlug === currentPost.slug || currentPost.childArticlesSlugs?.includes(candidate.slug))) {
+    score += 5.0; // Child of current pillar
+  }
+  if (candidate.isPillar && (currentPost.parentPillarSlug === candidate.slug || candidate.childArticlesSlugs?.includes(currentPost.slug))) {
+    score += 5.0; // Parent pillar of current child
+  }
+  if (currentPost.topicCluster && candidate.topicCluster && currentPost.topicCluster === candidate.topicCluster) {
+    score += 4.0; // Same topic cluster
+  }
+
+  // 2. Category Match
+  const currentCat = currentPost.categorySlug || currentPost.category?.slug;
+  const candCat = candidate.categorySlug || candidate.category?.slug;
+  if (currentCat && candCat && currentCat === candCat) {
+    score += 3.5;
+  }
+
+  // 3. Location Overlap
+  const currentLocs = (currentPost.locationSlugs || currentPost.location?.map(l => l.slug || l) || []).filter(Boolean);
+  const candLocs = (candidate.locationSlugs || candidate.location?.map(l => l.slug || l) || []).filter(Boolean);
+  const locOverlap = currentLocs.filter(l => candLocs.includes(l)).length;
+  score += locOverlap * 2.5;
+
+  // 4. Tags Overlap
+  const currentTags = (currentPost.tagsSlugs || currentPost.tags?.map(t => t.slug || t) || []).filter(Boolean);
+  const candTags = (candidate.tagsSlugs || candidate.tags?.map(t => t.slug || t) || []).filter(Boolean);
+  const tagOverlap = currentTags.filter(t => candTags.includes(t)).length;
+  score += tagOverlap * 2.0;
+
+  // 5. Property Type Overlap
+  const currentProps = (currentPost.propertyTypes || currentPost.propertyType?.map(p => p.slug || p) || []).filter(Boolean);
+  const candProps = (candidate.propertyTypes || candidate.propertyType?.map(p => p.slug || p) || []).filter(Boolean);
+  const propOverlap = currentProps.filter(p => candProps.includes(p)).length;
+  score += propOverlap * 1.5;
+
+  // 6. Keywords Overlap
+  const currentKeywords = [
+    currentPost.focusKeyword,
+    ...(currentPost.secondaryKeywords || [])
+  ].filter(Boolean).map(k => k.toLowerCase().trim());
+
+  const candKeywords = [
+    candidate.focusKeyword,
+    ...(candidate.secondaryKeywords || []),
+    candidate.title,
+    candidate.excerpt
+  ].filter(Boolean).map(k => k.toLowerCase());
+
+  for (const ck of currentKeywords) {
+    for (const candText of candKeywords) {
+      if (candText.includes(ck) || ck.includes(candText)) {
+        score += 2.0;
+        break;
+      }
+    }
+  }
+
+  return score;
+}
+
 export async function getRelatedPosts(currentPost, limit = 3) {
-  const cacheKey = `related:${currentPost?.slug}:${limit}`;
+  if (!currentPost) return [];
+  const cacheKey = `related:${currentPost.slug}:${limit}`;
   const cached = getCached(cacheKey);
   if (cached) return cached;
 
   try {
-    if (currentPost?.relatedPosts && currentPost.relatedPosts.length > 0) {
-      const res = currentPost.relatedPosts.slice(0, limit);
+    // 1. Manual relationships override automatic recommendations
+    const manualPosts = Array.isArray(currentPost.relatedPosts)
+      ? currentPost.relatedPosts.filter(Boolean)
+      : [];
+
+    if (manualPosts.length >= limit) {
+      const res = manualPosts.slice(0, limit);
       setCached(cacheKey, res);
       return res;
     }
 
-    const categorySlug = currentPost?.categorySlug || currentPost?.category?.slug;
+    // 2. Fetch candidates for intelligent scoring
+    const allPublished = await getBlogPosts({ excludeSlug: currentPost.slug, status: 'published' });
+    const manualSlugs = new Set(manualPosts.map(p => p.slug));
 
-    const res = await getBlogPosts({
-      category: categorySlug,
-      excludeSlug: currentPost?.slug,
-      limit
-    });
-    setCached(cacheKey, res);
-    return res;
+    // Filter out posts already manually selected
+    const candidates = allPublished.filter(p => !manualSlugs.has(p.slug));
+
+    // Score and sort candidates
+    const scoredCandidates = candidates
+      .map(candidate => ({
+        post: candidate,
+        score: calculateRelevanceScore(currentPost, candidate)
+      }))
+      .sort((a, b) => b.score - a.score)
+      .map(sc => sc.post);
+
+    const combined = [...manualPosts, ...scoredCandidates].slice(0, limit);
+    setCached(cacheKey, combined);
+    return combined;
   } catch (error) {
     console.warn('[blogService] getRelatedPosts error:', error?.message);
-    const res = getFallbackFiltered({ excludeSlug: currentPost?.slug, limit });
-    setCached(cacheKey, res);
-    return res;
+    const fallback = getFallbackFiltered({ excludeSlug: currentPost?.slug, limit });
+    setCached(cacheKey, fallback);
+    return fallback;
   }
+}
+
+/**
+ * Diagnostic Orphan & Internal Link Audit Report
+ * Identifies published articles with:
+ * - Zero outbound internal links
+ * - Zero inbound internal links (orphans)
+ * - Missing category
+ * - Missing location
+ * - Missing related posts
+ */
+export async function getOrphanAuditReport() {
+  const allPosts = await getBlogPosts({ status: 'published' });
+
+  // Regex to detect internal link paths
+  const internalLinkRegex = /\[([^\]]+)\]\((\/(?:blog|services|properties)[^)]*)\)|href=["'](\/(?:blog|services|properties)[^"']*)["']/g;
+
+  const inboundCounts = {};
+  allPosts.forEach(p => { inboundCounts[p.slug] = 0; });
+
+  const analyzedArticles = allPosts.map(post => {
+    const content = post.content || '';
+    const outboundMatches = [];
+    let match;
+    const re = new RegExp(internalLinkRegex);
+    while ((match = re.exec(content)) !== null) {
+      const url = match[2] || match[3];
+      if (url) outboundMatches.push(url);
+    }
+
+    // Trace inbound links to other posts
+    outboundMatches.forEach(url => {
+      const blogMatch = url.match(/^\/blog\/([^/?#]+)/);
+      if (blogMatch && blogMatch[1] && inboundCounts[blogMatch[1]] !== undefined && blogMatch[1] !== post.slug) {
+        inboundCounts[blogMatch[1]] += 1;
+      }
+    });
+
+    // Also credit inbound from manual relatedPosts
+    if (Array.isArray(post.relatedPosts)) {
+      post.relatedPosts.forEach(rel => {
+        const slug = rel.slug || rel;
+        if (slug && inboundCounts[slug] !== undefined && slug !== post.slug) {
+          inboundCounts[slug] += 1;
+        }
+      });
+    }
+
+    // Also credit parent pillar link
+    if (post.parentPillarSlug && inboundCounts[post.parentPillarSlug] !== undefined) {
+      inboundCounts[post.parentPillarSlug] += 1;
+    }
+
+    const hasCategory = Boolean(post.category || post.categorySlug);
+    const hasLocation = Boolean(
+      (Array.isArray(post.location) && post.location.length > 0) || 
+      (Array.isArray(post.locationSlugs) && post.locationSlugs.length > 0) || 
+      post.location
+    );
+    const hasRelatedPosts = Boolean(
+      (Array.isArray(post.relatedPosts) && post.relatedPosts.length > 0) || 
+      (Array.isArray(post.relatedPostsSlugs) && post.relatedPostsSlugs.length > 0)
+    );
+
+    return {
+      _id: post._id,
+      title: post.title,
+      slug: post.slug,
+      isPillar: !!post.isPillar,
+      topicCluster: post.topicCluster || 'dlf-gurugram',
+      parentPillarSlug: post.parentPillarSlug || null,
+      outboundCount: outboundMatches.length,
+      outboundLinks: outboundMatches,
+      hasCategory,
+      categoryName: post.category?.name || post.categorySlug || 'None',
+      hasLocation,
+      locationCount: post.location?.length || post.locationSlugs?.length || 0,
+      hasRelatedPosts,
+      updatedAt: post.updatedAt || post.publishedAt
+    };
+  });
+
+  let totalOrphans = 0;
+  let totalDeadEnds = 0;
+  let missingCategoryCount = 0;
+  let missingLocationCount = 0;
+  let missingRelatedPostsCount = 0;
+
+  const finalizedArticles = analyzedArticles.map(art => {
+    const inboundCount = inboundCounts[art.slug] || 0;
+    const isOrphan = inboundCount === 0;
+    const isDeadEnd = art.outboundCount === 0;
+
+    if (isOrphan) totalOrphans++;
+    if (isDeadEnd) totalDeadEnds++;
+    if (!art.hasCategory) missingCategoryCount++;
+    if (!art.hasLocation) missingLocationCount++;
+    if (!art.hasRelatedPosts) missingRelatedPostsCount++;
+
+    const issues = [];
+    if (isOrphan) issues.push('No Inbound Links (Orphan)');
+    if (isDeadEnd) issues.push('No Outbound Internal Links');
+    if (!art.hasCategory) issues.push('Missing Category');
+    if (!art.hasLocation) issues.push('Missing Location');
+    if (!art.hasRelatedPosts) issues.push('No Related Posts');
+
+    return {
+      ...art,
+      inboundCount,
+      isOrphan,
+      isDeadEnd,
+      issues,
+      status: issues.length === 0 ? 'HEALTHY' : 'NEEDS_ATTENTION'
+    };
+  });
+
+  const total = finalizedArticles.length;
+  const healthyCount = finalizedArticles.filter(a => a.issues.length === 0).length;
+  const healthScore = total > 0 ? Math.round((healthyCount / total) * 100) : 100;
+
+  return {
+    summary: {
+      totalPublished: total,
+      healthyCount,
+      healthScore,
+      totalOrphans,
+      totalDeadEnds,
+      missingCategoryCount,
+      missingLocationCount,
+      missingRelatedPostsCount
+    },
+    articles: finalizedArticles
+  };
 }

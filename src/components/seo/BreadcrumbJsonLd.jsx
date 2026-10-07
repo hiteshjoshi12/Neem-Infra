@@ -1,10 +1,12 @@
+import React from 'react';
 import JsonLd from './JsonLd';
-import { SITE_URL } from '../../lib/seo/seoConfig';
+import { buildBreadcrumbSchema } from '@/lib/seo/schemaBuilders';
 
 /**
  * BreadcrumbJsonLd — Schema.org BreadcrumbList structured data
  * =============================================================
- * Accepts an array of breadcrumb items and renders BreadcrumbList JSON-LD.
+ * Accepts an array of real breadcrumb items and renders BreadcrumbList JSON-LD.
+ * Uses crawlable absolute URLs for all items and 1-based sequential positioning.
  *
  * Usage:
  *   <BreadcrumbJsonLd items={[
@@ -13,18 +15,17 @@ import { SITE_URL } from '../../lib/seo/seoConfig';
  *   ]} />
  */
 export default function BreadcrumbJsonLd({ items }) {
-  if (!items || items.length === 0) return null;
+  if (!items || !Array.isArray(items) || items.length === 0) return null;
 
-  const data = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: items.map((item, index) => ({
-      '@type': 'ListItem',
-      position: index + 1,
-      name: item.name,
-      item: `${SITE_URL}${item.url === '/' ? '' : item.url}`,
-    })),
-  };
+  const schema = buildBreadcrumbSchema(items);
+  if (!schema) return null;
 
-  return <JsonLd data={data} />;
+  return (
+    <JsonLd
+      data={{
+        '@context': 'https://schema.org',
+        ...schema,
+      }}
+    />
+  );
 }

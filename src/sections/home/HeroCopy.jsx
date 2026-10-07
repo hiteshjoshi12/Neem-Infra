@@ -145,12 +145,12 @@ export default function HeroCopy() {
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="mb-3 sm:mb-3.5 flex items-center justify-center gap-3"
         >
-          <span className="w-7 h-[1px] bg-[#C6A24A]"></span>
-          <span className="text-[11px] sm:text-xs tracking-[0.3em] text-[#C6A24A] uppercase font-semibold flex items-center gap-1.5 drop-shadow-sm">
+          <span className="w-7 h-[1px] bg-[#D09A16]"></span>
+          <span className="text-[11px] sm:text-xs tracking-[0.3em] text-[#D09A16] uppercase font-semibold flex items-center gap-1.5 drop-shadow-sm">
             <Sparkles className="w-3.5 h-3.5" />
             {heroData.badge || "DLF Phase 1–4 • Sushant Lok • Golf Course Ext."}
           </span>
-          <span className="w-7 h-[1px] bg-[#C6A24A]"></span>
+          <span className="w-7 h-[1px] bg-[#D09A16]"></span>
         </motion.div>
 
         {/* Master Headline: Reduced ~20%, Responsive clamp, Strictly 2 Lines */}
@@ -158,20 +158,20 @@ export default function HeroCopy() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
-          className="text-2xl md:text-[clamp(1.75rem,3.5vw,3.5rem)] font-serif text-[#F7F5EF] leading-[1.12] tracking-tight max-w-[800px] mb-2 md:mb-3 sm:mb-3.5 drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)]"
+          className="text-2xl md:text-[clamp(1.75rem,3.5vw,3.5rem)] font-serif text-[#F7F5EF] leading-[1.15] tracking-tight max-w-[800px] mb-2 md:mb-3 sm:mb-3.5 drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)]"
         >
           <span className="block">Gurgaon&apos;s Premier</span>
           <span className="block">
-            <span className="italic font-light text-[#C6A24A]">Real Estate</span> Partner.
+            <span className="italic font-normal text-[#D09A16]">Real Estate</span> Partner.
           </span>
         </motion.h1>
 
-        {/* Supporting Description: Refined 16–18px, Max-w 680px */}
+        {/* Supporting Description: Refined readability with high-clarity slate */}
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
-          className="text-[#CBD5E1] text-xs sm:text-sm md:text-[15px] font-light max-w-[600px] mb-4 md:mb-5 sm:mb-6 leading-[1.58] drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]"
+          className="text-slate-100 text-sm sm:text-base md:text-[16px] font-normal max-w-[620px] mb-4 md:mb-5 sm:mb-6 leading-[1.62] drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]"
         >
           {heroData.description || "Discover an exclusive portfolio of luxury builder floors, high-rise penthouses, and bespoke villas across DLF Phase 1–4, Sushant Lok & Golf Course Ext."}
         </motion.p>
@@ -186,12 +186,12 @@ export default function HeroCopy() {
           {/* Desktop Search Bar (Horizontal Luxury Console, Sleek) */}
           <form
             onSubmit={handleSearch}
-            className="hidden lg:flex items-center bg-white/98 backdrop-blur-2xl border border-[#E2DDD5] hover:border-[#C6A24A]/40 rounded-2xl p-1.5 shadow-[0_20px_55px_rgba(7,11,22,0.4)] hover:shadow-[0_24px_65px_rgba(7,11,22,0.48)] transition-all duration-300 relative z-50 min-h-[64px]"
+            className="hidden lg:flex items-center bg-white/98 backdrop-blur-2xl border border-[#E2DDD5] hover:border-[#D09A16]/40 rounded-2xl p-1.5 shadow-[0_20px_55px_rgba(7,11,22,0.4)] hover:shadow-[0_24px_65px_rgba(7,11,22,0.48)] transition-all duration-300 relative z-50 min-h-[64px]"
           >
             {/* Field 1: Keyword Search */}
             <div className="flex-[1.2] flex items-center gap-2 px-3 py-1.5 border-r border-[#EBE7DF]">
-              <div className="w-6 h-6 rounded-lg bg-[#C6A24A]/10 flex items-center justify-center flex-shrink-0">
-                <Search className="text-[#C6A24A] w-3 h-3 flex-shrink-0" aria-hidden="true" />
+              <div className="w-6 h-6 rounded-lg bg-[#D09A16]/10 flex items-center justify-center flex-shrink-0">
+                <Search className="text-[#D09A16] w-3 h-3 flex-shrink-0" aria-hidden="true" />
               </div>
               <div className="flex flex-col flex-1 min-w-0 text-left">
                 <span className="text-[9px] font-semibold uppercase tracking-wider text-[#8A95A7] leading-none mb-0.5">
@@ -270,7 +270,7 @@ export default function HeroCopy() {
             <button
               type="submit"
               aria-label="Search and explore properties"
-              className="group/btn ml-2 bg-[#C6A24A] hover:bg-[#D4B258] text-[#0E162B] px-6 py-2.5 rounded-xl text-[11px] uppercase tracking-widest font-bold transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg cursor-pointer flex-shrink-0"
+              className="group/btn ml-2 bg-[#D09A16] hover:bg-[#D09A16] text-[#0E162B] px-6 py-2.5 rounded-xl text-[11px] uppercase tracking-widest font-bold transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg cursor-pointer flex-shrink-0"
             >
               <span>{heroData.searchButtonText || "Explore"}</span>
               <ArrowUpRight size={14} className="group-hover/btn:translate-x-1 transition-transform duration-200" />
@@ -283,7 +283,7 @@ export default function HeroCopy() {
             className="flex lg:hidden items-center bg-white border border-[#E2DDD5] rounded-full p-1.5 shadow-2xl relative z-50 w-full"
           >
             <div className="flex-1 flex items-center gap-2 pl-3">
-              <Search className="text-[#C6A24A] w-4 h-4 flex-shrink-0" />
+              <Search className="text-[#D09A16] w-4 h-4 flex-shrink-0" />
               <input
                 type="text"
                 value={searchQuery}
@@ -303,7 +303,7 @@ export default function HeroCopy() {
             )}
             <button
               type="submit"
-              className="bg-[#C6A24A] hover:bg-[#D4B258] text-[#0E162B] px-4 py-2.5 rounded-full text-[10px] uppercase tracking-widest font-bold flex items-center justify-center shadow-md ml-1"
+              className="bg-[#D09A16] hover:bg-[#D09A16] text-[#0E162B] px-4 py-2.5 rounded-full text-[10px] uppercase tracking-widest font-bold flex items-center justify-center shadow-md ml-1"
             >
               Explore
             </button>
@@ -311,7 +311,7 @@ export default function HeroCopy() {
 
           {/* Interactive Trending Capsule Buttons */}
           <div className="mt-3.5 sm:mt-4 hidden md:flex flex-wrap items-center justify-center gap-2">
-            <span className="text-[10px] uppercase tracking-widest text-[#C6A24A] font-semibold mr-1 flex items-center gap-1">
+            <span className="text-[10px] uppercase tracking-widest text-[#D09A16] font-semibold mr-1 flex items-center gap-1">
               <Sparkles className="w-3 h-3" />
               Trending:
             </span>
@@ -324,8 +324,8 @@ export default function HeroCopy() {
                   onClick={() => handleTagClick(tag)}
                   className={`px-3 py-1 rounded-full text-[11px] sm:text-xs transition-all duration-300 cursor-pointer flex items-center gap-1.5 backdrop-blur-md ${
                     isSelected
-                      ? 'bg-[#C6A24A] text-[#0E162B] font-bold shadow-[0_0_18px_rgba(198,162,74,0.45)] border border-[#C6A24A]'
-                      : 'bg-black/50 text-[#C9CED9] hover:bg-[#C6A24A]/25 hover:text-white border border-white/20'
+                      ? 'bg-[#D09A16] text-[#0E162B] font-bold shadow-[0_0_18px_rgba(208, 154, 22,0.45)] border border-[#D09A16]'
+                      : 'bg-black/50 text-[#C9CED9] hover:bg-[#D09A16]/25 hover:text-white border border-white/20'
                   }`}
                   title={`Filter by ${tag}`}
                 >
@@ -351,7 +351,7 @@ export default function HeroCopy() {
             type="button"
             onClick={toggleVideoPlayback}
             aria-label={isPlaying ? "Pause background video" : "Play background video"}
-            className="text-[#C6A24A] hover:text-white transition-colors p-1"
+            className="text-[#D09A16] hover:text-white transition-colors p-1"
             title={isPlaying ? "Pause Video" : "Play Video"}
           >
             {isPlaying ? <Pause size={12} /> : <Play size={12} />}
@@ -360,7 +360,7 @@ export default function HeroCopy() {
             type="button"
             onClick={toggleMute}
             aria-label={isMuted ? "Unmute audio" : "Mute audio"}
-            className="text-[#C6A24A] hover:text-white transition-colors p-1"
+            className="text-[#D09A16] hover:text-white transition-colors p-1"
             title={isMuted ? "Unmute Audio" : "Mute Audio"}
           >
             {isMuted ? <VolumeX size={12} /> : <Volume2 size={12} />}
@@ -370,7 +370,7 @@ export default function HeroCopy() {
         {/* Center: Scroll Whisper (Above Video Controls) */}
         <div className="hidden lg:flex absolute bottom-20 left-1/2 -translate-x-1/2 items-center gap-2 text-[10px] tracking-[0.25em] uppercase text-[#C9CED9]/70 drop-shadow">
           <span>Scroll to explore</span>
-          <ChevronDown size={12} className="animate-bounce text-[#C6A24A]" />
+          <ChevronDown size={12} className="animate-bounce text-[#D09A16]" />
         </div>
 
         {/* Right Dock: Ultra-Minimalist Floating Glass Spotlight Pill (Cycles every 3 seconds) */}
@@ -383,7 +383,7 @@ export default function HeroCopy() {
             initial={{ opacity: 0, y: 10, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             transition={{ duration: 0.5, ease: "easeOut", delay: 0.4 }}
-            className="group relative flex items-center gap-3 px-3.5 py-2 rounded-full bg-[#070B16]/85 backdrop-blur-2xl border border-white/20 hover:border-[#C6A24A]/60 transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.6)] cursor-pointer overflow-hidden"
+            className="group relative flex items-center gap-3 px-3.5 py-2 rounded-full bg-[#070B16]/85 backdrop-blur-2xl border border-white/20 hover:border-[#D09A16]/60 transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.6)] cursor-pointer overflow-hidden"
           >
               {/* Mini Thumbnail */}
               <div className="relative w-9 h-9 rounded-full overflow-hidden flex-shrink-0 border border-white/20">
@@ -399,15 +399,15 @@ export default function HeroCopy() {
 
               {/* Property Details (Compact) */}
               <div className="flex flex-col text-left pr-2 max-w-[240px]">
-                <span className="text-xs sm:text-[13px] font-serif text-[#F7F5EF] truncate group-hover:text-[#C6A24A] transition-colors leading-tight">
+                <span className="text-xs sm:text-[13px] font-serif text-[#F7F5EF] truncate group-hover:text-[#D09A16] transition-colors leading-tight">
                   {currentProperty.title || "Ultra-Luxury Independent Floor"}
                 </span>
                 <div className="flex items-center gap-1.5 mt-0.5">
                   <span className="text-[9px] uppercase tracking-wider text-[#9DA6B8] truncate">
                     {currentProperty.location || "DLF Phase 1"}
                   </span>
-                  <span className="w-1 h-1 rounded-full bg-[#C6A24A]/50" />
-                  <span className="text-[10px] font-semibold text-[#C6A24A]">
+                  <span className="w-1 h-1 rounded-full bg-[#D09A16]/50" />
+                  <span className="text-[10px] font-semibold text-[#D09A16]">
                     {currentProperty.price || "₹4.50 Cr."}
                   </span>
                 </div>
@@ -417,7 +417,7 @@ export default function HeroCopy() {
               <a
                 href={currentProperty.link || `tel:${heroData.spotlight?.phone || '+919811221207'}`}
                 aria-label={`Enquire about ${currentProperty.title || 'Featured Property'}`}
-                className="w-7 h-7 rounded-full bg-[#C6A24A] hover:bg-[#D4B258] text-[#0E162B] flex items-center justify-center flex-shrink-0 shadow transition-colors ml-1"
+                className="w-7 h-7 rounded-full bg-[#D09A16] hover:bg-[#D09A16] text-[#0E162B] flex items-center justify-center flex-shrink-0 shadow transition-colors ml-1"
                 title="Enquire"
               >
                 <ArrowUpRight size={14} />
@@ -430,7 +430,7 @@ export default function HeroCopy() {
                   initial={{ width: "0%" }}
                   animate={{ width: "100%" }}
                   transition={{ duration: 3, ease: "linear" }}
-                  className="h-full bg-[#C6A24A]"
+                  className="h-full bg-[#D09A16]"
                 />
               </div>
           </motion.div>

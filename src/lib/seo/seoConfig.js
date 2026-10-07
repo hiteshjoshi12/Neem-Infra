@@ -98,39 +98,18 @@ export const PAGE_SEO = {
     canonical: '/about',
     ogType: 'website',
   },
+  '/team': {
+    title: 'Leadership & Real Estate Advisory Team | Saudagar Properties Gurugram',
+    description:
+      'Meet the leadership, founders, and senior luxury real estate specialists behind Saudagar Properties with 25+ years of authority in DLF Phase 1–5.',
+    canonical: '/team',
+    ogType: 'website',
+  },
   '/contact': {
     title: 'Contact Us — Saudagar Properties | DLF Gurugram Real Estate',
     description:
       'Get in touch with Saudagar Properties for premium real estate advisory in Gurugram. Visit our office in DLF Phase 2 or contact us via phone and email.',
     canonical: '/contact',
-    ogType: 'website',
-  },
-  '/ready-to-move': {
-    title: 'Ready to Move Properties in DLF Gurugram — Saudagar Properties',
-    description:
-      'Browse ready-to-move luxury builder floors, villas, and apartments in DLF Phase 1–5, Sushant Lok, and Golf Course Road. Immediate possession properties curated by Saudagar Properties.',
-    canonical: '/ready-to-move',
-    ogType: 'website',
-  },
-  '/new-launches': {
-    title: 'New Launch Properties in DLF Gurugram — Saudagar Properties',
-    description:
-      'Discover newly launched residential and commercial projects in Gurugram. Pre-launch and new-launch builder floors, apartments, and commercial spaces in DLF and surrounding corridors.',
-    canonical: '/new-launches',
-    ogType: 'website',
-  },
-  '/under-construction': {
-    title: 'Under Construction Properties in DLF Gurugram — Saudagar Properties',
-    description:
-      'Invest in under-construction properties in DLF Gurugram at pre-possession prices. Builder floors, apartments, and commercial developments currently under construction.',
-    canonical: '/under-construction',
-    ogType: 'website',
-  },
-  '/developers': {
-    title: 'Top Real Estate Developers in Gurugram — Saudagar Properties',
-    description:
-      'Explore properties from leading developers in Gurugram including DLF, Emaar, BPTP, and more. Saudagar Properties partners with the most trusted builders in the region.',
-    canonical: '/developers',
     ogType: 'website',
   },
   '/terms': {
@@ -178,25 +157,13 @@ export const BREADCRUMBS = {
     { name: 'Home', url: '/' },
     { name: 'About Us', url: '/about' },
   ],
+  '/team': [
+    { name: 'Home', url: '/' },
+    { name: 'Our Team', url: '/team' },
+  ],
   '/contact': [
     { name: 'Home', url: '/' },
     { name: 'Contact Us', url: '/contact' },
-  ],
-  '/ready-to-move': [
-    { name: 'Home', url: '/' },
-    { name: 'Ready to Move', url: '/ready-to-move' },
-  ],
-  '/new-launches': [
-    { name: 'Home', url: '/' },
-    { name: 'New Launches', url: '/new-launches' },
-  ],
-  '/under-construction': [
-    { name: 'Home', url: '/' },
-    { name: 'Under Construction', url: '/under-construction' },
-  ],
-  '/developers': [
-    { name: 'Home', url: '/' },
-    { name: 'Developers', url: '/developers' },
   ],
   '/terms': [
     { name: 'Home', url: '/' },

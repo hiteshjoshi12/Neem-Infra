@@ -238,7 +238,7 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
             type="button"
             onClick={togglePlay}
             aria-label={isPlaying ? "Pause background video" : "Play background video"}
-            className="text-[#C6A24A] hover:text-white transition-colors p-1 cursor-pointer"
+            className="text-[#D09A16] hover:text-white transition-colors p-1 cursor-pointer"
             title={isPlaying ? "Pause Video" : "Play Video"}
           >
             {isPlaying ? <Pause size={13} /> : <Play size={13} />}
@@ -247,7 +247,7 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
             type="button"
             onClick={toggleMute}
             aria-label={isMuted ? "Unmute audio" : "Mute audio"}
-            className="text-[#C6A24A] hover:text-white transition-colors p-1 cursor-pointer"
+            className="text-[#D09A16] hover:text-white transition-colors p-1 cursor-pointer"
             title={isMuted ? "Unmute Audio" : "Mute Audio"}
           >
             {isMuted ? <VolumeX size={13} /> : <Volume2 size={13} />}

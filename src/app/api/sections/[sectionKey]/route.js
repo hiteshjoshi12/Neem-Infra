@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import SectionContent from '@/models/SectionContent';
-// import { protect } from '@/middleware/auth'; // Not implemented in Next.js yet, skipping for migration since frontend checks it
+import { requireAdmin } from '@/lib/auth/authGuard';
 
 export async function GET(req, { params }) {
   try {
@@ -26,6 +26,7 @@ export async function GET(req, { params }) {
 
 export async function PUT(req, { params }) {
   try {
+    const admin = await requireAdmin(req);
     await connectDB();
     const { sectionKey } = await params;
     const body = await req.json();
@@ -41,7 +42,7 @@ export async function PUT(req, { params }) {
         sectionKey,
         title: title || sectionKey,
         data,
-        lastUpdatedBy: 'Admin'
+        lastUpdatedBy: admin.name || 'Admin'
       },
       { returnDocument: 'after', upsert: true, runValidators: true }
     );
@@ -53,6 +54,7 @@ export async function PUT(req, { params }) {
       sectionKey: updatedSection.sectionKey
     });
   } catch (error) {
-    return NextResponse.json({ success: false, message: error.message }, { status: 500 });
+    const status = error.status || 500;
+    return NextResponse.json({ success: false, message: error.message }, { status });
   }
 }

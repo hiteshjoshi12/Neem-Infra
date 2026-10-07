@@ -107,14 +107,14 @@ export default function Navbar() {
                     >
                       <button
                         className={`flex items-center gap-1 px-2.5 py-1.5 text-[10px] xl:text-[11px] font-semibold tracking-[0.16em] uppercase rounded-full transition-all duration-300 ${activeDropdown === link.label
-                          ? 'text-[#C6A24A] bg-[#C6A24A]/10 shadow-[inset_0_1px_2px_rgba(0,0,0,0.05)]'
-                          : 'text-[#17213D] hover:text-[#C6A24A] hover:bg-[#F7F5EF]'
+                          ? 'text-[#D09A16] bg-[#D09A16]/10 shadow-[inset_0_1px_2px_rgba(0,0,0,0.05)]'
+                          : 'text-[#17213D] hover:text-[#D09A16] hover:bg-[#F7F5EF]'
                           }`}
                       >
                         <span>{link.label}</span>
                         <ChevronDown
                           size={13}
-                          className={`transition-transform duration-300 ${activeDropdown === link.label ? 'rotate-180 text-[#C6A24A]' : 'opacity-70'
+                          className={`transition-transform duration-300 ${activeDropdown === link.label ? 'rotate-180 text-[#D09A16]' : 'opacity-70'
                             }`}
                         />
                       </button>
@@ -131,8 +131,8 @@ export default function Navbar() {
                           >
                             <div className="bg-white/98 backdrop-blur-2xl border border-[#17213D]/10 rounded-2xl p-2.5 shadow-[0_20px_50px_-10px_rgba(14,22,43,0.18)] ring-1 ring-[#17213D]/[0.04]">
                               <div className="px-3 pt-2 pb-1.5 border-b border-[#17213D]/[0.08] mb-1.5 flex items-center justify-between">
-                                <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#C6A24A]">{corridorsBadge}</span>
-                                <Building2 size={13} className="text-[#C6A24A]" />
+                                <span className="text-[10px] tracking-[0.2em] uppercase font-bold text-[#D09A16]">{corridorsBadge}</span>
+                                <Building2 size={13} className="text-[#D09A16]" />
                               </div>
                               <div className="space-y-0.5">
                                 {link.dropdown.map((item) => (
@@ -141,12 +141,12 @@ export default function Navbar() {
                                     className="group flex flex-col px-3.5 py-2.5 rounded-xl hover:bg-[#F7F5EF] transition-all duration-200"
                                   >
                                     <div className="flex items-center justify-between">
-                                      <span className="text-xs font-medium text-[#17213D] group-hover:text-[#C6A24A] transition-colors">
+                                      <span className="text-xs font-medium text-[#17213D] group-hover:text-[#D09A16] transition-colors">
                                         {item.label}
                                       </span>
                                       <ArrowUpRight
                                         size={13}
-                                        className="text-[#999] opacity-0 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:text-[#C6A24A] transition-all duration-200"
+                                        className="text-[#999] opacity-0 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:text-[#D09A16] transition-all duration-200"
                                       />
                                     </div>
                                     {item.desc && (
@@ -170,14 +170,14 @@ export default function Navbar() {
                     href={link.href}
                     className={`relative px-2.5 py-1.5 text-[10px] xl:text-[11px] font-semibold tracking-[0.16em] uppercase rounded-full transition-all duration-300 ${isActive
                       ? 'text-[#17213D] bg-[#F7F5EF] font-bold shadow-[inset_0_1px_2px_rgba(0,0,0,0.06)]'
-                      : 'text-[#17213D] hover:text-[#C6A24A] hover:bg-[#F7F5EF]'
+                      : 'text-[#17213D] hover:text-[#D09A16] hover:bg-[#F7F5EF]'
                       }`}
                   >
                     <span>{link.label}</span>
                     {isActive && (
                       <motion.span
                         layoutId="activePill"
-                        className="absolute bottom-1 left-1/2 -translate-x-1/2 w-3 h-0.5 bg-[#C6A24A] rounded-full"
+                        className="absolute bottom-1 left-1/2 -translate-x-1/2 w-3 h-0.5 bg-[#D09A16] rounded-full"
                       />
                     )}
                   </Link>
@@ -193,7 +193,7 @@ export default function Navbar() {
                 className="hidden xl:flex items-center gap-1.5 px-2 py-1 text-[10px] font-medium tracking-wider text-[#566078] hover:text-[#17213D] transition-colors"
                 title="Call Directly"
               >
-                <div className="w-6 h-6 rounded-full bg-[#F7F5EF] border border-[#C6A24A]/25 flex items-center justify-center text-[#C6A24A] shadow-inner">
+                <div className="w-6 h-6 rounded-full bg-[#F7F5EF] border border-[#D09A16]/25 flex items-center justify-center text-[#D09A16] shadow-inner">
                   <Phone size={10} />
                 </div>
                 <span>{displayPhone}</span>
@@ -201,7 +201,7 @@ export default function Navbar() {
 
               {/* 3D Tactile CTA Button */}
               <Link href={ctaHref}
-                className="relative group hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#C6A24A] text-[#0E162B] text-[10px] font-bold tracking-[0.16em] uppercase overflow-hidden shadow-[0_4px_14px_rgba(198,162,74,0.3)] hover:bg-[#D8BD73] hover:shadow-[0_8px_22px_rgba(198,162,74,0.4)] hover:-translate-y-0.5 active:translate-y-0.5 transition-all duration-300"
+                className="relative group hidden sm:inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#D09A16] text-[#0E162B] text-[10px] font-bold tracking-[0.16em] uppercase overflow-hidden shadow-[0_4px_14px_rgba(208, 154, 22,0.3)] hover:bg-[#D09A16] hover:shadow-[0_8px_22px_rgba(208, 154, 22,0.4)] hover:-translate-y-0.5 active:translate-y-0.5 transition-all duration-300"
               >
                 <span className="relative z-10 text-[#0E162B] font-bold">{ctaText}</span>
                 <ArrowUpRight
@@ -218,7 +218,7 @@ export default function Navbar() {
                 className="flex sm:hidden w-9 h-9 rounded-full bg-[#F7F5EF] items-center justify-center text-[#17213D] shadow-sm border border-[#17213D]/10"
                 aria-label="Call Saudagar Properties"
               >
-                <Phone size={14} className="text-[#C6A24A]" />
+                <Phone size={14} className="text-[#D09A16]" />
               </a>
 
               {/* Mobile Menu Hamburger Button */}
@@ -248,7 +248,7 @@ export default function Navbar() {
             className="fixed inset-x-3 top-20 z-40 max-h-[85vh] overflow-y-auto rounded-3xl bg-white/98 backdrop-blur-2xl border border-white/80 shadow-[0_25px_60px_-15px_rgba(14,22,43,0.25)] p-6 flex flex-col ring-1 ring-[#17213D]/[0.06]"
           >
             <div className="flex items-center justify-between pb-4 border-b border-[#17213D]/[0.08]">
-              <span className="text-[10px] font-bold tracking-[0.25em] text-[#C6A24A] uppercase">Navigation</span>
+              <span className="text-[10px] font-bold tracking-[0.25em] text-[#D09A16] uppercase">Navigation</span>
               <span className="text-[10px] tracking-wider text-[#566078]">{mobileNavHeader}</span>
             </div>
 
@@ -264,7 +264,7 @@ export default function Navbar() {
                         <span>{link.label}</span>
                         <ChevronDown
                           size={16}
-                          className={`text-[#C6A24A] transition-transform duration-300 ${activeDropdown === link.label ? 'rotate-180' : ''
+                          className={`text-[#D09A16] transition-transform duration-300 ${activeDropdown === link.label ? 'rotate-180' : ''
                             }`}
                         />
                       </button>
@@ -276,12 +276,12 @@ export default function Navbar() {
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.25 }}
-                            className="overflow-hidden mt-3 pl-3 space-y-2 border-l-2 border-[#C6A24A]/40"
+                            className="overflow-hidden mt-3 pl-3 space-y-2 border-l-2 border-[#D09A16]/40"
                           >
                             {link.dropdown.map((sub) => (
                               <Link key={sub.label}
                                 href={sub.href}
-                                className="block py-1.5 text-xs text-[#566078] hover:text-[#C6A24A] transition-colors"
+                                className="block py-1.5 text-xs text-[#566078] hover:text-[#D09A16] transition-colors"
                               >
                                 {sub.label}
                               </Link>
@@ -296,19 +296,19 @@ export default function Navbar() {
                 return (
                   <Link key={link.label}
                     href={link.href}
-                    className="py-3 text-sm font-semibold tracking-[0.12em] text-[#17213D] uppercase hover:text-[#C6A24A] transition-colors flex items-center justify-between"
+                    className="py-3 text-sm font-semibold tracking-[0.12em] text-[#17213D] uppercase hover:text-[#D09A16] transition-colors flex items-center justify-between"
                   >
                     <span>{link.label}</span>
-                    <ArrowUpRight size={14} className="text-[#C6A24A]/50" />
+                    <ArrowUpRight size={14} className="text-[#D09A16]/50" />
                   </Link>
                 );
               })}
 
               <Link href={ctaHref}
-                className="py-3 text-sm font-semibold tracking-[0.12em] text-[#C6A24A] uppercase hover:text-[#17213D] transition-colors flex items-center justify-between"
+                className="py-3 text-sm font-semibold tracking-[0.12em] text-[#D09A16] uppercase hover:text-[#17213D] transition-colors flex items-center justify-between"
               >
                 <span>{ctaText.toUpperCase()}</span>
-                <ArrowUpRight size={14} className="text-[#C6A24A]" />
+                <ArrowUpRight size={14} className="text-[#D09A16]" />
               </Link>
             </nav>
 

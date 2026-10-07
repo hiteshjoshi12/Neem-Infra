@@ -34,7 +34,7 @@ export default function AdminProperties() {
     tag: 'Luxury Floor',
     desc: '',
     img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80',
-    link: '/ready-to-move',
+    link: '/properties',
     category: 'residential',
     order: 0,
     isActive: true,
@@ -91,7 +91,7 @@ export default function AdminProperties() {
       tag: prop.tag || '',
       desc: prop.desc || '',
       img: prop.img || '',
-      link: prop.link || '/ready-to-move',
+      link: prop.link || '/properties',
       category: prop.category || 'residential',
       order: prop.order || 0,
       isActive: prop.isActive !== undefined ? prop.isActive : true,
@@ -161,7 +161,7 @@ export default function AdminProperties() {
 
         <button
           onClick={openCreateModal}
-          className="px-6 py-3.5 rounded-xl bg-[#D09A16] hover:bg-[#B5986D] text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_6px_20px_rgba(197,168,128,0.3)] active:scale-95 cursor-pointer"
+          className="px-6 py-3.5 rounded-xl bg-[#D09A16] hover:bg-[#B5986D] text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_6px_20px_rgba(208, 154, 22,0.3)] active:scale-95 cursor-pointer"
         >
           <Plus size={16} />
           <span>Add New Property</span>
@@ -337,13 +337,13 @@ export default function AdminProperties() {
                     <select
                       value={formData.category}
                       onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                      className="w-full bg-[#121724] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
+                      className="w-full bg-[#121724] border border-white/20 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16] [&>option]:bg-[#121724] [&>option]:text-white"
                     >
-                      <option value="residential">Residential Floor/Plot</option>
-                      <option value="villa">Luxury Villa</option>
-                      <option value="penthouse">Penthouse</option>
-                      <option value="commercial">Commercial Hub</option>
-                      <option value="industrial">Industrial Asset</option>
+                      <option value="residential" className="bg-[#121724] text-white">Residential Floor/Plot</option>
+                      <option value="villa" className="bg-[#121724] text-white">Luxury Villa</option>
+                      <option value="penthouse" className="bg-[#121724] text-white">Penthouse</option>
+                      <option value="commercial" className="bg-[#121724] text-white">Commercial Hub</option>
+                      <option value="industrial" className="bg-[#121724] text-white">Industrial Asset</option>
                     </select>
                   </div>
 

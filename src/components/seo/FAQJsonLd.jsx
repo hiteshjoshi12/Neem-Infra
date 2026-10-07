@@ -1,31 +1,30 @@
+import React from 'react';
 import JsonLd from './JsonLd';
+import { buildFAQSchema } from '@/lib/seo/schemaBuilders';
 
 /**
  * FAQJsonLd — Schema.org FAQPage structured data
- * =============================================================
- * Accepts an array of FAQ items and renders FAQPage JSON-LD.
+ * ===============================================
+ * Only generates FAQPage markup when real, visible questions and answers are present.
+ * Never outputs empty questions, placeholders, or fabricated answers.
  *
  * Usage:
  *   <FAQJsonLd faqs={[
- *     { question: 'What is Saudagar Properties?', answer: 'We are a luxury real estate consultancy.' },
- *     { question: 'Where are you located?', answer: 'Our office is in DLF Phase 2, Gurugram.' }
+ *     { question: '...', answer: '...' }
  *   ]} />
  */
 export default function FAQJsonLd({ faqs }) {
-  if (!faqs || faqs.length === 0) return null;
+  if (!faqs || !Array.isArray(faqs) || faqs.length === 0) return null;
 
-  const data = {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqs.map((faq) => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer,
-      },
-    })),
-  };
+  const schema = buildFAQSchema(faqs);
+  if (!schema) return null;
 
-  return <JsonLd data={data} />;
+  return (
+    <JsonLd
+      data={{
+        '@context': 'https://schema.org',
+        ...schema,
+      }}
+    />
+  );
 }

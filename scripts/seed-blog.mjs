@@ -43,13 +43,12 @@ async function seedBlog() {
   console.log('Seeding locations...');
   const locationMap = {};
   for (const locData of INITIAL_LOCATIONS) {
-    let loc = await Location.findOne({ slug: locData.slug });
-    if (!loc) {
-      loc = await Location.create(locData);
-      console.log(`Created location: ${loc.name}`);
-    } else {
-      console.log(`Location already exists: ${loc.name}`);
-    }
+    const loc = await Location.findOneAndUpdate(
+      { slug: locData.slug },
+      { $set: locData },
+      { upsert: true, new: true }
+    );
+    console.log(`Synced location: ${loc.name}`);
     locationMap[loc.slug] = loc._id;
   }
 
@@ -57,49 +56,78 @@ async function seedBlog() {
   console.log('Seeding tags...');
   const tagMap = {};
   for (const tagData of INITIAL_TAGS) {
-    let tag = await Tag.findOne({ slug: tagData.slug });
-    if (!tag) {
-      tag = await Tag.create(tagData);
-      console.log(`Created tag: ${tag.name}`);
-    } else {
-      console.log(`Tag already exists: ${tag.name}`);
-    }
+    const tag = await Tag.findOneAndUpdate(
+      { slug: tagData.slug },
+      { $set: tagData },
+      { upsert: true, new: true }
+    );
+    console.log(`Synced tag: ${tag.name}`);
     tagMap[tag.slug] = tag._id;
   }
 
   // 5. Posts
   console.log('Seeding blog posts...');
   for (const postData of INITIAL_POSTS) {
-    let post = await BlogPost.findOne({ slug: postData.slug });
-    if (!post) {
-      const doc = {
-        title: postData.title,
-        slug: postData.slug,
-        excerpt: postData.excerpt,
-        content: postData.content,
-        featured: postData.featured,
-        featuredImage: postData.featuredImage,
-        featuredImageAlt: postData.featuredImageAlt,
-        readingTime: postData.readingTime,
-        status: postData.status,
-        publishedAt: new Date(postData.publishedAt),
-        author: authorMap[postData.authorSlug],
-        authorSlug: postData.authorSlug,
-        category: categoryMap[postData.categorySlug],
-        categorySlug: postData.categorySlug,
-        tags: (postData.tagsSlugs || []).map(s => tagMap[s]).filter(Boolean),
-        location: (postData.locationSlugs || []).map(s => locationMap[s]).filter(Boolean),
-        seoTitle: postData.seoTitle,
-        seoDescription: postData.seoDescription,
-        canonicalUrl: postData.canonicalUrl,
-        focusKeyword: postData.focusKeyword,
-        faq: postData.faq || []
-      };
+    const doc = {
+      title: postData.title,
+      slug: postData.slug,
+      excerpt: postData.excerpt,
+      content: postData.content,
+      featured: postData.featured,
+      featuredImage: postData.featuredImage,
+      featuredImageAlt: postData.featuredImageAlt,
+      featuredImageCaption: postData.featuredImageCaption || '',
+      featuredImageCredit: postData.featuredImageCredit || '',
+      featuredImageSource: postData.featuredImageSource || '',
+      featuredImageWidth: postData.featuredImageWidth || 1600,
+      featuredImageHeight: postData.featuredImageHeight || 900,
+      socialImage: postData.socialImage || '',
+      readingTime: postData.readingTime,
+      status: postData.status,
+      publishedAt: new Date(postData.publishedAt),
+      updatedAt: postData.updatedAt ? new Date(postData.updatedAt) : new Date(postData.publishedAt),
+      author: authorMap[postData.authorSlug],
+      authorSlug: postData.authorSlug,
+      category: categoryMap[postData.categorySlug],
+      categorySlug: postData.categorySlug,
+      tags: (postData.tagsSlugs || []).map(s => tagMap[s]).filter(Boolean),
+      location: (postData.locationSlugs || []).map(s => locationMap[s]).filter(Boolean),
+      seoTitle: postData.seoTitle,
+      seoDescription: postData.seoDescription,
+      canonicalUrl: postData.canonicalUrl,
+      focusKeyword: postData.focusKeyword,
+      faq: postData.faq || [],
+      directAnswer: postData.directAnswer || '',
+      keyTakeaways: postData.keyTakeaways || [],
+      definitions: postData.definitions || [],
+      prosCons: postData.prosCons || null,
+      editorialSources: postData.editorialSources || [],
+      expertPerspective: postData.expertPerspective || null,
+      isPillar: !!postData.isPillar,
+      topicCluster: postData.topicCluster || 'dlf-gurugram',
+      parentPillarSlug: postData.parentPillarSlug || null
+    };
 
-      await BlogPost.create(doc);
-      console.log(`Created blog post: ${postData.title}`);
-    } else {
-      console.log(`Blog post already exists: ${post.title}`);
+    const post = await BlogPost.findOneAndUpdate(
+      { slug: postData.slug },
+      { $set: doc },
+      { upsert: true, new: true }
+    );
+    console.log(`Synced blog post: ${post.title}`);
+  }
+
+  // 5b. Wire up relatedPosts ObjectIds
+  console.log('Linking related posts...');
+  const allDbPosts = await BlogPost.find({}).select('_id slug');
+  const postSlugToId = Object.fromEntries(allDbPosts.map(p => [p.slug, p._id]));
+
+  for (const postData of INITIAL_POSTS) {
+    if (postData.relatedPostsSlugs && postData.relatedPostsSlugs.length > 0) {
+      const relatedIds = postData.relatedPostsSlugs.map(s => postSlugToId[s]).filter(Boolean);
+      await BlogPost.findOneAndUpdate(
+        { slug: postData.slug },
+        { $set: { relatedPosts: relatedIds } }
+      );
     }
   }
 

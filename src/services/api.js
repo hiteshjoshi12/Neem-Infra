@@ -20,7 +20,7 @@ async function request(endpoint, options = {}) {
     throw new Error('API server not configured in this environment.');
   }
 
-  const token = localStorage.getItem('saudagar_admin_token');
+  const token = typeof window !== 'undefined' ? localStorage.getItem('saudagar_admin_token') : null;
 
   const headers = {
     'Content-Type': 'application/json',
@@ -125,8 +125,15 @@ export const api = {
 
   getInquiries: () => request('/inquiries'),
 
+  updateInquiry: (id, inquiryData) =>
+    request(`/inquiries/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(inquiryData)
+    }),
+
   deleteInquiry: (id) =>
     request(`/inquiries/${id}`, {
+      method: 'DELETE'
     }),
 
   // Blog CRUD
@@ -156,7 +163,26 @@ export const api = {
     request('/taxonomies/tags', {
       method: 'POST',
       body: JSON.stringify(tagData)
+    }),
+
+  // Locations (Market Intelligence Corridors)
+  getLocations: () => request('/locations'),
+  getLocation: (id) => request(`/locations/${id}`),
+  createLocation: (locationData) =>
+    request('/locations', {
+      method: 'POST',
+      body: JSON.stringify(locationData)
+    }),
+  updateLocation: (id, locationData) =>
+    request(`/locations/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(locationData)
+    }),
+  deleteLocation: (id) =>
+    request(`/locations/${id}`, {
+      method: 'DELETE'
     })
 };
 
 export default api;
+

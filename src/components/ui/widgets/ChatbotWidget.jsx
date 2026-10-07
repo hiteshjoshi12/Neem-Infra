@@ -125,7 +125,7 @@ export default function ChatbotWidget({ chatOpen, setChatOpen }) {
         <button 
           onClick={() => setChatOpen(!chatOpen)}
           aria-label="Toggle Chatbot"
-          className="relative w-12 h-12 rounded-full bg-[#17213D] text-[#C6A24A] flex items-center justify-center shadow-[0_10px_30px_rgba(29,38,59,0.5)] hover:shadow-[0_15px_35px_rgba(29,38,59,0.6)] border border-[#17213D] transition-all duration-300 hover:bg-[#C6A24A] hover:text-[#17213D] hover:scale-105 active:scale-95 cursor-pointer z-50"
+          className="relative w-12 h-12 rounded-full bg-[#17213D] text-[#D09A16] flex items-center justify-center shadow-[0_10px_30px_rgba(29,38,59,0.5)] hover:shadow-[0_15px_35px_rgba(29,38,59,0.6)] border border-[#17213D] transition-all duration-300 hover:bg-[#D09A16] hover:text-[#17213D] hover:scale-105 active:scale-95 cursor-pointer z-50"
         >
           {chatOpen ? <X size={22} className="animate-in fade-in zoom-in" /> : <Bot size={22} className="animate-in fade-in zoom-in" />}
         </button>
@@ -146,7 +146,7 @@ export default function ChatbotWidget({ chatOpen, setChatOpen }) {
             <div className="bg-gradient-to-r from-[#17213D] to-[#2a3652] p-4 flex items-center justify-between text-white shrink-0 shadow-md z-10">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
-                  <Bot size={20} className="text-[#C6A24A]" />
+                  <Bot size={20} className="text-[#D09A16]" />
                 </div>
                 <div>
                   <h3 className="font-serif font-bold text-lg leading-tight tracking-wide">Saudagar Assistant</h3>

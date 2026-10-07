@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import ArticleImage from '@/components/blog/ArticleImage';
 
 export function slugifyHeading(text) {
   return text
@@ -67,19 +68,25 @@ function parseInline(text) {
       parts.push(parseBoldItalic(text.substring(lastIndex, match.index)));
     }
     const linkText = match[1];
-    const linkUrl = match[2];
-    const isExternal = linkUrl.startsWith('http') && !linkUrl.includes('saudagarproperties.com');
-    parts.push(
-      <Link
-        key={`link-${match.index}`}
-        href={linkUrl}
-        target={isExternal ? '_blank' : undefined}
-        rel={isExternal ? 'noopener noreferrer' : undefined}
-        className="text-[#C6A24A] hover:text-[#B5986D] underline underline-offset-4 font-medium transition-colors"
-      >
-        {linkText}
-      </Link>
-    );
+    const rawUrl = match[2]?.trim() || '';
+    const isDangerous = /^(javascript:|data:|vbscript:)/i.test(rawUrl);
+
+    if (isDangerous) {
+      parts.push(<span key={`unsafe-${match.index}`}>{linkText}</span>);
+    } else {
+      const isExternal = rawUrl.startsWith('http') && !rawUrl.includes('saudagarproperties.com');
+      parts.push(
+        <Link
+          key={`link-${match.index}`}
+          href={rawUrl}
+          target={isExternal ? '_blank' : undefined}
+          rel={isExternal ? 'noopener noreferrer' : undefined}
+          className="text-[#D09A16] hover:text-[#B5986D] underline underline-offset-4 font-medium transition-colors"
+        >
+          {linkText}
+        </Link>
+      );
+    }
     lastIndex = match.index + match[0].length;
   }
 
@@ -143,7 +150,7 @@ export function MarkdownRenderer({ content = '' }) {
     if (currentList) {
       if (currentList.type === 'ul') {
         elements.push(
-          <ul key={`ul-${elements.length}`} className="space-y-3 mb-6 ml-6 list-disc text-[#334155] text-base md:text-lg leading-relaxed marker:text-[#C6A24A]">
+          <ul key={`ul-${elements.length}`} className="space-y-3 mb-6 ml-6 list-disc text-[#334155] text-base md:text-lg leading-relaxed marker:text-[#D09A16]">
             {currentList.items.map((item, i) => (
               <li key={i}>{parseInline(item)}</li>
             ))}
@@ -151,7 +158,7 @@ export function MarkdownRenderer({ content = '' }) {
         );
       } else {
         elements.push(
-          <ol key={`ol-${elements.length}`} className="space-y-3 mb-6 ml-6 list-decimal text-[#334155] text-base md:text-lg leading-relaxed marker:font-bold marker:text-[#C6A24A]">
+          <ol key={`ol-${elements.length}`} className="space-y-3 mb-6 ml-6 list-decimal text-[#334155] text-base md:text-lg leading-relaxed marker:font-bold marker:text-[#D09A16]">
             {currentList.items.map((item, i) => (
               <li key={i}>{parseInline(item)}</li>
             ))}
@@ -165,9 +172,17 @@ export function MarkdownRenderer({ content = '' }) {
   const flushBlockquote = () => {
     if (currentBlockquote.length > 0) {
       const text = currentBlockquote.join(' ').trim();
+      const isAdvisory = text.toLowerCase().includes('tip:') || text.toLowerCase().includes('advisory:') || text.toLowerCase().includes('warning:');
       elements.push(
-        <blockquote key={`quote-${elements.length}`} className="border-l-4 border-[#C6A24A] bg-[#F7F5EF] p-6 my-8 rounded-r-2xl shadow-xs">
-          <p className="font-serif italic text-lg md:text-xl text-[#17213D] leading-relaxed mb-0">
+        <blockquote 
+          key={`quote-${elements.length}`} 
+          className={`border-l-4 p-6 my-8 rounded-r-2xl shadow-xs ${
+            isAdvisory 
+              ? 'border-[#D09A16] bg-[#FAF8F5]' 
+              : 'border-[#17213D] bg-[#F7F5EF]'
+          }`}
+        >
+          <p className="font-serif italic text-base md:text-lg text-[#17213D] leading-relaxed mb-0">
             {parseInline(text)}
           </p>
         </blockquote>
@@ -259,7 +274,7 @@ export function MarkdownRenderer({ content = '' }) {
       continue;
     }
 
-    // Heading 3
+    // Heading 3 (with Step-by-Step detection)
     if (line.startsWith('### ')) {
       flushParagraph();
       flushList();
@@ -273,15 +288,34 @@ export function MarkdownRenderer({ content = '' }) {
       } else {
         idCounts[id] = 1;
       }
-      elements.push(
-        <h3
-          key={`h3-${elements.length}`}
-          id={id}
-          className="scroll-mt-28 text-xl md:text-2xl font-serif font-semibold text-[#17213D] mt-8 mb-4 tracking-tight"
-        >
-          {parseInline(rawTitle)}
-        </h3>
-      );
+
+      const stepMatch = rawTitle.match(/^Step\s+(\d+)[:\s]+(.*)/i);
+      if (stepMatch) {
+        const stepNum = stepMatch[1];
+        const stepText = stepMatch[2];
+        elements.push(
+          <h3
+            key={`h3-${elements.length}`}
+            id={id}
+            className="scroll-mt-28 flex items-center gap-3 text-xl md:text-2xl font-serif font-bold text-[#17213D] mt-8 mb-4 tracking-tight"
+          >
+            <span className="inline-flex items-center justify-center h-7 w-7 rounded-lg bg-[#17213D] text-[#D09A16] text-xs font-bold shrink-0">
+              {stepNum}
+            </span>
+            <span className="flex-1">{parseInline(`Step ${stepNum}: ${stepText}`)}</span>
+          </h3>
+        );
+      } else {
+        elements.push(
+          <h3
+            key={`h3-${elements.length}`}
+            id={id}
+            className="scroll-mt-28 text-xl md:text-2xl font-serif font-semibold text-[#17213D] mt-8 mb-4 tracking-tight"
+          >
+            {parseInline(rawTitle)}
+          </h3>
+        );
+      }
       continue;
     }
 
@@ -340,29 +374,47 @@ export function MarkdownRenderer({ content = '' }) {
       continue;
     }
 
-    // Image: ![alt](url)
+    // Image: ![alt](url) or ![alt | caption: ... | credit: ... | source: ...](url)
     const imgMatch = line.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
     if (imgMatch) {
       flushParagraph();
       flushList();
       flushBlockquote();
       flushTable();
-      const alt = imgMatch[1] || 'Real estate article image';
+      const rawAltSection = imgMatch[1] || '';
       const src = imgMatch[2];
+
+      let alt = rawAltSection;
+      let caption = '';
+      let credit = '';
+      let source = '';
+
+      if (rawAltSection.includes('|')) {
+        const tokens = rawAltSection.split('|').map(t => t.trim());
+        alt = tokens[0] || 'Saudagar luxury real estate Gurugram';
+        tokens.slice(1).forEach(token => {
+          const [key, ...valParts] = token.split(':');
+          const val = valParts.join(':').trim();
+          const cleanKey = key.trim().toLowerCase();
+          if (cleanKey === 'caption') caption = val;
+          else if (cleanKey === 'credit') credit = val;
+          else if (cleanKey === 'source') source = val;
+        });
+      } else {
+        alt = rawAltSection || 'Saudagar luxury real estate Gurugram';
+        caption = alt;
+      }
+
       elements.push(
-        <figure key={`img-${elements.length}`} className="my-8">
-          <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl shadow-sm border border-[#17213D]/10 bg-slate-100">
-            <Image
-              src={src}
-              alt={alt}
-              fill
-              sizes="(max-width: 768px) 100vw, 850px"
-              className="object-cover"
-              loading="lazy"
-            />
-          </div>
-          {alt && <figcaption className="text-center text-xs text-[#64748B] mt-2.5 italic">{alt}</figcaption>}
-        </figure>
+        <ArticleImage
+          key={`img-${elements.length}`}
+          src={src}
+          alt={alt}
+          caption={caption}
+          credit={credit}
+          source={source}
+          sizes="(max-width: 768px) 100vw, 850px"
+        />
       );
       continue;
     }

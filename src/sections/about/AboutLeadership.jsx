@@ -202,15 +202,15 @@ export default function AboutLeadership() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-16 md:py-24 bg-gradient-to-b from-white via-[#FAF8F5] to-white overflow-hidden">
+    <section ref={sectionRef} className="relative py-16 md:py-24 bg-[#0A0E17] text-white overflow-hidden border-t border-white/10">
       {/* Decorative Radial Gradients */}
       <div
         className="absolute top-1/3 left-0 w-[500px] h-[500px] rounded-full pointer-events-none -translate-y-1/2"
-        style={{ background: 'radial-gradient(circle, rgba(197,168,128,0.12) 0%, rgba(197,168,128,0) 70%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(208, 154, 22,0.12) 0%, rgba(208, 154, 22,0) 70%)' }}
       />
       <div
         className="absolute bottom-10 right-0 w-[500px] h-[500px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(circle, rgba(197,168,128,0.12) 0%, rgba(197,168,128,0) 70%)' }}
+        style={{ background: 'radial-gradient(circle, rgba(208, 154, 22,0.12) 0%, rgba(208, 154, 22,0) 70%)' }}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -220,16 +220,16 @@ export default function AboutLeadership() {
           ref={headerRef}
           className="text-center max-w-3xl mx-auto mb-12 md:mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[#A27B48] text-xs font-bold tracking-[0.25em] uppercase mb-4 shadow-sm">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.06] border border-[#D09A16]/40 text-[#D09A16] text-xs font-bold tracking-[0.25em] uppercase mb-4 shadow-[0_0_20px_rgba(208,154,22,0.15)]">
             <Users size={14} className="text-[#D09A16]" />
             <span>Team of Experts</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-[#1D263B] leading-tight mb-4">
-            Visionary <span className="italic font-light text-[#D09A16]">Founders & Leadership</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-tight mb-4">
+            Visionary <span className="italic font-serif text-[#D09A16]">Founders &amp; Leadership</span>
           </h2>
 
-          <p className="text-sm sm:text-base text-[#334155] font-normal leading-relaxed">
+          <p className="text-sm sm:text-base text-slate-300 font-normal leading-relaxed">
             Meet the driving force behind Saudagar Properties, delivering two decades of real estate authority, personal attention, and unwavering integrity.
           </p>
         </div>
@@ -248,7 +248,7 @@ export default function AboutLeadership() {
             >
               <Tilt3DCard
                 maxTilt={8}
-                className="group relative rounded-[32px] bg-white border border-[#E8E2D8] hover:border-[#D09A16] p-7 sm:p-10 transition-colors duration-300 shadow-[0_20px_50px_-15px_rgba(29,38,59,0.08)] hover:shadow-[0_30px_70px_-15px_rgba(197,168,128,0.3)] h-full flex flex-col justify-between"
+                className="group relative rounded-[32px] bg-white/[0.04] border border-white/10 hover:border-[#D09A16]/60 p-7 sm:p-10 transition-all duration-300 shadow-xl hover:shadow-[0_20px_50px_rgba(208,154,22,0.2)] h-full flex flex-col justify-between backdrop-blur-md"
               >
                 <div>
                   {/* Founder Header */}
@@ -256,9 +256,9 @@ export default function AboutLeadership() {
 
                     {/* Portrait Frame with Gold Halo */}
                     <div className="relative shrink-0">
-                      <div className="absolute -inset-2 rounded-[26px] bg-gradient-to-tr from-[#D09A16]/30 via-[#E2CEB4]/20 to-[#B39366]/30 opacity-70 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
+                      <div className="absolute -inset-2 rounded-[26px] bg-gradient-to-tr from-[#D09A16]/30 via-[#D09A16]/20 to-[#D09A16]/30 opacity-70 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-                      <div className="relative w-36 h-44 sm:w-40 sm:h-48 rounded-2xl overflow-hidden border-2 border-white shadow-2xl bg-slate-900">
+                      <div className="relative w-36 h-44 sm:w-40 sm:h-48 rounded-2xl overflow-hidden border-2 border-white/20 shadow-2xl bg-slate-900">
                         <Image
                           src={leader.image}
                           alt={leader.name}
@@ -267,11 +267,11 @@ export default function AboutLeadership() {
                           loading="lazy"
                           className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-108"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
                       </div>
 
                       {/* Floating Gold Seal Pin */}
-                      <div className="absolute -bottom-3 -right-3 w-10 h-10 rounded-2xl bg-gradient-to-br from-[#D09A16] to-[#B39366] text-[#0C101A] flex items-center justify-center shadow-[0_6px_20px_rgba(197,168,128,0.5)] border-2 border-white">
+                      <div className="absolute -bottom-3 -right-3 w-10 h-10 rounded-2xl bg-[#D09A16] text-[#0C101A] flex items-center justify-center shadow-lg border-2 border-white/20">
                         <Award size={18} />
                       </div>
 
@@ -283,32 +283,32 @@ export default function AboutLeadership() {
 
                     {/* Founder Title & Accolades */}
                     <div className="text-center sm:text-left flex-grow">
-                      <span className="inline-block px-3.5 py-1 rounded-full bg-[#FAF8F5] border border-[#E8E2D8] text-[#A27B48] text-[11px] font-bold tracking-[0.18em] uppercase mb-2 shadow-xs">
+                      <span className="inline-block px-3.5 py-1 rounded-full bg-white/10 border border-white/15 text-[#D09A16] text-[11px] font-bold tracking-[0.18em] uppercase mb-2 shadow-xs">
                         {leader.badge}
                       </span>
-                      <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#1D263B] mb-1 leading-snug">
+                      <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white mb-1 leading-snug">
                         {leader.name}
                       </h3>
-                      <p className="text-xs sm:text-sm font-semibold text-[#A27B48] uppercase tracking-wider mb-4">
+                      <p className="text-xs sm:text-sm font-semibold text-[#D09A16] uppercase tracking-wider mb-4">
                         {leader.role}
                       </p>
 
                       {/* Founder Philosophy Quote */}
-                      <div className="p-3.5 rounded-2xl bg-[#FAF8F5] border border-[#E8E2D8] text-xs italic text-[#334155] border-l-4 border-l-[#D09A16] shadow-2xs">
+                      <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 text-xs italic text-slate-300 border-l-4 border-l-[#D09A16] shadow-2xs">
                         &ldquo;{leader.quote}&rdquo;
                       </div>
                     </div>
                   </div>
 
                   {/* Biography */}
-                  <p className="text-xs sm:text-sm text-[#334155] font-normal leading-relaxed mb-6">
+                  <p className="text-xs sm:text-sm text-slate-300 font-normal leading-relaxed mb-6">
                     {leader.bio}
                   </p>
 
                   {/* Key Strengths Highlights */}
-                  <div className="pt-4 border-t border-[#F1F5F9] space-y-2.5 mb-6">
+                  <div className="pt-4 border-t border-white/10 space-y-2.5 mb-6">
                     {leader.highlights.map((h, hIdx) => (
-                      <div key={hIdx} className="flex items-start gap-2.5 text-xs text-[#1D263B]">
+                      <div key={hIdx} className="flex items-start gap-2.5 text-xs text-slate-200">
                         <CheckCircle2 size={15} className="text-[#D09A16] shrink-0 mt-0.5" />
                         <span className="font-medium">{h}</span>
                       </div>
@@ -317,14 +317,14 @@ export default function AboutLeadership() {
                 </div>
 
                 {/* Direct Touchpoint Footnote */}
-                <div className="pt-4 border-t border-[#F1F5F9] flex items-center justify-between text-xs text-slate-500 font-medium">
-                  <span className="flex items-center gap-1.5 text-[#1D263B] font-semibold">
+                <div className="pt-4 border-t border-white/10 flex items-center justify-between text-xs text-slate-400 font-medium">
+                  <span className="flex items-center gap-1.5 text-white font-semibold">
                     <Shield size={14} className="text-[#D09A16]" />
                     <span>Personal Consultation Guaranteed</span>
                   </span>
                   <a
                     href="tel:+919811221207"
-                    className="text-[#A27B48] hover:text-[#1D263B] font-bold uppercase tracking-wider transition-colors inline-flex items-center gap-1"
+                    className="text-[#D09A16] hover:text-white font-bold uppercase tracking-wider transition-colors inline-flex items-center gap-1"
                   >
                     <span>Direct Call</span>
                     <span>→</span>
@@ -341,8 +341,8 @@ export default function AboutLeadership() {
             <span className="text-xs font-bold tracking-[0.25em] text-[#D09A16] uppercase mb-2 block">
               Leadership In Action
             </span>
-            <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#1D263B]">
-              Core Advisory & Operations Team
+            <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white">
+              Core Advisory &amp; Operations Team
             </h3>
           </div>
 
@@ -351,14 +351,14 @@ export default function AboutLeadership() {
               <div
                 key={member.name}
                 ref={(el) => (teamCardsRef.current[mIdx] = el)}
-                className="group relative rounded-3xl bg-white border border-[#E8E2D8] hover:border-[#D09A16] p-8 text-center transition-all duration-500 shadow-[0_15px_35px_-10px_rgba(29,38,59,0.06)] hover:shadow-[0_25px_50px_-10px_rgba(197,168,128,0.25)] hover:-translate-y-2 flex flex-col items-center justify-between"
+                className="group relative rounded-3xl bg-white/[0.04] border border-white/10 hover:border-[#D09A16]/60 p-8 text-center transition-all duration-500 shadow-xl hover:shadow-[0_20px_50px_rgba(208,154,22,0.2)] hover:-translate-y-2 flex flex-col items-center justify-between backdrop-blur-md"
               >
                 <div>
                   {/* Photo Frame */}
                   <div className="relative mb-6">
                     <div className="absolute -inset-2.5 rounded-full border border-dashed border-[#D09A16]/40 group-hover:border-[#D09A16] group-hover:rotate-45 transition-all duration-700" />
 
-                    <div className="relative w-36 h-36 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-white shadow-xl bg-slate-100 mx-auto">
+                    <div className="relative w-36 h-36 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-white/20 shadow-xl bg-slate-900 mx-auto">
                       <Image
                         src={member.image}
                         alt={member.name}
@@ -369,36 +369,36 @@ export default function AboutLeadership() {
                       />
                     </div>
 
-                    <div className="absolute bottom-1 right-2 w-7 h-7 rounded-full bg-[#D09A16] text-[#0C101A] flex items-center justify-center shadow-md border-2 border-white">
+                    <div className="absolute bottom-1 right-2 w-7 h-7 rounded-full bg-[#D09A16] text-[#0C101A] flex items-center justify-center shadow-md border-2 border-white/20">
                       <Star size={12} className="fill-[#0C101A]" />
                     </div>
                   </div>
 
-                  <h4 className="text-xl sm:text-2xl font-serif font-bold text-[#1D263B] mb-1.5 group-hover:text-[#A27B48] transition-colors">
+                  <h4 className="text-xl sm:text-2xl font-serif font-bold text-white mb-1.5 group-hover:text-[#D09A16] transition-colors">
                     {member.name}
                   </h4>
 
-                  <p className="text-xs font-semibold text-[#A27B48] uppercase tracking-wider mb-4">
+                  <p className="text-xs font-semibold text-[#D09A16] uppercase tracking-wider mb-4">
                     {member.designation}
                   </p>
                 </div>
 
-                <div className="w-12 h-[2px] bg-[#E8E2D8] group-hover:bg-[#D09A16] group-hover:w-20 transition-all duration-300 mt-2" />
+                <div className="w-12 h-[2px] bg-white/20 group-hover:bg-[#D09A16] group-hover:w-20 transition-all duration-300 mt-2" />
               </div>
             ))}
           </div>
         </div>
 
         {/* ================= PART 3: MILESTONE COUNTERS ================= */}
-        <div ref={statsSectionRef} className="pt-8 border-t border-[#E8E2D8]">
+        <div ref={statsSectionRef} className="pt-8 border-t border-white/10">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center max-w-5xl mx-auto">
             {impactStats.map((stat, sIdx) => (
               <div
                 key={sIdx}
                 ref={(el) => (statCardsRef.current[sIdx] = el)}
-                className="group p-6 sm:p-8 rounded-3xl bg-[#FAF8F5] border border-[#E8E2D8] hover:border-[#D09A16] transition-all duration-300 shadow-xs hover:shadow-md hover:-translate-y-1"
+                className="group p-6 sm:p-8 rounded-3xl bg-white/[0.04] border border-white/10 hover:border-[#D09A16]/60 transition-all duration-300 shadow-xl hover:shadow-[0_20px_50px_rgba(208,154,22,0.2)] hover:-translate-y-1 backdrop-blur-md"
               >
-                <div className="text-5xl sm:text-6xl md:text-7xl font-serif font-bold text-[#1D263B] mb-2 leading-none">
+                <div className="text-5xl sm:text-6xl md:text-7xl font-serif font-bold text-white mb-2 leading-none">
                   <AnimatedCounter
                     value={stat.value}
                     suffix={stat.suffix}
@@ -407,11 +407,11 @@ export default function AboutLeadership() {
                   />
                 </div>
 
-                <div className="text-sm sm:text-base font-bold text-[#A27B48] tracking-wide uppercase mb-1">
+                <div className="text-sm sm:text-base font-bold text-[#D09A16] tracking-wide uppercase mb-1">
                   {stat.label}
                 </div>
 
-                <div className="text-xs text-slate-500 font-medium">
+                <div className="text-xs text-slate-300 font-medium">
                   {stat.desc}
                 </div>
               </div>

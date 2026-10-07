@@ -2,6 +2,7 @@
 import { gsap, ScrollTrigger } from "@/lib/gsap/animations";
 
 import { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
 import { Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react';
 import { animate, inView, stagger } from 'framer-motion';
 import api from '@/services/api';
@@ -112,6 +113,16 @@ export default function ContactClient() {
       {/* Page Header */}
       <div className="pt-32 pb-16 bg-[#1D263B] text-white text-center px-4">
         <div ref={headerRef} className="max-w-3xl mx-auto">
+          {/* Illuminated Breadcrumb Navigation */}
+          <div className="flex items-center justify-center gap-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-6">
+            <Link href="/" className="hover:text-[#D09A16] transition-colors">Home</Link>
+            <span className="text-slate-600">/</span>
+            <span className="text-[#D09A16] flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16] shadow-[0_0_8px_#D09A16]" />
+              <span>Contact Us</span>
+            </span>
+          </div>
+
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4">Contact Us</h1>
           <p className="text-[#CBD5E1] max-w-2xl mx-auto text-sm md:text-base font-light">
             Get in touch with Saudagar Properties for premium real estate advisory in Gurugram. We are here to assist you with buying, selling, or leasing luxury properties.
@@ -144,7 +155,7 @@ export default function ContactClient() {
                 <p className="text-sm text-[#475569] leading-relaxed">
                   38, Akashneem Marg<br />
                   DLF Phase 2<br />
-                  Gurgaon, Haryana 122008
+                  Gurugram, Haryana 122002
                 </p>
               </div>
             </div>
@@ -220,8 +231,9 @@ export default function ContactClient() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-[#1D263B] uppercase tracking-wider">Full Name *</label>
+                    <label htmlFor="contact-name" className="text-xs font-semibold text-[#1D263B] uppercase tracking-wider">Full Name *</label>
                     <input 
+                      id="contact-name"
                       type="text" 
                       name="name"
                       required
@@ -232,8 +244,9 @@ export default function ContactClient() {
                     />
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-[#1D263B] uppercase tracking-wider">Phone Number *</label>
+                    <label htmlFor="contact-phone" className="text-xs font-semibold text-[#1D263B] uppercase tracking-wider">Phone Number *</label>
                     <input 
+                      id="contact-phone"
                       type="tel" 
                       name="phone"
                       required
@@ -246,8 +259,9 @@ export default function ContactClient() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-[#1D263B] uppercase tracking-wider">Email Address *</label>
+                  <label htmlFor="contact-email" className="text-xs font-semibold text-[#1D263B] uppercase tracking-wider">Email Address *</label>
                   <input 
+                    id="contact-email"
                     type="email" 
                     name="email"
                     required
@@ -260,9 +274,10 @@ export default function ContactClient() {
 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-[#1D263B] uppercase tracking-wider">Purpose</label>
+                    <label htmlFor="contact-purpose" className="text-xs font-semibold text-[#1D263B] uppercase tracking-wider">Purpose</label>
                     <div className="relative">
                       <select 
+                        id="contact-purpose"
                         name="purpose"
                         value={formData.purpose}
                         onChange={handleChange}
@@ -280,9 +295,10 @@ export default function ContactClient() {
                   </div>
                   
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-[#1D263B] uppercase tracking-wider">Property Type</label>
+                    <label htmlFor="contact-property-type" className="text-xs font-semibold text-[#1D263B] uppercase tracking-wider">Property Type</label>
                     <div className="relative">
                       <select 
+                        id="contact-property-type"
                         name="propertyType"
                         value={formData.propertyType}
                         onChange={handleChange}
@@ -300,9 +316,10 @@ export default function ContactClient() {
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="text-xs font-semibold text-[#1D263B] uppercase tracking-wider">Budget</label>
+                    <label htmlFor="contact-budget" className="text-xs font-semibold text-[#1D263B] uppercase tracking-wider">Budget</label>
                     <div className="relative">
                       <select 
+                        id="contact-budget"
                         name="budget"
                         value={formData.budget}
                         onChange={handleChange}
@@ -321,8 +338,9 @@ export default function ContactClient() {
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="text-xs font-semibold text-[#1D263B] uppercase tracking-wider">Message *</label>
+                  <label htmlFor="contact-message" className="text-xs font-semibold text-[#1D263B] uppercase tracking-wider">Message *</label>
                   <textarea 
+                    id="contact-message"
                     name="message"
                     required
                     rows="4"
@@ -336,7 +354,7 @@ export default function ContactClient() {
                 <button 
                   type="submit" 
                   disabled={loading}
-                  className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-[#D09A16] hover:bg-[#B39366] text-white rounded-xl font-bold tracking-widest uppercase text-xs transition-colors duration-300 shadow-[0_10px_30px_rgba(197,168,128,0.3)] hover:-translate-y-0.5 disabled:opacity-70 disabled:hover:translate-y-0 cursor-pointer"
+                  className="w-full flex items-center justify-center gap-2 px-8 py-4 bg-[#D09A16] hover:bg-[#D09A16] text-white rounded-xl font-bold tracking-widest uppercase text-xs transition-colors duration-300 shadow-[0_10px_30px_rgba(208, 154, 22,0.3)] hover:-translate-y-0.5 disabled:opacity-70 disabled:hover:translate-y-0 cursor-pointer"
                 >
                   {loading ? (
                     <span className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></span>

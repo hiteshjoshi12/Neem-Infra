@@ -8,7 +8,7 @@ export default function ServicesLoading() {
           <div className="h-10 sm:h-14 w-3/4 max-w-xl bg-white/10 rounded-2xl mb-4" />
           <div className="h-6 w-1/2 max-w-md bg-white/10 rounded-xl mb-8" />
           <div className="flex gap-4">
-            <div className="h-12 w-48 bg-[#C6A24A]/40 rounded-xl" />
+            <div className="h-12 w-48 bg-[#D09A16]/40 rounded-xl" />
             <div className="h-12 w-40 bg-white/10 rounded-xl" />
           </div>
         </div>

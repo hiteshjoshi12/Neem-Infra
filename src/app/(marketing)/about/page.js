@@ -11,7 +11,7 @@ import { PAGE_SEO, BREADCRUMBS } from '@/lib/seo/seoConfig';
 export async function generateMetadata() {
   const seoData = PAGE_SEO['/about'];
   return {
-    title: seoData.title,
+    title: { absolute: seoData.title },
     description: seoData.description,
     alternates: {
       canonical: seoData.canonical,
@@ -23,9 +23,9 @@ export default function About() {
   const breadcrumbs = BREADCRUMBS['/about'];
 
   return (
-    <div className="min-h-screen bg-white text-[#1D263B] selection:bg-[#D09A16]/30 selection:text-[#0C101A]">
+    <div className="w-full min-h-screen bg-[#0A0E17] text-[#17213D] selection:bg-[#D09A16] selection:text-[#0A0E17]">
       <BreadcrumbJsonLd items={breadcrumbs} />
-      
+
       {/* 1. Hero Section & Mission Statement */}
       <AboutHero />
 

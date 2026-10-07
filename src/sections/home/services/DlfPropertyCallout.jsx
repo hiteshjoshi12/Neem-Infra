@@ -117,7 +117,7 @@ function GsapCounter({ end, suffix = "+" }) {
           ? targetEnd.toLocaleString("en-IN")
           : targetEnd}
       </span>
-      <span className="ml-0.5 font-light text-[#C6A24A]">{suffix}</span>
+      <span className="ml-0.5 font-light text-[#D09A16]">{suffix}</span>
     </span>
   );
 }
@@ -158,10 +158,10 @@ function DarkBackdrop() {
       aria-hidden="true"
     >
       {/* Background Architectural Glow matching CuratedCorridors */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#C6A24A_1px,transparent_1px)] [background-size:32px_32px]" />
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#D09A16_1px,transparent_1px)] [background-size:32px_32px]" />
 
       {/* Subtle gold radial ambient illumination */}
-      <div className="absolute -right-40 -top-40 h-[560px] w-[560px] rounded-full bg-[#C6A24A]/[0.05] blur-[140px]" />
+      <div className="absolute -right-40 -top-40 h-[560px] w-[560px] rounded-full bg-[#D09A16]/[0.05] blur-[140px]" />
       <div className="absolute -bottom-40 -left-40 h-[500px] w-[500px] rounded-full bg-[#182345]/40 blur-[130px]" />
 
       {/* Architectural vertical hairline columns */}
@@ -171,9 +171,9 @@ function DarkBackdrop() {
       <div className="absolute right-[8%] top-0 h-full w-px bg-white/[0.015]" />
 
       {/* Circular geometry */}
-      <div className="absolute -right-28 top-1/2 h-[580px] w-[580px] -translate-y-1/2 rounded-full border border-[#C6A24A]/[0.04]" />
+      <div className="absolute -right-28 top-1/2 h-[580px] w-[580px] -translate-y-1/2 rounded-full border border-[#D09A16]/[0.04]" />
       <div className="absolute -right-10 top-1/2 h-[420px] w-[420px] -translate-y-1/2 rounded-full border border-white/[0.02]" />
-      <div className="absolute right-[14%] top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-[#C6A24A] shadow-[0_0_24px_6px_rgba(198,162,74,0.25)]" />
+      <div className="absolute right-[14%] top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full bg-[#D09A16] shadow-[0_0_24px_6px_rgba(208, 154, 22,0.25)]" />
     </div>
   );
 }
@@ -392,16 +392,16 @@ export default function DlfPropertyCallout() {
 
             {/* Small Gold Eyebrow */}
             <div className="inline-flex items-center gap-2.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-[#C6A24A] shadow-[0_0_8px_#C6A24A]" />
-              <span className="text-[9px] font-bold uppercase tracking-[0.26em] text-[#C6A24A] sm:text-[10px]">
+              <span className="h-1.5 w-1.5 rounded-full bg-[#D09A16] shadow-[0_0_8px_#D09A16]" />
+              <span className="text-[9px] font-bold uppercase tracking-[0.26em] text-[#D09A16] sm:text-[10px]">
                 {badge}
               </span>
             </div>
 
             {/* Editorial Location Annotation */}
             <div className="mt-5 inline-flex items-center gap-2.5">
-              <span className="h-1.5 w-1.5 rounded-full border border-[#C6A24A] bg-[#C6A24A]/20" />
-              <span className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#C6A24A]">
+              <span className="h-1.5 w-1.5 rounded-full border border-[#D09A16] bg-[#D09A16]/20" />
+              <span className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D09A16]">
                 DLF GURUGRAM
               </span>
               <span className="text-white/20">·</span>
@@ -414,7 +414,7 @@ export default function DlfPropertyCallout() {
             <h2 className="mt-5 font-serif text-4xl font-normal leading-[1.05] tracking-tight text-[#F7F5EF] sm:text-5xl lg:text-6xl xl:text-7xl">
               DLF Gurugram,
               <br />
-              <span className="font-light italic text-[#C6A24A]">
+              <span className="font-light italic text-[#D09A16]">
                 considered differently.
               </span>
             </h2>
@@ -435,7 +435,7 @@ export default function DlfPropertyCallout() {
                 h-[320px] w-full
                 overflow-hidden
                 rounded-2xl
-                border border-[#C6A24A]/25
+                border border-[#D09A16]/25
                 shadow-[0_25px_70px_rgba(0,0,0,0.55)]
                 sm:h-[400px]
                 lg:h-[450px]
@@ -478,19 +478,19 @@ export default function DlfPropertyCallout() {
               <div
                 className="
                   pointer-events-none absolute inset-0
-                  border-l border-t border-[#C6A24A]/30
+                  border-l border-t border-[#D09A16]/30
                 "
               />
               <div
                 className="
                   pointer-events-none absolute right-0 top-0 h-28 w-28
-                  bg-gradient-to-bl from-[#C6A24A]/15 to-transparent
+                  bg-gradient-to-bl from-[#D09A16]/15 to-transparent
                 "
               />
 
               {/* Subtle Architectural Coordinate Label */}
               <div className="pointer-events-none absolute bottom-4 left-5 right-5 flex items-center justify-between font-mono text-[8px] uppercase tracking-[0.24em] text-[#F7F5EF]/75">
-                <span className="text-[#C6A24A]">DLF PHASE V · PRIVATE DESK</span>
+                <span className="text-[#D09A16]">DLF PHASE V · PRIVATE DESK</span>
                 <span className="text-white/40">28°27&apos;N 77°05&apos;E</span>
               </div>
             </div>
@@ -506,7 +506,7 @@ export default function DlfPropertyCallout() {
 
           {/* Top Thin Gold Architectural Line */}
           <div className="h-px w-full overflow-hidden bg-white/[0.08]">
-            <div className="dlf-gold-line h-full w-full origin-left scale-x-0 bg-gradient-to-r from-[#C6A24A] via-[#C6A24A]/40 to-transparent" />
+            <div className="dlf-gold-line h-full w-full origin-left scale-x-0 bg-gradient-to-r from-[#D09A16] via-[#D09A16]/40 to-transparent" />
           </div>
 
           {/* Metrics Layout: Direct on Dark Canvas, Divided Only by Thin Dividers */}
@@ -533,8 +533,8 @@ export default function DlfPropertyCallout() {
 
                 {/* Gold Accent Line that Expands on Hover */}
                 <div className="mt-5 flex items-center gap-2">
-                  <span className="h-px w-7 bg-[#C6A24A]/60 transition-all duration-500 ease-out group-hover:w-16 group-hover:bg-[#C6A24A]" />
-                  <span className="h-1 w-1 rounded-full bg-[#C6A24A]/50 transition-colors duration-300 group-hover:bg-[#C6A24A]" />
+                  <span className="h-px w-7 bg-[#D09A16]/60 transition-all duration-500 ease-out group-hover:w-16 group-hover:bg-[#D09A16]" />
+                  <span className="h-1 w-1 rounded-full bg-[#D09A16]/50 transition-colors duration-300 group-hover:bg-[#D09A16]" />
                 </div>
 
                 {/* Tiny Uppercase Typography with Generous Letter Spacing */}
@@ -566,7 +566,7 @@ export default function DlfPropertyCallout() {
             mt-16 sm:mt-20
             overflow-hidden
             rounded-2xl sm:rounded-3xl
-            border border-[#C6A24A]/30
+            border border-[#D09A16]/30
             bg-gradient-to-br from-[#131D38]/90 via-[#0F182F]/95 to-[#15203D]/90
             p-7 sm:p-10 lg:p-12
             shadow-[0_25px_80px_rgba(0,0,0,0.5),inset_0_1px_0_rgba(255,255,255,0.08)]
@@ -574,25 +574,25 @@ export default function DlfPropertyCallout() {
           "
         >
           {/* Ambient Gold Radial Glow Behind CTA Controls */}
-          <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#C6A24A]/15 blur-[80px] transition-all duration-700 group-hover/cta-panel:bg-[#C6A24A]/25" />
+          <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-[#D09A16]/15 blur-[80px] transition-all duration-700 group-hover/cta-panel:bg-[#D09A16]/25" />
 
           {/* Top Illuminated Gold Accent Line */}
-          <div className="pointer-events-none absolute left-0 right-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#C6A24A] to-transparent opacity-80" />
+          <div className="pointer-events-none absolute left-0 right-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#D09A16] to-transparent opacity-80" />
 
           {/* Subtle Architectural Coordinate Grid */}
-          <div className="pointer-events-none absolute inset-0 opacity-[0.025] bg-[radial-gradient(#C6A24A_1px,transparent_1px)] [background-size:24px_24px]" />
+          <div className="pointer-events-none absolute inset-0 opacity-[0.025] bg-[radial-gradient(#D09A16_1px,transparent_1px)] [background-size:24px_24px]" />
 
           <div className="relative z-10 flex flex-col gap-8 lg:flex-row lg:items-center lg:justify-between">
 
             {/* Left Editorial Info */}
             <div className="max-w-2xl">
               {/* Eyebrow badge with live pulse indicator */}
-              <div className="inline-flex items-center gap-2.5 rounded-full border border-[#C6A24A]/30 bg-[#C6A24A]/10 px-3.5 py-1.5 backdrop-blur-md">
+              <div className="inline-flex items-center gap-2.5 rounded-full border border-[#D09A16]/30 bg-[#D09A16]/10 px-3.5 py-1.5 backdrop-blur-md">
                 <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#C6A24A] opacity-75" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#C6A24A]" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#D09A16] opacity-75" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#D09A16]" />
                 </span>
-                <span className="text-[9px] font-bold uppercase tracking-[0.26em] text-[#C6A24A]">
+                <span className="text-[9px] font-bold uppercase tracking-[0.26em] text-[#D09A16]">
                   PRIVATE PROPERTY DESK · ACTIVE INQUIRIES
                 </span>
               </div>
@@ -630,7 +630,7 @@ export default function DlfPropertyCallout() {
                   group/phone
                   inline-flex items-center justify-center gap-3.5
                   rounded-full
-                  border border-[#C6A24A]/40
+                  border border-[#D09A16]/40
                   bg-[#182345]/70
                   px-7 py-4
                   text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em]
@@ -638,11 +638,11 @@ export default function DlfPropertyCallout() {
                   shadow-[0_10px_30px_rgba(0,0,0,0.3)]
                   backdrop-blur-md
                   transition-all duration-300
-                  hover:border-[#C6A24A] hover:bg-[#C6A24A]/15
+                  hover:border-[#D09A16] hover:bg-[#D09A16]/15
                   hover:-translate-y-0.5
                 "
               >
-                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#C6A24A]/15 text-[#C6A24A] transition-colors duration-300 group-hover/phone:bg-[#C6A24A] group-hover/phone:text-[#0A1020]">
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-[#D09A16]/15 text-[#D09A16] transition-colors duration-300 group-hover/phone:bg-[#D09A16] group-hover/phone:text-[#0A1020]">
                   <PhoneCall
                     size={12}
                     className="transition-transform duration-300 group-hover/phone:rotate-12"
@@ -660,15 +660,15 @@ export default function DlfPropertyCallout() {
                   inline-flex items-center justify-center gap-3
                   overflow-hidden
                   rounded-full
-                  bg-gradient-to-r from-[#C6A24A] via-[#DFC06C] to-[#C6A24A]
+                  bg-gradient-to-r from-[#D09A16] via-[#DFC06C] to-[#D09A16]
                   bg-[length:200%_auto]
                   px-8 py-4
                   text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em]
                   text-[#0A1020]
-                  shadow-[0_12px_35px_rgba(198,162,74,0.35)]
+                  shadow-[0_12px_35px_rgba(208, 154, 22,0.35)]
                   transition-all duration-500
                   hover:bg-[position:right_center]
-                  hover:shadow-[0_18px_50px_rgba(198,162,74,0.55)]
+                  hover:shadow-[0_18px_50px_rgba(208, 154, 22,0.55)]
                   hover:-translate-y-0.5
                 "
               >
@@ -681,8 +681,8 @@ export default function DlfPropertyCallout() {
               </Link>
 
               {/* Trust statement */}
-              <div className="flex items-center justify-center lg:justify-start gap-2 pt-1 text-[8px] uppercase tracking-[0.2em] text-[#C6A24A]/90 font-medium">
-                <Check size={11} className="text-[#C6A24A]" />
+              <div className="flex items-center justify-center lg:justify-start gap-2 pt-1 text-[8px] uppercase tracking-[0.2em] text-[#D09A16]/90 font-medium">
+                <Check size={11} className="text-[#D09A16]" />
                 <span>Confidential Advisory · Verified Titles</span>
               </div>
 
@@ -693,10 +693,10 @@ export default function DlfPropertyCallout() {
           {/* Minimal Brand Stamp Hairline */}
           <div className="mt-8 flex items-center justify-between border-t border-white/[0.06] pt-4 text-[7px] uppercase tracking-[0.24em] text-white/30">
             <div className="flex items-center gap-2">
-              <Check size={9} className="text-[#C6A24A]" />
+              <Check size={9} className="text-[#D09A16]" />
               <span>SAUDAGAR PROPERTIES PVT LTD</span>
             </div>
-            <span className="text-[#C6A24A]/60">GURUGRAM PRIME DIVISION</span>
+            <span className="text-[#D09A16]/60">GURUGRAM PRIME DIVISION</span>
           </div>
 
         </div>

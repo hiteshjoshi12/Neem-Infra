@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import Testimonial from '@/models/Testimonial';
+import { requireAdmin } from '@/lib/auth/authGuard';
 
 export async function GET(req) {
   try {
@@ -24,6 +25,7 @@ export async function GET(req) {
 
 export async function POST(req) {
   try {
+    await requireAdmin(req);
     await connectDB();
     const body = await req.json();
     const testimonial = await Testimonial.create(body);
@@ -34,7 +36,8 @@ export async function POST(req) {
       data: testimonial
     }, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ success: false, message: error.message }, { status: 400 });
+    const status = error.status || (error.name === 'ValidationError' ? 400 : 500);
+    return NextResponse.json({ success: false, message: error.message }, { status });
   }
 }
 

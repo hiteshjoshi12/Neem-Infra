@@ -122,7 +122,7 @@ export default function ServicesCardsGrid() {
             href={targetUrl}
             prefetch={true}
             ref={(el) => (cardRefs.current[index] = el)}
-            className="group relative flex flex-col h-full rounded-3xl bg-white border border-[#17213D]/10 shadow-[0_12px_35px_-10px_rgba(23,33,61,0.06)] hover:shadow-[0_25px_50px_-10px_rgba(198,162,74,0.22)] hover:border-[#C6A24A]/50 hover:-translate-y-2 transition-all duration-300 overflow-hidden transform-gpu cursor-pointer no-underline block"
+            className="group relative flex flex-col h-full rounded-3xl bg-white border border-[#17213D]/10 shadow-[0_12px_35px_-10px_rgba(23,33,61,0.06)] hover:shadow-[0_25px_50px_-10px_rgba(208, 154, 22,0.22)] hover:border-[#D09A16]/50 hover:-translate-y-2 transition-all duration-300 overflow-hidden transform-gpu cursor-pointer no-underline block"
           >
             {/* Top Image Preview with Dark Vignette */}
             <div className="relative h-52 sm:h-56 w-full overflow-hidden">
@@ -142,21 +142,21 @@ export default function ServicesCardsGrid() {
                 <span className="px-3.5 py-1 rounded-full bg-[#17213D]/90 backdrop-blur-md border border-white/20 text-white text-[10px] font-bold tracking-widest uppercase shadow-sm">
                   {service.category}
                 </span>
-                <span className="w-8 h-8 rounded-full bg-white/90 backdrop-blur-md border border-[#17213D]/15 text-[#C6A24A] flex items-center justify-center text-xs font-bold font-serif shadow-sm">
+                <span className="w-8 h-8 rounded-full bg-white/90 backdrop-blur-md border border-[#17213D]/15 text-[#D09A16] flex items-center justify-center text-xs font-bold font-serif shadow-sm">
                   {service.id}
                 </span>
               </div>
 
               {/* Title & Icon overlaid at the bottom of the image */}
               <div className="absolute bottom-4 left-5 right-5 flex items-center gap-3">
-                <div className="w-11 h-11 rounded-2xl bg-[#C6A24A] text-[#0E162B] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 shrink-0">
+                <div className="w-11 h-11 rounded-2xl bg-[#D09A16] text-[#0E162B] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 shrink-0">
                   <IconComponent size={22} />
                 </div>
                 <div>
                   <h3 className="text-2xl font-serif font-bold text-white tracking-wide">
                     {service.title}
                   </h3>
-                  <p className="text-[11px] text-[#E9D9A8] font-medium">
+                  <p className="text-[11px] text-[#D09A16] font-medium">
                     {service.badge}
                   </p>
                 </div>
@@ -173,7 +173,7 @@ export default function ServicesCardsGrid() {
               <div className="pt-4 border-t border-[#17213D]/[0.08] space-y-2 mb-6">
                 {service.highlights.map((item, i) => (
                   <div key={i} className="flex items-center gap-2.5 text-xs text-[#17213D] font-medium">
-                    <CheckCircle2 size={14} className="text-[#C6A24A] shrink-0" />
+                    <CheckCircle2 size={14} className="text-[#D09A16] shrink-0" />
                     <span>{item}</span>
                   </div>
                 ))}
@@ -184,12 +184,12 @@ export default function ServicesCardsGrid() {
                 className="w-full py-3.5 px-5 rounded-2xl bg-[#F7F5EF] group-hover:bg-[#17213D] text-[#17213D] group-hover:text-[#F7F5EF] border border-[#17213D]/12 group-hover:border-[#17213D] text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 shadow-sm"
               >
                 <span>{service.ctaText || `Explore ${service.title}`}</span>
-                <ArrowRight size={14} className="text-[#C6A24A] group-hover:translate-x-1.5 transition-transform" />
+                <ArrowRight size={14} className="text-[#D09A16] group-hover:translate-x-1.5 transition-transform" />
               </div>
             </div>
 
             {/* Bottom Champagne Gold Hover Glow Line */}
-            <div className="h-1 w-full bg-gradient-to-r from-transparent via-[#C6A24A] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="h-1 w-full bg-gradient-to-r from-transparent via-[#D09A16] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </Link>
         );
       })}

@@ -72,7 +72,7 @@ function Rating({ rating = 5 }) {
           key={index}
           size={14}
           fill="currentColor"
-          className="text-[#C6A24A]"
+          className="text-[#D09A16]"
           aria-hidden="true"
         />
       ))}
@@ -103,7 +103,7 @@ function FeaturedSplitTestimonial({
       className="group relative overflow-hidden rounded-[28px] sm:rounded-[36px] border border-white/10 bg-[#17213D] shadow-[0_25px_70px_rgba(0,0,0,0.45)] transition-all duration-500"
     >
       {/* Ambient background glows */}
-      <div className="pointer-events-none absolute -right-24 -top-24 h-[350px] w-[350px] rounded-full bg-[#C6A24A]/10 blur-[90px]" />
+      <div className="pointer-events-none absolute -right-24 -top-24 h-[350px] w-[350px] rounded-full bg-[#D09A16]/10 blur-[90px]" />
       <div className="pointer-events-none absolute bottom-0 left-0 h-[260px] w-[260px] rounded-full bg-[#202B4A]/25 blur-[80px]" />
 
       <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[460px] lg:min-h-[500px]">
@@ -125,8 +125,8 @@ function FeaturedSplitTestimonial({
           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-[#17213D]/70 hidden lg:block" />
 
           {/* Top-Left Verified Trust Pill */}
-          <div className="absolute top-5 left-5 z-10 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0E162B]/85 backdrop-blur-md border border-[#C6A24A]/40 text-[#C6A24A] text-[10px] font-bold tracking-widest uppercase shadow-md">
-            <ShieldCheck size={13} className="text-[#C6A24A]" />
+          <div className="absolute top-5 left-5 z-10 inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#0E162B]/85 backdrop-blur-md border border-[#D09A16]/40 text-[#D09A16] text-[10px] font-bold tracking-widest uppercase shadow-md">
+            <ShieldCheck size={13} className="text-[#D09A16]" />
             <span>Verified Advisory Client</span>
           </div>
 
@@ -141,11 +141,11 @@ function FeaturedSplitTestimonial({
                   
                   {/* BOLD & VISIBLE INVESTOR DUBAI TAGS */}
                   <div className="mt-2 flex flex-wrap items-center gap-1.5">
-                    <span className="px-3 py-1 rounded-lg bg-[#C6A24A] text-[#0E162B] text-xs font-black uppercase tracking-wider shadow-sm">
+                    <span className="px-3 py-1 rounded-lg bg-[#D09A16] text-[#0E162B] text-xs font-black uppercase tracking-wider shadow-sm">
                       {item.role}
                     </span>
                     <span className="px-3 py-1 rounded-lg bg-[#202B4A] border border-white/20 text-[#F7F5EF] text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-sm">
-                      <MapPin size={12} className="text-[#C6A24A] shrink-0" />
+                      <MapPin size={12} className="text-[#D09A16] shrink-0" />
                       <span>{item.location}</span>
                     </span>
                   </div>
@@ -165,11 +165,11 @@ function FeaturedSplitTestimonial({
           {/* Header Row: Perspective Badge + Carousel Arrows */}
           <div className="flex flex-wrap items-center justify-between gap-4 pb-5 border-b border-white/10">
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-2xl bg-[#C6A24A]/10 text-[#C6A24A] flex items-center justify-center border border-[#C6A24A]/30 shrink-0">
+              <div className="w-11 h-11 rounded-2xl bg-[#D09A16]/10 text-[#D09A16] flex items-center justify-center border border-[#D09A16]/30 shrink-0">
                 <Quote size={22} className="fill-current" />
               </div>
               <div>
-                <span className="text-[10px] font-extrabold uppercase tracking-[0.22em] text-[#C6A24A] block">
+                <span className="text-[10px] font-extrabold uppercase tracking-[0.22em] text-[#D09A16] block">
                   Client Perspective
                 </span>
                 <span className="text-xs font-semibold text-[#C9CED9]">
@@ -180,7 +180,7 @@ function FeaturedSplitTestimonial({
 
             {/* Carousel Navigation Arrows */}
             <div className="flex items-center gap-2.5">
-              <span className="text-xs font-serif font-bold text-[#C6A24A] tracking-wider px-2">
+              <span className="text-xs font-serif font-bold text-[#D09A16] tracking-wider px-2">
                 {String(activeIndex + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
               </span>
 
@@ -188,7 +188,7 @@ function FeaturedSplitTestimonial({
                 type="button"
                 onClick={onPrev}
                 aria-label="Previous testimonial"
-                className="w-10 h-10 rounded-full border border-white/15 bg-[#202B4A]/80 hover:bg-[#C6A24A] text-white hover:text-[#0E162B] flex items-center justify-center transition-all duration-300 shadow-sm cursor-pointer"
+                className="w-10 h-10 rounded-full border border-white/15 bg-[#202B4A]/80 hover:bg-[#D09A16] text-white hover:text-[#0E162B] flex items-center justify-center transition-all duration-300 shadow-sm cursor-pointer"
               >
                 <ChevronLeft size={18} />
               </button>
@@ -197,7 +197,7 @@ function FeaturedSplitTestimonial({
                 type="button"
                 onClick={onNext}
                 aria-label="Next testimonial"
-                className="w-10 h-10 rounded-full border border-white/15 bg-[#202B4A]/80 hover:bg-[#C6A24A] text-white hover:text-[#0E162B] flex items-center justify-center transition-all duration-300 shadow-sm cursor-pointer"
+                className="w-10 h-10 rounded-full border border-white/15 bg-[#202B4A]/80 hover:bg-[#D09A16] text-white hover:text-[#0E162B] flex items-center justify-center transition-all duration-300 shadow-sm cursor-pointer"
               >
                 <ChevronRight size={18} />
               </button>
@@ -230,11 +230,11 @@ function FeaturedSplitTestimonial({
 
               {/* BOLD & VISIBLE INVESTOR DUBAI TAGS (Secondary Prominent Display) */}
               <div className="mt-2 flex flex-wrap items-center gap-2">
-                <span className="px-3.5 py-1.5 rounded-full bg-[#C6A24A]/20 border border-[#C6A24A]/60 text-[#F5DE98] font-black text-xs uppercase tracking-wider">
+                <span className="px-3.5 py-1.5 rounded-full bg-[#D09A16]/20 border border-[#D09A16]/60 text-[#F5DE98] font-black text-xs uppercase tracking-wider">
                   {item.role}
                 </span>
                 <span className="px-3.5 py-1.5 rounded-full bg-[#202B4A] border border-white/20 text-white font-bold text-xs uppercase tracking-wider flex items-center gap-1.5">
-                  <MapPin size={13} className="text-[#C6A24A]" />
+                  <MapPin size={13} className="text-[#D09A16]" />
                   <span>{item.location}</span>
                 </span>
               </div>
@@ -250,7 +250,7 @@ function FeaturedSplitTestimonial({
                   aria-label={`Jump to testimonial ${idx + 1}`}
                   className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
                     idx === activeIndex
-                      ? "w-8 bg-[#C6A24A]"
+                      ? "w-8 bg-[#D09A16]"
                       : "w-2 bg-white/20 hover:bg-white/40"
                   }`}
                 />
@@ -297,8 +297,8 @@ function CompactTestimonial({ item, index, onSelect, active }) {
         justify-between
         h-full
         ${active
-          ? "border-[#C6A24A] bg-[#202B4A] shadow-[0_15px_45px_rgba(198,162,74,0.2)] scale-[1.01]"
-          : "border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.2)] hover:border-[#C6A24A]/50 hover:bg-[#1E294B]"
+          ? "border-[#D09A16] bg-[#202B4A] shadow-[0_15px_45px_rgba(208, 154, 22,0.2)] scale-[1.01]"
+          : "border-white/10 shadow-[0_8px_30px_rgba(0,0,0,0.2)] hover:border-[#D09A16]/50 hover:bg-[#1E294B]"
         }
       `}
     >
@@ -312,7 +312,7 @@ function CompactTestimonial({ item, index, onSelect, active }) {
           h-[3px]
           bg-gradient-to-r
           from-transparent
-          via-[#C6A24A]
+          via-[#D09A16]
           to-transparent
           transition-opacity
           duration-300
@@ -324,7 +324,7 @@ function CompactTestimonial({ item, index, onSelect, active }) {
         {/* Header: Rating & Number Index */}
         <div className="flex items-center justify-between gap-3 mb-4">
           <Rating rating={item.rating || 5} />
-          <span className="text-[10px] font-serif font-bold text-[#C6A24A]">
+          <span className="text-[10px] font-serif font-bold text-[#D09A16]">
             0{index + 1}
           </span>
         </div>
@@ -341,7 +341,7 @@ function CompactTestimonial({ item, index, onSelect, active }) {
       {/* Author & Bold Visible Tags */}
       <div className="pt-4 border-t border-white/10 flex items-center justify-between gap-3">
         <div className="flex items-center gap-3 min-w-0">
-          <div className="w-10 h-10 shrink-0 rounded-xl overflow-hidden relative border border-[#C6A24A]/40">
+          <div className="w-10 h-10 shrink-0 rounded-xl overflow-hidden relative border border-[#D09A16]/40">
             <Image
               src={displayAvatar}
               alt={`${item.name} — client`}
@@ -361,7 +361,7 @@ function CompactTestimonial({ item, index, onSelect, active }) {
             
             {/* BOLD & VISIBLE INVESTOR DUBAI TAG */}
             <div className="mt-0.5 flex items-center gap-1.5 truncate">
-              <span className="text-[10px] font-black uppercase tracking-wider text-[#C6A24A]">
+              <span className="text-[10px] font-black uppercase tracking-wider text-[#D09A16]">
                 {item.role}
               </span>
               <span className="text-white/30 text-xs">•</span>
@@ -391,8 +391,8 @@ function CompactTestimonial({ item, index, onSelect, active }) {
             transition-all
             duration-300
             ${active
-              ? "border-[#C6A24A] bg-[#C6A24A] text-[#0E162B]"
-              : "border-white/15 text-white/70 hover:border-[#C6A24A] hover:text-[#C6A24A]"
+              ? "border-[#D09A16] bg-[#D09A16] text-[#0E162B]"
+              : "border-white/15 text-white/70 hover:border-[#D09A16] hover:text-[#D09A16]"
             }
           `}
         >
@@ -550,7 +550,7 @@ export default function TestimonialsSection() {
       className="relative w-full overflow-hidden border-t border-white/[0.08] bg-[#0E162B] text-[#F7F5EF] py-16 sm:py-20 lg:py-24"
     >
       {/* Ambient background glows */}
-      <div className="pointer-events-none absolute right-[-180px] top-[-160px] h-[430px] w-[430px] rounded-full bg-[#C6A24A]/[0.04] blur-[110px]" />
+      <div className="pointer-events-none absolute right-[-180px] top-[-160px] h-[430px] w-[430px] rounded-full bg-[#D09A16]/[0.04] blur-[110px]" />
       <div className="pointer-events-none absolute left-[-150px] bottom-[-200px] h-[400px] w-[400px] rounded-full bg-[#202B4A]/25 blur-[100px]" />
       <div className="pointer-events-none absolute inset-0 opacity-[0.03] [background-image:linear-gradient(to_right,rgba(255,255,255,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:100px_100px]" />
 
@@ -562,8 +562,8 @@ export default function TestimonialsSection() {
           className="mb-10 flex flex-col gap-6 lg:mb-12 lg:flex-row lg:items-end lg:justify-between"
         >
           <div className="max-w-2xl">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#C6A24A]/30 bg-[#202B4A]/70 px-3.5 py-1.5 text-[8px] font-bold uppercase tracking-[0.23em] text-[#C6A24A] shadow-sm">
-              <Sparkles size={11} className="text-[#C6A24A]" />
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#D09A16]/30 bg-[#202B4A]/70 px-3.5 py-1.5 text-[8px] font-bold uppercase tracking-[0.23em] text-[#D09A16] shadow-sm">
+              <Sparkles size={11} className="text-[#D09A16]" />
               <span>{testData.badge || "Client Perspectives"}</span>
             </div>
 
@@ -572,7 +572,7 @@ export default function TestimonialsSection() {
               className="font-serif text-4xl font-normal leading-[1.05] tracking-[-0.04em] text-white sm:text-5xl lg:text-6xl"
             >
               {testData.titleMain || "Words of"}{" "}
-              <span className="italic font-light text-[#C6A24A]">
+              <span className="italic font-light text-[#D09A16]">
                 {testData.titleItalic || "Distinction"}
               </span>
             </h2>
@@ -584,7 +584,7 @@ export default function TestimonialsSection() {
           </div>
 
           <div className="flex shrink-0 items-center gap-3 lg:pb-1">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#C6A24A]/30 bg-[#202B4A] text-[#C6A24A] shadow-sm">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full border border-[#D09A16]/30 bg-[#202B4A] text-[#D09A16] shadow-sm">
               <ShieldCheck size={16} />
             </div>
             <div>
@@ -620,7 +620,7 @@ export default function TestimonialsSection() {
                 <span className="text-[11px] font-bold uppercase tracking-wider text-[#C9CED9]">
                   All Client Reviews ({list.length})
                 </span>
-                <span className="text-[10px] text-[#C6A24A] font-semibold">
+                <span className="text-[10px] text-[#D09A16] font-semibold">
                   • Swipe or Click to View
                 </span>
               </div>
@@ -629,7 +629,7 @@ export default function TestimonialsSection() {
                   type="button"
                   onClick={() => scrollRail("left")}
                   aria-label="Scroll left"
-                  className="w-8 h-8 rounded-full border border-white/15 bg-[#202B4A] text-white hover:border-[#C6A24A] hover:text-[#C6A24A] flex items-center justify-center transition-colors cursor-pointer"
+                  className="w-8 h-8 rounded-full border border-white/15 bg-[#202B4A] text-white hover:border-[#D09A16] hover:text-[#D09A16] flex items-center justify-center transition-colors cursor-pointer"
                 >
                   <ChevronLeft size={15} />
                 </button>
@@ -637,7 +637,7 @@ export default function TestimonialsSection() {
                   type="button"
                   onClick={() => scrollRail("right")}
                   aria-label="Scroll right"
-                  className="w-8 h-8 rounded-full border border-white/15 bg-[#202B4A] text-white hover:border-[#C6A24A] hover:text-[#C6A24A] flex items-center justify-center transition-colors cursor-pointer"
+                  className="w-8 h-8 rounded-full border border-white/15 bg-[#202B4A] text-white hover:border-[#D09A16] hover:text-[#D09A16] flex items-center justify-center transition-colors cursor-pointer"
                 >
                   <ChevronRight size={15} />
                 </button>
@@ -681,15 +681,15 @@ export default function TestimonialsSection() {
           <span className="text-[8px] font-bold uppercase tracking-[0.22em] text-[#C9CED9]/70">
             Residential Property Advisory
           </span>
-          <span className="h-1 w-1 rounded-full bg-[#C6A24A]" />
+          <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
           <span className="text-[8px] font-bold uppercase tracking-[0.22em] text-[#C9CED9]/70">
             Commercial & Retail Hubs
           </span>
-          <span className="h-1 w-1 rounded-full bg-[#C6A24A]" />
+          <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
           <span className="text-[8px] font-bold uppercase tracking-[0.22em] text-[#C9CED9]/70">
             NRI Real Estate Portfolio
           </span>
-          <span className="h-1 w-1 rounded-full bg-[#C6A24A]" />
+          <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
           <span className="text-[8px] font-bold uppercase tracking-[0.22em] text-[#C9CED9]/70">
             Gurugram & NCR
           </span>

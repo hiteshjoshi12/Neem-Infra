@@ -220,7 +220,7 @@ export default function AdminSectionsCMS() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#D09A16] to-[#B39366] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_6px_20px_rgba(197,168,128,0.3)] active:scale-95 cursor-pointer disabled:opacity-60"
+            className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-[#D09A16] to-[#D09A16] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_6px_20px_rgba(208, 154, 22,0.3)] active:scale-95 cursor-pointer disabled:opacity-60"
           >
             {saving ? (
               <RefreshCw size={14} className="animate-spin" />
@@ -309,7 +309,7 @@ export default function AdminSectionsCMS() {
           <button
             type="submit"
             disabled={saving}
-            className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#D09A16] to-[#B39366] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-[0_6px_20px_rgba(197,168,128,0.3)] active:scale-95 cursor-pointer disabled:opacity-60"
+            className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-[#D09A16] to-[#D09A16] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-[0_6px_20px_rgba(208, 154, 22,0.3)] active:scale-95 cursor-pointer disabled:opacity-60"
           >
             {saving ? <RefreshCw size={14} className="animate-spin" /> : <Save size={15} />}
             <span>{saving ? 'Publishing Changes...' : 'Save & Publish Live'}</span>

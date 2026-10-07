@@ -24,7 +24,7 @@ export const revalidate = 300; // Cache static payload for fast navigation
 export async function generateMetadata() {
   const seoData = PAGE_SEO['/services/commercial'];
   return {
-    title: seoData.title,
+    title: { absolute: seoData.title },
     description: seoData.description,
     alternates: {
       canonical: `${SITE_URL}${seoData.canonical}`,
@@ -106,13 +106,13 @@ export default async function CommercialServicesPage() {
   const breadcrumbs = BREADCRUMBS['/services/commercial'];
 
   return (
-    <div className="w-full min-h-screen bg-[#F7F5EF] text-[#17213D] pt-28">
+    <div className="w-full min-h-screen bg-[#F7F5EF] text-[#17213D]">
       {/* Schema.org Breadcrumb Structured Data */}
       <BreadcrumbJsonLd items={breadcrumbs} />
       
-      {/* ================= HERO SECTION ================= */}
-      <section className="relative w-full bg-[#0E162B] text-white py-16 md:py-24 overflow-hidden border-b border-white/10">
-        <div className="absolute inset-0 z-0 opacity-20 pointer-events-none">
+      {/* ================= HERO SECTION (DARK OPENING SCREEN) ================= */}
+      <section className="relative w-full bg-[#0A0E17] text-white pt-32 sm:pt-36 pb-20 md:pb-24 overflow-hidden border-b border-white/10">
+        <div className="absolute inset-0 z-0 opacity-25 pointer-events-none">
           <Image
             src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80"
             alt="Grade-A Commercial Real Estate Tower in Gurugram - Saudagar Properties"
@@ -123,39 +123,40 @@ export default async function CommercialServicesPage() {
           />
         </div>
 
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0E162B] via-[#0E162B]/85 to-transparent z-0 pointer-events-none" />
-        <div className="absolute inset-0 bg-[radial-gradient(#C6A24A_1px,transparent_1px)] [background-size:32px_32px] opacity-5 pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0E17] via-[#0A0E17]/90 to-transparent z-0 pointer-events-none" />
+        <div 
+          className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse at center, rgba(208,154,22,0.15) 0%, rgba(208,154,22,0) 70%)' }}
+        />
 
         <div className="max-w-7xl mx-auto px-5 sm:px-8 relative z-10">
           
-          {/* Breadcrumb Navigation */}
-          <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs text-[#9DA6B8]">
-            <Link href="/" className="hover:text-[#C6A24A] transition-colors flex items-center gap-1">
-              <Home size={12} />
-              <span>Home</span>
-            </Link>
-            <ChevronRight size={12} />
-            <Link href="/#services" className="hover:text-[#C6A24A] transition-colors">
-              Services
-            </Link>
-            <ChevronRight size={12} />
-            <span className="text-[#C6A24A] font-medium">Commercial Real Estate</span>
-          </nav>
+          {/* Illuminated Breadcrumb Navigation */}
+          <div className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-8">
+            <Link href="/" className="hover:text-[#D09A16] transition-colors">Home</Link>
+            <span className="text-slate-600">/</span>
+            <Link href="/#services" className="hover:text-[#D09A16] transition-colors">Services</Link>
+            <span className="text-slate-600">/</span>
+            <span className="text-[#D09A16] flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16] shadow-[0_0_8px_#D09A16]" />
+              <span>Commercial Advisory</span>
+            </span>
+          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
             
             <div className="lg:col-span-7">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#17213D] border border-[#C6A24A]/40 text-[#C6A24A] text-[11px] font-bold tracking-widest uppercase mb-5">
-                <Sparkles size={12} />
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-[#D09A16]/40 text-[#D09A16] text-[11px] font-bold tracking-widest uppercase mb-5 shadow-[0_0_20px_rgba(208,154,22,0.15)]">
+                <Sparkles size={12} className="text-[#D09A16]" />
                 <span>Commercial Advisory • Gurugram</span>
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-[#F7F5EF] leading-[1.12] mb-6">
-                Grade-A Offices & <br className="hidden sm:inline" />
-                <span className="italic font-light text-[#C6A24A]">High-Yield Assets</span> in DLF Cybercity.
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif text-white font-bold leading-[1.12] mb-6">
+                Grade-A Offices &amp; <br className="hidden sm:inline" />
+                <span className="italic font-light text-[#D09A16]">High-Yield Assets</span> in DLF Cybercity
               </h1>
 
-              <p className="text-[#C9CED9] text-base sm:text-lg font-light leading-relaxed max-w-xl mb-8">
+              <p className="text-slate-300 text-base sm:text-lg font-light leading-relaxed max-w-xl mb-8">
                 Empowering Fortune 500 enterprises, corporate tenants, and high-net-worth investors with strategic commercial acquisitions, corporate leasing, and high-ROI pre-leased assets across Gurgaon’s premier corridors.
               </p>
 
@@ -163,7 +164,7 @@ export default async function CommercialServicesPage() {
               <div className="flex flex-wrap items-center gap-4">
                 <a
                   href="#asset-classes"
-                  className="px-7 py-3.5 rounded-xl bg-[#C6A24A] hover:bg-[#D4B258] text-[#0E162B] font-bold text-xs uppercase tracking-widest shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
+                  className="px-7 py-3.5 rounded-xl bg-[#D09A16] hover:bg-[#D09A16] text-[#0E162B] font-bold text-xs uppercase tracking-widest shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
                 >
                   <span>Explore Commercial Assets</span>
                   <ArrowRight size={14} />
@@ -173,7 +174,7 @@ export default async function CommercialServicesPage() {
                   href="tel:+919811221207"
                   className="px-6 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 text-white border border-white/20 font-medium text-xs uppercase tracking-wider backdrop-blur-md transition-colors flex items-center gap-2"
                 >
-                  <PhoneCall size={14} className="text-[#C6A24A]" />
+                  <PhoneCall size={14} className="text-[#D09A16]" />
                   <span>Call +91 98112 21207</span>
                 </a>
               </div>
@@ -184,14 +185,14 @@ export default async function CommercialServicesPage() {
               <div className="bg-[#17213D]/90 backdrop-blur-xl border border-white/15 rounded-3xl p-6 sm:p-7 shadow-2xl relative">
                 <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-5">
                   <span className="text-xs uppercase tracking-wider text-[#9DA6B8]">Enterprise Advisory</span>
-                  <span className="text-xs font-semibold text-[#C6A24A] flex items-center gap-1">
+                  <span className="text-xs font-semibold text-[#D09A16] flex items-center gap-1">
                     <ShieldCheck size={14} /> Corporate Tenant Desk
                   </span>
                 </div>
 
                 <div className="space-y-4">
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-[#C6A24A]/10 text-[#C6A24A] flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="w-8 h-8 rounded-lg bg-[#D09A16]/10 text-[#D09A16] flex items-center justify-center shrink-0 mt-0.5">
                       <TrendingUp size={16} />
                     </div>
                     <div>
@@ -201,7 +202,7 @@ export default async function CommercialServicesPage() {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-[#C6A24A]/10 text-[#C6A24A] flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="w-8 h-8 rounded-lg bg-[#D09A16]/10 text-[#D09A16] flex items-center justify-center shrink-0 mt-0.5">
                       <Building size={16} />
                     </div>
                     <div>
@@ -211,7 +212,7 @@ export default async function CommercialServicesPage() {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-[#C6A24A]/10 text-[#C6A24A] flex items-center justify-center shrink-0 mt-0.5">
+                    <div className="w-8 h-8 rounded-lg bg-[#D09A16]/10 text-[#D09A16] flex items-center justify-center shrink-0 mt-0.5">
                       <Coins size={16} />
                     </div>
                     <div>
@@ -223,7 +224,7 @@ export default async function CommercialServicesPage() {
 
                 <div className="mt-6 pt-5 border-t border-white/10 flex items-center justify-between text-xs text-[#C9CED9]">
                   <span>Commercial Portfolio Managed</span>
-                  <span className="text-[#C6A24A] font-semibold">1,000,000+ Sq. Ft.</span>
+                  <span className="text-[#D09A16] font-semibold">1,000,000+ Sq. Ft.</span>
                 </div>
               </div>
             </div>
@@ -235,7 +236,7 @@ export default async function CommercialServicesPage() {
       {/* ================= COMMERCIAL ASSET CLASSES ================= */}
       <section id="asset-classes" className="py-16 md:py-24 max-w-7xl mx-auto px-5 sm:px-8">
         <div className="text-center max-w-3xl mx-auto mb-14">
-          <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#C6A24A] block mb-2">
+          <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#D09A16] block mb-2">
             Strategic Business Spaces
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-[#17213D]">
@@ -262,12 +263,12 @@ export default async function CommercialServicesPage() {
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent" />
-                <div className="absolute top-4 left-4 bg-[#0E162B]/85 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-semibold text-[#C6A24A] uppercase tracking-wider">
+                <div className="absolute top-4 left-4 bg-[#0E162B]/85 backdrop-blur-md px-3 py-1 rounded-full text-[11px] font-semibold text-[#D09A16] uppercase tracking-wider">
                   {item.locations}
                 </div>
                 <div className="absolute bottom-4 left-5 right-5 text-white">
                   <h3 className="text-2xl font-serif font-bold text-white mb-1">{item.title}</h3>
-                  <p className="text-xs text-[#E9D9A8] font-medium">{item.specs}</p>
+                  <p className="text-xs text-[#D09A16] font-medium">{item.specs}</p>
                 </div>
               </div>
 
@@ -275,13 +276,13 @@ export default async function CommercialServicesPage() {
                 <div className="mb-6">
                   <div className="flex items-center justify-between pb-4 border-b border-[#F0ECE1] mb-4">
                     <span className="text-xs uppercase tracking-wider text-[#8A95A7]">Valuation / Lease Rate</span>
-                    <span className="text-base font-bold text-[#C6A24A] font-serif">{item.pricing}</span>
+                    <span className="text-base font-bold text-[#D09A16] font-serif">{item.pricing}</span>
                   </div>
 
                   <div className="space-y-2">
                     {item.features.map((feat, i) => (
                       <div key={i} className="flex items-center gap-2 text-xs text-[#334155]">
-                        <CheckCircle2 size={13} className="text-[#C6A24A] shrink-0" />
+                        <CheckCircle2 size={13} className="text-[#D09A16] shrink-0" />
                         <span>{feat}</span>
                       </div>
                     ))}
@@ -293,7 +294,7 @@ export default async function CommercialServicesPage() {
                   className="w-full py-3 px-4 rounded-xl bg-[#F7F5EF] group-hover:bg-[#0E162B] text-[#0E162B] group-hover:text-[#F7F5EF] border border-[#17213D]/10 text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors duration-300"
                 >
                   <span>Inquire Commercial Asset</span>
-                  <ArrowRight size={13} className="text-[#C6A24A]" />
+                  <ArrowRight size={13} className="text-[#D09A16]" />
                 </a>
               </div>
             </div>
@@ -301,11 +302,90 @@ export default async function CommercialServicesPage() {
         </div>
       </section>
 
-      {/* ================= COMMERCIAL CORRIDORS ================= */}
-      <section className="py-16 md:py-20 bg-[#EFEBE1] border-y border-[#17213D]/10">
+      {/* ================= FEATURED COMMERCIAL INVENTORY (DARK ALTERNATING SECTION) ================= */}
+      <section id="inventory" className="py-20 md:py-24 bg-[#0A0E17] text-white border-y border-white/10 relative overflow-hidden">
+        {/* Ambient Glow */}
+        <div 
+          aria-hidden="true" 
+          className="absolute top-1/2 left-1/3 -translate-y-1/2 w-[600px] h-[350px] rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse at center, rgba(208, 154, 22, 0.1) 0%, rgba(208, 154, 22, 0) 70%)' }}
+        />
+
+        <div className="max-w-7xl mx-auto px-5 sm:px-8 relative z-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+            <div>
+              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#D09A16] block mb-2">
+                Enterprise Portfolios
+              </span>
+              <h2 className="text-3xl sm:text-4xl font-serif font-bold text-white">
+                Featured Commercial Assets
+              </h2>
+            </div>
+            <Link
+              href="/properties?category=commercial"
+              className="inline-flex items-center gap-2 text-xs font-semibold text-slate-300 hover:text-[#D09A16] uppercase tracking-wider transition-colors"
+            >
+              <span>View All Commercial Listings</span>
+              <ArrowRight size={14} className="text-[#D09A16]" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {commercialListings.length > 0 ? (
+              commercialListings.map((prop, i) => (
+                <div 
+                  key={prop._id || prop.id || i}
+                  className="bg-white/[0.04] rounded-2xl border border-white/10 hover:border-[#D09A16]/60 overflow-hidden shadow-xl hover:shadow-[0_20px_40px_rgba(208,154,22,0.15)] transition-all duration-300 flex flex-col backdrop-blur-md group"
+                >
+                  <div className="relative h-48 w-full overflow-hidden bg-slate-900">
+                    <Image
+                      src={prop.img || "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80"}
+                      alt={prop.title}
+                      fill
+                      sizes="(max-width: 768px) 100vw, 300px"
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute top-3 left-3 bg-[#0A0E17]/90 backdrop-blur-md border border-white/15 text-[#D09A16] px-2.5 py-0.5 rounded text-[10px] font-bold uppercase">
+                      {prop.tag || "Commercial"}
+                    </div>
+                  </div>
+
+                  <div className="p-4 flex flex-col justify-between flex-1">
+                    <div>
+                      <h3 className="font-serif font-bold text-base text-white group-hover:text-[#D09A16] transition-colors mb-1 truncate">{prop.title}</h3>
+                      <p className="text-xs text-slate-400 flex items-center gap-1 mb-2">
+                        <MapPin size={12} className="text-[#D09A16] shrink-0" />
+                        <span className="truncate">{prop.location}</span>
+                      </p>
+                      <p className="text-xs text-slate-300 mb-3 line-clamp-1">{prop.specs}</p>
+                    </div>
+
+                    <div className="pt-3 border-t border-white/10 flex items-center justify-between">
+                      <span className="text-sm font-bold text-[#D09A16] font-serif">{prop.price}</span>
+                      <Link
+                        href={prop.slug ? `/properties/${prop.slug}` : prop.link || "/contact"}
+                        className="px-3 py-1.5 rounded-lg bg-white/10 text-white text-[11px] font-semibold hover:bg-[#D09A16] hover:text-[#0A0E17] transition-colors"
+                      >
+                        Details
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              ))
+            ) : (
+              <div className="col-span-full p-8 rounded-2xl bg-white/[0.04] border border-white/10 text-center">
+                <p className="text-sm text-slate-300">Confidential off-market commercial mandates currently available upon private inquiry.</p>
+              </div>
+            )}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= COMMERCIAL CORRIDORS (LIGHT ALTERNATING SECTION) ================= */}
+      <section className="py-16 md:py-20 bg-[#F7F5EF] text-[#17213D] border-y border-[#17213D]/10">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#C6A24A] block mb-2">
+            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#D09A16] block mb-2">
               Corporate Corridors
             </span>
             <h2 className="text-3xl sm:text-4xl font-serif text-[#17213D]">
@@ -317,10 +397,10 @@ export default async function CommercialServicesPage() {
             {COMMERCIAL_CORRIDORS.map((loc, i) => (
               <div 
                 key={i} 
-                className="p-6 rounded-2xl bg-white border border-[#E2DDD5] shadow-sm hover:border-[#C6A24A]/50 transition-colors"
+                className="p-6 rounded-2xl bg-white border border-[#17213D]/10 shadow-sm hover:border-[#D09A16]/50 transition-colors"
               >
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-8 h-8 rounded-full bg-[#C6A24A]/10 text-[#C6A24A] flex items-center justify-center font-bold font-serif text-sm">
+                  <div className="w-8 h-8 rounded-full bg-[#D09A16]/10 text-[#D09A16] flex items-center justify-center font-bold font-serif text-sm">
                     0{i + 1}
                   </div>
                   <h3 className="font-serif text-lg font-bold text-[#17213D]">{loc.name}</h3>
@@ -335,7 +415,7 @@ export default async function CommercialServicesPage() {
       {/* ================= PRIVATE CORPORATE CONSULTATION BANNER ================= */}
       <section id="contact-desk" className="py-16 bg-[#0E162B] text-white relative overflow-hidden">
         <div className="max-w-5xl mx-auto px-5 sm:px-8 text-center relative z-10">
-          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-[#C6A24A] block mb-3">
+          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-[#D09A16] block mb-3">
             Corporate Advisory Mandate
           </span>
           <h2 className="text-3xl sm:text-5xl font-serif text-[#F7F5EF] mb-4">
@@ -348,7 +428,7 @@ export default async function CommercialServicesPage() {
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/contact"
-              className="px-8 py-3.5 rounded-xl bg-[#C6A24A] hover:bg-[#D4B258] text-[#0E162B] font-bold text-xs uppercase tracking-widest shadow-lg transition-all flex items-center gap-2"
+              className="px-8 py-3.5 rounded-xl bg-[#D09A16] hover:bg-[#D09A16] text-[#0E162B] font-bold text-xs uppercase tracking-widest shadow-lg transition-all flex items-center gap-2"
             >
               <span>Schedule Commercial Briefing</span>
               <Send size={13} />
@@ -358,7 +438,7 @@ export default async function CommercialServicesPage() {
               href="tel:+919811221207"
               className="px-8 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 font-medium text-xs uppercase tracking-wider backdrop-blur-md transition-colors flex items-center gap-2"
             >
-              <PhoneCall size={14} className="text-[#C6A24A]" />
+              <PhoneCall size={14} className="text-[#D09A16]" />
               <span>Direct Commercial Line</span>
             </a>
           </div>

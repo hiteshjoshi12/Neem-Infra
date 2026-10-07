@@ -20,6 +20,11 @@ const blogPostSchema = new mongoose.Schema(
     content: { type: String, required: true },
     featuredImage: { type: String },
     featuredImageAlt: { type: String, trim: true },
+    featuredImageCaption: { type: String, trim: true },
+    featuredImageCredit: { type: String, trim: true },
+    featuredImageSource: { type: String, trim: true },
+    featuredImageWidth: { type: Number, default: 1600 },
+    featuredImageHeight: { type: Number, default: 900 },
     
     // Relationships
     author: { type: mongoose.Schema.Types.ObjectId, ref: 'Author' },
@@ -32,6 +37,13 @@ const blogPostSchema = new mongoose.Schema(
     relatedPosts: [{ type: mongoose.Schema.Types.ObjectId, ref: 'BlogPost' }],
     relatedLocations: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Location' }],
     relatedServices: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Service' }],
+
+    // Topical Authority & Pillar Cluster
+    isPillar: { type: Boolean, default: false },
+    topicCluster: { type: String, trim: true },
+    parentPillar: { type: mongoose.Schema.Types.ObjectId, ref: 'BlogPost' },
+    parentPillarSlug: { type: String, trim: true },
+    childArticles: [{ type: mongoose.Schema.Types.ObjectId, ref: 'BlogPost' }],
     
     // Status and Dates
     status: {
@@ -55,6 +67,34 @@ const blogPostSchema = new mongoose.Schema(
     socialTitle: { type: String, trim: true },
     socialDescription: { type: String, trim: true },
     socialImage: { type: String },
+    
+    // Answer-Ready Architecture Fields
+    directAnswer: { type: String, trim: true },
+    keyTakeaways: [{ type: String, trim: true }],
+    definitions: [
+      {
+        term: { type: String, trim: true },
+        definition: { type: String, trim: true }
+      }
+    ],
+    prosCons: {
+      prosTitle: { type: String, trim: true },
+      pros: [{ type: String, trim: true }],
+      consTitle: { type: String, trim: true },
+      cons: [{ type: String, trim: true }]
+    },
+    editorialSources: [
+      {
+        name: { type: String, trim: true },
+        organization: { type: String, trim: true },
+        url: { type: String, trim: true }
+      }
+    ],
+    expertPerspective: {
+      quote: { type: String, trim: true },
+      authorName: { type: String, trim: true },
+      authorRole: { type: String, trim: true }
+    },
     
     // Structured Data / Extra
     tableOfContents: [

@@ -17,7 +17,8 @@ const TwitterIcon = () => (
 );
 
 import PublicLayout from '@/layouts/PublicLayout';
-import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
+import JsonLd from '@/components/seo/JsonLd';
+import { buildProfilePageSchema } from '@/lib/seo/schemaBuilders';
 import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { getBlogPosts, getAuthorBySlug, getAuthors } from '@/services/blogService';
 import { buildPageMetadata } from '@/lib/seo/metadataHelper';
@@ -62,11 +63,13 @@ export default async function BlogAuthorPage({ params }) {
     { name: authorName, url: `/blog/author/${author}` },
   ];
 
+  const profileSchema = authorDoc ? buildProfilePageSchema(authorDoc, breadcrumbs) : null;
+
   return (
     <PublicLayout asMain={false}>
-      <BreadcrumbJsonLd items={breadcrumbs} />
+      {profileSchema && <JsonLd data={profileSchema} />}
 
-      <main className="w-full bg-[#FAF8F5] pt-28 md:pt-36 pb-20 selection:bg-[#C6A24A] selection:text-[#0E162B]">
+      <main className="w-full bg-[#FAF8F5] pt-28 md:pt-36 pb-20 selection:bg-[#D09A16] selection:text-[#0E162B]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb Navigation */}
           <Breadcrumbs items={breadcrumbs} />
@@ -74,7 +77,7 @@ export default async function BlogAuthorPage({ params }) {
           {/* Author Profile Card Header */}
           <header className="bg-white rounded-3xl p-8 sm:p-12 border border-[#17213D]/10 shadow-[0_20px_50px_-15px_rgba(23,33,61,0.06)] mb-16">
             <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
-              <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-4 border-[#C6A24A] bg-[#17213D]/5 flex-shrink-0 shadow-md">
+              <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-4 border-[#D09A16] bg-[#17213D]/5 flex-shrink-0 shadow-md">
                 {authorDoc?.image ? (
                   <Image
                     src={authorDoc.image}
@@ -92,7 +95,7 @@ export default async function BlogAuthorPage({ params }) {
               </div>
 
               <div className="flex-1 text-center md:text-left">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-[#C6A24A]/10 text-[#C6A24A] border border-[#C6A24A]/30 mb-3">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-[#D09A16]/10 text-[#D09A16] border border-[#D09A16]/30 mb-3">
                   <Award size={13} />
                   <span>Senior Editorial Contributor</span>
                 </div>
@@ -132,7 +135,7 @@ export default async function BlogAuthorPage({ params }) {
                         href={authorDoc.socialProfiles.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-[#C6A24A] transition-colors"
+                        className="hover:text-[#D09A16] transition-colors"
                         aria-label={`${authorName} on LinkedIn`}
                       >
                         <LinkedinIcon />
@@ -143,7 +146,7 @@ export default async function BlogAuthorPage({ params }) {
                         href={authorDoc.socialProfiles.twitter}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-[#C6A24A] transition-colors"
+                        className="hover:text-[#D09A16] transition-colors"
                         aria-label={`${authorName} on Twitter`}
                       >
                         <TwitterIcon />
@@ -152,7 +155,7 @@ export default async function BlogAuthorPage({ params }) {
                   </div>
 
                   <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#17213D]">
-                    <BookOpen size={14} className="text-[#C6A24A]" />
+                    <BookOpen size={14} className="text-[#D09A16]" />
                     <span>{posts.length} Published Articles</span>
                   </div>
                 </div>
@@ -171,7 +174,7 @@ export default async function BlogAuthorPage({ params }) {
                 {posts.map((post) => (
                   <article
                     key={post._id || post.slug}
-                    className="bg-white rounded-2xl overflow-hidden border border-[#17213D]/10 group hover:border-[#C6A24A]/50 transition-all shadow-xs flex flex-col justify-between"
+                    className="bg-white rounded-2xl overflow-hidden border border-[#17213D]/10 group hover:border-[#D09A16]/50 transition-all shadow-xs flex flex-col justify-between"
                   >
                     <div>
                       {post.featuredImage && (
@@ -187,11 +190,11 @@ export default async function BlogAuthorPage({ params }) {
                       )}
                       <div className="p-6">
                         {post.category && (
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-[#C6A24A] block mb-2">
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-[#D09A16] block mb-2">
                             {post.category.name}
                           </span>
                         )}
-                        <h3 className="font-serif font-bold text-xl text-[#17213D] group-hover:text-[#C6A24A] transition-colors leading-snug line-clamp-2 mb-3">
+                        <h3 className="font-serif font-bold text-xl text-[#17213D] group-hover:text-[#D09A16] transition-colors leading-snug line-clamp-2 mb-3">
                           <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                         </h3>
                         <p className="text-sm text-[#566078] line-clamp-2 leading-relaxed mb-4">
@@ -202,12 +205,12 @@ export default async function BlogAuthorPage({ params }) {
 
                     <div className="px-6 pb-6 pt-3 border-t border-[#17213D]/5 flex items-center justify-between text-xs text-[#8892A6]">
                       <div className="flex items-center gap-1.5">
-                        <Clock size={13} className="text-[#C6A24A]" />
+                        <Clock size={13} className="text-[#D09A16]" />
                         <span>{post.readingTime || 5} min read</span>
                       </div>
                       <Link
                         href={`/blog/${post.slug}`}
-                        className="inline-flex items-center gap-1 font-bold text-[#17213D] group-hover:text-[#C6A24A] transition-colors"
+                        className="inline-flex items-center gap-1 font-bold text-[#17213D] group-hover:text-[#D09A16] transition-colors"
                       >
                         <span>Read</span>
                         <ArrowRight size={13} />

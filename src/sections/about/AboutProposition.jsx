@@ -30,7 +30,7 @@ export default function AboutProposition() {
       ],
       bgImage: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1400&q=80",
       ctaText: "Explore Residential",
-      ctaLink: "/ready-to-move"
+      ctaLink: "/services/residential"
     },
     {
       id: "commercial",
@@ -121,16 +121,16 @@ export default function AboutProposition() {
     <section
       ref={sectionRef}
       id="proposition"
-      className="relative py-16 md:py-24 bg-[#0C101A] text-white overflow-hidden"
+      className="relative py-16 md:py-24 bg-[#F7F5EF] text-[#17213D] overflow-hidden border-t border-[#17213D]/10"
     >
       {/* Ambient Lighting */}
       <div
         className="absolute top-0 left-1/4 w-[600px] h-[350px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at center, rgba(197,168,128,0.18) 0%, rgba(197,168,128,0) 70%)' }}
+        style={{ background: 'radial-gradient(ellipse at center, rgba(208, 154, 22,0.08) 0%, rgba(208, 154, 22,0) 70%)' }}
       />
       <div
         className="absolute bottom-0 right-1/4 w-[500px] h-[350px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at center, rgba(179,147,102,0.12) 0%, rgba(179,147,102,0) 70%)' }}
+        style={{ background: 'radial-gradient(ellipse at center, rgba(208, 154, 22,0.05) 0%, rgba(208, 154, 22,0) 70%)' }}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -140,34 +140,34 @@ export default function AboutProposition() {
           ref={headerRef}
           className="text-center max-w-3xl mx-auto mb-12 md:mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/5 border border-white/10 text-[#D09A16] text-xs font-bold tracking-[0.25em] uppercase mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[#D09A16] text-xs font-bold tracking-[0.25em] uppercase mb-4">
             <Sparkles size={13} className="text-[#D09A16]" />
             <span>Our Proposition</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-4 leading-tight">
-            Where Our <span className="italic font-light text-[#D09A16]">Expertise Lies</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#17213D] mb-4 leading-tight">
+            Where Our <span className="italic font-serif text-[#D09A16]">Expertise Lies</span>
           </h2>
 
-          <p className="text-sm sm:text-base text-slate-300 font-normal leading-relaxed">
+          <p className="text-sm sm:text-base text-[#566078] font-normal leading-relaxed">
             Let’s have a look at where our expertise lies and what it brings out for you.
           </p>
 
           {/* Interactive Pillar Selector Tabs */}
-          <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5 mt-8 p-1 sm:p-1.5 rounded-2xl bg-white/[0.04] border border-white/10 max-w-sm sm:max-w-lg mx-auto backdrop-blur-md">
+          <div className="grid grid-cols-3 gap-1.5 sm:gap-2.5 mt-8 p-1 sm:p-1.5 rounded-2xl bg-white border border-[#17213D]/10 max-w-sm sm:max-w-lg mx-auto shadow-sm">
             {pillars.map((p, idx) => {
               const isActive = activePillar === idx;
               return (
                 <button
                   key={p.id}
                   onClick={() => setActivePillar(idx)}
-                  className={`relative px-2 sm:px-6 py-2 sm:py-2.5 rounded-xl text-[11px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 sm:gap-2 ${isActive ? 'text-[#0C101A]' : 'text-slate-400 hover:text-white'
+                  className={`relative px-2 sm:px-6 py-2 sm:py-2.5 rounded-xl text-[11px] sm:text-xs font-bold uppercase tracking-wider transition-all duration-300 cursor-pointer flex items-center justify-center gap-1.5 sm:gap-2 ${isActive ? 'text-[#0A0E17]' : 'text-[#566078] hover:text-[#17213D]'
                     }`}
                 >
                   {isActive && (
                     <motion.div
                       layoutId="activePillarTab"
-                      className="absolute inset-0 bg-gradient-to-r from-[#D09A16] to-[#E2CEB4] rounded-xl shadow-[0_4px_20px_rgba(197,168,128,0.4)]"
+                      className="absolute inset-0 bg-[#D09A16] rounded-xl shadow-md"
                       transition={{ type: "spring", stiffness: 350, damping: 30 }}
                     />
                   )}
@@ -196,7 +196,7 @@ export default function AboutProposition() {
                 layout
                 transition={{ type: "spring", stiffness: 220, damping: 26 }}
                 className={`relative rounded-3xl overflow-hidden cursor-pointer transition-colors duration-300 border ${isExpanded
-                    ? 'flex-[3.5] border-[#D09A16] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8),0_0_40px_rgba(197,168,128,0.25)]'
+                    ? 'flex-[3.5] border-[#D09A16] shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8),0_0_40px_rgba(208, 154, 22,0.25)]'
                     : 'flex-[1] border-white/10 hover:border-[#D09A16]/50 hover:brightness-110'
                   }`}
               >
@@ -266,7 +266,7 @@ export default function AboutProposition() {
                         {/* Action CTA Button */}
                         <div className="pt-3">
                           <Link href={p.ctaLink}
-                            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#D09A16] to-[#B39366] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider transition-all shadow-[0_6px_20px_rgba(197,168,128,0.3)] hover:-translate-y-0.5"
+                            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-[#D09A16] to-[#D09A16] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider transition-all shadow-[0_6px_20px_rgba(208, 154, 22,0.3)] hover:-translate-y-0.5"
                           >
                             <span>{p.ctaText}</span>
                             <ArrowUpRight size={14} />

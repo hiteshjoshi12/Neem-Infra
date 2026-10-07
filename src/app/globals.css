@@ -1,43 +1,44 @@
 @import "tailwindcss";
 
 @theme {
-  --font-serif: var(--font-serif), Georgia, Cambria, "Times New Roman", Times, serif;
-  --font-sans: var(--font-sans), system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-serif: var(--font-serif), "Lora", Georgia, Cambria, serif;
+  --font-sans: var(--font-sans), "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-heading: var(--font-outfit), "Outfit", var(--font-sans), sans-serif;
   
   --color-brand-navy: #17213D;
   --color-brand-navy-deep: #0E162B;
   --color-brand-navy-surface: #202B4A;
   
-  --color-brand-gold: #C6A24A;
-  --color-brand-gold-light: #D8BD73;
-  --color-brand-gold-pale: #E9D9A8;
+  --color-brand-gold: #D09A16;
+  --color-brand-gold-light: #E5AC2B;
+  --color-brand-gold-pale: #F3CA68;
 
   --color-brand-ivory: #F7F5EF;
   --color-brand-cream: #EFEBE1;
   --color-brand-white: #FFFFFF;
 
-  --color-text-primary: #17213D;
-  --color-text-secondary: #566078;
+  --color-text-primary: #121A2F;
+  --color-text-secondary: #3B4863;
   --color-text-on-dark: #F7F5EF;
-  --color-text-on-dark-muted: #C9CED9;
+  --color-text-on-dark-muted: #CBD5E1;
 
   --color-border-light: rgba(23, 33, 61, 0.12);
-  --color-border-gold: rgba(198, 162, 74, 0.35);
+  --color-border-gold: rgba(208, 154, 22, 0.35);
 }
 
 :root {
   --brand-navy: #17213D;
   --brand-navy-deep: #0E162B;
   --brand-navy-surface: #202B4A;
-  --brand-gold: #C6A24A;
-  --brand-gold-light: #D8BD73;
-  --brand-gold-pale: #E9D9A8;
+  --brand-gold: #D09A16;
+  --brand-gold-light: #E5AC2B;
+  --brand-gold-pale: #F3CA68;
   --brand-ivory: #F7F5EF;
   --brand-cream: #EFEBE1;
-  --text-primary: #17213D;
-  --text-secondary: #566078;
+  --text-primary: #121A2F;
+  --text-secondary: #3B4863;
   --text-on-dark: #F7F5EF;
-  --text-on-dark-muted: #C9CED9;
+  --text-on-dark-muted: #CBD5E1;
 }
 
 html {
@@ -49,6 +50,30 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #121A2F;
+  background-color: #F7F5EF;
+  letter-spacing: -0.01em;
+}
+
+/* Headings Typography Enhancement - Razor-sharp and legible */
+h1, h2, h3, h4, h5, h6 {
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+  text-rendering: optimizeLegibility;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
+  letter-spacing: -0.012em;
+}
+
+.font-outfit {
+  font-family: var(--font-heading);
+}
+
+/* Paragraph reading comfort */
+p {
+  line-height: 1.65;
 }
 
 /* ========================================================
@@ -57,12 +82,12 @@ body {
 
 .section-light {
   background-color: #F7F5EF;
-  color: #17213D;
+  color: #121A2F;
 }
 
 .section-cream {
   background-color: #EFEBE1;
-  color: #17213D;
+  color: #121A2F;
 }
 
 .section-dark {
@@ -77,7 +102,7 @@ body {
 
 .card-light {
   background-color: #FFFFFF;
-  color: #17213D;
+  color: #121A2F;
   border: 1px solid rgba(23, 33, 61, 0.08);
   box-shadow: 0 20px 45px -10px rgba(23, 33, 61, 0.06);
 }
@@ -94,7 +119,7 @@ body {
 }
 
 .text-gold {
-  color: #C6A24A;
+  color: #D09A16;
 }
 
 .text-light {
@@ -102,7 +127,7 @@ body {
 }
 
 .border-gold {
-  border-color: rgba(198, 162, 74, 0.35);
+  border-color: rgba(208, 154, 22, 0.35);
 }
 
 .border-light {
@@ -110,24 +135,110 @@ body {
 }
 
 .btn-gold {
-  background-color: #C6A24A;
+  background-color: #D09A16;
   color: #0E162B;
   font-weight: 700;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .btn-gold:hover {
-  background-color: #D8BD73;
+  background-color: #E5AC2B;
 }
 
 .btn-navy {
   background-color: #17213D;
   color: #F7F5EF;
-  border: 1px solid rgba(198, 162, 74, 0.4);
+  border: 1px solid rgba(208, 154, 22, 0.4);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .btn-navy:hover {
   background-color: #202B4A;
-  border-color: #C6A24A;
+  border-color: #D09A16;
 }
 
+/* ========================================================
+   UNIVERSAL FORM DROPDOWN VISIBILITY FIX
+   Ensures native browser <select> dropdown menus are always
+   clearly readable with high-contrast background and text
+======================================================== */
+select option {
+  background-color: #0F172A !important;
+  color: #F8FAFC !important;
+  padding: 8px 12px;
+}
+
+select optgroup {
+  background-color: #0F172A !important;
+  color: #94A3B8 !important;
+}
+
+select:focus option:checked {
+  background-color: #1E293B !important;
+  color: #D09A16 !important;
+}
+
+/* ========================================================
+   ULTRA-PREMIUM SLEEK SCROLLBAR SYSTEM
+   Bespoke luxury scrollbar matching Saudagar Properties gold (#D09A16)
+======================================================== */
+
+/* Standard Firefox Scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(208, 154, 22, 0.4) transparent;
+}
+
+/* WebKit (Chrome, Edge, Safari, Opera) Vertical & Horizontal Scrollbars */
+::-webkit-scrollbar {
+  width: 7px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(14, 22, 43, 0.04);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(208, 154, 22, 0.35);
+  border-radius: 9999px;
+  border: 1px solid transparent;
+  background-clip: padding-box;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #D09A16;
+  box-shadow: 0 0 10px rgba(208, 154, 22, 0.45);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: #E5AC2B;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Container-specific luxury scrollbars for drawers, dropdowns, and cards */
+.luxury-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(208, 154, 22, 0.45) transparent;
+}
+
+.luxury-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.luxury-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.luxury-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(208, 154, 22, 0.35);
+  border-radius: 9999px;
+}
+
+.luxury-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #D09A16;
+}
 

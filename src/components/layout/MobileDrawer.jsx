@@ -37,7 +37,7 @@ export default function MobileDrawer({ onClose }) {
            <h2 className="text-xl font-serif tracking-widest uppercase text-white">Saudagar Properties</h2>
            <button 
              onClick={onClose} 
-             className="p-2 bg-white/5 hover:bg-white/10 rounded-full transition-colors text-[#C6A24A]"
+             className="p-2 bg-white/5 hover:bg-white/10 rounded-full transition-colors text-[#D09A16]"
              aria-label="Close menu"
            >
              <X size={20} />
@@ -51,11 +51,11 @@ export default function MobileDrawer({ onClose }) {
             Founded with the vision of offering strategic, transparent, and relationship-driven property advisory services. With deep market understanding and years of experience in Gurgaon’s dynamic real estate landscape, we help clients navigate property decisions with clarity and confidence.
           </p>
 
-          <h3 className="text-xl font-serif mb-6 border-b border-white/10 pb-2 text-[#C6A24A]">Our Core Services</h3>
+          <h3 className="text-xl font-serif mb-6 border-b border-white/10 pb-2 text-[#D09A16]">Our Core Services</h3>
           <ul className="space-y-5 text-sm text-[#F7F5EF] font-light mb-10">
             {CORE_SERVICES.map((service, idx) => (
               <li key={idx} className="flex items-center gap-3">
-                <span className="w-1.5 h-1.5 bg-[#C6A24A] rounded-full"></span>
+                <span className="w-1.5 h-1.5 bg-[#D09A16] rounded-full"></span>
                 {service}
               </li>
             ))}
@@ -64,7 +64,7 @@ export default function MobileDrawer({ onClose }) {
 
         {/* Footer Area */}
         <div className="p-8 bg-[#17213D] border-t border-white/10">
-          <button className="w-full py-4 mb-6 bg-[#C6A24A] text-[#0E162B] text-xs uppercase tracking-widest font-bold hover:bg-[#D8BD73] transition-colors rounded-xl shadow-lg">
+          <button className="w-full py-4 mb-6 bg-[#D09A16] text-[#0E162B] text-xs uppercase tracking-widest font-bold hover:bg-[#D09A16] transition-colors rounded-xl shadow-lg">
             Get A Free Consultation
           </button>
           

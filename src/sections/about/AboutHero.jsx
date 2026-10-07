@@ -97,11 +97,11 @@ export default function AboutHero() {
       {/* 2. Ambient Golden Light Beams */}
       <div
         className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[450px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at center, rgba(197,168,128,0.18) 0%, rgba(197,168,128,0) 70%)' }}
+        style={{ background: 'radial-gradient(ellipse at center, rgba(208, 154, 22,0.18) 0%, rgba(208, 154, 22,0) 70%)' }}
       />
       <div
         className="absolute bottom-10 right-10 w-[500px] h-[350px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at center, rgba(179,147,102,0.12) 0%, rgba(179,147,102,0) 70%)' }}
+        style={{ background: 'radial-gradient(ellipse at center, rgba(208, 154, 22,0.12) 0%, rgba(208, 154, 22,0) 70%)' }}
       />
 
       {/* 3. Architectural Accent Rings */}
@@ -127,7 +127,7 @@ export default function AboutHero() {
           <div ref={leftContentRef} className="lg:col-span-7 space-y-6 text-center lg:text-left">
 
             {/* Gold Badge */}
-            <div className="about-hero-anim inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/[0.06] border border-[#D09A16]/40 backdrop-blur-xl text-[#D09A16] text-xs font-bold tracking-[0.25em] uppercase shadow-[0_0_25px_rgba(197,168,128,0.2)]">
+            <div className="about-hero-anim inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/[0.06] border border-[#D09A16]/40 backdrop-blur-xl text-[#D09A16] text-xs font-bold tracking-[0.25em] uppercase shadow-[0_0_25px_rgba(208, 154, 22,0.2)]">
               <Sparkles size={14} className="text-[#D09A16]" />
               <span>About Saudagar Properties • 25+ Years Legacy</span>
             </div>
@@ -135,7 +135,7 @@ export default function AboutHero() {
             {/* High-Impact Serif Headline */}
             <h1 className="about-hero-anim text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-serif text-white leading-[1.1] tracking-tight">
               Pioneering Luxury & <br />
-              <span className="italic font-light text-[#D09A16] drop-shadow-[0_0_35px_rgba(197,168,128,0.4)]">
+              <span className="italic font-light text-[#D09A16] drop-shadow-[0_0_35px_rgba(208, 154, 22,0.4)]">
                 Optimal Real Estate
               </span>{" "}
               Solutions
@@ -150,7 +150,7 @@ export default function AboutHero() {
             <div className="about-hero-anim flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
               <a
                 href="#video-tour"
-                className="px-8 py-4 rounded-2xl bg-gradient-to-r from-[#D09A16] to-[#B39366] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-[0.18em] flex items-center gap-3 transition-all duration-300 shadow-[0_10px_30px_rgba(197,168,128,0.4)] hover:shadow-[0_15px_40px_rgba(197,168,128,0.6)] hover:-translate-y-0.5 cursor-pointer group"
+                className="px-8 py-4 rounded-2xl bg-gradient-to-r from-[#D09A16] to-[#D09A16] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-[0.18em] flex items-center gap-3 transition-all duration-300 shadow-[0_10px_30px_rgba(208, 154, 22,0.4)] hover:shadow-[0_15px_40px_rgba(208, 154, 22,0.6)] hover:-translate-y-0.5 cursor-pointer group"
               >
                 <div className="w-6 h-6 rounded-full bg-[#0C101A] text-[#D09A16] flex items-center justify-center">
                   <Play size={10} className="fill-[#D09A16] ml-0.5" />
@@ -182,11 +182,11 @@ export default function AboutHero() {
               className="relative w-full max-w-md"
             >
               {/* Outer 3D Halo Glow */}
-              <div className="absolute -inset-4 bg-gradient-to-tr from-[#D09A16]/30 to-[#B39366]/10 rounded-[36px] blur-2xl pointer-events-none" />
+              <div className="absolute -inset-4 bg-gradient-to-tr from-[#D09A16]/30 to-[#D09A16]/10 rounded-[36px] blur-2xl pointer-events-none" />
 
               {/* 3D Tilt Card Container */}
               <Tilt3DCard maxTilt={10} className="w-full">
-                <div className="relative rounded-[32px] overflow-hidden border border-[#D09A16]/40 bg-gradient-to-b from-slate-900/95 via-slate-950/95 to-black/95 p-6 sm:p-8 backdrop-blur-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_50px_rgba(197,168,128,0.25)] space-y-6">
+                <div className="relative rounded-[32px] overflow-hidden border border-[#D09A16]/40 bg-gradient-to-b from-slate-900/95 via-slate-950/95 to-black/95 p-6 sm:p-8 backdrop-blur-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_50px_rgba(208, 154, 22,0.25)] space-y-6">
 
                   {/* Card Visual Header */}
                   <div className="relative h-56 rounded-2xl overflow-hidden border border-white/10 shadow-lg">

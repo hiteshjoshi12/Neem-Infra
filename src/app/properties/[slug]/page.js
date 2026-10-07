@@ -1,8 +1,16 @@
-import { getPropertyBySlug } from '@/services/propertyService';
+import { getProperties, getPropertyBySlug } from '@/services/propertyService';
 import PublicLayout from '@/layouts/PublicLayout';
 import { notFound } from 'next/navigation';
 import PropertyJsonLd from '@/components/seo/PropertyJsonLd';
 import Image from 'next/image';
+import Link from 'next/link';
+
+export async function generateStaticParams() {
+  const properties = await getProperties({ all: false });
+  return (properties || [])
+    .map(p => ({ slug: p.slug || p._id?.toString() || p.id }))
+    .filter(p => Boolean(p.slug));
+}
 
 import { buildPageMetadata } from '@/lib/seo/metadataHelper';
 
@@ -43,6 +51,18 @@ export default async function PropertyDetailPage({ params }) {
       <PropertyJsonLd property={property} />
       <div className="w-full min-h-screen bg-[#FAF8F5] pt-32 pb-16 px-4">
         <div className="max-w-6xl mx-auto">
+          {/* Illuminated Breadcrumb Navigation */}
+          <div className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-[#566078] mb-6">
+            <Link href="/" className="hover:text-[#D09A16] transition-colors">Home</Link>
+            <span className="text-[#8892A6]">/</span>
+            <Link href="/properties" className="hover:text-[#D09A16] transition-colors">Featured</Link>
+            <span className="text-[#8892A6]">/</span>
+            <span className="text-[#D09A16] flex items-center gap-1.5 truncate max-w-md">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16] shadow-[0_0_8px_#D09A16] shrink-0" />
+              <span className="truncate">{property.title}</span>
+            </span>
+          </div>
+
           <div className="bg-white rounded-3xl shadow-sm border border-[#E8E4DA] overflow-hidden">
             <div className="w-full h-[40vh] md:h-[60vh] relative">
               <Image
@@ -94,7 +114,7 @@ export default async function PropertyDetailPage({ params }) {
                   <p className="text-sm text-slate-300 mb-8">Contact us to schedule a site visit or get more details about this property.</p>
                   <a 
                     href="/contact"
-                    className="block w-full text-center py-4 rounded-xl bg-[#D09A16] hover:bg-[#B39366] text-white font-bold tracking-wider uppercase text-sm transition-colors"
+                    className="block w-full text-center py-4 rounded-xl bg-[#D09A16] hover:bg-[#D09A16] text-white font-bold tracking-wider uppercase text-sm transition-colors"
                   >
                     Inquire Now
                   </a>
