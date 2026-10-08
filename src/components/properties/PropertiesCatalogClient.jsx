@@ -99,11 +99,11 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
   // Fetch properties from backend API based on active filters
   const fetchFilteredProperties = useCallback(async (paramsOverride = {}) => {
     setLoading(true);
+    const queryObj = {};
     try {
       const activeCorridorItem = CORRIDOR_CLASSIFICATIONS.find(c => c.id === (paramsOverride.corridor ?? activeCorridor));
       const activePriceItem = PRICE_RANGES.find(p => p.id === (paramsOverride.price ?? activePrice));
 
-      const queryObj = {};
       const cat = paramsOverride.category ?? activeCategory;
       if (cat && cat !== 'all') queryObj.category = cat;
 
@@ -128,10 +128,61 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
       }
     } catch (err) {
       console.warn('Error fetching filtered properties:', err);
+      // In-memory fallback over initialProperties
+      let fallback = initialProperties;
+      if (queryObj.location) {
+        fallback = fallback.filter(p => p.location?.toLowerCase().includes(queryObj.location.toLowerCase()));
+      }
+      if (queryObj.category) {
+        fallback = fallback.filter(p => p.category?.toLowerCase() === queryObj.category.toLowerCase());
+      }
+      if (queryObj.search) {
+        const qLower = queryObj.search.toLowerCase();
+        fallback = fallback.filter(p =>
+          p.title?.toLowerCase().includes(qLower) ||
+          p.location?.toLowerCase().includes(qLower) ||
+          p.specs?.toLowerCase().includes(qLower) ||
+          p.desc?.toLowerCase().includes(qLower)
+        );
+      }
+      setProperties(fallback);
     } finally {
       setLoading(false);
     }
-  }, [activeCorridor, activeCategory, activePrice, activeBhk, activeSort, searchTerm]);
+  }, [activeCorridor, activeCategory, activePrice, activeBhk, activeSort, searchTerm, initialProperties]);
+
+  // Synchronize state and trigger query when searchParams changes (e.g. navigation from hero search bar)
+  const searchParamsString = searchParams?.toString();
+  const prevParamsRef = useRef(searchParamsString);
+
+  useEffect(() => {
+    if (prevParamsRef.current !== searchParamsString) {
+      prevParamsRef.current = searchParamsString;
+
+      const pLoc = searchParams?.get('location') || 'all';
+      const pCat = searchParams?.get('category') || 'all';
+      const pPrice = searchParams?.get('price') || 'all';
+      const pBhk = searchParams?.get('bhk') || 'all';
+      const pSort = searchParams?.get('sort') || 'curated';
+      const pSearch = searchParams?.get('search') || '';
+
+      setActiveCorridor(pLoc);
+      setActiveCategory(pCat);
+      setActivePrice(pPrice);
+      setActiveBhk(pBhk);
+      setActiveSort(pSort);
+      setSearchTerm(pSearch);
+
+      fetchFilteredProperties({
+        corridor: pLoc,
+        category: pCat,
+        price: pPrice,
+        bhk: pBhk,
+        sort: pSort,
+        search: pSearch,
+      });
+    }
+  }, [searchParamsString, searchParams, fetchFilteredProperties]);
 
   // Sync state to URL search params
   const updateUrlParams = useCallback((newParams) => {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Search, MapPin, Building2, Wallet, ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import CustomSelect from '../../components/ui/CustomSelect';
@@ -62,6 +63,8 @@ export default function Hero() {
     card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
   };
 
+  const router = useRouter();
+
   const handleCardMouseLeave = () => {
     const card = spotlightCardRef.current;
     if (!card) return;
@@ -69,7 +72,39 @@ export default function Hero() {
   };
 
   const handleSearch = (e) => {
-    e.preventDefault();
+    if (e && e.preventDefault) e.preventDefault();
+    const params = new URLSearchParams();
+
+    if (searchQuery && searchQuery.trim()) {
+      params.set('search', searchQuery.trim());
+    }
+
+    if (location && location !== 'all') {
+      let locVal = location;
+      if (location === 'dlf-1' || location === 'dlf-phase-1') locVal = 'dlf-phase-1';
+      else if (location === 'dlf-2' || location === 'dlf-phase-2') locVal = 'dlf-phase-2';
+      else if (location === 'dlf-4' || location === 'dlf-phase-4') locVal = 'dlf-phase-4';
+      else if (location === 'dlf-5') locVal = 'dlf-phase-1';
+      else if (location === 'golf-course' || location === 'golf-course-ext') locVal = 'golf-course-ext';
+      else if (location === 'sushant-lok' || location === 'sushant-lok-1') locVal = 'sushant-lok-1';
+      params.set('location', locVal);
+    }
+
+    if (propertyType && propertyType !== 'all') {
+      let catVal = propertyType;
+      if (propertyType === 'builder-floor' || propertyType === 'residential') catVal = 'residential';
+      params.set('category', catVal);
+    }
+
+    if (budget && budget !== 'all') {
+      let budVal = budget;
+      if (budget === '5-to-10') budVal = '5-10';
+      else if (budget === 'above-10') budVal = 'above-15';
+      params.set('price', budVal);
+    }
+
+    const qs = params.toString();
+    router.push(qs ? `/properties?${qs}` : '/properties');
   };
 
   return (

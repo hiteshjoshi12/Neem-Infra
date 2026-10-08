@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { Search, MapPin, Building2, Wallet, Volume2, VolumeX, Play, Pause, ArrowUpRight, ChevronDown, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 import CustomSelect from '../../components/ui/CustomSelect';
@@ -25,6 +26,7 @@ const unsplashLoader = ({ src, width, quality }) => {
  * - Mobile: Clean stacked search card with compact footprint
  */
 export default function HeroCopy() {
+  const router = useRouter();
   const { sections, properties } = useCms();
   const heroData = sections?.hero || {};
 
@@ -66,35 +68,82 @@ export default function HeroCopy() {
 
   const currentProperty = cardList[currentCardIndex] || cardList[0] || {};
 
-  // Handle trending capsule click to populate search bar and filters
-  const handleTagClick = (tag) => {
-    if (searchQuery === tag) {
-      setSearchQuery("");
-      setLocation("");
-      setPropertyType("");
-      setBudget("");
-    } else {
-      setSearchQuery(tag);
-      if (tag.includes('DLF Phase 1')) {
-        setLocation('dlf-1');
-        setPropertyType('builder-floor');
-      } else if (tag.includes('Sushant Lok')) {
-        setLocation('sushant-lok');
-        setPropertyType('villa');
-      } else if (tag.includes('Golf Course')) {
-        setLocation('golf-course');
-      } else if (tag.includes('Under 5 Cr')) {
-        setBudget('under-5');
-      }
+  // Helper to build URL with query params
+  const buildPropertiesSearchUrl = (searchParamsObj = {}) => {
+    const params = new URLSearchParams();
+
+    const q = searchParamsObj.searchQuery !== undefined ? searchParamsObj.searchQuery : searchQuery;
+    if (q && q.trim()) {
+      params.set('search', q.trim());
     }
+
+    const loc = searchParamsObj.location !== undefined ? searchParamsObj.location : location;
+    if (loc && loc !== 'all' && loc !== '') {
+      let locVal = loc;
+      if (loc === 'dlf-1' || loc === 'dlf-phase-1') locVal = 'dlf-phase-1';
+      else if (loc === 'dlf-2' || loc === 'dlf-phase-2') locVal = 'dlf-phase-2';
+      else if (loc === 'dlf-4' || loc === 'dlf-phase-4') locVal = 'dlf-phase-4';
+      else if (loc === 'dlf-5') locVal = 'dlf-phase-1';
+      else if (loc === 'golf-course' || loc === 'golf-course-ext') locVal = 'golf-course-ext';
+      else if (loc === 'sushant-lok' || loc === 'sushant-lok-1') locVal = 'sushant-lok-1';
+      params.set('location', locVal);
+    }
+
+    const cat = searchParamsObj.propertyType !== undefined ? searchParamsObj.propertyType : propertyType;
+    if (cat && cat !== 'all' && cat !== '') {
+      let catVal = cat;
+      if (cat === 'builder-floor' || cat === 'residential') catVal = 'residential';
+      params.set('category', catVal);
+    }
+
+    const bud = searchParamsObj.budget !== undefined ? searchParamsObj.budget : budget;
+    if (bud && bud !== 'all' && bud !== '') {
+      let budVal = bud;
+      if (bud === '5-to-10') budVal = '5-10';
+      else if (bud === 'above-10') budVal = 'above-15';
+      params.set('price', budVal);
+    }
+
+    const qs = params.toString();
+    return qs ? `/properties?${qs}` : '/properties';
+  };
+
+  // Handle trending capsule click: set state and immediately navigate to properties
+  const handleTagClick = (tag) => {
+    let newLoc = "";
+    let newType = "";
+    let newBudget = "";
+
+    if (tag.includes('DLF Phase 1')) {
+      newLoc = 'dlf-phase-1';
+      newType = 'residential';
+    } else if (tag.includes('Sushant Lok')) {
+      newLoc = 'sushant-lok-1';
+      newType = 'villa';
+    } else if (tag.includes('Golf Course')) {
+      newLoc = 'golf-course-ext';
+    } else if (tag.includes('Under 5 Cr')) {
+      newBudget = 'under-5';
+    }
+
+    setSearchQuery(tag);
+    if (newLoc) setLocation(newLoc);
+    if (newType) setPropertyType(newType);
+    if (newBudget) setBudget(newBudget);
+
+    const targetUrl = buildPropertiesSearchUrl({
+      searchQuery: tag,
+      location: newLoc,
+      propertyType: newType,
+      budget: newBudget
+    });
+    router.push(targetUrl);
   };
 
   const handleSearch = (e) => {
-    e.preventDefault();
-    const targetSection = document.getElementById('featured') || document.getElementById('properties') || document.querySelector('section:nth-of-type(3)');
-    if (targetSection) {
-      targetSection.scrollIntoView({ behavior: 'smooth' });
-    }
+    if (e && e.preventDefault) e.preventDefault();
+    const targetUrl = buildPropertiesSearchUrl();
+    router.push(targetUrl);
   };
 
   const toggleVideoPlayback = () => {
@@ -226,11 +275,11 @@ export default function HeroCopy() {
                 value={location}
                 onChange={setLocation}
                 options={heroData.locationOptions || [
-                  { value: "golf-course", label: "Golf Course Ext" },
-                  { value: "dlf-1", label: "DLF Phase 1" },
-                  { value: "dlf-5", label: "DLF Phase 5" },
-                  { value: "sushant-lok", label: "Sushant Lok 1" },
-                  { value: "dwarka-expy", label: "Dwarka Expressway" }
+                  { value: "dlf-phase-1", label: "DLF Phase 1" },
+                  { value: "dlf-phase-2", label: "DLF Phase 2" },
+                  { value: "dlf-phase-4", label: "DLF Phase 4" },
+                  { value: "golf-course-ext", label: "Golf Course Ext" },
+                  { value: "sushant-lok-1", label: "Sushant Lok 1" }
                 ]}
               />
             </div>
@@ -243,10 +292,10 @@ export default function HeroCopy() {
                 value={propertyType}
                 onChange={setPropertyType}
                 options={heroData.propertyTypeOptions || [
-                  { value: "builder-floor", label: "Luxury Builder Floor" },
+                  { value: "residential", label: "Luxury Builder Floor" },
                   { value: "villa", label: "Bespoke Villa" },
                   { value: "penthouse", label: "Penthouse" },
-                  { value: "apartment", label: "High-Rise Apartment" }
+                  { value: "commercial", label: "Commercial Hub" }
                 ]}
               />
             </div>
@@ -259,9 +308,10 @@ export default function HeroCopy() {
                 value={budget}
                 onChange={setBudget}
                 options={heroData.budgetOptions || [
-                  { value: "under-5", label: "Under 5 Cr" },
-                  { value: "5-to-10", label: "5 Cr - 10 Cr" },
-                  { value: "above-10", label: "10 Cr+" }
+                  { value: "under-5", label: "Under ₹5 Cr" },
+                  { value: "5-10", label: "₹5 Cr – ₹10 Cr" },
+                  { value: "10-15", label: "₹10 Cr – ₹15 Cr" },
+                  { value: "above-15", label: "Above ₹15 Cr" }
                 ]}
               />
             </div>

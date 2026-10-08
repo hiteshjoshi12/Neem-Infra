@@ -36,8 +36,29 @@ function PropertiesCatalogSkeleton() {
   );
 }
 
-export default async function PropertiesPage() {
-  const properties = await getProperties({ all: false });
+export default async function PropertiesPage(props) {
+  const searchParams = props?.searchParams ? await props.searchParams : {};
+  
+  let corridorMatch = undefined;
+  if (searchParams?.location && searchParams.location !== 'all') {
+    const found = [
+      { id: 'dlf-phase-1', match: 'DLF Phase 1' },
+      { id: 'dlf-phase-2', match: 'DLF Phase 2' },
+      { id: 'dlf-phase-4', match: 'DLF Phase 4' },
+      { id: 'golf-course-ext', match: 'Golf Course' },
+      { id: 'sushant-lok-1', match: 'Sushant Lok' },
+    ].find(c => c.id === searchParams.location);
+    corridorMatch = found?.match || searchParams.location;
+  }
+
+  const properties = await getProperties({
+    all: false,
+    search: searchParams?.search,
+    category: searchParams?.category && searchParams.category !== 'all' ? searchParams.category : undefined,
+    location: corridorMatch,
+    bhk: searchParams?.bhk && searchParams.bhk !== 'all' ? searchParams.bhk : undefined,
+    sort: searchParams?.sort && searchParams.sort !== 'curated' ? searchParams.sort : undefined,
+  });
 
   return (
     <PublicLayout>
