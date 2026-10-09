@@ -15,20 +15,19 @@ export const metadata = buildPageMetadata({
 
 function PropertiesCatalogSkeleton() {
   return (
-    <div className="w-full min-h-screen bg-[#F7F5EF] pt-28 pb-20 animate-pulse">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <div className="h-4 w-40 bg-gray-200 rounded mb-4" />
-        <div className="h-10 w-96 bg-gray-300 rounded mb-4" />
-        <div className="h-5 w-full max-w-2xl bg-gray-200 rounded mb-10" />
-        <div className="flex gap-2 mb-8">
-          {[1, 2, 3, 4, 5].map((i) => (
-            <div key={i} className="h-8 w-28 bg-gray-200 rounded-xl" />
-          ))}
+    <div className="w-full min-h-screen bg-[#F7F5EF] animate-pulse">
+      <div className="bg-[#0A0E17] pt-28 pb-10 sm:pt-32 sm:pb-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="h-4 w-32 bg-white/10 rounded mb-4" />
+          <div className="h-10 w-80 bg-white/20 rounded mb-3" />
+          <div className="h-4 w-full max-w-xl bg-white/10 rounded" />
         </div>
-        <div className="h-20 bg-white rounded-2xl border border-gray-200 mb-8" />
-        <div className="space-y-6">
-          {[1, 2, 3].map((i) => (
-            <div key={i} className="h-72 bg-white rounded-3xl border border-gray-200" />
+      </div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+        <div className="h-28 bg-white rounded-2xl border border-gray-200 mb-8" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+          {[1, 2, 3, 4, 5, 6].map((i) => (
+            <div key={i} className="h-96 bg-white rounded-3xl border border-gray-200" />
           ))}
         </div>
       </div>
