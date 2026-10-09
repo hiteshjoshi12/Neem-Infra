@@ -279,8 +279,30 @@ export default function BlogCatalogInteractive({ allPosts = [], categories = [],
           SECTION 4: LIGHT — INTERACTIVE RESEARCH LIBRARY & CATEGORY CLUSTERS
       ========================================================================= */}
       <section className="py-20 md:py-28 bg-[#F7F5EF] text-[#17213D] relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Subtle Luxury Watermark Grid */}
+        <div 
+          aria-hidden="true" 
+          className="pointer-events-none absolute inset-0 opacity-[0.03] bg-[linear-gradient(#D09A16_1px,transparent_1px),linear-gradient(90deg,#D09A16_1px,transparent_1px)] [background-size:48px_48px]" 
+        />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
+          {/* Section Eyebrow & Title */}
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-6 border-b border-[#17213D]/10">
+            <div>
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[#D09A16] text-[11px] font-bold uppercase tracking-[0.2em] mb-3">
+                <FileText size={13} />
+                <span>Complete Archives • Intelligence Catalog</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#17213D] tracking-tight leading-tight">
+                The Gurugram Real Estate <span className="italic font-serif text-[#D09A16]">Research Library</span>
+              </h2>
+            </div>
+            <p className="text-xs sm:text-sm text-[#566078] max-w-md font-sans leading-relaxed">
+              Explore our comprehensive archive of independent market analyses, builder floor valuation benchmarks, legal due diligence advisories, and corridor growth studies.
+            </p>
+          </div>
+
           {/* Controls Bar: Category Pills + Live Search */}
           <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#17213D]/10 shadow-[0_15px_35px_rgba(23,33,61,0.04)] mb-14">
             <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-6">
@@ -360,11 +382,11 @@ export default function BlogCatalogInteractive({ allPosts = [], categories = [],
               
               <div className="flex items-center justify-between mb-8 pb-4 border-b border-[#17213D]/10">
                 <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#D09A16] flex items-center gap-2">
-                  <FileText size={14} />
-                  <span>Research Library</span>
+                  <BookOpen size={14} />
+                  <span>Published Dossiers</span>
                 </span>
                 <span className="text-xs text-[#566078] font-medium">
-                  Showing {filteredPosts.length} Articles
+                  Showing {filteredPosts.length} {filteredPosts.length === 1 ? 'Article' : 'Articles'}
                 </span>
               </div>
 
