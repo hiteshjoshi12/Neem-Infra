@@ -262,12 +262,12 @@ export default function DlfPropertyCallout() {
           imageRef.current,
           {
             opacity: 0,
-            scale: 1.08,
+            scale: 1.05,
           },
           {
             opacity: 1,
             scale: 1,
-            duration: 1.4,
+            duration: 1.2,
             ease: "power3.out",
             scrollTrigger: {
               trigger: imageContainerRef.current || imageRef.current,
@@ -276,17 +276,6 @@ export default function DlfPropertyCallout() {
             },
           }
         );
-
-        gsap.to(imageRef.current, {
-          yPercent: 8,
-          ease: "none",
-          scrollTrigger: {
-            trigger: imageContainerRef.current || imageRef.current,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.2,
-          },
-        });
       }
 
       /* H. Architectural Gold Line Expansion */

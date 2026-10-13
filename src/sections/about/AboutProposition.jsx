@@ -6,14 +6,14 @@ import { motion } from 'framer-motion';
 import { Compass, Briefcase, Factory, ArrowUpRight, Sparkles, CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-
-
-
+import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
 
 export default function AboutProposition() {
+  const { sections } = useCms();
+  const cms = sections?.page_about?.proposition || DEFAULT_SECTIONS.page_about.proposition;
   const [activePillar, setActivePillar] = useState(0);
 
-  const pillars = [
+  const defaultPillars = [
     {
       id: "residential",
       number: "01",
@@ -69,6 +69,14 @@ export default function AboutProposition() {
       ctaLink: "/contact"
     }
   ];
+
+  const pillars = (cms?.pillars && cms.pillars.length > 0)
+    ? cms.pillars.map((p, idx) => ({
+        ...defaultPillars[idx],
+        ...p,
+        icon: defaultPillars[idx]?.icon || Compass
+      }))
+    : defaultPillars;
 
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
@@ -142,15 +150,15 @@ export default function AboutProposition() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[#D09A16] text-xs font-bold tracking-[0.25em] uppercase mb-4">
             <Sparkles size={13} className="text-[#D09A16]" />
-            <span>Our Proposition</span>
+            <span>{cms.badge || "Our Proposition"}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#17213D] mb-4 leading-tight">
-            Where Our <span className="italic font-serif text-[#D09A16]">Expertise Lies</span>
+            {cms.titleMain || "Where Our "} <span className="italic font-serif text-[#D09A16]">{cms.titleItalic || "Expertise Lies"}</span>
           </h2>
 
           <p className="text-sm sm:text-base text-[#566078] font-normal leading-relaxed">
-            Let’s have a look at where our expertise lies and what it brings out for you.
+            {cms.subtitle || "Let’s have a look at where our expertise lies and what it brings out for you."}
           </p>
 
           {/* Interactive Pillar Selector Tabs */}

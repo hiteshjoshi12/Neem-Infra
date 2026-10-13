@@ -3,23 +3,30 @@ import Image from 'next/image';
 import { Camera, ShieldCheck } from 'lucide-react';
 
 /**
+ * Validates if a string is a valid Next.js image source.
+ * Must be either a root-relative path (starts with '/') or an absolute HTTP/HTTPS URL.
+ */
+function isValidImageSrc(src) {
+  if (!src || typeof src !== 'string') return false;
+  const trimmed = src.trim();
+  if (trimmed.startsWith('/')) return true;
+  if (trimmed.startsWith('http://') || trimmed.startsWith('https://')) {
+    try {
+      new URL(trimmed);
+      return true;
+    } catch {
+      return false;
+    }
+  }
+  return false;
+}
+
+/**
  * ArticleImage Component
  * ============================================================================
  * Production-ready, CLS-safe semantic image component for Saudagar Properties.
  * Meets Google Discover visual guidelines, Image SEO standards, and accessibility.
- *
- * Props:
- * - src: string (required) - Image URL (absolute HTTPS or local path)
- * - alt: string (required) - Meaningful, non-stuffed alt text
- * - caption: string (optional) - Editorial contextual caption
- * - credit: string (optional) - Photographer or agency credit
- * - source: string (optional) - Source archive (e.g., 'Saudagar Properties Archive')
- * - width: number (optional, default 1600)
- * - height: number (optional, default 900)
- * - aspectRatio: string (optional, default '16/9')
- * - priority: boolean (optional, default false) - Preload for LCP hero images
- * - sizes: string (optional) - Responsive sizes attribute
- * - className: string (optional)
+ * Completely crash-resilient against invalid markdown image URLs or unconfigured hosts.
  */
 export default function ArticleImage({
   src,
@@ -46,6 +53,52 @@ export default function ArticleImage({
     ? 'aspect-square' 
     : 'aspect-[16/9]';
 
+  const trimmedSrc = typeof src === 'string' ? src.trim() : '';
+
+  // If the provided src is not a valid URL or path (e.g. "Subsection Heading"),
+  // render a graceful placeholder instead of crashing next/image.
+  if (!isValidImageSrc(trimmedSrc)) {
+    return (
+      <figure className={`my-8 sm:my-10 group ${className}`}>
+        <div className={`relative w-full ${aspectClass} overflow-hidden rounded-2xl md:rounded-3xl border border-dashed border-[#17213D]/20 bg-[#F7F5EF] flex flex-col items-center justify-center p-6 text-center shadow-xs`}>
+          <div className="w-12 h-12 rounded-2xl bg-[#D09A16]/10 text-[#D09A16] flex items-center justify-center mb-3">
+            <Camera size={22} />
+          </div>
+          <p className="font-serif font-bold text-sm text-[#17213D] max-w-md">
+            {cleanAlt}
+          </p>
+          <span className="text-[11px] text-[#8892A6] mt-1.5 font-mono">
+            {trimmedSrc ? `[Unverified image path: ${trimmedSrc.slice(0, 40)}]` : '[Visual asset placeholder]'}
+          </span>
+        </div>
+
+        {(caption || credit || source) && (
+          <figcaption className="mt-3 px-1 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 text-xs text-[#566078]">
+            {caption && (
+              <span className="font-sans italic text-[#566078] leading-relaxed">
+                {caption}
+              </span>
+            )}
+          </figcaption>
+        )}
+      </figure>
+    );
+  }
+
+  // Check if remote host is in configured domains
+  let isUnoptimized = false;
+  if (trimmedSrc.startsWith('http://') || trimmedSrc.startsWith('https://')) {
+    try {
+      const hostname = new URL(trimmedSrc).hostname;
+      const configuredHosts = ['images.unsplash.com', 'saudagarproperties.com', 'www.saudagarproperties.com'];
+      if (!configuredHosts.includes(hostname)) {
+        isUnoptimized = true;
+      }
+    } catch {
+      isUnoptimized = true;
+    }
+  }
+
   return (
     <figure className={`my-8 sm:my-10 group ${className}`}>
       {/* 
@@ -54,9 +107,10 @@ export default function ArticleImage({
       */}
       <div className={`relative w-full ${aspectClass} overflow-hidden rounded-2xl md:rounded-3xl border border-[#17213D]/10 bg-slate-100 shadow-sm transition-all duration-300 group-hover:shadow-md`}>
         <Image
-          src={src}
+          src={trimmedSrc}
           alt={cleanAlt}
           fill
+          unoptimized={isUnoptimized}
           priority={priority}
           sizes={sizes}
           quality={85}

@@ -50,6 +50,17 @@ export async function POST(req) {
     await checkAuth(req); // authorize every mutation server-side
     
     const body = await req.json();
+    
+    // Ensure slug is never empty
+    if ((!body.slug || !body.slug.trim()) && body.title) {
+      body.slug = body.title
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/[\s_-]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    }
+
     const post = await BlogPost.create(body);
     
     // Invalidate caches

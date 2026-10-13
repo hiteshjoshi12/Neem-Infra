@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
 import OrganizationJsonLd from '@/components/seo/OrganizationJsonLd';
-import TeamInteractiveShowcase from '@/components/team/TeamInteractiveShowcase';
+import TeamClientView from '@/components/team/TeamClientView';
 import { PAGE_SEO, BREADCRUMBS } from '@/lib/seo/seoConfig';
 
 export async function generateMetadata() {
@@ -126,86 +126,11 @@ export default function TeamPage() {
     <div className="min-h-screen bg-[#F7F5EF] text-[#121A2F]">
       <BreadcrumbJsonLd items={breadcrumbs} />
       <OrganizationJsonLd />
-
-      {/* =========================================================================
-          1. EDITORIAL HEADER & TEAM MISSION (DARK LUXURY OPENING SCREEN)
-      ========================================================================= */}
-      <section className="relative overflow-hidden bg-[#0A0E17] text-white pt-32 sm:pt-36 pb-20 md:pb-24 border-b border-white/10">
-        {/* Background Architectural Vignette & Parallax Depth */}
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-25">
-          <Image
-            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80"
-            alt="DLF Luxury Estate Architecture"
-            fill
-            sizes="100vw"
-            className="object-cover object-center brightness-50 contrast-125"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0A0E17] via-[#0A0E17]/80 to-[#0A0E17]" />
-        </div>
-
-        {/* Ambient Golden Glow Beams */}
-        <div
-          className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse at center, rgba(208,154,22,0.15) 0%, rgba(208,154,22,0) 70%)' }}
-        />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Illuminated Breadcrumb Navigation */}
-          <div className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-8">
-            <Link href="/" className="hover:text-[#D09A16] transition-colors">Home</Link>
-            <span className="text-slate-600">/</span>
-            <span className="text-[#D09A16] flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16] shadow-[0_0_8px_#D09A16]" />
-              <span>Our Team</span>
-            </span>
-          </div>
-
-          <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-[#D09A16]/40 text-xs font-bold uppercase tracking-[0.2em] text-[#D09A16] mb-6 backdrop-blur-md shadow-[0_0_20px_rgba(208,154,22,0.15)]">
-              <Users size={14} className="text-[#D09A16]" />
-              <span>Saudagar Properties Advisory Board</span>
-            </div>
-
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-white tracking-tight leading-tight mb-6">
-              Our Leadership &amp; <span className="italic font-serif text-[#D09A16]">Advisory Principals</span>
-            </h1>
-
-            <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-sans max-w-3xl mx-auto">
-              For more than 25 years, Saudagar Properties has provided confidential, principal-led counsel to discerning families, corporate leaders, and NRI investors acquiring prime estates across DLF Phase 1–5, Sushant Lok, and Golf Course Road.
-            </p>
-
-            {/* Quick Metrics Bar in Dark Luxury Theme */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-12 pt-8 border-t border-white/10">
-              <div className="p-4 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 text-center hover:border-[#D09A16]/40 transition-colors">
-                <span className="block text-2xl sm:text-3xl font-serif font-bold text-white">25+</span>
-                <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold">Years of Trust</span>
-              </div>
-              <div className="p-4 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 text-center hover:border-[#D09A16]/40 transition-colors">
-                <span className="block text-2xl sm:text-3xl font-serif font-bold text-[#D09A16]">₹100 Cr+</span>
-                <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold">Saved for Clients</span>
-              </div>
-              <div className="p-4 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 text-center hover:border-[#D09A16]/40 transition-colors">
-                <span className="block text-2xl sm:text-3xl font-serif font-bold text-white">1,000+</span>
-                <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold">Families Advised</span>
-              </div>
-              <div className="p-4 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 text-center hover:border-[#D09A16]/40 transition-colors">
-                <span className="block text-2xl sm:text-3xl font-serif font-bold text-[#D09A16]">100%</span>
-                <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold">Title-Cleared</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================================
-          INTERACTIVE 3D SPLIT SHOWCASE (SECTIONS 2-5: LIGHT & DARK ALTERNATING)
-      ========================================================================= */}
-      <TeamInteractiveShowcase
-        founders={founders}
+      <TeamClientView
+        defaultFounders={founders}
         teamMembers={teamMembers}
         advisoryPillars={advisoryPillars}
       />
-
     </div>
   );
 }

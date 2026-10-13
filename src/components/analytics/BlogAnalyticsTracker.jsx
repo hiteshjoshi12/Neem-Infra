@@ -7,7 +7,6 @@ import {
   trackPhoneClick, 
   trackCtaClick,
   trackCategoryClick,
-  trackLocationPageClick,
   trackAuthorPageClick,
   trackRelatedArticleClick,
   trackPropertyInquiryClick
@@ -89,17 +88,6 @@ export default function BlogAnalyticsTracker({ post }) {
         trackCategoryClick({
           categoryName: text,
           categorySlug: catSlug,
-          sourcePage: `/blog/${post.slug}`
-        });
-        return;
-      }
-
-      // Location Page Click
-      if (href.includes('/blog/location/')) {
-        const locSlug = href.split('/blog/location/')[1]?.split('?')[0];
-        trackLocationPageClick({
-          locationName: text,
-          locationSlug: locSlug,
           sourcePage: `/blog/${post.slug}`
         });
         return;

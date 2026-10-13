@@ -323,40 +323,11 @@ export async function getCategoryBySlug(slug) {
 }
 
 export async function getLocations() {
-  const cacheKey = 'locations';
-  const cached = getCached(cacheKey);
-  if (cached) return cached;
-
-  try {
-    await connectDB();
-    const locations = await Location.find().sort({ name: 1 }).lean().exec();
-    const result = (locations && locations.length > 0) ? JSON.parse(JSON.stringify(locations)) : INITIAL_LOCATIONS;
-    setCached(cacheKey, result);
-    return result;
-  } catch (error) {
-    console.warn('[blogService] getLocations error:', error?.message);
-    setCached(cacheKey, INITIAL_LOCATIONS);
-    return INITIAL_LOCATIONS;
-  }
+  return [];
 }
 
-export async function getLocationBySlug(slug) {
-  const cacheKey = `loc:${slug}`;
-  const cached = getCached(cacheKey);
-  if (cached) return cached;
-
-  try {
-    await connectDB();
-    const loc = await Location.findOne({ slug }).lean().exec();
-    const result = loc ? JSON.parse(JSON.stringify(loc)) : (INITIAL_LOCATIONS.find(l => l.slug === slug) || null);
-    if (result) setCached(cacheKey, result);
-    return result;
-  } catch (error) {
-    console.warn('[blogService] getLocationBySlug error:', error?.message);
-    const result = INITIAL_LOCATIONS.find(l => l.slug === slug) || null;
-    if (result) setCached(cacheKey, result);
-    return result;
-  }
+export async function getLocationBySlug() {
+  return null;
 }
 
 export async function getTags() {

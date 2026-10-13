@@ -23,6 +23,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'www.saudagarproperties.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'ik.imagekit.io',
       }
     ],
   },
@@ -93,30 +97,30 @@ const nextConfig = {
         destination: '/about',
         permanent: true,
       },
-      // Legacy service/corridor routes to dedicated 1-to-1 destination
+      // Legacy service/corridor routes to active residential service
       {
         source: '/services/dlf-phase-1',
-        destination: '/blog/location/dlf-phase-1',
+        destination: '/services/residential',
         permanent: true,
       },
       {
         source: '/services/dlf-phase-2',
-        destination: '/blog/location/dlf-phase-2',
+        destination: '/services/residential',
         permanent: true,
       },
       {
         source: '/services/dlf-phase-3',
-        destination: '/blog/location/dlf-phase-3',
+        destination: '/services/residential',
         permanent: true,
       },
       {
         source: '/services/dlf-phase-4',
-        destination: '/blog/location/dlf-phase-4',
+        destination: '/services/residential',
         permanent: true,
       },
       {
         source: '/services/sushant-lok',
-        destination: '/blog/location/sushant-lok-1',
+        destination: '/services/residential',
         permanent: true,
       },
       {

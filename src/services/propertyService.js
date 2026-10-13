@@ -48,23 +48,37 @@ export async function getProperties(options = {}) {
       ];
     }
 
+    const minNum = minPrice ? parseFloat(minPrice) * 10000000 : null;
+    const maxNum = maxPrice ? parseFloat(maxPrice) * 10000000 : null;
+
+    if (minNum !== null || maxNum !== null) {
+      const priceCond = {};
+      if (minNum !== null) priceCond.$gte = minNum;
+      if (maxNum !== null) priceCond.$lte = maxNum;
+      // Filter by indexed priceNumeric with fallback
+      filter.$or = [
+        { priceNumeric: priceCond },
+        { priceNumeric: { $in: [0, null] } }
+      ];
+    }
+
     let properties = await Property.find(filter).lean().exec();
 
-    // In-memory price range filtering
-    if (minPrice || maxPrice) {
-      const minNum = minPrice ? parseFloat(minPrice) * 10000000 : 0;
-      const maxNum = maxPrice ? parseFloat(maxPrice) * 10000000 : Infinity;
+    // In-memory price range verification for unindexed/legacy items
+    if (minNum !== null || maxNum !== null) {
+      const minVal = minNum ?? 0;
+      const maxVal = maxNum ?? Infinity;
       properties = properties.filter((p) => {
-        const val = parsePriceToNumber(p.price);
-        return val >= minNum && val <= maxNum;
+        const val = p.priceNumeric || parsePriceToNumber(p.price);
+        return val >= minVal && val <= maxVal;
       });
     }
 
     // Sorting
     if (sort === 'price_asc') {
-      properties.sort((a, b) => parsePriceToNumber(a.price) - parsePriceToNumber(b.price));
+      properties.sort((a, b) => (a.priceNumeric || parsePriceToNumber(a.price)) - (b.priceNumeric || parsePriceToNumber(b.price)));
     } else if (sort === 'price_desc') {
-      properties.sort((a, b) => parsePriceToNumber(b.price) - parsePriceToNumber(a.price));
+      properties.sort((a, b) => (b.priceNumeric || parsePriceToNumber(b.price)) - (a.priceNumeric || parsePriceToNumber(a.price)));
     } else if (sort === 'newest') {
       properties.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     } else {
@@ -85,24 +99,35 @@ export async function getProperties(options = {}) {
   }
 }
 
+import mongoose from 'mongoose';
+import { LUXURY_PROPERTIES_DETAILED } from '@/constants/propertiesData';
+
 export async function getPropertyById(id) {
   try {
     await connectDB();
-    const property = await Property.findById(id).lean().exec();
-    return property ? JSON.parse(JSON.stringify(property)) : null;
+    let property = null;
+    if (mongoose.isValidObjectId(id)) {
+      property = await Property.findById(id).lean().exec();
+    }
+    if (property) return JSON.parse(JSON.stringify(property));
   } catch (error) {
     console.warn('[propertyService] getPropertyById fallback:', error?.message);
-    return FEATURED_PROPERTIES_DATA.find(p => p._id === id || p.id === id) || null;
   }
+  return LUXURY_PROPERTIES_DETAILED.find(p => p._id === id || p.id === id || p.slug === id) ||
+         FEATURED_PROPERTIES_DATA.find(p => p._id === id || p.id === id) || null;
 }
 
 export async function getPropertyBySlug(slug) {
   try {
     await connectDB();
-    const property = await Property.findOne({ slug }).lean().exec();
-    return property ? JSON.parse(JSON.stringify(property)) : null;
+    let property = await Property.findOne({ slug }).lean().exec();
+    if (!property && mongoose.isValidObjectId(slug)) {
+      property = await Property.findById(slug).lean().exec();
+    }
+    if (property) return JSON.parse(JSON.stringify(property));
   } catch (error) {
     console.warn('[propertyService] getPropertyBySlug fallback:', error?.message);
-    return FEATURED_PROPERTIES_DATA.find(p => p.slug === slug || p.id === slug) || null;
   }
+  return LUXURY_PROPERTIES_DETAILED.find(p => p.slug === slug || p.id === slug || p._id === slug) ||
+         FEATURED_PROPERTIES_DATA.find(p => p.slug === slug || p.id === slug) || null;
 }

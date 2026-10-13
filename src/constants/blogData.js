@@ -115,7 +115,7 @@ export const INITIAL_LOCATIONS = [
     ],
     seoTitle: "Gurugram Luxury Real Estate Advisory & Property Market Insights | Saudagar Properties",
     seoDescription: "Authoritative Gurugram property advisory. Explore builder floor benchmarks, micro-market pricing, verified plots, and high-yield commercial assets.",
-    canonicalUrl: "/blog/location/gurugram"
+    canonicalUrl: "/properties"
   },
   {
     name: "DLF Phase 1",
@@ -175,7 +175,7 @@ export const INITIAL_LOCATIONS = [
     ],
     seoTitle: "DLF Phase 1 Property Insights & Luxury Builder Floors | Saudagar Properties",
     seoDescription: "Discover luxury builder floors and freehold plots in DLF Phase 1 Gurugram. Pricing benchmarks, Aravalli zoning, and verified property advisory.",
-    canonicalUrl: "/blog/location/dlf-phase-1"
+    canonicalUrl: "/services/residential"
   },
   {
     name: "DLF Phase 2",
@@ -235,7 +235,7 @@ export const INITIAL_LOCATIONS = [
     ],
     seoTitle: "DLF Phase 2 Real Estate Insights & Builder Floors | Saudagar Properties",
     seoDescription: "Authoritative property advisory for DLF Phase 2 Gurugram. Explore builder floor pricing on Akashneem Marg, plot rates, and immediate Cyber City connectivity.",
-    canonicalUrl: "/blog/location/dlf-phase-2"
+    canonicalUrl: "/services/residential"
   },
   {
     name: "DLF Phase 3",
@@ -289,7 +289,7 @@ export const INITIAL_LOCATIONS = [
     ],
     seoTitle: "DLF Phase 3 Real Estate Guide & Builder Floors | Saudagar Properties",
     seoDescription: "Explore builder floor options, rental yields, and plot pricing in DLF Phase 3 Gurugram. Authoritative guidance near Cyber City and Moulsari Avenue.",
-    canonicalUrl: "/blog/location/dlf-phase-3"
+    canonicalUrl: "/services/residential"
   },
   {
     name: "DLF Phase 4",
@@ -344,7 +344,7 @@ export const INITIAL_LOCATIONS = [
     ],
     seoTitle: "DLF Phase 4 Real Estate & Builder Floors Guide | Saudagar Properties",
     seoDescription: "Discover luxury builder floors and properties in DLF Phase 4 Gurugram near Galleria Market. Price trends, plot sizes, and verified advisory.",
-    canonicalUrl: "/blog/location/dlf-phase-4"
+    canonicalUrl: "/services/residential"
   },
   {
     name: "DLF Phase 5",
@@ -399,7 +399,7 @@ export const INITIAL_LOCATIONS = [
     ],
     seoTitle: "DLF Phase 5 Luxury Real Estate & Condominiums | Saudagar Properties",
     seoDescription: "Explore ultra-luxury condominiums, penthouses, and properties in DLF Phase 5 Gurugram. Pricing, The Camellias insights, and private advisory.",
-    canonicalUrl: "/blog/location/dlf-phase-5"
+    canonicalUrl: "/services/residential"
   },
   {
     name: "DLF Phase 1–5",
@@ -455,7 +455,7 @@ export const INITIAL_LOCATIONS = [
     ],
     seoTitle: "DLF Phase 1–5 Luxury Builder Floors & Property Advisory | Saudagar Properties",
     seoDescription: "The authoritative guide to real estate in DLF Phase 1 to Phase 5 Gurugram. Independent builder floors, pricing trends, and clear-title acquisitions.",
-    canonicalUrl: "/blog/location/dlf-phase-1-5"
+    canonicalUrl: "/services/residential"
   },
   {
     name: "Golf Course Road",
@@ -510,7 +510,7 @@ export const INITIAL_LOCATIONS = [
     ],
     seoTitle: "Golf Course Road Real Estate & Luxury Condominiums | Saudagar Properties",
     seoDescription: "Explore luxury condominiums, penthouses, and commercial real estate along Golf Course Road Gurugram. Pricing benchmarks and confidential advisory.",
-    canonicalUrl: "/blog/location/golf-course-road"
+    canonicalUrl: "/properties"
   },
   {
     name: "Golf Course Extension Road",
@@ -564,7 +564,7 @@ export const INITIAL_LOCATIONS = [
     ],
     seoTitle: "Golf Course Extension Road Property Market Guide | Saudagar Properties",
     seoDescription: "Complete guide to Golf Course Extension Road real estate Gurugram. Discover new luxury launches, price per sq ft, and SPR connectivity insights.",
-    canonicalUrl: "/blog/location/golf-course-extension"
+    canonicalUrl: "/properties"
   },
   {
     name: "Sushant Lok 1",
@@ -619,7 +619,7 @@ export const INITIAL_LOCATIONS = [
     ],
     seoTitle: "Sushant Lok 1 Real Estate & Builder Floors Guide | Saudagar Properties",
     seoDescription: "Explore luxury builder floors and freehold plots in Sushant Lok 1 Gurugram. Pricing benchmarks, Metro connectivity, and verified property advisory.",
-    canonicalUrl: "/blog/location/sushant-lok-1"
+    canonicalUrl: "/services/residential"
   },
   {
     name: "Cyber City",
@@ -674,7 +674,7 @@ export const INITIAL_LOCATIONS = [
     ],
     seoTitle: "Cyber City Commercial Real Estate & Pre-Leased Offices | Saudagar Properties",
     seoDescription: "Discover pre-leased Grade-A office spaces in DLF Cyber City Gurugram. 7-9% yields, corporate leases, and institutional commercial advisory.",
-    canonicalUrl: "/blog/location/cyber-city"
+    canonicalUrl: "/services/commercial"
   },
   {
     name: "MG Road",
@@ -729,7 +729,7 @@ export const INITIAL_LOCATIONS = [
     ],
     seoTitle: "MG Road Property & Commercial Real Estate Guide | Saudagar Properties",
     seoDescription: "Explore commercial retail, showrooms, and property options on MG Road Gurugram. South Delhi connectivity and investment insights.",
-    canonicalUrl: "/blog/location/mg-road"
+    canonicalUrl: "/services/commercial"
   },
   {
     name: "Sohna Road",
@@ -783,7 +783,7 @@ export const INITIAL_LOCATIONS = [
     ],
     seoTitle: "Sohna Road Real Estate & Property Investment Guide | Saudagar Properties",
     seoDescription: "Discover residential communities and commercial spaces along Sohna Road Gurugram. Elevated expressway connectivity and market pricing.",
-    canonicalUrl: "/blog/location/sohna-road"
+    canonicalUrl: "/properties"
   }
 ];
 
@@ -901,9 +901,9 @@ export const INITIAL_POSTS = [
 
 Independent builder floors are low-density, four-story residential structures constructed on private freehold plots where each entire floor constitutes an autonomous, privately owned home. They dominate Gurugram's luxury market because buyers secure direct legal ownership of prime freehold land in postal codes where high-rise condominiums offer only communal airspace.
 
-While high-rise condominiums in [DLF Phase 5](/blog/location/dlf-phase-5) offer resort amenities, independent builder floors in [DLF Phase 1](/blog/location/dlf-phase-1), [DLF Phase 2](/blog/location/dlf-phase-2), and [DLF Phase 4](/blog/location/dlf-phase-4) provide an unmatched degree of privacy, freehold plot ownership, and bespoke architectural freedom.
+While high-rise condominiums in [DLF Phase 5](/services/residential) offer resort amenities, independent builder floors in [DLF Phase 1](/services/residential), [DLF Phase 2](/services/residential), and [DLF Phase 4](/services/residential) provide an unmatched degree of privacy, freehold plot ownership, and bespoke architectural freedom.
 
-> **Advisory Note:** A builder floor in [DLF Phase 1](/blog/location/dlf-phase-1) or [DLF Phase 2](/blog/location/dlf-phase-2) does not just offer 4,000 square feet of interior comfort—it secures an undivided proportionate share of the underlying freehold land in India's most resilient postal codes.
+> **Advisory Note:** A builder floor in [DLF Phase 1](/services/residential) or [DLF Phase 2](/services/residential) does not just offer 4,000 square feet of interior comfort—it secures an undivided proportionate share of the underlying freehold land in India's most resilient postal codes.
 
 ### Core Architectural Advantages Over High-Rise Living
 
@@ -920,12 +920,12 @@ Pricing for luxury builder floors is primarily governed by plot dimensions (300 
 
 | Corridor | Plot Size (Sq. Yds.) | Typical Config | Current Price Range (2026) | Rental Yield |
 | :--- | :--- | :--- | :--- | :--- |
-| [**DLF Phase 1**](/blog/location/dlf-phase-1) (A & B Blocks) | 500 – 1,000 | 4 & 5 BHK Floors | ₹5.50 Cr – ₹14.00 Cr | 3.2% – 3.8% |
-| [**DLF Phase 2**](/blog/location/dlf-phase-2) (Akashneem / Jacaranda) | 400 – 502 | 4 BHK Floors | ₹4.25 Cr – ₹7.50 Cr | 3.5% – 4.2% |
-| [**DLF Phase 3**](/blog/location/dlf-phase-3) (Pink Town / Moulsari) | 300 – 500 | 3 & 4 BHK Floors | ₹3.20 Cr – ₹5.80 Cr | 3.8% – 4.5% |
-| [**DLF Phase 4**](/blog/location/dlf-phase-4) (Near Galleria / Ridgewood)| 400 – 600 | 4 BHK Boutique | ₹4.75 Cr – ₹8.25 Cr | 3.4% – 4.0% |
+| [**DLF Phase 1**](/services/residential) (A & B Blocks) | 500 – 1,000 | 4 & 5 BHK Floors | ₹5.50 Cr – ₹14.00 Cr | 3.2% – 3.8% |
+| [**DLF Phase 2**](/services/residential) (Akashneem / Jacaranda) | 400 – 502 | 4 BHK Floors | ₹4.25 Cr – ₹7.50 Cr | 3.5% – 4.2% |
+| [**DLF Phase 3**](/services/residential) (Pink Town / Moulsari) | 300 – 500 | 3 & 4 BHK Floors | ₹3.20 Cr – ₹5.80 Cr | 3.8% – 4.5% |
+| [**DLF Phase 4**](/services/residential) (Near Galleria / Ridgewood)| 400 – 600 | 4 BHK Boutique | ₹4.75 Cr – ₹8.25 Cr | 3.4% – 4.0% |
 
-Similar architectural standards extend into [Sushant Lok 1](/blog/location/sushant-lok-1), where independent floors on 360 to 500 sq. yd. plots offer serene neighborhood living alongside immediate connectivity to Galleria and Yellow Line Metro stations.
+Similar architectural standards extend into [Sushant Lok 1](/services/residential), where independent floors on 360 to 500 sq. yd. plots offer serene neighborhood living alongside immediate connectivity to Galleria and Yellow Line Metro stations.
 
 For buyers comparing corridor dynamics between DLF phases and Golf Course Road, explore our [corridor comparison between Golf Course Road and Golf Course Extension](/blog/golf-course-road-vs-golf-course-extension-comparison). Additionally, if evaluating high-rise vertical living, consult our analysis of [bespoke architectural trends in Gurugram ultra-luxury penthouses](/blog/bespoke-architectural-trends-ultra-luxury-penthouses-gurugram).
 
@@ -955,9 +955,9 @@ Never disburse the final purchase tranche without an unconditional Occupancy Cer
 
 ## Why DLF Phase 2 Remains the Preferred Corridor for Executives
 
-DLF Phase 2 is the most liquid builder floor corridor in Gurugram because of its direct walkability to [Cyber City](/blog/location/cyber-city), Rapid Metro stations, and tree-lined avenues like Akashneem Marg. Ready-to-move 4 BHK floors on 500 sq. yd. plots routinely command immediate premiums within weeks of structural completion.
+DLF Phase 2 is the most liquid builder floor corridor in Gurugram because of its direct walkability to [Cyber City](/services/commercial), Rapid Metro stations, and tree-lined avenues like Akashneem Marg. Ready-to-move 4 BHK floors on 500 sq. yd. plots routinely command immediate premiums within weeks of structural completion.
 
-If you are evaluating off-market builder floors across [DLF Phase 1–5](/blog/location/dlf-phase-1-5), Saudagar Properties maintains Gurugram's most extensive private directory of vetted properties.`,
+If you are evaluating off-market builder floors across [DLF Phase 1–5](/services/residential), Saudagar Properties maintains Gurugram's most extensive private directory of vetted properties.`,
     faq: [
       {
         question: "What is the typical maintenance cost for an independent floor in DLF?",
@@ -1072,7 +1072,7 @@ If you are evaluating off-market builder floors across [DLF Phase 1–5](/blog/l
     ],
     content: `## Executive Overview: The 2026 Gurugram Luxury Real Estate Cycle
 
-[Gurugram](/blog/location/gurugram)'s property market continues its multi-year bull run, evolving from speculative momentum into an institutional-grade, capital-rich maturity. Grade-A developers and sovereign wealth funds have reinforced [Golf Course Road](/blog/location/golf-course-road) and [DLF Phase 1–5](/blog/location/dlf-phase-1-5) as northern India's premier wealth preservation assets.
+[Gurugram](/properties)'s property market continues its multi-year bull run, evolving from speculative momentum into an institutional-grade, capital-rich maturity. Grade-A developers and sovereign wealth funds have reinforced [Golf Course Road](/properties) and [DLF Phase 1–5](/services/residential) as northern India's premier wealth preservation assets.
 
 In this 2026 outlook, our research desk evaluates capital appreciation trajectories, rental yields across prime micro-markets, and emerging structural drivers.
 
@@ -1080,12 +1080,12 @@ In this 2026 outlook, our research desk evaluates capital appreciation trajector
 
 | Corridor | Annual Capital Growth (2025-26) | Avg. Price / Sq. Ft. | Gross Rental Yield | Key Catalyst |
 | :--- | :--- | :--- | :--- | :--- |
-| [**Golf Course Road**](/blog/location/golf-course-road) | +18.4% | ₹32,000 – ₹48,000 | 3.4% | Ultra-luxury condominium dominance & scarcity |
-| [**DLF Phase 1 & 2**](/blog/location/dlf-phase-2) | +21.2% | Freehold Plot Basis | 3.8% | Freehold land scarcity & low-density zoning |
-| [**Cyber City Hub**](/blog/location/cyber-city) | +12.6% | ₹24,000 – ₹30,000 | 6.8% (Commercial) | 97%+ Grade-A IT/ITeS occupancy |
-| [**Golf Course Ext. Road**](/blog/location/golf-course-extension) | +15.8% | ₹18,500 – ₹26,000 | 3.2% | New luxury launches & SPR connectivity |
-| [**Sohna Road Axis**](/blog/location/sohna-road) | +11.4% | ₹12,000 – ₹18,500 | 4.1% | Elevated expressway link to Rajiv Chowk |
-| [**MG Road Belt**](/blog/location/mg-road) | +13.2% | ₹22,000 – ₹35,000 | 5.8% (Retail) | High footfall retail & dual Metro access |
+| [**Golf Course Road**](/properties) | +18.4% | ₹32,000 – ₹48,000 | 3.4% | Ultra-luxury condominium dominance & scarcity |
+| [**DLF Phase 1 & 2**](/services/residential) | +21.2% | Freehold Plot Basis | 3.8% | Freehold land scarcity & low-density zoning |
+| [**Cyber City Hub**](/services/commercial) | +12.6% | ₹24,000 – ₹30,000 | 6.8% (Commercial) | 97%+ Grade-A IT/ITeS occupancy |
+| [**Golf Course Ext. Road**](/properties) | +15.8% | ₹18,500 – ₹26,000 | 3.2% | New luxury launches & SPR connectivity |
+| [**Sohna Road Axis**](/properties) | +11.4% | ₹12,000 – ₹18,500 | 4.1% | Elevated expressway link to Rajiv Chowk |
+| [**MG Road Belt**](/services/commercial) | +13.2% | ₹22,000 – ₹35,000 | 5.8% (Retail) | High footfall retail & dual Metro access |
 
 ---
 
@@ -1099,11 +1099,11 @@ Gurugram now houses over 400 family offices and corporate headquarters. High-net
 
 ### 2. Institutional Supply Shortage in Core DLF
 
-Unlike peripheral markets where farmland conversion fuels infinite supply, [DLF Phase 1–5](/blog/location/dlf-phase-1-5) has zero virgin land parcels. Supply can only come from redevelopment of single-storey older kothis into 4-unit luxury floors, setting a permanent price floor.
+Unlike peripheral markets where farmland conversion fuels infinite supply, [DLF Phase 1–5](/services/residential) has zero virgin land parcels. Supply can only come from redevelopment of single-storey older kothis into 4-unit luxury floors, setting a permanent price floor.
 
 ### 3. Expansion of Multinational Corporate Leases
 
-Global capability centres (GCCs) in [DLF Cyber City](/blog/location/cyber-city) and Horizon Center are expanding at record paces. Senior expatriates and corporate directors drive luxury rental demand, pushing 4 BHK floor rentals in [DLF Phase 2](/blog/location/dlf-phase-2) above ₹2.50 Lakh to ₹4.00 Lakh per month.
+Global capability centres (GCCs) in [DLF Cyber City](/services/commercial) and Horizon Center are expanding at record paces. Senior expatriates and corporate directors drive luxury rental demand, pushing 4 BHK floor rentals in [DLF Phase 2](/services/residential) above ₹2.50 Lakh to ₹4.00 Lakh per month.
 
 For institutional investors seeking commercial cash-flow allocations, read our underwriting of [pre-leased Grade-A commercial office spaces in DLF Cyber City](/blog/commercial-grade-a-office-spaces-cyber-city-yield-dynamics). Cross-border NRI investors should also consult our [NRI investment guide on FEMA regulations and repatriation](/blog/nri-investment-guide-fema-repatriation-luxury-real-estate).`,
     faq: [
@@ -1213,7 +1213,7 @@ For institutional investors seeking commercial cash-flow allocations, read our u
     ],
     content: `## Strategic Blueprint for Non-Resident Real Estate Investors
 
-For Non-Resident Indians (NRIs) in the United States, United Kingdom, UAE, and Singapore, Indian real estate represents both emotional connection and an exceptionally rewarding asset class. The currency advantage paired with 15–20% annual capital appreciation in [Gurugram](/blog/location/gurugram) makes [DLF Phase 1–5](/blog/location/dlf-phase-1-5) and [Golf Course Road](/blog/location/golf-course-road) properties a cornerstone of global NRI portfolios.
+For Non-Resident Indians (NRIs) in the United States, United Kingdom, UAE, and Singapore, Indian real estate represents both emotional connection and an exceptionally rewarding asset class. The currency advantage paired with 15–20% annual capital appreciation in [Gurugram](/properties) makes [DLF Phase 1–5](/services/residential) and [Golf Course Road](/properties) properties a cornerstone of global NRI portfolios.
 
 However, cross-border real estate acquisitions require strict adherence to the Foreign Exchange Management Act (FEMA) and Indian tax laws. At Saudagar Properties, our NRI desk provides end-to-end transaction facilitation.
 
@@ -1370,7 +1370,7 @@ If the property was originally purchased through an NRE account via inward forei
     ],
     content: `## The Battle of Gurugram's Two Elite Corridors
 
-For luxury homebuyers and family offices investing in Gurugram, the most frequent dilemma centers on [Golf Course Road (GCR)](/blog/location/golf-course-road) versus [Golf Course Extension Road (GCER)](/blog/location/golf-course-extension).
+For luxury homebuyers and family offices investing in Gurugram, the most frequent dilemma centers on [Golf Course Road (GCR)](/properties) versus [Golf Course Extension Road (GCER)](/properties).
 
 While both corridors share name pedigree and world-class retail, their investment dynamics, price entry points, and buyer demographics differ substantially.
 
@@ -1398,10 +1398,10 @@ The table below contrasts key real estate metrics between Gurugram's original Bi
 
 Your allocation strategy should reflect whether your primary investment mandate is generational wealth preservation or aggressive capital growth.
 
-- **Choose [Golf Course Road](/blog/location/golf-course-road)** if your objective is **pure wealth preservation, unshakeable prestige, and highest rental returns** from Fortune 500 expatriates.
-- **Choose [Golf Course Extension](/blog/location/golf-course-extension)** if your objective is **maximum 5-year capital appreciation, newer contemporary architecture, and comprehensive resort amenities**.
+- **Choose [Golf Course Road](/properties)** if your objective is **pure wealth preservation, unshakeable prestige, and highest rental returns** from Fortune 500 expatriates.
+- **Choose [Golf Course Extension](/properties)** if your objective is **maximum 5-year capital appreciation, newer contemporary architecture, and comprehensive resort amenities**.
 
-Near the junction of these two corridors lies [DLF Phase 5](/blog/location/dlf-phase-5), which anchors the super-luxury high-rise segment with trophy residences overlooking the championship golf courses. For insights into penthouse specifications in this zone, read our report on [bespoke architectural trends in Gurugram ultra-luxury penthouses](/blog/bespoke-architectural-trends-ultra-luxury-penthouses-gurugram).
+Near the junction of these two corridors lies [DLF Phase 5](/services/residential), which anchors the super-luxury high-rise segment with trophy residences overlooking the championship golf courses. For insights into penthouse specifications in this zone, read our report on [bespoke architectural trends in Gurugram ultra-luxury penthouses](/blog/bespoke-architectural-trends-ultra-luxury-penthouses-gurugram).
 
 Speak with Saudagar Properties to review available penthouse and villa opportunities across both corridors.`,
     faq: [
@@ -1511,9 +1511,9 @@ Speak with Saudagar Properties to review available penthouse and villa opportuni
     ],
     content: `## The Superior Appeal of Pre-Leased Commercial Assets
 
-While luxury residential floors in [DLF Phase 2](/blog/location/dlf-phase-2) provide 3.5%–4.2% rental yields alongside strong land appreciation, **pre-leased Grade-A commercial real estate in [DLF Cyber City](/blog/location/cyber-city) delivers 7.0%–8.8% gross yields with immediate cash flow from Day 1**.
+While luxury residential floors in [DLF Phase 2](/services/residential) provide 3.5%–4.2% rental yields alongside strong land appreciation, **pre-leased Grade-A commercial real estate in [DLF Cyber City](/services/commercial) delivers 7.0%–8.8% gross yields with immediate cash flow from Day 1**.
 
-For savvy investors, a pre-leased asset mitigates tenant vacancy risks while securing long-term lease lock-ins with Fortune 500 multinationals. Neighboring residential phases like [DLF Phase 3](/blog/location/dlf-phase-3) also draw massive secondary rental spillover from Cyber City employees.
+For savvy investors, a pre-leased asset mitigates tenant vacancy risks while securing long-term lease lock-ins with Fortune 500 multinationals. Neighboring residential phases like [DLF Phase 3](/services/residential) also draw massive secondary rental spillover from Cyber City employees.
 
 > **Advisory Note:** For macro yield benchmarks and multi-year capital appreciation forecasts across both residential and commercial sectors, review our comprehensive [Gurugram Real Estate Market Outlook 2026](/blog/gurugram-real-estate-market-outlook-2026).
 
@@ -1663,7 +1663,7 @@ Saudagar Properties curates off-market pre-leased commercial floors starting fro
     ],
     content: `## A New Era of Sky-High Architectural Mastery
 
-In Gurugram's prime residential developments—most notably along [DLF Phase 5](/blog/location/dlf-phase-5) and [Golf Course Road](/blog/location/golf-course-road)—penthouses are no longer merely top-floor apartments. They are bespoke private sky mansions offering over 8,000 to 15,000 square feet of private sanctuaries.
+In Gurugram's prime residential developments—most notably along [DLF Phase 5](/services/residential) and [Golf Course Road](/properties)—penthouses are no longer merely top-floor apartments. They are bespoke private sky mansions offering over 8,000 to 15,000 square feet of private sanctuaries.
 
 > **Advisory Note:** While penthouses offer vertical luxury, buyers prioritizing ground-level private plots and low-density autonomy should examine our master [guide to luxury independent builder floors in DLF Phase 1–5](/blog/luxury-builder-floors-dlf-phase-1-5-guide).
 

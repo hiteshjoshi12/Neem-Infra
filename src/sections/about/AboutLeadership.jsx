@@ -8,10 +8,12 @@ import { Users, Award, Shield, CheckCircle2, Star } from 'lucide-react';
 import Tilt3DCard from '../../components/ui/Tilt3DCard';
 import AnimatedCounter from '../../components/ui/AnimatedCounter';
 import Image from 'next/image';
-
+import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
 
 export default function AboutLeadership() {
-  const founders = [
+  const { sections } = useCms();
+  const cms = sections?.page_about?.leadership || DEFAULT_SECTIONS.page_about.leadership;
+  const defaultFounders = [
     {
       name: "Mr. Arun Sharma",
       role: "Founder & Managing Director",
@@ -44,7 +46,7 @@ export default function AboutLeadership() {
     }
   ];
 
-  const teamMembers = [
+  const defaultTeamMembers = [
     {
       name: "Ankit Sharma",
       designation: "Senior Client Advisory",
@@ -61,6 +63,14 @@ export default function AboutLeadership() {
       image: "https://saudagarproperties.com/wp-content/uploads/2020/09/shyam-upreti.png"
     }
   ];
+
+  const founders = (cms?.founders && cms.founders.length > 0)
+    ? cms.founders.map((f, idx) => ({ ...defaultFounders[idx], ...f }))
+    : defaultFounders;
+
+  const teamMembers = (cms?.teamMembers && cms.teamMembers.length > 0)
+    ? cms.teamMembers.map((t, idx) => ({ ...defaultTeamMembers[idx], ...t }))
+    : defaultTeamMembers;
 
   const impactStats = [
     {
@@ -222,15 +232,15 @@ export default function AboutLeadership() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.06] border border-[#D09A16]/40 text-[#D09A16] text-xs font-bold tracking-[0.25em] uppercase mb-4 shadow-[0_0_20px_rgba(208,154,22,0.15)]">
             <Users size={14} className="text-[#D09A16]" />
-            <span>Team of Experts</span>
+            <span>{cms.badge || "Team of Experts"}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-white leading-tight mb-4">
-            Visionary <span className="italic font-serif text-[#D09A16]">Founders &amp; Leadership</span>
+            {cms.titleMain || "Visionary "} <span className="italic font-serif text-[#D09A16]">{cms.titleItalic || "Founders & Leadership"}</span>
           </h2>
 
           <p className="text-sm sm:text-base text-slate-300 font-normal leading-relaxed">
-            Meet the driving force behind Saudagar Properties, delivering two decades of real estate authority, personal attention, and unwavering integrity.
+            {cms.subtitle || "Meet the driving force behind Saudagar Properties, delivering two decades of real estate authority, personal attention, and unwavering integrity."}
           </p>
         </div>
 

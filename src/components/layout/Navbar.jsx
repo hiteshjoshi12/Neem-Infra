@@ -58,9 +58,16 @@ export default function Navbar() {
   const rawPhone = navData.phoneRaw || displayPhone.replace(/\s+/g, '');
   const ctaText = navData.ctaText || "Contact Us";
   const ctaHref = navData.ctaHref || "/contact";
-  const corridorsBadge = navData.corridorsBadge || "Prime Corridors";
+  const corridorsBadge = (navData.corridorsBadge && navData.corridorsBadge !== "Prime Corridors") ? navData.corridorsBadge : "Portfolio & Services";
   const mobileNavHeader = navData.mobileNavHeader || "Saudagar Properties";
   const mobileConsultationTitle = navData.mobileConsultationTitle || "Private Consultation";
+
+  const sanitizeNavHref = (href) => {
+    if (!href) return '#';
+    if (href.includes('cyber-city') || href.includes('commercial')) return '/services/commercial';
+    if (href.startsWith('/blog/location')) return '/services/residential';
+    return href;
+  };
 
   return (
     <>
@@ -95,7 +102,23 @@ export default function Navbar() {
             {/* Center: Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-1 xl:gap-2">
               {navs.map((link) => {
-                const isActive = pathname === link.href;
+                const labelUpper = (link.label || '').toUpperCase();
+                let isActive = false;
+                if (labelUpper === 'FEATURED') {
+                  isActive = pathname === '/properties' || pathname.startsWith('/properties');
+                } else if (labelUpper === 'SERVICES') {
+                  isActive = pathname.startsWith('/services');
+                } else if (labelUpper === 'HOME') {
+                  isActive = pathname === '/';
+                } else if (labelUpper === 'ABOUT US') {
+                  isActive = pathname === '/about' || pathname.startsWith('/about');
+                } else if (labelUpper === 'OUR TEAM') {
+                  isActive = pathname === '/team' || pathname.startsWith('/team');
+                } else if (labelUpper === 'BLOG') {
+                  isActive = pathname === '/blog' || pathname.startsWith('/blog');
+                } else {
+                  isActive = link.href === '/' ? pathname === '/' : (link.href ? pathname.startsWith(link.href) : false);
+                }
 
                 if (link.dropdown && link.dropdown.length > 0) {
                   return (
@@ -106,16 +129,34 @@ export default function Navbar() {
                       onMouseLeave={handleMouseLeave}
                     >
                       <button
-                        className={`flex items-center gap-1 px-2.5 py-1.5 text-[10px] xl:text-[11px] font-semibold tracking-[0.16em] uppercase rounded-full transition-all duration-300 ${activeDropdown === link.label
-                          ? 'text-[#D09A16] bg-[#D09A16]/10 shadow-[inset_0_1px_2px_rgba(0,0,0,0.05)]'
-                          : 'text-[#17213D] hover:text-[#D09A16] hover:bg-[#F7F5EF]'
-                          }`}
+                        className={`relative flex items-center gap-1 px-3 py-1.5 text-[10px] xl:text-[11px] font-semibold tracking-[0.16em] uppercase rounded-full transition-all duration-300 z-10 cursor-pointer ${
+                          isActive
+                            ? 'text-white'
+                            : activeDropdown === link.label
+                            ? 'text-[#D09A16] bg-[#D09A16]/10'
+                            : 'text-[#17213D] hover:text-[#D09A16] hover:bg-[#F7F5EF]'
+                        }`}
                       >
+                        {isActive && (
+                          <motion.div
+                            layoutId="navbarActiveIndicator"
+                            className="absolute inset-0 rounded-full bg-[#17213D] shadow-sm -z-10"
+                            transition={{ type: "spring", stiffness: 420, damping: 32 }}
+                          />
+                        )}
+                        {isActive && (
+                          <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16] shadow-[0_0_8px_#D09A16]" />
+                        )}
                         <span>{link.label}</span>
                         <ChevronDown
                           size={13}
-                          className={`transition-transform duration-300 ${activeDropdown === link.label ? 'rotate-180 text-[#D09A16]' : 'opacity-70'
-                            }`}
+                          className={`transition-transform duration-300 ${
+                            activeDropdown === link.label 
+                              ? 'rotate-180 text-[#D09A16]' 
+                              : isActive 
+                              ? 'text-[#D09A16]' 
+                              : 'opacity-70'
+                          }`}
                         />
                       </button>
 
@@ -135,27 +176,41 @@ export default function Navbar() {
                                 <Building2 size={13} className="text-[#D09A16]" />
                               </div>
                               <div className="space-y-0.5">
-                                {link.dropdown.map((item) => (
-                                  <Link key={item.label}
-                                    href={item.href}
-                                    className="group flex flex-col px-3.5 py-2.5 rounded-xl hover:bg-[#F7F5EF] transition-all duration-200"
-                                  >
-                                    <div className="flex items-center justify-between">
-                                      <span className="text-xs font-medium text-[#17213D] group-hover:text-[#D09A16] transition-colors">
-                                        {item.label}
-                                      </span>
-                                      <ArrowUpRight
-                                        size={13}
-                                        className="text-[#999] opacity-0 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:text-[#D09A16] transition-all duration-200"
-                                      />
-                                    </div>
-                                    {item.desc && (
-                                      <span className="text-[10px] text-[#566078] group-hover:text-[#17213D] transition-colors mt-0.5">
-                                        {item.desc}
-                                      </span>
-                                    )}
-                                  </Link>
-                                ))}
+                                {link.dropdown.map((item) => {
+                                  const isSubActive = pathname === sanitizeNavHref(item.href);
+                                  return (
+                                    <Link key={item.label}
+                                      href={sanitizeNavHref(item.href)}
+                                      className={`group flex flex-col px-3.5 py-2.5 rounded-xl transition-all duration-200 ${
+                                        isSubActive
+                                          ? 'bg-[#F7F5EF] border border-[#D09A16]/30'
+                                          : 'hover:bg-[#F7F5EF]'
+                                      }`}
+                                    >
+                                      <div className="flex items-center justify-between">
+                                        <span className={`text-xs font-medium transition-colors flex items-center gap-1.5 ${
+                                          isSubActive ? 'text-[#D09A16] font-bold' : 'text-[#17213D] group-hover:text-[#D09A16]'
+                                        }`}>
+                                          {isSubActive && <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16]" />}
+                                          <span>{item.label}</span>
+                                        </span>
+                                        <ArrowUpRight
+                                          size={13}
+                                          className={`transition-all duration-200 ${
+                                            isSubActive
+                                              ? 'text-[#D09A16] opacity-100'
+                                              : 'text-[#999] opacity-0 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:text-[#D09A16]'
+                                          }`}
+                                        />
+                                      </div>
+                                      {item.desc && (
+                                        <span className="text-[10px] text-[#566078] group-hover:text-[#17213D] transition-colors mt-0.5">
+                                          {item.desc}
+                                        </span>
+                                      )}
+                                    </Link>
+                                  );
+                                })}
                               </div>
                             </div>
                           </motion.div>
@@ -168,18 +223,23 @@ export default function Navbar() {
                 return (
                   <Link key={link.label}
                     href={link.href}
-                    className={`relative px-2.5 py-1.5 text-[10px] xl:text-[11px] font-semibold tracking-[0.16em] uppercase rounded-full transition-all duration-300 ${isActive
-                      ? 'text-[#17213D] bg-[#F7F5EF] font-bold shadow-[inset_0_1px_2px_rgba(0,0,0,0.06)]'
-                      : 'text-[#17213D] hover:text-[#D09A16] hover:bg-[#F7F5EF]'
-                      }`}
+                    className={`relative flex items-center gap-1.5 px-3 py-1.5 text-[10px] xl:text-[11px] font-semibold tracking-[0.16em] uppercase rounded-full transition-all duration-300 z-10 ${
+                      isActive
+                        ? 'text-white'
+                        : 'text-[#17213D] hover:text-[#D09A16] hover:bg-[#F7F5EF]'
+                    }`}
                   >
-                    <span>{link.label}</span>
                     {isActive && (
-                      <motion.span
-                        layoutId="activePill"
-                        className="absolute bottom-1 left-1/2 -translate-x-1/2 w-3 h-0.5 bg-[#D09A16] rounded-full"
+                      <motion.div
+                        layoutId="navbarActiveIndicator"
+                        className="absolute inset-0 rounded-full bg-[#17213D] shadow-sm -z-10"
+                        transition={{ type: "spring", stiffness: 420, damping: 32 }}
                       />
                     )}
+                    {isActive && (
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16] shadow-[0_0_8px_#D09A16]" />
+                    )}
+                    <span>{link.label}</span>
                   </Link>
                 );
               })}
@@ -254,18 +314,40 @@ export default function Navbar() {
 
             <nav className="flex flex-col divide-y divide-[#17213D]/[0.06] py-2">
               {navs.map((link) => {
+                const labelUpper = (link.label || '').toUpperCase();
+                let isActive = false;
+                if (labelUpper === 'FEATURED') {
+                  isActive = pathname === '/properties' || pathname.startsWith('/properties');
+                } else if (labelUpper === 'SERVICES') {
+                  isActive = pathname.startsWith('/services');
+                } else if (labelUpper === 'HOME') {
+                  isActive = pathname === '/';
+                } else if (labelUpper === 'ABOUT US') {
+                  isActive = pathname === '/about' || pathname.startsWith('/about');
+                } else if (labelUpper === 'OUR TEAM') {
+                  isActive = pathname === '/team' || pathname.startsWith('/team');
+                } else if (labelUpper === 'BLOG') {
+                  isActive = pathname === '/blog' || pathname.startsWith('/blog');
+                } else {
+                  isActive = link.href === '/' ? pathname === '/' : (link.href ? pathname.startsWith(link.href) : false);
+                }
+
                 if (link.dropdown && link.dropdown.length > 0) {
                   return (
-                    <div key={link.label} className="py-3">
+                    <div key={link.label} className="py-2.5">
                       <button
                         onClick={() => setActiveDropdown(activeDropdown === link.label ? null : link.label)}
-                        className="w-full flex items-center justify-between text-sm font-semibold tracking-[0.12em] text-[#17213D] uppercase"
+                        className={`w-full flex items-center justify-between text-xs font-bold tracking-[0.12em] uppercase rounded-xl px-2.5 py-1.5 transition-colors ${
+                          isActive ? 'text-[#D09A16] bg-[#17213D]' : 'text-[#17213D]'
+                        }`}
                       >
-                        <span>{link.label}</span>
+                        <span className="flex items-center gap-2">
+                          {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16]" />}
+                          <span>{link.label}</span>
+                        </span>
                         <ChevronDown
-                          size={16}
-                          className={`text-[#D09A16] transition-transform duration-300 ${activeDropdown === link.label ? 'rotate-180' : ''
-                            }`}
+                          size={15}
+                          className={`text-[#D09A16] transition-transform duration-300 ${activeDropdown === link.label ? 'rotate-180' : ''}`}
                         />
                       </button>
 
@@ -276,16 +358,23 @@ export default function Navbar() {
                             animate={{ height: "auto", opacity: 1 }}
                             exit={{ height: 0, opacity: 0 }}
                             transition={{ duration: 0.25 }}
-                            className="overflow-hidden mt-3 pl-3 space-y-2 border-l-2 border-[#D09A16]/40"
+                            className="overflow-hidden mt-2.5 pl-3 space-y-1.5 border-l-2 border-[#D09A16]/40"
                           >
-                            {link.dropdown.map((sub) => (
-                              <Link key={sub.label}
-                                href={sub.href}
-                                className="block py-1.5 text-xs text-[#566078] hover:text-[#D09A16] transition-colors"
-                              >
-                                {sub.label}
-                              </Link>
-                            ))}
+                            {link.dropdown.map((sub) => {
+                              const isSubActive = pathname === sanitizeNavHref(sub.href);
+                              return (
+                                <Link key={sub.label}
+                                  href={sanitizeNavHref(sub.href)}
+                                  className={`block py-1.5 px-2.5 rounded-lg text-xs transition-colors ${
+                                    isSubActive
+                                      ? 'text-[#D09A16] font-bold bg-[#17213D]/5'
+                                      : 'text-[#566078] hover:text-[#D09A16]'
+                                  }`}
+                                >
+                                  {sub.label}
+                                </Link>
+                              );
+                            })}
                           </motion.div>
                         )}
                       </AnimatePresence>
@@ -296,16 +385,23 @@ export default function Navbar() {
                 return (
                   <Link key={link.label}
                     href={link.href}
-                    className="py-3 text-sm font-semibold tracking-[0.12em] text-[#17213D] uppercase hover:text-[#D09A16] transition-colors flex items-center justify-between"
+                    className={`py-2.5 px-2.5 rounded-xl text-xs font-bold tracking-[0.12em] uppercase transition-all flex items-center justify-between ${
+                      isActive
+                        ? 'bg-[#17213D] text-white shadow-xs'
+                        : 'text-[#17213D] hover:text-[#D09A16]'
+                    }`}
                   >
-                    <span>{link.label}</span>
-                    <ArrowUpRight size={14} className="text-[#D09A16]/50" />
+                    <span className="flex items-center gap-2">
+                      {isActive && <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16]" />}
+                      <span>{link.label}</span>
+                    </span>
+                    <ArrowUpRight size={13} className={isActive ? 'text-[#D09A16]' : 'text-slate-400'} />
                   </Link>
                 );
               })}
 
               <Link href={ctaHref}
-                className="py-3 text-sm font-semibold tracking-[0.12em] text-[#D09A16] uppercase hover:text-[#17213D] transition-colors flex items-center justify-between"
+                className="py-3 px-2.5 text-xs font-bold tracking-[0.12em] text-[#D09A16] uppercase hover:text-[#17213D] transition-colors flex items-center justify-between"
               >
                 <span>{ctaText.toUpperCase()}</span>
                 <ArrowUpRight size={14} className="text-[#D09A16]" />

@@ -2,9 +2,20 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import Testimonial from '@/models/Testimonial';
 import { requireAdmin } from '@/lib/auth/authGuard';
+import { getCached, setCached, invalidateCache } from '@/lib/cache/apiCache';
 
 export async function GET(req) {
   try {
+    const cacheKey = `testimonials_cache_${req.url}`;
+    const cached = getCached(cacheKey, 60000);
+    if (cached) {
+      return NextResponse.json(cached, {
+        headers: {
+          'Cache-Control': 'public, s-maxage=120, stale-while-revalidate=600'
+        }
+      });
+    }
+
     await connectDB();
     const { searchParams } = new URL(req.url);
     const all = searchParams.get('all');
@@ -13,10 +24,17 @@ export async function GET(req) {
 
     const testimonials = await Testimonial.find(filter).sort({ order: 1, createdAt: -1 });
 
-    return NextResponse.json({
+    const responsePayload = {
       success: true,
       count: testimonials.length,
       data: testimonials
+    };
+
+    setCached(cacheKey, responsePayload);
+    return NextResponse.json(responsePayload, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=120, stale-while-revalidate=600'
+      }
     });
   } catch (error) {
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
@@ -29,6 +47,7 @@ export async function POST(req) {
     await connectDB();
     const body = await req.json();
     const testimonial = await Testimonial.create(body);
+    invalidateCache('testimonials_cache');
     
     return NextResponse.json({
       success: true,

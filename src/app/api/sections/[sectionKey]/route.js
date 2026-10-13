@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import SectionContent from '@/models/SectionContent';
 import { requireAdmin } from '@/lib/auth/authGuard';
+import { invalidateCache } from '@/lib/cache/apiCache';
 
 export async function GET(req, { params }) {
   try {
@@ -46,6 +47,8 @@ export async function PUT(req, { params }) {
       },
       { returnDocument: 'after', upsert: true, runValidators: true }
     );
+
+    invalidateCache('cms_sections');
 
     return NextResponse.json({
       success: true,

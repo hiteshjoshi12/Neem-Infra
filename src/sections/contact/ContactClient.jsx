@@ -3,11 +3,16 @@ import { gsap, ScrollTrigger } from "@/lib/gsap/animations";
 
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react';
+import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
 import { animate, inView, stagger } from 'framer-motion';
 import api from '@/services/api';
+import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
 
 export default function ContactClient() {
+  const { sections } = useCms();
+  const cms = sections?.page_contact || DEFAULT_SECTIONS.page_contact;
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -110,9 +115,27 @@ export default function ContactClient() {
 
   return (
     <>
-      {/* Page Header */}
-      <div className="pt-32 pb-16 bg-[#1D263B] text-white text-center px-4">
-        <div ref={headerRef} className="max-w-3xl mx-auto">
+      {/* Page Header with Clearly Visible Architectural Background Image */}
+      <div className="relative pt-32 pb-20 md:pb-24 bg-[#0A0E17] text-white text-center px-4 overflow-hidden border-b border-white/10">
+        <div className="absolute inset-0 z-0 opacity-80 pointer-events-none">
+          <Image
+            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=80"
+            alt="Saudagar Properties Headquarters Gurugram"
+            fill
+            sizes="100vw"
+            priority
+            className="w-full h-full object-cover brightness-[0.85] contrast-[1.05]"
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0A0E17]/80 via-[#0A0E17]/50 to-[#0A0E17]/95" />
+        </div>
+
+        {/* Ambient Golden Glow */}
+        <div 
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(ellipse at center, rgba(208,154,22,0.15) 0%, rgba(208,154,22,0) 70%)' }}
+        />
+
+        <div ref={headerRef} className="max-w-3xl mx-auto relative z-10">
           {/* Illuminated Breadcrumb Navigation */}
           <div className="flex items-center justify-center gap-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-6">
             <Link href="/" className="hover:text-[#D09A16] transition-colors">Home</Link>
@@ -123,9 +146,11 @@ export default function ContactClient() {
             </span>
           </div>
 
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4">Contact Us</h1>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold mb-4">
+            {cms.hero?.titleMain || "Connect With Our Senior "} <span className="italic font-serif text-[#D09A16]">{cms.hero?.titleItalic || "Partners"}</span>
+          </h1>
           <p className="text-[#CBD5E1] max-w-2xl mx-auto text-sm md:text-base font-light">
-            Get in touch with Saudagar Properties for premium real estate advisory in Gurugram. We are here to assist you with buying, selling, or leasing luxury properties.
+            {cms.hero?.subtitle || "Get in touch with Saudagar Properties for premium real estate advisory in Gurugram. We are here to assist you with buying, selling, or leasing luxury properties."}
           </p>
         </div>
       </div>
@@ -138,8 +163,12 @@ export default function ContactClient() {
         {/* Left Column: Contact Information */}
         <div ref={leftColRef} className="lg:col-span-5 space-y-8">
           <div>
-            <h2 className="text-sm font-bold tracking-[0.2em] text-[#D09A16] uppercase mb-2">Get in Touch</h2>
-            <h3 className="text-3xl font-serif text-[#1D263B] mb-6">Reach Out Directly</h3>
+            <h2 className="text-sm font-bold tracking-[0.2em] text-[#D09A16] uppercase mb-2">
+              {cms.contactInfo?.officeBadge || "Corporate Headquarters"}
+            </h2>
+            <h3 className="text-3xl font-serif text-[#1D263B] mb-6">
+              {cms.contactInfo?.officeName || "Saudagar Properties Pvt. Ltd"}
+            </h3>
             <p className="text-[#475569] leading-relaxed mb-8">
               Whether you are looking to invest in DLF Phase 1-5, require commercial space, or need expert property valuation, our founders are personally available to guide you.
             </p>
@@ -151,11 +180,11 @@ export default function ContactClient() {
                 <MapPin className="text-[#D09A16]" size={20} />
               </div>
               <div>
-                <h4 className="text-base font-bold text-[#1D263B] mb-1">Headquarters</h4>
+                <h4 className="text-base font-bold text-[#1D263B] mb-1">
+                  {cms.contactInfo?.officeBadge || "Headquarters"}
+                </h4>
                 <p className="text-sm text-[#475569] leading-relaxed">
-                  38, Akashneem Marg<br />
-                  DLF Phase 2<br />
-                  Gurugram, Haryana 122002
+                  {cms.contactInfo?.address || "38, Akashneem Marg, DLF Phase 2, Gurugram, Haryana 122002"}
                 </p>
               </div>
             </div>
@@ -165,10 +194,16 @@ export default function ContactClient() {
                 <Phone className="text-[#D09A16]" size={20} />
               </div>
               <div>
-                <h4 className="text-base font-bold text-[#1D263B] mb-1">Phone</h4>
+                <h4 className="text-base font-bold text-[#1D263B] mb-1">
+                  {cms.contactInfo?.phoneBadge || "Phone"}
+                </h4>
                 <div className="flex flex-col gap-1">
-                  <a href="tel:+919718511207" className="text-sm text-[#475569] hover:text-[#D09A16] transition-colors">+91 97185 11207</a>
-                  <a href="tel:+919811221207" className="text-sm text-[#475569] hover:text-[#D09A16] transition-colors">+91 98112 21207</a>
+                  <a href={`tel:${cms.contactInfo?.phone1 || '+919718511207'}`} className="text-sm text-[#475569] hover:text-[#D09A16] transition-colors">
+                    {cms.contactInfo?.phone1 || "+91 97185 11207"}
+                  </a>
+                  <a href={`tel:${cms.contactInfo?.phone2 || '+919811221207'}`} className="text-sm text-[#475569] hover:text-[#D09A16] transition-colors">
+                    {cms.contactInfo?.phone2 || "+91 98112 21207"}
+                  </a>
                 </div>
               </div>
             </div>
@@ -178,9 +213,11 @@ export default function ContactClient() {
                 <Mail className="text-[#D09A16]" size={20} />
               </div>
               <div>
-                <h4 className="text-base font-bold text-[#1D263B] mb-1">Email</h4>
-                <a href="mailto:saudagar.properties@yahoo.in" className="text-sm text-[#475569] hover:text-[#D09A16] transition-colors">
-                  saudagar.properties@yahoo.in
+                <h4 className="text-base font-bold text-[#1D263B] mb-1">
+                  {cms.contactInfo?.emailBadge || "Email"}
+                </h4>
+                <a href={`mailto:${cms.contactInfo?.email || 'Saudagar.Properties@Yahoo.In'}`} className="text-sm text-[#475569] hover:text-[#D09A16] transition-colors">
+                  {cms.contactInfo?.email || "Saudagar.Properties@Yahoo.In"}
                 </a>
               </div>
             </div>
@@ -190,7 +227,8 @@ export default function ContactClient() {
         {/* Right Column: Contact Form */}
         <div ref={formBoxRef} className="lg:col-span-7">
           <div className="bg-white p-8 md:p-10 rounded-3xl shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] border border-[#E8E4DA]">
-            <h3 className="text-2xl font-serif text-[#1D263B] mb-6">Send an Inquiry</h3>
+            <h3 className="text-2xl font-serif text-[#1D263B] mb-2">{cms.form?.title || "Send an Inquiry"}</h3>
+            <p className="text-xs text-[#64748B] mb-6">{cms.form?.subtitle || "Fill out the form below and an executive advisor will contact you within 2 hours."}</p>
             
             {submitted ? (
               <div className="flex flex-col items-center justify-center text-center py-10 space-y-6">
@@ -208,9 +246,7 @@ export default function ContactClient() {
                     rel="noopener noreferrer"
                     className="flex items-center justify-center gap-2 px-8 py-4 bg-[#25D366] text-white rounded-xl font-semibold hover:bg-[#20bd5a] transition-all shadow-lg hover:shadow-xl hover:-translate-y-0.5"
                   >
-                    <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z" />
-                    </svg>
+                    <WhatsAppIcon size={20} />
                     <span>Connect instantly on WhatsApp</span>
                   </a>
                 </div>

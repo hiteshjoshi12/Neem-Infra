@@ -63,8 +63,8 @@ const BASELINE_SEARCH_DATA = {
       position: 4.0
     },
     {
-      page: '/blog/location/dlf-phase-2',
-      title: 'DLF Phase 2 Real Estate Insights & Builder Floors',
+      page: '/properties',
+      title: 'DLF Phase 1–5 Luxury Builder Floors & Residential Inventory',
       clicks: 1320,
       impressions: 24800,
       ctr: 5.32,

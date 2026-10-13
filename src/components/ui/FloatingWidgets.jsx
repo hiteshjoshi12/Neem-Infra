@@ -10,9 +10,7 @@ import MapsWidget from './widgets/MapsWidget';
 import WhatsAppWidget from './widgets/WhatsAppWidget';
 import { botKnowledgeBase } from './widgets/ChatbotWidget';
 
-const ChatbotWidget = dynamic(() => import('./widgets/ChatbotWidget'), {
-  ssr: false,
-});
+const ChatbotWidget = dynamic(() => import('./widgets/ChatbotWidget'), { ssr: false });
 
 export default function FloatingWidgets() {
   const { sections } = useCms();
@@ -78,7 +76,9 @@ export default function FloatingWidgets() {
       {/* RIGHT SIDE WIDGETS */}
       <aside aria-label="Page Actions" className="fixed bottom-6 right-4 sm:right-6 z-[60] flex flex-col items-end gap-4 pointer-events-none">
         <ScrollToTopWidget isHidden={chatOpen} />
-        <ChatbotWidget chatOpen={chatOpen} setChatOpen={setChatOpen} />
+        <React.Suspense fallback={null}>
+          <ChatbotWidget chatOpen={chatOpen} setChatOpen={setChatOpen} />
+        </React.Suspense>
       </aside>
     </>
   );

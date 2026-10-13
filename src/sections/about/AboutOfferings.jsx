@@ -8,10 +8,12 @@ import { Home, Building2, MapPin, ArrowUpRight, Sparkles, Check } from 'lucide-r
 
 import Tilt3DCard from '../../components/ui/Tilt3DCard';
 import Image from 'next/image';
-
+import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
 
 export default function AboutOfferings() {
-  const offerings = [
+  const { sections } = useCms();
+  const cms = sections?.page_about?.offerings || DEFAULT_SECTIONS.page_about.offerings;
+  const defaultOfferings = [
     {
       id: 'kothis-flats',
       icon: Home,
@@ -61,6 +63,14 @@ export default function AboutOfferings() {
       ctaLink: '/services/industrial'
     }
   ];
+
+  const offerings = (cms?.items && cms.items.length > 0)
+    ? cms.items.map((item, idx) => ({
+        ...defaultOfferings[idx],
+        ...item,
+        icon: defaultOfferings[idx]?.icon || Home
+      }))
+    : defaultOfferings;
 
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
@@ -132,15 +142,15 @@ export default function AboutOfferings() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.06] border border-[#D09A16]/40 text-[#D09A16] text-xs font-bold tracking-[0.25em] uppercase mb-4 shadow-[0_0_20px_rgba(208,154,22,0.15)]">
             <Sparkles size={13} className="text-[#D09A16]" />
-            <span>Prime Real Estate Portfolio</span>
+            <span>{cms.badge || "Prime Real Estate Portfolio"}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white leading-tight mb-4">
-            Our Core Property <span className="italic font-serif text-[#D09A16]">Categories</span>
+            {cms.titleMain || "Our Core Property "} <span className="italic font-serif text-[#D09A16]">{cms.titleItalic || "Categories"}</span>
           </h2>
 
           <p className="text-sm sm:text-base text-slate-300 font-normal leading-relaxed">
-            Whether you seek an illustrious residential address, high-end commercial headquarters, or strategic investment land, we curate the finest options in DLF Gurugram.
+            {cms.subtitle || "Whether you seek an illustrious residential address, high-end commercial headquarters, or strategic investment land, we curate the finest options in DLF Gurugram."}
           </p>
         </div>
 

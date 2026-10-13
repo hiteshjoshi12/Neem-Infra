@@ -72,18 +72,24 @@ export default function Footer() {
     { label: 'Contact Us', href: '/contact' },
   ];
 
-  const servicesTitle = footerData.servicesTitle || 'Locations';
+  const servicesTitle = (footerData.servicesTitle && footerData.servicesTitle !== 'Locations')
+    ? footerData.servicesTitle
+    : 'Portfolio & Services';
 
-  const serviceLinks = footerData.servicesLinks || [
-    { label: 'DLF Phase 1', href: '/blog/location/dlf-phase-1' },
-    { label: 'DLF Phase 2', href: '/blog/location/dlf-phase-2' },
-    { label: 'DLF Phase 3', href: '/blog/location/dlf-phase-3' },
-    { label: 'DLF Phase 4', href: '/blog/location/dlf-phase-4' },
-    { label: 'DLF Phase 5', href: '/blog/location/dlf-phase-5' },
-    { label: 'Golf Course Road', href: '/blog/location/golf-course-road' },
-    { label: 'Sushant Lok 1', href: '/blog/location/sushant-lok-1' },
-    { label: 'Cyber City', href: '/blog/location/cyber-city' },
+  const defaultServiceLinks = [
+    { label: 'Residential Portfolio', href: '/services/residential' },
+    { label: 'Commercial Spaces', href: '/services/commercial' },
+    { label: 'Industrial & Logistics', href: '/services/industrial' },
+    { label: 'Prime Properties', href: '/properties' },
+    { label: 'Market Insights & Blog', href: '/blog' },
+    { label: 'Contact Corporate Desk', href: '/contact' },
   ];
+
+  const rawServiceLinks = Array.isArray(footerData.servicesLinks) && footerData.servicesLinks.length > 0
+    ? footerData.servicesLinks.filter(l => !l.href?.includes('/blog/location'))
+    : [];
+
+  const serviceLinks = rawServiceLinks.length > 0 ? rawServiceLinks : defaultServiceLinks;
 
   const followTitle = footerData.followTitle || 'Private Advisory';
 

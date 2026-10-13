@@ -7,7 +7,12 @@ import { Play, Pause, Volume2, VolumeX, Maximize2, Film, CheckCircle2 } from 'lu
 
 
 
+import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
+
 export default function AboutVideoShowcase() {
+  const { sections } = useCms();
+  const cms = sections?.page_about?.videoShowcase || DEFAULT_SECTIONS.page_about.videoShowcase;
+
   const videoRef = useRef(null);
   const containerRef = useRef(null);
   const sectionRef = useRef(null);
@@ -23,7 +28,7 @@ export default function AboutVideoShowcase() {
   const [showControls, setShowControls] = useState(true);
   const controlsTimeoutRef = useRef(null);
 
-  const videoUrl = "https://saudagarproperties.com/wp-content/uploads/2025/06/FINAL-ONE_2.mp4";
+  const videoUrl = cms.videoUrl || "https://saudagarproperties.com/wp-content/uploads/2025/06/FINAL-ONE_2.mp4";
 
   const formatTime = (seconds) => {
     if (isNaN(seconds)) return '0:00';
@@ -166,16 +171,16 @@ export default function AboutVideoShowcase() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[#D09A16] text-xs font-bold tracking-[0.25em] uppercase mb-4">
             <Film size={13} className="text-[#D09A16]" />
-            <span>Cinematic Film &amp; Legacy</span>
+            <span>{cms.badge || "Cinematic Film & Legacy"}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#17213D] mb-4 leading-tight">
-            Inside Saudagar Properties: <br />
-            <span className="italic font-serif text-[#D09A16]">Two Decades of Excellence</span>
+            {cms.titleMain || "Inside Saudagar Properties: "} <br />
+            <span className="italic font-serif text-[#D09A16]">{cms.titleItalic || "Two Decades of Excellence"}</span>
           </h2>
 
           <p className="text-sm sm:text-base text-[#566078] font-normal leading-relaxed">
-            Take an exclusive inside look at our bespoke advisory, hands-on founder dedication, and turnkey property acquisitions across DLF Gurugram.
+            {cms.subtitle || "Take an exclusive inside look at our bespoke advisory, hands-on founder dedication, and turnkey property acquisitions across DLF Gurugram."}
           </p>
         </div>
 

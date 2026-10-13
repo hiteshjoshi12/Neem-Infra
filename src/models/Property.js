@@ -18,6 +18,11 @@ const propertySchema = new mongoose.Schema(
       required: true,
       trim: true
     },
+    priceNumeric: {
+      type: Number,
+      index: true,
+      default: 0
+    },
     location: {
       type: String,
       required: true,
@@ -49,6 +54,58 @@ const propertySchema = new mongoose.Schema(
       enum: ['residential', 'commercial', 'industrial', 'villa', 'penthouse'],
       default: 'residential'
     },
+    bhk: {
+      type: String,
+      trim: true
+    },
+    bathrooms: {
+      type: String,
+      trim: true
+    },
+    plotArea: {
+      type: String,
+      trim: true
+    },
+    builtUpArea: {
+      type: String,
+      trim: true
+    },
+    facing: {
+      type: String,
+      trim: true
+    },
+    floor: {
+      type: String,
+      trim: true
+    },
+    furnishing: {
+      type: String,
+      trim: true
+    },
+    parking: {
+      type: String,
+      trim: true
+    },
+    possession: {
+      type: String,
+      trim: true
+    },
+    reraNumber: {
+      type: String,
+      trim: true
+    },
+    features: {
+      type: [String],
+      default: []
+    },
+    nearbyLandmarks: {
+      type: [String],
+      default: []
+    },
+    images: {
+      type: [String],
+      default: []
+    },
     order: {
       type: Number,
       default: 0
@@ -64,5 +121,23 @@ const propertySchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
+propertySchema.pre('save', function () {
+  if (this.price && (!this.priceNumeric || this.isModified('price'))) {
+    const str = String(this.price).replace(/[₹,\s]/g, '').toLowerCase();
+    const crMatch = str.match(/([\d.]+)\s*cr/);
+    if (crMatch) {
+      this.priceNumeric = parseFloat(crMatch[1]) * 10000000;
+    } else {
+      const lakhMatch = str.match(/([\d.]+)\s*(?:lakh|lac)/);
+      if (lakhMatch) {
+        this.priceNumeric = parseFloat(lakhMatch[1]) * 100000;
+      } else {
+        const rawNum = parseFloat(str);
+        this.priceNumeric = isNaN(rawNum) ? 0 : rawNum;
+      }
+    }
+  }
+});
 
 export default mongoose.models.Property || mongoose.model('Property', propertySchema);

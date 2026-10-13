@@ -115,7 +115,7 @@ function FeaturedSplitTestimonial({
             alt={`${item.name} — Saudagar Properties client`}
             fill
             sizes="(max-width: 1024px) 100vw, 42vw"
-            priority
+            loading="lazy"
             itemProp="image"
             className="w-full h-full object-cover object-top filter brightness-[0.93] contrast-[1.05] group-hover:scale-105 transition-transform duration-700 ease-out"
           />

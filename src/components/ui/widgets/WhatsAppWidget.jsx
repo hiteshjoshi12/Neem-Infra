@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { FaWhatsapp } from 'react-icons/fa6';
+import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
 
 export default function WhatsAppWidget({ whatsappUrlLink }) {
   return (
@@ -19,7 +19,7 @@ export default function WhatsAppWidget({ whatsappUrlLink }) {
         aria-label="Contact us on WhatsApp"
         className="relative w-14 h-14 rounded-full bg-gradient-to-tr from-[#075E54] via-[#128C7E] to-[#25D366] text-white flex items-center justify-center shadow-[0_10px_25px_rgba(37,211,102,0.4)] hover:shadow-[0_15px_35px_rgba(37,211,102,0.6)] border-2 border-white/30 hover:border-white transition-all duration-300 hover:scale-108 active:scale-95 cursor-pointer z-10"
       >
-        <FaWhatsapp size={26} className="relative z-10 drop-shadow-sm" />
+        <WhatsAppIcon size={26} className="relative z-10 drop-shadow-sm" />
       </a>
       <a 
         href={whatsappUrlLink} 

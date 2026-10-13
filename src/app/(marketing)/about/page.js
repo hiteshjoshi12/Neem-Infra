@@ -3,6 +3,7 @@ import AboutVideoShowcase from '@/sections/about/AboutVideoShowcase';
 import AboutOfferings from '@/sections/about/AboutOfferings';
 import AboutProposition from '@/sections/about/AboutProposition';
 import AboutLeadership from '@/sections/about/AboutLeadership';
+import AboutWhyChooseUs from '@/sections/about/AboutWhyChooseUs';
 import AboutConsultationCta from '@/sections/about/AboutConsultationCta';
 import LocationMap from '@/sections/home/LocationMap';
 import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
@@ -41,10 +42,13 @@ export default function About() {
       {/* 5. Founders & Leadership Team (Mr. Arun Sharma & Mrs. Suneeta Chawla) */}
       <AboutLeadership />
 
-      {/* 6. Headquarters & Location Map */}
+      {/* 6. Why Choose Us • 7 Strategic Distinction Pillars & Matrix */}
+      <AboutWhyChooseUs />
+
+      {/* 7. Headquarters & Location Map */}
       <LocationMap />
 
-      {/* 7. Request a Free Consultation Action Banner */}
+      {/* 8. Request a Free Consultation Action Banner */}
       <AboutConsultationCta />
     </div>
   );

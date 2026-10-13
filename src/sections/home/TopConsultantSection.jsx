@@ -8,8 +8,9 @@ import { Building, Building2, Factory, ArrowUpRight, ShieldCheck, Award, PhoneCa
 
 import { useCms } from '../../context/CmsContext';
 import Tilt3DCard from '../../components/ui/Tilt3DCard';
+import LuxuryTextReveal from '@/components/ui/LuxuryTextReveal';
+import { DEFAULT_TOP_CONSULTANT_DATA } from '@/constants/homeData';
 import Image from 'next/image';
-
 
 const CATEGORY_ICONS = {
   building: Building,
@@ -21,34 +22,16 @@ export default function TopConsultantSection() {
   const { sections } = useCms();
   const data = sections?.topConsultant || {};
 
-  const badge = data.badge || "Bespoke Real Estate Advisory";
-  const headlineMain = data.headlineMain || "Top Real Estate Consultant";
-  const headlineItalic = data.headlineItalic || "In DLF Gurugram";
-  const summaryQuote = data.summaryQuote || "Authorized advisor and trusted partner for DLF Phase 1–4, Sushant Lok, and Cybercity’s most exclusive residential & commercial estates.";
-  const cardBadge = data.cardBadge || "DLF Authorized & Verified";
-  const paragraph1 = data.paragraph1 || "At Saudagar Properties, we are proud to be recognized as the premier real estate consultant in DLF Gurugram. We provide personalized, end-to-end solutions across residential, commercial, and industrial sectors with maximum ROI.";
-  const paragraph2 = data.paragraph2 || "Whether you are seeking an ultra-luxury builder floor in DLF Phase 1–4, a high-street commercial office in Udyog Vihar, or an investment-ready plot, our veteran team guides you through transparent transactions and seamless legal title verification.";
-
-  const categories = data.categories || [
-    { title: "Residential", subtitle: "Floors & Villas", icon: "Building" },
-    { title: "Commercial", subtitle: "Offices & Retail", icon: "Building2" },
-    { title: "Industrial", subtitle: "Plots & Assets", icon: "Factory" }
-  ];
-
-  const videoTour = data.videoTour || {
-    badge: "Sushant Lok & DLF Tour",
-    title: "Exclusive DLF & Sushant Lok Walkthrough",
-    subtitle: "Experience Gurgaon's finest properties with curated virtual walkthroughs.",
-    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80"
-  };
-
-  const ctaBanner = data.ctaBanner || {
-    title: "Ready to Invest or Buy in DLF Gurugram?",
-    description: "Get priority access to off-market inventory, bespoke site visits, and personalized ROI projections from our executive directors.",
-    phone: "+91 98112 21207",
-    buttonText: "Connect Now",
-    buttonHref: "/contact"
-  };
+  const badge = data.badge || DEFAULT_TOP_CONSULTANT_DATA.badge;
+  const headlineMain = data.headlineMain || DEFAULT_TOP_CONSULTANT_DATA.headlineMain;
+  const headlineItalic = data.headlineItalic || DEFAULT_TOP_CONSULTANT_DATA.headlineItalic;
+  const summaryQuote = data.summaryQuote || DEFAULT_TOP_CONSULTANT_DATA.summaryQuote;
+  const cardBadge = data.cardBadge || DEFAULT_TOP_CONSULTANT_DATA.cardBadge;
+  const paragraph1 = data.paragraph1 || DEFAULT_TOP_CONSULTANT_DATA.paragraph1;
+  const paragraph2 = data.paragraph2 || DEFAULT_TOP_CONSULTANT_DATA.paragraph2;
+  const categories = data.categories || DEFAULT_TOP_CONSULTANT_DATA.categories;
+  const videoTour = data.videoTour || DEFAULT_TOP_CONSULTANT_DATA.videoTour;
+  const ctaBanner = data.ctaBanner || DEFAULT_TOP_CONSULTANT_DATA.ctaBanner;
 
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
@@ -155,10 +138,11 @@ export default function TopConsultantSection() {
                 {badge}
               </span>
             </div>
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-serif text-[#17213D] leading-[1.15]">
-              {headlineMain} <br />
-              <span className="italic font-light text-[#D09A16]">{headlineItalic}</span>
-            </h2>
+            <LuxuryTextReveal
+              text={headlineMain}
+              highlightText={headlineItalic}
+              className="text-3xl md:text-5xl lg:text-6xl text-[#17213D] leading-[1.15]"
+            />
           </div>
 
           <p className="text-sm md:text-base text-[#566078] font-normal max-w-md leading-relaxed border-l-2 border-[#D09A16] pl-4">
@@ -200,16 +184,28 @@ export default function TopConsultantSection() {
                 {categories.map((cat, idx) => {
                   const iconKey = (cat.icon || 'building').toLowerCase();
                   const IconComp = CATEGORY_ICONS[iconKey] || Building;
+                  const href = cat.href || (
+                    cat.title?.toLowerCase().includes('residential') ? '/services/residential' :
+                    cat.title?.toLowerCase().includes('commercial') ? '/services/commercial' :
+                    '/services/industrial'
+                  );
                   return (
-                    <div key={idx} className="flex items-center gap-3 p-3.5 rounded-2xl bg-[#F7F5EF] border border-[#17213D]/[0.08] hover:border-[#D09A16] transition-colors">
-                      <div className="w-10 h-10 rounded-xl bg-[#17213D] text-[#D09A16] flex items-center justify-center flex-shrink-0 shadow-sm">
-                        <IconComp size={18} />
+                    <Link 
+                      key={idx} 
+                      href={href}
+                      className="group flex items-center justify-between gap-3 p-3.5 rounded-2xl bg-[#F7F5EF] border border-[#17213D]/[0.08] hover:border-[#D09A16] hover:bg-white transition-all duration-300 shadow-xs hover:shadow-md cursor-pointer"
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className="w-10 h-10 rounded-xl bg-[#17213D] text-[#D09A16] group-hover:bg-[#D09A16] group-hover:text-[#0A0E17] flex items-center justify-center flex-shrink-0 shadow-sm transition-colors">
+                          <IconComp size={18} />
+                        </div>
+                        <div className="min-w-0">
+                          <h3 className="text-xs font-bold text-[#17213D] group-hover:text-[#D09A16] uppercase tracking-wider transition-colors truncate">{cat.title}</h3>
+                          <p className="text-[11px] text-[#566078] font-medium truncate">{cat.subtitle}</p>
+                        </div>
                       </div>
-                      <div>
-                        <h3 className="text-xs font-bold text-[#17213D] uppercase tracking-wider">{cat.title}</h3>
-                        <p className="text-[11px] text-[#566078] font-medium">{cat.subtitle}</p>
-                      </div>
-                    </div>
+                      <ArrowUpRight size={14} className="text-[#8892A6] group-hover:text-[#D09A16] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
+                    </Link>
                   );
                 })}
               </div>

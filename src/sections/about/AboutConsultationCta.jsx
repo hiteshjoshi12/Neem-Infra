@@ -2,13 +2,20 @@
 import { gsap, ScrollTrigger } from "@/lib/gsap/animations";
 
 import { useEffect, useRef } from 'react';
-import { Phone, MessageCircle, Mail, MapPin, ExternalLink, CheckCircle2 } from 'lucide-react';
+import { Phone, Mail, MapPin, ExternalLink, CheckCircle2 } from 'lucide-react';
+import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
 
 
 
+
+import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
 
 export default function AboutConsultationCta() {
-  const whatsappUrl = "https://wa.me/919718511207?text=Hello%20Saudagar%20Properties%2C%20I%20would%20like%20to%20request%20a%20consultation%20for%20property%20in%20DLF%20Gurugram.";
+  const { sections } = useCms();
+  const cms = sections?.page_about?.consultationCta || DEFAULT_SECTIONS.page_about.consultationCta;
+
+  const whatsappUrl = cms.whatsappUrl || "https://wa.me/919718511207?text=Hello%20Saudagar%20Properties%2C%20I%20would%20like%20to%20request%20a%20consultation%20for%20property%20in%20DLF%20Gurugram.";
+  const phone = cms.phone || "+91 98112 21207";
   const gmapsUrl = "https://www.google.com/maps/place/Saudagar+Properties+Pvt.Ltd/@28.4847851,77.0842655,17z/data=!3m1!4b1!4m6!3m5!1s0x390d193a8eabbb6b:0x3d99d3fce74198d5!8m2!3d28.4847851!4d77.0842655!16s%2Fg%2F11f03pch1x";
 
   const containerRef = useRef(null);
@@ -86,15 +93,15 @@ export default function AboutConsultationCta() {
 
               {/* Headline */}
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-white leading-[1.15]">
-                Request a Private <br />
+                {cms.titleMain || "Request a Private "} <br />
                 <span className="italic font-light text-[#D09A16] drop-shadow-[0_0_30px_rgba(208, 154, 22,0.35)]">
-                  Executive Consultation
+                  {cms.titleItalic || "Executive Consultation"}
                 </span>
               </h2>
 
               {/* Authentic Copy */}
               <p className="text-sm sm:text-base text-slate-300 font-light leading-relaxed max-w-xl mx-auto lg:mx-0">
-                Reach out to get all support that will help you to make a wise decision and invest in the right property. Our founders and senior consultants personally guide your acquisition with complete legal transparency.
+                {cms.subtitle || "Reach out to get all support that will help you to make a wise decision and invest in the right property. Our founders and senior consultants personally guide your acquisition with complete legal transparency."}
               </p>
 
               {/* 3 VIP Assurances */}
@@ -120,11 +127,11 @@ export default function AboutConsultationCta() {
               {/* Action Buttons */}
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-3">
                 <a
-                  href="tel:+919811221207"
+                  href={`tel:${phone.replace(/\s+/g, '')}`}
                   className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-[#D09A16] to-[#D09A16] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-[0.16em] flex items-center gap-2.5 transition-all shadow-[0_10px_30px_rgba(208, 154, 22,0.35)] hover:-translate-y-0.5 cursor-pointer"
                 >
                   <Phone size={15} />
-                  <span>Call Direct: +91 98112 21207</span>
+                  <span>Call Direct: {phone}</span>
                 </a>
 
                 <a
@@ -133,7 +140,7 @@ export default function AboutConsultationCta() {
                   rel="noopener noreferrer"
                   className="px-7 py-3.5 rounded-2xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs uppercase tracking-[0.16em] flex items-center gap-2.5 transition-all shadow-[0_10px_25px_rgba(37,211,102,0.3)] hover:-translate-y-0.5 cursor-pointer"
                 >
-                  <MessageCircle size={15} />
+                  <WhatsAppIcon size={16} />
                   <span>WhatsApp Concierge</span>
                 </a>
               </div>

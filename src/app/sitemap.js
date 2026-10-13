@@ -1,6 +1,6 @@
 import { SITE_URL } from '@/lib/seo/seoConfig';
 import { getProperties } from '@/services/propertyService';
-import { getBlogPosts, getCategories, getLocations, getAuthors } from '@/services/blogService';
+import { getBlogPosts, getCategories, getAuthors } from '@/services/blogService';
 
 export default async function sitemap() {
   const seenUrls = new Set();
@@ -21,7 +21,6 @@ export default async function sitemap() {
     '/contact',
     '/properties',
     '/blog',
-    '/blog/location',
     '/privacy-policy',
     '/terms',
     '/services/residential',
@@ -88,23 +87,6 @@ export default async function sitemap() {
     }
   } catch (err) {
     console.warn('[sitemap] Failed to fetch categories for sitemap:', err?.message);
-  }
-
-  // 5. Dynamic Locations
-  try {
-    const locations = await getLocations();
-    for (const loc of locations || []) {
-      if (loc.slug) {
-        addEntry({
-          url: `${SITE_URL}/blog/location/${loc.slug}`,
-          lastModified: new Date(),
-          changeFrequency: 'weekly',
-          priority: 0.75,
-        });
-      }
-    }
-  } catch (err) {
-    console.warn('[sitemap] Failed to fetch locations for sitemap:', err?.message);
   }
 
   // 6. Dynamic Authors

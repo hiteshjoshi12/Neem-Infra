@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import Navbar from '../components/layout/Navbar';
 import Footer from '../components/layout/Footer';
@@ -14,7 +14,9 @@ export default function PublicLayout({ children, asMain = true }) {
         {children}
       </MainTag>
       <Footer />
-      <FloatingWidgets />
+      <Suspense fallback={null}>
+        <FloatingWidgets />
+      </Suspense>
       <OrganizationJsonLd />
     </div>
   );

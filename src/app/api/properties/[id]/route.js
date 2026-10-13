@@ -2,6 +2,19 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import Property from '@/models/Property';
 import { requireAdmin } from '@/lib/auth/authGuard';
+import { invalidateCache } from '@/lib/cache/apiCache';
+
+function normalizeArrayField(val) {
+  if (!val) return [];
+  if (Array.isArray(val)) return val.map(s => String(s).trim()).filter(Boolean);
+  if (typeof val === 'string') {
+    return val
+      .split(/[\n,]/)
+      .map(s => s.trim())
+      .filter(Boolean);
+  }
+  return [];
+}
 
 export async function GET(req, { params }) {
   try {
@@ -25,6 +38,10 @@ export async function PUT(req, { params }) {
     await connectDB();
     const { id } = await params;
     const body = await req.json();
+
+    if (body.features !== undefined) body.features = normalizeArrayField(body.features);
+    if (body.nearbyLandmarks !== undefined) body.nearbyLandmarks = normalizeArrayField(body.nearbyLandmarks);
+    if (body.images !== undefined) body.images = normalizeArrayField(body.images);
     
     const property = await Property.findByIdAndUpdate(id, body, {
       new: true,
@@ -34,6 +51,8 @@ export async function PUT(req, { params }) {
     if (!property) {
       return NextResponse.json({ success: false, message: 'Property not found' }, { status: 404 });
     }
+
+    invalidateCache('prop_cache');
 
     return NextResponse.json({
       success: true,
@@ -56,6 +75,8 @@ export async function DELETE(req, { params }) {
     if (!property) {
       return NextResponse.json({ success: false, message: 'Property not found' }, { status: 404 });
     }
+
+    invalidateCache('prop_cache');
 
     return NextResponse.json({
       success: true,

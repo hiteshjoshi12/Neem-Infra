@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import Property from '@/models/Property';
 import { requireAdmin } from '@/lib/auth/authGuard';
+import { getCached, setCached, invalidateCache } from '@/lib/cache/apiCache';
 
 /**
  * Helper to parse Indian currency strings like '₹5.75 Cr' or '₹85 Lakh' into numbers (in INR).
@@ -17,8 +18,38 @@ function parsePriceToNumber(priceStr) {
   return isNaN(rawNum) ? 0 : rawNum;
 }
 
+function normalizeArrayField(val) {
+  if (!val) return [];
+  if (Array.isArray(val)) return val.map(s => String(s).trim()).filter(Boolean);
+  if (typeof val === 'string') {
+    return val
+      .split(/[\n,]/)
+      .map(s => s.trim())
+      .filter(Boolean);
+  }
+  return [];
+}
+
+function generateSlug(title) {
+  if (!title) return `property-${Date.now().toString(36)}`;
+  return title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)+/g, '');
+}
+
 export async function GET(req) {
   try {
+    const cacheKey = `prop_cache_${req.url}`;
+    const cached = getCached(cacheKey, 60000);
+    if (cached) {
+      return NextResponse.json(cached, {
+        headers: {
+          'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300'
+        }
+      });
+    }
+
     await connectDB();
     const { searchParams } = new URL(req.url);
     const category = searchParams.get('category');
@@ -43,7 +74,6 @@ export async function GET(req) {
       filter.isFeatured = isFeatured === 'true';
     }
     if (location && location !== 'all') {
-      // Escape regex special chars
       const safeLoc = location.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
       filter.location = { $regex: safeLoc, $options: 'i' };
     }
@@ -62,34 +92,53 @@ export async function GET(req) {
       ];
     }
 
+    const minNum = minPrice ? parseFloat(minPrice) * 10000000 : null;
+    const maxNum = maxPrice ? parseFloat(maxPrice) * 10000000 : null;
+
+    if (minNum !== null || maxNum !== null) {
+      const priceCond = {};
+      if (minNum !== null) priceCond.$gte = minNum;
+      if (maxNum !== null) priceCond.$lte = maxNum;
+      filter.$or = [
+        { priceNumeric: priceCond },
+        { priceNumeric: { $in: [0, null] } }
+      ];
+    }
+
     let properties = await Property.find(filter).lean();
 
-    // In-memory price range filtering (converting '₹5.75 Cr' to numeric)
-    if (minPrice || maxPrice) {
-      const minNum = minPrice ? parseFloat(minPrice) * 10000000 : 0;
-      const maxNum = maxPrice ? parseFloat(maxPrice) * 10000000 : Infinity;
+    // In-memory price range verification for unindexed/legacy items
+    if (minNum !== null || maxNum !== null) {
+      const minVal = minNum ?? 0;
+      const maxVal = maxNum ?? Infinity;
       properties = properties.filter((p) => {
-        const val = parsePriceToNumber(p.price);
-        return val >= minNum && val <= maxNum;
+        const val = p.priceNumeric || parsePriceToNumber(p.price);
+        return val >= minVal && val <= maxVal;
       });
     }
 
     // In-memory or database sorting
     if (sort === 'price_asc') {
-      properties.sort((a, b) => parsePriceToNumber(a.price) - parsePriceToNumber(b.price));
+      properties.sort((a, b) => (a.priceNumeric || parsePriceToNumber(a.price)) - (b.priceNumeric || parsePriceToNumber(b.price)));
     } else if (sort === 'price_desc') {
-      properties.sort((a, b) => parsePriceToNumber(b.price) - parsePriceToNumber(a.price));
+      properties.sort((a, b) => (b.priceNumeric || parsePriceToNumber(b.price)) - (a.priceNumeric || parsePriceToNumber(a.price)));
     } else if (sort === 'newest') {
       properties.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     } else {
-      // Default: order field then createdAt
       properties.sort((a, b) => (a.order || 0) - (b.order || 0) || new Date(b.createdAt) - new Date(a.createdAt));
     }
 
-    return NextResponse.json({
+    const responsePayload = {
       success: true,
       count: properties.length,
       data: properties
+    };
+
+    setCached(cacheKey, responsePayload);
+    return NextResponse.json(responsePayload, {
+      headers: {
+        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300'
+      }
     });
   } catch (error) {
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
@@ -101,7 +150,20 @@ export async function POST(req) {
     await requireAdmin(req);
     await connectDB();
     const body = await req.json();
+
+    if (!body.slug || !body.slug.trim()) {
+      body.slug = generateSlug(body.title);
+    } else {
+      body.slug = generateSlug(body.slug);
+    }
+
+    // Normalize array fields
+    if (body.features !== undefined) body.features = normalizeArrayField(body.features);
+    if (body.nearbyLandmarks !== undefined) body.nearbyLandmarks = normalizeArrayField(body.nearbyLandmarks);
+    if (body.images !== undefined) body.images = normalizeArrayField(body.images);
+
     const property = await Property.create(body);
+    invalidateCache('prop_cache');
     
     return NextResponse.json({
       success: true,

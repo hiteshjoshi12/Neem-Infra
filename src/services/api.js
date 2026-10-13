@@ -57,13 +57,23 @@ export const api = {
 
   getMe: () => request('/auth/me'),
 
-  // Sections CMS
+  // Sections & Pages CMS
   getSections: () => request('/sections'),
 
   getSection: (sectionKey) => request(`/sections/${sectionKey}`),
 
   updateSection: (sectionKey, data, title) =>
     request(`/sections/${sectionKey}`, {
+      method: 'PUT',
+      body: JSON.stringify({ data, title })
+    }),
+
+  getPages: () => request('/pages'),
+
+  getPage: (pageKey) => request(`/pages/${pageKey}`),
+
+  updatePage: (pageKey, data, title) =>
+    request(`/pages/${pageKey}`, {
       method: 'PUT',
       body: JSON.stringify({ data, title })
     }),

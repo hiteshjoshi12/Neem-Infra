@@ -46,6 +46,16 @@ export async function PUT(req, { params }) {
     const { id } = await params;
     const body = await req.json();
     
+    // Ensure slug is never empty
+    if ((!body.slug || !body.slug.trim()) && body.title) {
+      body.slug = body.title
+        .toLowerCase()
+        .trim()
+        .replace(/[^\w\s-]/g, '')
+        .replace(/[\s_-]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    }
+
     const post = await BlogPost.findByIdAndUpdate(id, body, {
       new: true,
       runValidators: true

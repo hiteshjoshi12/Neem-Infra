@@ -35,7 +35,7 @@ export default function NavbarEditor({ formData, updateField }) {
     const currentDropdown = targetLink.dropdown ? [...targetLink.dropdown] : [];
     currentDropdown.push({
       label: 'New Corridor Location',
-      href: '/blog/location/dlf-phase-1',
+      href: '/services/residential',
       desc: 'Prime residential locality'
     });
     targetLink.dropdown = currentDropdown;
@@ -247,7 +247,7 @@ export default function NavbarEditor({ formData, updateField }) {
                                   type="text"
                                   value={sub.href || ''}
                                   onChange={(e) => handleDropdownItemChange(idx, sIdx, 'href', e.target.value)}
-                                  placeholder="/blog/location/dlf-phase-1"
+                                  placeholder="/services/residential"
                                   className="w-full bg-[#121724] border border-white/15 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-[#D09A16]"
                                 />
                               </div>

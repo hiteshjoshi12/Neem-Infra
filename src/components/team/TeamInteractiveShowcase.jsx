@@ -17,9 +17,9 @@ import {
   Building2,
   TrendingUp,
   MapPin,
-  MessageCircle,
   Briefcase
 } from 'lucide-react';
+import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
 
 const PILLAR_ICONS = {
   ShieldCheck,
@@ -28,7 +28,7 @@ const PILLAR_ICONS = {
   Compass,
 };
 
-export default function TeamInteractiveShowcase({ founders, teamMembers, advisoryPillars }) {
+export default function TeamInteractiveShowcase({ founders, teamMembers, advisoryPillars, cta }) {
   const [activeFounderIndex, setActiveFounderIndex] = useState(0);
   const activeFounder = founders[activeFounderIndex] || founders[0];
 
@@ -186,7 +186,12 @@ export default function TeamInteractiveShowcase({ founders, teamMembers, advisor
                     Highlighted Track Record &amp; Mandates:
                   </h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                    {activeFounder.highlights.map((item, hIdx) => (
+                    {(activeFounder?.highlights || [
+                      "Over two decades of premier luxury real estate advisory",
+                      "Personal involvement in high-value private transactions",
+                      "Pioneering authority across DLF Phase 1–5 freehold estates",
+                      "Unblemished record of clean titles and trusted closures"
+                    ]).map((item, hIdx) => (
                       <div 
                         key={hIdx} 
                         className="flex items-start gap-2.5 p-3 rounded-xl bg-[#F7F5EF] border border-[#17213D]/5 text-xs text-[#17213D] font-medium"
@@ -204,9 +209,9 @@ export default function TeamInteractiveShowcase({ founders, teamMembers, advisor
                     href="https://wa.me/919718511207"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-6 py-3 rounded-xl bg-[#17213D] hover:bg-[#D09A16] text-[#F7F5EF] hover:text-[#0A0E17] text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 shadow-sm"
+                    className="px-6 py-3 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 shadow-sm"
                   >
-                    <MessageCircle size={14} />
+                    <WhatsAppIcon size={16} />
                     <span>WhatsApp Direct Mandate</span>
                   </a>
 
@@ -373,13 +378,14 @@ export default function TeamInteractiveShowcase({ founders, teamMembers, advisor
       <section className="py-20 bg-[#0A0E17] text-white relative overflow-hidden border-t border-white/10">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
           <span className="text-xs font-bold uppercase tracking-[0.25em] text-[#D09A16] block mb-3">
-            Principal Direct Line
+            {cta?.badge || "Principal Direct Line"}
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-4">
-            Consult Directly with Our <span className="italic font-serif text-[#D09A16]">Managing Partners</span>
+            {cta?.titleMain || "Consult Directly with Our "}{' '}
+            <span className="italic font-serif text-[#D09A16]">{cta?.titleItalic || "Managing Partners"}</span>
           </h2>
           <p className="text-slate-300 text-sm sm:text-base max-w-2xl mx-auto mb-8 font-sans">
-            Whether inquiring about prime freehold plots in DLF Phase 1, off-market builder floors in Phase 2, or commercial pre-leased assets, connect with Mr. Arun Sharma &amp; senior leadership today.
+            {cta?.subtitle || "Whether inquiring about prime freehold plots in DLF Phase 1, off-market builder floors in Phase 2, or commercial pre-leased assets, connect with Mr. Arun Sharma & senior leadership today."}
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4">
@@ -392,12 +398,13 @@ export default function TeamInteractiveShowcase({ founders, teamMembers, advisor
             </Link>
 
             <a
-              href="https://wa.me/919718511207"
+              href={cta?.whatsappUrl || "https://wa.me/919718511207"}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 font-semibold text-xs uppercase tracking-wider backdrop-blur-md transition-colors"
+              className="px-8 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-bold text-xs uppercase tracking-wider backdrop-blur-md transition-colors flex items-center gap-2 shadow-sm"
             >
-              WhatsApp Our Founders
+              <WhatsAppIcon size={16} />
+              <span>WhatsApp Our Founders</span>
             </a>
           </div>
         </div>

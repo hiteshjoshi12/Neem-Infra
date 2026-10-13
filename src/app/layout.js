@@ -6,22 +6,21 @@ const lora = Lora({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-serif",
-  weight: ["400", "500", "600", "700"],
-  style: ["normal", "italic"],
+  weight: ["400", "600"],
 });
 
 const outfit = Outfit({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-outfit",
-  weight: ["400", "500", "600", "700"],
+  weight: ["500", "700"],
 });
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-sans",
-  weight: ["400", "500", "600", "700"],
+  weight: ["400", "500", "700"],
 });
 
 export const metadata = {
@@ -67,11 +66,11 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${lora.variable} ${outfit.variable} ${jakarta.variable} h-full antialiased`}>
+    <html lang="en" className={`${lora.variable} ${outfit.variable} ${jakarta.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
       </head>
-      <body className="min-h-full flex flex-col font-sans bg-[#F7F5EF] text-[#121A2F]">
+      <body className="min-h-full flex flex-col font-sans bg-[#F7F5EF] text-[#121A2F]" suppressHydrationWarning>
         <Providers>
           {children}
         </Providers>

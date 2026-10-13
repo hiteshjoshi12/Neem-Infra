@@ -8,6 +8,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
+    "seed": "node --env-file=.env.local scripts/seed-all.mjs",
     "typecheck": "node -e \"console.log('✓ Typecheck passed (Next.js compiler verified cleanly)')\"",
     "seo:check": "node scripts/audit-seo.mjs",
     "schema:verify": "node scripts/verify-schema.mjs",
@@ -21,6 +22,7 @@
   "dependencies": {
     "bcryptjs": "^3.0.3",
     "framer-motion": "^14.0.0",
+    "imagekit": "^6.0.0",
     "jsonwebtoken": "^9.0.3",
     "lucide-react": "^1.52.0",
     "mongoose": "^9.10.4",

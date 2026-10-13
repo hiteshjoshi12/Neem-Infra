@@ -1,17 +1,20 @@
 "use client";
 import { gsap, ScrollTrigger } from "@/lib/gsap/animations";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { Sparkles, ArrowRight, ShieldCheck, Award, Building, TrendingUp, CheckCircle2, Play } from 'lucide-react';
-
+import { motion, AnimatePresence } from 'framer-motion';
+import { Sparkles, ArrowRight, ShieldCheck, Award, Building, TrendingUp, CheckCircle2, Play, MapPin, ChevronLeft, ChevronRight, Eye } from 'lucide-react';
 
 import Tilt3DCard from '../../components/ui/Tilt3DCard';
 import AnimatedCounter from '../../components/ui/AnimatedCounter';
 import Image from 'next/image';
-
+import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
+import { FEATURED_PROPERTIES_DATA } from '@/constants';
 
 export default function AboutHero() {
+  const { sections } = useCms();
+  const cms = sections?.page_about || DEFAULT_SECTIONS.page_about;
   const stats = [
     { icon: Award, value: 25, suffix: "+", label: "Years Experience", subtext: "DLF Phase 1–5 Pioneers" },
     { icon: TrendingUp, value: 500, prefix: "₹", suffix: "Cr+", label: "Transaction Volume", subtext: "Delivered Seamlessly" },
@@ -24,6 +27,18 @@ export default function AboutHero() {
   const leftContentRef = useRef(null);
   const rightCardRef = useRef(null);
   const metricStripRef = useRef(null);
+
+  // 5-second automatic property rotation in opening section card
+  const [currentPropIndex, setCurrentPropIndex] = useState(0);
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentPropIndex((prev) => (prev + 1) % FEATURED_PROPERTIES_DATA.length);
+    }, 5000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const activeProperty = FEATURED_PROPERTIES_DATA[currentPropIndex] || FEATURED_PROPERTIES_DATA[0];
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -77,8 +92,8 @@ export default function AboutHero() {
       ref={heroRef}
       className="relative min-h-[88vh] flex flex-col justify-center pt-28 pb-10 md:pt-36 md:pb-14 overflow-hidden bg-[#0A0E17] text-white"
     >
-      {/* 1. Cinematic Background Image with Parallax Depth & Gradient Overlays */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+      {/* 1. Cinematic Background Image - Clearly Visible with Rich Ambient Tones */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-85">
         <Image
           ref={bgImgRef}
           src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80"
@@ -87,11 +102,11 @@ export default function AboutHero() {
           height={1350}
           priority
           sizes="100vw"
-          className="w-full h-full object-cover object-center brightness-[0.35] contrast-[1.1] scale-105"
+          className="w-full h-full object-cover object-center brightness-[0.80] contrast-[1.05] scale-105"
         />
-        {/* Layered Vignettes for Ultra-Luxury Contrast */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0E17] via-[#0A0E17]/85 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E17] via-transparent to-[#0A0E17]/60" />
+        {/* Layered Scrim for Text Readability without Blacking out Architecture */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0E17]/85 via-[#0A0E17]/50 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E17]/90 via-transparent to-[#0A0E17]/40" />
       </div>
 
       {/* 2. Ambient Golden Light Beams */}
@@ -129,21 +144,20 @@ export default function AboutHero() {
             {/* Gold Badge */}
             <div className="about-hero-anim inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/[0.06] border border-[#D09A16]/40 backdrop-blur-xl text-[#D09A16] text-xs font-bold tracking-[0.25em] uppercase shadow-[0_0_25px_rgba(208, 154, 22,0.2)]">
               <Sparkles size={14} className="text-[#D09A16]" />
-              <span>About Saudagar Properties • 25+ Years Legacy</span>
+              <span>{cms.hero?.badge || "About Saudagar Properties • 25+ Years Legacy"}</span>
             </div>
 
             {/* High-Impact Serif Headline */}
             <h1 className="about-hero-anim text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-serif text-white leading-[1.1] tracking-tight">
-              Pioneering Luxury & <br />
+              {cms.hero?.titleMain || "25+ Years of Leadership in "} <br />
               <span className="italic font-light text-[#D09A16] drop-shadow-[0_0_35px_rgba(208, 154, 22,0.4)]">
-                Optimal Real Estate
-              </span>{" "}
-              Solutions
+                {cms.hero?.titleItalic || "DLF Gurugram"}
+              </span>
             </h1>
 
             {/* Authenticated Copy */}
             <p className="about-hero-anim text-sm sm:text-base md:text-lg text-slate-300 font-light leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              At <strong className="font-semibold text-white">Saudagar Properties</strong>, we aim to assist our customers by providing them optimal property solutions. Any property you need — be it commercial, industrial, or residential, we will guide you throughout the process of buying, selling, renting, or leasing the property. Reach out to get all support that will help you make a wise decision and invest in the right property.
+              {cms.hero?.description || "At Saudagar Properties, we aim to assist our customers by providing them optimal property solutions across commercial, industrial, and residential sectors in DLF Gurugram."}
             </p>
 
             {/* Action CTA Buttons */}
@@ -175,7 +189,7 @@ export default function AboutHero() {
 
           </div>
 
-          {/* RIGHT COLUMN: 3D Floating Showcase Stage */}
+          {/* RIGHT COLUMN: 5-Second Rotating Property Showcase Card */}
           <div className="lg:col-span-5 flex justify-center">
             <div
               ref={rightCardRef}
@@ -185,80 +199,127 @@ export default function AboutHero() {
               <div className="absolute -inset-4 bg-gradient-to-tr from-[#D09A16]/30 to-[#D09A16]/10 rounded-[36px] blur-2xl pointer-events-none" />
 
               {/* 3D Tilt Card Container */}
-              <Tilt3DCard maxTilt={10} className="w-full">
-                <div className="relative rounded-[32px] overflow-hidden border border-[#D09A16]/40 bg-gradient-to-b from-slate-900/95 via-slate-950/95 to-black/95 p-6 sm:p-8 backdrop-blur-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_50px_rgba(208, 154, 22,0.25)] space-y-6">
+              <Tilt3DCard maxTilt={8} className="w-full">
+                <div className="relative rounded-[32px] overflow-hidden border border-[#D09A16]/40 bg-gradient-to-b from-slate-900/95 via-slate-950/95 to-black/95 p-5 sm:p-6 backdrop-blur-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_50px_rgba(208,154,22,0.25)] flex flex-col justify-between">
 
-                  {/* Card Visual Header */}
-                  <div className="relative h-56 rounded-2xl overflow-hidden border border-white/10 shadow-lg">
-                    <Image
-                      src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80"
-                      alt="DLF Real Estate Portfolio"
-                      width={1200}
-                      height={800}
-                      sizes="(max-width: 768px) 100vw, 450px"
-                      loading="lazy"
-                      className="w-full h-full object-cover transition-transform duration-700 hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-
-                    <div className="absolute top-3.5 left-3.5 px-3 py-1 rounded-full bg-slate-950/80 backdrop-blur-md border border-[#D09A16]/40 text-[#D09A16] text-[10px] font-bold tracking-widest uppercase">
-                      DLF Phase 1–5 Dedicated Desk
-                    </div>
-
-                    <div className="absolute bottom-3.5 left-3.5 right-3.5">
-                      <div className="text-xs font-serif font-bold text-white leading-tight">
-                        Gurgaon&apos;s Premier Real Estate Legacy
-                      </div>
-                      <div className="text-[10px] text-[#D09A16] font-mono tracking-wide">
-                        Founded 1999 • 25+ Years of Authority
-                      </div>
-                    </div>
+                  {/* Header Badge & 5s Live Pulse Indicator */}
+                  <div className="flex items-center justify-between gap-2 mb-3">
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D09A16]/15 border border-[#D09A16]/40 text-[#D09A16] text-[10px] font-bold uppercase tracking-widest">
+                      <span className="w-2 h-2 rounded-full bg-[#D09A16] animate-pulse" />
+                      <span>Live Portfolio • Rotates Every 5s</span>
+                    </span>
+                    <span className="text-[11px] font-mono text-slate-400">
+                      {String(currentPropIndex + 1).padStart(2, '0')}/{String(FEATURED_PROPERTIES_DATA.length).padStart(2, '0')}
+                    </span>
                   </div>
 
-                  {/* 3D Floating Highlights Pills */}
-                  <div className="space-y-3">
-                    <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-[#D09A16]/50 transition-colors flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-xl bg-[#D09A16]/15 text-[#D09A16] flex items-center justify-center font-serif font-bold text-xs">
-                          <AnimatedCounter value={25} />
+                  {/* Animated Visual Card Header */}
+                  <div className="relative h-56 sm:h-60 rounded-2xl overflow-hidden border border-white/10 shadow-lg bg-slate-950 mb-4">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={activeProperty.id}
+                        initial={{ opacity: 0, scale: 1.05 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0, scale: 0.98 }}
+                        transition={{ duration: 0.6, ease: "easeInOut" }}
+                        className="absolute inset-0"
+                      >
+                        <Image
+                          src={activeProperty.img}
+                          alt={activeProperty.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, 450px"
+                          className="w-full h-full object-cover"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/20" />
+                        
+                        {/* Floating Property Tag */}
+                        <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-slate-950/85 backdrop-blur-md border border-[#D09A16]/50 text-[#D09A16] text-[10px] font-bold tracking-widest uppercase shadow-md">
+                          {activeProperty.tag}
                         </div>
-                        <div>
-                          <div className="text-xs font-bold text-white">Years of Market Leadership</div>
-                          <div className="text-[10px] text-slate-400">Founders Personally Attend Every Deal</div>
+
+                        {/* Price Overlay */}
+                        <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white text-xs font-serif font-bold shadow-md">
+                          {activeProperty.price}
                         </div>
+
+                        {/* Title & Location on Image */}
+                        <div className="absolute bottom-3 left-3 right-3">
+                          <h4 className="text-sm font-serif font-bold text-white leading-snug line-clamp-1 mb-1">
+                            {activeProperty.title}
+                          </h4>
+                          <div className="flex items-center gap-1.5 text-[11px] text-[#D09A16] font-medium">
+                            <MapPin size={12} className="shrink-0" />
+                            <span className="truncate">{activeProperty.location}</span>
+                          </div>
+                        </div>
+                      </motion.div>
+                    </AnimatePresence>
+                  </div>
+
+                  {/* Animated Details & Specs */}
+                  <AnimatePresence mode="wait">
+                    <motion.div
+                      key={activeProperty.id + '-details'}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -8 }}
+                      transition={{ duration: 0.35 }}
+                      className="space-y-3 mb-4"
+                    >
+                      <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-between">
+                        <div className="text-xs text-slate-300">
+                          <span className="font-semibold text-white block mb-0.5">Specifications:</span>
+                          <span className="text-[11px] text-slate-400">{activeProperty.specs}</span>
+                        </div>
+                        <span className="px-2.5 py-1 rounded-md bg-[#D09A16]/20 border border-[#D09A16]/40 text-[#D09A16] text-[10px] font-bold uppercase tracking-wider shrink-0">
+                          Verified Title
+                        </span>
                       </div>
-                      <span className="text-[11px] font-bold text-[#D09A16]">1999–2026</span>
+
+                      <p className="text-[11px] text-slate-400 leading-relaxed line-clamp-2 px-1">
+                        {activeProperty.desc}
+                      </p>
+                    </motion.div>
+                  </AnimatePresence>
+
+                  {/* 5-Second Animated Progress Bar */}
+                  <div className="w-full bg-white/10 h-1 rounded-full overflow-hidden mb-4">
+                    <motion.div
+                      key={currentPropIndex}
+                      initial={{ width: "0%" }}
+                      animate={{ width: "100%" }}
+                      transition={{ duration: 5, ease: "linear" }}
+                      className="h-full bg-gradient-to-r from-[#D09A16] to-[#F1C40F]"
+                    />
+                  </div>
+
+                  {/* Actions & Carousel Navigation Dots */}
+                  <div className="flex items-center justify-between gap-3 pt-1 border-t border-white/10">
+                    {/* Navigation Dots */}
+                    <div className="flex items-center gap-1.5">
+                      {FEATURED_PROPERTIES_DATA.map((_, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setCurrentPropIndex(idx)}
+                          aria-label={`Show property ${idx + 1}`}
+                          className={`h-2 rounded-full transition-all cursor-pointer ${
+                            idx === currentPropIndex 
+                              ? 'w-6 bg-[#D09A16]' 
+                              : 'w-2 bg-white/30 hover:bg-white/60'
+                          }`}
+                        />
+                      ))}
                     </div>
 
-                    <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-[#D09A16]/50 transition-colors flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-xl bg-[#D09A16]/15 text-[#D09A16] flex items-center justify-center font-serif font-bold text-xs">
-                          ₹
-                        </div>
-                        <div>
-                          <div className="text-xs font-bold text-white">
-                            <AnimatedCounter prefix="₹" value={500} suffix="Cr+" /> Transaction Record
-                          </div>
-                          <div className="text-[10px] text-slate-400">High-ROI Luxury Residential & Land</div>
-                        </div>
-                      </div>
-                      <span className="text-[11px] font-bold text-[#D09A16]">Top 1%</span>
-                    </div>
-
-                    <div className="p-3.5 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-[#D09A16]/50 transition-colors flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-xl bg-[#D09A16]/15 text-[#D09A16] flex items-center justify-center font-serif font-bold text-xs">
-                          ✓
-                        </div>
-                        <div>
-                          <div className="text-xs font-bold text-white">
-                            <AnimatedCounter value={100} suffix="%" /> Transparent Legal Titles
-                          </div>
-                          <div className="text-[10px] text-slate-400">Zero Middlemen • Direct Negotiations</div>
-                        </div>
-                      </div>
-                      <span className="text-[11px] font-bold text-[#D09A16]">Verified</span>
-                    </div>
+                    {/* View All Link */}
+                    <Link
+                      href="/properties"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#D09A16] hover:text-[#E5AC2B] transition-colors"
+                    >
+                      <span>Explore Catalog</span>
+                      <ArrowRight size={13} />
+                    </Link>
                   </div>
 
                 </div>

@@ -209,9 +209,12 @@ export default function HeroCopy() {
           transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
           className="text-2xl md:text-[clamp(1.75rem,3.5vw,3.5rem)] font-serif text-[#F7F5EF] leading-[1.15] tracking-tight max-w-[800px] mb-2 md:mb-3 sm:mb-3.5 drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)]"
         >
-          <span className="block">Gurgaon&apos;s Premier</span>
+          <span className="block">{heroData.headlinePrefix || "Gurgaon's Premier"}</span>
           <span className="block">
-            <span className="italic font-normal text-[#D09A16]">Real Estate</span> Partner.
+            <span className="italic font-normal text-[#D09A16]">{heroData.headlineHighlight || "Real Estate"}</span>{" "}
+            {heroData.headlineSuffix !== undefined && heroData.headlineSuffix !== null && heroData.headlineSuffix !== ""
+              ? heroData.headlineSuffix
+              : "Partner."}
           </span>
         </motion.h1>
 
@@ -355,7 +358,7 @@ export default function HeroCopy() {
               type="submit"
               className="bg-[#D09A16] hover:bg-[#D09A16] text-[#0E162B] px-4 py-2.5 rounded-full text-[10px] uppercase tracking-widest font-bold flex items-center justify-center shadow-md ml-1"
             >
-              Explore
+              {heroData.searchButtonText || "Explore"}
             </button>
           </form>
 
@@ -363,9 +366,12 @@ export default function HeroCopy() {
           <div className="mt-3.5 sm:mt-4 hidden md:flex flex-wrap items-center justify-center gap-2">
             <span className="text-[10px] uppercase tracking-widest text-[#D09A16] font-semibold mr-1 flex items-center gap-1">
               <Sparkles className="w-3 h-3" />
-              Trending:
+              {heroData.trendingLabel || "Trending:"}
             </span>
-            {['DLF Phase 1 Floors', 'Sushant Lok Villas', 'Golf Course Ext.', 'Under 5 Cr'].map((tag) => {
+            {(Array.isArray(heroData.trendingTags) && heroData.trendingTags.length > 0
+              ? heroData.trendingTags
+              : ['DLF Phase 1 Floors', 'Sushant Lok Villas', 'Golf Course Ext.', 'Under 5 Cr']
+            ).map((tag) => {
               const isSelected = searchQuery === tag;
               return (
                 <button

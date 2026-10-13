@@ -6,21 +6,22 @@ import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import {
   MapPin,
-  Search,
   ArrowRight,
   Phone,
   X,
   Building2,
   RefreshCw,
   ChevronDown,
-  MessageCircle,
   Sparkles,
   PhoneCall,
   CheckCircle2,
-  SlidersHorizontal
+  SlidersHorizontal,
+  RotateCcw
 } from 'lucide-react';
+import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
 import api from '@/services/api';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
+import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
 
 const CORRIDOR_CLASSIFICATIONS = [
   { id: 'all', label: 'All Corridors', match: '' },
@@ -74,6 +75,8 @@ function parsePriceToNumber(priceStr) {
 
 export default function PropertiesCatalogClient({ initialProperties = [] }) {
   const searchParams = useSearchParams();
+  const { sections } = useCms();
+  const cms = sections?.page_properties || DEFAULT_SECTIONS.page_properties;
 
   // State initialized from URL query params or defaults
   const [properties, setProperties] = useState(initialProperties);
@@ -83,10 +86,9 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
   const [activePrice, setActivePrice] = useState(searchParams?.get('price') || 'all');
   const [activeBhk, setActiveBhk] = useState(searchParams?.get('bhk') || 'all');
   const [activeSort, setActiveSort] = useState(searchParams?.get('sort') || 'curated');
-  const [searchTerm, setSearchTerm] = useState(searchParams?.get('search') || '');
 
   // Synchronize state and trigger query when searchParams changes
-  const searchParamsString = searchParams?.toString();
+  const searchParamsString = searchParams?.toString() || '';
   const prevParamsRef = useRef(searchParamsString);
 
   // Fetch properties from backend API based on active filters
@@ -98,14 +100,12 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
     const priceVal = paramsOverride.price ?? activePrice;
     const bhkVal = paramsOverride.bhk ?? activeBhk;
     const sortVal = paramsOverride.sort ?? activeSort;
-    const searchVal = paramsOverride.search ?? searchTerm;
 
     const activeCorridorItem = CORRIDOR_CLASSIFICATIONS.find(c => c.id === corrVal);
     const activePriceItem = PRICE_RANGES.find(p => p.id === priceVal);
 
     if (catVal && catVal !== 'all') queryObj.category = catVal;
     if (activeCorridorItem?.match) queryObj.location = activeCorridorItem.match;
-    if (searchVal && searchVal.trim()) queryObj.search = searchVal.trim();
     if (bhkVal && bhkVal !== 'all') queryObj.bhk = bhkVal;
     if (activePriceItem?.min) queryObj.minPrice = activePriceItem.min;
     if (activePriceItem?.max) queryObj.maxPrice = activePriceItem.max;
@@ -139,15 +139,6 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
           return val >= minNum && val <= maxNum;
         });
       }
-      if (queryObj.search) {
-        const qLower = queryObj.search.toLowerCase();
-        fallback = fallback.filter(p =>
-          p.title?.toLowerCase().includes(qLower) ||
-          p.location?.toLowerCase().includes(qLower) ||
-          p.specs?.toLowerCase().includes(qLower) ||
-          p.desc?.toLowerCase().includes(qLower)
-        );
-      }
       if (sortVal === 'price_asc') {
         fallback.sort((a, b) => parsePriceToNumber(a.price) - parsePriceToNumber(b.price));
       } else if (sortVal === 'price_desc') {
@@ -159,7 +150,7 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
     } finally {
       setLoading(false);
     }
-  }, [activeCorridor, activeCategory, activePrice, activeBhk, activeSort, searchTerm, initialProperties]);
+  }, [activeCorridor, activeCategory, activePrice, activeBhk, activeSort, initialProperties]);
 
   useEffect(() => {
     if (prevParamsRef.current !== searchParamsString) {
@@ -177,7 +168,6 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
       setActivePrice(pPrice);
       setActiveBhk(pBhk);
       setActiveSort(pSort);
-      setSearchTerm(pSearch);
 
       fetchFilteredProperties({
         corridor: pLoc,
@@ -185,7 +175,6 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
         price: pPrice,
         bhk: pBhk,
         sort: pSort,
-        search: pSearch,
       });
     }
   }, [searchParamsString, searchParams, fetchFilteredProperties]);
@@ -235,34 +224,25 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
     fetchFilteredProperties({ sort: sortId });
   };
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    updateUrlParams({ search: searchTerm });
-    fetchFilteredProperties({ search: searchTerm });
-  };
-
   const handleResetFilters = () => {
     setActiveCorridor('all');
     setActiveCategory('all');
     setActivePrice('all');
     setActiveBhk('all');
     setActiveSort('curated');
-    setSearchTerm('');
     updateUrlParams({
       location: 'all',
       category: 'all',
       price: 'all',
       bhk: 'all',
-      sort: 'curated',
-      search: ''
+      sort: 'curated'
     });
     fetchFilteredProperties({
       corridor: 'all',
       category: 'all',
       price: 'all',
       bhk: 'all',
-      sort: 'curated',
-      search: ''
+      sort: 'curated'
     });
   };
 
@@ -271,8 +251,7 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
     activeCategory !== 'all' ||
     activePrice !== 'all' ||
     activeBhk !== 'all' ||
-    activeSort !== 'curated' ||
-    searchTerm.trim() !== '';
+    activeSort !== 'curated';
 
   // Corridor counts calculated from current initial dataset
   const corridorCounts = useMemo(() => {
@@ -294,17 +273,17 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
           Compact header with clear title, subtitle, and breadcrumbs.
       ========================================================================= */}
       <section className="relative overflow-hidden bg-[#0A0E17] text-white pt-28 pb-10 sm:pt-32 sm:pb-12 border-b border-white/10">
-        {/* Subtle Architectural Background Vignette */}
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-20">
+        {/* Architectural Background Vignette - Clearly Visible */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-80">
           <Image
             src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80"
             alt="DLF Real Estate Architecture"
             fill
             sizes="100vw"
-            className="object-cover object-center brightness-50 contrast-125"
+            className="object-cover object-center brightness-[0.85] contrast-[1.05]"
             priority
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0A0E17] via-[#0A0E17]/85 to-[#0A0E17]" />
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0A0E17]/80 via-[#0A0E17]/45 to-[#0A0E17]/95" />
         </div>
 
         {/* Golden Ambient Glow */}
@@ -329,15 +308,15 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
             <div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.06] border border-[#D09A16]/30 text-[#D09A16] text-[11px] font-bold uppercase tracking-[0.2em] mb-2.5">
                 <Sparkles size={12} className="text-[#D09A16]" />
-                <span>Verified Portfolio • DLF Gurugram</span>
+                <span>{cms.masthead?.badge || "Verified Portfolio • DLF Gurugram"}</span>
               </div>
               
               <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white tracking-tight leading-tight">
-                Luxury Properties &amp; <span className="italic font-serif text-[#D09A16]">Builder Floors</span>
+                {cms.masthead?.titleMain || "Luxury Properties & "} <span className="italic font-serif text-[#D09A16]">{cms.masthead?.titleItalic || "Builder Floors"}</span>
               </h1>
               
               <p className="text-xs sm:text-sm text-slate-300 font-sans max-w-2xl mt-2 leading-relaxed">
-                Explore verified ready-to-move luxury builder floors, kothis, and penthouses across DLF Phase 1–5, Sushant Lok, and Golf Course Road with 100% clean title certification.
+                {cms.masthead?.description || "Explore verified ready-to-move luxury builder floors, kothis, and penthouses across DLF Phase 1–5, Sushant Lok, and Golf Course Road with 100% clean title certification."}
               </p>
             </div>
 
@@ -351,7 +330,7 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
                   {properties.length} {properties.length === 1 ? 'Property' : 'Properties'}
                 </span>
                 <span className="text-[10px] uppercase tracking-wider text-slate-400 font-medium">
-                  Active Listings
+                  {cms.masthead?.statsLabel || "Active Listings"}
                 </span>
               </div>
             </div>
@@ -360,47 +339,21 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
       </section>
 
       {/* =========================================================================
-          SECTION 2: LIGHT — CLEAN, UNIFIED PROPERTY FILTER TOOLBAR
-          Simple, intuitive, and immediate.
+          SECTION 2: LUXURY ARCHITECTURAL PROPERTY FILTER TOOLBAR
+          Sleek, intuitive, responsive with active filter pills & instant clear
       ========================================================================= */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
-        <div className="bg-white rounded-2xl p-4 sm:p-5 border border-[#17213D]/10 shadow-[0_10px_30px_rgba(23,33,61,0.04)] space-y-4">
+        <div className="bg-white rounded-3xl p-5 sm:p-6 border border-[#E2DDD5] shadow-[0_12px_40px_rgba(23,33,61,0.06)] space-y-5">
           
-          {/* Top Row: Fast Search & Location Filter Pills */}
-          <div className="flex flex-col lg:flex-row lg:items-center gap-3 justify-between">
-            
-            {/* Search Input */}
-            <form onSubmit={handleSearchSubmit} className="relative w-full lg:max-w-sm">
-              <Search size={15} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
-              <input
-                type="text"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search by title, location, or plot size..."
-                className="w-full bg-[#F7F5EF] border border-[#17213D]/10 rounded-xl pl-10 pr-20 py-2.5 text-xs font-medium text-[#17213D] placeholder-slate-400 outline-none focus:border-[#D09A16] focus:ring-1 focus:ring-[#D09A16] transition-all"
-              />
-              {searchTerm && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    setSearchTerm('');
-                    fetchFilteredProperties({ search: '' });
-                  }}
-                  className="absolute right-14 top-1/2 -translate-y-1/2 text-slate-400 hover:text-[#17213D] p-1 cursor-pointer"
-                >
-                  <X size={13} />
-                </button>
-              )}
-              <button
-                type="submit"
-                className="absolute right-1.5 top-1/2 -translate-y-1/2 px-3 py-1 rounded-lg bg-[#17213D] text-white text-[10px] font-bold uppercase tracking-wider hover:bg-[#D09A16] hover:text-[#0A0E17] transition-all cursor-pointer"
-              >
-                Search
-              </button>
-            </form>
+          {/* Top Corridor Segmented Bar */}
+          <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+            <div className="flex items-center gap-2 text-xs font-bold text-[#17213D] uppercase tracking-[0.2em] shrink-0">
+              <SlidersHorizontal size={14} className="text-[#D09A16]" />
+              <span>Corridor Filter</span>
+            </div>
 
-            {/* Quick Location Pills */}
-            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0 luxury-scrollbar">
+            {/* Corridor Tabs */}
+            <div className="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0 luxury-scrollbar w-full lg:w-auto">
               {CORRIDOR_CLASSIFICATIONS.map(corridor => {
                 const count = corridorCounts[corridor.id] || 0;
                 const isSelected = activeCorridor === corridor.id;
@@ -409,16 +362,16 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
                   <button
                     key={corridor.id}
                     onClick={() => handleCorridorSelect(corridor.id)}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 flex items-center gap-1.5 cursor-pointer shrink-0 ${
+                    className={`relative px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-300 flex items-center gap-2 cursor-pointer shrink-0 ${
                       isSelected
-                        ? 'bg-[#17213D] text-white shadow-xs'
-                        : 'bg-[#F7F5EF] text-[#566078] hover:text-[#17213D] hover:bg-[#EFEBE1]'
+                        ? 'bg-[#0A0E17] text-white shadow-md'
+                        : 'bg-[#F7F5EF] text-[#566078] hover:text-[#17213D] hover:bg-[#EDE8DE] border border-[#E2DDD5]/60'
                     }`}
                   >
-                    <MapPin size={11} className={isSelected ? 'text-[#D09A16]' : 'text-slate-400'} />
+                    <MapPin size={12} className={isSelected ? 'text-[#D09A16]' : 'text-slate-400'} />
                     <span>{corridor.label}</span>
-                    <span className={`text-[10px] font-mono px-1.5 py-0.2 rounded-full ${
-                      isSelected ? 'bg-white/20 text-white' : 'bg-slate-200/70 text-slate-600'
+                    <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded-full ${
+                      isSelected ? 'bg-white/20 text-[#D09A16] font-bold' : 'bg-slate-200/80 text-slate-600'
                     }`}>
                       {count}
                     </span>
@@ -428,81 +381,159 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
             </div>
           </div>
 
-          {/* Bottom Row: Dropdown Selectors + Clear Filter */}
-          <div className="pt-3 border-t border-[#17213D]/10 flex flex-wrap items-center justify-between gap-3 text-xs">
+          {/* Bottom Controls Row: Custom Styled Selectors & Sort */}
+          <div className="pt-4 border-t border-[#F0ECE1] flex flex-wrap items-center justify-between gap-3 text-xs">
             
-            <div className="flex flex-wrap items-center gap-2.5">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-2.5 w-full lg:w-auto">
               
-              {/* Asset Type Select */}
+              {/* Asset Type Selector */}
               <div className="relative">
-                <select
-                  value={activeCategory}
-                  onChange={(e) => handleCategorySelect(e.target.value)}
-                  className="appearance-none bg-[#F7F5EF] border border-[#17213D]/10 text-[#17213D] font-medium rounded-xl pl-3 pr-8 py-2 text-xs focus:outline-none focus:border-[#D09A16] cursor-pointer"
-                >
-                  {CATEGORIES.map(c => (
-                    <option key={c.id} value={c.id}>{c.label}</option>
-                  ))}
-                </select>
-                <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                <label className="block text-[9px] font-bold uppercase tracking-wider text-[#8A95A7] mb-1">
+                  Property Type
+                </label>
+                <div className="relative">
+                  <select
+                    value={activeCategory}
+                    onChange={(e) => handleCategorySelect(e.target.value)}
+                    className={`w-full appearance-none bg-[#F7F5EF] border text-[#17213D] font-semibold rounded-xl pl-3 pr-8 py-2 text-xs focus:outline-none focus:border-[#D09A16] cursor-pointer transition-colors ${
+                      activeCategory !== 'all' ? 'border-[#D09A16] bg-[#D09A16]/5 text-[#D09A16]' : 'border-[#E2DDD5]'
+                    }`}
+                  >
+                    {CATEGORIES.map(c => (
+                      <option key={c.id} value={c.id}>{c.label}</option>
+                    ))}
+                  </select>
+                  <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                </div>
               </div>
 
-              {/* Budget Select */}
+              {/* Budget Range Selector */}
               <div className="relative">
-                <select
-                  value={activePrice}
-                  onChange={(e) => handlePriceSelect(e.target.value)}
-                  className="appearance-none bg-[#F7F5EF] border border-[#17213D]/10 text-[#17213D] font-medium rounded-xl pl-3 pr-8 py-2 text-xs focus:outline-none focus:border-[#D09A16] cursor-pointer"
-                >
-                  {PRICE_RANGES.map(p => (
-                    <option key={p.id} value={p.id}>{p.label}</option>
-                  ))}
-                </select>
-                <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                <label className="block text-[9px] font-bold uppercase tracking-wider text-[#8A95A7] mb-1">
+                  Price Bracket
+                </label>
+                <div className="relative">
+                  <select
+                    value={activePrice}
+                    onChange={(e) => handlePriceSelect(e.target.value)}
+                    className={`w-full appearance-none bg-[#F7F5EF] border text-[#17213D] font-semibold rounded-xl pl-3 pr-8 py-2 text-xs focus:outline-none focus:border-[#D09A16] cursor-pointer transition-colors ${
+                      activePrice !== 'all' ? 'border-[#D09A16] bg-[#D09A16]/5 text-[#D09A16]' : 'border-[#E2DDD5]'
+                    }`}
+                  >
+                    {PRICE_RANGES.map(p => (
+                      <option key={p.id} value={p.id}>{p.label}</option>
+                    ))}
+                  </select>
+                  <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                </div>
               </div>
 
-              {/* Configuration (BHK) Select */}
+              {/* BHK Configuration */}
               <div className="relative">
-                <select
-                  value={activeBhk}
-                  onChange={(e) => handleBhkSelect(e.target.value)}
-                  className="appearance-none bg-[#F7F5EF] border border-[#17213D]/10 text-[#17213D] font-medium rounded-xl pl-3 pr-8 py-2 text-xs focus:outline-none focus:border-[#D09A16] cursor-pointer"
-                >
-                  {BHK_CONFIGS.map(b => (
-                    <option key={b.id} value={b.id}>{b.label}</option>
-                  ))}
-                </select>
-                <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                <label className="block text-[9px] font-bold uppercase tracking-wider text-[#8A95A7] mb-1">
+                  Configuration
+                </label>
+                <div className="relative">
+                  <select
+                    value={activeBhk}
+                    onChange={(e) => handleBhkSelect(e.target.value)}
+                    className={`w-full appearance-none bg-[#F7F5EF] border text-[#17213D] font-semibold rounded-xl pl-3 pr-8 py-2 text-xs focus:outline-none focus:border-[#D09A16] cursor-pointer transition-colors ${
+                      activeBhk !== 'all' ? 'border-[#D09A16] bg-[#D09A16]/5 text-[#D09A16]' : 'border-[#E2DDD5]'
+                    }`}
+                  >
+                    {BHK_CONFIGS.map(b => (
+                      <option key={b.id} value={b.id}>{b.label}</option>
+                    ))}
+                  </select>
+                  <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                </div>
               </div>
 
-              {/* Sort Order Select */}
+              {/* Sort Order */}
               <div className="relative">
-                <select
-                  value={activeSort}
-                  onChange={(e) => handleSortChange(e.target.value)}
-                  className="appearance-none bg-[#F7F5EF] border border-[#17213D]/10 text-[#17213D] font-medium rounded-xl pl-3 pr-8 py-2 text-xs focus:outline-none focus:border-[#D09A16] cursor-pointer"
-                >
-                  {SORT_OPTIONS.map(s => (
-                    <option key={s.id} value={s.id}>{s.label}</option>
-                  ))}
-                </select>
-                <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                <label className="block text-[9px] font-bold uppercase tracking-wider text-[#8A95A7] mb-1">
+                  Sort Order
+                </label>
+                <div className="relative">
+                  <select
+                    value={activeSort}
+                    onChange={(e) => handleSortChange(e.target.value)}
+                    className="w-full appearance-none bg-[#F7F5EF] border border-[#E2DDD5] text-[#17213D] font-semibold rounded-xl pl-3 pr-8 py-2 text-xs focus:outline-none focus:border-[#D09A16] cursor-pointer transition-colors"
+                  >
+                    {SORT_OPTIONS.map(s => (
+                      <option key={s.id} value={s.id}>{s.label}</option>
+                    ))}
+                  </select>
+                  <ChevronDown size={13} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+                </div>
               </div>
 
             </div>
 
-            {/* Clear All Filters Button */}
+            {/* Reset All Action */}
             {hasActiveFilters && (
               <button
                 onClick={handleResetFilters}
-                className="text-xs font-bold text-[#D09A16] hover:underline flex items-center gap-1 cursor-pointer ml-auto"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-[#0A0E17] text-[#D09A16] hover:bg-[#D09A16] hover:text-[#0A0E17] text-xs font-bold uppercase tracking-wider transition-all cursor-pointer ml-auto mt-2 lg:mt-0 shadow-sm"
               >
-                <X size={12} />
-                <span>Reset Filters</span>
+                <RotateCcw size={12} />
+                <span>Reset All</span>
               </button>
             )}
 
           </div>
+
+          {/* Active Filter Chips Strip */}
+          {hasActiveFilters && (
+            <div className="pt-3 border-t border-[#F0ECE1] flex flex-wrap items-center gap-2 text-xs">
+              <span className="text-[10px] font-bold uppercase tracking-wider text-[#8A95A7] mr-1">
+                Active Filters:
+              </span>
+
+              {activeCorridor !== 'all' && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#0A0E17] text-white text-[11px] font-medium">
+                  <span>{CORRIDOR_CLASSIFICATIONS.find(c => c.id === activeCorridor)?.label}</span>
+                  <button onClick={() => handleCorridorSelect('all')} className="hover:text-[#D09A16] cursor-pointer">
+                    <X size={11} />
+                  </button>
+                </span>
+              )}
+
+              {activeCategory !== 'all' && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#0A0E17] text-white text-[11px] font-medium">
+                  <span>{CATEGORIES.find(c => c.id === activeCategory)?.label}</span>
+                  <button onClick={() => handleCategorySelect('all')} className="hover:text-[#D09A16] cursor-pointer">
+                    <X size={11} />
+                  </button>
+                </span>
+              )}
+
+              {activePrice !== 'all' && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#0A0E17] text-white text-[11px] font-medium">
+                  <span>{PRICE_RANGES.find(p => p.id === activePrice)?.label}</span>
+                  <button onClick={() => handlePriceSelect('all')} className="hover:text-[#D09A16] cursor-pointer">
+                    <X size={11} />
+                  </button>
+                </span>
+              )}
+
+              {activeBhk !== 'all' && (
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#0A0E17] text-white text-[11px] font-medium">
+                  <span>{activeBhk}</span>
+                  <button onClick={() => handleBhkSelect('all')} className="hover:text-[#D09A16] cursor-pointer">
+                    <X size={11} />
+                  </button>
+                </span>
+              )}
+
+              <button
+                onClick={handleResetFilters}
+                className="text-[11px] text-[#D09A16] hover:underline font-bold ml-1 cursor-pointer"
+              >
+                Clear All
+              </button>
+            </div>
+          )}
 
         </div>
       </section>
@@ -544,26 +575,26 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
               <Building2 size={26} />
             </div>
             <h3 className="text-xl font-serif font-bold text-[#17213D]">
-              No Properties Found Matching Your Criteria
+              {cms.emptyState?.title || "No Properties Found Matching Your Criteria"}
             </h3>
             <p className="text-xs text-[#566078] leading-relaxed max-w-sm mx-auto">
-              Try adjusting your corridor, budget, or configuration filters. You can also contact our advisory desk directly for confidential off-market inventory.
+              {cms.emptyState?.description || "Try adjusting your corridor, budget, or configuration filters. You can also contact our advisory desk directly for confidential off-market inventory."}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
               <button
                 onClick={handleResetFilters}
                 className="px-5 py-2.5 rounded-xl bg-[#17213D] text-[#F7F5EF] text-xs font-bold uppercase tracking-wider hover:bg-[#D09A16] hover:text-[#0A0E17] transition-all cursor-pointer"
               >
-                Reset All Filters
+                {cms.emptyState?.resetBtnText || "Reset All Filters"}
               </button>
               <a
-                href="https://wa.me/919718511207"
+                href={`https://wa.me/${cms.advisory?.whatsappNumber || '919718511207'}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-5 py-2.5 rounded-xl bg-[#D09A16] text-[#0A0E17] text-xs font-bold uppercase tracking-wider hover:bg-[#E5AC2B] transition-all flex items-center gap-1.5 cursor-pointer shadow-sm"
               >
-                <MessageCircle size={14} />
-                <span>WhatsApp Advisory Desk</span>
+                <WhatsAppIcon size={14} />
+                <span>{cms.emptyState?.whatsappBtnText || "WhatsApp Advisory Desk"}</span>
               </a>
             </div>
           </div>
@@ -600,35 +631,35 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
             <div className="max-w-xl space-y-2">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/[0.06] border border-[#D09A16]/30 text-[10px] font-bold uppercase tracking-[0.2em] text-[#D09A16]">
                 <Sparkles size={11} className="text-[#D09A16]" />
-                <span>Private Off-Market Advisory</span>
+                <span>{cms.advisory?.badge || "Private Off-Market Advisory"}</span>
               </div>
 
               <h3 className="text-xl sm:text-2xl font-serif font-bold text-white">
-                Looking for Unlisted DLF Phase 1–5 <span className="italic font-serif text-[#D09A16]">Estates?</span>
+                {cms.advisory?.titleMain || "Looking for Unlisted DLF Phase 1–5 "} <span className="italic font-serif text-[#D09A16]">{cms.advisory?.titleItalic || "Estates?"}</span>
               </h3>
 
               <p className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
-                Many of Gurugram’s most exclusive builder floors and corner kothis are held off-market for family privacy. Connect directly with Arun Sharma and our senior partners for confidential site visits.
+                {cms.advisory?.description || "Many of Gurugram’s most exclusive builder floors and corner kothis are held off-market for family privacy. Connect directly with Arun Sharma and our senior partners for confidential site visits."}
               </p>
             </div>
 
             <div className="flex flex-wrap items-center gap-3 shrink-0">
               <a
-                href="https://wa.me/919718511207?text=Hello%20Saudagar%20Properties%2C%20I%20am%20interested%20in%20confidential%20off-market%20DLF%20properties."
+                href={`https://wa.me/${cms.advisory?.whatsappNumber || '919718511207'}?text=Hello%20Saudagar%20Properties%2C%20I%20am%20interested%20in%20confidential%20off-market%20DLF%20properties.`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-5 py-3 rounded-xl bg-[#D09A16] hover:bg-[#E5AC2B] text-[#0A0E17] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
               >
-                <MessageCircle size={14} />
-                <span>WhatsApp Advisory</span>
+                <WhatsAppIcon size={15} />
+                <span>{cms.advisory?.whatsappBtnText || "WhatsApp Advisory"}</span>
               </a>
 
               <a
-                href="tel:+919811221207"
+                href={`tel:${cms.advisory?.phoneRaw || '+919811221207'}`}
                 className="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/20 border border-white/20 text-white font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer"
               >
                 <PhoneCall size={14} className="text-[#D09A16]" />
-                <span>+91 98112 21207</span>
+                <span>{cms.advisory?.phoneText || "+91 98112 21207"}</span>
               </a>
             </div>
           </div>
@@ -761,7 +792,7 @@ function PropertyListingCard({ property, index = 0 }) {
           className="p-2.5 rounded-xl bg-[#F7F5EF] hover:bg-[#25D366] hover:text-white border border-[#17213D]/10 text-[#17213D] transition-all cursor-pointer"
           title="Direct WhatsApp Consultation"
         >
-          <MessageCircle size={15} />
+          <WhatsAppIcon size={16} />
         </a>
 
         <a

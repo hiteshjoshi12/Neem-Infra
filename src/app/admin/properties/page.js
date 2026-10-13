@@ -16,6 +16,7 @@ import {
 import api from '@/services/api';
 import { useCms } from '@/context/CmsContext';
 import Image from 'next/image';
+import ImageUploadInput from '@/components/admin/ImageUploadInput';
 
 export default function AdminProperties() {
   const [properties, setProperties] = useState([]);
@@ -28,14 +29,28 @@ export default function AdminProperties() {
 
   const initialForm = {
     title: '',
+    slug: '',
     price: '',
     location: 'DLF Phase 2, Gurugram',
-    specs: '4 BHK • 3,200 Sq.Ft',
-    tag: 'Luxury Floor',
+    specs: '4 BHK • 4 Baths • 500 Sq. Yds.',
+    tag: 'Exclusive Floor',
     desc: '',
     img: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80',
     link: '/properties',
     category: 'residential',
+    bhk: '4 BHK',
+    bathrooms: '4 Baths',
+    plotArea: '500 Sq. Yds.',
+    builtUpArea: '3,800 Sq. Ft.',
+    facing: 'North-East Facing',
+    floor: '2nd Floor of 4',
+    furnishing: 'Semi-Furnished (Italian Modular Kitchen)',
+    parking: '2 Covered Stilt Car Parks',
+    possession: 'Ready to Move (Immediate)',
+    reraNumber: 'Freehold Municipal Sanction • Clean Title',
+    features: 'Private Automated Elevator, Italian Botticino Marble, 100% DG Power Backup, Dedicated Servant Room, Vastu Compliant',
+    nearbyLandmarks: 'DLF Cyber City — 6 Mins\nMG Road Metro Station — 4 Mins\nGalleria Market — 8 Mins\nFortis & Max Hospital — 10 Mins',
+    images: '',
     order: 0,
     isActive: true,
     isFeatured: true
@@ -85,6 +100,7 @@ export default function AdminProperties() {
     setEditingId(prop._id);
     setFormData({
       title: prop.title || '',
+      slug: prop.slug || '',
       price: prop.price || '',
       location: prop.location || '',
       specs: prop.specs || '',
@@ -93,6 +109,19 @@ export default function AdminProperties() {
       img: prop.img || '',
       link: prop.link || '/properties',
       category: prop.category || 'residential',
+      bhk: prop.bhk || '',
+      bathrooms: prop.bathrooms || '',
+      plotArea: prop.plotArea || '',
+      builtUpArea: prop.builtUpArea || '',
+      facing: prop.facing || '',
+      floor: prop.floor || '',
+      furnishing: prop.furnishing || '',
+      parking: prop.parking || '',
+      possession: prop.possession || '',
+      reraNumber: prop.reraNumber || '',
+      features: Array.isArray(prop.features) ? prop.features.join(', ') : (prop.features || ''),
+      nearbyLandmarks: Array.isArray(prop.nearbyLandmarks) ? prop.nearbyLandmarks.join('\n') : (prop.nearbyLandmarks || ''),
+      images: Array.isArray(prop.images) ? prop.images.join('\n') : (prop.images || ''),
       order: prop.order || 0,
       isActive: prop.isActive !== undefined ? prop.isActive : true,
       isFeatured: prop.isFeatured !== undefined ? prop.isFeatured : true
@@ -110,11 +139,24 @@ export default function AdminProperties() {
     setSubmitting(true);
 
     try {
+      const payload = {
+        ...formData,
+        features: typeof formData.features === 'string'
+          ? formData.features.split(',').map(s => s.trim()).filter(Boolean)
+          : formData.features,
+        nearbyLandmarks: typeof formData.nearbyLandmarks === 'string'
+          ? formData.nearbyLandmarks.split(/[\n,]/).map(s => s.trim()).filter(Boolean)
+          : formData.nearbyLandmarks,
+        images: typeof formData.images === 'string'
+          ? formData.images.split(/[\n,]/).map(s => s.trim()).filter(Boolean)
+          : formData.images,
+      };
+
       if (editingId) {
-        await api.updateProperty(editingId, formData);
+        await api.updateProperty(editingId, payload);
         setToast('Property updated successfully!');
       } else {
-        await api.createProperty(formData);
+        await api.createProperty(payload);
         setToast('Property added successfully!');
       }
       closeModal();
@@ -271,118 +313,333 @@ export default function AdminProperties() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.95 }}
-              className="w-full max-w-2xl bg-[#141A29] border border-white/15 rounded-3xl p-6 sm:p-8 shadow-2xl relative my-8 max-h-[90vh] overflow-y-auto"
+              className="w-full max-w-4xl bg-[#141A29] border border-white/15 rounded-3xl p-6 sm:p-8 shadow-2xl relative my-8 max-h-[92vh] overflow-y-auto"
             >
               <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-6">
-                <h3 className="text-lg font-serif font-bold text-white">
-                  {editingId ? 'Edit Property Listing' : 'Add New Property Listing'}
-                </h3>
-                <button onClick={closeModal} className="text-slate-400 hover:text-white">
+                <div>
+                  <h3 className="text-xl font-serif font-bold text-white">
+                    {editingId ? 'Edit Luxury Property Dossier' : 'Add New Luxury Property Listing'}
+                  </h3>
+                  <p className="text-xs text-slate-400 mt-1">
+                    Fill in architectural specifications, transit landmarks, amenities & gallery images to build the luxury details page.
+                  </p>
+                </div>
+                <button onClick={closeModal} className="text-slate-400 hover:text-white p-2 rounded-xl bg-white/5 hover:bg-white/10 transition-colors">
                   <X size={20} />
                 </button>
               </div>
 
-              <form onSubmit={handleSubmit} className="space-y-4 text-xs">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-slate-300 font-semibold mb-1">Property Title *</label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.title}
-                      onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                      placeholder="DLF Phase 2 Luxury Floor"
-                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-slate-300 font-semibold mb-1">Price Tag *</label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.price}
-                      onChange={(e) => setFormData({ ...formData, price: e.target.value })}
-                      placeholder="₹5.75 Cr"
-                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-slate-300 font-semibold mb-1">Location *</label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.location}
-                      onChange={(e) => setFormData({ ...formData, location: e.target.value })}
-                      placeholder="DLF Phase 2, Gurugram"
-                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-slate-300 font-semibold mb-1">Specs Details *</label>
-                    <input
-                      type="text"
-                      required
-                      value={formData.specs}
-                      onChange={(e) => setFormData({ ...formData, specs: e.target.value })}
-                      placeholder="4 BHK • 3,200 Sq.Ft • Park Facing"
-                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-slate-300 font-semibold mb-1">Category</label>
-                    <select
-                      value={formData.category}
-                      onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                      className="w-full bg-[#121724] border border-white/20 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16] [&>option]:bg-[#121724] [&>option]:text-white"
-                    >
-                      <option value="residential" className="bg-[#121724] text-white">Residential Floor/Plot</option>
-                      <option value="villa" className="bg-[#121724] text-white">Luxury Villa</option>
-                      <option value="penthouse" className="bg-[#121724] text-white">Penthouse</option>
-                      <option value="commercial" className="bg-[#121724] text-white">Commercial Hub</option>
-                      <option value="industrial" className="bg-[#121724] text-white">Industrial Asset</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-slate-300 font-semibold mb-1">Badge Tag</label>
-                    <input
-                      type="text"
-                      value={formData.tag}
-                      onChange={(e) => setFormData({ ...formData, tag: e.target.value })}
-                      placeholder="Exclusive Floor"
-                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
-                    />
-                  </div>
-                </div>
-
+              <form onSubmit={handleSubmit} className="space-y-6 text-xs">
+                {/* PART 1: CORE COMMERCIAL IDENTIFIERS */}
                 <div>
-                  <label className="block text-slate-300 font-semibold mb-1">Image URL *</label>
-                  <input
-                    type="text"
-                    required
-                    value={formData.img}
-                    onChange={(e) => setFormData({ ...formData, img: e.target.value })}
-                    placeholder="https://images.unsplash.com/..."
-                    className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
-                  />
+                  <h4 className="text-[11px] font-bold text-[#D09A16] uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16]" />
+                    <span>1. Core Listing Information</span>
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div className="sm:col-span-2">
+                      <label className="block text-slate-300 font-semibold mb-1">Property Title *</label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.title}
+                        onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                        placeholder="4 BHK Luxury Independent Floor in DLF Phase 1"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-slate-300 font-semibold mb-1">Custom URL Slug (Optional)</label>
+                      <input
+                        type="text"
+                        value={formData.slug}
+                        onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
+                        placeholder="e.g. 4-bhk-floor-dlf-phase-1"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-slate-300 font-semibold mb-1">Benchmark Ask / Price *</label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.price}
+                        onChange={(e) => setFormData({ ...formData, price: e.target.value })}
+                        placeholder="₹4.25 Cr"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-slate-300 font-semibold mb-1">Location / Micro-Market *</label>
+                      <input
+                        type="text"
+                        required
+                        value={formData.location}
+                        onChange={(e) => setFormData({ ...formData, location: e.target.value })}
+                        placeholder="DLF Phase 1, Gurugram"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-slate-300 font-semibold mb-1">Asset Category</label>
+                      <select
+                        value={formData.category}
+                        onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                        className="w-full bg-[#121724] border border-white/20 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
+                      >
+                        <option value="residential">Builder Floor</option>
+                        <option value="villa">Luxury Villa / Kothi</option>
+                        <option value="penthouse">Penthouse</option>
+                        <option value="commercial">Commercial Hub</option>
+                        <option value="industrial">Industrial Asset</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block text-slate-300 font-semibold mb-1">Badge Tag</label>
+                      <input
+                        type="text"
+                        value={formData.tag}
+                        onChange={(e) => setFormData({ ...formData, tag: e.target.value })}
+                        placeholder="FOR SALE • DLF PHASE 1"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
+                      />
+                    </div>
+
+                    <div className="sm:col-span-2">
+                      <label className="block text-slate-300 font-semibold mb-1">Catalog Specs Summary</label>
+                      <input
+                        type="text"
+                        value={formData.specs}
+                        onChange={(e) => setFormData({ ...formData, specs: e.target.value })}
+                        placeholder="4 BHK • 4 Baths • 500 Sq. Yds."
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
+                      />
+                    </div>
+                  </div>
                 </div>
 
-                <div>
-                  <label className="block text-slate-300 font-semibold mb-1">Description *</label>
-                  <textarea
-                    rows={3}
-                    required
-                    value={formData.desc}
-                    onChange={(e) => setFormData({ ...formData, desc: e.target.value })}
-                    placeholder="Architect-designed luxury floor with high-end fixtures..."
-                    className="w-full bg-white/[0.05] border border-white/15 rounded-xl p-3 text-white outline-none focus:border-[#D09A16]"
-                  />
+                {/* PART 2: ARCHITECTURAL SPECIFICATIONS (BUILDS VIEW DETAILS PAGE) */}
+                <div className="pt-2 border-t border-white/10">
+                  <h4 className="text-[11px] font-bold text-[#D09A16] uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16]" />
+                    <span>2. Architectural & Unit Specifications</span>
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+                    <div>
+                      <label className="block text-slate-300 font-semibold mb-1">Configuration (BHK)</label>
+                      <input
+                        type="text"
+                        value={formData.bhk}
+                        onChange={(e) => setFormData({ ...formData, bhk: e.target.value })}
+                        placeholder="4 BHK"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-slate-300 font-semibold mb-1">Bathrooms</label>
+                      <input
+                        type="text"
+                        value={formData.bathrooms}
+                        onChange={(e) => setFormData({ ...formData, bathrooms: e.target.value })}
+                        placeholder="4 Baths + Powder"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-slate-300 font-semibold mb-1">Plot Area</label>
+                      <input
+                        type="text"
+                        value={formData.plotArea}
+                        onChange={(e) => setFormData({ ...formData, plotArea: e.target.value })}
+                        placeholder="500 Sq. Yds."
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-slate-300 font-semibold mb-1">Built-Up Area</label>
+                      <input
+                        type="text"
+                        value={formData.builtUpArea}
+                        onChange={(e) => setFormData({ ...formData, builtUpArea: e.target.value })}
+                        placeholder="3,800 Sq. Ft."
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-slate-300 font-semibold mb-1">Facing / Orientation</label>
+                      <input
+                        type="text"
+                        value={formData.facing}
+                        onChange={(e) => setFormData({ ...formData, facing: e.target.value })}
+                        placeholder="North-East (Park Facing)"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-slate-300 font-semibold mb-1">Floor Level</label>
+                      <input
+                        type="text"
+                        value={formData.floor}
+                        onChange={(e) => setFormData({ ...formData, floor: e.target.value })}
+                        placeholder="2nd Floor of 4"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-slate-300 font-semibold mb-1">Furnishing Status</label>
+                      <input
+                        type="text"
+                        value={formData.furnishing}
+                        onChange={(e) => setFormData({ ...formData, furnishing: e.target.value })}
+                        placeholder="Semi-Furnished (Italian Modular)"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-slate-300 font-semibold mb-1">Dedicated Parking</label>
+                      <input
+                        type="text"
+                        value={formData.parking}
+                        onChange={(e) => setFormData({ ...formData, parking: e.target.value })}
+                        placeholder="2 Stilt Car Parks"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                      />
+                    </div>
+
+                    <div className="sm:col-span-2">
+                      <label className="block text-slate-300 font-semibold mb-1">Possession Status</label>
+                      <input
+                        type="text"
+                        value={formData.possession}
+                        onChange={(e) => setFormData({ ...formData, possession: e.target.value })}
+                        placeholder="Ready to Move (Immediate / OC Received)"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                      />
+                    </div>
+
+                    <div className="sm:col-span-2">
+                      <label className="block text-slate-300 font-semibold mb-1">RERA / Sanction Number</label>
+                      <input
+                        type="text"
+                        value={formData.reraNumber}
+                        onChange={(e) => setFormData({ ...formData, reraNumber: e.target.value })}
+                        placeholder="Freehold Municipal Sanction • Clean 30-Yr Title"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                      />
+                    </div>
+                  </div>
                 </div>
 
+                {/* PART 3: AMENITIES & TRANSIT CONNECTIVITY */}
+                <div className="pt-2 border-t border-white/10">
+                  <h4 className="text-[11px] font-bold text-[#D09A16] uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16]" />
+                    <span>3. Key Amenities & Nearby Landmarks</span>
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-slate-300 font-semibold mb-1">
+                        Curated Features & Amenities (Comma-separated)
+                      </label>
+                      <textarea
+                        rows={3}
+                        value={formData.features}
+                        onChange={(e) => setFormData({ ...formData, features: e.target.value })}
+                        placeholder="Private Automated Elevator, Italian Botticino Marble, 100% DG Power Backup, Dedicated Servant Room, Vastu-Compliant"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl p-3 text-white outline-none focus:border-[#D09A16]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-slate-300 font-semibold mb-1">
+                        Transit & Landmarks (Comma or Newline-separated)
+                      </label>
+                      <textarea
+                        rows={3}
+                        value={formData.nearbyLandmarks}
+                        onChange={(e) => setFormData({ ...formData, nearbyLandmarks: e.target.value })}
+                        placeholder="DLF Cyber City — 6 Mins&#10;MG Road Metro Station — 4 Mins&#10;Shiv Nadar School — 8 Mins&#10;Fortis & Max Hospital — 10 Mins"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl p-3 text-white outline-none focus:border-[#D09A16]"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* PART 4: IMAGERY & MEDIA */}
+                <div className="pt-2 border-t border-white/10">
+                  <h4 className="text-[11px] font-bold text-[#D09A16] uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16]" />
+                    <span>4. Gallery & Media Assets (ImageKit Enabled)</span>
+                  </h4>
+                  <div className="space-y-4">
+                    <ImageUploadInput
+                      label="Primary Cover Image *"
+                      value={formData.img}
+                      onChange={(url) => setFormData({ ...formData, img: url })}
+                      folder="/saudagar-properties/properties"
+                      placeholder="Browse or upload cover image..."
+                    />
+
+                    <div>
+                      <label className="block text-slate-300 font-semibold mb-1 text-xs">
+                        Additional Gallery Image URLs (Newline or comma separated)
+                      </label>
+                      <textarea
+                        rows={2}
+                        value={formData.images}
+                        onChange={(e) => setFormData({ ...formData, images: e.target.value })}
+                        placeholder="https://images.unsplash.com/...&#10;https://images.unsplash.com/..."
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl p-3 text-white outline-none focus:border-[#D09A16] mb-2 font-mono text-xs"
+                      />
+                      <ImageUploadInput
+                        label="Browse & Add Gallery Photo"
+                        value=""
+                        onChange={(url) => {
+                          if (url) {
+                            setFormData((prev) => ({
+                              ...prev,
+                              images: prev.images ? `${prev.images}\n${url}` : url
+                            }));
+                          }
+                        }}
+                        folder="/saudagar-properties/properties"
+                        placeholder="Browse to upload and append a gallery photo..."
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* PART 5: ARCHITECTURAL OVERVIEW */}
+                <div className="pt-2 border-t border-white/10">
+                  <h4 className="text-[11px] font-bold text-[#D09A16] uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16]" />
+                    <span>5. Architectural Narrative & Overview *</span>
+                  </h4>
+                  <div>
+                    <textarea
+                      rows={3}
+                      required
+                      value={formData.desc}
+                      onChange={(e) => setFormData({ ...formData, desc: e.target.value })}
+                      placeholder="Newly constructed, ready-to-move builder floor strategically located in DLF Phase 1. Park facing with top schools & markets nearby. Featuring expansive balconies, independent terrace rights, dedicated stilt car parking..."
+                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl p-3 text-white outline-none focus:border-[#D09A16]"
+                    />
+                  </div>
+                </div>
+
+                {/* PART 6: PUBLISHING STATUS */}
                 <div className="flex items-center gap-6 pt-2">
                   <label className="flex items-center gap-2 cursor-pointer text-slate-300">
                     <input
@@ -401,7 +658,7 @@ export default function AdminProperties() {
                       onChange={(e) => setFormData({ ...formData, isFeatured: e.target.checked })}
                       className="w-4 h-4 accent-[#D09A16]"
                     />
-                    <span>Highlight in 3D Slider</span>
+                    <span>Highlight in Featured Portfolio</span>
                   </label>
                 </div>
 
@@ -409,16 +666,16 @@ export default function AdminProperties() {
                   <button
                     type="button"
                     onClick={closeModal}
-                    className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold transition-colors"
+                    className="px-5 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 text-white font-semibold transition-colors cursor-pointer"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="px-6 py-2.5 rounded-xl bg-[#D09A16] hover:bg-[#B5986D] text-[#0C101A] font-bold uppercase tracking-wider transition-colors disabled:opacity-60"
+                    className="px-6 py-2.5 rounded-xl bg-[#D09A16] hover:bg-[#E5AC2B] text-[#0C101A] font-bold uppercase tracking-wider transition-colors disabled:opacity-60 cursor-pointer shadow-md"
                   >
-                    {submitting ? 'Saving...' : editingId ? 'Update Property' : 'Create Listing'}
+                    {submitting ? 'Saving Property...' : editingId ? 'Update Property Dossier' : 'Create Property Dossier'}
                   </button>
                 </div>
               </form>
