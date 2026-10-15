@@ -27,7 +27,8 @@ import { connectDB } from '@/lib/mongodb';
 import SectionContent from '@/models/SectionContent';
 import { DEFAULT_SECTIONS } from '@/constants/defaultSections';
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 async function getBlogPageCms() {
   try {
@@ -78,7 +79,7 @@ export async function generateMetadata() {
           {/* Architectural Background Vignette - Clearly Visible */}
           <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-80">
             <Image
-              src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80"
+              src={blogCms.masthead?.bgImage || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80"}
               alt="Gurugram Real Estate Editorial"
               fill
               sizes="100vw"
@@ -119,11 +120,49 @@ export async function generateMetadata() {
         </section>
 
         {/* =========================================================================
+            SECTION 1.5: 4-POINT LIVE MARKET PULSE TELEMETRY BAR
+        ========================================================================= */}
+        {blogCms.marketPulse && blogCms.marketPulse.length > 0 && (
+          <section className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 sm:-mt-10 mb-8">
+            <div className="bg-[#12192C]/95 backdrop-blur-xl border border-white/15 rounded-3xl p-5 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.35)]">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 divide-y lg:divide-y-0 lg:divide-x divide-white/10">
+                {blogCms.marketPulse.map((pulse, pIdx) => (
+                  <div key={pIdx} className={`flex flex-col justify-between ${pIdx > 0 ? 'pt-4 lg:pt-0 lg:pl-6' : ''}`}>
+                    <div className="flex items-baseline gap-1.5 mb-1.5">
+                      <span className="w-2 h-2 rounded-full bg-[#D09A16] shadow-[0_0_8px_#D09A16] mr-1 self-center shrink-0" />
+                      <span className="text-2xl sm:text-3xl font-serif font-bold text-white tracking-tight">
+                        {pulse.value}
+                      </span>
+                      {pulse.unit && (
+                        <span className="text-xs font-semibold text-[#D09A16] uppercase tracking-wider">
+                          {pulse.unit}
+                        </span>
+                      )}
+                    </div>
+                    <div>
+                      <span className="block text-xs font-bold text-slate-200">
+                        {pulse.label}
+                      </span>
+                      {pulse.subtext && (
+                        <span className="text-[11px] text-slate-400 mt-0.5 block">
+                          {pulse.subtext}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* =========================================================================
             INTERACTIVE CATALOG
             • Section 1: Lead Cover Story & Stacked Dispatches
             • Section 2: Research Library Grid, Search, Tabs & Most Read
         ========================================================================= */}
         <BlogCatalogInteractive 
+          initialData={blogCms}
           allPosts={allPosts} 
           categories={categories} 
         />

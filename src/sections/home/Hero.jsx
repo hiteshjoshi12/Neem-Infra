@@ -7,7 +7,6 @@ import Image from 'next/image';
 import CustomSelect from '../../components/ui/CustomSelect';
 import CinematicHeroBackground from '../../components/ui/CinematicHeroBackground';
 import { useCms } from '../../context/CmsContext';
-import { FEATURED_PROPERTIES_DATA } from '../../constants';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const unsplashLoader = ({ src, width, quality }) => {
@@ -19,8 +18,8 @@ export default function Hero() {
   const { sections, properties } = useCms();
   const heroData = sections?.hero || {};
 
-  // Resolve backend featured properties with fallback
-  const rawProperties = properties && properties.length > 0 ? properties : FEATURED_PROPERTIES_DATA;
+  // Resolve backend featured properties
+  const rawProperties = properties || [];
   const featuredProperties = rawProperties.filter((p) => p.isFeatured !== false);
   const cardList = featuredProperties.length > 0 ? featuredProperties : rawProperties;
 

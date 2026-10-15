@@ -10,7 +10,8 @@ import Breadcrumbs from '@/components/ui/Breadcrumbs';
 import { getBlogPosts, getCategoryBySlug, getCategories } from '@/services/blogService';
 import { buildPageMetadata } from '@/lib/seo/metadataHelper';
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function generateStaticParams() {
   const categories = await getCategories();

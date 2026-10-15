@@ -60,3 +60,36 @@ export const DEFAULT_WHY_CHOOSE_US_DATA = {
     }
   ]
 };
+
+export const DEFAULT_TESTIMONIALS_DATA = [
+  {
+    name: "Deepak Arora",
+    role: "Investor",
+    location: "Dubai, UAE",
+    propertyType: "DLF Phase 1 Floor",
+    rating: 5,
+    avatar: "https://saudagarproperties.com/wp-content/uploads/2021/01/c3.jpg",
+    quote: "Selecting a best real estate consultant in Gurugram, especially one who is trustworthy, experienced, and honest, is the basic pillar of investment. From their before sales to after sales service, I can definitely say that customer satisfaction is in the company's DNA. Extremely happy to approach them for my investment decisions and will look up to the same in future too.",
+    tag: "NRI Investment Advisory"
+  },
+  {
+    name: "Kedarnath Gupta",
+    role: "Investor",
+    location: "Dubai, UAE",
+    propertyType: "DLF Phase 2 Floor",
+    rating: 5,
+    avatar: "https://saudagarproperties.com/wp-content/uploads/2021/01/c2.jpg",
+    quote: "Choosing the right home is a very important aspect of any individual's life. With their decade-long experience in the Gurgaon real estate market, Saudagar Properties Pvt. Ltd. played a key role in ensuring that I was making the right decision while choosing my dream home by providing the right push when needed, and cautioning me when necessary. I owe the team a huge part of my dream.",
+    tag: "High-Value Transaction"
+  },
+  {
+    name: "Saravjit Dasaan",
+    role: "Investor & End User",
+    location: "India",
+    propertyType: "Sushant Lok Villa",
+    rating: 5,
+    avatar: "https://saudagarproperties.com/wp-content/uploads/2021/01/c1.jpg",
+    quote: "The team seamlessly took over everything, from research, visit, paperwork to maintenance. Amidst a plethora of options, Saudagar Properties shortlisted the best residential properties in Gurgaon according to my needs and comfort. It has been a delight working with the highly-qualified and seasoned team. I would recommend their services to all my friends and acquaintances.",
+    tag: "End-to-End Concierge"
+  }
+];

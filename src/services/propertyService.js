@@ -1,6 +1,5 @@
 import { connectDB } from '@/lib/mongodb';
 import Property from '@/models/Property';
-import { FEATURED_PROPERTIES_DATA } from '@/constants';
 
 function parsePriceToNumber(priceStr) {
   if (!priceStr) return 0;
@@ -89,18 +88,14 @@ export async function getProperties(options = {}) {
       properties = properties.slice(0, limit);
     }
     
-    if (properties && properties.length > 0) {
-      return JSON.parse(JSON.stringify(properties));
-    }
-    return FEATURED_PROPERTIES_DATA;
+    return JSON.parse(JSON.stringify(properties || []));
   } catch (error) {
-    console.warn('[propertyService] Using fallback properties data:', error?.message);
-    return FEATURED_PROPERTIES_DATA;
+    console.error('[propertyService] Error fetching properties from MongoDB:', error?.message);
+    return [];
   }
 }
 
 import mongoose from 'mongoose';
-import { LUXURY_PROPERTIES_DETAILED } from '@/constants/propertiesData';
 
 export async function getPropertyById(id) {
   try {
@@ -110,11 +105,11 @@ export async function getPropertyById(id) {
       property = await Property.findById(id).lean().exec();
     }
     if (property) return JSON.parse(JSON.stringify(property));
+    return null;
   } catch (error) {
-    console.warn('[propertyService] getPropertyById fallback:', error?.message);
+    console.error('[propertyService] getPropertyById error:', error?.message);
+    return null;
   }
-  return LUXURY_PROPERTIES_DETAILED.find(p => p._id === id || p.id === id || p.slug === id) ||
-         FEATURED_PROPERTIES_DATA.find(p => p._id === id || p.id === id) || null;
 }
 
 export async function getPropertyBySlug(slug) {
@@ -125,9 +120,9 @@ export async function getPropertyBySlug(slug) {
       property = await Property.findById(slug).lean().exec();
     }
     if (property) return JSON.parse(JSON.stringify(property));
+    return null;
   } catch (error) {
-    console.warn('[propertyService] getPropertyBySlug fallback:', error?.message);
+    console.error('[propertyService] getPropertyBySlug error:', error?.message);
+    return null;
   }
-  return LUXURY_PROPERTIES_DETAILED.find(p => p.slug === slug || p.id === slug || p._id === slug) ||
-         FEATURED_PROPERTIES_DATA.find(p => p.slug === slug || p.id === slug) || null;
 }

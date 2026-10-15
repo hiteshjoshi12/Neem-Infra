@@ -206,7 +206,7 @@ export default function TeamInteractiveShowcase({ founders, teamMembers, advisor
                 {/* Direct Connect Action Row */}
                 <div className="pt-4 border-t border-[#17213D]/10 flex flex-wrap items-center gap-3">
                   <a
-                    href="https://wa.me/919718511207"
+                    href={activeFounder?.whatsappUrl || cta?.whatsappUrl || "https://wa.me/919718511207"}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-6 py-3 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white text-xs font-bold uppercase tracking-wider transition-all flex items-center gap-2 shadow-sm"
@@ -216,11 +216,11 @@ export default function TeamInteractiveShowcase({ founders, teamMembers, advisor
                   </a>
 
                   <a
-                    href="tel:+919811221207"
+                    href={`tel:${(activeFounder?.phone || cta?.phone || '+919811221207').replace(/[^0-9+]/g, '')}`}
                     className="px-6 py-3 rounded-xl bg-[#F7F5EF] hover:bg-[#EFEBE1] border border-[#17213D]/15 text-[#17213D] text-xs font-bold uppercase tracking-wider transition-colors flex items-center gap-2"
                   >
                     <Phone size={14} className="text-[#D09A16]" />
-                    <span>Call Desk (+91 98112 21207)</span>
+                    <span>Call Desk ({activeFounder?.phone || cta?.phone || '+91 98112 21207'})</span>
                   </a>
                 </div>
 

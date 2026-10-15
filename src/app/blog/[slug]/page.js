@@ -25,7 +25,8 @@ import { getBlogPostBySlug, getRelatedPosts, getBlogPosts } from '@/services/blo
 import { extractTableOfContents, MarkdownRenderer } from '@/lib/blog/markdownRenderer';
 import { buildArticleMetadata } from '@/lib/seo/metadataHelper';
 
-export const revalidate = 60;
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function generateStaticParams() {
   const posts = await getBlogPosts();

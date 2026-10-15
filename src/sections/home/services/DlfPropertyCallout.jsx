@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 
 import { useCms } from "../../../context/CmsContext";
+import { DEFAULT_SECTIONS } from "@/constants/defaultSections";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -188,18 +189,31 @@ export default function DlfPropertyCallout() {
   const callout =
     sections?.dlfCallout ||
     sections?.services?.dlfCallout ||
+    DEFAULT_SECTIONS?.dlfCallout ||
     {};
 
   const statsCards =
-    callout.statsCards || DEFAULT_STATS_CARDS;
+    callout.statsCards || DEFAULT_SECTIONS?.dlfCallout?.statsCards || DEFAULT_STATS_CARDS;
 
   const badge =
     callout.badge ||
-    "DLF GURGAON · PRIVATE PROPERTY DESK";
+    "DLF GURGAON DEDICATED DESK";
 
-  const headline =
-    callout.headline ||
-    "Are you looking for a property in DLF Gurgaon? Simply connect with us!";
+  const locationTag =
+    callout.locationTag ||
+    "DLF GURUGRAM";
+
+  const expertiseTag =
+    callout.expertiseTag ||
+    "LOCAL PROPERTY EXPERTISE";
+
+  const titleMain =
+    callout.titleMain ||
+    "DLF Gurugram,";
+
+  const titleItalic =
+    callout.titleItalic ||
+    "considered differently.";
 
   const description =
     callout.description ||
@@ -216,6 +230,45 @@ export default function DlfPropertyCallout() {
   const propertyImage =
     callout.image ||
     "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85";
+
+  const coordinateLabel =
+    callout.coordinateLabel ||
+    "DLF PHASE V · PRIVATE DESK";
+
+  const coordinateValue =
+    callout.coordinateValue ||
+    "28°27'N 77°05'E";
+
+  const ctaBadge =
+    callout.ctaBadge ||
+    "PRIVATE PROPERTY DESK · ACTIVE INQUIRIES";
+
+  const headline =
+    callout.ctaHeadline ||
+    callout.headline ||
+    "Are you looking for a property in DLF Gurgaon? Simply connect with us!";
+
+  const ctaDescription =
+    callout.ctaDescription ||
+    "Direct access to off-market inventory, verified titles, and bespoke consultation across DLF Phase 1–5, Golf Course Road & Cybercity.";
+
+  const ctaTags =
+    (callout.ctaTags && Array.isArray(callout.ctaTags) && callout.ctaTags.length > 0)
+      ? callout.ctaTags
+      : ["Residential Villas", "Luxury Floors", "Commercial HQs", "Industrial Assets"];
+
+  const ctaText =
+    callout.ctaText ||
+    "Explore Deals";
+
+  const ctaLink =
+    callout.ctaLink ||
+    callout.cta ||
+    "/contact";
+
+  const trustStatement =
+    callout.trustStatement ||
+    "Confidential Advisory · Verified Titles";
 
   const containerRef = useRef(null);
   const imageContainerRef = useRef(null);
@@ -391,20 +444,20 @@ export default function DlfPropertyCallout() {
             <div className="mt-5 inline-flex items-center gap-2.5">
               <span className="h-1.5 w-1.5 rounded-full border border-[#D09A16] bg-[#D09A16]/20" />
               <span className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#D09A16]">
-                DLF GURUGRAM
+                {locationTag}
               </span>
               <span className="text-white/20">·</span>
               <span className="text-[9px] font-medium uppercase tracking-[0.2em] text-[#C9CED9]">
-                LOCAL PROPERTY EXPERTISE
+                {expertiseTag}
               </span>
             </div>
 
             {/* Large Elegant Serif Heading */}
             <h2 className="mt-5 font-serif text-4xl font-normal leading-[1.05] tracking-tight text-[#F7F5EF] sm:text-5xl lg:text-6xl xl:text-7xl">
-              DLF Gurugram,
+              {titleMain}
               <br />
               <span className="font-light italic text-[#D09A16]">
-                considered differently.
+                {titleItalic}
               </span>
             </h2>
 
@@ -479,8 +532,8 @@ export default function DlfPropertyCallout() {
 
               {/* Subtle Architectural Coordinate Label */}
               <div className="pointer-events-none absolute bottom-4 left-5 right-5 flex items-center justify-between font-mono text-[8px] uppercase tracking-[0.24em] text-[#F7F5EF]/75">
-                <span className="text-[#D09A16]">DLF PHASE V · PRIVATE DESK</span>
-                <span className="text-white/40">28°27&apos;N 77°05&apos;E</span>
+                <span className="text-[#D09A16]">{coordinateLabel}</span>
+                <span className="text-white/40">{coordinateValue}</span>
               </div>
             </div>
           </div>
@@ -582,7 +635,7 @@ export default function DlfPropertyCallout() {
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-[#D09A16]" />
                 </span>
                 <span className="text-[9px] font-bold uppercase tracking-[0.26em] text-[#D09A16]">
-                  PRIVATE PROPERTY DESK · ACTIVE INQUIRIES
+                  {ctaBadge}
                 </span>
               </div>
 
@@ -593,12 +646,12 @@ export default function DlfPropertyCallout() {
 
               {/* Muted description */}
               <p className="mt-3 text-xs sm:text-sm font-light leading-relaxed text-[#C9CED9] max-w-xl">
-                Direct access to off-market inventory, verified titles, and bespoke consultation across DLF Phase 1–5, Golf Course Road & Cybercity.
+                {ctaDescription}
               </p>
 
               {/* Property types list */}
               <div className="mt-4 flex flex-wrap items-center gap-2">
-                {["Residential Villas", "Luxury Floors", "Commercial HQs", "Industrial Assets"].map((tag, idx) => (
+                {ctaTags.map((tag, idx) => (
                   <span
                     key={idx}
                     className="rounded-full border border-white/10 bg-white/[0.03] px-3 py-1 text-[8px] font-semibold uppercase tracking-[0.16em] text-[#C9CED9]/80"
@@ -642,7 +695,7 @@ export default function DlfPropertyCallout() {
 
               {/* Gold Editorial CTA Button */}
               <Link
-                href={callout.cta || "/contact"}
+                href={ctaLink}
                 className="
                   group/btn
                   relative
@@ -661,7 +714,7 @@ export default function DlfPropertyCallout() {
                   hover:-translate-y-0.5
                 "
               >
-                <span className="relative z-10">{callout.ctaText || "Explore Deals"}</span>
+                <span className="relative z-10">{ctaText}</span>
                 <ArrowUpRight
                   size={16}
                   className="relative z-10 transition-transform duration-300 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1"
@@ -672,7 +725,7 @@ export default function DlfPropertyCallout() {
               {/* Trust statement */}
               <div className="flex items-center justify-center lg:justify-start gap-2 pt-1 text-[8px] uppercase tracking-[0.2em] text-[#D09A16]/90 font-medium">
                 <Check size={11} className="text-[#D09A16]" />
-                <span>Confidential Advisory · Verified Titles</span>
+                <span>{trustStatement}</span>
               </div>
 
             </div>

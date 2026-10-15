@@ -4,6 +4,9 @@ import { notFound } from 'next/navigation';
 import PropertyJsonLd from '@/components/seo/PropertyJsonLd';
 import PropertyDetailClient from '@/components/properties/PropertyDetailClient';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export async function generateStaticParams() {
   const properties = await getProperties({ all: false });
   return (properties || [])

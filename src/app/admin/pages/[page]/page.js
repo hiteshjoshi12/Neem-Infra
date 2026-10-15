@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { useRouter, useParams } from 'next/navigation';
+import { useRouter, useParams, useSearchParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import {
   Save,
@@ -23,16 +23,33 @@ import {
   Film,
   FileText,
   LayoutList,
+  Compass,
+  ShieldCheck,
   Plus,
-  Trash2
+  Trash2,
+  ExternalLink,
+  ChevronRight,
+  TrendingUp,
+  HelpCircle
 } from 'lucide-react';
 import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
+import { CORRIDOR_PAGES_DATA } from '@/constants/corridorPagesData';
 import api from '@/services/api';
 import ImageUploadInput from '@/components/admin/ImageUploadInput';
+
+const CORRIDOR_LIST = [
+  { slug: 'dlf-phase-1', name: 'DLF Phase 1', path: '/property/dlf-phase-1' },
+  { slug: 'dlf-phase-2', name: 'DLF Phase 2', path: '/property/dlf-phase-2' },
+  { slug: 'dlf-phase-3', name: 'DLF Phase 3', path: '/property/dlf-phase-3' },
+  { slug: 'dlf-phase-4', name: 'DLF Phase 4', path: '/property/dlf-phase-4' },
+  { slug: 'shushant-lok', name: 'Sushant Lok', path: '/property/shushant-lok' },
+  { slug: 'udyog-vihar', name: 'Udyog Vihar', path: '/property/udyog-vihar' }
+];
 
 const PAGE_CONFIGS = {
   properties: {
     pageKey: 'page_properties',
+    liveUrl: '/properties',
     title: 'Properties Catalog Page CMS',
     desc: 'Customize the header masthead, search filters, empty states, and advisory contact banner.',
     icon: Building2,
@@ -45,8 +62,9 @@ const PAGE_CONFIGS = {
   },
   residential: {
     pageKey: 'page_residential',
+    liveUrl: '/services/residential',
     title: 'Residential Services Page CMS',
-    desc: 'Manage luxury builder floor typologies, DLF Phase 1–5 metrics, micro-markets, 7-point due diligence roadmap, and private consultation CTA.',
+    desc: 'Manage luxury builder floor typologies, DLF Phase 1–5 metrics, micro-markets, 7-point due diligence roadmap, specification standards, and private consultation CTA.',
     icon: Building2,
     sections: [
       { id: 'hero', label: 'Hero & Masthead' },
@@ -54,13 +72,15 @@ const PAGE_CONFIGS = {
       { id: 'assetClasses', label: 'Asset Classes & Pricing' },
       { id: 'microMarkets', label: 'Micro-Markets' },
       { id: 'dueDiligenceSteps', label: '7-Point Due Diligence' },
+      { id: 'specificationStandards', label: 'Specification Standards' },
       { id: 'cta', label: 'Consultation Banner' }
     ]
   },
   commercial: {
     pageKey: 'page_commercial',
+    liveUrl: '/services/commercial',
     title: 'Commercial Services Page CMS',
-    desc: 'Manage Cyber City & Udyog Vihar corporate suites, high-street retail, pre-leased yields, lease structuring framework, and leasing desk copy.',
+    desc: 'Manage Cyber City & Udyog Vihar corporate suites, high-street retail, pre-leased yields, lease structuring framework, compliance standards, and leasing desk copy.',
     icon: Layers,
     sections: [
       { id: 'hero', label: 'Hero & Masthead' },
@@ -68,13 +88,15 @@ const PAGE_CONFIGS = {
       { id: 'assetClasses', label: 'Office & Retail Classes' },
       { id: 'yieldBenchmarks', label: 'Yield Benchmarks' },
       { id: 'leaseFramework', label: 'Lease Framework' },
+      { id: 'complianceStandards', label: 'Compliance Standards' },
       { id: 'cta', label: 'Corporate Advisory Banner' }
     ]
   },
   industrial: {
     pageKey: 'page_industrial',
+    liveUrl: '/services/industrial',
     title: 'Industrial Services Page CMS',
-    desc: 'Manage logistics parks, HSIIDC plots, warehousing specs, transport corridors, compliance steps, and BTS manufacturing land copy.',
+    desc: 'Manage logistics parks, HSIIDC plots, warehousing specs, transport corridors, compliance steps, engineering standards, and BTS manufacturing land copy.',
     icon: LayoutList,
     sections: [
       { id: 'hero', label: 'Hero & Masthead' },
@@ -82,11 +104,13 @@ const PAGE_CONFIGS = {
       { id: 'assetClasses', label: 'Industrial & Land Classes' },
       { id: 'corridors', label: 'Industrial Corridors' },
       { id: 'complianceSteps', label: 'HSIIDC Compliance' },
+      { id: 'engineeringStandards', label: 'Engineering Standards' },
       { id: 'cta', label: 'Industrial Advisory Banner' }
     ]
   },
   team: {
     pageKey: 'page_team',
+    liveUrl: '/team',
     title: 'Our Team Page CMS',
     desc: 'Manage founder credentials for Arun Sharma & Suneeta Chawla, senior principals, 4 fiduciary pillars, and private session CTA.',
     icon: Users,
@@ -100,21 +124,23 @@ const PAGE_CONFIGS = {
   },
   about: {
     pageKey: 'page_about',
+    liveUrl: '/about',
     title: 'About Us Page CMS',
     desc: 'Customize company leadership narrative, legacy video tour, property categories, value proposition, why choose us distinction, and private advisory CTA.',
     icon: Users,
     sections: [
-      { id: 'hero', label: 'Hero & Mission' },
+      { id: 'hero', label: 'Hero & Metric Strip' },
       { id: 'videoShowcase', label: 'Video Showcase' },
       { id: 'offerings', label: 'Property Categories' },
       { id: 'proposition', label: 'Value Proposition' },
-      { id: 'leadership', label: 'Founders & Leadership' },
-      { id: 'whyChooseUs', label: 'Why Choose Us' },
+      { id: 'leadership', label: 'Founders & Team' },
+      { id: 'whyChooseUs', label: '7 Pillars & Comparison' },
       { id: 'consultationCta', label: 'Consultation Banner' }
     ]
   },
   contact: {
     pageKey: 'page_contact',
+    liveUrl: '/contact',
     title: 'Contact Page CMS',
     desc: 'Customize headquarters address, direct telephone lines, email desks, office timings, and inquiry form text.',
     icon: Phone,
@@ -126,19 +152,63 @@ const PAGE_CONFIGS = {
   },
   blog: {
     pageKey: 'page_blog',
-    title: 'Blog Page CMS',
-    desc: 'Customize market intelligence headlines, corridor spotlights, research library, and newsletter text.',
+    liveUrl: '/blog',
+    title: 'Blog & Research Page CMS',
+    desc: 'Customize market intelligence headlines, market pulse metrics, corridor spotlights, research library, and newsletter text.',
     icon: BookOpen,
     sections: [
       { id: 'masthead', label: 'Hero Masthead' },
+      { id: 'marketPulse', label: 'Market Pulse Bar' },
       { id: 'spotlight', label: 'Editorial Spotlight' },
+      { id: 'corridors', label: 'Corridor Spotlights' },
       { id: 'researchLibrary', label: 'Research Library Archive' },
       { id: 'newsletter', label: 'Advisory Newsletter' }
+    ]
+  },
+  corridors: {
+    pageKey: 'corridor_dlf-phase-1',
+    isCorridor: true,
+    liveUrl: '/property/dlf-phase-1',
+    title: 'Micro-Market Corridor CMS',
+    desc: 'Customize live metrics, overview narrative, connectivity, nearest landmarks, and FAQs for DLF Phase 1–4, Sushant Lok & Udyog Vihar.',
+    icon: Compass,
+    sections: [
+      { id: 'hero', label: 'Hero & Gallery' },
+      { id: 'metrics', label: 'Live Benchmarks' },
+      { id: 'overview', label: 'Locality Profile' },
+      { id: 'typologies', label: 'Asset Typologies' },
+      { id: 'locationSection', label: 'Urban Balance & Callout' },
+      { id: 'whyLiveHere', label: 'Why Live Here (8 Pillars)' },
+      { id: 'nearestPlaces', label: 'Commute & Landmarks' },
+      { id: 'howWeHelp', label: 'Turnkey Platform & Authority' },
+      { id: 'faqs', label: 'Corridor FAQs' }
+    ]
+  },
+  terms: {
+    pageKey: 'page_terms',
+    liveUrl: '/terms',
+    title: 'Terms of Service CMS',
+    desc: 'Customize legal disclosures, title verification disclaimers, and advisory representation conditions.',
+    icon: FileText,
+    sections: [
+      { id: 'hero', label: 'Hero Masthead' },
+      { id: 'sections', label: 'Terms Clauses & Articles' }
+    ]
+  },
+  privacy: {
+    pageKey: 'page_privacy',
+    liveUrl: '/privacy-policy',
+    title: 'Privacy Policy CMS',
+    desc: 'Customize HNWI confidentiality standards, zero third-party monetization policy, and client data governance.',
+    icon: ShieldCheck,
+    sections: [
+      { id: 'hero', label: 'Hero Masthead' },
+      { id: 'sections', label: 'Privacy Articles & Safeguards' }
     ]
   }
 };
 
-// Simple reusable input components
+// Reusable Form Inputs
 function FormField({ label, description, value, onChange, placeholder = '' }) {
   return (
     <div className="space-y-1.5">
@@ -179,49 +249,87 @@ function TextAreaField({ label, description, value, onChange, rows = 3, placehol
   );
 }
 
+function ListField({ label, description, items = [], onChange, placeholder = 'One item per line', rows = 3 }) {
+  const text = Array.isArray(items) ? items.join('\n') : (items || '');
+  return (
+    <div className="space-y-1.5">
+      <label className="block text-xs font-semibold text-slate-200">
+        {label} <span className="text-[10px] text-slate-400 font-normal">(One bullet per line)</span>
+      </label>
+      {description && (
+        <p className="text-[11px] text-slate-400">{description}</p>
+      )}
+      <textarea
+        rows={rows}
+        value={text}
+        onChange={(e) => {
+          const lines = e.target.value.split('\n');
+          onChange(lines);
+        }}
+        placeholder={placeholder}
+        className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 focus:border-[#D09A16] text-white text-xs outline-none transition-colors leading-relaxed font-mono"
+      />
+    </div>
+  );
+}
+
 export default function AdminPageCMS() {
   const routerParams = useParams();
+  const searchParams = useSearchParams();
   const pageParam = routerParams?.page || 'properties';
   const config = PAGE_CONFIGS[pageParam] || PAGE_CONFIGS.properties;
 
+  const [selectedCorridor, setSelectedCorridor] = useState(() => {
+    const querySlug = searchParams?.get('corridor');
+    return querySlug || 'dlf-phase-1';
+  });
+
+  const activePageKey = config.isCorridor 
+    ? `corridor_${selectedCorridor}` 
+    : config.pageKey;
+
   const { sections, refetch, updateLocalSection } = useCms();
-  const [currentPageKey, setCurrentPageKey] = useState(config.pageKey);
   const [activeSectionTab, setActiveSectionTab] = useState(config.sections[0]?.id || '');
-  const [formData, setFormData] = useState(() => ({
-    ...(DEFAULT_SECTIONS[config.pageKey] || {}),
-    ...(sections[config.pageKey] || {})
-  }));
+  
+  const getInitialData = () => {
+    if (config.isCorridor) {
+      return sections[activePageKey] || CORRIDOR_PAGES_DATA[selectedCorridor] || {};
+    }
+    return sections[activePageKey] || DEFAULT_SECTIONS[activePageKey] || {};
+  };
+
+  const [currentKey, setCurrentKey] = useState(activePageKey);
+  const [formData, setFormData] = useState(getInitialData);
   const [saving, setSaving] = useState(false);
   const [statusMsg, setStatusMsg] = useState({ type: '', text: '' });
 
-  // Sync state when page changes (official React pattern for adjusting state from props/params)
-  if (currentPageKey !== config.pageKey) {
-    setCurrentPageKey(config.pageKey);
-    const pageDefault = DEFAULT_SECTIONS[config.pageKey] || {};
-    const pageSaved = sections[config.pageKey] || {};
-    setFormData({ ...pageDefault, ...pageSaved });
+  // Sync state during render when activePageKey changes (official React pattern)
+  if (currentKey !== activePageKey) {
+    setCurrentKey(activePageKey);
+    const freshDefault = config.isCorridor 
+      ? (CORRIDOR_PAGES_DATA[selectedCorridor] || {}) 
+      : (DEFAULT_SECTIONS[activePageKey] || {});
+    const existing = sections[activePageKey] || {};
+    setFormData({ ...freshDefault, ...existing });
     setActiveSectionTab(config.sections[0]?.id || '');
     setStatusMsg({ type: '', text: '' });
   }
 
-  // Fetch fresh page data from database asynchronously
+  // Fetch fresh from MongoDB asynchronously
   useEffect(() => {
     let isMounted = true;
-
-    api.getPage(config.pageKey)
+    api.getPage(activePageKey)
       .then((res) => {
         if (isMounted && res?.success && res.data) {
           setFormData((prev) => ({ ...prev, ...res.data }));
         }
       })
       .catch((err) => {
-        console.warn(`[Admin] Fresh fetch for page '${config.pageKey}':`, err.message);
+        console.warn(`[Admin] Fresh fetch for '${activePageKey}':`, err.message);
       });
 
-    return () => {
-      isMounted = false;
-    };
-  }, [config.pageKey]);
+    return () => { isMounted = false; };
+  }, [activePageKey]);
 
   const updateField = (path, value) => {
     setFormData((prev) => {
@@ -243,13 +351,17 @@ export default function AdminPageCMS() {
     setStatusMsg({ type: '', text: '' });
 
     try {
-      const res = await api.updatePage(config.pageKey, formData, config.title);
+      const pageTitle = config.isCorridor 
+        ? `Corridor: ${selectedCorridor.toUpperCase()}` 
+        : config.title;
+
+      const res = await api.updatePage(activePageKey, formData, pageTitle);
       if (res && res.success) {
-        setStatusMsg({ type: 'success', text: `Page content saved and updated live successfully!` });
+        setStatusMsg({ type: 'success', text: `Page content saved & updated in MongoDB live successfully!` });
         const savedData = res.data || formData;
         setFormData(savedData);
         if (updateLocalSection) {
-          updateLocalSection(config.pageKey, savedData);
+          updateLocalSection(activePageKey, savedData);
         }
         await refetch(true);
       } else {
@@ -266,7 +378,7 @@ export default function AdminPageCMS() {
         type: 'error',
         isAuth: isAuthError,
         text: isAuthError
-          ? 'Your admin login session has expired or is unauthorized. Please log in again to save changes.'
+          ? 'Your admin login session has expired or is unauthorized. Please log in again.'
           : (err.message || 'Network error saving changes')
       });
     } finally {
@@ -275,59 +387,105 @@ export default function AdminPageCMS() {
   };
 
   const PageIcon = config.icon;
+  const currentLiveUrl = config.isCorridor 
+    ? `/property/${selectedCorridor}` 
+    : config.liveUrl;
 
   return (
-    <div className="space-y-6">
-      {/* Header Bar */}
+    <div className="space-y-6 max-w-7xl mx-auto">
+      {/* Top Header Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-white/10">
         <div>
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[#D09A16] text-[11px] font-bold uppercase tracking-wider mb-2">
-            <PageIcon size={12} />
-            <span>Page Content CMS</span>
+          <div className="flex items-center gap-2 mb-2">
+            <Link
+              href="/admin/pages"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white text-[11px] font-semibold transition-colors"
+            >
+              <span>← All Pages Hub</span>
+            </Link>
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[#D09A16] text-[11px] font-bold uppercase tracking-wider">
+              <PageIcon size={12} />
+              <span>{config.isCorridor ? 'Corridor CMS' : 'Page CMS'}</span>
+            </div>
           </div>
           <h1 className="text-xl sm:text-2xl font-serif font-bold text-white tracking-wide">
-            {config.title}
+            {config.isCorridor 
+              ? `${CORRIDOR_LIST.find(c => c.slug === selectedCorridor)?.name || 'Corridor'} CMS` 
+              : config.title}
           </h1>
           <p className="text-xs text-slate-400 mt-1 max-w-xl">
             {config.desc}
           </p>
         </div>
 
-        <button
-          onClick={handleSave}
-          disabled={saving}
-          className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#D09A16] to-[#D09A16] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_4px_15px_rgba(208,154,22,0.3)] active:scale-95 cursor-pointer disabled:opacity-60"
-        >
-          {saving ? (
-            <RefreshCw size={14} className="animate-spin" />
-          ) : (
-            <Save size={15} />
-          )}
-          <span>{saving ? 'Saving...' : 'Save Changes'}</span>
-        </button>
+        <div className="flex items-center gap-2.5">
+          <Link
+            href={currentLiveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium text-xs flex items-center gap-1.5 transition-colors"
+          >
+            <span>View Live</span>
+            <ExternalLink size={13} />
+          </Link>
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#D09A16] to-[#D09A16] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_4px_15px_rgba(208,154,22,0.3)] active:scale-95 cursor-pointer disabled:opacity-60"
+          >
+            {saving ? <RefreshCw size={14} className="animate-spin" /> : <Save size={14} />}
+            <span>{saving ? 'Saving...' : 'Save Changes'}</span>
+          </button>
+        </div>
       </div>
 
-      {/* Section Filter Pills */}
-      <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-none border-b border-white/10">
-        {config.sections.map((sec) => {
-          const isActive = activeSectionTab === sec.id;
-          return (
-            <button
-              key={sec.id}
-              onClick={() => setActiveSectionTab(sec.id)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer flex items-center gap-2 ${
-                isActive
-                  ? 'bg-[#D09A16] text-[#0C101A] shadow-md'
-                  : 'bg-white/5 hover:bg-white/10 text-slate-300'
-              }`}
-            >
-              <span>{sec.label}</span>
-            </button>
-          );
-        })}
+      {/* Corridor Selector Strip (When on corridors page) */}
+      {config.isCorridor && (
+        <div className="p-4 rounded-2xl bg-[#0E1424] border border-white/10 space-y-2.5">
+          <div className="flex items-center justify-between">
+            <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+              Select Micro-Market Corridor to Edit:
+            </span>
+            <span className="text-[11px] font-mono text-[#D09A16]">
+              Database Key: corridor_{selectedCorridor}
+            </span>
+          </div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2">
+            {CORRIDOR_LIST.map((corridor) => (
+              <button
+                key={corridor.slug}
+                onClick={() => setSelectedCorridor(corridor.slug)}
+                className={`py-2 px-3 rounded-xl text-xs font-semibold text-center transition-all cursor-pointer ${
+                  selectedCorridor === corridor.slug
+                    ? 'bg-[#D09A16] text-[#0C101A] font-bold shadow-md shadow-[#D09A16]/20'
+                    : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/5'
+                }`}
+              >
+                {corridor.name}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Section Tabs Switcher */}
+      <div className="flex items-center gap-2 overflow-x-auto pb-1 scrollbar-none">
+        {config.sections.map((sec) => (
+          <button
+            key={sec.id}
+            onClick={() => setActiveSectionTab(sec.id)}
+            className={`px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+              activeSectionTab === sec.id
+                ? 'bg-[#D09A16] text-[#0C101A] shadow-md'
+                : 'bg-white/5 hover:bg-white/10 text-slate-300'
+            }`}
+          >
+            <span>{sec.label}</span>
+          </button>
+        ))}
       </div>
 
-      {/* Status Alert */}
+      {/* Status Alert Notification */}
       {statusMsg.text && (
         <motion.div
           initial={{ opacity: 0, y: -6 }}
@@ -356,12 +514,76 @@ export default function AdminPageCMS() {
       {/* Form Editor Body */}
       <form onSubmit={handleSave} className="rounded-2xl bg-[#0E1424] border border-white/10 p-6 sm:p-8 shadow-xl space-y-6">
 
+        {/* ======================= PROPERTIES CATALOG ======================= */}
+        {pageParam === 'properties' && (
+          <>
+            {activeSectionTab === 'masthead' && (
+              <div className="space-y-5">
+                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Catalog Masthead &amp; Hero</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <FormField label="Badge Text" value={formData?.masthead?.badge} onChange={(val) => updateField('masthead.badge', val)} placeholder="e.g. Verified Portfolio • DLF Gurugram" />
+                  <FormField label="Stats Counter Label" value={formData?.masthead?.statsLabel} onChange={(val) => updateField('masthead.statsLabel', val)} placeholder="e.g. Active Listings" />
+                  <FormField label="Heading Prefix" value={formData?.masthead?.titleMain} onChange={(val) => updateField('masthead.titleMain', val)} placeholder="e.g. Luxury Properties & " />
+                  <FormField label="Heading Highlight (Italic)" value={formData?.masthead?.titleItalic} onChange={(val) => updateField('masthead.titleItalic', val)} placeholder="e.g. Builder Floors" />
+                </div>
+                <TextAreaField label="Description Subtext" value={formData?.masthead?.description} onChange={(val) => updateField('masthead.description', val)} rows={3} placeholder="Explore verified ready-to-move luxury builder floors..." />
+                <ImageUploadInput
+                  label="Masthead Architectural Background Image"
+                  value={formData?.masthead?.bgImage}
+                  onChange={(val) => updateField('masthead.bgImage', val)}
+                  folder="/saudagar-properties/properties"
+                />
+              </div>
+            )}
+
+            {activeSectionTab === 'filters' && (
+              <div className="space-y-5">
+                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Search Toolbar &amp; Corridor Bar</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <FormField label="Corridor Filter Section Label" value={formData?.filters?.corridorLabel} onChange={(val) => updateField('filters.corridorLabel', val)} placeholder="e.g. Corridor Filter" />
+                  <FormField label="Search Bar Placeholder" value={formData?.filters?.searchPlaceholder} onChange={(val) => updateField('filters.searchPlaceholder', val)} placeholder="e.g. Search by title, location, or plot size..." />
+                  <FormField label="Freehold Verification Badge Label" value={formData?.filters?.verifiedBadgeText} onChange={(val) => updateField('filters.verifiedBadgeText', val)} placeholder="e.g. 100% Freehold Title Verification" />
+                  <FormField label="All Locations Tab Label" value={formData?.filters?.allLocationsLabel} onChange={(val) => updateField('filters.allLocationsLabel', val)} placeholder="e.g. All Corridors" />
+                </div>
+              </div>
+            )}
+
+            {activeSectionTab === 'emptyState' && (
+              <div className="space-y-5">
+                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Empty Search State Display</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <FormField label="Empty State Heading" value={formData?.emptyState?.title} onChange={(val) => updateField('emptyState.title', val)} placeholder="e.g. No Properties Found Matching Your Criteria" />
+                  <FormField label="Reset Filters Button Text" value={formData?.emptyState?.resetBtnText} onChange={(val) => updateField('emptyState.resetBtnText', val)} placeholder="e.g. Reset All Filters" />
+                  <FormField label="WhatsApp Button Text" value={formData?.emptyState?.whatsappBtnText} onChange={(val) => updateField('emptyState.whatsappBtnText', val)} placeholder="e.g. WhatsApp Advisory Desk" />
+                </div>
+                <TextAreaField label="Guidance Description" value={formData?.emptyState?.description} onChange={(val) => updateField('emptyState.description', val)} rows={3} placeholder="Try adjusting your corridor, budget, or configuration filters..." />
+              </div>
+            )}
+
+            {activeSectionTab === 'advisory' && (
+              <div className="space-y-5">
+                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Bottom Advisory Banner</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <FormField label="Badge Text" value={formData?.advisory?.badge} onChange={(val) => updateField('advisory.badge', val)} placeholder="e.g. Private Off-Market Advisory" />
+                  <FormField label="WhatsApp Contact Number (Digits only)" value={formData?.advisory?.whatsappNumber} onChange={(val) => updateField('advisory.whatsappNumber', val)} placeholder="e.g. 919718511207" />
+                  <FormField label="Heading Prefix" value={formData?.advisory?.titleMain} onChange={(val) => updateField('advisory.titleMain', val)} placeholder="e.g. Looking for Unlisted DLF Phase 1–5 " />
+                  <FormField label="Heading Highlight (Italic)" value={formData?.advisory?.titleItalic} onChange={(val) => updateField('advisory.titleItalic', val)} placeholder="e.g. Estates?" />
+                  <FormField label="WhatsApp CTA Button Text" value={formData?.advisory?.whatsappBtnText} onChange={(val) => updateField('advisory.whatsappBtnText', val)} placeholder="e.g. WhatsApp Advisory" />
+                  <FormField label="Direct Hotline Display Text" value={formData?.advisory?.phoneText} onChange={(val) => updateField('advisory.phoneText', val)} placeholder="e.g. +91 98112 21207" />
+                  <FormField label="Phone Dial String (tel: URI)" value={formData?.advisory?.phoneRaw} onChange={(val) => updateField('advisory.phoneRaw', val)} placeholder="e.g. +919811221207" />
+                </div>
+                <TextAreaField label="Advisory Description" value={formData?.advisory?.description} onChange={(val) => updateField('advisory.description', val)} rows={3} placeholder="Many of Gurugram's most exclusive builder floors..." />
+              </div>
+            )}
+          </>
+        )}
+
         {/* ======================= RESIDENTIAL SERVICES ======================= */}
         {pageParam === 'residential' && (
           <>
             {activeSectionTab === 'hero' && (
               <div className="space-y-5">
-                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Hero Banner & Masthead</h3>
+                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Hero Banner &amp; Masthead</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField label="Badge Text" value={formData?.hero?.badge} onChange={(val) => updateField('hero.badge', val)} />
                   <FormField label="Direct Hotline Phone" value={formData?.hero?.ctaPhone} onChange={(val) => updateField('hero.ctaPhone', val)} />
@@ -375,6 +597,22 @@ export default function AdminPageCMS() {
                   onChange={(val) => updateField('hero.bgImage', val)}
                   folder="/saudagar-properties/services"
                 />
+
+                <div className="pt-4 border-t border-white/10 space-y-4">
+                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Hero Right Showcase Card</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FormField label="Card Category Tag" value={formData?.hero?.heroCard?.tag} onChange={(val) => updateField('hero.heroCard.tag', val)} placeholder="e.g. Advisory Authority" />
+                    <FormField label="Card Verified Badge" value={formData?.hero?.heroCard?.badge} onChange={(val) => updateField('hero.heroCard.badge', val)} placeholder="e.g. DLF Authorized Desk" />
+                    <FormField label="Feature #1 Title" value={formData?.hero?.heroCard?.feature1Title} onChange={(val) => updateField('hero.heroCard.feature1Title', val)} placeholder="e.g. 100% Clear & Verified Titles" />
+                    <FormField label="Feature #1 Description" value={formData?.hero?.heroCard?.feature1Desc} onChange={(val) => updateField('hero.heroCard.feature1Desc', val)} placeholder="e.g. Every builder floor..." />
+                    <FormField label="Feature #2 Title" value={formData?.hero?.heroCard?.feature2Title} onChange={(val) => updateField('hero.heroCard.feature2Title', val)} placeholder="e.g. Off-Market Builder Floors" />
+                    <FormField label="Feature #2 Description" value={formData?.hero?.heroCard?.feature2Desc} onChange={(val) => updateField('hero.heroCard.feature2Desc', val)} placeholder="e.g. Direct access..." />
+                    <FormField label="Feature #3 Title" value={formData?.hero?.heroCard?.feature3Title} onChange={(val) => updateField('hero.heroCard.feature3Title', val)} placeholder="e.g. 25+ Years DLF Leadership" />
+                    <FormField label="Feature #3 Description" value={formData?.hero?.heroCard?.feature3Desc} onChange={(val) => updateField('hero.heroCard.feature3Desc', val)} placeholder="e.g. Trusted advisors..." />
+                    <FormField label="Card Stat Label" value={formData?.hero?.heroCard?.statLabel} onChange={(val) => updateField('hero.heroCard.statLabel', val)} placeholder="e.g. Average Turnaround" />
+                    <FormField label="Card Stat Value" value={formData?.hero?.heroCard?.statValue} onChange={(val) => updateField('hero.heroCard.statValue', val)} placeholder="e.g. Seamless 14-Day Closure" />
+                  </div>
+                </div>
               </div>
             )}
 
@@ -393,7 +631,7 @@ export default function AdminPageCMS() {
 
             {activeSectionTab === 'assetClasses' && (
               <div className="space-y-6">
-                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Residential Asset Classes & Typologies</h3>
+                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Residential Asset Classes &amp; Typologies</h3>
                 {(formData?.assetClasses || []).map((item, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
                     <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Asset Class #{idx + 1}: {item.title}</h4>
@@ -401,8 +639,28 @@ export default function AdminPageCMS() {
                       <FormField label="Class Title" value={item.title} onChange={(val) => updateField(`assetClasses.${idx}.title`, val)} />
                       <FormField label="Locations" value={item.locations} onChange={(val) => updateField(`assetClasses.${idx}.locations`, val)} />
                       <FormField label="Specifications Summary" value={item.specs} onChange={(val) => updateField(`assetClasses.${idx}.specs`, val)} />
-                      <FormField label="Price Bracket" value={item.price} onChange={(val) => updateField(`assetClasses.${idx}.price`, val)} />
+                      <FormField label="Price Bracket" value={item.price || item.pricing} onChange={(val) => { updateField(`assetClasses.${idx}.price`, val); updateField(`assetClasses.${idx}.pricing`, val); }} />
                     </div>
+                    
+                    <div className="pt-2">
+                      <span className="text-[11px] font-bold text-[#D09A16] uppercase tracking-wider block mb-2">Technical &amp; Typology Metrics</span>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                        {(item.metrics || [{ label: '', val: '' }, { label: '', val: '' }, { label: '', val: '' }, { label: '', val: '' }]).slice(0, 4).map((m, mIdx) => (
+                          <div key={mIdx} className="p-3 rounded-xl bg-white/[0.03] border border-white/5 space-y-2">
+                            <FormField label={`Metric #${mIdx + 1} Label`} value={m.label} onChange={(val) => updateField(`assetClasses.${idx}.metrics.${mIdx}.label`, val)} placeholder="e.g. Built-Up Area" />
+                            <FormField label="Value" value={m.val || m.value} onChange={(val) => { updateField(`assetClasses.${idx}.metrics.${mIdx}.val`, val); updateField(`assetClasses.${idx}.metrics.${mIdx}.value`, val); }} placeholder="e.g. 2,800 - 4,500 Sq. Ft." />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <ListField
+                      label="Key Features &amp; Specifications"
+                      items={item.features}
+                      onChange={(val) => updateField(`assetClasses.${idx}.features`, val)}
+                      placeholder="Private OTIS/Kone elevator with access control&#10;Separate staff quarters with private washroom"
+                    />
+
                     <ImageUploadInput
                       label={`Asset Class #${idx + 1} Image`}
                       value={item.image}
@@ -427,6 +685,12 @@ export default function AdminPageCMS() {
                       <FormField label="Price Range / Valuation" value={market.priceRange} onChange={(val) => updateField(`microMarkets.${idx}.priceRange`, val)} />
                       <FormField label="Rental Yield" value={market.rentalYield} onChange={(val) => updateField(`microMarkets.${idx}.rentalYield`, val)} />
                     </div>
+                    <ListField
+                      label="Micro-Market Key Highlights"
+                      items={market.highlights}
+                      onChange={(val) => updateField(`microMarkets.${idx}.highlights`, val)}
+                      placeholder="Immediate connectivity to Golf Course Road &amp; MG Road&#10;Dense tree canopy, tranquil residential atmosphere"
+                    />
                   </div>
                 ))}
               </div>
@@ -444,6 +708,23 @@ export default function AdminPageCMS() {
                       </div>
                     </div>
                     <TextAreaField label="Verification Protocol Description" value={step.desc} onChange={(val) => updateField(`dueDiligenceSteps.${idx}.desc`, val)} rows={2} />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {activeSectionTab === 'specificationStandards' && (
+              <div className="space-y-6">
+                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Luxury Architectural &amp; Specification Standards</h3>
+                {(formData?.specificationStandards || []).map((std, idx) => (
+                  <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
+                    <FormField label={`Standard Category #${idx + 1}`} value={std.category} onChange={(val) => updateField(`specificationStandards.${idx}.category`, val)} />
+                    <ListField
+                      label="Category Specifications &amp; Standards"
+                      items={std.items}
+                      onChange={(val) => updateField(`specificationStandards.${idx}.items`, val)}
+                      placeholder="Seismic Zone IV earthquake-resistant RCC frame construction&#10;Double-glazed Unit (DGU) acoustic windows by Schüco / Fenesta"
+                    />
                   </div>
                 ))}
               </div>
@@ -484,12 +765,28 @@ export default function AdminPageCMS() {
                   onChange={(val) => updateField('hero.bgImage', val)}
                   folder="/saudagar-properties/services"
                 />
+
+                <div className="pt-4 border-t border-white/10 space-y-4">
+                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Hero Right Showcase Card</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FormField label="Card Category Tag" value={formData?.hero?.heroCard?.tag} onChange={(val) => updateField('hero.heroCard.tag', val)} placeholder="e.g. Enterprise Advisory" />
+                    <FormField label="Card Verified Badge" value={formData?.hero?.heroCard?.badge} onChange={(val) => updateField('hero.heroCard.badge', val)} placeholder="e.g. Corporate Tenant Desk" />
+                    <FormField label="Feature #1 Title" value={formData?.hero?.heroCard?.feature1Title} onChange={(val) => updateField('hero.heroCard.feature1Title', val)} placeholder="e.g. Pre-Leased High ROI Deals" />
+                    <FormField label="Feature #1 Description" value={formData?.hero?.heroCard?.feature1Desc} onChange={(val) => updateField('hero.heroCard.feature1Desc', val)} placeholder="e.g. Vetted commercial..." />
+                    <FormField label="Feature #2 Title" value={formData?.hero?.heroCard?.feature2Title} onChange={(val) => updateField('hero.heroCard.feature2Title', val)} placeholder="e.g. Direct Developer Mandates" />
+                    <FormField label="Feature #2 Description" value={formData?.hero?.heroCard?.feature2Desc} onChange={(val) => updateField('hero.heroCard.feature2Desc', val)} placeholder="e.g. Preferred institutional..." />
+                    <FormField label="Feature #3 Title" value={formData?.hero?.heroCard?.feature3Title} onChange={(val) => updateField('hero.heroCard.feature3Title', val)} placeholder="e.g. End-to-End Lease Structuring" />
+                    <FormField label="Feature #3 Description" value={formData?.hero?.heroCard?.feature3Desc} onChange={(val) => updateField('hero.heroCard.feature3Desc', val)} placeholder="e.g. Complete legal lease..." />
+                    <FormField label="Card Stat Label" value={formData?.hero?.heroCard?.statLabel} onChange={(val) => updateField('hero.heroCard.statLabel', val)} placeholder="e.g. Commercial Portfolio Transacted" />
+                    <FormField label="Card Stat Value" value={formData?.hero?.heroCard?.statValue} onChange={(val) => updateField('hero.heroCard.statValue', val)} placeholder="e.g. 1,000,000+ Sq. Ft." />
+                  </div>
+                </div>
               </div>
             )}
 
             {activeSectionTab === 'metrics' && (
               <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Commercial Yield & Performance Metrics</h3>
+                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Commercial Yield &amp; Performance Metrics</h3>
                 {(formData?.metrics || []).map((m, idx) => (
                   <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <FormField label={`Metric #${idx + 1} Label`} value={m.label} onChange={(val) => updateField(`metrics.${idx}.label`, val)} />
@@ -502,7 +799,7 @@ export default function AdminPageCMS() {
 
             {activeSectionTab === 'assetClasses' && (
               <div className="space-y-6">
-                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Office & Retail Asset Classes</h3>
+                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Office &amp; Retail Asset Classes</h3>
                 {(formData?.assetClasses || []).map((item, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
                     <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Asset Class #{idx + 1}: {item.title}</h4>
@@ -510,8 +807,28 @@ export default function AdminPageCMS() {
                       <FormField label="Title" value={item.title} onChange={(val) => updateField(`assetClasses.${idx}.title`, val)} />
                       <FormField label="Locations" value={item.locations} onChange={(val) => updateField(`assetClasses.${idx}.locations`, val)} />
                       <FormField label="Specs" value={item.specs} onChange={(val) => updateField(`assetClasses.${idx}.specs`, val)} />
-                      <FormField label="Price / Rental Yield" value={item.price} onChange={(val) => updateField(`assetClasses.${idx}.price`, val)} />
+                      <FormField label="Price / Rental Yield" value={item.price || item.pricing} onChange={(val) => { updateField(`assetClasses.${idx}.price`, val); updateField(`assetClasses.${idx}.pricing`, val); }} />
                     </div>
+
+                    <div className="pt-2">
+                      <span className="text-[11px] font-bold text-[#D09A16] uppercase tracking-wider block mb-2">Technical &amp; Asset Metrics</span>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                        {(item.metrics || [{ label: '', val: '' }, { label: '', val: '' }, { label: '', val: '' }, { label: '', val: '' }]).slice(0, 4).map((m, mIdx) => (
+                          <div key={mIdx} className="p-3 rounded-xl bg-white/[0.03] border border-white/5 space-y-2">
+                            <FormField label={`Metric #${mIdx + 1} Label`} value={m.label} onChange={(val) => updateField(`assetClasses.${idx}.metrics.${mIdx}.label`, val)} placeholder="e.g. Floor Plates" />
+                            <FormField label="Value" value={m.val || m.value} onChange={(val) => { updateField(`assetClasses.${idx}.metrics.${mIdx}.val`, val); updateField(`assetClasses.${idx}.metrics.${mIdx}.value`, val); }} placeholder="e.g. 15,000 - 35,000 Sq. Ft." />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <ListField
+                      label="Key Commercial Features &amp; Specifications"
+                      items={item.features}
+                      onChange={(val) => updateField(`assetClasses.${idx}.features`, val)}
+                      placeholder="LEED Gold / Platinum Certified sustainable design&#10;High-speed destination-controlled elevators"
+                    />
+
                     <ImageUploadInput
                       label={`Asset Class #${idx + 1} Image`}
                       value={item.image}
@@ -532,10 +849,16 @@ export default function AdminPageCMS() {
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                       <FormField label="Commercial Hub Name" value={market.hub} onChange={(val) => updateField(`yieldBenchmarks.${idx}.hub`, val)} />
                       <FormField label="Category / Asset Class" value={market.category} onChange={(val) => updateField(`yieldBenchmarks.${idx}.category`, val)} />
-                      <FormField label="Yield Range (%)" value={market.yieldRange} onChange={(val) => updateField(`yieldBenchmarks.${idx}.yieldRange`, val)} />
-                      <FormField label="Lease Rate / Valuation" value={market.capitalValuation} onChange={(val) => updateField(`yieldBenchmarks.${idx}.capitalValuation`, val)} />
-                      <FormField label="Average Occupancy Rate" value={market.occupancyRate} onChange={(val) => updateField(`yieldBenchmarks.${idx}.occupancyRate`, val)} />
+                      <FormField label="Yield Range (%)" value={market.netYield || market.yieldRange} onChange={(val) => { updateField(`yieldBenchmarks.${idx}.netYield`, val); updateField(`yieldBenchmarks.${idx}.yieldRange`, val); }} />
+                      <FormField label="Lease Rate / Valuation" value={market.leaseRate || market.capitalValuation} onChange={(val) => { updateField(`yieldBenchmarks.${idx}.leaseRate`, val); updateField(`yieldBenchmarks.${idx}.capitalValuation`, val); }} />
+                      <FormField label="Average Occupancy Rate" value={market.occupancy || market.occupancyRate} onChange={(val) => { updateField(`yieldBenchmarks.${idx}.occupancy`, val); updateField(`yieldBenchmarks.${idx}.occupancyRate`, val); }} />
                     </div>
+                    <ListField
+                      label="Hub Yield Highlights"
+                      items={market.highlights}
+                      onChange={(val) => updateField(`yieldBenchmarks.${idx}.highlights`, val)}
+                      placeholder="India's premier corporate destination housing 500+ MNCs&#10;Direct Rapid Metro and NH-48 connectivity"
+                    />
                   </div>
                 ))}
               </div>
@@ -553,6 +876,21 @@ export default function AdminPageCMS() {
                       </div>
                     </div>
                     <TextAreaField label="Lease Structuring Protocol" value={step.desc} onChange={(val) => updateField(`leaseFramework.${idx}.desc`, val)} rows={2} />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {activeSectionTab === 'complianceStandards' && (
+              <div className="space-y-6">
+                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Institutional Building Compliance Checklist</h3>
+                {(formData?.complianceStandards || []).map((std, idx) => (
+                  <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <FormField label="Standard / Benchmark Title" value={std.title} onChange={(val) => updateField(`complianceStandards.${idx}.title`, val)} />
+                      <FormField label="Compliance Metrics / Certification" value={std.metrics} onChange={(val) => updateField(`complianceStandards.${idx}.metrics`, val)} />
+                    </div>
+                    <TextAreaField label="Audit &amp; Engineering Description" value={std.desc} onChange={(val) => updateField(`complianceStandards.${idx}.desc`, val)} rows={2} />
                   </div>
                 ))}
               </div>
@@ -593,12 +931,28 @@ export default function AdminPageCMS() {
                   onChange={(val) => updateField('hero.bgImage', val)}
                   folder="/saudagar-properties/services"
                 />
+
+                <div className="pt-4 border-t border-white/10 space-y-4">
+                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Hero Right Showcase Card</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FormField label="Card Category Tag" value={formData?.hero?.heroCard?.tag} onChange={(val) => updateField('hero.heroCard.tag', val)} placeholder="e.g. Industrial Desk" />
+                    <FormField label="Card Verified Badge" value={formData?.hero?.heroCard?.badge} onChange={(val) => updateField('hero.heroCard.badge', val)} placeholder="e.g. HSIIDC & Legal Diligence" />
+                    <FormField label="Feature #1 Title" value={formData?.hero?.heroCard?.feature1Title} onChange={(val) => updateField('hero.heroCard.feature1Title', val)} placeholder="e.g. Turnkey Logistics Facilities" />
+                    <FormField label="Feature #1 Description" value={formData?.hero?.heroCard?.feature1Desc} onChange={(val) => updateField('hero.heroCard.feature1Desc', val)} placeholder="e.g. Immediate occupancy..." />
+                    <FormField label="Feature #2 Title" value={formData?.hero?.heroCard?.feature2Title} onChange={(val) => updateField('hero.heroCard.feature2Title', val)} placeholder="e.g. Zoning & Compliance Audits" />
+                    <FormField label="Feature #2 Description" value={formData?.hero?.heroCard?.feature2Desc} onChange={(val) => updateField('hero.heroCard.feature2Desc', val)} placeholder="e.g. Pollution board NOC..." />
+                    <FormField label="Feature #3 Title" value={formData?.hero?.heroCard?.feature3Title} onChange={(val) => updateField('hero.heroCard.feature3Title', val)} placeholder="e.g. Arterial Freight Proximity" />
+                    <FormField label="Feature #3 Description" value={formData?.hero?.heroCard?.feature3Desc} onChange={(val) => updateField('hero.heroCard.feature3Desc', val)} placeholder="e.g. Plots located with..." />
+                    <FormField label="Card Stat Label" value={formData?.hero?.heroCard?.statLabel} onChange={(val) => updateField('hero.heroCard.statLabel', val)} placeholder="e.g. Industrial Land Transacted" />
+                    <FormField label="Card Stat Value" value={formData?.hero?.heroCard?.statValue} onChange={(val) => updateField('hero.heroCard.statValue', val)} placeholder="e.g. 100+ Acres in NCR" />
+                  </div>
+                </div>
               </div>
             )}
 
             {activeSectionTab === 'metrics' && (
               <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Logistics & Warehousing Metrics</h3>
+                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Logistics &amp; Warehousing Metrics</h3>
                 {(formData?.metrics || []).map((m, idx) => (
                   <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <FormField label={`Metric #${idx + 1} Label`} value={m.label} onChange={(val) => updateField(`metrics.${idx}.label`, val)} />
@@ -611,7 +965,7 @@ export default function AdminPageCMS() {
 
             {activeSectionTab === 'assetClasses' && (
               <div className="space-y-6">
-                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Industrial & Logistics Asset Classes</h3>
+                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Industrial &amp; Logistics Asset Classes</h3>
                 {(formData?.assetClasses || []).map((item, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
                     <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Asset Class #{idx + 1}: {item.title}</h4>
@@ -619,8 +973,28 @@ export default function AdminPageCMS() {
                       <FormField label="Title" value={item.title} onChange={(val) => updateField(`assetClasses.${idx}.title`, val)} />
                       <FormField label="Locations" value={item.locations} onChange={(val) => updateField(`assetClasses.${idx}.locations`, val)} />
                       <FormField label="Specs" value={item.specs} onChange={(val) => updateField(`assetClasses.${idx}.specs`, val)} />
-                      <FormField label="Pricing / Lease Rate" value={item.price} onChange={(val) => updateField(`assetClasses.${idx}.price`, val)} />
+                      <FormField label="Pricing / Lease Rate" value={item.price || item.pricing} onChange={(val) => { updateField(`assetClasses.${idx}.price`, val); updateField(`assetClasses.${idx}.pricing`, val); }} />
                     </div>
+
+                    <div className="pt-2">
+                      <span className="text-[11px] font-bold text-[#D09A16] uppercase tracking-wider block mb-2">Technical &amp; Engineering Metrics</span>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                        {(item.metrics || [{ label: '', val: '' }, { label: '', val: '' }, { label: '', val: '' }, { label: '', val: '' }]).slice(0, 4).map((m, mIdx) => (
+                          <div key={mIdx} className="p-3 rounded-xl bg-white/[0.03] border border-white/5 space-y-2">
+                            <FormField label={`Metric #${mIdx + 1} Label`} value={m.label} onChange={(val) => updateField(`assetClasses.${idx}.metrics.${mIdx}.label`, val)} placeholder="e.g. Clear Height" />
+                            <FormField label="Value" value={m.val || m.value} onChange={(val) => { updateField(`assetClasses.${idx}.metrics.${mIdx}.val`, val); updateField(`assetClasses.${idx}.metrics.${mIdx}.value`, val); }} placeholder="e.g. 10.5m to 12.5m" />
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    <ListField
+                      label="Key Warehouse &amp; Industrial Features"
+                      items={item.features}
+                      onChange={(val) => updateField(`assetClasses.${idx}.features`, val)}
+                      placeholder="FM2 laser-screeded flooring with heavy racking capacity&#10;Automated hydraulic dock levelers"
+                    />
+
                     <ImageUploadInput
                       label={`Asset Class #${idx + 1} Image`}
                       value={item.image}
@@ -643,10 +1017,17 @@ export default function AdminPageCMS() {
                       <FormField label="Zoning / Category" value={corridor.zoning || corridor.category} onChange={(val) => { updateField(`corridors.${idx}.zoning`, val); updateField(`corridors.${idx}.category`, val); }} />
                       <FormField label="Lease Pricing Range" value={corridor.pricing} onChange={(val) => updateField(`corridors.${idx}.pricing`, val)} />
                       <FormField label="Freight / Connectivity" value={corridor.connectivity || corridor.freightAccess} onChange={(val) => { updateField(`corridors.${idx}.connectivity`, val); updateField(`corridors.${idx}.freightAccess`, val); }} />
-                      <div className="sm:col-span-2">
+                      <FormField label="Power Infrastructure" value={corridor.powerAvailability} onChange={(val) => updateField(`corridors.${idx}.powerAvailability`, val)} placeholder="e.g. Dual 66kV / 33kV Dedicated Substations" />
+                      <div>
                         <FormField label="Ideal Industry / Occupiers" value={corridor.idealFor} onChange={(val) => updateField(`corridors.${idx}.idealFor`, val)} />
                       </div>
                     </div>
+                    <ListField
+                      label="Corridor Key Highlights"
+                      items={corridor.highlights}
+                      onChange={(val) => updateField(`corridors.${idx}.highlights`, val)}
+                      placeholder="Adjacent to DLF Cybercity with zero transit delay&#10;Immediate availability of skilled technical workforce"
+                    />
                   </div>
                 ))}
               </div>
@@ -664,6 +1045,21 @@ export default function AdminPageCMS() {
                       </div>
                     </div>
                     <TextAreaField label="Regulatory Clearance Details" value={step.desc} onChange={(val) => updateField(`complianceSteps.${idx}.desc`, val)} rows={2} />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {activeSectionTab === 'engineeringStandards' && (
+              <div className="space-y-6">
+                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Grade-A Warehouse Engineering Standards</h3>
+                {(formData?.engineeringStandards || []).map((std, idx) => (
+                  <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <FormField label="Engineering Standard Title" value={std.title} onChange={(val) => updateField(`engineeringStandards.${idx}.title`, val)} />
+                      <FormField label="Technical Benchmark / Metrics" value={std.metrics} onChange={(val) => updateField(`engineeringStandards.${idx}.metrics`, val)} />
+                    </div>
+                    <TextAreaField label="Engineering Specification Details" value={std.desc} onChange={(val) => updateField(`engineeringStandards.${idx}.desc`, val)} rows={2} />
                   </div>
                 ))}
               </div>
@@ -703,12 +1099,29 @@ export default function AdminPageCMS() {
                   onChange={(val) => updateField('hero.bgImage', val)}
                   folder="/saudagar-properties/team"
                 />
+
+                <div className="pt-4 border-t border-white/10 space-y-4">
+                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">4 Key Trust Metrics (Hero Strip)</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                    {(formData?.hero?.stats || [
+                      { value: "25+", label: "Years of Trust", highlight: false },
+                      { value: "₹100 Cr+", label: "Saved for Clients", highlight: true },
+                      { value: "1,000+", label: "Families Advised", highlight: false },
+                      { value: "100%", label: "Title-Cleared", highlight: true }
+                    ]).map((stat, sIdx) => (
+                      <div key={sIdx} className="p-3 rounded-xl bg-white/[0.02] border border-white/10 space-y-2">
+                        <FormField label={`Metric #${sIdx + 1} Value`} value={stat.value} onChange={(val) => updateField(`hero.stats.${sIdx}.value`, val)} placeholder="e.g. 25+" />
+                        <FormField label="Label" value={stat.label} onChange={(val) => updateField(`hero.stats.${sIdx}.label`, val)} placeholder="e.g. Years of Trust" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
 
             {activeSectionTab === 'founders' && (
               <div className="space-y-6">
-                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Founders & Leadership Principals</h3>
+                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Founders &amp; Leadership Principals</h3>
                 {(formData?.founders || []).map((f, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
                     <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Leadership #{idx + 1}: {f.name}</h4>
@@ -717,9 +1130,16 @@ export default function AdminPageCMS() {
                       <FormField label="Role / Title" value={f.role} onChange={(val) => updateField(`founders.${idx}.role`, val)} />
                       <FormField label="Experience Badge" value={f.badge} onChange={(val) => updateField(`founders.${idx}.badge`, val)} />
                       <FormField label="Direct Hotline Phone" value={f.phone} onChange={(val) => updateField(`founders.${idx}.phone`, val)} />
+                      <FormField label="WhatsApp Link" value={f.whatsappUrl} onChange={(val) => updateField(`founders.${idx}.whatsappUrl`, val)} placeholder="https://wa.me/919718511207" />
                     </div>
                     <TextAreaField label="Executive Biography" value={f.bio} onChange={(val) => updateField(`founders.${idx}.bio`, val)} rows={3} />
                     <FormField label="Personal Quote / Philosophy" value={f.quote} onChange={(val) => updateField(`founders.${idx}.quote`, val)} />
+                    <ListField
+                      label="Founder Portfolio Highlights"
+                      items={f.highlights}
+                      onChange={(val) => updateField(`founders.${idx}.highlights`, val)}
+                      placeholder="Over two decades of premier real estate leadership&#10;Personal involvement in every client consultation"
+                    />
                     <ImageUploadInput
                       label={`${f.name} Portrait Photo`}
                       value={f.image}
@@ -844,55 +1264,103 @@ export default function AdminPageCMS() {
         {/* ======================= ABOUT PAGE ======================= */}
         {pageParam === 'about' && (
           <>
+            {/* 1. HERO & METRIC STRIP */}
             {activeSectionTab === 'hero' && (
-              <div className="space-y-5">
-                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Hero & Mission</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <FormField label="Badge" value={formData?.hero?.badge} onChange={(val) => updateField('hero.badge', val)} />
-                  <FormField label="Years Experience (e.g. 25+)" value={formData?.hero?.experienceYears} onChange={(val) => updateField('hero.experienceYears', val)} />
-                  <FormField label="Title Prefix" value={formData?.hero?.titleMain} onChange={(val) => updateField('hero.titleMain', val)} />
-                  <FormField label="Title Highlight" value={formData?.hero?.titleItalic} onChange={(val) => updateField('hero.titleItalic', val)} />
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-sm font-semibold text-white">Hero Masthead &amp; Key Highlights</h3>
+                  <p className="text-xs text-slate-400">Manage the hero headline, subtitle, action buttons, and bottom 4 metric strip stats</p>
                 </div>
-                <TextAreaField label="Hero Subtitle" value={formData?.hero?.description} onChange={(val) => updateField('hero.description', val)} />
-                <FormField label="Mission Heading" value={formData?.hero?.missionTitle} onChange={(val) => updateField('hero.missionTitle', val)} />
-                <TextAreaField label="Mission Statement" value={formData?.hero?.missionText} onChange={(val) => updateField('hero.missionText', val)} />
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <FormField label="Badge" value={formData?.hero?.badge} onChange={(val) => updateField('hero.badge', val)} placeholder="About Saudagar Properties • 25+ Years Legacy" />
+                  <FormField label="Title Prefix" value={formData?.hero?.titleMain} onChange={(val) => updateField('hero.titleMain', val)} placeholder="25+ Years of Leadership in " />
+                  <FormField label="Title Highlight (Gold Italic)" value={formData?.hero?.titleItalic} onChange={(val) => updateField('hero.titleItalic', val)} placeholder="DLF Gurugram" />
+                </div>
+
+                <TextAreaField label="Hero Subtitle / Description" value={formData?.hero?.description} onChange={(val) => updateField('hero.description', val)} rows={3} />
+
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <FormField label="Headquarters Micro-Badge" value={formData?.hero?.addressBadge} onChange={(val) => updateField('hero.addressBadge', val)} placeholder="Headquartered at 38, Akashneem Marg, DLF Phase 2, Gurugram" />
+                  <FormField label="Video Button Label" value={formData?.hero?.watchFilmText} onChange={(val) => updateField('hero.watchFilmText', val)} placeholder="Watch Corporate Film" />
+                  <FormField label="Proposition Button Label" value={formData?.hero?.propositionBtnText} onChange={(val) => updateField('hero.propositionBtnText', val)} placeholder="Our Proposition" />
+                </div>
+
                 <ImageUploadInput
-                  label="About Hero Background Image"
+                  label="Hero Background Parallax Image"
                   value={formData?.hero?.bgImage}
                   onChange={(val) => updateField('hero.bgImage', val)}
                   folder="/saudagar-properties/cms"
                 />
+
+                <div className="pt-4 border-t border-white/10 space-y-4">
+                  <div>
+                    <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Bottom 4 Metric Strip Counters</h4>
+                    <p className="text-xs text-slate-400">Counters displayed in the floating glass strip at the bottom of the hero</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {(formData?.hero?.stats || [
+                      { value: 25, suffix: "+", label: "Years Experience", subtext: "DLF Phase 1–5 Pioneers" },
+                      { prefix: "₹", value: 500, suffix: "Cr+", label: "Transaction Volume", subtext: "Delivered Seamlessly" },
+                      { value: 100, suffix: "%", label: "Direct & Transparent", subtext: "Zero Middlemen Fees" },
+                      { value: 5000, suffix: "+", formatComma: true, label: "HNI Families & Corporates", subtext: "Enduring Relationships" }
+                    ]).map((stat, sIdx) => (
+                      <div key={sIdx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#D09A16]">Counter #{sIdx + 1}</span>
+                        <div className="grid grid-cols-3 gap-2">
+                          <FormField label="Prefix" value={stat.prefix || ''} onChange={(val) => updateField(`hero.stats.${sIdx}.prefix`, val)} placeholder="₹" />
+                          <FormField label="Value" value={stat.value} onChange={(val) => updateField(`hero.stats.${sIdx}.value`, Number(val) || val)} placeholder="25" />
+                          <FormField label="Suffix" value={stat.suffix || ''} onChange={(val) => updateField(`hero.stats.${sIdx}.suffix`, val)} placeholder="+" />
+                        </div>
+                        <FormField label="Metric Label" value={stat.label} onChange={(val) => updateField(`hero.stats.${sIdx}.label`, val)} />
+                        <FormField label="Subtext / Details" value={stat.subtext} onChange={(val) => updateField(`hero.stats.${sIdx}.subtext`, val)} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
 
+            {/* 2. VIDEO SHOWCASE */}
             {activeSectionTab === 'videoShowcase' && (
               <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Video Showcase & Legacy</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <FormField label="Badge" value={formData?.videoShowcase?.badge} onChange={(val) => updateField('videoShowcase.badge', val)} />
-                  <FormField label="Video MP4 URL" value={formData?.videoShowcase?.videoUrl} onChange={(val) => updateField('videoShowcase.videoUrl', val)} />
-                  <FormField label="Title Main" value={formData?.videoShowcase?.titleMain} onChange={(val) => updateField('videoShowcase.titleMain', val)} />
-                  <FormField label="Title Highlight" value={formData?.videoShowcase?.titleItalic} onChange={(val) => updateField('videoShowcase.titleItalic', val)} />
+                <div>
+                  <h3 className="text-sm font-semibold text-white">Video Showcase &amp; Legacy</h3>
+                  <p className="text-xs text-slate-400">Configure the corporate cinema film player and legacy narrative</p>
                 </div>
-                <TextAreaField label="Subtitle" value={formData?.videoShowcase?.subtitle} onChange={(val) => updateField('videoShowcase.subtitle', val)} />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <FormField label="Badge" value={formData?.videoShowcase?.badge} onChange={(val) => updateField('videoShowcase.badge', val)} placeholder="Cinematic Film & Legacy" />
+                  <FormField label="Video MP4 URL" value={formData?.videoShowcase?.videoUrl} onChange={(val) => updateField('videoShowcase.videoUrl', val)} placeholder="https://.../video.mp4" />
+                  <FormField label="Title Main" value={formData?.videoShowcase?.titleMain} onChange={(val) => updateField('videoShowcase.titleMain', val)} placeholder="Inside Saudagar Properties: " />
+                  <FormField label="Title Highlight" value={formData?.videoShowcase?.titleItalic} onChange={(val) => updateField('videoShowcase.titleItalic', val)} placeholder="Two Decades of Excellence" />
+                </div>
+                <TextAreaField label="Subtitle" value={formData?.videoShowcase?.subtitle} onChange={(val) => updateField('videoShowcase.subtitle', val)} rows={3} />
               </div>
             )}
 
+            {/* 3. PROPERTY CATEGORIES / OFFERINGS */}
             {activeSectionTab === 'offerings' && (
               <div className="space-y-6">
-                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Core Property Categories</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <FormField label="Badge" value={formData?.offerings?.badge} onChange={(val) => updateField('offerings.badge', val)} />
-                  <FormField label="Title Main" value={formData?.offerings?.titleMain} onChange={(val) => updateField('offerings.titleMain', val)} />
-                  <FormField label="Title Highlight" value={formData?.offerings?.titleItalic} onChange={(val) => updateField('offerings.titleItalic', val)} />
+                <div>
+                  <h3 className="text-sm font-semibold text-white">Core Property Categories (3 Cards)</h3>
+                  <p className="text-xs text-slate-400">Edit Kothis/Flats, Office Spaces, and Plots &amp; Strategic Land</p>
                 </div>
-                <TextAreaField label="Section Subtitle" value={formData?.offerings?.subtitle} onChange={(val) => updateField('offerings.subtitle', val)} />
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <FormField label="Badge" value={formData?.offerings?.badge} onChange={(val) => updateField('offerings.badge', val)} placeholder="Prime Real Estate Portfolio" />
+                  <FormField label="Title Main" value={formData?.offerings?.titleMain} onChange={(val) => updateField('offerings.titleMain', val)} placeholder="Our Core Property " />
+                  <FormField label="Title Highlight" value={formData?.offerings?.titleItalic} onChange={(val) => updateField('offerings.titleItalic', val)} placeholder="Categories" />
+                </div>
+                <TextAreaField label="Section Subtitle" value={formData?.offerings?.subtitle} onChange={(val) => updateField('offerings.subtitle', val)} rows={2} />
 
-                <div className="space-y-4 pt-2">
-                  <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider">3 Property Category Cards</h4>
+                <div className="space-y-6 pt-2">
+                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">3 Property Category Cards</h4>
                   {(formData?.offerings?.items || []).map((item, idx) => (
                     <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                      <h5 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Card #{idx + 1}: {item.title}</h5>
+                      <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                        <h5 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Card #{idx + 1}: {item.title}</h5>
+                        <span className="text-[10px] text-slate-400">{item.tag}</span>
+                      </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <FormField label="Tag" value={item.tag} onChange={(val) => updateField(`offerings.items.${idx}.tag`, val)} />
                         <FormField label="Title" value={item.title} onChange={(val) => updateField(`offerings.items.${idx}.title`, val)} />
@@ -900,6 +1368,23 @@ export default function AdminPageCMS() {
                         <FormField label="Button Link" value={item.ctaLink} onChange={(val) => updateField(`offerings.items.${idx}.ctaLink`, val)} />
                       </div>
                       <TextAreaField label="Description" value={item.description} onChange={(val) => updateField(`offerings.items.${idx}.description`, val)} rows={2} />
+
+                      {/* 4 Feature Checklist Items */}
+                      <div className="space-y-2 pt-2 border-t border-white/10">
+                        <label className="block text-xs font-medium text-slate-300">4 Key Feature Checklist Items</label>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          {[0, 1, 2, 3].map((fIdx) => (
+                            <FormField
+                              key={fIdx}
+                              label={`Feature #${fIdx + 1}`}
+                              value={item?.features?.[fIdx] || ''}
+                              onChange={(val) => updateField(`offerings.items.${idx}.features.${fIdx}`, val)}
+                              placeholder={`Feature bullet ${fIdx + 1}`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+
                       <ImageUploadInput
                         label={`Card #${idx + 1} Image`}
                         value={item.image}
@@ -912,28 +1397,52 @@ export default function AdminPageCMS() {
               </div>
             )}
 
+            {/* 4. VALUE PROPOSITION */}
             {activeSectionTab === 'proposition' && (
               <div className="space-y-6">
-                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Three Pillars of Value Proposition</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <FormField label="Badge" value={formData?.proposition?.badge} onChange={(val) => updateField('proposition.badge', val)} />
-                  <FormField label="Title Main" value={formData?.proposition?.titleMain} onChange={(val) => updateField('proposition.titleMain', val)} />
-                  <FormField label="Title Highlight" value={formData?.proposition?.titleItalic} onChange={(val) => updateField('proposition.titleItalic', val)} />
+                <div>
+                  <h3 className="text-sm font-semibold text-white">Three Pillars of Value Proposition</h3>
+                  <p className="text-xs text-slate-400">Edit the Residential, Commercial, and Industrial interactive accordion showcase</p>
                 </div>
-                <TextAreaField label="Section Subtitle" value={formData?.proposition?.subtitle} onChange={(val) => updateField('proposition.subtitle', val)} />
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <FormField label="Badge" value={formData?.proposition?.badge} onChange={(val) => updateField('proposition.badge', val)} placeholder="Our Proposition" />
+                  <FormField label="Title Main" value={formData?.proposition?.titleMain} onChange={(val) => updateField('proposition.titleMain', val)} placeholder="Where Our " />
+                  <FormField label="Title Highlight" value={formData?.proposition?.titleItalic} onChange={(val) => updateField('proposition.titleItalic', val)} placeholder="Expertise Lies" />
+                </div>
+                <TextAreaField label="Section Subtitle" value={formData?.proposition?.subtitle} onChange={(val) => updateField('proposition.subtitle', val)} rows={2} />
 
-                <div className="space-y-4 pt-2">
-                  <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider">Pillars (Residential, Commercial, Industrial)</h4>
+                <div className="space-y-6 pt-2">
+                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">3 Pillars (Residential, Commercial, Industrial)</h4>
                   {(formData?.proposition?.pillars || []).map((pillar, idx) => (
                     <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                      <h5 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Pillar #{pillar.number || idx + 1}: {pillar.title}</h5>
+                      <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                        <h5 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Pillar #{pillar.number || idx + 1}: {pillar.title}</h5>
+                        <span className="text-[10px] text-slate-400">{pillar.tag}</span>
+                      </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <FormField label="Number" value={pillar.number} onChange={(val) => updateField(`proposition.pillars.${idx}.number`, val)} />
                         <FormField label="Tag" value={pillar.tag} onChange={(val) => updateField(`proposition.pillars.${idx}.tag`, val)} />
                         <FormField label="Pillar Title" value={pillar.title} onChange={(val) => updateField(`proposition.pillars.${idx}.title`, val)} />
                         <FormField label="Headline" value={pillar.headline} onChange={(val) => updateField(`proposition.pillars.${idx}.headline`, val)} />
                       </div>
-                      <TextAreaField label="Advisory Quote / Philosophy" value={pillar.quote} onChange={(val) => updateField(`proposition.pillars.${idx}.quote`, val)} rows={2} />
+                      <TextAreaField label="Advisory Philosophy / Quote" value={pillar.quote} onChange={(val) => updateField(`proposition.pillars.${idx}.quote`, val)} rows={2} />
+
+                      {/* 4 Key Points / Pills */}
+                      <div className="space-y-2 pt-2 border-t border-white/10">
+                        <label className="block text-xs font-medium text-slate-300">4 Key Focus Points (Pills)</label>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2">
+                          {[0, 1, 2, 3].map((kIdx) => (
+                            <FormField
+                              key={kIdx}
+                              label={`Point #${kIdx + 1}`}
+                              value={pillar?.keyPoints?.[kIdx] || ''}
+                              onChange={(val) => updateField(`proposition.pillars.${idx}.keyPoints.${kIdx}`, val)}
+                              placeholder={`Focus point ${kIdx + 1}`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                         <FormField label="CTA Text" value={pillar.ctaText} onChange={(val) => updateField(`proposition.pillars.${idx}.ctaText`, val)} />
                         <FormField label="CTA Link" value={pillar.ctaLink} onChange={(val) => updateField(`proposition.pillars.${idx}.ctaLink`, val)} />
@@ -950,28 +1459,54 @@ export default function AdminPageCMS() {
               </div>
             )}
 
+            {/* 5. FOUNDERS & LEADERSHIP */}
             {activeSectionTab === 'leadership' && (
               <div className="space-y-6">
-                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Leadership &amp; Advisory Team</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <FormField label="Badge" value={formData?.leadership?.badge} onChange={(val) => updateField('leadership.badge', val)} />
-                  <FormField label="Title Main" value={formData?.leadership?.titleMain} onChange={(val) => updateField('leadership.titleMain', val)} />
-                  <FormField label="Title Highlight" value={formData?.leadership?.titleItalic} onChange={(val) => updateField('leadership.titleItalic', val)} />
+                <div>
+                  <h3 className="text-sm font-semibold text-white">Leadership &amp; Advisory Team</h3>
+                  <p className="text-xs text-slate-400">Manage founders Mr. Arun Sharma &amp; Mrs. Suneeta Chawla, core team, and impact metrics</p>
                 </div>
-                <TextAreaField label="Section Subtitle" value={formData?.leadership?.subtitle} onChange={(val) => updateField('leadership.subtitle', val)} />
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <FormField label="Badge" value={formData?.leadership?.badge} onChange={(val) => updateField('leadership.badge', val)} placeholder="Team of Experts" />
+                  <FormField label="Title Main" value={formData?.leadership?.titleMain} onChange={(val) => updateField('leadership.titleMain', val)} placeholder="Visionary " />
+                  <FormField label="Title Highlight" value={formData?.leadership?.titleItalic} onChange={(val) => updateField('leadership.titleItalic', val)} placeholder="Founders & Leadership" />
+                </div>
+                <TextAreaField label="Section Subtitle" value={formData?.leadership?.subtitle} onChange={(val) => updateField('leadership.subtitle', val)} rows={2} />
 
-                <div className="space-y-4 pt-2">
-                  <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider">Visionary Founders</h4>
+                {/* Visionary Founders */}
+                <div className="space-y-6 pt-2">
+                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Visionary Founders</h4>
                   {(formData?.leadership?.founders || []).map((f, idx) => (
                     <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                      <h5 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Founder #{idx + 1}: {f.name}</h5>
-                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                        <h5 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Founder #{idx + 1}: {f.name}</h5>
+                        <span className="text-[10px] text-slate-400">{f.role}</span>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <FormField label="Full Name" value={f.name} onChange={(val) => updateField(`leadership.founders.${idx}.name`, val)} />
                         <FormField label="Role / Title" value={f.role} onChange={(val) => updateField(`leadership.founders.${idx}.role`, val)} />
-                        <FormField label="Badge / Experience" value={f.badge || f.experienceBadge} onChange={(val) => { updateField(`leadership.founders.${idx}.badge`, val); updateField(`leadership.founders.${idx}.experienceBadge`, val); }} />
+                        <FormField label="Badge" value={f.badge} onChange={(val) => updateField(`leadership.founders.${idx}.badge`, val)} />
+                        <FormField label="Experience Chip" value={f.experienceBadge} onChange={(val) => updateField(`leadership.founders.${idx}.experienceBadge`, val)} />
                       </div>
-                      <TextAreaField label="Executive Biography" value={f.bio} onChange={(val) => updateField(`leadership.founders.${idx}.bio`, val)} rows={3} />
                       <FormField label="Leadership Quote" value={f.quote} onChange={(val) => updateField(`leadership.founders.${idx}.quote`, val)} />
+                      <TextAreaField label="Executive Biography" value={f.bio} onChange={(val) => updateField(`leadership.founders.${idx}.bio`, val)} rows={3} />
+
+                      {/* 4 Founder Highlights */}
+                      <div className="space-y-2 pt-2 border-t border-white/10">
+                        <label className="block text-xs font-medium text-slate-300">4 Key Career Highlights &amp; Strengths</label>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                          {[0, 1, 2, 3].map((hIdx) => (
+                            <FormField
+                              key={hIdx}
+                              label={`Highlight #${hIdx + 1}`}
+                              value={f?.highlights?.[hIdx] || ''}
+                              onChange={(val) => updateField(`leadership.founders.${idx}.highlights.${hIdx}`, val)}
+                              placeholder={`Career milestone ${hIdx + 1}`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+
                       <ImageUploadInput
                         label={`${f.name} Portrait Photo`}
                         value={f.image}
@@ -982,6 +1517,7 @@ export default function AdminPageCMS() {
                   ))}
                 </div>
 
+                {/* Senior Team Specialists */}
                 <div className="space-y-4 pt-4 border-t border-white/10">
                   <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider">Senior Team Specialists</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -999,32 +1535,133 @@ export default function AdminPageCMS() {
                     ))}
                   </div>
                 </div>
+
+                {/* 3 Impact Stats */}
+                <div className="space-y-4 pt-4 border-t border-white/10">
+                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">3 Milestone Impact Counters</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    {(formData?.leadership?.impactStats || [
+                      { value: 100, suffix: "+", label: "CR Saves In Property Investment", desc: "Optimized value and negotiations" },
+                      { value: 1000, suffix: "+", label: "Happy Clients", desc: "Families & corporate executives" },
+                      { value: 25, suffix: "+", label: "Years of Trust and Experience", desc: "DLF Gurugram market authority" }
+                    ]).map((stat, stIdx) => (
+                      <div key={stIdx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#D09A16]">Metric #{stIdx + 1}</span>
+                        <div className="grid grid-cols-2 gap-2">
+                          <FormField label="Value" value={stat.value} onChange={(val) => updateField(`leadership.impactStats.${stIdx}.value`, Number(val) || val)} />
+                          <FormField label="Suffix" value={stat.suffix} onChange={(val) => updateField(`leadership.impactStats.${stIdx}.suffix`, val)} />
+                        </div>
+                        <FormField label="Label" value={stat.label} onChange={(val) => updateField(`leadership.impactStats.${stIdx}.label`, val)} />
+                        <FormField label="Description" value={stat.desc} onChange={(val) => updateField(`leadership.impactStats.${stIdx}.desc`, val)} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
 
+            {/* 6. WHY CHOOSE US (7 PILLARS & MATRIX) */}
             {activeSectionTab === 'whyChooseUs' && (
-              <div className="space-y-5">
-                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Why Choose Us Distinction</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <FormField label="Badge" value={formData?.whyChooseUs?.badge} onChange={(val) => updateField('whyChooseUs.badge', val)} />
-                  <FormField label="Title Main" value={formData?.whyChooseUs?.titleMain} onChange={(val) => updateField('whyChooseUs.titleMain', val)} />
-                  <FormField label="Title Highlight" value={formData?.whyChooseUs?.titleItalic} onChange={(val) => updateField('whyChooseUs.titleItalic', val)} />
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-sm font-semibold text-white">Why Choose Us (7 Distinction Pillars &amp; Comparison Matrix)</h3>
+                  <p className="text-xs text-slate-400">Manage the 7 strategic pillars and the transparency comparison matrix</p>
                 </div>
-                <TextAreaField label="Section Subtitle" value={formData?.whyChooseUs?.subtitle} onChange={(val) => updateField('whyChooseUs.subtitle', val)} />
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <FormField label="Badge" value={formData?.whyChooseUs?.badge} onChange={(val) => updateField('whyChooseUs.badge', val)} placeholder="Why Choose Saudagar Properties • Fiduciary Distinction" />
+                  <FormField label="Title Main" value={formData?.whyChooseUs?.titleMain} onChange={(val) => updateField('whyChooseUs.titleMain', val)} placeholder="The Saudagar Distinction: 7 Strategic Pillars of Trust & " />
+                  <FormField label="Title Highlight" value={formData?.whyChooseUs?.titleItalic} onChange={(val) => updateField('whyChooseUs.titleItalic', val)} placeholder="Market Leadership" />
+                </div>
+                <TextAreaField label="Section Subtitle" value={formData?.whyChooseUs?.subtitle} onChange={(val) => updateField('whyChooseUs.subtitle', val)} rows={2} />
+
+                {/* 7 Strategic Pillars */}
+                <div className="space-y-6 pt-4 border-t border-white/10">
+                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">7 Strategic Distinction Pillars</h4>
+                  {(formData?.whyChooseUs?.pillars || []).map((pillar, pIdx) => (
+                    <div key={pIdx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
+                      <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                        <h5 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">
+                          Pillar #{pillar.number || pIdx + 1} {pIdx === 0 ? '(Lead Hero Card)' : ''}: {pillar.title}
+                        </h5>
+                        <span className="text-[10px] text-slate-400">{pillar.badge}</span>
+                      </div>
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <FormField label="Number" value={pillar.number} onChange={(val) => updateField(`whyChooseUs.pillars.${pIdx}.number`, val)} />
+                        <FormField label="Badge" value={pillar.badge} onChange={(val) => updateField(`whyChooseUs.pillars.${pIdx}.badge`, val)} />
+                        <FormField label="Title" value={pillar.title} onChange={(val) => updateField(`whyChooseUs.pillars.${pIdx}.title`, val)} />
+                      </div>
+                      <TextAreaField label="Description" value={pillar.description} onChange={(val) => updateField(`whyChooseUs.pillars.${pIdx}.description`, val)} rows={2} />
+
+                      {/* 3 Pillar Bullets */}
+                      <div className="space-y-2 pt-2 border-t border-white/10">
+                        <label className="block text-xs font-medium text-slate-300">3 Bullet Points</label>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                          {[0, 1, 2].map((bIdx) => (
+                            <FormField
+                              key={bIdx}
+                              label={`Bullet #${bIdx + 1}`}
+                              value={pillar?.bullets?.[bIdx] || ''}
+                              onChange={(val) => updateField(`whyChooseUs.pillars.${pIdx}.bullets.${bIdx}`, val)}
+                              placeholder={`Bullet ${bIdx + 1}`}
+                            />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Fiduciary Comparison Matrix */}
+                <div className="space-y-4 pt-4 border-t border-white/10">
+                  <div>
+                    <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Transparency Benchmark Comparison Matrix</h4>
+                    <p className="text-xs text-slate-400">4 benchmark comparisons between traditional brokerage and Saudagar advisory</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    {(formData?.whyChooseUs?.comparisonMatrix || []).map((row, rIdx) => (
+                      <div key={rIdx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#D09A16]">Benchmark #{rIdx + 1}</span>
+                        <FormField label="Feature Name" value={row.feature} onChange={(val) => updateField(`whyChooseUs.comparisonMatrix.${rIdx}.feature`, val)} placeholder="e.g. Deal Representation" />
+                        <FormField label="Traditional Brokerage (Red ✕)" value={row.traditional} onChange={(val) => updateField(`whyChooseUs.comparisonMatrix.${rIdx}.traditional`, val)} placeholder="Volume brokers chasing quick turnover" />
+                        <FormField label="Saudagar Advisory (Green ✓)" value={row.saudagar} onChange={(val) => updateField(`whyChooseUs.comparisonMatrix.${rIdx}.saudagar`, val)} placeholder="Founders personally attend every transaction" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
 
+            {/* 7. CONSULTATION BANNER */}
             {activeSectionTab === 'consultationCta' && (
-              <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Consultation CTA Banner</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                  <FormField label="Badge" value={formData?.consultationCta?.badge} onChange={(val) => updateField('consultationCta.badge', val)} />
-                  <FormField label="Phone Number" value={formData?.consultationCta?.phone} onChange={(val) => updateField('consultationCta.phone', val)} />
-                  <FormField label="Title Main" value={formData?.consultationCta?.titleMain} onChange={(val) => updateField('consultationCta.titleMain', val)} />
-                  <FormField label="Title Highlight" value={formData?.consultationCta?.titleItalic} onChange={(val) => updateField('consultationCta.titleItalic', val)} />
+              <div className="space-y-6">
+                <div>
+                  <h3 className="text-sm font-semibold text-white">Consultation CTA Banner</h3>
+                  <p className="text-xs text-slate-400">Manage the bottom executive consultation invitation chassis</p>
                 </div>
-                <TextAreaField label="Subtitle" value={formData?.consultationCta?.subtitle} onChange={(val) => updateField('consultationCta.subtitle', val)} />
-                <FormField label="WhatsApp URL" value={formData?.consultationCta?.whatsappUrl} onChange={(val) => updateField('consultationCta.whatsappUrl', val)} />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <FormField label="Title Main" value={formData?.consultationCta?.titleMain} onChange={(val) => updateField('consultationCta.titleMain', val)} placeholder="Request a Private " />
+                  <FormField label="Title Highlight" value={formData?.consultationCta?.titleItalic} onChange={(val) => updateField('consultationCta.titleItalic', val)} placeholder="Executive Consultation" />
+                  <FormField label="Direct Telephone Line" value={formData?.consultationCta?.phone} onChange={(val) => updateField('consultationCta.phone', val)} placeholder="+91 98112 21207" />
+                  <FormField label="WhatsApp URL" value={formData?.consultationCta?.whatsappUrl} onChange={(val) => updateField('consultationCta.whatsappUrl', val)} placeholder="https://wa.me/919718511207..." />
+                </div>
+                <TextAreaField label="Subtitle" value={formData?.consultationCta?.subtitle} onChange={(val) => updateField('consultationCta.subtitle', val)} rows={3} />
+
+                {/* 4 VIP Assurances */}
+                <div className="space-y-3 pt-3 border-t border-white/10">
+                  <label className="block text-xs font-medium text-slate-300">4 VIP Advisory Assurances</label>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {[0, 1, 2, 3].map((aIdx) => (
+                      <FormField
+                        key={aIdx}
+                        label={`Assurance #${aIdx + 1}`}
+                        value={formData?.consultationCta?.assurances?.[aIdx] || ''}
+                        onChange={(val) => updateField(`consultationCta.assurances.${aIdx}`, val)}
+                        placeholder={`Assurance guarantee ${aIdx + 1}`}
+                      />
+                    ))}
+                  </div>
+                </div>
               </div>
             )}
           </>
@@ -1042,12 +1679,18 @@ export default function AdminPageCMS() {
                   <FormField label="Title Highlight" value={formData?.hero?.titleItalic} onChange={(val) => updateField('hero.titleItalic', val)} />
                 </div>
                 <TextAreaField label="Subtitle" value={formData?.hero?.subtitle} onChange={(val) => updateField('hero.subtitle', val)} />
+                <ImageUploadInput
+                  label="Hero Background Image"
+                  value={formData?.hero?.bgImage}
+                  onChange={(val) => updateField('hero.bgImage', val)}
+                  folder="/saudagar-properties/contact"
+                />
               </div>
             )}
 
             {activeSectionTab === 'contactInfo' && (
               <div className="space-y-4">
-                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Headquarters Address & Phones</h3>
+                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Headquarters Address &amp; Phones</h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <FormField label="Office Name" value={formData?.contactInfo?.officeName} onChange={(val) => updateField('contactInfo.officeName', val)} />
                   <FormField label="Office Address" value={formData?.contactInfo?.address} onChange={(val) => updateField('contactInfo.address', val)} />
@@ -1066,6 +1709,7 @@ export default function AdminPageCMS() {
                   <FormField label="Form Title" value={formData?.form?.title} onChange={(val) => updateField('form.title', val)} />
                   <FormField label="Submit Button Text" value={formData?.form?.buttonText} onChange={(val) => updateField('form.buttonText', val)} />
                   <FormField label="WhatsApp CTA Button Text" value={formData?.form?.whatsappCtaText} onChange={(val) => updateField('form.whatsappCtaText', val)} />
+                  <FormField label="WhatsApp Direct Number (digits only)" value={formData?.form?.whatsappNumber} onChange={(val) => updateField('form.whatsappNumber', val)} placeholder="e.g. 919718511207" />
                 </div>
                 <TextAreaField label="Form Subtitle" value={formData?.form?.subtitle} onChange={(val) => updateField('form.subtitle', val)} />
               </div>
@@ -1085,6 +1729,31 @@ export default function AdminPageCMS() {
                   <FormField label="Title Highlight" value={formData?.masthead?.titleItalic} onChange={(val) => updateField('masthead.titleItalic', val)} />
                 </div>
                 <TextAreaField label="Description" value={formData?.masthead?.description} onChange={(val) => updateField('masthead.description', val)} />
+                <ImageUploadInput
+                  label="Masthead Background Image"
+                  value={formData?.masthead?.bgImage}
+                  onChange={(val) => updateField('masthead.bgImage', val)}
+                  folder="/saudagar-properties/blog"
+                />
+              </div>
+            )}
+
+            {activeSectionTab === 'marketPulse' && (
+              <div className="space-y-4">
+                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Market Pulse 4-Point Indicator Bar</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {(formData?.marketPulse || []).map((card, idx) => (
+                    <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
+                      <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Indicator #{idx + 1}</h4>
+                      <FormField label="Label" value={card.label} onChange={(val) => updateField(`marketPulse.${idx}.label`, val)} />
+                      <div className="grid grid-cols-2 gap-2">
+                        <FormField label="Value" value={card.value} onChange={(val) => updateField(`marketPulse.${idx}.value`, val)} />
+                        <FormField label="Unit" value={card.unit} onChange={(val) => updateField(`marketPulse.${idx}.unit`, val)} />
+                      </div>
+                      <FormField label="Subtext" value={card.subtext} onChange={(val) => updateField(`marketPulse.${idx}.subtext`, val)} />
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
 
@@ -1097,6 +1766,18 @@ export default function AdminPageCMS() {
                   <FormField label="Title Highlight" value={formData?.spotlight?.titleItalic} onChange={(val) => updateField('spotlight.titleItalic', val)} />
                 </div>
                 <TextAreaField label="Description" value={formData?.spotlight?.description} onChange={(val) => updateField('spotlight.description', val)} />
+              </div>
+            )}
+
+            {activeSectionTab === 'corridors' && (
+              <div className="space-y-4">
+                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Location-Based Corridor Spotlights</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <FormField label="Badge" value={formData?.corridors?.badge} onChange={(val) => updateField('corridors.badge', val)} />
+                  <FormField label="Title Main" value={formData?.corridors?.titleMain} onChange={(val) => updateField('corridors.titleMain', val)} />
+                  <FormField label="Title Highlight" value={formData?.corridors?.titleItalic} onChange={(val) => updateField('corridors.titleItalic', val)} />
+                </div>
+                <TextAreaField label="Description" value={formData?.corridors?.description} onChange={(val) => updateField('corridors.description', val)} />
               </div>
             )}
 
@@ -1123,6 +1804,634 @@ export default function AdminPageCMS() {
                   <FormField label="Button Text" value={formData?.newsletter?.buttonText} onChange={(val) => updateField('newsletter.buttonText', val)} />
                 </div>
                 <TextAreaField label="Description" value={formData?.newsletter?.description} onChange={(val) => updateField('newsletter.description', val)} />
+              </div>
+            )}
+          </>
+        )}
+
+        {/* ======================= MICRO-MARKET CORRIDORS ======================= */}
+        {pageParam === 'corridors' && (
+          <>
+            {activeSectionTab === 'hero' && (
+              <div className="space-y-6">
+                <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                  <h3 className="text-sm font-semibold text-white">
+                    Corridor Hero Masthead &amp; Key Highlights
+                  </h3>
+                  <span className="text-xs text-[#D09A16] font-mono">
+                    Editing: {CORRIDOR_LIST.find(c => c.slug === selectedCorridor)?.name}
+                  </span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <FormField label="Badge Text" value={formData?.hero?.badge} onChange={(val) => updateField('hero.badge', val)} />
+                  <FormField label="Starting Price Tag" value={formData?.hero?.priceStarting} onChange={(val) => updateField('hero.priceStarting', val)} />
+                  <FormField label="Heading Prefix" value={formData?.hero?.titleMain} onChange={(val) => updateField('hero.titleMain', val)} />
+                  <FormField label="Heading Highlight" value={formData?.hero?.titleHighlight} onChange={(val) => updateField('hero.titleHighlight', val)} />
+                  <FormField label="Direct Hotline Phone" value={formData?.hero?.directPhone} onChange={(val) => updateField('hero.directPhone', val)} />
+                  <FormField label="WhatsApp Digits" value={formData?.hero?.whatsappNumber} onChange={(val) => updateField('hero.whatsappNumber', val)} />
+                </div>
+                <TextAreaField label="Corridor Overview Subtitle" value={formData?.hero?.subtitle} onChange={(val) => updateField('hero.subtitle', val)} rows={3} />
+                <ImageUploadInput
+                  label="Corridor Hero Main Background Image"
+                  value={formData?.hero?.bgImage}
+                  onChange={(val) => updateField('hero.bgImage', val)}
+                  folder="/saudagar-properties/corridors"
+                />
+
+                <div className="pt-2">
+                  <ListField
+                    label="Micro-Market Feature Highlight Chips (Under Subtitle)"
+                    description="Enter each key highlight chip displayed beneath the hero subtitle."
+                    items={formData?.hero?.keyHighlights || []}
+                    onChange={(val) => updateField('hero.keyHighlights', val)}
+                    placeholder="100% Freehold Conveyance&#10;250 to 1,000 Sq. Yds Footprints&#10;Direct Access to Golf Course Rd"
+                    rows={4}
+                  />
+                </div>
+
+                <div className="space-y-4 pt-4 border-t border-white/10">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="text-xs font-bold text-white uppercase tracking-wider">Gallery Showcase Perspectives (Right Column Stage)</h4>
+                      <p className="text-[11px] text-slate-400">Manage the high-resolution architectural gallery images &amp; tags.</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const current = formData?.hero?.galleryImages || [];
+                        updateField('hero.galleryImages', [...current, { url: '', title: 'Perspective View', tag: 'Luxury Estate' }]);
+                      }}
+                      className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                    >
+                      <Plus size={13} />
+                      <span>Add Perspective</span>
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {(formData?.hero?.galleryImages || []).map((img, idx) => (
+                      <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3 relative group">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-bold text-[#D09A16]">Perspective 0{idx + 1}</span>
+                          {(formData?.hero?.galleryImages || []).length > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const next = (formData?.hero?.galleryImages || []).filter((_, i) => i !== idx);
+                                updateField('hero.galleryImages', next);
+                              }}
+                              className="p-1 rounded-md text-red-400 hover:bg-red-500/10 transition-colors"
+                              title="Delete Photo"
+                            >
+                              <Trash2 size={13} />
+                            </button>
+                          )}
+                        </div>
+                        <ImageUploadInput
+                          label={`Photo 0${idx + 1}`}
+                          value={img.url}
+                          onChange={(val) => updateField(`hero.galleryImages.${idx}.url`, val)}
+                          folder="/saudagar-properties/corridors"
+                        />
+                        <FormField label="Title / Caption" value={img.title} onChange={(val) => updateField(`hero.galleryImages.${idx}.title`, val)} />
+                        <FormField label="Badge / Tag" value={img.tag} onChange={(val) => updateField(`hero.galleryImages.${idx}.tag`, val)} placeholder="e.g. Featured Estate" />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeSectionTab === 'metrics' && (
+              <div className="space-y-4">
+                <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                  <h3 className="text-sm font-semibold text-white">4 Real-Time Corridor Benchmarks</h3>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const current = formData?.metrics || [];
+                      updateField('metrics', [...current, { label: 'Metric', value: '100%', desc: 'Description' }]);
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Plus size={13} />
+                    <span>Add Benchmark</span>
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {(formData?.metrics || []).map((m, idx) => (
+                    <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3 relative group">
+                      <div className="flex items-center justify-between">
+                        <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Benchmark #{idx + 1}</h4>
+                        {(formData?.metrics || []).length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const next = (formData?.metrics || []).filter((_, i) => i !== idx);
+                              updateField('metrics', next);
+                            }}
+                            className="p-1 rounded-md text-red-400 hover:bg-red-500/10 transition-colors"
+                            title="Delete Benchmark"
+                          >
+                            <Trash2 size={13} />
+                          </button>
+                        )}
+                      </div>
+                      <FormField label="Label" value={m.label} onChange={(val) => updateField(`metrics.${idx}.label`, val)} />
+                      <FormField label="Value" value={m.value} onChange={(val) => updateField(`metrics.${idx}.value`, val)} />
+                      <FormField label="Description" value={m.desc} onChange={(val) => updateField(`metrics.${idx}.desc`, val)} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeSectionTab === 'overview' && (
+              <div className="space-y-5">
+                <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                  <h3 className="text-sm font-semibold text-white">Locality Profile &amp; Distinct Character</h3>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const current = formData?.overview?.paragraphs || [];
+                      updateField('overview.paragraphs', [...current, 'New descriptive paragraph about this micro-market.']);
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Plus size={13} />
+                    <span>Add Paragraph</span>
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <FormField label="Tag" value={formData?.overview?.tag} onChange={(val) => updateField('overview.tag', val)} />
+                  <FormField label="Overview Title" value={formData?.overview?.title} onChange={(val) => updateField('overview.title', val)} />
+                </div>
+                <div className="space-y-3">
+                  <label className="block text-xs font-semibold text-slate-200">Editorial Paragraphs</label>
+                  {(formData?.overview?.paragraphs || []).map((para, idx) => (
+                    <div key={idx} className="relative group p-3.5 rounded-xl bg-white/[0.02] border border-white/10 space-y-2">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[11px] font-bold text-[#D09A16]">Paragraph #{idx + 1}</span>
+                        {(formData?.overview?.paragraphs || []).length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const next = (formData?.overview?.paragraphs || []).filter((_, i) => i !== idx);
+                              updateField('overview.paragraphs', next);
+                            }}
+                            className="p-1 rounded-md text-red-400 hover:bg-red-500/10 transition-colors"
+                            title="Delete Paragraph"
+                          >
+                            <Trash2 size={13} />
+                          </button>
+                        )}
+                      </div>
+                      <TextAreaField
+                        label=""
+                        value={para}
+                        onChange={(val) => updateField(`overview.paragraphs.${idx}`, val)}
+                        rows={3}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeSectionTab === 'typologies' && (
+              <div className="space-y-5">
+                <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                  <div>
+                    <h3 className="text-sm font-semibold text-white">Core Asset Typologies (3 Cards)</h3>
+                    <p className="text-[11px] text-slate-400">Builder Floor, Independent Kothi &amp; Freehold Plot investment cards displayed in the dark locality section.</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const current = formData?.overview?.typologies || [];
+                      updateField('overview.typologies', [
+                        ...current,
+                        {
+                          title: 'Luxury Asset Typology',
+                          specs: '4 BHK • 350 Sq. Yds • Private Lift',
+                          price: '₹5.00 Cr Onwards',
+                          highlights: ['Private lift and dedicated stilt parking', 'Immediate registry and mutation']
+                        }
+                      ]);
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Plus size={13} />
+                    <span>Add Typology</span>
+                  </button>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+                  {(formData?.overview?.typologies || []).map((t, idx) => (
+                    <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-3.5 relative group">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-[#D09A16]">Typology #{idx + 1}</span>
+                        {(formData?.overview?.typologies || []).length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const next = (formData?.overview?.typologies || []).filter((_, i) => i !== idx);
+                              updateField('overview.typologies', next);
+                            }}
+                            className="p-1 rounded-md text-red-400 hover:bg-red-500/10 transition-colors"
+                            title="Delete Typology"
+                          >
+                            <Trash2 size={13} />
+                          </button>
+                        )}
+                      </div>
+                      <FormField label="Typology Title" value={t.title} onChange={(val) => updateField(`overview.typologies.${idx}.title`, val)} />
+                      <FormField label="Specifications / Layout" value={t.specs} onChange={(val) => updateField(`overview.typologies.${idx}.specs`, val)} placeholder="e.g. 4 BHK • 300 to 500 Sq. Yds • Private Lift" />
+                      <FormField label="Price Benchmark" value={t.price} onChange={(val) => updateField(`overview.typologies.${idx}.price`, val)} placeholder="e.g. ₹4.50 Cr – ₹12.00 Cr" />
+                      <ListField
+                        label="Bullet Highlights"
+                        items={t.highlights || []}
+                        onChange={(val) => updateField(`overview.typologies.${idx}.highlights`, val)}
+                        placeholder="Bullet feature 1&#10;Bullet feature 2"
+                        rows={3}
+                      />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeSectionTab === 'locationSection' && (
+              <div className="space-y-6">
+                <div className="border-b border-white/10 pb-2">
+                  <h3 className="text-sm font-semibold text-white">Strategic Urban Equilibrium &amp; Quick Callout Box</h3>
+                  <p className="text-[11px] text-slate-400">Customize Section 3 narrative, strategic key points, and the right-hand direct hotline card.</p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
+                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Left Narrative Column</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FormField label="Eyebrow Tag" value={formData?.locationSection?.tag} onChange={(val) => updateField('locationSection.tag', val)} />
+                    <FormField label="Section Title" value={formData?.locationSection?.title} onChange={(val) => updateField('locationSection.title', val)} />
+                  </div>
+                  <FormField label="Subtitle (Italic)" value={formData?.locationSection?.subtitle} onChange={(val) => updateField('locationSection.subtitle', val)} />
+                  <TextAreaField
+                    label="Editorial Description"
+                    value={formData?.locationSection?.description}
+                    onChange={(val) => updateField('locationSection.description', val)}
+                    rows={4}
+                  />
+                  <ListField
+                    label="Equilibrium Advantage Chips (Bottom row)"
+                    items={formData?.locationSection?.highlights || [
+                      'MG Road & Cyber City Access',
+                      'Aravalli Green Canopy',
+                      '100% Freehold Mutation'
+                    ]}
+                    onChange={(val) => updateField('locationSection.highlights', val)}
+                    rows={3}
+                  />
+                </div>
+
+                <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
+                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Right Column: Advisory Callout Card</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FormField label="Badge" value={formData?.quickCallout?.badge} onChange={(val) => updateField('quickCallout.badge', val)} />
+                    <FormField label="Card Title" value={formData?.quickCallout?.title} onChange={(val) => updateField('quickCallout.title', val)} />
+                    <FormField label="Hotline Direct Phone" value={formData?.quickCallout?.phone} onChange={(val) => updateField('quickCallout.phone', val)} />
+                    <FormField label="WhatsApp Action URL" value={formData?.quickCallout?.whatsappUrl} onChange={(val) => updateField('quickCallout.whatsappUrl', val)} />
+                  </div>
+                  <TextAreaField
+                    label="Card Subtitle / Guidance"
+                    value={formData?.quickCallout?.subtitle}
+                    onChange={(val) => updateField('quickCallout.subtitle', val)}
+                    rows={2}
+                  />
+                </div>
+              </div>
+            )}
+
+            {activeSectionTab === 'whyLiveHere' && (
+              <div className="space-y-5">
+                <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                  <div>
+                    <h3 className="text-sm font-semibold text-white">Why You Should Consider Living in this Corridor</h3>
+                    <p className="text-[11px] text-slate-400">Pinnacle of residential prestige and 8 strategic reasons.</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const current = formData?.whyLiveHere?.pillars || [];
+                      const nextNum = (current.length + 1).toString().padStart(2, '0');
+                      updateField('whyLiveHere.pillars', [...current, { number: nextNum, title: 'Strategic Advantage', desc: 'Advantage description...' }]);
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Plus size={13} />
+                    <span>Add Reason</span>
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <FormField label="Badge" value={formData?.whyLiveHere?.badge} onChange={(val) => updateField('whyLiveHere.badge', val)} />
+                  <FormField label="Section Title" value={formData?.whyLiveHere?.title} onChange={(val) => updateField('whyLiveHere.title', val)} />
+                </div>
+                <TextAreaField label="Introductory Paragraph" value={formData?.whyLiveHere?.intro} onChange={(val) => updateField('whyLiveHere.intro', val)} rows={2} />
+                
+                <div className="space-y-3 pt-3">
+                  <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider">Strategic Reasons &amp; Pillars</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {(formData?.whyLiveHere?.pillars || []).map((p, idx) => (
+                      <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-2 relative group">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-bold text-[#D09A16]">Pillar #{p.number || idx + 1}</span>
+                          {(formData?.whyLiveHere?.pillars || []).length > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const next = (formData?.whyLiveHere?.pillars || []).filter((_, i) => i !== idx);
+                                updateField('whyLiveHere.pillars', next);
+                              }}
+                              className="p-1 rounded-md text-red-400 hover:bg-red-500/10 transition-colors"
+                              title="Delete Pillar"
+                            >
+                              <Trash2 size={13} />
+                            </button>
+                          )}
+                        </div>
+                        <div className="grid grid-cols-4 gap-2">
+                          <div className="col-span-1">
+                            <FormField label="No." value={p.number} onChange={(val) => updateField(`whyLiveHere.pillars.${idx}.number`, val)} />
+                          </div>
+                          <div className="col-span-3">
+                            <FormField label="Title" value={p.title} onChange={(val) => updateField(`whyLiveHere.pillars.${idx}.title`, val)} />
+                          </div>
+                        </div>
+                        <TextAreaField label="Description" value={p.desc} onChange={(val) => updateField(`whyLiveHere.pillars.${idx}.desc`, val)} rows={2} />
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeSectionTab === 'nearestPlaces' && (
+              <div className="space-y-5">
+                <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                  <h3 className="text-sm font-semibold text-white">Transit &amp; Commute Radar</h3>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const current = formData?.nearestPlaces?.places || [];
+                      updateField('nearestPlaces.places', [
+                        ...current,
+                        { name: 'New Landmark', category: 'Connectivity Hub', distance: '5 km', time: '8 Mins', desc: 'Direct transit access via highway.' }
+                      ]);
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Plus size={13} />
+                    <span>Add Landmark</span>
+                  </button>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <FormField label="Badge" value={formData?.nearestPlaces?.badge} onChange={(val) => updateField('nearestPlaces.badge', val)} />
+                  <FormField label="Title" value={formData?.nearestPlaces?.title} onChange={(val) => updateField('nearestPlaces.title', val)} />
+                </div>
+                <TextAreaField label="Subtitle" value={formData?.nearestPlaces?.subtitle} onChange={(val) => updateField('nearestPlaces.subtitle', val)} rows={2} />
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                  {(formData?.nearestPlaces?.places || []).map((place, idx) => (
+                    <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-2 relative group">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-[#D09A16]">Landmark #{idx + 1}</span>
+                        {(formData?.nearestPlaces?.places || []).length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const next = (formData?.nearestPlaces?.places || []).filter((_, i) => i !== idx);
+                              updateField('nearestPlaces.places', next);
+                            }}
+                            className="p-1 rounded-md text-red-400 hover:bg-red-500/10 transition-colors"
+                            title="Delete Landmark"
+                          >
+                            <Trash2 size={13} />
+                          </button>
+                        )}
+                      </div>
+                      <FormField label="Landmark Name" value={place.name} onChange={(val) => updateField(`nearestPlaces.places.${idx}.name`, val)} />
+                      <div className="grid grid-cols-2 gap-2">
+                        <FormField label="Distance" value={place.distance} onChange={(val) => updateField(`nearestPlaces.places.${idx}.distance`, val)} />
+                        <FormField label="Transit Time" value={place.time} onChange={(val) => updateField(`nearestPlaces.places.${idx}.time`, val)} />
+                      </div>
+                      <FormField label="Category" value={place.category} onChange={(val) => updateField(`nearestPlaces.places.${idx}.category`, val)} />
+                      <TextAreaField label="Commute Details" value={place.desc} onChange={(val) => updateField(`nearestPlaces.places.${idx}.desc`, val)} rows={2} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {activeSectionTab === 'howWeHelp' && (
+              <div className="space-y-6">
+                <div className="border-b border-white/10 pb-2">
+                  <h3 className="text-sm font-semibold text-white">Turnkey Platform &amp; Founders Advisory Mandate</h3>
+                  <p className="text-[11px] text-slate-400">Customize Section 6 client acquisition services, checklist, and leadership credentials.</p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
+                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">How Can We Help You? (Left Column)</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FormField label="Badge" value={formData?.howWeHelp?.badge} onChange={(val) => updateField('howWeHelp.badge', val)} />
+                    <FormField label="Section Title" value={formData?.howWeHelp?.title} onChange={(val) => updateField('howWeHelp.title', val)} />
+                  </div>
+                  <ListField
+                    label="Editorial Narrative Paragraphs"
+                    description="Separate paragraphs by pressing Enter."
+                    items={formData?.howWeHelp?.paragraphs || []}
+                    onChange={(val) => updateField('howWeHelp.paragraphs', val)}
+                    rows={4}
+                  />
+                  <ListField
+                    label="Services Checklist (Bullet Items)"
+                    items={formData?.howWeHelp?.servicesChecklist || []}
+                    onChange={(val) => updateField('howWeHelp.servicesChecklist', val)}
+                    rows={4}
+                  />
+                </div>
+
+                <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
+                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Why Choose Saudagar Properties (Right Card)</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FormField label="Badge" value={formData?.whyChooseSaudagar?.badge} onChange={(val) => updateField('whyChooseSaudagar.badge', val)} />
+                    <FormField label="Card Title" value={formData?.whyChooseSaudagar?.title} onChange={(val) => updateField('whyChooseSaudagar.title', val)} />
+                    <FormField label="Founder Name" value={formData?.whyChooseSaudagar?.founderName} onChange={(val) => updateField('whyChooseSaudagar.founderName', val)} placeholder="Arun Sharma & Suneeta Chawla" />
+                    <FormField label="Founder Designation" value={formData?.whyChooseSaudagar?.founderTitle} onChange={(val) => updateField('whyChooseSaudagar.founderTitle', val)} placeholder="Founders, Saudagar Properties Pvt Ltd" />
+                  </div>
+                  <TextAreaField
+                    label="Authority Narrative Content"
+                    value={formData?.whyChooseSaudagar?.content}
+                    onChange={(val) => updateField('whyChooseSaudagar.content', val)}
+                    rows={5}
+                  />
+                </div>
+              </div>
+            )}
+
+            {activeSectionTab === 'faqs' && (
+              <div className="space-y-5">
+                <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                  <h3 className="text-sm font-semibold text-white">Frequently Asked Questions</h3>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const newFaqs = [...(formData?.faqs || []), { question: 'New Question', answer: 'New Answer' }];
+                      updateField('faqs', newFaqs);
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Plus size={13} />
+                    <span>Add FAQ</span>
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  {(formData?.faqs || []).map((faq, idx) => (
+                    <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3 relative group">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-[#D09A16]">FAQ #{idx + 1}</span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newFaqs = (formData?.faqs || []).filter((_, i) => i !== idx);
+                            updateField('faqs', newFaqs);
+                          }}
+                          className="p-1 rounded-md text-red-400 hover:bg-red-500/10 transition-colors"
+                          title="Delete FAQ"
+                        >
+                          <Trash2 size={13} />
+                        </button>
+                      </div>
+                      <FormField label="Question" value={faq.question} onChange={(val) => updateField(`faqs.${idx}.question`, val)} />
+                      <TextAreaField label="Answer" value={faq.answer} onChange={(val) => updateField(`faqs.${idx}.answer`, val)} rows={3} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
+        )}
+
+        {/* ======================= TERMS OF SERVICE ======================= */}
+        {pageParam === 'terms' && (
+          <>
+            {activeSectionTab === 'hero' && (
+              <div className="space-y-5">
+                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Terms Page Masthead</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <FormField label="Badge Text" value={formData?.hero?.badge} onChange={(val) => updateField('hero.badge', val)} />
+                  <FormField label="Page Title" value={formData?.hero?.title} onChange={(val) => updateField('hero.title', val)} />
+                </div>
+                <TextAreaField label="Subtitle" value={formData?.hero?.subtitle} onChange={(val) => updateField('hero.subtitle', val)} rows={2} />
+              </div>
+            )}
+
+            {activeSectionTab === 'sections' && (
+              <div className="space-y-5">
+                <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                  <h3 className="text-sm font-semibold text-white">Terms Articles &amp; Clauses</h3>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const newSecs = [...(formData?.sections || []), { heading: 'New Clause Heading', content: 'Clause content here...' }];
+                      updateField('sections', newSecs);
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Plus size={13} />
+                    <span>Add Clause</span>
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  {(formData?.sections || []).map((sec, idx) => (
+                    <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3 relative">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-[#D09A16]">Clause #{idx + 1}</span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newSecs = (formData?.sections || []).filter((_, i) => i !== idx);
+                            updateField('sections', newSecs);
+                          }}
+                          className="p-1 rounded-md text-red-400 hover:bg-red-500/10 transition-colors"
+                          title="Delete Clause"
+                        >
+                          <Trash2 size={13} />
+                        </button>
+                      </div>
+                      <FormField label="Heading" value={sec.heading} onChange={(val) => updateField(`sections.${idx}.heading`, val)} />
+                      <TextAreaField label="Content / Legal Text" value={sec.content} onChange={(val) => updateField(`sections.${idx}.content`, val)} rows={3} />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </>
+        )}
+
+        {/* ======================= PRIVACY POLICY ======================= */}
+        {pageParam === 'privacy' && (
+          <>
+            {activeSectionTab === 'hero' && (
+              <div className="space-y-5">
+                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Privacy Page Masthead</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <FormField label="Badge Text" value={formData?.hero?.badge} onChange={(val) => updateField('hero.badge', val)} />
+                  <FormField label="Page Title" value={formData?.hero?.title} onChange={(val) => updateField('hero.title', val)} />
+                </div>
+                <TextAreaField label="Subtitle" value={formData?.hero?.subtitle} onChange={(val) => updateField('hero.subtitle', val)} rows={2} />
+              </div>
+            )}
+
+            {activeSectionTab === 'sections' && (
+              <div className="space-y-5">
+                <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                  <h3 className="text-sm font-semibold text-white">Privacy Articles &amp; Safeguards</h3>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const newSecs = [...(formData?.sections || []), { heading: 'New Privacy Safeguard', content: 'Safeguard details here...' }];
+                      updateField('sections', newSecs);
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Plus size={13} />
+                    <span>Add Article</span>
+                  </button>
+                </div>
+
+                <div className="space-y-4">
+                  {(formData?.sections || []).map((sec, idx) => (
+                    <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3 relative">
+                      <div className="flex items-center justify-between">
+                        <span className="text-xs font-bold text-[#D09A16]">Article #{idx + 1}</span>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const newSecs = (formData?.sections || []).filter((_, i) => i !== idx);
+                            updateField('sections', newSecs);
+                          }}
+                          className="p-1 rounded-md text-red-400 hover:bg-red-500/10 transition-colors"
+                          title="Delete Article"
+                        >
+                          <Trash2 size={13} />
+                        </button>
+                      </div>
+                      <FormField label="Heading" value={sec.heading} onChange={(val) => updateField(`sections.${idx}.heading`, val)} />
+                      <TextAreaField label="Content / Safeguard Text" value={sec.content} onChange={(val) => updateField(`sections.${idx}.content`, val)} rows={3} />
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
           </>

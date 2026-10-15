@@ -1,4 +1,4 @@
-import dynamic from 'next/dynamic';
+import nextDynamic from 'next/dynamic';
 // Toggle between original Hero and Option 1 Split-Screen Focus (HeroCopy)
 import Hero from '@/sections/home/HeroCopy';
 // import Hero from '@/sections/home/Hero';
@@ -6,12 +6,16 @@ import TopConsultantSection from '@/sections/home/TopConsultantSection';
 import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
 import { PAGE_SEO, BREADCRUMBS } from '@/lib/seo/seoConfig';
 
-const CuratedCorridors = dynamic(() => import('@/sections/home/CuratedCorridors'), { ssr: true });
-const OurServicesSection = dynamic(() => import('@/sections/home/OurServicesSection'), { ssr: true });
-const WhyChooseUsSection = dynamic(() => import('@/sections/home/WhyChooseUsSection'), { ssr: true });
-const AiShowcaseSection = dynamic(() => import('@/sections/home/AiShowcaseSection'), { ssr: true });
-const TestimonialsSection = dynamic(() => import('@/sections/home/TestimonialsSection'), { ssr: true });
-const LocationMap = dynamic(() => import('@/sections/home/LocationMap'), { ssr: true });
+const CuratedCorridors = nextDynamic(() => import('@/sections/home/CuratedCorridors'), { ssr: true });
+const OurServicesSection = nextDynamic(() => import('@/sections/home/OurServicesSection'), { ssr: true });
+const WhyChooseUsSection = nextDynamic(() => import('@/sections/home/WhyChooseUsSection'), { ssr: true });
+const AiShowcaseSection = nextDynamic(() => import('@/sections/home/AiShowcaseSection'), { ssr: true });
+const TestimonialsSection = nextDynamic(() => import('@/sections/home/TestimonialsSection'), { ssr: true });
+const LocationMap = nextDynamic(() => import('@/sections/home/LocationMap'), { ssr: true });
+const NewsletterSection = nextDynamic(() => import('@/sections/home/NewsletterSection'), { ssr: true });
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
 
 export async function generateMetadata() {
   const seoData = PAGE_SEO['/'];
@@ -54,6 +58,9 @@ export default function Home() {
 
       {/* 7. Location Map & Market Intelligence Section */}
       <LocationMap />
+
+      {/* 8. Newsletter Subscription Banner */}
+      <NewsletterSection />
     </div>
   );
 }

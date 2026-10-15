@@ -21,6 +21,7 @@ import {
   Phone,
   LayoutList,
   FileText,
+  Compass,
   PanelLeftClose,
   PanelLeftOpen
 } from 'lucide-react';
@@ -90,28 +91,22 @@ export default function AdminLayout({ children }) {
       ]
     },
     {
-      group: 'Pages Content (CMS)',
+      group: 'Website Pages (CMS)',
       items: [
-        { label: 'Landing Page', to: '/admin/sections', icon: Home },
-        { label: 'Residential Services', to: '/admin/pages/residential', icon: Building },
-        { label: 'Commercial Services', to: '/admin/pages/commercial', icon: Layers },
-        { label: 'Industrial Services', to: '/admin/pages/industrial', icon: LayoutList },
-        { label: 'Properties Catalog', to: '/admin/pages/properties', icon: LayoutList },
-        { label: 'Our Team Page', to: '/admin/pages/team', icon: Users },
-        { label: 'About Us Page', to: '/admin/pages/about', icon: Users },
-        { label: 'Contact Us Page', to: '/admin/pages/contact', icon: Phone },
-        { label: 'Blog Catalog Page', to: '/admin/pages/blog', icon: BookOpen },
+        { label: 'All Pages Hub', to: '/admin/pages', icon: Layers, pill: '12 Pages' },
+        { label: 'Landing Page', to: '/admin/sections', icon: Home, pill: '12 Sec' },
+        { label: 'Micro-Market Corridors', to: '/admin/pages/corridors', icon: Compass, pill: '6 Locs' },
       ]
     },
     {
-      group: 'Listings & Inquiries',
+      group: 'Inventory & Leads',
       items: [
         { label: 'Properties Database', to: '/admin/properties', icon: Building },
         { label: 'Client Inquiries', to: '/admin/inquiries', icon: Inbox, badge: inquiryCount },
       ]
     },
     {
-      group: 'Editorial & Content',
+      group: 'Editorial & Media',
       items: [
         { label: 'Blog Articles', to: '/admin/blog', icon: FileText },
         { label: 'Testimonials', to: '/admin/testimonials', icon: Quote },
@@ -123,6 +118,18 @@ export default function AdminLayout({ children }) {
   const getHeaderInfo = () => {
     if (pathname === '/admin/dashboard') {
       return { title: 'Dashboard Overview', desc: 'Platform activity, stats, and shortcuts' };
+    }
+    if (pathname === '/admin/pages') {
+      return { title: 'Website Pages CMS Hub', desc: 'Manage all 12 public website pages and micro-market corridors' };
+    }
+    if (pathname.startsWith('/admin/pages/corridors')) {
+      return { title: 'Micro-Market Corridors CMS', desc: 'Edit DLF Phase 1–4, Sushant Lok, and Udyog Vihar corridor landing pages' };
+    }
+    if (pathname === '/admin/pages/terms') {
+      return { title: 'Terms of Service CMS', desc: 'Edit legal engagement conditions and disclaimers' };
+    }
+    if (pathname === '/admin/pages/privacy') {
+      return { title: 'Privacy Policy CMS', desc: 'Edit HNWI confidentiality and data governance policy' };
     }
     if (pathname.startsWith('/admin/sections')) {
       return { title: 'Landing Page CMS', desc: 'Manage hero banner, sections, stats, and homepage copy' };
@@ -143,7 +150,7 @@ export default function AdminLayout({ children }) {
       return { title: 'Properties Page CMS', desc: 'Edit catalog masthead, search filters, and bottom advisory banner' };
     }
     if (pathname === '/admin/pages/blog') {
-      return { title: 'Blog Page CMS', desc: 'Edit research archive masthead and newsletter banner' };
+      return { title: 'Blog Page CMS', desc: 'Edit research archive masthead, market pulse, and newsletter banner' };
     }
     if (pathname === '/admin/pages/about') {
       return { title: 'About Us Page CMS', desc: 'Edit company mission, video tour, leadership, and consultation banner' };
@@ -169,6 +176,9 @@ export default function AdminLayout({ children }) {
   const { title: currentTitle, desc: currentDesc } = getHeaderInfo();
 
   const isItemActive = (to) => {
+    if (to === '/admin/pages') {
+      return pathname === '/admin/pages';
+    }
     return pathname === to || pathname.startsWith(to + '/');
   };
 
@@ -254,6 +264,12 @@ export default function AdminLayout({ children }) {
                         <span className="truncate">{item.label}</span>
                       )}
                     </div>
+
+                    {!isSidebarCollapsed && item.pill && (
+                      <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-white/5 border border-white/10 text-slate-300 shrink-0">
+                        {item.pill}
+                      </span>
+                    )}
 
                     {!isSidebarCollapsed && item.badge !== undefined && item.badge > 0 && (
                       <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold shrink-0 ${active
@@ -393,11 +409,18 @@ export default function AdminLayout({ children }) {
                         <Icon size={18} className={active ? 'text-[#D09A16]' : 'text-slate-400'} />
                         <span>{item.label}</span>
                       </div>
-                      {item.badge !== undefined && item.badge > 0 && (
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#D09A16] text-[#0E1424]">
-                          {item.badge}
-                        </span>
-                      )}
+                      <div className="flex items-center gap-1.5">
+                        {item.pill && (
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-white/5 border border-white/10 text-slate-300">
+                            {item.pill}
+                          </span>
+                        )}
+                        {item.badge !== undefined && item.badge > 0 && (
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#D09A16] text-[#0E1424]">
+                            {item.badge}
+                          </span>
+                        )}
+                      </div>
                     </Link>
                   );
                 })}

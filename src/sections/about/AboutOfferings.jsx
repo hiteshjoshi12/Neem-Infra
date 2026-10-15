@@ -210,7 +210,7 @@ export default function AboutOfferings() {
 
                       {/* Key Highlights Checklist */}
                       <div className="space-y-2.5 pt-4 border-t border-white/10 mb-6">
-                        {item.features.map((feat, fIdx) => (
+                        {(item.features || []).map((feat, fIdx) => (
                           <div key={fIdx} className="flex items-start gap-2.5 text-xs text-slate-200">
                             <Check size={14} className="text-[#D09A16] shrink-0 mt-0.5" />
                             <span className="font-medium">{feat}</span>

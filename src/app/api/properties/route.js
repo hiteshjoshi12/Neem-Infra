@@ -40,16 +40,6 @@ function generateSlug(title) {
 
 export async function GET(req) {
   try {
-    const cacheKey = `prop_cache_${req.url}`;
-    const cached = getCached(cacheKey, 60000);
-    if (cached) {
-      return NextResponse.json(cached, {
-        headers: {
-          'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300'
-        }
-      });
-    }
-
     await connectDB();
     const { searchParams } = new URL(req.url);
     const category = searchParams.get('category');
@@ -134,10 +124,11 @@ export async function GET(req) {
       data: properties
     };
 
-    setCached(cacheKey, responsePayload);
     return NextResponse.json(responsePayload, {
       headers: {
-        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300'
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
       }
     });
   } catch (error) {

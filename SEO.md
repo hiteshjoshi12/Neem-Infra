@@ -1,14 +1,13 @@
 # Saudagar Properties — Modern Next.js SEO, AEO & GEO Architecture
 
-This document is the definitive master specification for **Search Engine Optimization (SEO)**, **Answer Engine Optimization (AEO)**, and **Generative Engine Optimization (GEO)** across the Saudagar Properties web platform.
-
-Whenever developers or AI agents add new pages or modify existing routes, follow this document to ensure 100% compliance.
+> **Definitive Master Specification for Search Engine Optimization (SEO), Answer Engine Optimization (AEO), and Generative Engine Optimization (GEO)**  
+> Engineered for Saudagar Properties Pvt Ltd across Next.js 16 App Router, React 19, and MongoDB.
 
 ---
 
 ## 🚀 Quick Run: Automated SEO / AEO / GEO Deep Audit
 
-To run a deep audit of the entire site and verify all SEO, AEO, and GEO signals across every route in `src/app`:
+To run an automated audit verifying all technical signals across every route:
 
 ```bash
 npm run seo:check
@@ -17,7 +16,7 @@ npm run seo:check
 *(Alternatively: `node scripts/audit-seo.mjs`)*
 
 ### What the Audit Verifies:
-1. **Technical Crawl Infrastructure**: Dynamic `sitemap.js` (with MongoDB property sync) and `robots.js` (no duplicate/shadowing static files).
+1. **Technical Crawl Infrastructure**: Dynamic `sitemap.js` (with MongoDB property and blog post sync) and `robots.js` (no duplicate/shadowing static files).
 2. **Server-Side Metadata**: Every public page exports server-rendered `metadata` or `generateMetadata()`.
 3. **Canonical URLs**: Every public page specifies an explicit canonical URL (`alternates.canonical`).
 4. **AEO Breadcrumbs**: Every public page implements Schema.org `BreadcrumbList` via `<BreadcrumbJsonLd>`.
@@ -28,18 +27,22 @@ npm run seo:check
 
 ## 🏛️ Architecture Overview (Next.js 16 App Router)
 
-Next.js App Router relies on **Server Components and native Route Handlers**. Client-side `<head>` manipulation (`<SEOHead>` / `document.createElement`) is obsolete. All metadata must be pre-rendered on the server so AI bots and search engine crawlers receive complete headers on the initial HTTP response.
+Next.js App Router relies on **Server Components and native Route Handlers**. Client-side `<head>` manipulation (`<SEOHead>` / `document.createElement`) is obsolete. All metadata is pre-rendered on the server so AI bots and search engine crawlers receive complete headers on the initial HTTP response.
 
 ### Core File Structure
 ```
 src/
 ├── app/
 │   ├── layout.js              # Global metadataBase, default OpenGraph, Twitter, Favicons
-│   ├── sitemap.js             # Dynamic sitemap (MongoDB sync + all static routes)
+│   ├── sitemap.js             # Dynamic sitemap (MongoDB sync for properties & blog posts)
 │   ├── robots.js              # Dynamic crawler directives & sitemap pointer
-│   └── (marketing)/...        # Public pages with server-rendered metadata
+│   ├── (marketing)/...        # Public pages with server-rendered metadata
+│   └── blog/                  # Public blog hub, article reader & taxonomy routes
 ├── lib/
+│   ├── blog/
+│   │   └── markdownRenderer.jsx # Markdown parser, TOC extractor & reading metrics
 │   └── seo/
+│       ├── imageSeoHelper.js  # SEO-friendly image filename generator
 │       └── seoConfig.js       # Central source of truth for business NAP, PAGE_SEO & BREADCRUMBS
 └── components/
     └── seo/
@@ -47,6 +50,7 @@ src/
         ├── OrganizationJsonLd.jsx # RealEstateAgent + LocalBusiness + GEO Coordinates
         ├── BreadcrumbJsonLd.jsx   # BreadcrumbList schema (AEO rich snippets)
         ├── PropertyJsonLd.jsx     # RealEstateListing / SingleFamilyResidence schema
+        ├── BlogJsonLd.jsx         # BlogPosting schema for editorial articles
         └── FAQJsonLd.jsx          # FAQPage schema for Voice / Featured Snippets
 scripts/
 └── audit-seo.mjs              # Deep audit runner (npm run seo:check)
@@ -70,17 +74,17 @@ scripts/
    - Every page MUST specify `alternates: { canonical: '/your-route' }`.
    - Never use external or inconsistent trailing slashes.
 5. **OpenGraph & Twitter Cards**:
-   - Handled globally with defaults in `src/app/layout.js`, overridden per-page where unique imagery exists (e.g. property detail pages).
+   - Handled globally with defaults in `src/app/layout.js`, overridden per-page where unique imagery exists (e.g. property detail pages and blog articles).
 
 ### Pillar 2: AEO (Answer Engine Optimization — Voice, Assistant, Featured Snippets)
 
 AEO focuses on search engines providing direct, spoken, or highlighted answers (Google Featured Snippets, Siri, Google Assistant):
 
-1. **Breadcrumb Hierarchy**: Every public page MUST render `<BreadcrumbJsonLd items={breadcrumbs} />`. This builds search path breadcrumbs (e.g., `Home > Services > Residential`).
+1. **Breadcrumb Hierarchy**: Every public page renders `<BreadcrumbJsonLd items={breadcrumbs} />`. This builds search path breadcrumbs (e.g., `Home > Services > Residential`).
 2. **Answer-First Copywriting**:
    - Follow every major `<h2>` with a concise, direct **40–50 word summary paragraph** answering the immediate user query before expanding into details.
 3. **FAQ Schema**:
-   - Pages with Q&A or advisory content must include `<FAQJsonLd faqs={items} />` with exact question and answer objects.
+   - Pages with Q&A or advisory content include `<FAQJsonLd faqs={items} />` with exact question and answer objects.
 
 ### Pillar 3: GEO (Generative Engine Optimization — ChatGPT, Perplexity, Gemini, Claude)
 
@@ -93,7 +97,7 @@ GEO optimizes your website to be cited as the authoritative source by Large Lang
      - **Phone**: `+91 98112 21207` / `+91 98112 21217`
      - **Website**: `https://www.saudagarproperties.com`
 2. **Entity Knowledge Graph (`<OrganizationJsonLd />`)**:
-   - Defined globally in `PublicLayout.jsx`.
+   - Defined globally in `layout.js` / `PublicLayout.jsx`.
    - Emits `@type: ["RealEstateAgent", "LocalBusiness"]`.
    - Embeds exact geographic coordinates: `latitude: 28.4795`, `longitude: 77.0872`.
    - Embeds authority social links (`sameAs`) for Facebook, Instagram, LinkedIn, YouTube, and Justdial.
@@ -102,95 +106,51 @@ GEO optimizes your website to be cited as the authoritative source by Large Lang
 
 ---
 
-## 🛠️ Step-by-Step: Adding a New Public Page
+## 📰 Editorial Blog & Content SEO Architecture
 
-Whenever you create a new public route (e.g. `src/app/(marketing)/services/nri-investment/page.js`):
+The editorial publishing engine at `/blog` is optimized for topical authority and indexation:
 
-### Step 1: Register Metadata in `seoConfig.js`
-Open [`src/lib/seo/seoConfig.js`](file:///d:/Freelancing%20Projects/Saudagar%20Properties%20-%20Copy/src/lib/seo/seoConfig.js) and add entries to `PAGE_SEO` and `BREADCRUMBS`:
-
-```javascript
-// In src/lib/seo/seoConfig.js:
-
-export const PAGE_SEO = {
-  // ... existing pages
-  '/services/nri-investment': {
-    title: 'NRI Real Estate Investment Advisory Gurugram | Saudagar Properties',
-    description: 'Specialized NRI property advisory for high-yield luxury floors, villas & commercial investments in DLF Gurugram.',
-    canonical: '/services/nri-investment',
+### 1. `BlogPosting` Schema.org JSON-LD
+Every article rendered at `/blog/[slug]` injects:
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Article Title",
+  "description": "Excerpt summarizing the post",
+  "image": "https://www.saudagarproperties.com/images/hero.webp",
+  "datePublished": "2026-10-15T10:00:00Z",
+  "dateModified": "2026-10-15T14:30:00Z",
+  "author": {
+    "@type": "Person",
+    "name": "Author Name"
   },
-};
-
-export const BREADCRUMBS = {
-  // ... existing breadcrumbs
-  '/services/nri-investment': [
-    { name: 'Home', url: '/' },
-    { name: 'Services', url: '/#services' },
-    { name: 'NRI Investment', url: '/services/nri-investment' },
-  ],
-};
-```
-
-### Step 2: Implement the Page Component
-In `src/app/(marketing)/services/nri-investment/page.js`:
-
-```javascript
-import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
-import { PAGE_SEO, BREADCRUMBS } from '@/lib/seo/seoConfig';
-
-// 1. Server-rendered Metadata
-export async function generateMetadata() {
-  const seoData = PAGE_SEO['/services/nri-investment'];
-  return {
-    title: seoData.title,
-    description: seoData.description,
-    alternates: {
-      canonical: seoData.canonical,
-    },
-  };
-}
-
-// 2. Page Component with AEO Breadcrumbs & Single H1
-export default function NriInvestmentPage() {
-  const breadcrumbs = BREADCRUMBS['/services/nri-investment'];
-
-  return (
-    <div className="w-full min-h-screen bg-[#FAF8F5]">
-      {/* Schema.org BreadcrumbList for AEO & rich snippets */}
-      <BreadcrumbJsonLd items={breadcrumbs} />
-
-      {/* Exactly ONE H1 per page */}
-      <h1 className="text-4xl md:text-5xl font-serif text-[#1D263B]">
-        NRI Real Estate Investment Advisory in Gurugram
-      </h1>
-
-      {/* Direct Answer Paragraph for AI / Voice Search */}
-      <p className="text-lg text-[#475569] mt-4">
-        Saudagar Properties offers comprehensive end-to-end real estate advisory for Non-Resident Indians (NRIs) seeking prime residential floors and commercial investments in DLF Phase 1–5 and Golf Course Road.
-      </p>
-
-      {/* Additional page sections */}
-    </div>
-  );
+  "publisher": {
+    "@type": "Organization",
+    "name": "Saudagar Properties",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://www.saudagarproperties.com/logo.png"
+    }
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://www.saudagarproperties.com/blog/article-slug"
+  }
 }
 ```
 
-### Step 3: Add the Route to `sitemap.js`
-Open [`src/app/sitemap.js`](file:///d:/Freelancing%20Projects/Saudagar%20Properties%20-%20Copy/src/app/sitemap.js) and append the new path to `staticRoutes`:
+### 2. Internal Linking Strategy & Equity Distribution
+To eliminate orphan pages and maximize search bot crawling depth:
+- **Corridor Links**: Every blog post touching upon a locality (e.g., DLF Phase 2, Golf Course Road) embeds a direct link to that corridor's property catalog.
+- **Related Articles**: The bottom of each article presents 3 contextually related posts sharing category or tags.
+- **1-Click Link Insertion**: Writers use <kbd>Ctrl+K</kbd> in `BlogEditor.jsx` to search and link published articles and properties with canonical relative paths (`/blog/[slug]` or `/properties/[slug]`).
 
-```javascript
-const staticRoutes = [
-  // ... existing routes
-  '/services/nri-investment',
-].map(...)
-```
-
-### Step 4: Run the Automated Audit
-Execute the deep check:
-```bash
-npm run seo:check
-```
-Verify that all checks pass with **0 errors and 0 warnings**.
+### 3. Automated Dynamic XML Sitemap
+[`src/app/sitemap.js`](file:///d:/Freelancing%20Projects/Saudagar%20Properties%20-%20Copy/src/app/sitemap.js) dynamically aggregates:
+- Core static marketing routes (`/`, `/about`, `/contact`, `/services`, etc.)
+- Active MongoDB properties (`/properties/[slug]`)
+- Published MongoDB blog posts (`/blog/[slug]`)
 
 ---
 
@@ -232,9 +192,9 @@ Pages under `src/app/admin/*` and `src/app/api/*` must **never** be indexed by s
 
 ---
 
-## 📋 Comprehensive New Page Checklist
+## 📋 Comprehensive Pre-Release Checklist
 
-Before deploying or submitting any new page, ensure:
+Before deploying any new page or article, ensure:
 
 - [ ] **Route File**: Created in `src/app/.../page.js` as a Server Component.
 - [ ] **Metadata**: Exports `metadata` or async `generateMetadata()`.
@@ -242,9 +202,9 @@ Before deploying or submitting any new page, ensure:
 - [ ] **Description**: 140–160 characters with clear value proposition and CTA.
 - [ ] **Canonical URL**: Specified via `alternates: { canonical: '...' }`.
 - [ ] **Breadcrumbs**: Emits `<BreadcrumbJsonLd items={breadcrumbs} />`.
-- [ ] **Entity Schema**: Covered by `<OrganizationJsonLd>` (in layout) or `<PropertyJsonLd>`.
+- [ ] **Entity Schema**: Covered by `<OrganizationJsonLd>` (in layout), `<PropertyJsonLd>`, or `<BlogJsonLd>`.
 - [ ] **Headings**: Contains exactly **one** `<h1>` tag followed by logical `<h2>` and `<h3>` hierarchy.
 - [ ] **Answer Block**: First paragraph after H1/H2 gives a concise, authoritative answer (for AEO/GEO).
 - [ ] **Images**: All images use `next/image` with informative `alt` text and `sizes`.
-- [ ] **Sitemap**: Static route added to `src/app/sitemap.js` (dynamic properties are synced automatically).
+- [ ] **Sitemap**: Synced dynamically via `src/app/sitemap.js`.
 - [ ] **Verification**: Run `npm run seo:check` and ensure 0 warnings/errors.

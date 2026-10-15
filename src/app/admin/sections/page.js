@@ -46,7 +46,7 @@ const TABS = [
   { id: 'topConsultant', label: 'Consultant Showcase', icon: Award },
   { id: 'curatedCorridors', label: 'Featured Corridors', icon: Building2 },
   { id: 'services', label: 'Our Services', icon: Layers },
-  { id: 'dlfCallout', label: 'Market Stats', icon: TrendingUp },
+  { id: 'dlfCallout', label: 'DLF Callout & Stats', icon: TrendingUp },
   { id: 'whyChooseUs', label: 'Why Choose Us', icon: ShieldCheck },
   { id: 'testimonials', label: 'Testimonials Header', icon: MessageSquare },
   { id: 'location', label: 'Office & Map', icon: MapPin },
@@ -200,6 +200,17 @@ export default function AdminSectionsCMS() {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
         <div>
+          <div className="flex items-center gap-2 mb-2">
+            <Link
+              href="/admin/pages"
+              className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 text-slate-300 hover:text-white text-[11px] font-semibold transition-colors"
+            >
+              <span>← All Pages Hub</span>
+            </Link>
+            <span className="px-2 py-0.5 rounded-full bg-[#D09A16]/10 text-[#D09A16] border border-[#D09A16]/30 text-[10px] font-bold uppercase tracking-wider">
+              12 Sections
+            </span>
+          </div>
           <h1 className="text-xl sm:text-2xl font-serif font-bold text-white">
             Landing Page CMS
           </h1>
@@ -209,6 +220,14 @@ export default function AdminSectionsCMS() {
         </div>
 
         <div className="flex items-center gap-3">
+          <Link
+            href="/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium text-xs flex items-center gap-1.5 transition-colors"
+          >
+            <span>View Live Site</span>
+          </Link>
           <button
             onClick={handleSave}
             disabled={saving}

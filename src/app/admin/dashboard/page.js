@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import {
   Layers,
   Building,
@@ -15,7 +16,15 @@ import {
   BookOpen,
   Search,
   ExternalLink,
-  ChevronRight
+  ChevronRight,
+  Home,
+  Users,
+  Phone,
+  Compass,
+  FileText,
+  Plus,
+  Edit3,
+  Sliders
 } from 'lucide-react';
 import api from '@/services/api';
 
@@ -26,9 +35,11 @@ export default function AdminDashboard() {
     inquiriesCount: 0,
     sectionsCount: 12,
     blogsCount: 0,
+    pagesCount: 12
   });
   const [recentInquiries, setRecentInquiries] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [cmsTab, setCmsTab] = useState('core');
 
   useEffect(() => {
     let ignore = false;
@@ -41,7 +52,7 @@ export default function AdminDashboard() {
           api.getBlogs()
         ]);
 
-        const pCount = propsRes.status === 'fulfilled' && propsRes.value?.count ? propsRes.value.count : 5;
+        const pCount = propsRes.status === 'fulfilled' && propsRes.value?.count ? propsRes.value.count : 4;
         const tCount = testsRes.status === 'fulfilled' && testsRes.value?.count ? testsRes.value.count : 3;
         const inqs = inqRes.status === 'fulfilled' && inqRes.value?.data ? inqRes.value.data : [];
         const bCount = blogRes.status === 'fulfilled' && blogRes.value?.count ? blogRes.value.count : 6;
@@ -51,10 +62,11 @@ export default function AdminDashboard() {
             propertiesCount: pCount,
             testimonialsCount: tCount,
             inquiriesCount: inqs.length,
-            sectionsCount: 12,
-            blogsCount: bCount
+            sectionsCount: 28,
+            blogsCount: bCount,
+            pagesCount: 12
           });
-          setRecentInquiries(inqs.slice(0, 5));
+          setRecentInquiries(inqs.slice(0, 6));
         }
       } catch (err) {
         console.warn('Dashboard fetch warning:', err);
@@ -71,70 +83,105 @@ export default function AdminDashboard() {
     {
       title: 'Managed Properties',
       value: stats.propertiesCount,
-      subtext: 'Luxury floors & prime corridor listings',
+      subtext: 'Luxury builder floors & plots',
       icon: Building,
       link: '/admin/properties',
-      color: '#D09A16'
+      color: '#D09A16',
+      badge: 'Active Listings'
     },
     {
-      title: 'Customer Leads',
+      title: 'Client Inquiries',
       value: stats.inquiriesCount,
-      subtext: 'Newsletter & direct property inquiries',
+      subtext: 'Direct lead submissions',
       icon: Inbox,
       link: '/admin/inquiries',
-      color: '#60A5FA'
+      color: '#60A5FA',
+      badge: 'Real-time Desk'
     },
     {
       title: 'Editorial Articles',
       value: stats.blogsCount,
-      subtext: 'Published guides & local SEO clusters',
+      subtext: 'Market research & local guides',
       icon: BookOpen,
       link: '/admin/blog',
-      color: '#34D399'
+      color: '#34D399',
+      badge: 'SEO Intelligence'
     },
     {
-      title: 'CMS Sections',
-      value: stats.sectionsCount,
-      subtext: 'Hero, navbar, corridors, testimonials...',
+      title: 'Website Pages CMS',
+      value: `${stats.pagesCount} Pages`,
+      subtext: 'All pages & corridors live in DB',
       icon: Layers,
-      link: '/admin/sections',
-      color: '#F59E0B'
+      link: '/admin/pages',
+      color: '#F59E0B',
+      badge: 'Unified CMS'
     }
   ];
+
+  const pageGroups = {
+    core: [
+      { name: 'Landing Page (Homepage)', route: '/', editUrl: '/admin/sections', count: '12 Sections', icon: Home },
+      { name: 'About Us Page', route: '/about', editUrl: '/admin/pages/about', count: '7 Sections', icon: Users },
+      { name: 'Properties Catalog', route: '/properties', editUrl: '/admin/pages/properties', count: '4 Sections', icon: Building },
+      { name: 'Our Team Page', route: '/team', editUrl: '/admin/pages/team', count: '5 Sections', icon: Users },
+      { name: 'Contact Us Page', route: '/contact', editUrl: '/admin/pages/contact', count: '3 Sections', icon: Phone },
+      { name: 'Blog Archive & Research', route: '/blog', editUrl: '/admin/pages/blog', count: '6 Sections', icon: BookOpen }
+    ],
+    services: [
+      { name: 'Residential Services', route: '/services/residential', editUrl: '/admin/pages/residential', count: '6 Sections', icon: Building },
+      { name: 'Commercial Services', route: '/services/commercial', editUrl: '/admin/pages/commercial', count: '6 Sections', icon: Layers },
+      { name: 'Industrial Services', route: '/services/industrial', editUrl: '/admin/pages/industrial', count: '6 Sections', icon: ShieldCheck }
+    ],
+    corridors: [
+      { name: 'DLF Phase 1 Corridor', route: '/property/dlf-phase-1', editUrl: '/admin/pages/corridors?corridor=dlf-phase-1', count: '10 Sections', icon: Compass },
+      { name: 'DLF Phase 2 Corridor', route: '/property/dlf-phase-2', editUrl: '/admin/pages/corridors?corridor=dlf-phase-2', count: '10 Sections', icon: Compass },
+      { name: 'DLF Phase 3 Corridor', route: '/property/dlf-phase-3', editUrl: '/admin/pages/corridors?corridor=dlf-phase-3', count: '10 Sections', icon: Compass },
+      { name: 'DLF Phase 4 Corridor', route: '/property/dlf-phase-4', editUrl: '/admin/pages/corridors?corridor=dlf-phase-4', count: '10 Sections', icon: Compass },
+      { name: 'Sushant Lok Corridor', route: '/property/shushant-lok', editUrl: '/admin/pages/corridors?corridor=shushant-lok', count: '10 Sections', icon: Compass },
+      { name: 'Udyog Vihar Corridor', route: '/property/udyog-vihar', editUrl: '/admin/pages/corridors?corridor=udyog-vihar', count: '10 Sections', icon: Compass }
+    ],
+    legal: [
+      { name: 'Terms of Service', route: '/terms', editUrl: '/admin/pages/terms', count: '2 Sections', icon: FileText },
+      { name: 'Privacy Policy', route: '/privacy-policy', editUrl: '/admin/pages/privacy', count: '2 Sections', icon: ShieldCheck }
+    ]
+  };
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Welcome Hero Banner */}
       <div className="relative rounded-2xl bg-gradient-to-r from-[#111A30] via-[#0E1424] to-[#0A0F1D] p-6 sm:p-8 border border-white/[0.08] shadow-lg overflow-hidden">
-        <div className="absolute top-0 right-0 w-72 h-72 bg-[#D09A16]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-[#D09A16]/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-1.5">
             <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[10px] font-bold tracking-wider text-[#D09A16] uppercase">
               <Sparkles size={12} />
-              <span>Saudagar CMS Engine</span>
+              <span>Saudagar Properties Control Suite</span>
             </div>
             <h1 className="text-xl sm:text-2xl lg:text-3xl font-serif font-bold text-white">
               Executive Management Overview
             </h1>
             <p className="text-xs sm:text-sm text-slate-300 max-w-xl font-normal leading-relaxed">
-              Curate live listings, monitor client leads, publish search-optimized articles, and update website branding in real-time.
+              Full control over all 12 public pages, 6 micro-market corridors, luxury property inventory, and client inquiries — with real-time updates directly to MongoDB.
             </p>
           </div>
 
           <div className="flex flex-wrap items-center gap-2.5">
             <Link
-              href="/admin/properties"
-              className="px-4 py-2.5 rounded-xl bg-[#D09A16] hover:bg-[#D09A16] text-[#0E162B] font-bold text-xs flex items-center gap-1.5 transition-colors shadow-sm"
+              href="/admin/pages"
+              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#D09A16] to-[#D09A16] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-[0_2px_10px_rgba(208,154,22,0.2)]"
             >
-              <span>Manage Properties</span>
+              <span>Pages CMS Hub</span>
               <ArrowUpRight size={14} />
             </Link>
             <Link
-              href="/admin/inquiries"
+              href="/"
+              target="_blank"
+              rel="noopener noreferrer"
               className="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white font-medium text-xs flex items-center gap-1.5 transition-colors"
             >
-              <span>View Leads ({stats.inquiriesCount})</span>
+              <span>Visit Live Portal</span>
+              <ExternalLink size={13} />
             </Link>
           </div>
         </div>
@@ -157,13 +204,15 @@ export default function AdminDashboard() {
                 >
                   <Icon size={20} />
                 </div>
-                <ArrowUpRight size={15} className="text-slate-500 group-hover:text-white transition-colors" />
+                <span className="px-2 py-0.5 rounded-full bg-white/5 text-[10px] text-slate-400 font-mono">
+                  {item.badge}
+                </span>
               </div>
 
               <div className="text-2xl sm:text-3xl font-serif font-bold text-white mb-0.5">
                 {loading ? '...' : item.value}
               </div>
-              <h3 className="text-xs font-bold text-slate-200 mb-0.5">
+              <h3 className="text-xs font-bold text-slate-200 mb-0.5 group-hover:text-[#D09A16] transition-colors">
                 {item.title}
               </h3>
               <p className="text-[11px] text-slate-400">
@@ -174,96 +223,183 @@ export default function AdminDashboard() {
         })}
       </div>
 
-      {/* Secondary Grid: CMS Sections & Recent Leads */}
+      {/* Quick Action Command Strip */}
+      <div className="p-4 rounded-2xl bg-[#0E1424] border border-white/[0.08] flex flex-wrap items-center justify-between gap-3">
+        <span className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
+          <Sliders size={13} className="text-[#D09A16]" />
+          <span>Quick Actions</span>
+        </span>
+        <div className="flex flex-wrap items-center gap-2">
+          <Link
+            href="/admin/properties/new"
+            className="px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors"
+          >
+            <Plus size={13} className="text-[#D09A16]" />
+            <span>Add Property</span>
+          </Link>
+          <Link
+            href="/admin/blog/new"
+            className="px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors"
+          >
+            <Plus size={13} className="text-[#D09A16]" />
+            <span>Create Article</span>
+          </Link>
+          <Link
+            href="/admin/sections"
+            className="px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors"
+          >
+            <Edit3 size={13} className="text-[#D09A16]" />
+            <span>Edit Homepage</span>
+          </Link>
+          <Link
+            href="/admin/inquiries"
+            className="px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors"
+          >
+            <Inbox size={13} className="text-[#D09A16]" />
+            <span>Review Leads ({stats.inquiriesCount})</span>
+          </Link>
+        </div>
+      </div>
+
+      {/* Two-Column Section: Pages Matrix & Recent Leads */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
 
-        {/* Homepage Sections Manager */}
+        {/* Website Pages Quick Jump Matrix */}
         <div className="lg:col-span-7 rounded-2xl bg-[#0E1424] border border-white/[0.08] p-5 sm:p-6 space-y-4">
-          <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/[0.06] pb-3">
             <div>
-              <h3 className="text-sm font-serif font-bold text-white">Homepage Section Editors</h3>
-              <p className="text-xs text-slate-400">Jump directly into any section to edit copy & media</p>
+              <h3 className="text-sm font-serif font-bold text-white">Website Pages CMS Matrix</h3>
+              <p className="text-xs text-slate-400">Directly jump into any page or corridor editor</p>
             </div>
-            <Link href="/admin/sections" className="text-xs text-[#D09A16] hover:underline font-semibold flex items-center gap-1">
-              <span>View All</span>
+            <Link href="/admin/pages" className="text-xs text-[#D09A16] hover:underline font-semibold flex items-center gap-1">
+              <span>View Master Hub (12)</span>
               <ChevronRight size={13} />
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          {/* Sub-category selector */}
+          <div className="flex items-center gap-1.5 bg-white/[0.02] p-1 rounded-xl border border-white/5">
             {[
-              { name: '1. Navbar & Header', desc: 'Logo, links, dropdowns, CTA & phones', tab: 'navbar' },
-              { name: '2. Hero Section', desc: 'Title, tags, search bar & spotlight card', tab: 'hero' },
-              { name: '3. Top Consultant', desc: 'Copy, 3 categories, video walkthrough', tab: 'topConsultant' },
-              { name: '4. Featured Properties', desc: 'Section header and corridor copy', tab: 'curatedCorridors' },
-              { name: '5. Our Services', desc: 'Core services, 25+ yrs counter, process', tab: 'services' },
-              { name: '6. DLF Callout & Stats', desc: 'Dedicated DLF desk, phone, explore & stats', tab: 'dlfCallout' },
-              { name: '7. Why Choose Us', desc: 'Trust card, advantage copy & pillars', tab: 'whyChooseUs' },
-              { name: '8. Testimonials Header', desc: 'Section title, badges & subtitle', tab: 'testimonials' },
-              { name: '9. Location & Map', desc: 'Office address, Google Map pin & phones', tab: 'location' },
-              { name: '10. Newsletter Section', desc: 'Subscription banner & intelligence copy', tab: 'newsletter' },
-              { name: '11. Footer & Socials', desc: 'About copy, addresses, phone list & socials', tab: 'footer' },
-              { name: '12. Floating Widgets', desc: 'WhatsApp number, prefill text & scroll-to-top', tab: 'floatingWidgets' }
-            ].map((sec, i) => (
-              <Link
-                key={i}
-                href={`/admin/sections?tab=${sec.tab}`}
-                className="p-3 rounded-xl bg-white/[0.02] hover:bg-white/[0.06] border border-white/[0.04] hover:border-[#D09A16]/40 transition-all flex flex-col justify-between group"
+              { id: 'core', label: 'Core Pages (6)' },
+              { id: 'services', label: 'Services (3)' },
+              { id: 'corridors', label: 'Corridors (6)' },
+              { id: 'legal', label: 'Legal (2)' }
+            ].map(tab => (
+              <button
+                key={tab.id}
+                onClick={() => setCmsTab(tab.id)}
+                className={`flex-1 py-1.5 px-2 rounded-lg text-[11px] font-semibold transition-all cursor-pointer ${
+                  cmsTab === tab.id
+                    ? 'bg-[#D09A16] text-[#0C101A] font-bold shadow-sm'
+                    : 'text-slate-400 hover:text-white'
+                }`}
               >
-                <div className="flex items-center justify-between mb-1">
-                  <h4 className="text-xs font-semibold text-white group-hover:text-[#D09A16] transition-colors">
-                    {sec.name}
-                  </h4>
-                  <ArrowUpRight size={12} className="text-slate-500 group-hover:text-[#D09A16]" />
-                </div>
-                <p className="text-[11px] text-slate-400 font-light leading-relaxed">
-                  {sec.desc}
-                </p>
-              </Link>
+                {tab.label}
+              </button>
             ))}
+          </div>
+
+          {/* Page List Grid */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+            {pageGroups[cmsTab].map((p, i) => {
+              const Icon = p.icon;
+              return (
+                <div
+                  key={i}
+                  className="p-3.5 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.04] hover:border-[#D09A16]/40 transition-all flex flex-col justify-between group"
+                >
+                  <div className="flex items-center justify-between gap-2 mb-2">
+                    <div className="flex items-center gap-2">
+                      <div className="w-7 h-7 rounded-lg bg-white/5 text-[#D09A16] flex items-center justify-center">
+                        <Icon size={14} />
+                      </div>
+                      <span className="text-xs font-semibold text-white group-hover:text-[#D09A16] transition-colors truncate">
+                        {p.name}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between pt-2 border-t border-white/5 text-[11px]">
+                    <span className="text-slate-400 font-mono">{p.count}</span>
+                    <div className="flex items-center gap-1.5">
+                      <Link
+                        href={p.route}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="p-1 rounded-md text-slate-400 hover:text-white transition-colors"
+                        title="View Live"
+                      >
+                        <ExternalLink size={12} />
+                      </Link>
+                      <Link
+                        href={p.editUrl}
+                        className="px-2 py-0.5 rounded-md bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-semibold text-[10px] uppercase tracking-wider transition-colors flex items-center gap-1"
+                      >
+                        <Edit3 size={10} />
+                        <span>Edit</span>
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        {/* Recent Inquiries Panel */}
+        {/* Recent Client Inquiries Inbox */}
         <div className="lg:col-span-5 rounded-2xl bg-[#0E1424] border border-white/[0.08] p-5 sm:p-6 space-y-4">
           <div className="flex items-center justify-between border-b border-white/[0.06] pb-3">
             <div>
-              <h3 className="text-sm font-serif font-bold text-white">Recent Client Leads</h3>
-              <p className="text-xs text-slate-400">Latest website submissions</p>
+              <h3 className="text-sm font-serif font-bold text-white">Client Inquiries Inbox</h3>
+              <p className="text-xs text-slate-400">Latest website submissions &amp; requests</p>
             </div>
             <Link href="/admin/inquiries" className="text-xs text-[#D09A16] hover:underline font-semibold flex items-center gap-1">
-              <span>All Leads</span>
+              <span>All Leads ({stats.inquiriesCount})</span>
               <ChevronRight size={13} />
             </Link>
           </div>
 
           {loading ? (
             <div className="py-12 text-center text-slate-400 text-xs">
-              Loading recent leads...
+              Loading recent inquiries...
             </div>
           ) : recentInquiries.length === 0 ? (
             <div className="py-12 text-center text-slate-400 text-xs space-y-1">
               <p className="font-semibold text-white">No inquiries yet</p>
-              <p>Sign up on the website newsletter to test.</p>
+              <p>Test the inquiry form on any property or contact page.</p>
             </div>
           ) : (
-            <div className="space-y-2">
+            <div className="space-y-2.5">
               {recentInquiries.map((inq) => (
                 <div
                   key={inq._id}
-                  className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.04] flex items-center justify-between gap-3"
+                  className="p-3 rounded-xl bg-white/[0.02] border border-white/[0.04] hover:border-white/10 transition-colors flex items-start justify-between gap-3"
                 >
-                  <div className="min-w-0">
-                    <p className="text-xs font-semibold text-white truncate">{inq.email}</p>
-                    <div className="flex items-center gap-2 text-[10px] text-slate-400 mt-0.5">
-                      <span className="capitalize">{inq.type?.replace(/_/g, ' ')}</span>
-                      <span>•</span>
+                  <div className="min-w-0 space-y-1">
+                    <div className="flex items-center gap-2">
+                      <p className="text-xs font-semibold text-white truncate">{inq.name || inq.email}</p>
+                      <span className="px-1.5 py-0.2 rounded bg-[#D09A16]/15 text-[#D09A16] text-[9px] font-bold uppercase tracking-wider">
+                        {inq.type?.replace(/_/g, ' ') || 'Lead'}
+                      </span>
+                    </div>
+                    {inq.phone && (
+                      <p className="text-[11px] text-slate-400 font-mono">{inq.phone}</p>
+                    )}
+                    {inq.message && (
+                      <p className="text-[11px] text-slate-400 line-clamp-1 italic">
+                        &quot;{inq.message}&quot;
+                      </p>
+                    )}
+                    <div className="text-[10px] text-slate-500 flex items-center gap-1 pt-0.5">
+                      <Clock size={10} />
                       <span>{new Date(inq.createdAt).toLocaleDateString()}</span>
                     </div>
                   </div>
+
                   <Link
                     href="/admin/inquiries"
                     className="p-1.5 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white shrink-0 transition-colors"
+                    title="View Lead Details"
                   >
                     <ArrowUpRight size={13} />
                   </Link>

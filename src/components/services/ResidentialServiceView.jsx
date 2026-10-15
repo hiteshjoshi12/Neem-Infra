@@ -34,6 +34,7 @@ const fadeUpVariant = {
 };
 
 export default function ResidentialServiceView({ 
+  initialData = null,
   residentialListings = [], 
   breadcrumbs = [],
   typologies = [],
@@ -42,21 +43,47 @@ export default function ResidentialServiceView({
   specificationStandards = []
 }) {
   const { sections } = useCms();
-  const cms = sections?.page_residential || DEFAULT_SECTIONS.page_residential;
-  const heroData = cms?.hero || DEFAULT_SECTIONS.page_residential.hero;
-  const rawTypologies = cms?.assetClasses && cms.assetClasses.length > 0 ? cms.assetClasses : typologies;
+  const cms = sections?.page_residential || initialData || DEFAULT_SECTIONS?.page_residential || {};
+  const heroData = cms?.hero || DEFAULT_SECTIONS?.page_residential?.hero || {};
+  const activeMetrics = (cms?.metrics && cms.metrics.length > 0)
+    ? cms.metrics
+    : (DEFAULT_SECTIONS?.page_residential?.metrics || []);
+  const heroCardData = heroData?.heroCard || DEFAULT_SECTIONS?.page_residential?.hero?.heroCard || {};
+  const rawTypologies = (cms?.assetClasses && cms.assetClasses.length > 0)
+    ? cms.assetClasses
+    : (typologies && typologies.length > 0 ? typologies : DEFAULT_SECTIONS.page_residential.assetClasses);
+
   const activeTypologies = (rawTypologies || []).map((item, idx) => {
-    const base = typologies[idx] || {};
+    const base = DEFAULT_SECTIONS.page_residential.assetClasses[idx] || {};
     return {
       ...base,
       ...item,
-      metrics: item?.metrics || base?.metrics || [],
-      features: item?.features || base?.features || [],
+      metrics: (item?.metrics && item.metrics.length > 0) ? item.metrics : (base?.metrics || []),
+      features: (item?.features && item.features.length > 0) ? item.features : (base?.features || []),
       price: item?.price || item?.pricing || base?.price || base?.pricing || '',
     };
   });
-  const activeMicroMarkets = cms?.microMarkets && cms.microMarkets.length > 0 ? cms.microMarkets : microMarkets;
-  const activeDueDiligenceSteps = cms?.dueDiligenceSteps && cms.dueDiligenceSteps.length > 0 ? cms.dueDiligenceSteps : dueDiligenceSteps;
+
+  const rawMicroMarkets = (cms?.microMarkets && cms.microMarkets.length > 0)
+    ? cms.microMarkets
+    : (microMarkets && microMarkets.length > 0 ? microMarkets : DEFAULT_SECTIONS.page_residential.microMarkets);
+
+  const activeMicroMarkets = (rawMicroMarkets || []).map((market, idx) => {
+    const base = DEFAULT_SECTIONS.page_residential.microMarkets[idx] || {};
+    return {
+      ...base,
+      ...market,
+      highlights: (market?.highlights && market.highlights.length > 0) ? market.highlights : (base?.highlights || [])
+    };
+  });
+
+  const activeDueDiligenceSteps = (cms?.dueDiligenceSteps && cms.dueDiligenceSteps.length > 0)
+    ? cms.dueDiligenceSteps
+    : (dueDiligenceSteps && dueDiligenceSteps.length > 0 ? dueDiligenceSteps : DEFAULT_SECTIONS.page_residential.dueDiligenceSteps);
+
+  const activeSpecificationStandards = (cms?.specificationStandards && cms.specificationStandards.length > 0)
+    ? cms.specificationStandards
+    : (specificationStandards && specificationStandards.length > 0 ? specificationStandards : DEFAULT_SECTIONS.page_residential.specificationStandards);
   return (
     <div className="w-full min-h-screen bg-[#F7F5EF] text-[#17213D]">
       <BreadcrumbJsonLd items={breadcrumbs} />
@@ -144,9 +171,11 @@ export default function ResidentialServiceView({
             >
               <div className="bg-[#17213D]/90 backdrop-blur-xl border border-white/15 rounded-3xl p-6 sm:p-7 shadow-2xl relative">
                 <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-5">
-                  <span className="text-xs uppercase tracking-wider text-[#9DA6B8]">Advisory Authority</span>
+                  <span className="text-xs uppercase tracking-wider text-[#9DA6B8]">
+                    {heroCardData.tag || "Advisory Authority"}
+                  </span>
                   <span className="text-xs font-semibold text-[#D09A16] flex items-center gap-1">
-                    <ShieldCheck size={14} /> DLF Authorized Desk
+                    <ShieldCheck size={14} /> {heroCardData.badge || "DLF Authorized Desk"}
                   </span>
                 </div>
 
@@ -156,8 +185,12 @@ export default function ResidentialServiceView({
                       <Key size={16} />
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold text-white">100% Clear &amp; Verified Titles</h4>
-                      <p className="text-xs text-[#9DA6B8] mt-0.5">Every builder floor and plot undergoes 3-tier legal verification before listing.</p>
+                      <h4 className="text-sm font-semibold text-white">
+                        {heroCardData.feature1Title || "100% Clear & Verified Titles"}
+                      </h4>
+                      <p className="text-xs text-[#9DA6B8] mt-0.5">
+                        {heroCardData.feature1Desc || "Every builder floor and plot undergoes 3-tier legal verification before listing."}
+                      </p>
                     </div>
                   </div>
 
@@ -166,8 +199,12 @@ export default function ResidentialServiceView({
                       <Building2 size={16} />
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold text-white">Off-Market Builder Floors</h4>
-                      <p className="text-xs text-[#9DA6B8] mt-0.5">Direct access to pre-launch and confidential floors not listed on open public portals.</p>
+                      <h4 className="text-sm font-semibold text-white">
+                        {heroCardData.feature2Title || "Off-Market Builder Floors"}
+                      </h4>
+                      <p className="text-xs text-[#9DA6B8] mt-0.5">
+                        {heroCardData.feature2Desc || "Direct access to pre-launch and confidential floors not listed on open public portals."}
+                      </p>
                     </div>
                   </div>
 
@@ -176,15 +213,21 @@ export default function ResidentialServiceView({
                       <Award size={16} />
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold text-white">25+ Years DLF Leadership</h4>
-                      <p className="text-xs text-[#9DA6B8] mt-0.5">Trusted advisors to Gurgaon’s leading business families, doctors, and CXOs.</p>
+                      <h4 className="text-sm font-semibold text-white">
+                        {heroCardData.feature3Title || "25+ Years DLF Leadership"}
+                      </h4>
+                      <p className="text-xs text-[#9DA6B8] mt-0.5">
+                        {heroCardData.feature3Desc || "Trusted advisors to Gurgaon’s leading business families, doctors, and CXOs."}
+                      </p>
                     </div>
                   </div>
                 </div>
 
                 <div className="mt-6 pt-5 border-t border-white/10 flex items-center justify-between text-xs text-[#C9CED9]">
-                  <span>Average Turnaround</span>
-                  <span className="text-[#D09A16] font-semibold">Seamless 14-Day Closure</span>
+                  <span>{heroCardData.statLabel || "Average Turnaround"}</span>
+                  <span className="text-[#D09A16] font-semibold">
+                    {heroCardData.statValue || "Seamless 14-Day Closure"}
+                  </span>
                 </div>
               </div>
             </motion.div>
@@ -192,6 +235,39 @@ export default function ResidentialServiceView({
           </div>
         </div>
       </section>
+
+      {/* ================= 4 KEY PERFORMANCE METRICS STRIP ================= */}
+      {activeMetrics && activeMetrics.length > 0 && (
+        <section className="relative z-20 max-w-7xl mx-auto px-5 sm:px-8 -mt-8 sm:-mt-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-[#12192C]/95 backdrop-blur-xl border border-white/15 rounded-3xl p-5 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.35)]"
+          >
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 divide-y lg:divide-y-0 lg:divide-x divide-white/10">
+              {activeMetrics.map((m, idx) => (
+                <div key={idx} className={`flex flex-col justify-between ${idx > 0 ? 'pt-4 lg:pt-0 lg:pl-6' : ''}`}>
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="w-2 h-2 rounded-full bg-[#D09A16] shadow-[0_0_8px_#D09A16]" />
+                    <span className="text-2xl sm:text-3xl font-serif font-bold text-white tracking-tight">
+                      {m.value}
+                    </span>
+                  </div>
+                  <div>
+                    <h4 className="text-xs sm:text-sm font-bold text-slate-200 uppercase tracking-wider mb-0.5">
+                      {m.label}
+                    </h4>
+                    <p className="text-[11px] text-[#9DA6B8] leading-relaxed">
+                      {m.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </section>
+      )}
 
       {/* ================= RESIDENTIAL ASSET CLASSES ================= */}
       <section className="py-20 md:py-28 max-w-7xl mx-auto px-5 sm:px-8">
@@ -451,7 +527,7 @@ export default function ResidentialServiceView({
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {specificationStandards.map((spec, sIdx) => (
+            {(activeSpecificationStandards || []).map((spec, sIdx) => (
               <motion.div 
                 key={sIdx}
                 initial="hidden"
@@ -556,33 +632,44 @@ export default function ResidentialServiceView({
       <section id="contact-desk" className="py-16 bg-[#0E162B] text-white relative overflow-hidden">
         <div className="max-w-5xl mx-auto px-5 sm:px-8 text-center relative z-10">
           <span className="text-xs font-semibold uppercase tracking-[0.3em] text-[#D09A16] block mb-3">
-            Confidential Real Estate Desk
+            {cms?.cta?.badge || "Confidential Real Estate Desk"}
           </span>
           <h2 className="text-3xl sm:text-5xl font-serif text-[#F7F5EF] mb-4">
-            Looking for an Exclusive Residential Property?
+            {cms?.cta?.titleMain || "Looking for an Exclusive Residential Property?"}{' '}
+            {cms?.cta?.titleItalic && <span className="italic text-[#D09A16]">{cms.cta.titleItalic}</span>}
           </h2>
-          <p className="text-[#C9CED9] text-sm sm:text-base max-w-2xl mx-auto mb-8 font-light">
-            Share your preferred phase, plot size, and budget with our senior partners. We arrange private, discreet site viewings with complete title verification.
+          <p className="text-[#C9CED9] text-sm sm:text-base max-w-2xl mx-auto mb-8 font-light leading-relaxed">
+            {cms?.cta?.subtitle || "Share your preferred phase, plot size, and budget with our senior partners. We arrange private, discreet site viewings with complete title verification."}
           </p>
 
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
               href="/contact"
-              className="px-8 py-3.5 rounded-xl bg-[#D09A16] hover:bg-[#b8850f] text-[#0E162B] font-bold text-xs uppercase tracking-widest shadow-lg transition-all flex items-center gap-2"
+              className="px-8 py-3.5 rounded-xl bg-[#D09A16] hover:bg-[#b8850f] text-[#0E162B] font-bold text-xs uppercase tracking-widest shadow-lg transition-all flex items-center gap-2 cursor-pointer"
             >
               <span>Book Private Consultation</span>
               <Send size={13} />
             </Link>
 
             <a
-              href="https://wa.me/919718511207"
+              href={cms?.cta?.whatsappUrl || "https://wa.me/919718511207"}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-2 shadow-sm"
+              className="px-8 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-2 shadow-sm cursor-pointer"
             >
               <WhatsAppIcon size={16} />
               <span>WhatsApp Us Direct</span>
             </a>
+
+            {cms?.cta?.phone && (
+              <a
+                href={`tel:${cms.cta.phone.replace(/\s+/g, '')}`}
+                className="px-7 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold text-xs uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer"
+              >
+                <PhoneCall size={14} className="text-[#D09A16]" />
+                <span>Call {cms.cta.phone}</span>
+              </a>
+            )}
           </div>
         </div>
       </section>

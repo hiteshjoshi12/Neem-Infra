@@ -5,26 +5,14 @@ import Category from '../models/Category.js';
 import Location from '../models/Location.js';
 import Tag from '../models/Tag.js';
 import PropertyType from '../models/PropertyType.js';
-import { 
-  INITIAL_POSTS, 
-  INITIAL_AUTHORS, 
-  INITIAL_CATEGORIES, 
-  INITIAL_LOCATIONS, 
-  INITIAL_TAGS 
-} from '../constants/blogData.js';
 
 // In-memory cache with 60s TTL to eliminate database roundtrips and make page navigation instant
 const memoryCache = new Map();
 const CACHE_TTL_MS = 60 * 1000; // 60 seconds
 
-function getCached(key) {
-  const item = memoryCache.get(key);
-  if (!item) return null;
-  if (Date.now() - item.timestamp > CACHE_TTL_MS) {
-    memoryCache.delete(key);
-    return null;
-  }
-  return item.data;
+function getCached(_key) {
+  // Always return null to ensure database changes reflect immediately on the UI
+  return null;
 }
 
 function setCached(key, data) {
@@ -33,32 +21,6 @@ function setCached(key, data) {
 
 export function clearBlogCache() {
   memoryCache.clear();
-}
-
-// Helper to hydrate fallback posts with objects for author, category, etc.
-function getHydratedFallbackPosts() {
-  const authorMap = Object.fromEntries(INITIAL_AUTHORS.map(a => [a.slug, a]));
-  const catMap = Object.fromEntries(INITIAL_CATEGORIES.map(c => [c.slug, c]));
-  const locMap = Object.fromEntries(INITIAL_LOCATIONS.map(l => [l.slug, l]));
-  const tagMap = Object.fromEntries(INITIAL_TAGS.map(t => [t.slug, t]));
-
-  return INITIAL_POSTS.map(p => ({
-    ...p,
-    _id: `fallback-${p.slug}`,
-    author: authorMap[p.authorSlug] || { name: 'Saudagar Advisory Desk', slug: 'saudagar-advisory' },
-    category: catMap[p.categorySlug] || { name: 'Real Estate Advisory', slug: 'real-estate-advisory' },
-    location: (p.locationSlugs || []).map(s => locMap[s]).filter(Boolean),
-    tags: (p.tagsSlugs || []).map(s => tagMap[s]).filter(Boolean),
-    isPillar: !!p.isPillar,
-    topicCluster: p.topicCluster || 'dlf-gurugram',
-    parentPillarSlug: p.parentPillarSlug || null,
-    childArticlesSlugs: p.childArticlesSlugs || [],
-    relatedPostsSlugs: p.relatedPostsSlugs || [],
-    relatedPosts: p.relatedPostsSlugs || [],
-    publishedAt: p.publishedAt,
-    createdAt: p.publishedAt,
-    updatedAt: p.updatedAt || p.publishedAt
-  }));
 }
 
 export async function getBlogPosts(options = {}) {
@@ -136,50 +98,13 @@ export async function getBlogPosts(options = {}) {
     }
 
     const posts = await query.lean().exec();
-
-    let result;
-    if (posts && posts.length > 0) {
-      result = JSON.parse(JSON.stringify(posts));
-    } else {
-      result = getFallbackFiltered(options);
-    }
+    const result = posts && posts.length > 0 ? JSON.parse(JSON.stringify(posts)) : [];
     setCached(cacheKey, result);
     return result;
   } catch (error) {
-    console.warn('[blogService] getBlogPosts error, using fallback:', error?.message);
-    const result = getFallbackFiltered(options);
-    setCached(cacheKey, result);
-    return result;
+    console.warn('[blogService] getBlogPosts error:', error?.message);
+    return [];
   }
-}
-
-function getFallbackFiltered(options = {}) {
-  const { category, tag, location, author, featured, limit, excludeSlug } = options;
-  let posts = getHydratedFallbackPosts();
-
-  if (excludeSlug) {
-    posts = posts.filter(p => p.slug !== excludeSlug);
-  }
-  if (featured !== undefined) {
-    posts = posts.filter(p => !!p.featured === !!featured);
-  }
-  if (category) {
-    posts = posts.filter(p => p.categorySlug === category || p.category?.slug === category);
-  }
-  if (tag) {
-    posts = posts.filter(p => p.tagsSlugs?.includes(tag) || p.tags?.some(t => t.slug === tag));
-  }
-  if (location) {
-    posts = posts.filter(p => p.locationSlugs?.includes(location) || p.location?.some(l => l.slug === location));
-  }
-  if (author) {
-    posts = posts.filter(p => p.authorSlug === author || p.author?.slug === author);
-  }
-  if (limit) {
-    posts = posts.slice(0, limit);
-  }
-
-  return posts;
 }
 
 export async function getBlogPostBySlug(slug) {
@@ -204,19 +129,12 @@ export async function getBlogPostBySlug(slug) {
       .lean()
       .exec();
 
-    let result = null;
-    if (post) {
-      result = JSON.parse(JSON.stringify(post));
-    } else {
-      const fallback = getHydratedFallbackPosts().find(p => p.slug === slug);
-      result = fallback || null;
-    }
+    const result = post ? JSON.parse(JSON.stringify(post)) : null;
 
     if (result) {
       // Resolve parentPillar if not populated but slug exists
       if (result.parentPillarSlug && (!result.parentPillar || typeof result.parentPillar === 'string')) {
-        const parentDoc = await BlogPost.findOne({ slug: result.parentPillarSlug, status: 'published' }).lean().exec()
-          || getHydratedFallbackPosts().find(p => p.slug === result.parentPillarSlug);
+        const parentDoc = await BlogPost.findOne({ slug: result.parentPillarSlug, status: 'published' }).lean().exec();
         if (parentDoc) {
           result.parentPillar = {
             title: parentDoc.title,
@@ -245,29 +163,7 @@ export async function getBlogPostBySlug(slug) {
     return result;
   } catch (error) {
     console.warn('[blogService] getBlogPostBySlug error:', error?.message);
-    const fallback = getHydratedFallbackPosts().find(p => p.slug === slug);
-    let result = fallback || null;
-    if (result) {
-      if (result.parentPillarSlug && !result.parentPillar) {
-        const parentDoc = getHydratedFallbackPosts().find(p => p.slug === result.parentPillarSlug);
-        if (parentDoc) {
-          result.parentPillar = { title: parentDoc.title, slug: parentDoc.slug, excerpt: parentDoc.excerpt };
-        }
-      }
-      if (result.isPillar && (!result.childArticles || result.childArticles.length === 0)) {
-        result.childArticles = getHydratedFallbackPosts()
-          .filter(p => p.slug !== result.slug && (p.parentPillarSlug === result.slug || result.childArticlesSlugs?.includes(p.slug)))
-          .map(c => ({
-            title: c.title,
-            slug: c.slug,
-            excerpt: c.excerpt,
-            readingTime: c.readingTime || 5,
-            featuredImage: c.featuredImage
-          }));
-      }
-      setCached(cacheKey, result);
-    }
-    return result;
+    return null;
   }
 }
 
@@ -279,7 +175,7 @@ export async function getCategories() {
   try {
     await connectDB();
     const categories = await Category.find().sort({ name: 1 }).lean().exec();
-    let result;
+    let result = [];
     if (categories && categories.length > 0) {
       const counts = await BlogPost.aggregate([
         { $match: { status: 'published' } },
@@ -290,16 +186,12 @@ export async function getCategories() {
         ...JSON.parse(JSON.stringify(cat)),
         postCount: countMap[String(cat._id)] || 0
       }));
-    } else {
-      result = INITIAL_CATEGORIES.map(c => ({ ...c, postCount: 1 }));
     }
     setCached(cacheKey, result);
     return result;
   } catch (error) {
     console.warn('[blogService] getCategories error:', error?.message);
-    const result = INITIAL_CATEGORIES.map(c => ({ ...c, postCount: 1 }));
-    setCached(cacheKey, result);
-    return result;
+    return [];
   }
 }
 
@@ -311,14 +203,12 @@ export async function getCategoryBySlug(slug) {
   try {
     await connectDB();
     const cat = await Category.findOne({ slug }).lean().exec();
-    let result = cat ? JSON.parse(JSON.stringify(cat)) : (INITIAL_CATEGORIES.find(c => c.slug === slug) || null);
+    const result = cat ? JSON.parse(JSON.stringify(cat)) : null;
     if (result) setCached(cacheKey, result);
     return result;
   } catch (error) {
     console.warn('[blogService] getCategoryBySlug error:', error?.message);
-    const result = INITIAL_CATEGORIES.find(c => c.slug === slug) || null;
-    if (result) setCached(cacheKey, result);
-    return result;
+    return null;
   }
 }
 
@@ -338,13 +228,12 @@ export async function getTags() {
   try {
     await connectDB();
     const tags = await Tag.find().sort({ name: 1 }).lean().exec();
-    const result = (tags && tags.length > 0) ? JSON.parse(JSON.stringify(tags)) : INITIAL_TAGS;
+    const result = (tags && tags.length > 0) ? JSON.parse(JSON.stringify(tags)) : [];
     setCached(cacheKey, result);
     return result;
   } catch (error) {
     console.warn('[blogService] getTags error:', error?.message);
-    setCached(cacheKey, INITIAL_TAGS);
-    return INITIAL_TAGS;
+    return [];
   }
 }
 
@@ -356,14 +245,12 @@ export async function getTagBySlug(slug) {
   try {
     await connectDB();
     const tag = await Tag.findOne({ slug }).lean().exec();
-    const result = tag ? JSON.parse(JSON.stringify(tag)) : (INITIAL_TAGS.find(t => t.slug === slug) || null);
+    const result = tag ? JSON.parse(JSON.stringify(tag)) : null;
     if (result) setCached(cacheKey, result);
     return result;
   } catch (error) {
     console.warn('[blogService] getTagBySlug error:', error?.message);
-    const result = INITIAL_TAGS.find(t => t.slug === slug) || null;
-    if (result) setCached(cacheKey, result);
-    return result;
+    return null;
   }
 }
 
@@ -375,13 +262,12 @@ export async function getAuthors() {
   try {
     await connectDB();
     const authors = await Author.find().sort({ name: 1 }).lean().exec();
-    const result = (authors && authors.length > 0) ? JSON.parse(JSON.stringify(authors)) : INITIAL_AUTHORS;
+    const result = (authors && authors.length > 0) ? JSON.parse(JSON.stringify(authors)) : [];
     setCached(cacheKey, result);
     return result;
   } catch (error) {
     console.warn('[blogService] getAuthors error:', error?.message);
-    setCached(cacheKey, INITIAL_AUTHORS);
-    return INITIAL_AUTHORS;
+    return [];
   }
 }
 
@@ -393,14 +279,12 @@ export async function getAuthorBySlug(slug) {
   try {
     await connectDB();
     const author = await Author.findOne({ slug }).lean().exec();
-    const result = author ? JSON.parse(JSON.stringify(author)) : (INITIAL_AUTHORS.find(a => a.slug === slug) || null);
+    const result = author ? JSON.parse(JSON.stringify(author)) : null;
     if (result) setCached(cacheKey, result);
     return result;
   } catch (error) {
     console.warn('[blogService] getAuthorBySlug error:', error?.message);
-    const result = INITIAL_AUTHORS.find(a => a.slug === slug) || null;
-    if (result) setCached(cacheKey, result);
-    return result;
+    return null;
   }
 }
 
@@ -518,9 +402,7 @@ export async function getRelatedPosts(currentPost, limit = 3) {
     return combined;
   } catch (error) {
     console.warn('[blogService] getRelatedPosts error:', error?.message);
-    const fallback = getFallbackFiltered({ excludeSlug: currentPost?.slug, limit });
-    setCached(cacheKey, fallback);
-    return fallback;
+    return [];
   }
 }
 

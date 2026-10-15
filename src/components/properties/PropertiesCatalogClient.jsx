@@ -76,7 +76,7 @@ function parsePriceToNumber(priceStr) {
 export default function PropertiesCatalogClient({ initialProperties = [] }) {
   const searchParams = useSearchParams();
   const { sections } = useCms();
-  const cms = sections?.page_properties || DEFAULT_SECTIONS.page_properties;
+  const cms = sections?.page_properties || DEFAULT_SECTIONS?.page_properties || {};
 
   // State initialized from URL query params or defaults
   const [properties, setProperties] = useState(initialProperties);
@@ -276,7 +276,7 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
         {/* Architectural Background Vignette - Clearly Visible */}
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-80">
           <Image
-            src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80"
+            src={cms.masthead?.bgImage || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80"}
             alt="DLF Real Estate Architecture"
             fill
             sizes="100vw"
@@ -349,7 +349,7 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div className="flex items-center gap-2 text-xs font-bold text-[#17213D] uppercase tracking-[0.2em] shrink-0">
               <SlidersHorizontal size={14} className="text-[#D09A16]" />
-              <span>Corridor Filter</span>
+              <span>{cms.filters?.corridorLabel || "Corridor Filter"}</span>
             </div>
 
             {/* Corridor Tabs */}
@@ -357,6 +357,9 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
               {CORRIDOR_CLASSIFICATIONS.map(corridor => {
                 const count = corridorCounts[corridor.id] || 0;
                 const isSelected = activeCorridor === corridor.id;
+                const displayLabel = corridor.id === 'all' 
+                  ? (cms.filters?.allLocationsLabel || corridor.label) 
+                  : corridor.label;
 
                 return (
                   <button
@@ -369,7 +372,7 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
                     }`}
                   >
                     <MapPin size={12} className={isSelected ? 'text-[#D09A16]' : 'text-slate-400'} />
-                    <span>{corridor.label}</span>
+                    <span>{displayLabel}</span>
                     <span className={`text-[10px] font-mono px-1.5 py-0.5 rounded-full ${
                       isSelected ? 'bg-white/20 text-[#D09A16] font-bold' : 'bg-slate-200/80 text-slate-600'
                     }`}>
@@ -557,7 +560,7 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
 
           <div className="flex items-center gap-2 text-xs font-semibold text-[#566078]">
             <CheckCircle2 size={13} className="text-[#D09A16]" />
-            <span className="hidden sm:inline">100% Freehold Title Verification</span>
+            <span className="hidden sm:inline">{cms.filters?.verifiedBadgeText || "100% Freehold Title Verification"}</span>
           </div>
         </div>
 

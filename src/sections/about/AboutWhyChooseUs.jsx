@@ -36,9 +36,12 @@ const PILLAR_ICONS = [
 export default function AboutWhyChooseUs() {
   const { sections } = useCms();
   const cms = sections?.page_about?.whyChooseUs || DEFAULT_SECTIONS?.page_about?.whyChooseUs;
+  const pillarsList = (cms?.pillars && Array.isArray(cms.pillars) && cms.pillars.length > 0) 
+    ? cms.pillars 
+    : WHY_CHOOSE_US_PILLARS;
 
-  const leadPillar = WHY_CHOOSE_US_PILLARS[0];
-  const gridPillars = WHY_CHOOSE_US_PILLARS.slice(1);
+  const leadPillar = pillarsList[0] || WHY_CHOOSE_US_PILLARS[0];
+  const gridPillars = pillarsList.slice(1);
 
   return (
     <section className="py-20 md:py-28 bg-[#F7F5EF] text-[#17213D] border-t border-[#17213D]/10 relative overflow-hidden">
@@ -187,7 +190,10 @@ export default function AboutWhyChooseUs() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {TRADITIONAL_VS_SAUDAGAR.map((item, idx) => (
+            {(cms?.comparisonMatrix && Array.isArray(cms.comparisonMatrix) && cms.comparisonMatrix.length > 0
+              ? cms.comparisonMatrix
+              : TRADITIONAL_VS_SAUDAGAR
+            ).map((item, idx) => (
               <div 
                 key={idx}
                 className="p-5 rounded-2xl bg-[#F7F5EF] border border-[#17213D]/10 space-y-3"

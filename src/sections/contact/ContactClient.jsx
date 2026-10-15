@@ -4,15 +4,15 @@ import { gsap, ScrollTrigger } from "@/lib/gsap/animations";
 import { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { Mail, Phone, MapPin, Send, CheckCircle2 } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, CheckCircle2, Clock } from 'lucide-react';
 import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
 import { animate, inView, stagger } from 'framer-motion';
 import api from '@/services/api';
 import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
 
-export default function ContactClient() {
+export default function ContactClient({ initialData }) {
   const { sections } = useCms();
-  const cms = sections?.page_contact || DEFAULT_SECTIONS.page_contact;
+  const cms = sections?.page_contact || initialData || DEFAULT_SECTIONS.page_contact;
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -112,7 +112,8 @@ export default function ContactClient() {
   };
 
   const formattedMessage = `*New Inquiry from Website*%0A%0A*Name:* ${formData.name}%0A*Email:* ${formData.email}%0A*Phone:* ${formData.phone}%0A*Purpose:* ${formData.purpose}%0A*Property Type:* ${formData.propertyType}%0A*Budget:* ${formData.budget}%0A*Message:* ${formData.message}`;
-  const whatsappUrl = `https://wa.me/919718511207?text=${formattedMessage}`;
+  const targetWhatsapp = (cms.form?.whatsappNumber || cms.contactInfo?.phone1 || '919718511207').replace(/[^0-9]/g, '');
+  const whatsappUrl = `https://wa.me/${targetWhatsapp}?text=${formattedMessage}`;
 
   return (
     <>
@@ -120,7 +121,7 @@ export default function ContactClient() {
       <div className="relative pt-32 pb-20 md:pb-24 bg-[#0A0E17] text-white text-center px-4 overflow-hidden border-b border-white/10">
         <div className="absolute inset-0 z-0 opacity-80 pointer-events-none">
           <Image
-            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=80"
+            src={cms.hero?.bgImage || "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=80"}
             alt="Saudagar Properties Headquarters Gurugram"
             fill
             sizes="100vw"
@@ -222,6 +223,22 @@ export default function ContactClient() {
                 </a>
               </div>
             </div>
+
+            {cms.contactInfo?.hours && (
+              <div className="flex items-start gap-4 p-6 bg-white rounded-2xl border border-[#E8E4DA] shadow-sm hover:shadow-md hover:border-[#D09A16]/50 transition-colors">
+                <div className="w-12 h-12 rounded-full bg-[#FAF8F5] flex items-center justify-center shrink-0">
+                  <Clock className="text-[#D09A16]" size={20} />
+                </div>
+                <div>
+                  <h4 className="text-base font-bold text-[#1D263B] mb-1">
+                    {cms.contactInfo?.hoursBadge || "Office Timings"}
+                  </h4>
+                  <p className="text-sm text-[#475569] leading-relaxed">
+                    {cms.contactInfo?.hours}
+                  </p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
 

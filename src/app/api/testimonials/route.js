@@ -6,16 +6,6 @@ import { getCached, setCached, invalidateCache } from '@/lib/cache/apiCache';
 
 export async function GET(req) {
   try {
-    const cacheKey = `testimonials_cache_${req.url}`;
-    const cached = getCached(cacheKey, 60000);
-    if (cached) {
-      return NextResponse.json(cached, {
-        headers: {
-          'Cache-Control': 'public, s-maxage=120, stale-while-revalidate=600'
-        }
-      });
-    }
-
     await connectDB();
     const { searchParams } = new URL(req.url);
     const all = searchParams.get('all');
@@ -30,10 +20,11 @@ export async function GET(req) {
       data: testimonials
     };
 
-    setCached(cacheKey, responsePayload);
     return NextResponse.json(responsePayload, {
       headers: {
-        'Cache-Control': 'public, s-maxage=120, stale-while-revalidate=600'
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
       }
     });
   } catch (error) {

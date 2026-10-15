@@ -9,16 +9,31 @@ import TeamInteractiveShowcase from '@/components/team/TeamInteractiveShowcase';
 import TeamAdvisoryAuthority from '@/components/team/TeamAdvisoryAuthority';
 
 export default function TeamClientView({ 
+  initialData,
   defaultFounders = [], 
   teamMembers = [], 
   advisoryPillars = [] 
 }) {
   const { sections } = useCms();
-  const cms = sections?.page_team || DEFAULT_SECTIONS.page_team;
+  const cms = sections?.page_team || initialData || DEFAULT_SECTIONS.page_team;
   const heroData = cms?.hero || DEFAULT_SECTIONS.page_team.hero;
-  const activeFounders = cms?.founders && cms.founders.length > 0 ? cms.founders : defaultFounders;
-  const activeTeamMembers = cms?.teamMembers && cms.teamMembers.length > 0 ? cms.teamMembers : teamMembers;
-  const activeAdvisoryPillars = cms?.advisoryPillars && cms.advisoryPillars.length > 0 ? cms.advisoryPillars : advisoryPillars;
+  const heroStats = heroData?.stats || DEFAULT_SECTIONS.page_team.hero.stats || [
+    { value: "25+", label: "Years of Trust", highlight: false },
+    { value: "₹100 Cr+", label: "Saved for Clients", highlight: true },
+    { value: "1,000+", label: "Families Advised", highlight: false },
+    { value: "100%", label: "Title-Cleared", highlight: true }
+  ];
+  const activeFounders = (cms?.founders && cms.founders.length > 0)
+    ? cms.founders
+    : (defaultFounders && defaultFounders.length > 0 ? defaultFounders : DEFAULT_SECTIONS.page_team.founders);
+
+  const activeTeamMembers = (cms?.teamMembers && cms.teamMembers.length > 0)
+    ? cms.teamMembers
+    : (teamMembers && teamMembers.length > 0 ? teamMembers : DEFAULT_SECTIONS.page_team.teamMembers);
+
+  const activeAdvisoryPillars = (cms?.advisoryPillars && cms.advisoryPillars.length > 0)
+    ? cms.advisoryPillars
+    : (advisoryPillars && advisoryPillars.length > 0 ? advisoryPillars : DEFAULT_SECTIONS.page_team.advisoryPillars);
   const activeCta = cms?.cta || DEFAULT_SECTIONS.page_team.cta;
 
   return (
@@ -70,22 +85,16 @@ export default function TeamClientView({
             </p>
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-12 pt-8 border-t border-white/10">
-              <div className="p-4 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 text-center hover:border-[#D09A16]/40 transition-colors">
-                <span className="block text-2xl sm:text-3xl font-serif font-bold text-white">25+</span>
-                <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold">Years of Trust</span>
-              </div>
-              <div className="p-4 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 text-center hover:border-[#D09A16]/40 transition-colors">
-                <span className="block text-2xl sm:text-3xl font-serif font-bold text-[#D09A16]">₹100 Cr+</span>
-                <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold">Saved for Clients</span>
-              </div>
-              <div className="p-4 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 text-center hover:border-[#D09A16]/40 transition-colors">
-                <span className="block text-2xl sm:text-3xl font-serif font-bold text-white">1,000+</span>
-                <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold">Families Advised</span>
-              </div>
-              <div className="p-4 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 text-center hover:border-[#D09A16]/40 transition-colors">
-                <span className="block text-2xl sm:text-3xl font-serif font-bold text-[#D09A16]">100%</span>
-                <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold">Title-Cleared</span>
-              </div>
+              {heroStats.map((stat, idx) => (
+                <div key={idx} className="p-4 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 text-center hover:border-[#D09A16]/40 transition-colors">
+                  <span className={`block text-2xl sm:text-3xl font-serif font-bold ${stat.highlight ? 'text-[#D09A16]' : 'text-white'}`}>
+                    {stat.value}
+                  </span>
+                  <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold">
+                    {stat.label}
+                  </span>
+                </div>
+              ))}
             </div>
           </div>
         </div>

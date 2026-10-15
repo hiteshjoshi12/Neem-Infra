@@ -7,7 +7,6 @@ import Image from 'next/image';
 import CustomSelect from '../../components/ui/CustomSelect';
 import CinematicHeroBackground from '../../components/ui/CinematicHeroBackground';
 import { useCms } from '../../context/CmsContext';
-import { FEATURED_PROPERTIES_DATA } from '../../constants';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const unsplashLoader = ({ src, width, quality }) => {
@@ -30,8 +29,8 @@ export default function HeroCopy() {
   const { sections, properties } = useCms();
   const heroData = sections?.hero || {};
 
-  // Resolve backend featured properties with fallback
-  const rawProperties = properties && properties.length > 0 ? properties : FEATURED_PROPERTIES_DATA;
+  // Resolve backend featured properties
+  const rawProperties = properties || [];
   const featuredProperties = rawProperties.filter((p) => p.isFeatured !== false);
   const cardList = featuredProperties.length > 0 ? featuredProperties : rawProperties;
 
@@ -430,67 +429,69 @@ export default function HeroCopy() {
         </div>
 
         {/* Right Dock: Ultra-Minimalist Floating Glass Spotlight Pill (Cycles every 3 seconds) */}
-        <div
-          onMouseEnter={() => setIsHovered(true)}
-          onMouseLeave={() => setIsHovered(false)}
-          className="hidden md:block absolute bottom-8 right-8 z-50"
-        >
-          <motion.div
-            initial={{ opacity: 0, y: 10, scale: 0.98 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.5, ease: "easeOut", delay: 0.4 }}
-            className="group relative flex items-center gap-3 px-3.5 py-2 rounded-full bg-[#070B16]/85 backdrop-blur-2xl border border-white/20 hover:border-[#D09A16]/60 transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.6)] cursor-pointer overflow-hidden"
+        {currentProperty?.title && (
+          <div
+            onMouseEnter={() => setIsHovered(true)}
+            onMouseLeave={() => setIsHovered(false)}
+            className="hidden md:block absolute bottom-8 right-8 z-50"
           >
-              {/* Mini Thumbnail */}
-              <div className="relative w-9 h-9 rounded-full overflow-hidden flex-shrink-0 border border-white/20">
-                <Image
-                  loader={unsplashLoader}
-                  src={currentProperty.img || (currentProperty.images && currentProperty.images[0]) || heroData.spotlight?.image || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c"}
-                  alt={currentProperty.title || "Featured Property"}
-                  fill
-                  sizes="36px"
-                  className="object-cover group-hover:scale-110 transition-transform duration-500"
-                />
-              </div>
-
-              {/* Property Details (Compact) */}
-              <div className="flex flex-col text-left pr-2 max-w-[240px]">
-                <span className="text-xs sm:text-[13px] font-serif text-[#F7F5EF] truncate group-hover:text-[#D09A16] transition-colors leading-tight">
-                  {currentProperty.title || "Ultra-Luxury Independent Floor"}
-                </span>
-                <div className="flex items-center gap-1.5 mt-0.5">
-                  <span className="text-[9px] uppercase tracking-wider text-[#9DA6B8] truncate">
-                    {currentProperty.location || "DLF Phase 1"}
-                  </span>
-                  <span className="w-1 h-1 rounded-full bg-[#D09A16]/50" />
-                  <span className="text-[10px] font-semibold text-[#D09A16]">
-                    {currentProperty.price || "₹4.50 Cr."}
-                  </span>
+            <motion.div
+              initial={{ opacity: 0, y: 10, scale: 0.98 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              transition={{ duration: 0.5, ease: "easeOut", delay: 0.4 }}
+              className="group relative flex items-center gap-3 px-3.5 py-2 rounded-full bg-[#070B16]/85 backdrop-blur-2xl border border-white/20 hover:border-[#D09A16]/60 transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.6)] cursor-pointer overflow-hidden"
+            >
+                {/* Mini Thumbnail */}
+                <div className="relative w-9 h-9 rounded-full overflow-hidden flex-shrink-0 border border-white/20">
+                  <Image
+                    loader={unsplashLoader}
+                    src={currentProperty.img || (currentProperty.images && currentProperty.images[0]) || heroData.spotlight?.image || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c"}
+                    alt={currentProperty.title || "Featured Property"}
+                    fill
+                    sizes="36px"
+                    className="object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
                 </div>
-              </div>
 
-              {/* Direct Enquiry Action Arrow */}
-              <a
-                href={currentProperty.link || `tel:${heroData.spotlight?.phone || '+919811221207'}`}
-                aria-label={`Enquire about ${currentProperty.title || 'Featured Property'}`}
-                className="w-7 h-7 rounded-full bg-[#D09A16] hover:bg-[#D09A16] text-[#0E162B] flex items-center justify-center flex-shrink-0 shadow transition-colors ml-1"
-                title="Enquire"
-              >
-                <ArrowUpRight size={14} />
-              </a>
+                {/* Property Details (Compact) */}
+                <div className="flex flex-col text-left pr-2 max-w-[240px]">
+                  <span className="text-xs sm:text-[13px] font-serif text-[#F7F5EF] truncate group-hover:text-[#D09A16] transition-colors leading-tight">
+                    {currentProperty.title || "Ultra-Luxury Independent Floor"}
+                  </span>
+                  <div className="flex items-center gap-1.5 mt-0.5">
+                    <span className="text-[9px] uppercase tracking-wider text-[#9DA6B8] truncate">
+                      {currentProperty.location || "DLF Phase 1"}
+                    </span>
+                    <span className="w-1 h-1 rounded-full bg-[#D09A16]/50" />
+                    <span className="text-[10px] font-semibold text-[#D09A16]">
+                      {currentProperty.price || "₹4.50 Cr."}
+                    </span>
+                  </div>
+                </div>
 
-              {/* 3-Second Cycle Progress Line */}
-              <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-white/10">
-                <motion.div
-                  key={`progress-${currentCardIndex}`}
-                  initial={{ width: "0%" }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: 3, ease: "linear" }}
-                  className="h-full bg-[#D09A16]"
-                />
-              </div>
-          </motion.div>
-        </div>
+                {/* Direct Enquiry Action Arrow */}
+                <a
+                  href={currentProperty.link || `tel:${heroData.spotlight?.phone || '+919811221207'}`}
+                  aria-label={`Enquire about ${currentProperty.title || 'Featured Property'}`}
+                  className="w-7 h-7 rounded-full bg-[#D09A16] hover:bg-[#D09A16] text-[#0E162B] flex items-center justify-center flex-shrink-0 shadow transition-colors ml-1"
+                  title="Enquire"
+                >
+                  <ArrowUpRight size={14} />
+                </a>
+
+                {/* 3-Second Cycle Progress Line */}
+                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-white/10">
+                  <motion.div
+                    key={`progress-${currentCardIndex}`}
+                    initial={{ width: "0%" }}
+                    animate={{ width: "100%" }}
+                    transition={{ duration: 3, ease: "linear" }}
+                    className="h-full bg-[#D09A16]"
+                  />
+                </div>
+            </motion.div>
+          </div>
+        )}
 
       </div>
 

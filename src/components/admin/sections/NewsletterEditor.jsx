@@ -13,7 +13,7 @@ export default function NewsletterEditor({ formData, updateField }) {
         subtitle="Manage the email subscription headline, input placeholders, privacy disclaimer, and success confirmation"
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
         <FormInput
           label="Badge"
           placeholder="Market Intelligence"
@@ -31,6 +31,12 @@ export default function NewsletterEditor({ formData, updateField }) {
           placeholder="Saudagar Properties"
           value={formData.titleItalic}
           onChange={(e) => updateField('titleItalic', e.target.value)}
+        />
+        <FormInput
+          label="Title Suffix (Optional)"
+          placeholder="Newsletter"
+          value={formData.titleSuffix}
+          onChange={(e) => updateField('titleSuffix', e.target.value)}
         />
       </div>
 

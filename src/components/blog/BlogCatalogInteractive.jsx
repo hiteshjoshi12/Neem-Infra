@@ -21,9 +21,18 @@ import {
 import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
 import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
 
-export default function BlogCatalogInteractive({ allPosts = [], categories = [] }) {
+const CORRIDOR_CHIPS = [
+  { name: 'DLF Phase 1', slug: 'dlf-phase-1', tag: 'Flagship Freehold' },
+  { name: 'DLF Phase 2', slug: 'dlf-phase-2', tag: 'Direct Cybercity' },
+  { name: 'DLF Phase 3', slug: 'dlf-phase-3', tag: 'High-Rental Yield' },
+  { name: 'DLF Phase 4', slug: 'dlf-phase-4', tag: 'Galleria & Super Mart' },
+  { name: 'Sushant Lok 1', slug: 'shushant-lok', tag: 'Prime Plotted' },
+  { name: 'Udyog Vihar', slug: 'udyog-vihar', tag: 'Corporate & Tech' },
+];
+
+export default function BlogCatalogInteractive({ initialData, allPosts = [], categories = [] }) {
   const { sections } = useCms();
-  const cms = sections?.page_blog || DEFAULT_SECTIONS.page_blog;
+  const cms = sections?.page_blog || initialData || DEFAULT_SECTIONS.page_blog;
   const [selectedCategory, setSelectedCategory] = useState('all');
 
   // Filter posts based on category
@@ -241,6 +250,47 @@ export default function BlogCatalogInteractive({ allPosts = [], categories = [] 
 
         </div>
       </section>
+
+      {/* =========================================================================
+          SECTION 2.5: INTERACTIVE GEOGRAPHIC RADAR & CORRIDOR SPOTLIGHTS
+      ========================================================================= */}
+      {cms.corridors && (
+        <section className="py-10 bg-white border-b border-[#17213D]/10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#D09A16] block mb-1">
+                  {cms.corridors?.badge || "Interactive Geographic Radar"}
+                </span>
+                <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#17213D]">
+                  {cms.corridors?.titleMain || "Location-Based "}<span className="italic font-serif text-[#D09A16]">{cms.corridors?.titleItalic || "Market Intelligence"}</span>
+                </h3>
+              </div>
+              <p className="text-xs text-[#566078] max-w-md font-sans leading-relaxed">
+                {cms.corridors?.description || "Select a prime Gurugram micro-market below to inspect real-time zoning benchmarks, capital appreciation drivers, and published advisory research."}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+              {CORRIDOR_CHIPS.map((corr) => (
+                <Link
+                  key={corr.slug}
+                  href={`/property/${corr.slug}`}
+                  className="p-3.5 rounded-2xl bg-[#F7F5EF] hover:bg-[#17213D] text-[#17213D] hover:text-white border border-[#17213D]/10 hover:border-[#D09A16] transition-all group flex flex-col justify-between cursor-pointer shadow-sm hover:shadow-md"
+                >
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-[#D09A16] group-hover:text-[#D09A16]">
+                    {corr.tag}
+                  </span>
+                  <span className="text-xs font-serif font-bold mt-1 group-hover:text-white flex items-center justify-between">
+                    <span>{corr.name}</span>
+                    <ArrowUpRight size={12} className="opacity-0 group-hover:opacity-100 transition-opacity" />
+                  </span>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* =========================================================================
           SECTION 3: LIGHT — INTERACTIVE RESEARCH LIBRARY & CATEGORY CLUSTERS
@@ -475,25 +525,25 @@ export default function BlogCatalogInteractive({ allPosts = [], categories = [] 
                     Speak directly with Arun Sharma and senior principals for discreet title vetting, builder floor registry valuation, or pre-acquisition scrutiny.
                   </p>
 
-                  <div className="space-y-3">
-                    <a
-                      href="https://wa.me/919718511207"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full py-3 px-4 rounded-xl bg-[#D09A16] hover:bg-[#E5AC2B] text-[#0A0E17] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
-                    >
-                      <WhatsAppIcon size={15} />
-                      <span>WhatsApp Advisory Desk</span>
-                    </a>
+                    <div className="space-y-3">
+                      <a
+                        href={`https://wa.me/${(cms.newsletter?.whatsappNumber || '919718511207').replace(/[^0-9]/g, '')}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full py-3 px-4 rounded-xl bg-[#D09A16] hover:bg-[#E5AC2B] text-[#0A0E17] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
+                      >
+                        <WhatsAppIcon size={15} />
+                        <span>WhatsApp Advisory Desk</span>
+                      </a>
 
-                    <a
-                      href="tel:+919811221207"
-                      className="w-full py-3 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors cursor-pointer"
-                    >
-                      <PhoneCall size={14} className="text-[#D09A16]" />
-                      <span>Direct Line (+91 98112 21207)</span>
-                    </a>
-                  </div>
+                      <a
+                        href="tel:+919811221207"
+                        className="w-full py-3 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors cursor-pointer"
+                      >
+                        <PhoneCall size={14} className="text-[#D09A16]" />
+                        <span>Direct Line (+91 98112 21207)</span>
+                      </a>
+                    </div>
                 </div>
               </div>
 

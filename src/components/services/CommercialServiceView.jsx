@@ -35,6 +35,7 @@ const fadeUpVariant = {
 };
 
 export default function CommercialServiceView({ 
+  initialData = null,
   commercialListings = [], 
   breadcrumbs = [],
   assetClasses = [],
@@ -43,21 +44,50 @@ export default function CommercialServiceView({
   complianceStandards = []
 }) {
   const { sections } = useCms();
-  const cms = sections?.page_commercial || DEFAULT_SECTIONS.page_commercial;
-  const heroData = cms?.hero || DEFAULT_SECTIONS.page_commercial.hero;
-  const rawAssetClasses = cms?.assetClasses && cms.assetClasses.length > 0 ? cms.assetClasses : assetClasses;
+  const cms = sections?.page_commercial || initialData || DEFAULT_SECTIONS?.page_commercial || {};
+  const heroData = cms?.hero || DEFAULT_SECTIONS?.page_commercial?.hero || {};
+  const activeMetrics = (cms?.metrics && cms.metrics.length > 0)
+    ? cms.metrics
+    : (DEFAULT_SECTIONS?.page_commercial?.metrics || []);
+  const heroCardData = heroData?.heroCard || DEFAULT_SECTIONS?.page_commercial?.hero?.heroCard || {};
+  const rawAssetClasses = (cms?.assetClasses && cms.assetClasses.length > 0)
+    ? cms.assetClasses
+    : (assetClasses && assetClasses.length > 0 ? assetClasses : DEFAULT_SECTIONS.page_commercial.assetClasses);
+
   const activeAssetClasses = (rawAssetClasses || []).map((item, idx) => {
-    const base = assetClasses[idx] || {};
+    const base = DEFAULT_SECTIONS.page_commercial.assetClasses[idx] || {};
     return {
       ...base,
       ...item,
-      metrics: item?.metrics || base?.metrics || [],
-      features: item?.features || base?.features || [],
+      metrics: (item?.metrics && item.metrics.length > 0) ? item.metrics : (base?.metrics || []),
+      features: (item?.features && item.features.length > 0) ? item.features : (base?.features || []),
       pricing: item?.pricing || item?.price || base?.pricing || base?.price || '',
     };
   });
-  const activeYieldBenchmarks = cms?.yieldBenchmarks && cms.yieldBenchmarks.length > 0 ? cms.yieldBenchmarks : yieldBenchmarks;
-  const activeLeaseFramework = cms?.leaseFramework && cms.leaseFramework.length > 0 ? cms.leaseFramework : leaseFramework;
+
+  const rawYieldBenchmarks = (cms?.yieldBenchmarks && cms.yieldBenchmarks.length > 0)
+    ? cms.yieldBenchmarks
+    : (yieldBenchmarks && yieldBenchmarks.length > 0 ? yieldBenchmarks : DEFAULT_SECTIONS.page_commercial.yieldBenchmarks);
+
+  const activeYieldBenchmarks = (rawYieldBenchmarks || []).map((m, idx) => {
+    const base = DEFAULT_SECTIONS.page_commercial.yieldBenchmarks[idx] || {};
+    return {
+      ...base,
+      ...m,
+      leaseRate: m?.leaseRate || m?.capitalValuation || base?.leaseRate || '',
+      netYield: m?.netYield || m?.yieldRange || base?.netYield || '',
+      occupancy: m?.occupancy || m?.occupancyRate || base?.occupancy || '',
+      highlights: (m?.highlights && m.highlights.length > 0) ? m.highlights : (base?.highlights || [])
+    };
+  });
+
+  const activeLeaseFramework = (cms?.leaseFramework && cms.leaseFramework.length > 0)
+    ? cms.leaseFramework
+    : (leaseFramework && leaseFramework.length > 0 ? leaseFramework : DEFAULT_SECTIONS.page_commercial.leaseFramework);
+
+  const activeComplianceStandards = (cms?.complianceStandards && cms.complianceStandards.length > 0)
+    ? cms.complianceStandards
+    : (complianceStandards && complianceStandards.length > 0 ? complianceStandards : DEFAULT_SECTIONS.page_commercial.complianceStandards);
   return (
     <div className="w-full min-h-screen bg-[#F7F5EF] text-[#17213D]">
       <BreadcrumbJsonLd items={breadcrumbs} />
@@ -144,9 +174,11 @@ export default function CommercialServiceView({
             >
               <div className="bg-[#17213D]/90 backdrop-blur-xl border border-white/15 rounded-3xl p-6 sm:p-7 shadow-2xl relative">
                 <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-5">
-                  <span className="text-xs uppercase tracking-wider text-[#9DA6B8]">Enterprise Advisory</span>
+                  <span className="text-xs uppercase tracking-wider text-[#9DA6B8]">
+                    {heroCardData.tag || "Enterprise Advisory"}
+                  </span>
                   <span className="text-xs font-semibold text-[#D09A16] flex items-center gap-1">
-                    <ShieldCheck size={14} /> Corporate Tenant Desk
+                    <ShieldCheck size={14} /> {heroCardData.badge || "Corporate Tenant Desk"}
                   </span>
                 </div>
 
@@ -156,8 +188,12 @@ export default function CommercialServiceView({
                       <TrendingUp size={16} />
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold text-white">Pre-Leased High ROI Deals</h4>
-                      <p className="text-xs text-[#9DA6B8] mt-0.5">Vetted commercial investments yielding 8%–9.5% net annual rental income with blue-chip tenants.</p>
+                      <h4 className="text-sm font-semibold text-white">
+                        {heroCardData.feature1Title || "Pre-Leased High ROI Deals"}
+                      </h4>
+                      <p className="text-xs text-[#9DA6B8] mt-0.5">
+                        {heroCardData.feature1Desc || "Vetted commercial investments yielding 8%–9.5% net annual rental income with blue-chip tenants."}
+                      </p>
                     </div>
                   </div>
 
@@ -166,8 +202,12 @@ export default function CommercialServiceView({
                       <Building size={16} />
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold text-white">Direct Developer Mandates</h4>
-                      <p className="text-xs text-[#9DA6B8] mt-0.5">Preferred institutional pricing with DLF, Horizon, and top Grade-A builders across Gurugram.</p>
+                      <h4 className="text-sm font-semibold text-white">
+                        {heroCardData.feature2Title || "Direct Developer Mandates"}
+                      </h4>
+                      <p className="text-xs text-[#9DA6B8] mt-0.5">
+                        {heroCardData.feature2Desc || "Preferred institutional pricing with DLF, Horizon, and top Grade-A builders across Gurugram."}
+                      </p>
                     </div>
                   </div>
 
@@ -176,15 +216,21 @@ export default function CommercialServiceView({
                       <Coins size={16} />
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold text-white">End-to-End Lease Structuring</h4>
-                      <p className="text-xs text-[#9DA6B8] mt-0.5">Complete legal lease agreements, lock-in period formulation, and security deposit management.</p>
+                      <h4 className="text-sm font-semibold text-white">
+                        {heroCardData.feature3Title || "End-to-End Lease Structuring"}
+                      </h4>
+                      <p className="text-xs text-[#9DA6B8] mt-0.5">
+                        {heroCardData.feature3Desc || "Complete legal lease agreements, lock-in period formulation, and security deposit management."}
+                      </p>
                     </div>
                   </div>
                 </div>
 
                 <div className="mt-6 pt-5 border-t border-white/10 flex items-center justify-between text-xs text-[#C9CED9]">
-                  <span>Commercial Portfolio Transacted</span>
-                  <span className="text-[#D09A16] font-semibold">1,000,000+ Sq. Ft.</span>
+                  <span>{heroCardData.statLabel || "Commercial Portfolio Transacted"}</span>
+                  <span className="text-[#D09A16] font-semibold">
+                    {heroCardData.statValue || "1,000,000+ Sq. Ft."}
+                  </span>
                 </div>
               </div>
             </motion.div>
@@ -192,6 +238,39 @@ export default function CommercialServiceView({
           </div>
         </div>
       </section>
+
+      {/* ================= 4 KEY COMMERCIAL YIELD METRICS STRIP ================= */}
+      {activeMetrics && activeMetrics.length > 0 && (
+        <section className="relative z-20 max-w-7xl mx-auto px-5 sm:px-8 -mt-8 sm:-mt-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-[#12192C]/95 backdrop-blur-xl border border-white/15 rounded-3xl p-5 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.35)]"
+          >
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 divide-y lg:divide-y-0 lg:divide-x divide-white/10">
+              {activeMetrics.map((m, idx) => (
+                <div key={idx} className={`flex flex-col justify-between ${idx > 0 ? 'pt-4 lg:pt-0 lg:pl-6' : ''}`}>
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="w-2 h-2 rounded-full bg-[#D09A16] shadow-[0_0_8px_#D09A16]" />
+                    <span className="text-2xl sm:text-3xl font-serif font-bold text-white tracking-tight">
+                      {m.value}
+                    </span>
+                  </div>
+                  <div>
+                    <h4 className="text-xs sm:text-sm font-bold text-slate-200 uppercase tracking-wider mb-0.5">
+                      {m.label}
+                    </h4>
+                    <p className="text-[11px] text-[#9DA6B8] leading-relaxed">
+                      {m.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </section>
+      )}
 
       {/* ================= COMMERCIAL ASSET PROFILES ================= */}
       <section id="asset-classes" className="py-20 md:py-28 max-w-7xl mx-auto px-5 sm:px-8">
@@ -447,7 +526,7 @@ export default function CommercialServiceView({
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {complianceStandards.map((std, sIdx) => (
+            {(activeComplianceStandards || []).map((std, sIdx) => (
               <motion.div 
                 key={sIdx}
                 initial="hidden"
@@ -575,11 +654,21 @@ export default function CommercialServiceView({
               href={cms?.cta?.whatsappUrl || "https://wa.me/919718511207"}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-2 shadow-sm"
+              className="px-8 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-2 shadow-sm cursor-pointer"
             >
               <WhatsAppIcon size={16} />
               <span>WhatsApp Direct Line</span>
             </a>
+
+            {cms?.cta?.phone && (
+              <a
+                href={`tel:${cms.cta.phone.replace(/\s+/g, '')}`}
+                className="px-7 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold text-xs uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer"
+              >
+                <PhoneCall size={14} className="text-[#D09A16]" />
+                <span>Call {cms.cta.phone}</span>
+              </a>
+            )}
           </div>
         </div>
       </section>

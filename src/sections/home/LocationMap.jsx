@@ -10,7 +10,6 @@ import {
   Sparkles,
 } from "lucide-react";
 import { useCms } from "../../context/CmsContext";
-import NewsletterSection from "./NewsletterSection";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);

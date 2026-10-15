@@ -511,18 +511,19 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
               </div>
 
               <div className="flex flex-wrap items-center gap-3 pt-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD5] text-xs text-slate-700 font-medium shadow-xs">
-                  <CheckCircle2 size={13} className="text-[#D09A16]" />
-                  <span>MG Road &amp; Cyber City Access</span>
-                </div>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD5] text-xs text-slate-700 font-medium shadow-xs">
-                  <CheckCircle2 size={13} className="text-[#D09A16]" />
-                  <span>Aravalli Green Canopy</span>
-                </div>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD5] text-xs text-slate-700 font-medium shadow-xs">
-                  <CheckCircle2 size={13} className="text-[#D09A16]" />
-                  <span>100% Freehold Mutation</span>
-                </div>
+                {(locationSection.highlights && locationSection.highlights.length > 0
+                  ? locationSection.highlights
+                  : [
+                      'MG Road & Cyber City Access',
+                      'Aravalli Green Canopy',
+                      '100% Freehold Mutation'
+                    ]
+                ).map((hl, hlIdx) => (
+                  <div key={hlIdx} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD5] text-xs text-slate-700 font-medium shadow-xs">
+                    <CheckCircle2 size={13} className="text-[#D09A16]" />
+                    <span>{hl}</span>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -751,10 +752,10 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
               <div className="pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
                 <div>
                   <span className="block text-xs font-bold text-white uppercase tracking-wider">
-                    Arun Sharma &amp; Suneeta Chawla
+                    {whyChooseSaudagar.founderName || 'Arun Sharma & Suneeta Chawla'}
                   </span>
                   <span className="text-[11px] text-slate-400">
-                    Founders, Saudagar Properties Pvt Ltd
+                    {whyChooseSaudagar.founderTitle || 'Founders, Saudagar Properties Pvt Ltd'}
                   </span>
                 </div>
                 <Link

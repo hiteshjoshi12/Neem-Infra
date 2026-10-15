@@ -1,7 +1,7 @@
 # Saudagar Properties — Dual-Tone Brand Design System
 
 > **Official Design System Specification for Saudagar Properties Pvt Ltd**  
-> Luxury Real-Estate Visual Identity, Design Tokens, Architectural Section Rhythm, and Component Guidelines.
+> Luxury Real-Estate Visual Identity, Design Tokens, Architectural Section Rhythm, Editorial Blog Guidelines, and Component Rules.
 
 ---
 
@@ -59,7 +59,7 @@ The official Saudagar Properties insignia embodies:
 
 ## 3. The Dual-Tone Architectural Rhythm
 
-Rather than a monotonous single-color website (all-white or all-black), the homepage employs an intentional **alternating rhythm between Light and Dark Worlds**:
+Rather than a monotonous single-color website (all-white or all-black), the public marketing pages employ an intentional **alternating rhythm between Light and Dark Worlds**:
 
 ```
 [ HEADER ]           Morphing Floating Capsule (Integrated Dark Hero -> Solid Ivory/Navy Sticky)
@@ -89,14 +89,14 @@ Rather than a monotonous single-color website (all-white or all-black), the home
 
 ## 4. Typography Hierarchy
 
-- **Headings (H1, H2, H3)**: Serif (`font-serif`, Playfair Display)
+- **Headings (H1, H2, H3)**: Serif (`font-serif`, Playfair Display / Lora)
   - Communicates heritage, prestige, architectural elegance, and luxury.
   - Light sections: `text-[#17213D]`, italic highlights in `text-[#C6A24A]`.
   - Dark sections: `text-[#F7F5EF]`, italic highlights in `text-[#D8BD73]`.
 - **Body & Editorial Text**: Sans-serif (`font-sans`, Plus Jakarta Sans)
   - Communicates clarity, precision, and modernity.
-  - Light sections: `text-[#566078]` with leading-relaxed.
-  - Dark sections: `text-[#C9CED9]` with leading-relaxed.
+  - Light sections: `text-[#566078]` with `leading-relaxed`.
+  - Dark sections: `text-[#C9CED9]` with `leading-relaxed`.
 - **Eyebrow Badges & Technical Labels**:
   - Uppercase, letter-spaced (`tracking-[0.22em]`), font-semibold, `text-[10px]` - `text-[12px]`.
   - Accompanied by a 1px gold line or small icon.
@@ -158,6 +158,55 @@ Rather than a monotonous single-color website (all-white or all-black), the home
 
 ## 7. Responsive Consistency Across Breakpoints
 
-- Mobile (320px – 640px): Section rhythm is preserved; padding scales gracefully (`py-12` vs `py-24`); typography scales proportionally with fluid clamp classes.
-- Tablet (768px – 1024px): 2-column grids maintain balanced negative space.
-- Desktop (1280px – 1920px): Maximum container bounds at `max-w-7xl` prevent over-stretching, keeping typographic lines within ideal reading lengths (65–75 characters).
+- **Mobile (320px – 640px)**: Section rhythm is preserved; padding scales gracefully (`py-12` vs `py-24`); typography scales proportionally with fluid clamp classes.
+- **Tablet (768px – 1024px)**: 2-column grids maintain balanced negative space.
+- **Desktop (1280px – 1920px)**: Maximum container bounds at `max-w-7xl` prevent over-stretching, keeping typographic lines within ideal reading lengths (65–75 characters).
+
+---
+
+## 8. Editorial & Blog Reading Experience
+
+Articles rendered at `/blog/[slug]` and within the Admin **LiveArticlePreview** mirror high-end architectural monographs:
+
+### 8.1 Reading Typography & Width
+- **Reading Container**: Restricted to `max-w-3xl mx-auto` to maintain optimal line-length (~65–75 characters).
+- **Headings**:
+  - H1: `font-serif text-3xl md:text-5xl text-[#0E162B] font-bold leading-tight`.
+  - H2: `font-serif text-2xl md:text-3xl text-[#0E162B] font-semibold mt-12 mb-4 pb-2 border-b border-[#0E162B]/10`.
+  - H3: `font-serif text-xl md:text-2xl text-[#17213D] font-medium mt-8 mb-3`.
+- **Body Text**: `font-sans text-base md:text-lg text-[#334155] leading-relaxed mb-6 font-normal`.
+
+### 8.2 Architectural Callouts & Quotes
+- **Editorial Pull Quote**:
+  ```html
+  <blockquote class="border-l-2 border-[#C6A24A] pl-6 my-8 italic text-xl font-serif text-[#0E162B] bg-[#F7F5EF]/60 py-4 rounded-r-xl">
+    ...
+  </blockquote>
+  ```
+- **Market Advisory Callout (`:::tip`)**:
+  - Border: 1px gold border `border-[#C6A24A]/40`.
+  - Background: Soft cream ivory `bg-[#FDFBF7]`.
+  - Header: Gold uppercase badge `ADVISORY PERSPECTIVE`.
+
+### 8.3 Internal Hyperlinks
+- Internal links to corridors, properties, and blog posts are styled with:
+  - Color: `text-[#C6A24A] font-medium`.
+  - Hover: `underline decoration-[#C6A24A]/60 underline-offset-4 hover:text-[#B58C36]`.
+
+---
+
+## 9. Admin CMS & Studio Workspace Tokens
+
+The administrative suite (`/admin/*`) utilizes a professional dark studio theme:
+
+- **Canvas Background**: Deep Midnight Slate `#0B1120`.
+- **Card Panels**: `#131C31` with `border border-white/10`.
+- **Active Toolbar Buttons**: `bg-[#C6A24A]/20 text-[#D8BD73] border border-[#C6A24A]/30`.
+- **Split Live Preview Container**:
+  - Independent synchronized scroll container.
+  - Matches the 100% exact CSS, typography, and image styling of public `/blog/[slug]`.
+- **Internal Link Modal**:
+  - Keyboard Shortcut: <kbd>Ctrl+K</kbd> (or <kbd>Cmd+K</kbd>).
+  - Search Input: High contrast with search icon.
+  - Filter Tabs: Articles, Corridors, Properties, Services, Custom URL.
+  - Selected Badge: Gold highlight pill showing item slug and type.

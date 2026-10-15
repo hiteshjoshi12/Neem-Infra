@@ -104,24 +104,22 @@ export default function AboutConsultationCta() {
                 {cms.subtitle || "Reach out to get all support that will help you to make a wise decision and invest in the right property. Our founders and senior consultants personally guide your acquisition with complete legal transparency."}
               </p>
 
-              {/* 3 VIP Assurances */}
+              {/* VIP Assurances */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-xs text-slate-300">
-                <div className="flex items-center gap-2 justify-center lg:justify-start">
-                  <CheckCircle2 size={15} className="text-[#D09A16] shrink-0" />
-                  <span>Direct Founder-Led Discussions</span>
-                </div>
-                <div className="flex items-center gap-2 justify-center lg:justify-start">
-                  <CheckCircle2 size={15} className="text-[#D09A16] shrink-0" />
-                  <span>100% Freehold Title Verification</span>
-                </div>
-                <div className="flex items-center gap-2 justify-center lg:justify-start">
-                  <CheckCircle2 size={15} className="text-[#D09A16] shrink-0" />
-                  <span>Zero Hidden Brokerage Fees</span>
-                </div>
-                <div className="flex items-center gap-2 justify-center lg:justify-start">
-                  <CheckCircle2 size={15} className="text-[#D09A16] shrink-0" />
-                  <span>Off-Market DLF Phase 1–5 Inventory</span>
-                </div>
+                {(cms.assurances && Array.isArray(cms.assurances) && cms.assurances.length > 0
+                  ? cms.assurances
+                  : [
+                      "Direct Founder-Led Discussions",
+                      "100% Freehold Title Verification",
+                      "Zero Hidden Brokerage Fees",
+                      "Off-Market DLF Phase 1–5 Inventory"
+                    ]
+                ).map((assurance, aIdx) => (
+                  <div key={aIdx} className="flex items-center gap-2 justify-center lg:justify-start">
+                    <CheckCircle2 size={15} className="text-[#D09A16] shrink-0" />
+                    <span>{assurance}</span>
+                  </div>
+                ))}
               </div>
 
               {/* Action Buttons */}

@@ -260,7 +260,7 @@ export default function AboutProposition() {
 
                         {/* Interactive Feature Pills */}
                         <div className="flex flex-wrap gap-2 pt-2">
-                          {p.keyPoints.map((pt, ptIdx) => (
+                          {(p.keyPoints || []).map((pt, ptIdx) => (
                             <div
                               key={ptIdx}
                               className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 backdrop-blur-md border border-white/15 text-xs text-white"

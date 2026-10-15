@@ -7,14 +7,12 @@ import { ChevronLeft, ChevronRight, ArrowUpRight, MapPin } from 'lucide-react';
 import Link from 'next/link';
 
 
-import { FEATURED_PROPERTIES_DATA } from '../../constants';
 import { useCms } from '../../context/CmsContext';
 import Image from 'next/image';
 
-
 export default function CuratedCorridors() {
   const { properties, sections } = useCms();
-  const propertyList = properties && properties.length > 0 ? properties : FEATURED_PROPERTIES_DATA;
+  const propertyList = properties || [];
   const corridorData = sections?.curatedCorridors || {};
 
   const [currentIndex, setCurrentIndex] = useState(0);

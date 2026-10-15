@@ -23,6 +23,7 @@ if (fs.existsSync(envPath)) {
 
 import { DEFAULT_SECTIONS } from '../src/constants/defaultSections.js';
 import { LUXURY_PROPERTIES_DETAILED } from '../src/constants/propertiesData.js';
+import { CORRIDOR_PAGES_DATA } from '../src/constants/corridorPagesData.js';
 import {
   INITIAL_AUTHORS,
   INITIAL_CATEGORIES,
@@ -112,7 +113,20 @@ async function seedAll() {
     });
     seededSectionsCount++;
   }
-  console.log(`   ✓ Successfully seeded ${seededSectionsCount} CMS sections.\n`);
+
+  // Seed all micro-market corridor landing contents
+  const corridorKeys = Object.keys(CORRIDOR_PAGES_DATA);
+  for (const cKey of corridorKeys) {
+    const sectionKey = `corridor_${cKey}`;
+    await SectionContent.create({
+      sectionKey,
+      title: `${CORRIDOR_PAGES_DATA[cKey].corridorName || cKey} Corridor Landing Content`,
+      data: CORRIDOR_PAGES_DATA[cKey],
+      lastUpdatedBy: 'Master Seed'
+    });
+    seededSectionsCount++;
+  }
+  console.log(`   ✓ Successfully seeded ${seededSectionsCount} CMS sections (including ${corridorKeys.length} micro-market corridors).\n`);
 
   // ====================================================================
   // 2. PROPERTIES CATALOG

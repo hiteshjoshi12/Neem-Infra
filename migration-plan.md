@@ -1,65 +1,105 @@
-# Website Migration Plan (React/Express -> Next.js App Router)
+# Website Migration & Enhancement Plan (Vite/Express -> Next.js 16 App Router)
 
-## Stage 1: Codebase Audit
-- **Frontend**: Vite + React, React Router.
-- **Backend**: Express.js + MongoDB.
-- **Goal**: Analyze the entire project to map existing functionalities.
+> **Execution Roadmap & Implementation Status for Saudagar Properties**  
+> All 20 execution stages completed and verified for production release.
 
-## Stage 2: Architecture Design
-- Map existing routes and endpoints.
-- Design target Next.js App Router directory structure.
-- Define a strategy for Server vs. Client Components.
+---
 
-## Stage 3: Setup Next.js Project
-- Initialize the Next.js App Router project (or modify the existing one).
-- Configure Tailwind CSS, environment variables.
+## 🏁 Implementation Status Overview
 
-## Stage 4: Migrate Global Styling & Assets
-- Move `index.css` to `app/globals.css`.
-- Move images and fonts from `public/` and `src/assets/`.
+| Phase | Milestone | Status |
+|:---|:---|:---|
+| **Phase 1: Codebase Audit & Mapping** | Stages 1 – 3: Architecture & Dependency Setup | ✅ Complete |
+| **Phase 2: Core Migration** | Stages 4 – 11: Routing, Components, MongoDB, Forms & APIs | ✅ Complete |
+| **Phase 3: Search & Discovery Optimization** | Stages 12 – 14: Dynamic Sitemaps, SEO, AEO & GEO Knowledge Graph | ✅ Complete |
+| **Phase 4: Quality & Performance Audits** | Stages 15 – 16: Verification, Typecheck & Next.js Build Pass | ✅ Complete |
+| **Phase 5: Lead Pipeline & Security Hardening** | Stage 17: Honeypot Anti-Spam, Rate Limits & Nodemailer Email Alerts | ✅ Complete |
+| **Phase 6: Editorial Blog & Taxonomy Engine** | Stage 18: Blog Engine, Taxonomies, Dynamic TOC & Reading Time | ✅ Complete |
+| **Phase 7: Advanced Studio CMS & Live Preview** | Stage 19: Split Live Preview Workspace & 1-Click Internal Link Engine | ✅ Complete |
+| **Phase 8: Pre-Launch Production Audit** | Stage 20: Deep Audit, Link Validation & Production Build Verification | ✅ Complete |
 
-## Stage 5: Migrate Routing
-- Create the standard routes: `/`, `/about`, `/contact`, `/terms`, `/privacy-policy`.
-- Migrate Admin dashboard routes under `/admin/...`.
-- Implement dynamic routing for properties (`/properties/[slug]`) and locations (`/locations/[slug]`).
+---
 
-## Stage 6: Migrate Shared Components
-- Move layouts, UI components (navigation, footer, loaders), forms, and context providers to `components/`.
-- Ensure components are properly marked as `"use client"` where interactivity is required.
+## 📋 Detailed Stage Breakdown
 
-## Stage 7: Migrate Property Pages (Server-Side)
-- Implement `/properties` and `/properties/[slug]`.
-- Fetch data from MongoDB directly in Server Components using a `propertyService`.
-- Add SEO metadata generation.
+### Stage 1: Codebase Audit
+- Analyzed legacy repository: Vite + React frontend, standalone Express server, MongoDB Mongoose models.
+- Mapped all endpoints, routes, dependencies, and business logic.
 
-## Stage 8: Migrate Location Pages
-- Implement `/locations/[slug]`.
-- Build the foundation for location-based SEO landing pages.
+### Stage 2: Target Architecture Design
+- Formulated Next.js App Router directory structure (`src/app`).
+- Defined boundaries between Server Components (default SSR/SSG) and Client Components (`"use client"`).
 
-## Stage 9: Migrate MongoDB Layer
-- Implement `lib/mongodb.js` for stable connection caching in Serverless/Next.js environment.
-- Move Mongoose models to `models/`.
-- Adapt `Property.js` to potentially include a slug field for SEO, while keeping the rest identical.
+### Stage 3: Next.js Project Foundation
+- Initialized Next.js 16 with React 19 and Tailwind CSS v4.
+- Established path aliases (`@/*` pointing to `src/*`).
 
-## Stage 10: Migrate Backend / API
-- Migrate Express endpoints to Next.js Route Handlers (`app/api/...`) where client components still need to fetch data.
-- Refactor data access into reusable services (e.g., `services/propertyService.js`).
+### Stage 4: Global Styling & Asset Migration
+- Transferred styling into CSS design tokens and Tailwind theme.
+- Migrated brand imagery, logos, and vector assets.
 
-## Stage 11: Migrate Forms
-- Refactor contact and inquiry forms to use Server Actions or Route Handlers.
-- Ensure strict server-side validation.
+### Stage 5: Core Routing Transition
+- Migrated standard public routes (`/`, `/about`, `/contact`, `/services`, `/terms`, `/privacy-policy`).
+- Established route hierarchy with nested layouts.
 
-## Stage 12: SEO Foundation
-- Implement dynamic `sitemap.js` and `robots.js`.
-- Add meta titles, descriptions, canonicals, and OpenGraph tags to all pages.
+### Stage 6: Shared Component Re-architecture
+- Created reusable components under `src/components/common` (Navigation, Footer, Contact modals).
+- Encapsulated interactive client behaviors in dedicated `"use client"` wrappers.
 
-## Stage 13: Structured Data
-- Add JSON-LD snippets for Organization, WebSite, LocalBusiness, and RealEstate/Property entities.
+### Stage 7: Server-Side Property Catalog
+- Built `/properties` and dynamic `/properties/[slug]` routes.
+- Integrated `propertyService.js` to query MongoDB directly during SSR with zero client-side waterfall delays.
 
-## Stage 14: Performance Optimization
-- Transition images to `next/image`.
-- Verify caching and optimize LCP/CLS/INP.
+### Stage 8: Curated Corridors & Location Landing Pages
+- Built location-based corridor browsing for DLF Phase 1–5, Golf Course Road, and Southern Peripheral Road.
 
-## Stage 15 & 16: Testing & Audits
-- Functional testing of forms, CMS, admin sections, routing.
-- Final SEO / HTML audit for server-rendered content verification.
+### Stage 9: Serverless MongoDB Connection Layer
+- Implemented `src/lib/mongodb.js` with global connection caching for serverless environments.
+- Migrated all Mongoose schemas to `src/models`.
+
+### Stage 10: API Handlers Migration
+- Replaced Express controllers with Next.js Server Route Handlers under `src/app/api/*`.
+- Maintained RESTful parity for frontend CMS consumers.
+
+### Stage 11: Lead Forms & Submissions
+- Built contact and inquiry forms submitting to `/api/inquiries`.
+- Implemented server-side validation and field sanitization.
+
+### Stage 12: Technical SEO Infrastructure
+- Created dynamic `sitemap.js` syncing static pages, active listings, and published blog posts.
+- Created `robots.js` granting crawler access to public routes while disallowing `/admin/` and `/api/`.
+
+### Stage 13: Schema.org Structured Data (AEO & GEO)
+- Implemented `OrganizationJsonLd` with geo-coordinates, NAP consistency, and social authority links.
+- Added `BreadcrumbJsonLd`, `PropertyJsonLd`, and `BlogJsonLd` for rich search snippets and LLM citations.
+
+### Stage 14: Core Web Vitals & Image Optimization
+- Replaced raw `<img>` tags with Next.js `<Image />` component with responsive `sizes` and `priority` for hero sections.
+
+### Stage 15: Admin CMS Suite Migration
+- Built token-authenticated admin management under `/admin/*` for properties, inquiries, and homepage sections.
+
+### Stage 16: Verification & Build Validation
+- Executed linting, typecheck, and build validation suites with zero errors.
+
+---
+
+## 🚀 Post-Migration Enhancements
+
+### Stage 17: Lead Pipeline & Automated Email Dispatch
+- Integrated **Nodemailer** transport in `src/lib/email/emailService.js` to dispatch instant branded HTML alert emails to executive inboxes.
+- Implemented honeypot bot trap (`website_hp`, `company_fax`) and per-IP rate limiting (10 requests / 10 min) in `src/app/api/inquiries/route.js`.
+
+### Stage 18: Editorial Blog & Taxonomy Engine
+- Created public `/blog`, `/blog/[slug]`, and taxonomy archive routes (`/blog/category/*`, `/blog/tag/*`, `/blog/author/*`).
+- Added markdown parsing, reading time calculation, and automated Table of Contents extraction.
+
+### Stage 19: Advanced Studio CMS & Live Article Preview
+- Upgraded `src/components/admin/BlogEditor.jsx` with **3-mode workspace**: Canvas, Split Live Preview, and Full Preview.
+- Created synchronous `LiveArticlePreview.jsx` matching live `/blog/[slug]` typography, hero banners, and tags.
+- Built **1-Click Internal Link Engine** (<kbd>Ctrl+K</kbd>) via `InternalLinkModal.jsx` to search and insert links to articles, corridors, properties, and services.
+
+### Stage 20: Pre-Launch Production Audit
+- Executed comprehensive audit for live audience traffic.
+- Validated SEO signals with `npm run seo:check`.
+- Verified clean compilation with `npm run build`.

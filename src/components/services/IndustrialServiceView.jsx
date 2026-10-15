@@ -35,6 +35,7 @@ const fadeUpVariant = {
 };
 
 export default function IndustrialServiceView({ 
+  initialData = null,
   industrialListings = [], 
   breadcrumbs = [],
   assetClasses = [],
@@ -43,21 +44,51 @@ export default function IndustrialServiceView({
   engineeringStandards = []
 }) {
   const { sections } = useCms();
-  const cms = sections?.page_industrial || DEFAULT_SECTIONS.page_industrial;
-  const heroData = cms?.hero || DEFAULT_SECTIONS.page_industrial.hero;
-  const rawAssetClasses = cms?.assetClasses && cms.assetClasses.length > 0 ? cms.assetClasses : assetClasses;
+  const cms = sections?.page_industrial || initialData || DEFAULT_SECTIONS?.page_industrial || {};
+  const heroData = cms?.hero || DEFAULT_SECTIONS?.page_industrial?.hero || {};
+  const activeMetrics = (cms?.metrics && cms.metrics.length > 0)
+    ? cms.metrics
+    : (DEFAULT_SECTIONS?.page_industrial?.metrics || []);
+  const heroCardData = heroData?.heroCard || DEFAULT_SECTIONS?.page_industrial?.hero?.heroCard || {};
+  const rawAssetClasses = (cms?.assetClasses && cms.assetClasses.length > 0)
+    ? cms.assetClasses
+    : (assetClasses && assetClasses.length > 0 ? assetClasses : DEFAULT_SECTIONS.page_industrial.assetClasses);
+
   const activeAssetClasses = (rawAssetClasses || []).map((item, idx) => {
-    const base = assetClasses[idx] || {};
+    const base = DEFAULT_SECTIONS.page_industrial.assetClasses[idx] || {};
     return {
       ...base,
       ...item,
-      metrics: item?.metrics || base?.metrics || [],
-      features: item?.features || base?.features || [],
+      metrics: (item?.metrics && item.metrics.length > 0) ? item.metrics : (base?.metrics || []),
+      features: (item?.features && item.features.length > 0) ? item.features : (base?.features || []),
       pricing: item?.pricing || item?.price || base?.pricing || base?.price || '',
     };
   });
-  const activeCorridors = cms?.corridors && cms.corridors.length > 0 ? cms.corridors : corridors;
-  const activeComplianceSteps = cms?.complianceSteps && cms.complianceSteps.length > 0 ? cms.complianceSteps : complianceSteps;
+
+  const rawCorridors = (cms?.corridors && cms.corridors.length > 0)
+    ? cms.corridors
+    : (corridors && corridors.length > 0 ? corridors : DEFAULT_SECTIONS.page_industrial.corridors);
+
+  const activeCorridors = (rawCorridors || []).map((market, idx) => {
+    const base = DEFAULT_SECTIONS.page_industrial.corridors[idx] || {};
+    return {
+      ...base,
+      ...market,
+      hub: market?.hub || market?.corridor || base?.hub || '',
+      category: market?.category || market?.zoning || base?.category || '',
+      freightAccess: market?.freightAccess || market?.connectivity || base?.freightAccess || '',
+      powerAvailability: market?.powerAvailability || base?.powerAvailability || '',
+      highlights: (market?.highlights && market.highlights.length > 0) ? market.highlights : (base?.highlights || [])
+    };
+  });
+
+  const activeComplianceSteps = (cms?.complianceSteps && cms.complianceSteps.length > 0)
+    ? cms.complianceSteps
+    : (complianceSteps && complianceSteps.length > 0 ? complianceSteps : DEFAULT_SECTIONS.page_industrial.complianceSteps);
+
+  const activeEngineeringStandards = (cms?.engineeringStandards && cms.engineeringStandards.length > 0)
+    ? cms.engineeringStandards
+    : (engineeringStandards && engineeringStandards.length > 0 ? engineeringStandards : DEFAULT_SECTIONS.page_industrial.engineeringStandards);
 
   return (
     <div className="w-full min-h-screen bg-[#F7F5EF] text-[#17213D]">
@@ -145,9 +176,11 @@ export default function IndustrialServiceView({
             >
               <div className="bg-[#17213D]/90 backdrop-blur-xl border border-white/15 rounded-3xl p-6 sm:p-7 shadow-2xl relative">
                 <div className="flex items-center justify-between pb-4 border-b border-white/10 mb-5">
-                  <span className="text-xs uppercase tracking-wider text-[#9DA6B8]">Industrial Desk</span>
+                  <span className="text-xs uppercase tracking-wider text-[#9DA6B8]">
+                    {heroCardData.tag || "Industrial Desk"}
+                  </span>
                   <span className="text-xs font-semibold text-[#D09A16] flex items-center gap-1">
-                    <ShieldCheck size={14} /> HSIIDC &amp; Legal Diligence
+                    <ShieldCheck size={14} /> {heroCardData.badge || "HSIIDC & Legal Diligence"}
                   </span>
                 </div>
 
@@ -157,8 +190,12 @@ export default function IndustrialServiceView({
                       <Boxes size={16} />
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold text-white">Turnkey Logistics Facilities</h4>
-                      <p className="text-xs text-[#9DA6B8] mt-0.5">Immediate occupancy for modern 3PL, e-commerce, cold-storage, and supply chain hubs.</p>
+                      <h4 className="text-sm font-semibold text-white">
+                        {heroCardData.feature1Title || "Turnkey Logistics Facilities"}
+                      </h4>
+                      <p className="text-xs text-[#9DA6B8] mt-0.5">
+                        {heroCardData.feature1Desc || "Immediate occupancy for modern 3PL, e-commerce, cold-storage, and supply chain hubs."}
+                      </p>
                     </div>
                   </div>
 
@@ -167,8 +204,12 @@ export default function IndustrialServiceView({
                       <Cpu size={16} />
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold text-white">Zoning &amp; Compliance Audits</h4>
-                      <p className="text-xs text-[#9DA6B8] mt-0.5">Pollution board NOC, electricity load sanctions, fire safety, and industrial zoning verification.</p>
+                      <h4 className="text-sm font-semibold text-white">
+                        {heroCardData.feature2Title || "Zoning & Compliance Audits"}
+                      </h4>
+                      <p className="text-xs text-[#9DA6B8] mt-0.5">
+                        {heroCardData.feature2Desc || "Pollution board NOC, electricity load sanctions, fire safety, and industrial zoning verification."}
+                      </p>
                     </div>
                   </div>
 
@@ -177,15 +218,21 @@ export default function IndustrialServiceView({
                       <Truck size={16} />
                     </div>
                     <div>
-                      <h4 className="text-sm font-semibold text-white">Arterial Freight Proximity</h4>
-                      <p className="text-xs text-[#9DA6B8] mt-0.5">Plots located with direct connectivity to NH-48, KMP Expressway, and Delhi International Airport.</p>
+                      <h4 className="text-sm font-semibold text-white">
+                        {heroCardData.feature3Title || "Arterial Freight Proximity"}
+                      </h4>
+                      <p className="text-xs text-[#9DA6B8] mt-0.5">
+                        {heroCardData.feature3Desc || "Plots located with direct connectivity to NH-48, KMP Expressway, and Delhi International Airport."}
+                      </p>
                     </div>
                   </div>
                 </div>
 
                 <div className="mt-6 pt-5 border-t border-white/10 flex items-center justify-between text-xs text-[#C9CED9]">
-                  <span>Industrial Land Transacted</span>
-                  <span className="text-[#D09A16] font-semibold">100+ Acres in NCR</span>
+                  <span>{heroCardData.statLabel || "Industrial Land Transacted"}</span>
+                  <span className="text-[#D09A16] font-semibold">
+                    {heroCardData.statValue || "100+ Acres in NCR"}
+                  </span>
                 </div>
               </div>
             </motion.div>
@@ -193,6 +240,39 @@ export default function IndustrialServiceView({
           </div>
         </div>
       </section>
+
+      {/* ================= 4 KEY LOGISTICS METRICS STRIP ================= */}
+      {activeMetrics && activeMetrics.length > 0 && (
+        <section className="relative z-20 max-w-7xl mx-auto px-5 sm:px-8 -mt-8 sm:-mt-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+            className="bg-[#12192C]/95 backdrop-blur-xl border border-white/15 rounded-3xl p-5 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.35)]"
+          >
+            <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 divide-y lg:divide-y-0 lg:divide-x divide-white/10">
+              {activeMetrics.map((m, idx) => (
+                <div key={idx} className={`flex flex-col justify-between ${idx > 0 ? 'pt-4 lg:pt-0 lg:pl-6' : ''}`}>
+                  <div className="flex items-center gap-2 mb-1.5">
+                    <span className="w-2 h-2 rounded-full bg-[#D09A16] shadow-[0_0_8px_#D09A16]" />
+                    <span className="text-2xl sm:text-3xl font-serif font-bold text-white tracking-tight">
+                      {m.value}
+                    </span>
+                  </div>
+                  <div>
+                    <h4 className="text-xs sm:text-sm font-bold text-slate-200 uppercase tracking-wider mb-0.5">
+                      {m.label}
+                    </h4>
+                    <p className="text-[11px] text-[#9DA6B8] leading-relaxed">
+                      {m.desc}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </section>
+      )}
 
       {/* ================= INDUSTRIAL ASSET PROFILES ================= */}
       <section id="asset-classes" className="py-20 md:py-28 max-w-7xl mx-auto px-5 sm:px-8">
@@ -444,7 +524,7 @@ export default function IndustrialServiceView({
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {engineeringStandards.map((std, sIdx) => (
+            {(activeEngineeringStandards || []).map((std, sIdx) => (
               <motion.div 
                 key={sIdx}
                 initial="hidden"
@@ -572,11 +652,21 @@ export default function IndustrialServiceView({
               href={cms?.cta?.whatsappUrl || "https://wa.me/919718511207"}
               target="_blank"
               rel="noopener noreferrer"
-              className="px-8 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-2 shadow-sm"
+              className="px-8 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-bold text-xs uppercase tracking-wider transition-all flex items-center gap-2 shadow-sm cursor-pointer"
             >
               <WhatsAppIcon size={16} />
               <span>WhatsApp Direct Line</span>
             </a>
+
+            {cms?.cta?.phone && (
+              <a
+                href={`tel:${cms.cta.phone.replace(/\s+/g, '')}`}
+                className="px-7 py-3.5 rounded-xl bg-white/10 hover:bg-white/15 border border-white/20 text-white font-semibold text-xs uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer"
+              >
+                <PhoneCall size={14} className="text-[#D09A16]" />
+                <span>Call {cms.cta.phone}</span>
+              </a>
+            )}
           </div>
         </div>
       </section>

@@ -16,6 +16,12 @@ export async function GET() {
       success: true,
       data: pageMap,
       raw: records
+    }, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
     });
   } catch (error) {
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });

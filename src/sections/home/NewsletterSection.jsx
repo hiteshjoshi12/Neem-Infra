@@ -188,6 +188,7 @@ export default function NewsletterSection({ isEmbedded = false }) {
             <span className="font-light italic text-[#D09A16]">
               {newsData.titleItalic || "Saudagar Properties"}
             </span>
+            {newsData.titleSuffix ? ` ${newsData.titleSuffix}` : ""}
           </h2>
 
           {/* Curated Description */}
@@ -278,6 +279,7 @@ export default function NewsletterSection({ isEmbedded = false }) {
                   <ShieldCheck size={13} className="text-[#D09A16] shrink-0" />
                   <span>
                     {newsData.disclaimer ||
+                      newsData.guaranteeText ||
                       "Zero spam. Complete confidentiality. Unsubscribe at any time."}
                   </span>
                 </div>

@@ -1,18 +1,32 @@
 import { notFound } from 'next/navigation';
-import { CORRIDOR_PAGES_DATA } from '@/constants/corridorPagesData';
 import { getProperties } from '@/services/propertyService';
 import PropertyLandingView from '@/components/property-landing/PropertyLandingView';
 import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
 import { buildPageMetadata } from '@/lib/seo/metadataHelper';
 import { SITE_URL } from '@/lib/seo/seoConfig';
 
-export const revalidate = 120;
+import { connectDB } from '@/lib/mongodb';
+import SectionContent from '@/models/SectionContent';
+
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+async function getCorridor(slug) {
+  try {
+    await connectDB();
+    const doc = await SectionContent.findOne({ sectionKey: `corridor_${slug}` }).lean();
+    if (doc?.data) return doc.data;
+  } catch (err) {
+    console.warn(`[Corridor] Database fetch error:`, err?.message);
+  }
+  return null;
+}
 
 export async function generateMetadata(props) {
   const params = await props.params;
   const rawSlug = params?.slug;
   const slug = rawSlug === 'sushant-lok' ? 'shushant-lok' : rawSlug;
-  const corridor = CORRIDOR_PAGES_DATA[slug];
+  const corridor = await getCorridor(slug);
 
   if (!corridor) {
     return {
@@ -46,7 +60,7 @@ export default async function PropertyCorridorPage(props) {
   const params = await props.params;
   const rawSlug = params?.slug;
   const slug = rawSlug === 'sushant-lok' ? 'shushant-lok' : rawSlug;
-  const corridor = CORRIDOR_PAGES_DATA[slug];
+  const corridor = await getCorridor(slug);
 
   if (!corridor) {
     notFound();

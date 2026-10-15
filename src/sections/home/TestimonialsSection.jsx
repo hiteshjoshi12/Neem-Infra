@@ -14,51 +14,12 @@ import {
   CheckCircle2
 } from "lucide-react";
 import { useCms } from "../../context/CmsContext";
+import { DEFAULT_TESTIMONIALS_DATA } from "@/constants/homeData";
 import Image from 'next/image';
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
-
-/* =========================================================
-   DEFAULT TESTIMONIALS (High-Resolution Curated Assets)
-========================================================= */
-
-const TESTIMONIALS = [
-  {
-    id: "01",
-    name: "Deepak Arora",
-    role: "Investor",
-    location: "Dubai, UAE",
-    rating: 5,
-    avatar: "https://saudagarproperties.com/wp-content/uploads/2021/01/c3.jpg",
-    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1000&q=80",
-    quote: "Selecting a best real estate consultant in Gurugram, especially one who is trustworthy, experienced, and honest, is the basic pillar of investment. From their before sales to after sales service, I can definitely say that customer satisfaction is in the company's DNA. Extremely happy to approach them for my investment decisions and will look up to the same in future too.",
-    tag: "NRI Investment Advisory",
-  },
-  {
-    id: "02",
-    name: "Kedarnath Gupta",
-    role: "Investor",
-    location: "Dubai, UAE",
-    rating: 5,
-    avatar: "https://saudagarproperties.com/wp-content/uploads/2021/01/c2.jpg",
-    image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1000&q=80",
-    quote: "Choosing the right home is a very important aspect of any individual's life. With their decade-long experience in the Gurgaon real estate market, Saudagar Properties Pvt. Ltd. played a key role in ensuring that I was making the right decision while choosing my dream home by providing the right push when needed, and cautioning me when necessary. I owe the team a huge part of my dream.",
-    tag: "High-Value Transaction",
-  },
-  {
-    id: "03",
-    name: "Saravjit Dasaan",
-    role: "Investor & End User",
-    location: "India",
-    rating: 5,
-    avatar: "https://saudagarproperties.com/wp-content/uploads/2021/01/c1.jpg",
-    image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1000&q=80",
-    quote: "The team seamlessly took over everything, from research, visit, paperwork to maintenance. Amidst a plethora of options, Saudagar Properties shortlisted the best residential properties in Gurgaon according to my needs and comfort. It has been a delight working with the highly-qualified and seasoned team. I would recommend their services to all my friends and acquaintances.",
-    tag: "End-to-End Concierge",
-  },
-];
 
 /* =========================================================
    STAR RATING
@@ -410,9 +371,8 @@ function CompactTestimonial({ item, index, onSelect, active }) {
 ========================================================= */
 
 export default function TestimonialsSection() {
-  const { testimonials, sections } = useCms();
-
-  const list = testimonials && testimonials.length > 0 ? testimonials : TESTIMONIALS;
+  const { testimonials = [], sections = {} } = useCms() || {};
+  const list = (testimonials && testimonials.length > 0) ? testimonials : DEFAULT_TESTIMONIALS_DATA;
   const testData = sections?.testimonials || {};
 
   const [activeIndex, setActiveIndex] = useState(0);

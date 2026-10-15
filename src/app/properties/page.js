@@ -5,6 +5,9 @@ import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
 import { buildPageMetadata } from '@/lib/seo/metadataHelper';
 import PropertiesCatalogClient from '@/components/properties/PropertiesCatalogClient';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
 export const metadata = buildPageMetadata({
   title: 'Luxury Properties & Builder Floors DLF Gurugram',
   description: 'Explore verified ready-to-move luxury builder floors, kothis, and commercial spaces across DLF Phase 1–5, Sushant Lok, and Golf Course Road.',

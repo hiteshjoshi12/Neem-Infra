@@ -10,17 +10,27 @@ import Tilt3DCard from '../../components/ui/Tilt3DCard';
 import AnimatedCounter from '../../components/ui/AnimatedCounter';
 import Image from 'next/image';
 import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
-import { FEATURED_PROPERTIES_DATA } from '@/constants';
 
 export default function AboutHero() {
-  const { sections } = useCms();
+  const { sections, properties } = useCms();
   const cms = sections?.page_about || DEFAULT_SECTIONS.page_about;
-  const stats = [
+  const activePropertyList = properties || [];
+
+  const defaultStats = [
     { icon: Award, value: 25, suffix: "+", label: "Years Experience", subtext: "DLF Phase 1–5 Pioneers" },
     { icon: TrendingUp, value: 500, prefix: "₹", suffix: "Cr+", label: "Transaction Volume", subtext: "Delivered Seamlessly" },
     { icon: ShieldCheck, value: 100, suffix: "%", label: "Direct & Transparent", subtext: "Zero Middlemen Fees" },
     { icon: Building, value: 5000, suffix: "+", formatComma: true, label: "HNI Families & Corporates", subtext: "Enduring Relationships" }
   ];
+
+  const STAT_ICONS = [Award, TrendingUp, ShieldCheck, Building];
+  const stats = (cms.hero?.stats && Array.isArray(cms.hero.stats) && cms.hero.stats.length > 0)
+    ? cms.hero.stats.map((st, idx) => ({
+        ...defaultStats[idx],
+        ...st,
+        icon: STAT_ICONS[idx % STAT_ICONS.length]
+      }))
+    : defaultStats;
 
   const heroRef = useRef(null);
   const bgImgRef = useRef(null);
@@ -32,13 +42,14 @@ export default function AboutHero() {
   const [currentPropIndex, setCurrentPropIndex] = useState(0);
 
   useEffect(() => {
+    if (activePropertyList.length === 0) return;
     const timer = setInterval(() => {
-      setCurrentPropIndex((prev) => (prev + 1) % FEATURED_PROPERTIES_DATA.length);
+      setCurrentPropIndex((prev) => (prev + 1) % activePropertyList.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, []);
+  }, [activePropertyList.length]);
 
-  const activeProperty = FEATURED_PROPERTIES_DATA[currentPropIndex] || FEATURED_PROPERTIES_DATA[0];
+  const activeProperty = activePropertyList[currentPropIndex] || activePropertyList[0] || null;
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -96,7 +107,7 @@ export default function AboutHero() {
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-85">
         <Image
           ref={bgImgRef}
-          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80"
+          src={cms.hero?.bgImage || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80"}
           alt="DLF Luxury Villa Architecture"
           width={2400}
           height={1350}
@@ -169,14 +180,14 @@ export default function AboutHero() {
                 <div className="w-6 h-6 rounded-full bg-[#0C101A] text-[#D09A16] flex items-center justify-center">
                   <Play size={10} className="fill-[#D09A16] ml-0.5" />
                 </div>
-                <span>Watch Corporate Film</span>
+                <span>{cms.hero?.watchFilmText || "Watch Corporate Film"}</span>
               </a>
 
               <a
                 href="#proposition"
                 className="px-8 py-4 rounded-2xl bg-white/[0.05] hover:bg-white/[0.1] text-white border border-white/20 hover:border-[#D09A16] font-bold text-xs uppercase tracking-[0.18em] transition-all duration-300 backdrop-blur-md hover:-translate-y-0.5 cursor-pointer flex items-center gap-2"
               >
-                <span>Our Proposition</span>
+                <span>{cms.hero?.propositionBtnText || "Our Proposition"}</span>
                 <ArrowRight size={14} className="text-[#D09A16]" />
               </a>
             </div>
@@ -184,7 +195,7 @@ export default function AboutHero() {
             {/* Direct Verification Micro-badge */}
             <div className="about-hero-anim flex items-center justify-center lg:justify-start gap-2 pt-2 text-xs text-slate-400">
               <CheckCircle2 size={15} className="text-[#D09A16]" />
-              <span>Headquartered at 38, Akashneem Marg, DLF Phase 2, Gurugram</span>
+              <span>{cms.hero?.addressBadge || "Headquartered at 38, Akashneem Marg, DLF Phase 2, Gurugram"}</span>
             </div>
 
           </div>
@@ -200,129 +211,135 @@ export default function AboutHero() {
 
               {/* 3D Tilt Card Container */}
               <Tilt3DCard maxTilt={8} className="w-full">
-                <div className="relative rounded-[32px] overflow-hidden border border-[#D09A16]/40 bg-gradient-to-b from-slate-900/95 via-slate-950/95 to-black/95 p-5 sm:p-6 backdrop-blur-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_50px_rgba(208,154,22,0.25)] flex flex-col justify-between">
+                {activeProperty ? (
+                  <div className="relative rounded-[32px] overflow-hidden border border-[#D09A16]/40 bg-gradient-to-b from-slate-900/95 via-slate-950/95 to-black/95 p-5 sm:p-6 backdrop-blur-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_50px_rgba(208,154,22,0.25)] flex flex-col justify-between">
 
-                  {/* Header Badge & 5s Live Pulse Indicator */}
-                  <div className="flex items-center justify-between gap-2 mb-3">
-                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D09A16]/15 border border-[#D09A16]/40 text-[#D09A16] text-[10px] font-bold uppercase tracking-widest">
-                      <span className="w-2 h-2 rounded-full bg-[#D09A16] animate-pulse" />
-                      <span>Live Portfolio • Rotates Every 5s</span>
-                    </span>
-                    <span className="text-[11px] font-mono text-slate-400">
-                      {String(currentPropIndex + 1).padStart(2, '0')}/{String(FEATURED_PROPERTIES_DATA.length).padStart(2, '0')}
-                    </span>
-                  </div>
-
-                  {/* Animated Visual Card Header */}
-                  <div className="relative h-56 sm:h-60 rounded-2xl overflow-hidden border border-white/10 shadow-lg bg-slate-950 mb-4">
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={activeProperty.id}
-                        initial={{ opacity: 0, scale: 1.05 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.98 }}
-                        transition={{ duration: 0.6, ease: "easeInOut" }}
-                        className="absolute inset-0"
-                      >
-                        <Image
-                          src={activeProperty.img}
-                          alt={activeProperty.title}
-                          fill
-                          sizes="(max-width: 768px) 100vw, 450px"
-                          className="w-full h-full object-cover"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/20" />
-                        
-                        {/* Floating Property Tag */}
-                        <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-slate-950/85 backdrop-blur-md border border-[#D09A16]/50 text-[#D09A16] text-[10px] font-bold tracking-widest uppercase shadow-md">
-                          {activeProperty.tag}
-                        </div>
-
-                        {/* Price Overlay */}
-                        <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white text-xs font-serif font-bold shadow-md">
-                          {activeProperty.price}
-                        </div>
-
-                        {/* Title & Location on Image */}
-                        <div className="absolute bottom-3 left-3 right-3">
-                          <h4 className="text-sm font-serif font-bold text-white leading-snug line-clamp-1 mb-1">
-                            {activeProperty.title}
-                          </h4>
-                          <div className="flex items-center gap-1.5 text-[11px] text-[#D09A16] font-medium">
-                            <MapPin size={12} className="shrink-0" />
-                            <span className="truncate">{activeProperty.location}</span>
-                          </div>
-                        </div>
-                      </motion.div>
-                    </AnimatePresence>
-                  </div>
-
-                  {/* Animated Details & Specs */}
-                  <AnimatePresence mode="wait">
-                    <motion.div
-                      key={activeProperty.id + '-details'}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -8 }}
-                      transition={{ duration: 0.35 }}
-                      className="space-y-3 mb-4"
-                    >
-                      <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-between">
-                        <div className="text-xs text-slate-300">
-                          <span className="font-semibold text-white block mb-0.5">Specifications:</span>
-                          <span className="text-[11px] text-slate-400">{activeProperty.specs}</span>
-                        </div>
-                        <span className="px-2.5 py-1 rounded-md bg-[#D09A16]/20 border border-[#D09A16]/40 text-[#D09A16] text-[10px] font-bold uppercase tracking-wider shrink-0">
-                          Verified Title
-                        </span>
-                      </div>
-
-                      <p className="text-[11px] text-slate-400 leading-relaxed line-clamp-2 px-1">
-                        {activeProperty.desc}
-                      </p>
-                    </motion.div>
-                  </AnimatePresence>
-
-                  {/* 5-Second Animated Progress Bar */}
-                  <div className="w-full bg-white/10 h-1 rounded-full overflow-hidden mb-4">
-                    <motion.div
-                      key={currentPropIndex}
-                      initial={{ width: "0%" }}
-                      animate={{ width: "100%" }}
-                      transition={{ duration: 5, ease: "linear" }}
-                      className="h-full bg-gradient-to-r from-[#D09A16] to-[#F1C40F]"
-                    />
-                  </div>
-
-                  {/* Actions & Carousel Navigation Dots */}
-                  <div className="flex items-center justify-between gap-3 pt-1 border-t border-white/10">
-                    {/* Navigation Dots */}
-                    <div className="flex items-center gap-1.5">
-                      {FEATURED_PROPERTIES_DATA.map((_, idx) => (
-                        <button
-                          key={idx}
-                          onClick={() => setCurrentPropIndex(idx)}
-                          aria-label={`Show property ${idx + 1}`}
-                          className={`h-2 rounded-full transition-all cursor-pointer ${
-                            idx === currentPropIndex 
-                              ? 'w-6 bg-[#D09A16]' 
-                              : 'w-2 bg-white/30 hover:bg-white/60'
-                          }`}
-                        />
-                      ))}
+                    {/* Header Badge & 5s Live Pulse Indicator */}
+                    <div className="flex items-center justify-between gap-2 mb-3">
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D09A16]/15 border border-[#D09A16]/40 text-[#D09A16] text-[10px] font-bold uppercase tracking-widest">
+                        <span className="w-2 h-2 rounded-full bg-[#D09A16] animate-pulse" />
+                        <span>Live Portfolio • Rotates Every 5s</span>
+                      </span>
+                      <span className="text-[11px] font-mono text-slate-400">
+                        {String(currentPropIndex + 1).padStart(2, '0')}/{String(activePropertyList.length).padStart(2, '0')}
+                      </span>
                     </div>
 
-                    {/* View All Link */}
-                    <Link
-                      href="/properties"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#D09A16] hover:text-[#E5AC2B] transition-colors"
-                    >
-                      <span>Explore Catalog</span>
-                      <ArrowRight size={13} />
-                    </Link>
-                  </div>
+                    {/* Animated Visual Card Header */}
+                    <div className="relative h-56 sm:h-60 rounded-2xl overflow-hidden border border-white/10 shadow-lg bg-slate-950 mb-4">
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={activeProperty.id || activeProperty._id}
+                          initial={{ opacity: 0, scale: 1.05 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0, scale: 0.98 }}
+                          transition={{ duration: 0.6, ease: "easeInOut" }}
+                          className="absolute inset-0"
+                        >
+                          <Image
+                            src={activeProperty.img || (activeProperty.images && activeProperty.images[0]) || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c"}
+                            alt={activeProperty.title || "Featured Property"}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 450px"
+                            className="w-full h-full object-cover"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/20" />
+                          
+                          {/* Floating Property Tag */}
+                          <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-slate-950/85 backdrop-blur-md border border-[#D09A16]/50 text-[#D09A16] text-[10px] font-bold tracking-widest uppercase shadow-md">
+                            {activeProperty.tag || "DLF Freehold"}
+                          </div>
 
-                </div>
+                          {/* Price Overlay */}
+                          <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/80 backdrop-blur-md border border-white/20 text-white text-xs font-serif font-bold shadow-md">
+                            {activeProperty.price}
+                          </div>
+
+                          {/* Title & Location on Image */}
+                          <div className="absolute bottom-3 left-3 right-3">
+                            <h4 className="text-sm font-serif font-bold text-white leading-snug line-clamp-1 mb-1">
+                              {activeProperty.title}
+                            </h4>
+                            <div className="flex items-center gap-1.5 text-[11px] text-[#D09A16] font-medium">
+                              <MapPin size={12} className="shrink-0" />
+                              <span className="truncate">{activeProperty.location}</span>
+                            </div>
+                          </div>
+                        </motion.div>
+                      </AnimatePresence>
+                    </div>
+
+                    {/* Animated Details & Specs */}
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={(activeProperty.id || activeProperty._id) + '-details'}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -8 }}
+                        transition={{ duration: 0.35 }}
+                        className="space-y-3 mb-4"
+                      >
+                        <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-between">
+                          <div className="text-xs text-slate-300">
+                            <span className="font-semibold text-white block mb-0.5">Specifications:</span>
+                            <span className="text-[11px] text-slate-400">{activeProperty.specs}</span>
+                          </div>
+                          <span className="px-2.5 py-1 rounded-md bg-[#D09A16]/20 border border-[#D09A16]/40 text-[#D09A16] text-[10px] font-bold uppercase tracking-wider shrink-0">
+                            Verified Title
+                          </span>
+                        </div>
+
+                        <p className="text-[11px] text-slate-400 leading-relaxed line-clamp-2 px-1">
+                          {activeProperty.desc}
+                        </p>
+                      </motion.div>
+                    </AnimatePresence>
+
+                    {/* 5-Second Animated Progress Bar */}
+                    <div className="w-full bg-white/10 h-1 rounded-full overflow-hidden mb-4">
+                      <motion.div
+                        key={currentPropIndex}
+                        initial={{ width: "0%" }}
+                        animate={{ width: "100%" }}
+                        transition={{ duration: 5, ease: "linear" }}
+                        className="h-full bg-gradient-to-r from-[#D09A16] to-[#F1C40F]"
+                      />
+                    </div>
+
+                    {/* Actions & Carousel Navigation Dots */}
+                    <div className="flex items-center justify-between gap-3 pt-1 border-t border-white/10">
+                      {/* Navigation Dots */}
+                      <div className="flex items-center gap-1.5">
+                        {activePropertyList.map((_, idx) => (
+                          <button
+                            key={idx}
+                            onClick={() => setCurrentPropIndex(idx)}
+                            aria-label={`Show property ${idx + 1}`}
+                            className={`h-2 rounded-full transition-all cursor-pointer ${
+                              idx === currentPropIndex 
+                                ? 'w-6 bg-[#D09A16]' 
+                                : 'w-2 bg-white/30 hover:bg-white/60'
+                            }`}
+                          />
+                        ))}
+                      </div>
+
+                      {/* View All Link */}
+                      <Link
+                        href="/properties"
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#D09A16] hover:text-[#E5AC2B] transition-colors"
+                      >
+                        <span>Explore Catalog</span>
+                        <ArrowRight size={13} />
+                      </Link>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="relative rounded-[32px] overflow-hidden border border-[#D09A16]/40 bg-gradient-to-b from-slate-900/95 via-slate-950/95 to-black/95 p-6 backdrop-blur-2xl text-center">
+                    <span className="text-[#D09A16] font-serif text-lg font-bold block mb-2">Saudagar Properties</span>
+                    <p className="text-xs text-slate-300">DLF Phase 1–5 Premier Real Estate Advisory</p>
+                  </div>
+                )}
               </Tilt3DCard>
             </div>
           </div>

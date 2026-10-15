@@ -13,66 +13,10 @@ import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
 export default function AboutLeadership() {
   const { sections } = useCms();
   const cms = sections?.page_about?.leadership || DEFAULT_SECTIONS.page_about.leadership;
-  const defaultFounders = [
-    {
-      name: "Mr. Arun Sharma",
-      role: "Founder & Managing Director",
-      badge: "Founder • 20+ Years Authority",
-      experienceBadge: "20+ Years",
-      image: "https://saudagarproperties.com/wp-content/uploads/2025/12/Arun-Sharma-img.webp",
-      bio: "Mr. Arun Sharma, the Founder of Saudagar properties Pvt Ltd is the force which drives us. A highly-experienced professional in Real Estate scenario with a career spanning more than two decades, his expertise includes skillful management of resources, and an astute and zealous work ethic. Inspite of years of experience behind him, he still ensures that every client is personally attended by him. His insistence on quality and consistency and his deft approach to the business has helped us scale new heights.",
-      highlights: [
-        "Over two decades of premier real estate leadership",
-        "Personal involvement in every client consultation",
-        "Astute & zealous management of resources",
-        "Pioneering advisory in DLF Phase 1–5 & Gurugram"
-      ],
-      quote: "Quality, consistency, and personal dedication are the bedrock of lasting real estate value."
-    },
-    {
-      name: "Mrs. Suneeta Chawla",
-      role: "Co-Founder",
-      badge: "Co-Founder • 10+ Years Veteran",
-      experienceBadge: "10+ Years",
-      image: "https://saudagarproperties.com/wp-content/uploads/2021/01/WhatsApp-Image-2020-09-24-at-6.34.26-PM.jpeg",
-      bio: "Our co-founder and an esteemed veteran in the Real Estate market, Suneeta Chawla has been in the Real Estate Business for more than a decade now. Her keen instincts in the real estate business are remarkable. Her expertise and pragmatic approach has led to many successful deals in the past. We shall now and forever value her resourcefulness and integrity. She is one of the pillars that hold this venture sturdily.",
-      highlights: [
-        "Over a decade of astute market transactions",
-        "Pragmatic approach delivering high-ROI results",
-        "Remarkable instincts in luxury real estate",
-        "A foundational pillar of resourcefulness & integrity"
-      ],
-      quote: "Resourcefulness and integrity turn property decisions into lifelong generational wealth."
-    }
-  ];
+  const founders = cms?.founders || DEFAULT_SECTIONS.page_about?.leadership?.founders || [];
+  const teamMembers = cms?.teamMembers || DEFAULT_SECTIONS.page_about?.leadership?.teamMembers || [];
 
-  const defaultTeamMembers = [
-    {
-      name: "Ankit Sharma",
-      designation: "Senior Client Advisory",
-      image: "https://saudagarproperties.com/wp-content/uploads/2020/09/Mohit-2-copy.png"
-    },
-    {
-      name: "Bhavishya Sharma",
-      designation: "Luxury Investment Specialist",
-      image: "https://saudagarproperties.com/wp-content/uploads/2020/09/Bhavishyasharma-1.png"
-    },
-    {
-      name: "Shyam Upreti",
-      designation: "Commercial & Portfolio Lead",
-      image: "https://saudagarproperties.com/wp-content/uploads/2020/09/shyam-upreti.png"
-    }
-  ];
-
-  const founders = (cms?.founders && cms.founders.length > 0)
-    ? cms.founders.map((f, idx) => ({ ...defaultFounders[idx], ...f }))
-    : defaultFounders;
-
-  const teamMembers = (cms?.teamMembers && cms.teamMembers.length > 0)
-    ? cms.teamMembers.map((t, idx) => ({ ...defaultTeamMembers[idx], ...t }))
-    : defaultTeamMembers;
-
-  const impactStats = [
+  const defaultImpactStats = [
     {
       value: 100,
       suffix: "+",
@@ -93,6 +37,9 @@ export default function AboutLeadership() {
       desc: "DLF Gurugram market authority"
     }
   ];
+  const impactStats = (cms?.impactStats && Array.isArray(cms.impactStats) && cms.impactStats.length > 0)
+    ? cms.impactStats
+    : defaultImpactStats;
 
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
@@ -316,14 +263,16 @@ export default function AboutLeadership() {
                   </p>
 
                   {/* Key Strengths Highlights */}
-                  <div className="pt-4 border-t border-white/10 space-y-2.5 mb-6">
-                    {leader.highlights.map((h, hIdx) => (
-                      <div key={hIdx} className="flex items-start gap-2.5 text-xs text-slate-200">
-                        <CheckCircle2 size={15} className="text-[#D09A16] shrink-0 mt-0.5" />
-                        <span className="font-medium">{h}</span>
-                      </div>
-                    ))}
-                  </div>
+                  {Array.isArray(leader.highlights) && leader.highlights.length > 0 && (
+                    <div className="pt-4 border-t border-white/10 space-y-2.5 mb-6">
+                      {leader.highlights.map((h, hIdx) => (
+                        <div key={hIdx} className="flex items-start gap-2.5 text-xs text-slate-200">
+                          <CheckCircle2 size={15} className="text-[#D09A16] shrink-0 mt-0.5" />
+                          <span className="font-medium">{h}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 {/* Direct Touchpoint Footnote */}

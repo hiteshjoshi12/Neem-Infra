@@ -353,52 +353,30 @@ export default function ServicesEditor({ formData, updateField, onNavigateTab })
         </div>
       </div>
 
-      {/* Sub-section 4: DLF Property Callout Banner Link */}
-      <div className="pt-6 border-t border-white/10 space-y-4">
-        <div className="flex items-center justify-between">
-          <h4 className="text-sm font-serif font-bold text-[#D09A16]">
-            4. DLF Property Callout Banner & Stats
+      {/* Sub-section 4: DLF Property Callout Banner & Stats */}
+      <div className="p-6 rounded-2xl bg-gradient-to-br from-[#182345]/70 to-[#0F182F]/90 border border-[#D09A16]/30 shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div className="space-y-2 max-w-xl">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[#D09A16] text-[10px] font-bold uppercase tracking-wider">
+            <span>Part 4 of Our Services Flow</span>
+          </div>
+          <h4 className="text-base font-serif font-bold text-white">
+            DLF Property Callout & 3D Animated Stats
           </h4>
-          {onNavigateTab && (
-            <button
-              type="button"
-              onClick={() => onNavigateTab('dlfCallout')}
-              className="px-3 py-1.5 rounded-lg bg-[#D09A16] text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 shrink-0 cursor-pointer hover:brightness-110"
-            >
-              <span>Open Tab 6: DLF Callout & Stats</span>
-              <ArrowUpRight size={13} />
-            </button>
-          )}
+          <p className="text-xs text-slate-300 leading-relaxed">
+            This closing section renders directly below the 4-step working process. Because it includes the two-tone editorial headline (&ldquo;DLF Gurugram, considered differently&rdquo;), architectural photo coordinates, 3D animated metric counters, and the private property desk CTA panel, it is managed in its own dedicated CMS tab.
+          </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <FormInput
-            label="Banner Badge"
-            value={dlfCallout.badge}
-            onChange={(e) => updateField('dlfCallout.badge', e.target.value)}
-          />
-          <FormInput
-            label="Call Phone Number"
-            value={dlfCallout.phone}
-            onChange={(e) => updateField('dlfCallout.phone', e.target.value)}
-          />
-          <FormInput
-            label="Explore Button Text"
-            placeholder="Explore Deals"
-            value={dlfCallout.ctaText}
-            onChange={(e) => updateField('dlfCallout.ctaText', e.target.value)}
-          />
-        </div>
-        <FormInput
-          label="Banner Title"
-          value={dlfCallout.headline}
-          onChange={(e) => updateField('dlfCallout.headline', e.target.value)}
-        />
-        <FormTextarea
-          label="Banner Description"
-          rows={2}
-          value={dlfCallout.description}
-          onChange={(e) => updateField('dlfCallout.description', e.target.value)}
-        />
+
+        {onNavigateTab && (
+          <button
+            type="button"
+            onClick={() => onNavigateTab('dlfCallout')}
+            className="px-5 py-3 rounded-xl bg-[#D09A16] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shrink-0 cursor-pointer shadow-md transition-all"
+          >
+            <span>Open DLF Callout & Stats CMS</span>
+            <ArrowUpRight size={15} />
+          </button>
+        )}
       </div>
     </div>
   );

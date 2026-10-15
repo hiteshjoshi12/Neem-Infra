@@ -1,42 +1,20 @@
 /**
- * High-performance lightweight in-memory cache for API endpoints
- * Prevents redundant DB queries and delivers near-instant sub-5ms responses.
+ * Lightweight in-memory cache helper for API endpoints.
+ * Configured for real-time live database synchronization.
+ * getCached returns null to ensure immediate database visibility across all UI touchpoints.
  */
 
 const cacheStore = new Map();
-const MAX_CACHE_ENTRIES = 500;
 
-export function getCached(key, ttlMs = 60000) {
-  const entry = cacheStore.get(key);
-  if (!entry) return null;
-  if (Date.now() - entry.timestamp > ttlMs) {
-    cacheStore.delete(key);
-    return null;
-  }
-  return entry.data;
+export function getCached(_key, _ttlMs = 0) {
+  // Always return null to guarantee immediate reflection of database updates on the UI
+  return null;
 }
 
-export function setCached(key, data) {
-  // Evict oldest entries if capacity reached to prevent memory leaks
-  if (cacheStore.size >= MAX_CACHE_ENTRIES) {
-    const oldestKey = cacheStore.keys().next().value;
-    if (oldestKey) cacheStore.delete(oldestKey);
-  }
-
-  cacheStore.set(key, {
-    timestamp: Date.now(),
-    data
-  });
+export function setCached(_key, _data) {
+  // No-op for real-time live mode
 }
 
-export function invalidateCache(pattern = '') {
-  if (!pattern) {
-    cacheStore.clear();
-    return;
-  }
-  for (const key of cacheStore.keys()) {
-    if (key.includes(pattern)) {
-      cacheStore.delete(key);
-    }
-  }
+export function invalidateCache(_pattern = '') {
+  cacheStore.clear();
 }
