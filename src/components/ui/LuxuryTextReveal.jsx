@@ -53,7 +53,7 @@ export default function LuxuryTextReveal({
       <motion.span
         initial="hidden"
         whileInView="visible"
-        viewport={{ once, margin: "-10%" }}
+        viewport={{ once, amount: 0.05 }}
         variants={containerVariants}
         className="inline-block"
       >

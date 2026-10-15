@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import SectionContent from '@/models/SectionContent';
 import { requireAdmin } from '@/lib/auth/authGuard';
+import { invalidateCache } from '@/lib/cache/apiCache';
 
 export async function GET(req, { params }) {
   try {
@@ -18,6 +19,11 @@ export async function GET(req, { params }) {
       data: record.data,
       pageKey: record.sectionKey,
       updatedAt: record.updatedAt
+    }, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate',
+        'Pragma': 'no-cache'
+      }
     });
   } catch (error) {
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
@@ -39,19 +45,29 @@ export async function PUT(req, { params }) {
     const updatedRecord = await SectionContent.findOneAndUpdate(
       { sectionKey: pageKey },
       {
-        sectionKey: pageKey,
-        title: title || pageKey,
-        data,
-        lastUpdatedBy: admin.name || 'Admin'
+        $set: {
+          sectionKey: pageKey,
+          title: title || pageKey,
+          data,
+          lastUpdatedBy: admin.name || 'Admin'
+        }
       },
       { returnDocument: 'after', upsert: true, runValidators: true }
     );
+
+    invalidateCache('cms_sections');
+    invalidateCache();
 
     return NextResponse.json({
       success: true,
       message: `Page content for '${pageKey}' updated successfully`,
       data: updatedRecord.data,
       pageKey: updatedRecord.sectionKey
+    }, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate',
+        'Pragma': 'no-cache'
+      }
     });
   } catch (error) {
     const status = error.status || 500;

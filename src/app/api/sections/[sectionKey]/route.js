@@ -19,6 +19,11 @@ export async function GET(req, { params }) {
       data: section.data,
       sectionKey: section.sectionKey,
       updatedAt: section.updatedAt
+    }, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate',
+        'Pragma': 'no-cache'
+      }
     });
   } catch (error) {
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
@@ -40,21 +45,29 @@ export async function PUT(req, { params }) {
     const updatedSection = await SectionContent.findOneAndUpdate(
       { sectionKey },
       {
-        sectionKey,
-        title: title || sectionKey,
-        data,
-        lastUpdatedBy: admin.name || 'Admin'
+        $set: {
+          sectionKey,
+          title: title || sectionKey,
+          data,
+          lastUpdatedBy: admin.name || 'Admin'
+        }
       },
       { returnDocument: 'after', upsert: true, runValidators: true }
     );
 
     invalidateCache('cms_sections');
+    invalidateCache(); // Purge all cached server sections
 
     return NextResponse.json({
       success: true,
       message: `Section '${sectionKey}' updated successfully`,
       data: updatedSection.data,
       sectionKey: updatedSection.sectionKey
+    }, {
+      headers: {
+        'Cache-Control': 'no-store, no-cache, must-revalidate',
+        'Pragma': 'no-cache'
+      }
     });
   } catch (error) {
     const status = error.status || 500;

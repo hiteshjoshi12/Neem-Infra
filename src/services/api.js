@@ -58,23 +58,27 @@ export const api = {
   getMe: () => request('/auth/me'),
 
   // Sections & Pages CMS
-  getSections: () => request('/sections'),
+  getSections: (fresh = false) =>
+    request(`/sections${fresh ? '?fresh=1' : ''}`, { cache: 'no-store' }),
 
-  getSection: (sectionKey) => request(`/sections/${sectionKey}`),
+  getSection: (sectionKey) =>
+    request(`/sections/${sectionKey}?t=${Date.now()}`, { cache: 'no-store' }),
 
   updateSection: (sectionKey, data, title) =>
     request(`/sections/${sectionKey}`, {
       method: 'PUT',
+      cache: 'no-store',
       body: JSON.stringify({ data, title })
     }),
 
-  getPages: () => request('/pages'),
+  getPages: () => request(`/pages?t=${Date.now()}`, { cache: 'no-store' }),
 
-  getPage: (pageKey) => request(`/pages/${pageKey}`),
+  getPage: (pageKey) => request(`/pages/${pageKey}?t=${Date.now()}`, { cache: 'no-store' }),
 
   updatePage: (pageKey, data, title) =>
     request(`/pages/${pageKey}`, {
       method: 'PUT',
+      cache: 'no-store',
       body: JSON.stringify({ data, title })
     }),
 

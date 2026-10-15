@@ -26,6 +26,12 @@ export default async function sitemap() {
     '/services/residential',
     '/services/commercial',
     '/services/industrial',
+    '/property/dlf-phase-1',
+    '/property/dlf-phase-2',
+    '/property/dlf-phase-3',
+    '/property/dlf-phase-4',
+    '/property/shushant-lok',
+    '/property/udyog-vihar',
   ];
 
   for (const route of staticRoutes) {

@@ -14,11 +14,12 @@ export const DEFAULT_SECTIONS = {
         label: "SERVICES",
         href: "/services/residential",
         dropdown: [
-          { label: "Residential Luxury Floors", href: "/services/residential", desc: "DLF Phase 1–5 builder floors & villas" },
-          { label: "Commercial Real Estate", href: "/services/commercial", desc: "Grade-A office suites & retail" },
-          { label: "Industrial & Logistics", href: "/services/industrial", desc: "Warehousing & strategic land parcels" },
-          { label: "Prime Properties Catalog", href: "/properties", desc: "Verified ready-to-move listings" },
-          { label: "Market Insights & Blog", href: "/blog", desc: "Gurugram market intelligence reports" },
+          { label: "Property In Dlf Phase 1", href: "/property/dlf-phase-1", desc: "DLF Phase 1 builder floors & villas" },
+          { label: "Property In Dlf Phase 2", href: "/property/dlf-phase-2", desc: "Grade-A office suites & retail" },
+          { label: "Property In Dlf Phase 3", href: "/property/dlf-phase-3", desc: "Warehousing & strategic land parcels" },
+          { label: "Property In Dlf Phase 4", href: "/property/dlf-phase-4", desc: "Verified ready-to-move listings" },
+          { label: "Property In Shushant Lok", href: "/property/shushant-lok", desc: "Gurugram market intelligence reports" },
+          { label: "Property In Udyog Vihar", href: "/property/udyog-vihar", desc: "Prime residential locality" },
         ]
       },
       { label: "FEATURED", href: "/properties" },

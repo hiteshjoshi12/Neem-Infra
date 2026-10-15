@@ -18,9 +18,28 @@ export const CmsProvider = ({ children }) => {
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const updateLocalSection = useCallback((sectionKey, data) => {
+    setSections((prev) => {
+      const updated = { ...prev, [sectionKey]: data };
+      if (typeof window !== 'undefined') {
+        try {
+          const stored = sessionStorage.getItem(CMS_STORAGE_KEY);
+          const parsed = stored ? JSON.parse(stored) : {};
+          parsed.sections = { ...(parsed.sections || {}), [sectionKey]: data };
+          parsed.timestamp = Date.now();
+          sessionStorage.setItem(CMS_STORAGE_KEY, JSON.stringify(parsed));
+        } catch (e) {}
+      }
+      return updated;
+    });
+  }, []);
+
   const fetchCmsData = useCallback(async (force = false) => {
-    // Check client sessionStorage to avoid refetching 50KB payload on every mount
-    if (!force && typeof window !== 'undefined') {
+    if (force && typeof window !== 'undefined') {
+      try {
+        sessionStorage.removeItem(CMS_STORAGE_KEY);
+      } catch (e) {}
+    } else if (!force && typeof window !== 'undefined') {
       try {
         const stored = sessionStorage.getItem(CMS_STORAGE_KEY);
         if (stored) {
@@ -40,7 +59,7 @@ export const CmsProvider = ({ children }) => {
 
     try {
       const [secResult, propResult, testResult] = await Promise.allSettled([
-        api.getSections(),
+        api.getSections(force),
         api.getProperties(),
         api.getTestimonials()
       ]);
@@ -97,7 +116,8 @@ export const CmsProvider = ({ children }) => {
         properties,
         testimonials,
         loading,
-        refetch: fetchCmsData
+        refetch: (force = true) => fetchCmsData(force),
+        updateLocalSection
       }}
     >
       {children}

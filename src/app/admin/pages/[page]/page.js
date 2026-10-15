@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, use } from 'react';
+import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import {
@@ -183,22 +184,36 @@ export default function AdminPageCMS({ params }) {
   const pageParam = unwrappedParams?.page || 'properties';
   const config = PAGE_CONFIGS[pageParam] || PAGE_CONFIGS.properties;
 
-  const { sections, refetch } = useCms();
+  const { sections, refetch, updateLocalSection } = useCms();
   const [activeSectionTab, setActiveSectionTab] = useState(config.sections[0]?.id || '');
   const [formData, setFormData] = useState({});
   const [saving, setSaving] = useState(false);
   const [statusMsg, setStatusMsg] = useState({ type: '', text: '' });
 
-  // Sync state when page changes or sections update
+  // Sync state when page changes, initializing from context/defaults and fetching live from DB
   useEffect(() => {
+    let isMounted = true;
     const pageDefault = DEFAULT_SECTIONS[config.pageKey] || {};
     const pageSaved = sections[config.pageKey] || {};
-    // Deep merge saved over default
     const merged = { ...pageDefault, ...pageSaved };
     setFormData(merged);
     setActiveSectionTab(config.sections[0]?.id || '');
     setStatusMsg({ type: '', text: '' });
-  }, [config.pageKey, sections]);
+
+    api.getPage(config.pageKey)
+      .then((res) => {
+        if (isMounted && res?.success && res.data) {
+          setFormData((prev) => ({ ...prev, ...res.data }));
+        }
+      })
+      .catch((err) => {
+        console.warn(`[Admin] Fresh fetch for page '${config.pageKey}':`, err.message);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [config.pageKey]);
 
   const updateField = (path, value) => {
     setFormData((prev) => {
@@ -221,14 +236,31 @@ export default function AdminPageCMS({ params }) {
 
     try {
       const res = await api.updatePage(config.pageKey, formData, config.title);
-      if (res.success) {
+      if (res && res.success) {
         setStatusMsg({ type: 'success', text: `Page content saved and updated live successfully!` });
-        await refetch();
+        const savedData = res.data || formData;
+        setFormData(savedData);
+        if (updateLocalSection) {
+          updateLocalSection(config.pageKey, savedData);
+        }
+        await refetch(true);
       } else {
-        setStatusMsg({ type: 'error', text: res.message || 'Failed to save changes' });
+        setStatusMsg({ type: 'error', text: res?.message || 'Failed to save changes' });
       }
     } catch (err) {
-      setStatusMsg({ type: 'error', text: err.message || 'Network error saving changes' });
+      console.error('[Admin Page Save Error]', err);
+      const isAuthError =
+        err.message?.toLowerCase().includes('authorized') ||
+        err.message?.toLowerCase().includes('token') ||
+        err.message?.toLowerCase().includes('401');
+
+      setStatusMsg({
+        type: 'error',
+        isAuth: isAuthError,
+        text: isAuthError
+          ? 'Your admin login session has expired or is unauthorized. Please log in again to save changes.'
+          : (err.message || 'Network error saving changes')
+      });
     } finally {
       setSaving(false);
     }
@@ -292,14 +324,24 @@ export default function AdminPageCMS({ params }) {
         <motion.div
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
-          className={`p-4 rounded-2xl text-xs flex items-center gap-3 ${
+          className={`p-4 rounded-2xl text-xs flex items-center justify-between gap-3 ${
             statusMsg.type === 'success'
               ? 'bg-emerald-500/15 border border-emerald-500/30 text-emerald-300'
               : 'bg-red-500/15 border border-red-500/30 text-red-300'
           }`}
         >
-          {statusMsg.type === 'success' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
-          <span>{statusMsg.text}</span>
+          <div className="flex items-center gap-2.5">
+            {statusMsg.type === 'success' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
+            <span>{statusMsg.text}</span>
+          </div>
+          {statusMsg.isAuth && (
+            <Link
+              href="/admin/login"
+              className="px-3 py-1.5 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-white font-bold text-[11px] uppercase tracking-wider transition-colors shrink-0"
+            >
+              Log In Again
+            </Link>
+          )}
         </motion.div>
       )}
 

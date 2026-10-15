@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { useSearchParams, useRouter, usePathname } from 'next/navigation';
 import { motion } from 'framer-motion';
 import {
@@ -55,27 +56,41 @@ const TABS = [
   { id: 'floatingWidgets', label: 'Floating Buttons', icon: Phone }
 ];
 
+import { DEFAULT_SECTIONS } from '@/constants/defaultSections';
+
 export default function AdminSectionsCMS() {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
   const activeTab = searchParams ? searchParams.get('tab') || 'hero' : 'hero';
 
-  const { sections, refetch } = useCms();
+  const { sections, refetch, updateLocalSection } = useCms();
   const [formData, setFormData] = useState({});
   const [saving, setSaving] = useState(false);
   const [statusMsg, setStatusMsg] = useState({ type: '', text: '' });
 
-  const [prevTabKey, setPrevTabKey] = useState(activeTab);
-  const [prevSections, setPrevSections] = useState(sections);
-
-  if (prevTabKey !== activeTab || prevSections !== sections) {
-    setPrevTabKey(activeTab);
-    setPrevSections(sections);
-    const currentData = sections[activeTab] || {};
-    setFormData(currentData);
+  // On tab change or mount, initialize from context/defaults and fetch fresh from DB
+  useEffect(() => {
+    let isMounted = true;
+    const initialData = sections[activeTab] || DEFAULT_SECTIONS[activeTab] || {};
+    setFormData(initialData);
     setStatusMsg({ type: '', text: '' });
-  }
+
+    api.getSection(activeTab)
+      .then((res) => {
+        if (isMounted && res?.success && res.data) {
+          setFormData(res.data);
+        }
+      })
+      .catch((err) => {
+        // Fallback to existing initialData if direct section fetch fails
+        console.warn(`[Admin] Fresh fetch for section '${activeTab}':`, err.message);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, [activeTab]);
 
   const handleTabChange = (tabId) => {
     const params = new URLSearchParams(searchParams?.toString() || '');
@@ -90,14 +105,38 @@ export default function AdminSectionsCMS() {
 
     try {
       const res = await api.updateSection(activeTab, formData, `${activeTab.toUpperCase()} Section`);
-      if (res.success) {
-        setStatusMsg({ type: 'success', text: `Changes saved and published successfully!` });
-        await refetch();
+      if (res && res.success) {
+        setStatusMsg({
+          type: 'success',
+          text: `Section "${activeTab}" saved and published live to database successfully!`
+        });
+
+        // Update local form and context immediately
+        const savedData = res.data || formData;
+        setFormData(savedData);
+        if (updateLocalSection) {
+          updateLocalSection(activeTab, savedData);
+        }
+
+        // Force background refetch to synchronize cache
+        await refetch(true);
       } else {
-        setStatusMsg({ type: 'error', text: res.message || 'Failed to update section' });
+        setStatusMsg({ type: 'error', text: res?.message || 'Failed to update section' });
       }
     } catch (err) {
-      setStatusMsg({ type: 'error', text: err.message || 'Error saving to backend' });
+      console.error('[Admin Save Error]', err);
+      const isAuthError =
+        err.message?.toLowerCase().includes('authorized') ||
+        err.message?.toLowerCase().includes('token') ||
+        err.message?.toLowerCase().includes('401');
+
+      setStatusMsg({
+        type: 'error',
+        isAuth: isAuthError,
+        text: isAuthError
+          ? 'Your admin login session has expired or is unauthorized. Please log in again to save changes.'
+          : (err.message || 'Error saving to database')
+      });
     } finally {
       setSaving(false);
     }
@@ -208,14 +247,24 @@ export default function AdminSectionsCMS() {
         <motion.div
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
-          className={`p-4 rounded-2xl text-xs flex items-center gap-3 ${
+          className={`p-4 rounded-2xl text-xs flex items-center justify-between gap-3 ${
             statusMsg.type === 'success'
               ? 'bg-emerald-500/15 border border-emerald-500/30 text-emerald-300'
               : 'bg-red-500/15 border border-red-500/30 text-red-300'
           }`}
         >
-          {statusMsg.type === 'success' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
-          <span>{statusMsg.text}</span>
+          <div className="flex items-center gap-2.5">
+            {statusMsg.type === 'success' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
+            <span>{statusMsg.text}</span>
+          </div>
+          {statusMsg.isAuth && (
+            <Link
+              href="/admin/login"
+              className="px-3 py-1.5 rounded-lg bg-red-500/20 hover:bg-red-500/30 text-white font-bold text-[11px] uppercase tracking-wider transition-colors shrink-0"
+            >
+              Log In Again
+            </Link>
+          )}
         </motion.div>
       )}
 

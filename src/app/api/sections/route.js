@@ -3,15 +3,21 @@ import { connectDB } from '@/lib/mongodb';
 import SectionContent from '@/models/SectionContent';
 import { getCached, setCached } from '@/lib/cache/apiCache';
 
-export async function GET() {
+export async function GET(req) {
   try {
-    const cached = getCached('cms_sections_all', 60000);
-    if (cached) {
-      return NextResponse.json(cached, {
-        headers: {
-          'Cache-Control': 'public, s-maxage=120, stale-while-revalidate=600'
-        }
-      });
+    const url = new URL(req.url);
+    const isFresh = url.searchParams.get('fresh') === '1';
+
+    if (!isFresh) {
+      const cached = getCached('cms_sections_all', 15000); // 15 sec server cache
+      if (cached) {
+        return NextResponse.json(cached, {
+          headers: {
+            'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+            'Pragma': 'no-cache'
+          }
+        });
+      }
     }
 
     await connectDB();
@@ -31,7 +37,8 @@ export async function GET() {
     setCached('cms_sections_all', responsePayload);
     return NextResponse.json(responsePayload, {
       headers: {
-        'Cache-Control': 'public, s-maxage=120, stale-while-revalidate=600'
+        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
+        'Pragma': 'no-cache'
       }
     });
   } catch (error) {
