@@ -66,7 +66,12 @@ export default function AdminInquiries() {
 
   const filteredInquiries = useMemo(() => {
     return inquiries.filter(item => {
-      const matchesType = typeFilter === 'all' || item.type === typeFilter;
+      const matchesType = 
+        typeFilter === 'all' || 
+        item.type === typeFilter ||
+        (typeFilter === 'property_inquiry' && ['property_inquiry', 'consultation', 'viewing_request', 'corridor_inquiry'].includes(item.type)) ||
+        (typeFilter === 'general_contact' && ['general_contact', 'contact_form'].includes(item.type));
+
       const q = searchTerm.toLowerCase().trim();
       if (!q) return matchesType;
 
@@ -75,7 +80,8 @@ export default function AdminInquiries() {
         (item.name && item.name.toLowerCase().includes(q)) ||
         (item.phone && item.phone.toLowerCase().includes(q)) ||
         (item.message && item.message.toLowerCase().includes(q)) ||
-        (item.propertyTitle && item.propertyTitle.toLowerCase().includes(q));
+        (item.propertyTitle && item.propertyTitle.toLowerCase().includes(q)) ||
+        (item.source && item.source.toLowerCase().includes(q));
 
       return matchesType && matchesSearch;
     });
@@ -86,7 +92,7 @@ export default function AdminInquiries() {
       all: inquiries.length,
       newsletter: inquiries.filter(i => i.type === 'newsletter').length,
       general_contact: inquiries.filter(i => i.type === 'general_contact' || i.type === 'contact_form').length,
-      property_inquiry: inquiries.filter(i => i.type === 'property_inquiry' || i.type === 'consultation').length
+      property_inquiry: inquiries.filter(i => ['property_inquiry', 'consultation', 'viewing_request', 'corridor_inquiry'].includes(i.type)).length
     };
   }, [inquiries]);
 
@@ -152,14 +158,14 @@ export default function AdminInquiries() {
             All ({counts.all})
           </button>
           <button
-            onClick={() => setTypeFilter('newsletter')}
+            onClick={() => setTypeFilter('property_inquiry')}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
-              typeFilter === 'newsletter'
+              typeFilter === 'property_inquiry'
                 ? 'bg-[#D09A16] text-[#0A0E1A] font-bold shadow-sm'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
-            Newsletter ({counts.newsletter})
+            Property & Viewing ({counts.property_inquiry})
           </button>
           <button
             onClick={() => setTypeFilter('general_contact')}
@@ -170,6 +176,16 @@ export default function AdminInquiries() {
             }`}
           >
             Direct Inquiries ({counts.general_contact})
+          </button>
+          <button
+            onClick={() => setTypeFilter('newsletter')}
+            className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+              typeFilter === 'newsletter'
+                ? 'bg-[#D09A16] text-[#0A0E1A] font-bold shadow-sm'
+                : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            Newsletter ({counts.newsletter})
           </button>
         </div>
       </div>

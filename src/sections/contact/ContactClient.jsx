@@ -99,6 +99,7 @@ export default function ContactClient() {
         email: formData.email,
         phone: formData.phone,
         message: `Purpose: ${formData.purpose}\nProperty Type: ${formData.propertyType}\nBudget: ${formData.budget}\n\nMessage:\n${formData.message}`,
+        source: 'Main Contact Page',
         type: 'general_contact'
       });
       setSubmitted(true);

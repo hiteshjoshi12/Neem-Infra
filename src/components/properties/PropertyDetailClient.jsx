@@ -28,6 +28,7 @@ export default function PropertyDetailClient({ property }) {
   const [scheduleForm, setScheduleForm] = useState({
     name: '',
     phone: '',
+    email: '',
     preferredDate: '',
     notes: ''
   });
@@ -118,7 +119,8 @@ export default function PropertyDetailClient({ property }) {
 
     try {
       const cleanPhone = scheduleForm.phone.replace(/\D/g, '');
-      const clientEmail = cleanPhone ? `${cleanPhone}@lead.saudagarproperties.com` : 'viewing.lead@saudagarproperties.com';
+      const userEnteredEmail = scheduleForm.email?.trim();
+      const clientEmail = userEnteredEmail || (cleanPhone ? `${cleanPhone}@lead.saudagarproperties.com` : 'viewing.lead@saudagarproperties.com');
 
       await api.createInquiry({
         type: 'property_inquiry',
@@ -126,6 +128,8 @@ export default function PropertyDetailClient({ property }) {
         name: scheduleForm.name,
         phone: scheduleForm.phone,
         email: clientEmail,
+        preferredDate: scheduleForm.preferredDate || 'Flexible',
+        source: `Property Detail - ${property.title}`,
         message: `[Private Viewing Request]\nProperty: ${property.title}\nLocation: ${property.location}\nValuation: ${property.price}\nPreferred Date: ${scheduleForm.preferredDate || 'Flexible'}\nNotes: ${scheduleForm.notes || 'None'}`
       });
 
@@ -133,7 +137,7 @@ export default function PropertyDetailClient({ property }) {
       setTimeout(() => {
         setIsScheduleOpen(false);
         setScheduleSent(false);
-        setScheduleForm({ name: '', phone: '', preferredDate: '', notes: '' });
+        setScheduleForm({ name: '', phone: '', email: '', preferredDate: '', notes: '' });
       }, 3000);
     } catch (err) {
       console.error('Schedule viewing submission error:', err);
@@ -582,6 +586,17 @@ export default function PropertyDetailClient({ property }) {
                       placeholder="+91 98XXX XXXXX"
                       value={scheduleForm.phone}
                       onChange={(e) => setScheduleForm({ ...scheduleForm, phone: e.target.value })}
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#E2DDD5] text-[#17213D] focus:outline-none focus:border-[#D09A16]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[#17213D] font-semibold mb-1">Email Address</label>
+                    <input
+                      type="email"
+                      placeholder="e.g. rajiv@example.com"
+                      value={scheduleForm.email}
+                      onChange={(e) => setScheduleForm({ ...scheduleForm, email: e.target.value })}
                       className="w-full px-3.5 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#E2DDD5] text-[#17213D] focus:outline-none focus:border-[#D09A16]"
                     />
                   </div>

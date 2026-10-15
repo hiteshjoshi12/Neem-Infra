@@ -91,6 +91,8 @@ export default function NewsletterSection({ isEmbedded = false }) {
       await api.createInquiry({
         email: email.trim(),
         type: "newsletter",
+        source: "Homepage Newsletter Section",
+        message: "Subscriber joined the Saudagar Properties private newsletter from the homepage."
       });
     } catch (err) {
       console.warn("Newsletter API error:", err?.message);

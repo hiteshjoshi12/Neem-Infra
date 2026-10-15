@@ -80,6 +80,8 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
         name: formData.name,
         email: formData.email,
         phone: formData.phone,
+        type: 'corridor_inquiry',
+        propertyTitle: corridor.corridorName,
         message: `[Corridor Inquiry: ${corridor.corridorName}] Requirement: ${formData.requirement} | Budget: ${formData.budget} | Note: ${formData.message}`,
         source: `Corridor Page - ${corridor.corridorName}`
       };

@@ -16,6 +16,7 @@ import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
 import PublicLayout from '@/layouts/PublicLayout';
 import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
 import BlogCatalogInteractive from '@/components/blog/BlogCatalogInteractive';
+import BlogNewsletterForm from '@/components/blog/BlogNewsletterForm';
 import { 
   getBlogPosts, 
   getCategories 
@@ -152,22 +153,11 @@ export async function generateMetadata() {
               {blogCms.newsletter?.description || "Join our private registry of high-net-worth investors, family offices, and NRI principals who receive confidential quarterly valuation reports, zoning circulars, and pre-launch opportunities across DLF Gurugram."}
             </p>
 
-            {/* Newsletter Input */}
-            <form className="flex flex-col sm:flex-row items-center gap-3 max-w-md mx-auto mb-6">
-              <input
-                type="email"
-                placeholder={blogCms.newsletter?.inputPlaceholder || "Enter your confidential email..."}
-                required
-                className="w-full px-5 py-3.5 rounded-2xl bg-white/[0.06] border border-white/15 text-white placeholder-slate-400 text-xs outline-none focus:border-[#D09A16] focus:ring-1 focus:ring-[#D09A16] shadow-sm transition-all"
-              />
-              <button
-                type="submit"
-                className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-[#D09A16] hover:bg-[#E5AC2B] text-[#0A0E17] font-bold text-xs uppercase tracking-wider transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer shrink-0"
-              >
-                <span>{blogCms.newsletter?.buttonText || "Subscribe"}</span>
-                <Send size={13} />
-              </button>
-            </form>
+            {/* Newsletter Input Component */}
+            <BlogNewsletterForm
+              placeholder={blogCms.newsletter?.inputPlaceholder}
+              buttonText={blogCms.newsletter?.buttonText}
+            />
 
             <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400 pt-4 border-t border-white/10">
               <span className="flex items-center gap-1.5">

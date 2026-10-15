@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import Inquiry from '@/models/Inquiry';
 import { requireAdmin } from '@/lib/auth/authGuard';
+import { sendInquiryNotification } from '@/lib/email/emailService';
 
 // In-memory rate limiting map for inquiry spam prevention: ip -> timestamp[]
 const inquiryRateLimits = new Map();
@@ -30,19 +31,26 @@ export async function POST(request) {
     }
 
     // 2. Strict Input Validation & Length Limits
-    const rawEmail = (body.email || '').trim().toLowerCase();
     const rawName = (body.name || '').trim().slice(0, 100);
     const rawPhone = (body.phone || '').trim().slice(0, 30);
     const rawMessage = (body.message || '').trim().slice(0, 3000);
     const rawPropertyTitle = (body.propertyTitle || '').trim().slice(0, 200);
+    const rawPreferredDate = (body.preferredDate || '').trim().slice(0, 100);
+    const rawSource = (body.source || '').trim().slice(0, 150) || 'website';
     const rawType = body.type || 'contact_form';
 
-    if (!rawEmail) {
-      return NextResponse.json({ success: false, message: 'A valid email address or phone is required' }, { status: 400 });
+    let finalEmail = (body.email || '').trim().toLowerCase();
+    if (!finalEmail && rawPhone) {
+      const cleanPhone = rawPhone.replace(/\D/g, '');
+      finalEmail = `${cleanPhone || 'inquiry'}@lead.saudagarproperties.com`;
+    }
+
+    if (!finalEmail && !rawPhone) {
+      return NextResponse.json({ success: false, message: 'Please provide either an email address or contact phone number' }, { status: 400 });
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(rawEmail)) {
+    if (finalEmail && !emailRegex.test(finalEmail)) {
       return NextResponse.json({ success: false, message: 'Please provide a valid email format' }, { status: 400 });
     }
 
@@ -50,11 +58,13 @@ export async function POST(request) {
 
     const inquiry = await Inquiry.create({
       type: rawType,
-      email: rawEmail,
+      email: finalEmail,
       name: rawName,
       phone: rawPhone,
       message: rawMessage,
       propertyTitle: rawPropertyTitle,
+      preferredDate: rawPreferredDate,
+      source: rawSource,
       status: 'new'
     });
 
@@ -62,10 +72,19 @@ export async function POST(request) {
     recentSubmissions.push(now);
     inquiryRateLimits.set(ip, recentSubmissions);
 
+    // 3. Dispatch Email Notification to Business Inbox
+    let emailStatus = null;
+    try {
+      emailStatus = await sendInquiryNotification(inquiry);
+    } catch (emailErr) {
+      console.error('[Inquiry Email Notification Failed]', emailErr);
+    }
+
     return NextResponse.json({
       success: true,
       message: 'Inquiry received successfully',
-      data: inquiry
+      data: inquiry,
+      emailDelivered: emailStatus?.delivered ?? false
     }, { status: 201 });
   } catch (error) {
     console.error('[API Error /api/inquiries]', error);
