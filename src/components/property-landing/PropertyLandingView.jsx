@@ -41,6 +41,13 @@ const fadeUpVariant = {
 
 export default function PropertyLandingView({ corridor, properties = [] }) {
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
+  const [activeImageIndex, setActiveImageIndex] = useState(0);
+  const [currentCorridorSlug, setCurrentCorridorSlug] = useState(corridor.slug);
+
+  if (currentCorridorSlug !== corridor.slug) {
+    setCurrentCorridorSlug(corridor.slug);
+    setActiveImageIndex(0);
+  }
 
   // Form State
   const [formData, setFormData] = useState({
@@ -101,6 +108,18 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
   const whyChooseSaudagar = corridor.whyChooseSaudagar || {};
   const faqs = corridor.faqs || [];
 
+  const galleryImages = (hero.galleryImages && hero.galleryImages.length > 0)
+    ? hero.galleryImages
+    : [
+        {
+          url: hero.bgImage || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85',
+          title: `${corridor.corridorName} Premium Architecture`,
+          tag: 'Featured Estate'
+        }
+      ];
+  const activeImage = galleryImages[activeImageIndex] || galleryImages[0];
+  const keyHighlights = hero.keyHighlights || [];
+
   const handleSelectTypology = (typologyTitle) => {
     setFormData((prev) => ({
       ...prev,
@@ -113,116 +132,260 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#0A0E17] text-[#F7F5EF] selection:bg-[#D09A16] selection:text-[#0A0E17]">
+    <div className="w-full min-h-screen bg-[#FAF8F5] text-[#17213D] selection:bg-[#D09A16] selection:text-[#0A0E17]">
       {/* =========================================================================
-          1. HERO MASTHEAD WITH EDITORIAL TYPOGRAPHY & ATMOSPHERIC VIGNETTE
+          1. HERO MASTHEAD: LUXURY EDITORIAL LIGHT CANVAS & PROPERTY SHOWCASE
       ========================================================================= */}
-      <section className="relative overflow-hidden pt-32 sm:pt-36 pb-20 md:pb-24 border-b border-white/10">
-        {/* Background Image with Cinematic Gradient */}
-        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-60">
-          <Image
-            src={hero.bgImage || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80'}
-            alt={`${corridor.corridorName} Real Estate`}
-            fill
-            sizes="100vw"
-            priority
-            className="object-cover object-center brightness-[0.75] contrast-[1.15]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0A0E17]/90 via-[#0A0E17]/65 to-[#0A0E17]" />
-        </div>
-
-        {/* Ambient Golden Radial Glow */}
+      <section className="relative overflow-hidden pt-28 sm:pt-32 pb-16 lg:pb-20 bg-[#FAF8F5] text-[#17213D] border-b border-[#E8E2D9]">
+        {/* Subtle Architectural Grid Pattern */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[450px] rounded-full"
-          style={{ background: 'radial-gradient(ellipse at center, rgba(208,154,22,0.16) 0%, rgba(208,154,22,0) 70%)' }}
+          className="pointer-events-none absolute inset-0 opacity-[0.035] bg-[linear-gradient(#17213D_1px,transparent_1px),linear-gradient(90deg,#17213D_1px,transparent_1px)] [background-size:40px_40px]"
+        />
+
+        {/* Radiant Warm Gold Ambient Radial Glow */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute top-10 right-1/4 w-[600px] h-[400px] rounded-full"
+          style={{
+            background: 'radial-gradient(circle, rgba(208,154,22,0.08) 0%, rgba(208,154,22,0) 70%)'
+          }}
         />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb Navigation */}
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-6">
+          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-500 mb-6">
             <Link href="/" className="hover:text-[#D09A16] transition-colors">Home</Link>
-            <span className="text-slate-600">/</span>
+            <span className="text-slate-300">/</span>
             <Link href="/properties" className="hover:text-[#D09A16] transition-colors">Properties</Link>
-            <span className="text-slate-600">/</span>
-            <span className="text-[#D09A16] flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16] shadow-[0_0_8px_#D09A16] animate-pulse" />
+            <span className="text-slate-300">/</span>
+            <span className="text-[#B48216] font-bold flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16] shadow-[0_0_6px_#D09A16]" />
               <span>{corridor.corridorName}</span>
             </span>
-          </div>
+          </nav>
 
-          <div className="max-w-4xl">
-            {/* Eyebrow Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/[0.06] border border-[#D09A16]/40 text-[#D09A16] text-[11px] font-bold uppercase tracking-[0.22em] mb-4 backdrop-blur-md shadow-sm">
-              <Sparkles size={12} className="text-[#D09A16]" />
-              <span>{hero.badge}</span>
-            </div>
-
-            {/* Master Animated Headline with Masked Luxury Sliding Animation */}
-            <LuxuryTextReveal
-              as="h1"
-              text={hero.titleMain}
-              highlightText={hero.titleHighlight}
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white tracking-tight leading-[1.12] mb-6"
-              delay={0.05}
-            />
-
-            {/* Supporting Editorial Paragraph */}
-            <p className="text-sm sm:text-base md:text-lg text-slate-200 font-sans leading-relaxed max-w-3xl mb-8">
-              {hero.subtitle}
-            </p>
-
-            {/* Action Bar */}
-            <div className="flex flex-wrap items-center gap-4">
-              <a
-                href={`tel:${hero.directPhone?.replace(/[\s-]/g, '') || '+919811221207'}`}
-                className="px-6 py-3.5 rounded-xl bg-[#D09A16] hover:bg-[#E5AC2B] text-[#0A0E17] font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg active:scale-95 cursor-pointer"
-              >
-                <Phone size={15} />
-                <span>Call Direct: {hero.directPhone || '+91 98112 21207'}</span>
-              </a>
-
-              <a
-                href={quickCallout.whatsappUrl || `https://wa.me/${hero.whatsappNumber || '919718511207'}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-6 py-3.5 rounded-xl bg-white/[0.08] hover:bg-white/[0.15] border border-white/20 text-white font-semibold text-xs uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer backdrop-blur-md"
-              >
-                <WhatsAppIcon size={16} />
-                <span>WhatsApp Advisory</span>
-              </a>
-
-              <a
-                href="#inquiry-form"
-                className="px-6 py-3.5 rounded-xl bg-transparent hover:bg-white/[0.04] text-slate-300 hover:text-white font-medium text-xs uppercase tracking-wider flex items-center gap-1.5 transition-colors"
-              >
-                <span>Request Site Visit</span>
-                <ArrowRight size={13} className="text-[#D09A16]" />
-              </a>
-            </div>
-          </div>
-
-          {/* 4 Key Metrics Bar */}
-          {metrics.length > 0 && (
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-14 pt-8 border-t border-white/10">
-              {metrics.map((m, idx) => (
-                <div
-                  key={idx}
-                  className="p-4 rounded-2xl bg-white/[0.04] border border-white/10 backdrop-blur-md hover:border-[#D09A16]/40 transition-colors group"
-                >
-                  <span className="text-xl sm:text-2xl font-serif font-bold text-[#D09A16] block leading-none mb-1 group-hover:scale-105 transition-transform origin-left">
-                    {m.value}
-                  </span>
-                  <span className="text-[11px] font-bold uppercase tracking-wider text-white block">
-                    {m.label}
-                  </span>
-                  <span className="text-[11px] text-slate-400 font-sans block mt-0.5">
-                    {m.desc}
-                  </span>
+          {/* Hero 2-Column Split Layout */}
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
+            {/* Left Editorial Narrative Column (7 cols) */}
+            <div className="lg:col-span-7 space-y-6">
+              {/* Eyebrow Pill + Starting Price Badge */}
+              <div className="flex flex-wrap items-center gap-2.5">
+                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[#9E6E00] text-[11px] font-bold uppercase tracking-[0.2em] shadow-xs">
+                  <Sparkles size={12} className="text-[#D09A16]" />
+                  <span>{hero.badge}</span>
                 </div>
-              ))}
+
+                {hero.priceStarting && (
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white border border-[#E5DFD5] text-[#17213D] text-[11px] font-bold shadow-xs">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                    <span className="text-slate-500 font-medium">Starting at:</span>
+                    <span className="text-[#B48216]">{hero.priceStarting}</span>
+                  </div>
+                )}
+              </div>
+
+              {/* Master Headline with Luxury Reveal */}
+              <LuxuryTextReveal
+                as="h1"
+                text={hero.titleMain}
+                highlightText={hero.titleHighlight}
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-[3.25rem] font-serif font-bold text-[#111827] tracking-tight leading-[1.14]"
+                delay={0.05}
+              />
+
+              {/* Supporting Editorial Paragraph */}
+              <p className="text-sm sm:text-base md:text-[1.06rem] text-slate-600 font-sans leading-relaxed max-w-2xl">
+                {hero.subtitle}
+              </p>
+
+              {/* Key Micro-Market Feature Chips (Horizontal, Modern, Replaces clunky 4 cards) */}
+              {keyHighlights.length > 0 && (
+                <div className="flex flex-wrap items-center gap-2 pt-1">
+                  {keyHighlights.map((highlight, hIdx) => (
+                    <div
+                      key={hIdx}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/90 border border-[#E2DBD0] text-[#1E293B] text-xs font-semibold shadow-xs hover:border-[#D09A16]/60 transition-colors"
+                    >
+                      <CheckCircle2 size={13} className="text-[#D09A16] shrink-0" />
+                      <span>{highlight}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Action Buttons Bar */}
+              <div className="flex flex-wrap items-center gap-3.5 pt-2">
+                <a
+                  href={`tel:${hero.directPhone?.replace(/[\s-]/g, '') || '+919811221207'}`}
+                  className="px-6 py-3.5 rounded-xl bg-[#17213D] hover:bg-[#223055] text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-md active:scale-95 cursor-pointer hover:shadow-lg"
+                >
+                  <Phone size={14} className="text-[#D09A16]" />
+                  <span>Call Direct: {hero.directPhone || '+91 98112 21207'}</span>
+                </a>
+
+                <a
+                  href={quickCallout.whatsappUrl || `https://wa.me/${hero.whatsappNumber || '919718511207'}?text=Hello%20Saudagar%20Properties%2C%20I%20am%20interested%20in%20${encodeURIComponent(corridor.corridorName)}.`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-6 py-3.5 rounded-xl bg-[#25D366]/10 hover:bg-[#25D366] text-[#0A5C28] hover:text-white border border-[#25D366]/35 font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer shadow-xs active:scale-95"
+                >
+                  <WhatsAppIcon size={16} />
+                  <span>WhatsApp Advisory</span>
+                </a>
+
+                <a
+                  href="#inquiry-form"
+                  className="px-5 py-3.5 rounded-xl bg-white hover:bg-slate-50 border border-slate-300 text-slate-700 hover:text-slate-900 font-semibold text-xs uppercase tracking-wider flex items-center gap-1.5 transition-colors shadow-xs"
+                >
+                  <span>Schedule Visit</span>
+                  <ArrowRight size={13} className="text-[#D09A16]" />
+                </a>
+              </div>
+
+              {/* Micro Trust Credentials Line */}
+              <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-slate-500 font-medium">
+                <span className="flex items-center gap-1.5">
+                  <ShieldCheck size={14} className="text-[#D09A16]" />
+                  <span>25+ Years Authority</span>
+                </span>
+                <span className="text-slate-300">•</span>
+                <span className="flex items-center gap-1.5">
+                  <Award size={14} className="text-[#D09A16]" />
+                  <span>100% Freehold Title Vetted</span>
+                </span>
+                <span className="text-slate-300">•</span>
+                <span className="flex items-center gap-1.5">
+                  <Building2 size={14} className="text-[#D09A16]" />
+                  <span>Direct Seller Mandates</span>
+                </span>
+              </div>
             </div>
-          )}
+
+            {/* Right Gallery Showcase Column (5 cols) */}
+            <div className="lg:col-span-5">
+              <div className="relative">
+                {/* Ambient Behind-Glow */}
+                <div
+                  aria-hidden="true"
+                  className="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-[#D09A16]/20 to-transparent blur-xl opacity-60 pointer-events-none"
+                />
+
+                {/* Main Stage Image Card */}
+                <div className="relative rounded-3xl overflow-hidden bg-slate-900 border-2 border-white shadow-[0_20px_50px_rgba(23,33,61,0.18)]">
+                  {/* Photo Display with Framer Motion AnimatePresence */}
+                  <div className="relative h-[360px] sm:h-[420px] w-full overflow-hidden bg-slate-100">
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={activeImageIndex}
+                        initial={{ opacity: 0, scale: 1.04 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.45, ease: 'easeOut' }}
+                        className="absolute inset-0"
+                      >
+                        <Image
+                          src={activeImage.url}
+                          alt={`${corridor.corridorName} - ${activeImage.title}`}
+                          fill
+                          sizes="(max-width: 1024px) 100vw, 45vw"
+                          priority
+                          className="object-cover object-center"
+                        />
+                        {/* Subtle bottom vignette to ensure caption readability */}
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                      </motion.div>
+                    </AnimatePresence>
+
+                    {/* Top Badge: Floating Pill */}
+                    <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
+                      <span className="px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-[11px] font-bold text-[#17213D] shadow-md border border-white/60 flex items-center gap-1.5">
+                        <Sparkles size={12} className="text-[#D09A16]" />
+                        <span>{activeImage.tag || 'Verified Architecture'}</span>
+                      </span>
+                    </div>
+
+                    {/* Top-Right Badge: Corridor Tag */}
+                    <div className="absolute top-4 right-4 z-10">
+                      <span className="px-3 py-1 rounded-full bg-black/60 backdrop-blur-md text-[10px] font-bold text-white tracking-wider uppercase border border-white/20">
+                        {corridor.corridorName}
+                      </span>
+                    </div>
+
+                    {/* Bottom Overlay Card */}
+                    <div className="absolute bottom-3 left-3 right-3 z-10 p-3.5 rounded-2xl bg-white/95 backdrop-blur-md border border-white/90 shadow-lg flex items-center justify-between gap-3">
+                      <div className="min-w-0">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#B48216] block">
+                          Featured Property View • 0{activeImageIndex + 1}/0{galleryImages.length}
+                        </span>
+                        <h4 className="text-sm font-serif font-bold text-[#17213D] truncate">
+                          {activeImage.title}
+                        </h4>
+                      </div>
+
+                      {hero.priceStarting && (
+                        <div className="shrink-0 text-right">
+                          <span className="text-[10px] uppercase tracking-wider text-slate-400 block font-semibold">
+                            Guideline
+                          </span>
+                          <span className="text-xs font-serif font-bold text-[#B48216]">
+                            {hero.priceStarting}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Interactive Thumbnail Gallery Strip (3 Perspectives) */}
+                  {galleryImages.length > 1 && (
+                    <div className="p-3 bg-white border-t border-slate-100 flex items-center gap-2.5 overflow-x-auto">
+                      {galleryImages.map((img, idx) => (
+                        <button
+                          key={idx}
+                          type="button"
+                          onClick={() => setActiveImageIndex(idx)}
+                          className={`group relative flex-1 min-w-[90px] h-16 rounded-xl overflow-hidden border-2 transition-all cursor-pointer text-left ${
+                            activeImageIndex === idx
+                              ? 'border-[#D09A16] shadow-sm ring-2 ring-[#D09A16]/20 scale-[1.02]'
+                              : 'border-transparent opacity-70 hover:opacity-100'
+                          }`}
+                        >
+                          <Image
+                            src={img.url}
+                            alt={img.title}
+                            fill
+                            sizes="100px"
+                            className="object-cover object-center"
+                          />
+                          <div className="absolute inset-0 bg-black/35 group-hover:bg-black/10 transition-colors" />
+                          <div className="absolute bottom-1 left-1.5 right-1.5">
+                            <span className="text-[9px] font-bold text-white uppercase tracking-wider drop-shadow-sm truncate block">
+                              {img.tag || `View 0${idx + 1}`}
+                            </span>
+                          </div>
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Micro-Market Intelligence Strip */}
+          <div className="mt-12 pt-6 border-t border-[#E8E2D9] flex flex-wrap items-center justify-between gap-4 text-xs">
+            <div className="flex items-center gap-2 text-slate-500 font-semibold uppercase tracking-wider text-[11px]">
+              <Navigation size={13} className="text-[#D09A16]" />
+              <span>{corridor.corridorName} Micro-Market Intelligence</span>
+            </div>
+            <div className="hidden sm:flex items-center gap-5 text-slate-500 text-[11px] font-medium">
+              <span>✦ Direct Builder &amp; Resale Mandates</span>
+              <span className="text-slate-300">•</span>
+              <span>✦ Real-Time On-Ground Inventory</span>
+              <span className="text-slate-300">•</span>
+              <span>✦ Zero Conflict of Interest</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -319,42 +482,42 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
       </section>
 
       {/* =========================================================================
-          3. STRATEGIC URBAN EQUILIBRIUM & CAPITAL APPRECIATION
+          3. STRATEGIC URBAN EQUILIBRIUM & CAPITAL APPRECIATION (LIGHT)
       ========================================================================= */}
-      <section className="py-20 bg-[#0A0E17] text-white border-b border-white/10 relative overflow-hidden">
+      <section className="py-20 bg-white text-[#17213D] border-b border-[#E8E2D9] relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
             {/* Left Narrative */}
             <div className="lg:col-span-7 space-y-4">
-              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#D09A16] block">
+              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#B48216] block">
                 {locationSection.tag || 'Strategic Urban Balance'}
               </span>
 
               <LuxuryTextReveal
                 as="h2"
                 text={locationSection.title}
-                className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white tracking-tight leading-snug"
+                className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#111827] tracking-tight leading-snug"
                 delay={0.08}
               />
 
-              <div className="text-sm font-serif italic text-[#D09A16]">
+              <div className="text-sm font-serif italic text-[#B48216]">
                 {locationSection.subtitle}
               </div>
 
-              <div className="text-xs sm:text-sm text-slate-300 font-sans leading-relaxed whitespace-pre-line pt-2">
+              <div className="text-xs sm:text-sm text-slate-600 font-sans leading-relaxed whitespace-pre-line pt-2">
                 {locationSection.description}
               </div>
 
               <div className="flex flex-wrap items-center gap-3 pt-4">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-slate-300">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD5] text-xs text-slate-700 font-medium shadow-xs">
                   <CheckCircle2 size={13} className="text-[#D09A16]" />
                   <span>MG Road &amp; Cyber City Access</span>
                 </div>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-slate-300">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD5] text-xs text-slate-700 font-medium shadow-xs">
                   <CheckCircle2 size={13} className="text-[#D09A16]" />
                   <span>Aravalli Green Canopy</span>
                 </div>
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white/[0.04] border border-white/10 text-xs text-slate-300">
+                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD5] text-xs text-slate-700 font-medium shadow-xs">
                   <CheckCircle2 size={13} className="text-[#D09A16]" />
                   <span>100% Freehold Mutation</span>
                 </div>
@@ -363,7 +526,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
 
             {/* Right Quick Callout Banner */}
             <div className="lg:col-span-5">
-              <div className="relative rounded-3xl bg-gradient-to-b from-[#141E36] to-[#0E162B] border border-[#D09A16]/40 p-7 sm:p-8 backdrop-blur-xl shadow-2xl space-y-5">
+              <div className="relative rounded-3xl bg-gradient-to-b from-[#141E36] to-[#0E162B] border border-[#D09A16]/40 p-7 sm:p-8 backdrop-blur-xl shadow-2xl space-y-5 text-white">
                 <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D09A16]/20 text-[#D09A16] text-[10px] font-bold uppercase tracking-wider">
                   <ShieldCheck size={12} />
                   <span>{quickCallout.badge || 'Advisory Desk'}</span>
@@ -465,29 +628,29 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
       </section>
 
       {/* =========================================================================
-          5. NEAREST PLACES & COMMUTE RADAR
+          5. NEAREST PLACES & COMMUTE RADAR (LIGHT)
       ========================================================================= */}
-      <section className="py-20 bg-[#0A0E17] text-white border-b border-white/10 relative overflow-hidden">
+      <section className="py-20 bg-[#FAF8F5] text-[#17213D] border-b border-[#E8E2D9] relative overflow-hidden">
         <div
           aria-hidden="true"
           className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[500px] h-[300px] rounded-full pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse at center, rgba(208, 154, 22, 0.12) 0%, rgba(208, 154, 22, 0) 70%)' }}
+          style={{ background: 'radial-gradient(ellipse at center, rgba(208, 154, 22, 0.08) 0%, rgba(208, 154, 22, 0) 70%)' }}
         />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl mb-12">
-            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#D09A16] block mb-2">
+            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#B48216] block mb-2">
               {nearestPlaces.badge || 'Transit Times'}
             </span>
 
             <LuxuryTextReveal
               as="h2"
               text={nearestPlaces.title}
-              className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white"
+              className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#111827]"
               delay={0.08}
             />
 
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mt-2">
+            <p className="text-xs sm:text-sm text-slate-600 leading-relaxed mt-2 font-sans">
               {nearestPlaces.subtitle}
             </p>
           </div>
@@ -502,26 +665,26 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                 custom={idx}
                 variants={fadeUpVariant}
                 whileHover={{ y: -5 }}
-                className="group p-6 rounded-2xl bg-[#141E36]/90 border border-white/10 backdrop-blur-md hover:border-[#D09A16]/50 transition-all flex flex-col justify-between shadow-[0_4px_20px_rgba(0,0,0,0.3)]"
+                className="group p-6 rounded-2xl bg-white border border-[#E5DFD5] hover:border-[#D09A16]/60 transition-all flex flex-col justify-between shadow-[0_4px_20px_rgba(23,33,61,0.06)] hover:shadow-[0_12px_30px_rgba(208,154,22,0.12)]"
               >
                 <div>
                   <div className="flex items-center justify-between gap-2 mb-3">
-                    <span className="px-2.5 py-1 rounded-full bg-[#D09A16]/15 border border-[#D09A16]/30 text-[10px] font-bold uppercase tracking-wider text-[#D09A16]">
+                    <span className="px-2.5 py-1 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/25 text-[10px] font-bold uppercase tracking-wider text-[#9E6E00]">
                       {place.category}
                     </span>
-                    <span className="text-xs font-semibold text-emerald-400 flex items-center gap-1">
+                    <span className="text-xs font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full flex items-center gap-1 border border-emerald-200">
                       <Clock size={12} />
                       <span>{place.time}</span>
                     </span>
                   </div>
 
-                  <h3 className="font-serif font-bold text-lg text-white mb-1 group-hover:text-[#D09A16] transition-colors">
+                  <h3 className="font-serif font-bold text-lg text-[#111827] mb-1 group-hover:text-[#B48216] transition-colors">
                     {place.name}
                   </h3>
-                  <div className="text-xs text-[#D09A16] font-medium mb-3">
+                  <div className="text-xs text-[#B48216] font-semibold mb-3">
                     {place.distance}
                   </div>
-                  <p className="text-xs text-slate-300 leading-relaxed font-sans">
+                  <p className="text-xs text-slate-600 leading-relaxed font-sans">
                     {place.desc}
                   </p>
                 </div>
@@ -605,26 +768,26 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
       </section>
 
       {/* =========================================================================
-          7. CURATED VERIFIED INVENTORY FOR THIS CORRIDOR
+          7. CURATED VERIFIED INVENTORY FOR THIS CORRIDOR (LIGHT)
       ========================================================================= */}
       {properties.length > 0 && (
-        <section className="py-20 bg-[#0A0E17] text-white border-b border-white/10">
+        <section className="py-20 bg-white text-[#17213D] border-b border-[#E8E2D9]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
               <div>
-                <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#D09A16] block mb-2">
+                <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#B48216] block mb-2">
                   Verified Real Estate
                 </span>
                 <LuxuryTextReveal
                   as="h2"
                   text={`Available Properties in ${corridor.corridorName}`}
-                  className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white"
+                  className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#111827]"
                   delay={0.08}
                 />
               </div>
               <Link
                 href={`/properties?location=${corridor.slug}`}
-                className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#D09A16] hover:underline"
+                className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#B48216] hover:text-[#9E6E00] hover:underline"
               >
                 <span>View Full Catalog</span>
                 <ArrowRight size={14} />
@@ -642,10 +805,10 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                     viewport={{ once: true }}
                     custom={idx}
                     variants={fadeUpVariant}
-                    className="rounded-3xl bg-white/[0.04] border border-white/10 hover:border-[#D09A16]/50 overflow-hidden transition-all duration-300 flex flex-col justify-between"
+                    className="rounded-3xl bg-[#FAF8F5] border border-[#E5DFD5] hover:border-[#D09A16]/60 shadow-[0_4px_20px_rgba(23,33,61,0.06)] hover:shadow-[0_12px_35px_rgba(208,154,22,0.12)] overflow-hidden transition-all duration-300 flex flex-col justify-between"
                   >
                     <div>
-                      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-900">
+                      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
                         <Image
                           src={p.img || (p.images && p.images[0]) || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80'}
                           alt={p.title}
@@ -659,22 +822,22 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                       </div>
 
                       <div className="p-6">
-                        <div className="text-xl font-serif font-bold text-[#D09A16] mb-2">
+                        <div className="text-xl font-serif font-bold text-[#B48216] mb-2">
                           {p.price}
                         </div>
-                        <h3 className="font-serif font-bold text-base text-white hover:text-[#D09A16] transition-colors line-clamp-1 mb-2">
+                        <h3 className="font-serif font-bold text-base text-[#111827] hover:text-[#B48216] transition-colors line-clamp-1 mb-2">
                           <Link href={detailUrl}>{p.title}</Link>
                         </h3>
-                        <p className="text-xs text-slate-300 line-clamp-2 leading-relaxed mb-4">
+                        <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed mb-4">
                           {p.desc}
                         </p>
                       </div>
                     </div>
 
-                    <div className="p-6 pt-0 flex items-center justify-between gap-3 border-t border-white/10">
+                    <div className="p-6 pt-0 flex items-center justify-between gap-3 border-t border-[#E5DFD5]">
                       <Link
                         href={detailUrl}
-                        className="flex-1 py-2.5 px-3 rounded-xl bg-white/10 hover:bg-[#D09A16] hover:text-[#0A0E17] text-white text-xs font-bold uppercase tracking-wider text-center transition-all"
+                        className="flex-1 py-2.5 px-3 rounded-xl bg-[#17213D] hover:bg-[#23335D] text-white text-xs font-bold uppercase tracking-wider text-center transition-all shadow-xs"
                       >
                         Details
                       </Link>
@@ -682,7 +845,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                         href={`https://wa.me/919718511207?text=Hello%20Saudagar%20Properties%2C%20I%20am%20interested%20in%20${encodeURIComponent(p.title)}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="p-2.5 rounded-xl bg-white/10 hover:bg-[#25D366] text-white transition-all cursor-pointer"
+                        className="p-2.5 rounded-xl bg-emerald-50 hover:bg-[#25D366] text-[#0A5C28] hover:text-white border border-emerald-200 transition-all cursor-pointer shadow-xs"
                         title="WhatsApp"
                       >
                         <WhatsAppIcon size={16} />
@@ -834,24 +997,24 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
       </section>
 
       {/* =========================================================================
-          9. FREQUENTLY ASKED QUESTIONS (INTERACTIVE LUXURY ACCORDION)
+          9. FREQUENTLY ASKED QUESTIONS (LIGHT ACCORDION)
       ========================================================================= */}
       {faqs.length > 0 && (
-        <section className="py-20 bg-[#0A0E17] text-white relative">
+        <section className="py-20 bg-[#FAF8F5] text-[#17213D] relative border-b border-[#E8E2D9]">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-14">
-              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#D09A16] block mb-2">
+              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#B48216] block mb-2">
                 Expert Guidance &amp; Insights
               </span>
 
               <LuxuryTextReveal
                 as="h2"
                 text="Frequently Asked Questions"
-                className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white"
+                className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#111827]"
                 delay={0.08}
               />
 
-              <p className="text-xs sm:text-sm text-slate-300 mt-2 font-sans">
+              <p className="text-xs sm:text-sm text-slate-600 mt-2 font-sans">
                 Key questions answered regarding acquisitions, pricing benchmarks, and zoning in {corridor.corridorName}.
               </p>
             </div>
@@ -862,19 +1025,23 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                 return (
                   <div
                     key={idx}
-                    className="rounded-2xl bg-[#141E36]/90 border border-white/10 hover:border-[#D09A16]/40 transition-colors overflow-hidden shadow-[0_4px_20px_rgba(0,0,0,0.3)]"
+                    className={`rounded-2xl border transition-all overflow-hidden ${
+                      isOpen
+                        ? 'bg-white border-[#D09A16]/50 shadow-md ring-1 ring-[#D09A16]/15'
+                        : 'bg-white border-[#E5DFD5] hover:border-[#D09A16]/40 shadow-xs'
+                    }`}
                   >
                     <button
                       type="button"
                       onClick={() => toggleFaq(idx)}
                       className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer select-none"
                     >
-                      <span className="font-serif font-bold text-base sm:text-lg text-white">
+                      <span className="font-serif font-bold text-base sm:text-lg text-[#111827]">
                         {faq.question}
                       </span>
                       <ChevronDown
                         size={18}
-                        className={`text-[#D09A16] transition-transform duration-300 shrink-0 ${
+                        className={`text-[#B48216] transition-transform duration-300 shrink-0 ${
                           isOpen ? 'rotate-180' : ''
                         }`}
                       />
@@ -889,7 +1056,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                           transition={{ duration: 0.35, ease: 'easeOut' }}
                           className="overflow-hidden"
                         >
-                          <div className="px-5 sm:px-6 pb-6 pt-1 text-xs sm:text-sm text-slate-300 font-sans leading-relaxed border-t border-white/5">
+                          <div className="px-5 sm:px-6 pb-6 pt-1 text-xs sm:text-sm text-slate-600 font-sans leading-relaxed border-t border-slate-100">
                             {faq.answer}
                           </div>
                         </motion.div>

@@ -5,14 +5,17 @@ import Category from '@/models/Category';
 import Tag from '@/models/Tag';
 import PropertyType from '@/models/PropertyType';
 
+import Location from '@/models/Location';
+
 export async function GET(req) {
   try {
     await connectDB();
     
-    const [authors, categories, tags, propertyTypes] = await Promise.all([
+    const [authors, categories, tags, locations, propertyTypes] = await Promise.all([
       Author.find().sort({ name: 1 }),
       Category.find().sort({ name: 1 }),
       Tag.find().sort({ name: 1 }),
+      Location.find().sort({ name: 1 }),
       PropertyType.find().sort({ name: 1 })
     ]);
 
@@ -22,7 +25,7 @@ export async function GET(req) {
         authors,
         categories,
         tags,
-        locations: [],
+        locations,
         propertyTypes
       }
     });

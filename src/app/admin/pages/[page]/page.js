@@ -179,26 +179,34 @@ function TextAreaField({ label, description, value, onChange, rows = 3, placehol
   );
 }
 
-export default function AdminPageCMS({ params }) {
-  const unwrappedParams = params ? (params.page ? params : use(params)) : useParams();
-  const pageParam = unwrappedParams?.page || 'properties';
+export default function AdminPageCMS() {
+  const routerParams = useParams();
+  const pageParam = routerParams?.page || 'properties';
   const config = PAGE_CONFIGS[pageParam] || PAGE_CONFIGS.properties;
 
   const { sections, refetch, updateLocalSection } = useCms();
+  const [currentPageKey, setCurrentPageKey] = useState(config.pageKey);
   const [activeSectionTab, setActiveSectionTab] = useState(config.sections[0]?.id || '');
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState(() => ({
+    ...(DEFAULT_SECTIONS[config.pageKey] || {}),
+    ...(sections[config.pageKey] || {})
+  }));
   const [saving, setSaving] = useState(false);
   const [statusMsg, setStatusMsg] = useState({ type: '', text: '' });
 
-  // Sync state when page changes, initializing from context/defaults and fetching live from DB
-  useEffect(() => {
-    let isMounted = true;
+  // Sync state when page changes (official React pattern for adjusting state from props/params)
+  if (currentPageKey !== config.pageKey) {
+    setCurrentPageKey(config.pageKey);
     const pageDefault = DEFAULT_SECTIONS[config.pageKey] || {};
     const pageSaved = sections[config.pageKey] || {};
-    const merged = { ...pageDefault, ...pageSaved };
-    setFormData(merged);
+    setFormData({ ...pageDefault, ...pageSaved });
     setActiveSectionTab(config.sections[0]?.id || '');
     setStatusMsg({ type: '', text: '' });
+  }
+
+  // Fetch fresh page data from database asynchronously
+  useEffect(() => {
+    let isMounted = true;
 
     api.getPage(config.pageKey)
       .then((res) => {

@@ -65,16 +65,21 @@ export default function AdminSectionsCMS() {
   const activeTab = searchParams ? searchParams.get('tab') || 'hero' : 'hero';
 
   const { sections, refetch, updateLocalSection } = useCms();
-  const [formData, setFormData] = useState({});
+  const [currentTab, setCurrentTab] = useState(activeTab);
+  const [formData, setFormData] = useState(() => sections[activeTab] || DEFAULT_SECTIONS[activeTab] || {});
   const [saving, setSaving] = useState(false);
   const [statusMsg, setStatusMsg] = useState({ type: '', text: '' });
 
-  // On tab change or mount, initialize from context/defaults and fetch fresh from DB
+  // Sync state when active tab changes (official React pattern for adjusting state from props/URL)
+  if (currentTab !== activeTab) {
+    setCurrentTab(activeTab);
+    setFormData(sections[activeTab] || DEFAULT_SECTIONS[activeTab] || {});
+    setStatusMsg({ type: '', text: '' });
+  }
+
+  // Fetch fresh section data from database asynchronously
   useEffect(() => {
     let isMounted = true;
-    const initialData = sections[activeTab] || DEFAULT_SECTIONS[activeTab] || {};
-    setFormData(initialData);
-    setStatusMsg({ type: '', text: '' });
 
     api.getSection(activeTab)
       .then((res) => {
@@ -83,7 +88,6 @@ export default function AdminSectionsCMS() {
         }
       })
       .catch((err) => {
-        // Fallback to existing initialData if direct section fetch fails
         console.warn(`[Admin] Fresh fetch for section '${activeTab}':`, err.message);
       });
 

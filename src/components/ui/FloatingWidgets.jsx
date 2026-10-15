@@ -25,28 +25,10 @@ export default function FloatingWidgets() {
   const whatsappUrlLink = `https://wa.me/${whatsappNumber.replace(/\D/g, '')}?text=${encodeURIComponent(whatsappPrefill)}`;
   const gmapsUrl = locData.gmapsUrl || "https://www.google.com/maps/place/Saudagar+Properties+Pvt.Ltd/@28.4847851,77.0842655,17z";
 
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": botKnowledgeBase.map(faq => ({
-      "@type": "Question",
-      "name": faq.q,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.a
-      }
-    }))
-  };
-
   const [showLeftWidgets, setShowLeftWidgets] = useState(false);
 
   return (
     <>
-      {/* INJECT KNOWLEDGE BASE AS SCHEMA FOR SEO/AEO/GEO */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
 
       {/* LEFT SIDE WIDGETS (Expandable FAB) */}
       <aside aria-label="Contact Links" className="fixed bottom-6 left-4 sm:left-6 z-[60] flex flex-col items-start gap-3 pointer-events-none">

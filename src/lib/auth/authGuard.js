@@ -16,9 +16,16 @@ export async function requireAdmin(req) {
   }
 
   const token = authHeader.split(' ')[1];
+  const jwtSecret = process.env.JWT_SECRET;
+  if (!jwtSecret && process.env.NODE_ENV === 'production') {
+    const error = new Error('Server configuration error: JWT_SECRET is not set');
+    error.status = 500;
+    throw error;
+  }
+
   let decoded;
   try {
-    decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret123');
+    decoded = jwt.verify(token, jwtSecret || 'secret123');
   } catch (err) {
     const error = new Error('Not authorized, token signature invalid or expired');
     error.status = 401;

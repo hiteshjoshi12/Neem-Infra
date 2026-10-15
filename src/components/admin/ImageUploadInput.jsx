@@ -40,8 +40,11 @@ export default function ImageUploadInput({
       formData.append('file', file);
       formData.append('folder', folder);
 
+      const token = typeof window !== 'undefined' ? localStorage.getItem('saudagar_admin_token') : null;
+
       const res = await fetch('/api/upload', {
         method: 'POST',
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
         body: formData
       });
 

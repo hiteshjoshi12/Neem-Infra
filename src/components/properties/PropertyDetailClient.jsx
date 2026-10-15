@@ -16,12 +16,15 @@ import {
   X
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
+import api from '@/services/api';
 
 export default function PropertyDetailClient({ property }) {
   const [activeImageIdx, setActiveImageIdx] = useState(0);
   const [copied, setCopied] = useState(false);
   const [isScheduleOpen, setIsScheduleOpen] = useState(false);
   const [scheduleSent, setScheduleSent] = useState(false);
+  const [scheduleLoading, setScheduleLoading] = useState(false);
+  const [scheduleError, setScheduleError] = useState('');
   const [scheduleForm, setScheduleForm] = useState({
     name: '',
     phone: '',
@@ -108,14 +111,36 @@ export default function PropertyDetailClient({ property }) {
     }
   };
 
-  const handleScheduleSubmit = (e) => {
+  const handleScheduleSubmit = async (e) => {
     e.preventDefault();
-    setScheduleSent(true);
-    setTimeout(() => {
-      setIsScheduleOpen(false);
-      setScheduleSent(false);
-      setScheduleForm({ name: '', phone: '', preferredDate: '', notes: '' });
-    }, 2500);
+    setScheduleLoading(true);
+    setScheduleError('');
+
+    try {
+      const cleanPhone = scheduleForm.phone.replace(/\D/g, '');
+      const clientEmail = cleanPhone ? `${cleanPhone}@lead.saudagarproperties.com` : 'viewing.lead@saudagarproperties.com';
+
+      await api.createInquiry({
+        type: 'property_inquiry',
+        propertyTitle: property.title,
+        name: scheduleForm.name,
+        phone: scheduleForm.phone,
+        email: clientEmail,
+        message: `[Private Viewing Request]\nProperty: ${property.title}\nLocation: ${property.location}\nValuation: ${property.price}\nPreferred Date: ${scheduleForm.preferredDate || 'Flexible'}\nNotes: ${scheduleForm.notes || 'None'}`
+      });
+
+      setScheduleSent(true);
+      setTimeout(() => {
+        setIsScheduleOpen(false);
+        setScheduleSent(false);
+        setScheduleForm({ name: '', phone: '', preferredDate: '', notes: '' });
+      }, 3000);
+    } catch (err) {
+      console.error('Schedule viewing submission error:', err);
+      setScheduleError(err.message || 'Unable to submit viewing request. Please reach out via WhatsApp or call us directly.');
+    } finally {
+      setScheduleLoading(false);
+    }
   };
 
   // Structured specification pairs
@@ -582,11 +607,25 @@ export default function PropertyDetailClient({ property }) {
                     />
                   </div>
 
+                  {scheduleError && (
+                    <div className="p-2.5 rounded-xl bg-rose-500/10 border border-rose-500/20 text-rose-600 text-xs font-medium">
+                      {scheduleError}
+                    </div>
+                  )}
+
                   <button
                     type="submit"
-                    className="w-full py-3.5 rounded-xl bg-[#0A0E17] hover:bg-[#D09A16] text-white hover:text-[#0A0E17] font-bold uppercase tracking-wider text-xs transition-colors cursor-pointer mt-2"
+                    disabled={scheduleLoading}
+                    className="w-full py-3.5 rounded-xl bg-[#0A0E17] hover:bg-[#D09A16] disabled:opacity-60 disabled:cursor-not-allowed text-white hover:text-[#0A0E17] font-bold uppercase tracking-wider text-xs transition-colors cursor-pointer mt-2 flex items-center justify-center gap-2"
                   >
-                    Confirm Private Viewing Request
+                    {scheduleLoading ? (
+                      <>
+                        <div className="w-3.5 h-3.5 border-2 border-current border-t-transparent rounded-full animate-spin" />
+                        <span>Submitting Request...</span>
+                      </>
+                    ) : (
+                      <span>Confirm Private Viewing Request</span>
+                    )}
                   </button>
                 </form>
               )}

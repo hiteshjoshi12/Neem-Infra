@@ -1,6 +1,7 @@
 import { getProperties } from '@/services/propertyService';
 import { PAGE_SEO, BREADCRUMBS, SITE_URL, SITE_NAME } from '@/lib/seo/seoConfig';
 import CommercialServiceView from '@/components/services/CommercialServiceView';
+import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
 
 export const revalidate = 300; // Cache static payload for fast navigation
 
@@ -203,13 +204,16 @@ export default async function CommercialServicesPage() {
   const breadcrumbs = BREADCRUMBS['/services/commercial'];
 
   return (
-    <CommercialServiceView
-      commercialListings={commercialListings}
-      breadcrumbs={breadcrumbs}
-      assetClasses={COMMERCIAL_ASSET_CLASSES}
-      yieldBenchmarks={COMMERCIAL_YIELD_BENCHMARKS}
-      leaseFramework={LEASE_STRUCTURING_FRAMEWORK}
-      complianceStandards={INSTITUTIONAL_COMPLIANCE_STANDARDS}
-    />
+    <>
+      <BreadcrumbJsonLd items={breadcrumbs} />
+      <CommercialServiceView
+        commercialListings={commercialListings}
+        breadcrumbs={breadcrumbs}
+        assetClasses={COMMERCIAL_ASSET_CLASSES}
+        yieldBenchmarks={COMMERCIAL_YIELD_BENCHMARKS}
+        leaseFramework={LEASE_STRUCTURING_FRAMEWORK}
+        complianceStandards={INSTITUTIONAL_COMPLIANCE_STANDARDS}
+      />
+    </>
   );
 }

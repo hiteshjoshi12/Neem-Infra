@@ -2,9 +2,13 @@ import { NextResponse } from 'next/server';
 import ImageKit from 'imagekit';
 import path from 'path';
 import fs from 'fs/promises';
+import { requireAdmin } from '@/lib/auth/authGuard';
 
 // Dynamic route configuration
 export const dynamic = 'force-dynamic';
+
+const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
+const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10MB
 
 function getImageKitInstance() {
   const publicKey = process.env.IMAGEKIT_PUBLIC_KEY;
@@ -23,6 +27,7 @@ function getImageKitInstance() {
 
 export async function POST(req) {
   try {
+    await requireAdmin(req);
     const formData = await req.formData();
     const file = formData.get('file');
     const folder = formData.get('folder') || '/saudagar-properties/general';
@@ -30,6 +35,22 @@ export async function POST(req) {
     if (!file || typeof file === 'string') {
       return NextResponse.json(
         { success: false, message: 'No file provided in form-data' },
+        { status: 400 }
+      );
+    }
+
+    // 1. Validate MIME Type
+    if (!ALLOWED_MIME_TYPES.includes(file.type)) {
+      return NextResponse.json(
+        { success: false, message: `Unsupported image format (${file.type}). Allowed formats: JPEG, PNG, WebP, AVIF.` },
+        { status: 400 }
+      );
+    }
+
+    // 2. Validate File Size
+    if (file.size > MAX_FILE_SIZE_BYTES) {
+      return NextResponse.json(
+        { success: false, message: 'File size exceeds maximum permitted limit of 10MB.' },
         { status: 400 }
       );
     }

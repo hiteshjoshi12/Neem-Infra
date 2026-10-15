@@ -44,8 +44,7 @@ async function runProductionValidation() {
   assert(sitemapXml.includes('https://www.saudagarproperties.com/about'), '/about page included in sitemap');
   assert(sitemapXml.includes('https://www.saudagarproperties.com/contact'), '/contact page included in sitemap');
   assert(sitemapXml.includes('https://www.saudagarproperties.com/blog'), '/blog page included in sitemap');
-  assert(sitemapXml.includes('/blog/luxury-builder-floors-dlf-phase-1-5-guide'), 'Published blog post included in sitemap');
-  assert(sitemapXml.includes('/blog/location/dlf-phase-2'), 'DLF Phase 2 location page included in sitemap');
+  assert(sitemapXml.includes('/property/dlf-phase-2'), 'DLF Phase 2 corridor page included in sitemap');
 
   // ---------------------------------------------------------------------------
   // Check 5: Verify Robots
@@ -150,16 +149,17 @@ async function runProductionValidation() {
   // Check 12: Verify Internal Links
   // ---------------------------------------------------------------------------
   console.log('\nCheck 12: Navigation & Internal Link Integrity Verification');
-  const cmsContent = fs.readFileSync('src/context/CmsContext.jsx', 'utf8');
-  assert(!cmsContent.includes('href: "/ready-to-move"'), 'CmsContext navbar links do not contain /ready-to-move');
-  assert(cmsContent.includes('href: "/properties"'), 'CmsContext FEATURED link points directly to /properties');
-  assert(cmsContent.includes('href: "/team"'), 'CmsContext OUR TEAM link points to /team');
-  assert(!cmsContent.includes('href: "/services/dlf-phase-1"'), 'CmsContext dropdown does not contain coarse /services/dlf-phase-1');
-  assert(cmsContent.includes('href: "/blog/location/dlf-phase-1"'), 'CmsContext dropdown links directly to /blog/location/dlf-phase-1');
-  assert(cmsContent.includes('href: "/blog/location/dlf-phase-2"'), 'CmsContext dropdown links directly to /blog/location/dlf-phase-2');
-  assert(cmsContent.includes('href: "/blog/location/dlf-phase-3"'), 'CmsContext dropdown links directly to /blog/location/dlf-phase-3');
-  assert(cmsContent.includes('href: "/blog/location/dlf-phase-4"'), 'CmsContext dropdown links directly to /blog/location/dlf-phase-4');
-  assert(cmsContent.includes('href: "/services/industrial"'), 'CmsContext dropdown links directly to /services/industrial');
+  const sectionsContent = fs.readFileSync('src/constants/defaultSections.js', 'utf8');
+  assert(!sectionsContent.includes('href: "/ready-to-move"'), 'Navbar links do not contain /ready-to-move');
+  assert(sectionsContent.includes('href: "/properties"'), 'Navbar FEATURED link points directly to /properties');
+  assert(sectionsContent.includes('href: "/team"'), 'Navbar OUR TEAM link points to /team');
+  assert(!sectionsContent.includes('href: "/services/dlf-phase-1"'), 'Navbar dropdown does not contain coarse /services/dlf-phase-1');
+  assert(sectionsContent.includes('href: "/property/dlf-phase-1"'), 'Navbar dropdown links directly to /property/dlf-phase-1');
+  assert(sectionsContent.includes('href: "/property/dlf-phase-2"'), 'Navbar dropdown links directly to /property/dlf-phase-2');
+  assert(sectionsContent.includes('href: "/property/dlf-phase-3"'), 'Navbar dropdown links directly to /property/dlf-phase-3');
+  assert(sectionsContent.includes('href: "/property/dlf-phase-4"'), 'Navbar dropdown links directly to /property/dlf-phase-4');
+  assert(sectionsContent.includes('href: "/property/shushant-lok"'), 'Navbar dropdown links directly to /property/shushant-lok');
+  assert(sectionsContent.includes('href: "/property/udyog-vihar"'), 'Navbar dropdown links directly to /property/udyog-vihar');
 
   const constantsContent = fs.readFileSync('src/constants/index.js', 'utf8');
   assert(!constantsContent.includes('/ready-to-move'), 'constants/index.js does not contain /ready-to-move');
@@ -179,12 +179,12 @@ async function runProductionValidation() {
   assert(redirectMap['/under-construction'] === '/properties', '301 Redirect: /under-construction -> /properties');
   assert(redirectMap['/developers'] === '/about', '301 Redirect: /developers -> /about');
   assert(redirectMap['/our-team'] === '/team', '301 Redirect: /our-team -> /team');
-  assert(redirectMap['/services/dlf-phase-1'] === '/blog/location/dlf-phase-1', '301 Redirect: /services/dlf-phase-1 -> /blog/location/dlf-phase-1');
-  assert(redirectMap['/services/dlf-phase-2'] === '/blog/location/dlf-phase-2', '301 Redirect: /services/dlf-phase-2 -> /blog/location/dlf-phase-2');
-  assert(redirectMap['/services/dlf-phase-3'] === '/blog/location/dlf-phase-3', '301 Redirect: /services/dlf-phase-3 -> /blog/location/dlf-phase-3');
-  assert(redirectMap['/services/dlf-phase-4'] === '/blog/location/dlf-phase-4', '301 Redirect: /services/dlf-phase-4 -> /blog/location/dlf-phase-4');
-  assert(redirectMap['/services/sushant-lok'] === '/blog/location/sushant-lok-1', '301 Redirect: /services/sushant-lok -> /blog/location/sushant-lok-1');
-  assert(redirectMap['/services/udyog-vihar'] === '/services/industrial', '301 Redirect: /services/udyog-vihar -> /services/industrial');
+  assert(redirectMap['/services/dlf-phase-1'] === '/property/dlf-phase-1', '301 Redirect: /services/dlf-phase-1 -> /property/dlf-phase-1');
+  assert(redirectMap['/services/dlf-phase-2'] === '/property/dlf-phase-2', '301 Redirect: /services/dlf-phase-2 -> /property/dlf-phase-2');
+  assert(redirectMap['/services/dlf-phase-3'] === '/property/dlf-phase-3', '301 Redirect: /services/dlf-phase-3 -> /property/dlf-phase-3');
+  assert(redirectMap['/services/dlf-phase-4'] === '/property/dlf-phase-4', '301 Redirect: /services/dlf-phase-4 -> /property/dlf-phase-4');
+  assert(redirectMap['/services/sushant-lok'] === '/property/shushant-lok', '301 Redirect: /services/sushant-lok -> /property/shushant-lok');
+  assert(redirectMap['/services/udyog-vihar'] === '/property/udyog-vihar', '301 Redirect: /services/udyog-vihar -> /property/udyog-vihar');
 
   // ---------------------------------------------------------------------------
   // Check 14: Mobile Rendering & Component Structure

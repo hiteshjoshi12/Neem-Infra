@@ -643,28 +643,76 @@ export const DEFAULT_SECTIONS = {
         locations: "DLF Phase 1, 2, 3, 4 & Sushant Lok",
         specs: "4 BHK • 300 to 500 Sq. Yds • Private Lift & Terrace",
         price: "₹4.50 Cr – ₹12.00 Cr",
-        image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"
+        image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+        metrics: [
+          { label: "Built-Up Area", val: "2,800 - 4,500 Sq. Ft." },
+          { label: "Stilt Parking", val: "2 - 3 Dedicated Covered Bays" },
+          { label: "Ownership", val: "Freehold with Independent Registry" },
+          { label: "Terrace Rights", val: "Exclusive 4th Floor / Pro-rata" }
+        ],
+        features: [
+          "Private OTIS/Kone elevator with access control",
+          "Separate staff quarters with private washroom",
+          "Gated sector security with 24/7 boom barriers",
+          "Zero society maintenance disputes"
+        ]
       },
       {
         title: "Independent Kothis & Bespoke Mansions",
         locations: "DLF Phase 1 & 2 Prime Avenues",
         specs: "500 to 1,000 Sq. Yds • Bespoke Architecture",
         price: "₹14.00 Cr – ₹35.00 Cr",
-        image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
+        image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
+        metrics: [
+          { label: "Plot Footprint", val: "500 to 1,000 Sq. Yds" },
+          { label: "Frontage", val: "50 to 80 Ft. Road Facing" },
+          { label: "Title Structure", val: "Sole Owner 100% Freehold" },
+          { label: "Redevelopment", val: "FAR Sanction for Stilt+4 Floors" }
+        ],
+        features: [
+          "100% Land & Sky ownership with title certainty",
+          "Sprawling private front lawns & rear courtyards",
+          "Multi-car driveway with basement entertainment den",
+          "Unrivaled generational capital preservation"
+        ]
       },
       {
         title: "Residential Freehold Plots",
         locations: "DLF Phase 1–4, Sushant Lok 1",
         specs: "215 to 1,000 Sq. Yds • Immediate Registry",
         price: "₹3.50 Lakh – ₹4.80 Lakh / Sq. Yd",
-        image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80"
+        image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
+        metrics: [
+          { label: "Dimensions", val: "Standard & Corner Rectangular" },
+          { label: "Clearance", val: "Clear Chain of Title with DLF NOC" },
+          { label: "Water & Power", val: "Direct DHBVN & MCG Underground Grid" },
+          { label: "Possession", val: "Immediate Physical Possession" }
+        ],
+        features: [
+          "100% Verified ownership history & encumbrance-free",
+          "Complete freedom of custom architectural design",
+          "Direct DLF conveyance deed and immediate registry",
+          "Highest long-term land value appreciation in NCR"
+        ]
       },
       {
         title: "Ultra-Luxury Condominiums & Penthouses",
         locations: "Golf Course Road & DLF Phase 5",
         specs: "4 & 5 BHK • 4,500 to 11,000 Sq. Ft",
         price: "₹18.00 Cr – ₹65.00 Cr",
-        image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80"
+        image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80",
+        metrics: [
+          { label: "Ceiling Height", val: "12 Ft. Double-Height Living" },
+          { label: "Balcony Decks", val: "Wraparound Aravalli Views" },
+          { label: "Clubhouse", val: "50,000 Sq. Ft. World-Class Amenities" },
+          { label: "Security", val: "5-Tier Biometric & Concierge" }
+        ],
+        features: [
+          "Unobstructed skyline and DLF Golf Course vistas",
+          "Private plunge pool and heated Jacuzzi decks",
+          "Integrated home automation (Crestron/Lutron)",
+          "Designated concierge, valet, and butler services"
+        ]
       }
     ],
     microMarkets: [

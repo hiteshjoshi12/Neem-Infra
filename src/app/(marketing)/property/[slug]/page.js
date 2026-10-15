@@ -10,7 +10,8 @@ export const revalidate = 120;
 
 export async function generateMetadata(props) {
   const params = await props.params;
-  const slug = params?.slug;
+  const rawSlug = params?.slug;
+  const slug = rawSlug === 'sushant-lok' ? 'shushant-lok' : rawSlug;
   const corridor = CORRIDOR_PAGES_DATA[slug];
 
   if (!corridor) {
@@ -43,7 +44,8 @@ export async function generateMetadata(props) {
 
 export default async function PropertyCorridorPage(props) {
   const params = await props.params;
-  const slug = params?.slug;
+  const rawSlug = params?.slug;
+  const slug = rawSlug === 'sushant-lok' ? 'shushant-lok' : rawSlug;
   const corridor = CORRIDOR_PAGES_DATA[slug];
 
   if (!corridor) {

@@ -58,6 +58,10 @@ const nextConfig = {
             key: 'Permissions-Policy',
             value: 'camera=(), microphone=(), geolocation=(self)',
           },
+          {
+            key: 'Strict-Transport-Security',
+            value: 'max-age=63072000; includeSubDomains; preload',
+          },
         ],
       },
     ];
@@ -97,35 +101,40 @@ const nextConfig = {
         destination: '/about',
         permanent: true,
       },
-      // Legacy service/corridor routes to active residential service
+      // Micro-market & corridor landing page redirects
       {
         source: '/services/dlf-phase-1',
-        destination: '/services/residential',
+        destination: '/property/dlf-phase-1',
         permanent: true,
       },
       {
         source: '/services/dlf-phase-2',
-        destination: '/services/residential',
+        destination: '/property/dlf-phase-2',
         permanent: true,
       },
       {
         source: '/services/dlf-phase-3',
-        destination: '/services/residential',
+        destination: '/property/dlf-phase-3',
         permanent: true,
       },
       {
         source: '/services/dlf-phase-4',
-        destination: '/services/residential',
+        destination: '/property/dlf-phase-4',
         permanent: true,
       },
       {
         source: '/services/sushant-lok',
-        destination: '/services/residential',
+        destination: '/property/shushant-lok',
         permanent: true,
       },
       {
         source: '/services/udyog-vihar',
-        destination: '/services/industrial',
+        destination: '/property/udyog-vihar',
+        permanent: true,
+      },
+      {
+        source: '/property/sushant-lok',
+        destination: '/property/shushant-lok',
         permanent: true,
       },
       // Legacy property catalog routes redirected to active counterparts

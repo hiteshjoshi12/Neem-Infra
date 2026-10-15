@@ -236,7 +236,34 @@ async function seedAll() {
     });
     seededPostsCount++;
   }
-  console.log(`   ✓ Seeded ${seededPostsCount} editorial blog articles.\n`);
+
+  // 3b. Second pass: Link inter-article relationships (relatedPosts, childArticles, parentPillar)
+  const allCreatedPosts = await BlogPost.find({});
+  const postSlugMap = {};
+  allCreatedPosts.forEach(p => { postSlugMap[p.slug] = p._id; });
+
+  for (const postData of INITIAL_POSTS) {
+    const relatedIds = (postData.relatedPostsSlugs || [])
+      .map(s => postSlugMap[s])
+      .filter(Boolean);
+    const childIds = (postData.childArticlesSlugs || [])
+      .map(s => postSlugMap[s])
+      .filter(Boolean);
+    const parentPillarId = postData.parentPillarSlug ? postSlugMap[postData.parentPillarSlug] : null;
+
+    await BlogPost.updateOne(
+      { slug: postData.slug },
+      {
+        $set: {
+          relatedPosts: relatedIds,
+          childArticles: childIds,
+          ...(parentPillarId ? { parentPillar: parentPillarId } : {})
+        }
+      }
+    );
+  }
+
+  console.log(`   ✓ Seeded ${seededPostsCount} editorial blog articles and linked relationships.\n`);
 
   // ====================================================================
   // 4. TESTIMONIALS

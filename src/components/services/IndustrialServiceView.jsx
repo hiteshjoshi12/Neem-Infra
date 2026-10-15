@@ -45,7 +45,17 @@ export default function IndustrialServiceView({
   const { sections } = useCms();
   const cms = sections?.page_industrial || DEFAULT_SECTIONS.page_industrial;
   const heroData = cms?.hero || DEFAULT_SECTIONS.page_industrial.hero;
-  const activeAssetClasses = cms?.assetClasses && cms.assetClasses.length > 0 ? cms.assetClasses : assetClasses;
+  const rawAssetClasses = cms?.assetClasses && cms.assetClasses.length > 0 ? cms.assetClasses : assetClasses;
+  const activeAssetClasses = (rawAssetClasses || []).map((item, idx) => {
+    const base = assetClasses[idx] || {};
+    return {
+      ...base,
+      ...item,
+      metrics: item?.metrics || base?.metrics || [],
+      features: item?.features || base?.features || [],
+      pricing: item?.pricing || item?.price || base?.pricing || base?.price || '',
+    };
+  });
   const activeCorridors = cms?.corridors && cms.corridors.length > 0 ? cms.corridors : corridors;
   const activeComplianceSteps = cms?.complianceSteps && cms.complianceSteps.length > 0 ? cms.complianceSteps : complianceSteps;
 
@@ -245,23 +255,27 @@ export default function IndustrialServiceView({
                     <span className="text-lg font-bold text-[#D09A16] font-serif whitespace-nowrap ml-4">{item.pricing}</span>
                   </div>
 
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6 bg-[#F9F8F5] p-4 rounded-2xl border border-[#EDE8DF]">
-                    {item.metrics.map((m, mIdx) => (
-                      <div key={mIdx}>
-                        <span className="text-[10px] font-semibold uppercase tracking-wider text-[#8A95A7] block mb-0.5">{m.label}</span>
-                        <span className="text-xs font-bold text-[#17213D]">{m.val}</span>
-                      </div>
-                    ))}
-                  </div>
+                  {item.metrics && item.metrics.length > 0 && (
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6 bg-[#F9F8F5] p-4 rounded-2xl border border-[#EDE8DF]">
+                      {item.metrics.map((m, mIdx) => (
+                        <div key={mIdx}>
+                          <span className="text-[10px] font-semibold uppercase tracking-wider text-[#8A95A7] block mb-0.5">{m.label}</span>
+                          <span className="text-xs font-bold text-[#17213D]">{m.val || m.value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-6">
-                    {item.features.map((feat, i) => (
-                      <div key={i} className="flex items-start gap-2 text-xs text-[#334155]">
-                        <CheckCircle2 size={14} className="text-[#D09A16] shrink-0 mt-0.5" />
-                        <span className="leading-snug">{feat}</span>
-                      </div>
-                    ))}
-                  </div>
+                  {item.features && item.features.length > 0 && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-6">
+                      {item.features.map((feat, i) => (
+                        <div key={i} className="flex items-start gap-2 text-xs text-[#334155]">
+                          <CheckCircle2 size={14} className="text-[#D09A16] shrink-0 mt-0.5" />
+                          <span className="leading-snug">{feat}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div className="pt-5 border-t border-[#F0ECE1] flex flex-wrap items-center justify-between gap-4">

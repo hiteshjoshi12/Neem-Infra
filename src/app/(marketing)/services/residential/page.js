@@ -1,6 +1,7 @@
 import { getProperties } from '@/services/propertyService';
 import { PAGE_SEO, BREADCRUMBS, SITE_URL, SITE_NAME } from '@/lib/seo/seoConfig';
 import ResidentialServiceView from '@/components/services/ResidentialServiceView';
+import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
 
 export const revalidate = 300; // Cache static payload for fast navigation
 
@@ -204,13 +205,16 @@ export default async function ResidentialServicesPage() {
   const breadcrumbs = BREADCRUMBS['/services/residential'];
 
   return (
-    <ResidentialServiceView
-      residentialListings={residentialListings}
-      breadcrumbs={breadcrumbs}
-      typologies={RESIDENTIAL_TYPOLOGIES}
-      microMarkets={MICRO_MARKET_INTELLIGENCE}
-      dueDiligenceSteps={DUE_DILIGENCE_STEPS}
-      specificationStandards={SPECIFICATION_STANDARDS}
-    />
+    <>
+      <BreadcrumbJsonLd items={breadcrumbs} />
+      <ResidentialServiceView
+        residentialListings={residentialListings}
+        breadcrumbs={breadcrumbs}
+        typologies={RESIDENTIAL_TYPOLOGIES}
+        microMarkets={MICRO_MARKET_INTELLIGENCE}
+        dueDiligenceSteps={DUE_DILIGENCE_STEPS}
+        specificationStandards={SPECIFICATION_STANDARDS}
+      />
+    </>
   );
 }

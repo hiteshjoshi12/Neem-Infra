@@ -35,20 +35,18 @@ export default function AdminLayout({ children }) {
   const router = useRouter();
   const pathname = usePathname();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const [inquiryCount, setInquiryCount] = useState(0);
-
-  // Restore sidebar collapse preference
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem('saudagar_admin_sidebar_collapsed');
-      if (saved !== null) {
-        setIsSidebarCollapsed(saved === 'true');
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('saudagar_admin_sidebar_collapsed');
+        if (saved !== null) return saved === 'true';
+      } catch {
+        return false;
       }
-    } catch {
-      // ignore
     }
-  }, []);
+    return false;
+  });
+  const [inquiryCount, setInquiryCount] = useState(0);
 
   const toggleSidebar = () => {
     setIsSidebarCollapsed(prev => {

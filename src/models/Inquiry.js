@@ -38,4 +38,10 @@ const inquirySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Performance Indexes for fast admin querying and CRM status filtering
+inquirySchema.index({ createdAt: -1 });
+inquirySchema.index({ status: 1, createdAt: -1 });
+inquirySchema.index({ email: 1 });
+inquirySchema.index({ type: 1 });
+
 export default mongoose.models.Inquiry || mongoose.model('Inquiry', inquirySchema);

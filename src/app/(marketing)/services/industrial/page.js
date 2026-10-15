@@ -1,6 +1,7 @@
 import { getProperties } from '@/services/propertyService';
 import { PAGE_SEO, BREADCRUMBS, SITE_URL, SITE_NAME } from '@/lib/seo/seoConfig';
 import IndustrialServiceView from '@/components/services/IndustrialServiceView';
+import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
 
 export const revalidate = 300; // Cache static payload for fast navigation
 
@@ -198,13 +199,16 @@ export default async function IndustrialServicesPage() {
   const breadcrumbs = BREADCRUMBS['/services/industrial'];
 
   return (
-    <IndustrialServiceView
-      industrialListings={industrialListings}
-      breadcrumbs={breadcrumbs}
-      assetClasses={INDUSTRIAL_ASSET_CLASSES}
-      corridors={INDUSTRIAL_CORRIDORS}
-      complianceSteps={HSIIDC_COMPLIANCE_STEPS}
-      engineeringStandards={WAREHOUSE_ENGINEERING_STANDARDS}
-    />
+    <>
+      <BreadcrumbJsonLd items={breadcrumbs} />
+      <IndustrialServiceView
+        industrialListings={industrialListings}
+        breadcrumbs={breadcrumbs}
+        assetClasses={INDUSTRIAL_ASSET_CLASSES}
+        corridors={INDUSTRIAL_CORRIDORS}
+        complianceSteps={HSIIDC_COMPLIANCE_STEPS}
+        engineeringStandards={WAREHOUSE_ENGINEERING_STANDARDS}
+      />
+    </>
   );
 }

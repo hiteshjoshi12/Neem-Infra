@@ -1,20 +1,7 @@
 import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import BlogPost from '@/models/BlogPost';
-import jwt from 'jsonwebtoken';
-import Admin from '@/models/Admin';
-
-const checkAuth = async (req) => {
-  const authHeader = req.headers.get('authorization');
-  if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    throw new Error('Not authorized, no token');
-  }
-  const token = authHeader.split(' ')[1];
-  const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret123');
-  const admin = await Admin.findById(decoded.id).select('-password');
-  if (!admin) throw new Error('Admin not found');
-  return admin;
-};
+import { requireAdmin } from '@/lib/auth/authGuard';
 
 export async function GET(req, { params }) {
   try {
@@ -40,8 +27,8 @@ import { clearBlogCache } from '@/services/blogService';
 
 export async function PUT(req, { params }) {
   try {
+    await requireAdmin(req);
     await connectDB();
-    await checkAuth(req);
     
     const { id } = await params;
     const body = await req.json();
@@ -79,14 +66,15 @@ export async function PUT(req, { params }) {
       data: post
     });
   } catch (error) {
-    return NextResponse.json({ success: false, message: error.message }, { status: 400 });
+    const status = error.status || 400;
+    return NextResponse.json({ success: false, message: error.message }, { status });
   }
 }
 
 export async function DELETE(req, { params }) {
   try {
+    await requireAdmin(req);
     await connectDB();
-    await checkAuth(req);
     
     const { id } = await params;
     const post = await BlogPost.findByIdAndDelete(id);

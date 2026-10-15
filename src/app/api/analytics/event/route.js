@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { requireAdmin } from '@/lib/auth/authGuard';
 
 // In-memory aggregates for analytics events
 const eventAggregates = {
@@ -99,14 +100,16 @@ export async function POST(request) {
  * GET /api/analytics/event
  * Returns aggregated stats for Admin Performance Dashboard
  */
-export async function GET() {
-  const totalViews = Object.values(eventAggregates.articleViews).reduce((a, b) => a + b, 0);
+export async function GET(request) {
+  try {
+    await requireAdmin(request);
+    const totalViews = Object.values(eventAggregates.articleViews).reduce((a, b) => a + b, 0);
 
-  return NextResponse.json({
-    success: true,
-    data: {
-      totalViews,
-      viewsByArticle: eventAggregates.articleViews,
+    return NextResponse.json({
+      success: true,
+      data: {
+        totalViews,
+        viewsByArticle: eventAggregates.articleViews,
       scrollDepths: eventAggregates.scrollDepths,
       interactions: {
         ctaClicks: eventAggregates.ctaClicks,
@@ -121,4 +124,8 @@ export async function GET() {
       recentEvents: eventAggregates.recentEvents
     }
   });
+  } catch (error) {
+    const status = error.status || 500;
+    return NextResponse.json({ success: false, message: error.message }, { status });
+  }
 }

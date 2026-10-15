@@ -115,6 +115,12 @@ const blogPostSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Performance Indexes for high-traffic editorial queries
+blogPostSchema.index({ status: 1, publishedAt: -1 });
+blogPostSchema.index({ category: 1, status: 1 });
+blogPostSchema.index({ isPillar: 1 });
+blogPostSchema.index({ topicCluster: 1 });
+
 blogPostSchema.pre('validate', function () {
   if (!this.slug && this.title) {
     this.slug = generateSlug(this.title);

@@ -4,6 +4,7 @@
  */
 
 const cacheStore = new Map();
+const MAX_CACHE_ENTRIES = 500;
 
 export function getCached(key, ttlMs = 60000) {
   const entry = cacheStore.get(key);
@@ -16,6 +17,12 @@ export function getCached(key, ttlMs = 60000) {
 }
 
 export function setCached(key, data) {
+  // Evict oldest entries if capacity reached to prevent memory leaks
+  if (cacheStore.size >= MAX_CACHE_ENTRIES) {
+    const oldestKey = cacheStore.keys().next().value;
+    if (oldestKey) cacheStore.delete(oldestKey);
+  }
+
   cacheStore.set(key, {
     timestamp: Date.now(),
     data

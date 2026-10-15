@@ -112,15 +112,23 @@ const propertySchema = new mongoose.Schema(
     },
     isFeatured: {
       type: Boolean,
-      default: true
+      default: true,
+      index: true
     },
     isActive: {
       type: Boolean,
-      default: true
+      default: true,
+      index: true
     }
   },
   { timestamps: true }
 );
+
+// Performance Indexes for fast catalog browsing and micro-market filtering
+propertySchema.index({ isActive: 1, isFeatured: 1, order: 1 });
+propertySchema.index({ isActive: 1, category: 1, createdAt: -1 });
+propertySchema.index({ location: 1 });
+propertySchema.index({ createdAt: -1 });
 
 propertySchema.pre('save', function () {
   if (this.price && (!this.priceNumeric || this.isModified('price'))) {

@@ -79,16 +79,11 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
           });
 
           // Set defaults if creating new article
-          if (!isEdit && !formData.author && res.data.authors?.length > 0) {
+          if (!isEdit && res.data.authors?.length > 0) {
             setFormData(prev => ({
               ...prev,
-              author: res.data.authors[0]._id
-            }));
-          }
-          if (!isEdit && !formData.category && res.data.categories?.length > 0) {
-            setFormData(prev => ({
-              ...prev,
-              category: res.data.categories[0]._id
+              author: prev.author || res.data.authors[0]._id,
+              category: prev.category || res.data.categories?.[0]?._id || ''
             }));
           }
         }
@@ -119,13 +114,6 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
     setFormData(prev => ({ ...prev, ...updates }));
   };
 
-  // Auto calculate reading time based on words
-  useEffect(() => {
-    const wordCount = (formData.content || '').trim().split(/\s+/).filter(Boolean).length;
-    const estTime = Math.max(1, Math.ceil(wordCount / 200));
-    setFormData(prev => ({ ...prev, readingTime: estTime }));
-  }, [formData.content]);
-
   // Markdown formatting helpers
   const insertFormatting = (prefix, suffix = '') => {
     const textarea = textareaRef.current;
@@ -155,8 +143,11 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
       uploadData.append('file', file);
       uploadData.append('folder', '/saudagar-properties/blogs');
 
+      const token = typeof window !== 'undefined' ? localStorage.getItem('saudagar_admin_token') : null;
+
       const res = await fetch('/api/upload', {
         method: 'POST',
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
         body: uploadData
       });
       const data = await res.json();
@@ -240,8 +231,11 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
 
     try {
       setSaving(true);
+      const wordCount = (formData.content || '').trim().split(/\s+/).filter(Boolean).length;
+      const readingTime = Math.max(1, Math.ceil(wordCount / 200));
       const payload = {
         ...formData,
+        readingTime,
         status: statusOverride || formData.status,
         publishedAt: statusOverride === 'published' ? (formData.publishedAt || new Date().toISOString()) : formData.publishedAt
       };

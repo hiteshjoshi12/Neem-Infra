@@ -44,7 +44,17 @@ export default function ResidentialServiceView({
   const { sections } = useCms();
   const cms = sections?.page_residential || DEFAULT_SECTIONS.page_residential;
   const heroData = cms?.hero || DEFAULT_SECTIONS.page_residential.hero;
-  const activeTypologies = cms?.assetClasses && cms.assetClasses.length > 0 ? cms.assetClasses : typologies;
+  const rawTypologies = cms?.assetClasses && cms.assetClasses.length > 0 ? cms.assetClasses : typologies;
+  const activeTypologies = (rawTypologies || []).map((item, idx) => {
+    const base = typologies[idx] || {};
+    return {
+      ...base,
+      ...item,
+      metrics: item?.metrics || base?.metrics || [],
+      features: item?.features || base?.features || [],
+      price: item?.price || item?.pricing || base?.price || base?.pricing || '',
+    };
+  });
   const activeMicroMarkets = cms?.microMarkets && cms.microMarkets.length > 0 ? cms.microMarkets : microMarkets;
   const activeDueDiligenceSteps = cms?.dueDiligenceSteps && cms.dueDiligenceSteps.length > 0 ? cms.dueDiligenceSteps : dueDiligenceSteps;
   return (
@@ -246,23 +256,27 @@ export default function ResidentialServiceView({
                     <span className="text-lg font-bold text-[#D09A16] font-serif whitespace-nowrap ml-4">{item.price}</span>
                   </div>
 
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6 bg-[#F9F8F5] p-4 rounded-2xl border border-[#EDE8DF]">
-                    {item.metrics.map((m, mIdx) => (
-                      <div key={mIdx}>
-                        <span className="text-[10px] font-semibold uppercase tracking-wider text-[#8A95A7] block mb-0.5">{m.label}</span>
-                        <span className="text-xs font-bold text-[#17213D]">{m.val}</span>
-                      </div>
-                    ))}
-                  </div>
+                  {item.metrics && item.metrics.length > 0 && (
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-6 bg-[#F9F8F5] p-4 rounded-2xl border border-[#EDE8DF]">
+                      {item.metrics.map((m, mIdx) => (
+                        <div key={mIdx}>
+                          <span className="text-[10px] font-semibold uppercase tracking-wider text-[#8A95A7] block mb-0.5">{m.label}</span>
+                          <span className="text-xs font-bold text-[#17213D]">{m.val || m.value}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-6">
-                    {item.features.map((feat, i) => (
-                      <div key={i} className="flex items-start gap-2 text-xs text-[#334155]">
-                        <CheckCircle2 size={14} className="text-[#D09A16] shrink-0 mt-0.5" />
-                        <span className="leading-snug">{feat}</span>
-                      </div>
-                    ))}
-                  </div>
+                  {item.features && item.features.length > 0 && (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 mb-6">
+                      {item.features.map((feat, i) => (
+                        <div key={i} className="flex items-start gap-2 text-xs text-[#334155]">
+                          <CheckCircle2 size={14} className="text-[#D09A16] shrink-0 mt-0.5" />
+                          <span className="leading-snug">{feat}</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
 
                 <div className="pt-5 border-t border-[#F0ECE1] flex flex-wrap items-center justify-between gap-4">

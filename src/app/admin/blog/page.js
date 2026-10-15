@@ -27,7 +27,6 @@ export default function AdminBlogDashboard() {
 
   const fetchBlogs = useCallback(async () => {
     try {
-      setLoading(true);
       const res = await api.getBlogs();
       if (res.success) {
         setBlogs(res.data || []);
@@ -40,8 +39,24 @@ export default function AdminBlogDashboard() {
   }, []);
 
   useEffect(() => {
-    fetchBlogs();
-  }, [fetchBlogs]);
+    let isMounted = true;
+    api.getBlogs()
+      .then((res) => {
+        if (isMounted && res.success) {
+          setBlogs(res.data || []);
+        }
+      })
+      .catch((err) => {
+        console.warn('Failed to fetch blogs:', err);
+      })
+      .finally(() => {
+        if (isMounted) setLoading(false);
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleDelete = async (id, title) => {
     if (!window.confirm(`Are you sure you want to delete "${title}"?`)) return;
