@@ -259,7 +259,7 @@ export default function CuratedCorridors() {
                   </p>
 
                   <div className="flex items-center justify-between pt-3 border-t border-white/15">
-                    <Link href={item.link}
+                    <Link href={item.link || (item.slug ? `/properties/${item.slug}` : '/properties')}
                       className="inline-flex items-center gap-2 bg-[#C6A24A] hover:bg-[#D8BD73] text-[#0E162B] px-4 py-2 sm:px-6 sm:py-2.5 rounded-full text-[10px] sm:text-xs font-bold tracking-widest uppercase transition-colors duration-300 shadow-md group"
                     >
                       <span>View Details</span>

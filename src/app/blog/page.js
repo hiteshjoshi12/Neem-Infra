@@ -57,7 +57,7 @@ export async function generateMetadata() {
   });
 }export default async function BlogIndexPage() {
   const [allPosts, categories, blogCms] = await Promise.all([
-    getBlogPosts({ limit: 16 }),
+    getBlogPosts({ limit: 100 }),
     getCategories(),
     getBlogPageCms(),
   ]);
