@@ -13,9 +13,9 @@ let API_BASE_URL = '/api';
 /**
  * Helper to make API requests with Authorization header
  */
-async function request(endpoint, options = {}) {
-  // If no API URL is configured (e.g. production site without deployed backend URL),
-  // reject cleanly without making an unauthorized cross-network request.
+const pendingGetRequests = new Map();
+
+async function executeRequest(endpoint, options = {}) {
   if (!API_BASE_URL) {
     throw new Error('API server not configured in this environment.');
   }
@@ -49,6 +49,30 @@ async function request(endpoint, options = {}) {
     }
     throw error;
   }
+}
+
+async function request(endpoint, options = {}) {
+  const method = (options.method || 'GET').toUpperCase();
+
+  // Deduplicate simultaneous identical in-flight GET requests (e.g. React StrictMode or sibling components)
+  if (method === 'GET' && isBrowser) {
+    if (pendingGetRequests.has(endpoint)) {
+      return pendingGetRequests.get(endpoint);
+    }
+    const promise = (async () => {
+      try {
+        return await executeRequest(endpoint, options);
+      } finally {
+        setTimeout(() => {
+          pendingGetRequests.delete(endpoint);
+        }, 150);
+      }
+    })();
+    pendingGetRequests.set(endpoint, promise);
+    return promise;
+  }
+
+  return executeRequest(endpoint, options);
 }
 
 export const api = {

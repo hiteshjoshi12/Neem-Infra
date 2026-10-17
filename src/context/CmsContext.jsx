@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import api from '../services/api';
 import { DEFAULT_SECTIONS } from '../constants/defaultSections';
 
@@ -15,6 +15,9 @@ export const CmsProvider = ({ children }) => {
   const [testimonials, setTestimonials] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const lastFetchRef = useRef(0);
+  const isFetchingRef = useRef(false);
+
   // Clear any legacy sessionStorage cache on mount to ensure no stale data persists
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -28,14 +31,27 @@ export const CmsProvider = ({ children }) => {
     setSections((prev) => ({ ...prev, [sectionKey]: data }));
   }, []);
 
-  const fetchCmsData = useCallback(async () => {
+  const fetchCmsData = useCallback(async (force = false) => {
+    // If on admin route, skip fetching public landing data to avoid unnecessary database queries
+    if (typeof window !== 'undefined' && window.location.pathname.startsWith('/admin')) {
+      setLoading(false);
+      return;
+    }
+
+    const now = Date.now();
+    // Prevent duplicate in-flight requests or rapid re-fetching within 45 seconds (unless forced)
+    if (isFetchingRef.current) return;
+    if (!force && now - lastFetchRef.current < 45000) return;
+
+    isFetchingRef.current = true;
     try {
-      // Direct, non-cached fetch to ensure immediate reflection of database changes
       const [secResult, propResult, testResult] = await Promise.allSettled([
         api.getSections(true),
         api.getProperties({ all: false }),
         api.getTestimonials()
       ]);
+
+      lastFetchRef.current = Date.now();
 
       if (secResult.status === 'fulfilled' && secResult.value?.success && secResult.value?.data) {
         setSections((prev) => ({
@@ -54,27 +70,34 @@ export const CmsProvider = ({ children }) => {
     } catch (err) {
       console.warn('[CmsContext] Network fetch error, using current state:', err?.message);
     } finally {
+      isFetchingRef.current = false;
       setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    fetchCmsData();
+    // Do not fetch on admin pages
+    if (typeof window !== 'undefined' && window.location.pathname.startsWith('/admin')) {
+      setLoading(false);
+      return;
+    }
 
-    // Re-sync with database whenever user switches tabs or returns to this window
+    fetchCmsData(false);
+
+    // Re-sync with database only when user returns to this tab and at least 60s elapsed
     const handleVisibilityChange = () => {
       if (document.visibilityState === 'visible') {
-        fetchCmsData();
+        const elapsed = Date.now() - lastFetchRef.current;
+        if (elapsed > 60000) {
+          fetchCmsData(false);
+        }
       }
     };
 
     window.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('focus', fetchCmsData);
 
     return () => {
       window.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('focus', fetchCmsData);
     };
   }, [fetchCmsData]);
 

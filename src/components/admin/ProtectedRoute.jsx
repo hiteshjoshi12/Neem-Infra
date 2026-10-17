@@ -11,7 +11,10 @@ export default function ProtectedRoute({ children }) {
 
   useEffect(() => {
     if (!loading && !isAuthenticated) {
-      router.replace('/admin/login');
+      const timer = setTimeout(() => {
+        router.replace('/admin/login');
+      }, 0);
+      return () => clearTimeout(timer);
     }
   }, [loading, isAuthenticated, router]);
 

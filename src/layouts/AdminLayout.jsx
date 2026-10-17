@@ -1,7 +1,7 @@
 "use client";
 
 import Link from 'next/link';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import {
   LayoutDashboard,
@@ -48,6 +48,7 @@ export default function AdminLayout({ children }) {
     return false;
   });
   const [inquiryCount, setInquiryCount] = useState(0);
+  const fetchedInquiriesRef = useRef(false);
 
   const toggleSidebar = () => {
     setIsSidebarCollapsed(prev => {
@@ -61,14 +62,18 @@ export default function AdminLayout({ children }) {
     });
   };
 
-  // Fetch quick lead count for badge
+  // Fetch quick lead count for badge (guarded to avoid re-querying on every sub-route transition)
   useEffect(() => {
+    if (fetchedInquiriesRef.current && pathname !== '/admin/inquiries') {
+      return;
+    }
     let ignore = false;
     async function loadStats() {
       try {
         const res = await api.getInquiries();
         if (!ignore && res?.success && Array.isArray(res?.data)) {
           setInquiryCount(res.data.length);
+          fetchedInquiriesRef.current = true;
         }
       } catch {
         // Silently ignore if not loaded yet
