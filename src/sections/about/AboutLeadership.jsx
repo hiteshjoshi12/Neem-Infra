@@ -1,8 +1,8 @@
 "use client";
 import { gsap, ScrollTrigger } from "@/lib/gsap/animations";
 
-import { useEffect, useRef } from 'react';
-import { Users, Award, Shield, CheckCircle2, Star } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { Users, Award, Shield, CheckCircle2, Star, ChevronLeft, ChevronRight } from 'lucide-react';
 
 
 import Tilt3DCard from '../../components/ui/Tilt3DCard';
@@ -15,6 +15,7 @@ export default function AboutLeadership() {
   const cms = sections?.page_about?.leadership || DEFAULT_SECTIONS.page_about.leadership;
   const founders = cms?.founders || DEFAULT_SECTIONS.page_about?.leadership?.founders || [];
   const teamMembers = cms?.teamMembers || DEFAULT_SECTIONS.page_about?.leadership?.teamMembers || [];
+  const [teamIndex, setTeamIndex] = useState(0);
 
   const defaultImpactStats = [
     {
@@ -296,56 +297,115 @@ export default function AboutLeadership() {
 
         {/* ================= PART 2: KEY EXECUTIVE TEAM ================= */}
         <div ref={teamSectionRef} className="mb-16 md:mb-20">
-          <div className="text-center max-w-2xl mx-auto mb-10">
-            <span className="text-xs font-bold tracking-[0.25em] text-[#D09A16] uppercase mb-2 block">
-              Leadership In Action
-            </span>
-            <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white">
-              Core Advisory &amp; Operations Team
-            </h3>
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-6 max-w-5xl mx-auto mb-10">
+            <div className="text-center sm:text-left">
+              <span className="text-xs font-bold tracking-[0.25em] text-[#D09A16] uppercase mb-2 block">
+                Leadership In Action
+              </span>
+              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-white">
+                Core Advisory &amp; Operations Team
+              </h3>
+            </div>
+
+            {/* Carousel Navigation Buttons (Visible when teamMembers.length > 3) */}
+            {teamMembers.length > 3 && (
+              <div className="flex items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => setTeamIndex((prev) => Math.max(0, prev - 1))}
+                  disabled={teamIndex === 0}
+                  aria-label="Previous Team Members"
+                  className={`w-11 h-11 rounded-2xl border flex items-center justify-center transition-all ${
+                    teamIndex === 0
+                      ? 'border-white/10 text-white/30 cursor-not-allowed bg-white/[0.02]'
+                      : 'border-[#D09A16]/50 text-[#D09A16] hover:bg-[#D09A16] hover:text-[#0A0E17] bg-white/[0.05] shadow-lg cursor-pointer'
+                  }`}
+                >
+                  <ChevronLeft size={20} />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setTeamIndex((prev) => Math.min(Math.max(0, teamMembers.length - 3), prev + 1))}
+                  disabled={teamIndex >= Math.max(0, teamMembers.length - 3)}
+                  aria-label="Next Team Members"
+                  className={`w-11 h-11 rounded-2xl border flex items-center justify-center transition-all ${
+                    teamIndex >= Math.max(0, teamMembers.length - 3)
+                      ? 'border-white/10 text-white/30 cursor-not-allowed bg-white/[0.02]'
+                      : 'border-[#D09A16]/50 text-[#D09A16] hover:bg-[#D09A16] hover:text-[#0A0E17] bg-white/[0.05] shadow-lg cursor-pointer'
+                  }`}
+                >
+                  <ChevronRight size={20} />
+                </button>
+              </div>
+            )}
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-            {teamMembers.map((member, mIdx) => (
-              <div
-                key={member.name}
-                ref={(el) => (teamCardsRef.current[mIdx] = el)}
-                className="group relative rounded-3xl bg-white/[0.04] border border-white/10 hover:border-[#D09A16]/60 p-8 text-center transition-all duration-500 shadow-xl hover:shadow-[0_20px_50px_rgba(208,154,22,0.2)] hover:-translate-y-2 flex flex-col items-center justify-between backdrop-blur-md"
-              >
-                <div>
-                  {/* Photo Frame */}
-                  <div className="relative mb-6">
-                    <div className="absolute -inset-2.5 rounded-full border border-dashed border-[#D09A16]/40 group-hover:border-[#D09A16] group-hover:rotate-45 transition-all duration-700" />
+          {/* Carousel Viewport */}
+          <div className="overflow-hidden max-w-5xl mx-auto py-2">
+            <div
+              className="flex transition-transform duration-500 ease-out gap-8"
+              style={{
+                transform: `translateX(calc(-${teamIndex} * (100% / 3 + 32px / 3)))`
+              }}
+            >
+              {teamMembers.map((member, mIdx) => (
+                <div
+                  key={member.name || mIdx}
+                  ref={(el) => (teamCardsRef.current[mIdx] = el)}
+                  className="w-full sm:w-[calc(50%-16px)] lg:w-[calc(33.333%-22px)] shrink-0 group relative rounded-3xl bg-white/[0.04] border border-white/10 hover:border-[#D09A16]/60 p-8 text-center transition-all duration-500 shadow-xl hover:shadow-[0_20px_50px_rgba(208,154,22,0.2)] hover:-translate-y-2 flex flex-col items-center justify-between backdrop-blur-md"
+                >
+                  <div>
+                    {/* Photo Frame */}
+                    <div className="relative mb-6">
+                      <div className="absolute -inset-2.5 rounded-full border border-dashed border-[#D09A16]/40 group-hover:border-[#D09A16] group-hover:rotate-45 transition-all duration-700" />
 
-                    <div className="relative w-36 h-36 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-white/20 shadow-xl bg-slate-900 mx-auto">
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        width={160}
-                        height={160}
-                        loading="lazy"
-                        className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
-                      />
+                      <div className="relative w-36 h-36 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-white/20 shadow-xl bg-slate-900 mx-auto">
+                        <Image
+                          src={member.image}
+                          alt={member.name}
+                          width={160}
+                          height={160}
+                          loading="lazy"
+                          className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-110"
+                        />
+                      </div>
+
+                      <div className="absolute bottom-1 right-2 w-7 h-7 rounded-full bg-[#D09A16] text-[#0C101A] flex items-center justify-center shadow-md border-2 border-white/20">
+                        <Star size={12} className="fill-[#0C101A]" />
+                      </div>
                     </div>
 
-                    <div className="absolute bottom-1 right-2 w-7 h-7 rounded-full bg-[#D09A16] text-[#0C101A] flex items-center justify-center shadow-md border-2 border-white/20">
-                      <Star size={12} className="fill-[#0C101A]" />
-                    </div>
+                    <h4 className="text-xl sm:text-2xl font-serif font-bold text-white mb-1.5 group-hover:text-[#D09A16] transition-colors">
+                      {member.name}
+                    </h4>
+
+                    <p className="text-xs font-semibold text-[#D09A16] uppercase tracking-wider mb-4">
+                      {member.designation}
+                    </p>
                   </div>
 
-                  <h4 className="text-xl sm:text-2xl font-serif font-bold text-white mb-1.5 group-hover:text-[#D09A16] transition-colors">
-                    {member.name}
-                  </h4>
-
-                  <p className="text-xs font-semibold text-[#D09A16] uppercase tracking-wider mb-4">
-                    {member.designation}
-                  </p>
+                  <div className="w-12 h-[2px] bg-white/20 group-hover:bg-[#D09A16] group-hover:w-20 transition-all duration-300 mt-2" />
                 </div>
-
-                <div className="w-12 h-[2px] bg-white/20 group-hover:bg-[#D09A16] group-hover:w-20 transition-all duration-300 mt-2" />
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
+
+          {/* Pagination Dots (Visible when teamMembers.length > 3) */}
+          {teamMembers.length > 3 && (
+            <div className="flex items-center justify-center gap-2 mt-8">
+              {Array.from({ length: Math.max(0, teamMembers.length - 3) + 1 }).map((_, dotIdx) => (
+                <button
+                  key={dotIdx}
+                  type="button"
+                  onClick={() => setTeamIndex(dotIdx)}
+                  aria-label={`Go to team slide ${dotIdx + 1}`}
+                  className={`h-2 rounded-full transition-all duration-300 cursor-pointer ${
+                    teamIndex === dotIdx ? 'w-8 bg-[#D09A16]' : 'w-2 bg-white/20 hover:bg-white/40'
+                  }`}
+                />
+              ))}
+            </div>
+          )}
         </div>
 
         {/* ================= PART 3: MILESTONE COUNTERS ================= */}

@@ -20,7 +20,9 @@ import {
   Check,
   Award,
   Layers,
-  ArrowUpRight
+  ArrowUpRight,
+  Maximize2,
+  X
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
 import LuxuryTextReveal from '@/components/ui/LuxuryTextReveal';
@@ -43,6 +45,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
   const [openFaqIndex, setOpenFaqIndex] = useState(0);
   const [activeImageIndex, setActiveImageIndex] = useState(0);
   const [currentCorridorSlug, setCurrentCorridorSlug] = useState(corridor.slug);
+  const [isMapModalOpen, setIsMapModalOpen] = useState(false);
 
   if (currentCorridorSlug !== corridor.slug) {
     setCurrentCorridorSlug(corridor.slug);
@@ -108,6 +111,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
   const nearestPlaces = corridor.nearestPlaces || {};
   const howWeHelp = corridor.howWeHelp || {};
   const whyChooseSaudagar = corridor.whyChooseSaudagar || {};
+  const mapShowcase = corridor.mapShowcase || {};
   const faqs = corridor.faqs || [];
 
   const galleryImages = (hero.galleryImages && hero.galleryImages.length > 0)
@@ -631,9 +635,9 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
       </section>
 
       {/* =========================================================================
-          5. NEAREST PLACES & COMMUTE RADAR (LIGHT)
+          5. NEAREST PLACES & COMMUTE RADAR (LIGHT) WITH IMAGES
       ========================================================================= */}
-      <section className="py-20 bg-[#FAF8F5] text-[#17213D] border-b border-[#E8E2D9] relative overflow-hidden">
+      <section className="py-20 sm:py-24 bg-[#FAF8F5] text-[#17213D] border-b border-[#E8E2D9] relative overflow-hidden">
         <div
           aria-hidden="true"
           className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[500px] h-[300px] rounded-full pointer-events-none"
@@ -641,9 +645,9 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
         />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-          <div className="max-w-3xl mb-12">
+          <div className="max-w-3xl mb-14">
             <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#B48216] block mb-2">
-              {nearestPlaces.badge || 'Transit Times'}
+              {nearestPlaces.badge || 'Transit Times & Connectivity'}
             </span>
 
             <LuxuryTextReveal
@@ -658,7 +662,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {(nearestPlaces.places || []).map((place, idx) => (
               <motion.div
                 key={idx}
@@ -667,29 +671,53 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                 viewport={{ once: true, amount: 0.1 }}
                 custom={idx}
                 variants={fadeUpVariant}
-                whileHover={{ y: -5 }}
-                className="group p-6 rounded-2xl bg-white border border-[#E5DFD5] hover:border-[#D09A16]/60 transition-all flex flex-col justify-between shadow-[0_4px_20px_rgba(23,33,61,0.06)] hover:shadow-[0_12px_30px_rgba(208,154,22,0.12)]"
+                whileHover={{ y: -6 }}
+                className="group rounded-3xl bg-white border border-[#E5DFD5] hover:border-[#D09A16]/60 transition-all duration-300 flex flex-col justify-between shadow-[0_4px_20px_rgba(23,33,61,0.06)] hover:shadow-[0_16px_35px_rgba(208,154,22,0.14)] overflow-hidden"
               >
                 <div>
-                  <div className="flex items-center justify-between gap-2 mb-3">
-                    <span className="px-2.5 py-1 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/25 text-[10px] font-bold uppercase tracking-wider text-[#9E6E00]">
+                  {/* Landmark Photographic Banner */}
+                  <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
+                    <Image
+                      src={place.image || 'https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=800&q=80'}
+                      alt={place.name}
+                      fill
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                      className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
+
+                    {/* Category Tag on Top Left */}
+                    <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md border border-white/40 text-[10px] font-bold uppercase tracking-wider text-[#17213D] shadow-xs">
                       {place.category}
-                    </span>
-                    <span className="text-xs font-semibold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full flex items-center gap-1 border border-emerald-200">
+                    </div>
+
+                    {/* Transit Time on Top Right */}
+                    <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full bg-emerald-900/85 backdrop-blur-md border border-emerald-400/30 text-emerald-300 text-[11px] font-bold flex items-center gap-1 shadow-xs">
                       <Clock size={12} />
                       <span>{place.time}</span>
-                    </span>
+                    </div>
+
+                    {/* Distance Tag on bottom */}
+                    <div className="absolute bottom-2.5 left-3 text-white text-xs font-semibold flex items-center gap-1.5 drop-shadow-md">
+                      <Navigation size={13} className="text-[#D09A16]" />
+                      <span>{place.distance} away</span>
+                    </div>
                   </div>
 
-                  <h3 className="font-serif font-bold text-lg text-[#111827] mb-1 group-hover:text-[#B48216] transition-colors">
-                    {place.name}
-                  </h3>
-                  <div className="text-xs text-[#B48216] font-semibold mb-3">
-                    {place.distance}
+                  {/* Content */}
+                  <div className="p-5 sm:p-6">
+                    <h3 className="font-serif font-bold text-lg text-[#111827] mb-2 group-hover:text-[#B48216] transition-colors leading-snug">
+                      {place.name}
+                    </h3>
+                    <p className="text-xs text-slate-600 leading-relaxed font-sans line-clamp-3">
+                      {place.desc}
+                    </p>
                   </div>
-                  <p className="text-xs text-slate-600 leading-relaxed font-sans">
-                    {place.desc}
-                  </p>
+                </div>
+
+                {/* Subtle bottom gold hairline */}
+                <div className="px-5 sm:px-6 pb-5 pt-0">
+                  <div className="h-[2px] w-10 bg-[#D09A16]/30 group-hover:w-full group-hover:bg-[#D09A16] transition-all duration-300 rounded-full" />
                 </div>
               </motion.div>
             ))}
@@ -698,71 +726,199 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
       </section>
 
       {/* =========================================================================
-          6. HOW CAN WE HELP YOU & WHY CHOOSE SAUDAGAR PROPERTIES
+          6A. HOW CAN WE HELP YOU? (TURNKEY ADVISORY & ACQUISITION PLATFORM)
       ========================================================================= */}
-      <section className="py-20 bg-[#0E162B] text-white border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-            {/* How We Help */}
-            <div className="space-y-4">
+      <section className="py-20 sm:py-24 bg-[#0E162B] text-white border-b border-white/10 relative overflow-hidden">
+        <div
+          aria-hidden="true"
+          className="absolute -top-32 -left-32 w-[550px] h-[550px] rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(circle, rgba(208, 154, 22, 0.08) 0%, rgba(0,0,0,0) 70%)' }}
+        />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+            {/* Narrative & Checklist Column */}
+            <div className="lg:col-span-7 space-y-6">
               <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#D09A16] block">
-                {howWeHelp.badge || 'Turnkey Acquisition Platform'}
+                {howWeHelp.badge || 'Turnkey Advisory & Acquisition Platform'}
               </span>
 
               <LuxuryTextReveal
                 as="h2"
                 text={howWeHelp.title}
-                className="text-2xl sm:text-3xl font-serif font-bold text-white"
+                className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white leading-tight"
                 delay={0.08}
               />
 
-              <div className="space-y-3 text-xs sm:text-sm text-slate-300 leading-relaxed font-sans pt-1">
+              <div className="space-y-3.5 text-xs sm:text-sm text-slate-300 leading-relaxed font-sans pt-1">
                 {(howWeHelp.paragraphs || []).map((p, idx) => (
                   <p key={idx}>{p}</p>
                 ))}
               </div>
 
-              {/* Checklist */}
+              {/* Verified Services Checklist */}
               {howWeHelp.servicesChecklist && (
-                <div className="space-y-2.5 pt-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3">
                   {howWeHelp.servicesChecklist.map((item, idx) => (
-                    <div key={idx} className="flex items-start gap-2.5 text-xs text-slate-200 font-medium">
-                      <CheckCircle2 size={15} className="text-[#D09A16] shrink-0 mt-0.5" />
-                      <span>{item}</span>
+                    <div
+                      key={idx}
+                      className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 flex items-start gap-3 text-xs text-slate-200 font-medium hover:border-[#D09A16]/40 transition-colors"
+                    >
+                      <CheckCircle2 size={16} className="text-[#D09A16] shrink-0 mt-0.5" />
+                      <span className="leading-snug">{item}</span>
                     </div>
                   ))}
                 </div>
               )}
+
+              {/* Action Buttons */}
+              <div className="pt-4 flex flex-wrap items-center gap-4">
+                <a
+                  href="#inquiry-form"
+                  className="px-6 py-3 rounded-xl bg-[#D09A16] hover:bg-[#E5AC2B] text-[#0A0E17] font-bold text-xs uppercase tracking-wider transition-all shadow-md active:scale-95 inline-flex items-center gap-2"
+                >
+                  <span>Request Private Consultation</span>
+                  <ArrowRight size={14} />
+                </a>
+                <a
+                  href="https://wa.me/919718511207?text=Hello%20Saudagar%20Properties%2C%20I%20would%20like%20to%20consult%20regarding%20property%20acquisitions."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white font-bold text-xs uppercase tracking-wider border border-white/15 transition-all inline-flex items-center gap-2"
+                >
+                  <WhatsAppIcon size={15} />
+                  <span>Direct Desk Hotline</span>
+                </a>
+              </div>
             </div>
 
-            {/* Why Choose Saudagar */}
-            <div className="p-8 sm:p-10 rounded-3xl bg-[#141E36] border border-white/10 shadow-[0_12px_40px_rgba(0,0,0,0.4)] space-y-4 flex flex-col justify-between">
-              <div>
-                <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#D09A16] block mb-2">
-                  {whyChooseSaudagar.badge || '25+ Years Experience'}
-                </span>
-                <h3 className="text-xl sm:text-2xl font-serif font-bold text-white mb-4">
-                  {whyChooseSaudagar.title}
-                </h3>
-                <div className="text-xs sm:text-sm text-slate-300 leading-relaxed font-sans whitespace-pre-line">
-                  {whyChooseSaudagar.content}
+            {/* Feature Image Column */}
+            <div className="lg:col-span-5">
+              <div className="relative rounded-3xl overflow-hidden border border-[#D09A16]/30 shadow-[0_20px_50px_rgba(0,0,0,0.6)] group">
+                <div className="relative aspect-[4/3] sm:aspect-[1/1] w-full">
+                  <Image
+                    src={howWeHelp.image || 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=85'}
+                    alt="Saudagar Properties Turnkey Acquisition Advisory"
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0E162B] via-transparent to-transparent opacity-80" />
+                </div>
+
+                {/* Floating Glassmorphism Advisory Badge */}
+                <div className="absolute bottom-5 left-5 right-5 p-4 rounded-2xl bg-[#141E36]/90 backdrop-blur-md border border-[#D09A16]/30 text-white flex items-center gap-3.5 shadow-xl">
+                  <div className="p-2.5 rounded-xl bg-[#D09A16]/15 border border-[#D09A16]/30 text-[#D09A16] shrink-0">
+                    <ShieldCheck size={22} />
+                  </div>
+                  <div>
+                    <span className="block text-xs font-bold text-white uppercase tracking-wider">
+                      Turnkey Due Diligence
+                    </span>
+                    <span className="text-[11px] text-slate-300 leading-tight block">
+                      Title clearance, registry representation &amp; architect consultation
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================================
+          6B. WHY CHOOSE SAUDAGAR PROPERTIES FOR THIS CORRIDOR
+      ========================================================================= */}
+      <section className="py-20 sm:py-24 bg-[#FAF8F5] text-[#17213D] border-b border-[#E8E2D9] relative overflow-hidden">
+        <div
+          aria-hidden="true"
+          className="absolute bottom-0 right-0 w-[500px] h-[400px] rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(circle, rgba(208, 154, 22, 0.07) 0%, rgba(250,248,245,0) 70%)' }}
+        />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+            {/* Left Column: Corridor Legacy Image */}
+            <div className="lg:col-span-5 order-2 lg:order-1">
+              <div className="relative rounded-3xl overflow-hidden border border-[#E5DFD5] shadow-[0_16px_40px_rgba(23,33,61,0.08)] group bg-white">
+                <div className="relative aspect-[4/3] sm:aspect-[1/1] w-full">
+                  <Image
+                    src={whyChooseSaudagar.image || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=85'}
+                    alt={whyChooseSaudagar.title || 'Why Choose Saudagar Properties'}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 40vw"
+                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                </div>
+
+                {/* Top Badge */}
+                <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-[#17213D]/90 backdrop-blur-md text-[#D09A16] border border-[#D09A16]/30 text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-md">
+                  <Award size={14} />
+                  <span>25+ Years Legacy</span>
+                </div>
+
+                {/* Bottom Signature Note */}
+                <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-[#E5DFD5] text-[#17213D] shadow-lg flex items-center justify-between">
+                  <div>
+                    <span className="block text-xs font-bold text-[#111827]">
+                      {whyChooseSaudagar.founderName || 'Arun Sharma & Suneeta Chawla'}
+                    </span>
+                    <span className="text-[11px] text-slate-500">
+                      {whyChooseSaudagar.founderTitle || 'Founders, Saudagar Properties Pvt Ltd'}
+                    </span>
+                  </div>
+                  <Link
+                    href="/contact"
+                    className="px-3.5 py-1.5 rounded-lg bg-[#D09A16] hover:bg-[#E5AC2B] text-[#0A0E17] font-bold text-[11px] uppercase tracking-wider transition-colors shadow-xs"
+                  >
+                    Direct Desk
+                  </Link>
+                </div>
+              </div>
+            </div>
+
+            {/* Right Column: Authority Narrative */}
+            <div className="lg:col-span-7 order-1 lg:order-2 space-y-6">
+              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#B48216] block">
+                {whyChooseSaudagar.badge || 'Market Leadership & Uncompromising Integrity'}
+              </span>
+
+              <LuxuryTextReveal
+                as="h2"
+                text={whyChooseSaudagar.title}
+                className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#111827] leading-tight"
+                delay={0.08}
+              />
+
+              <div className="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans space-y-3 whitespace-pre-line">
+                {whyChooseSaudagar.content}
+              </div>
+
+              {/* Three Institutional Pillars */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-3">
+                <div className="p-3.5 rounded-2xl bg-white border border-[#E5DFD5] shadow-xs">
+                  <span className="text-lg font-serif font-bold text-[#B48216] block">25+ Yrs</span>
+                  <span className="text-[11px] font-semibold text-slate-700">Micro-Market Authority</span>
+                </div>
+                <div className="p-3.5 rounded-2xl bg-white border border-[#E5DFD5] shadow-xs">
+                  <span className="text-lg font-serif font-bold text-[#B48216] block">100%</span>
+                  <span className="text-[11px] font-semibold text-slate-700">Clean Freehold Titles</span>
+                </div>
+                <div className="p-3.5 rounded-2xl bg-white border border-[#E5DFD5] shadow-xs">
+                  <span className="text-lg font-serif font-bold text-[#B48216] block">₹500+ Cr</span>
+                  <span className="text-[11px] font-semibold text-slate-700">Transactions Facilitated</span>
                 </div>
               </div>
 
-              <div className="pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4">
-                <div>
-                  <span className="block text-xs font-bold text-white uppercase tracking-wider">
-                    {whyChooseSaudagar.founderName || 'Arun Sharma & Suneeta Chawla'}
-                  </span>
-                  <span className="text-[11px] text-slate-400">
-                    {whyChooseSaudagar.founderTitle || 'Founders, Saudagar Properties Pvt Ltd'}
-                  </span>
-                </div>
+              {/* Connect Button */}
+              <div className="pt-2">
                 <Link
-                  href="/contact"
-                  className="px-5 py-2.5 rounded-xl bg-[#D09A16] hover:bg-[#E5AC2B] text-[#0A0E17] font-bold text-xs uppercase tracking-wider transition-all shadow-sm"
+                  href="/team"
+                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#B48216] hover:text-[#9E6E00] group"
                 >
-                  Contact Desk
+                  <span>Meet Our Leadership &amp; Corridor Advisory Team</span>
+                  <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
             </div>
@@ -1072,6 +1228,198 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
           </div>
         </section>
       )}
+      {/* =========================================================================
+          10. DUAL MAP SHOWCASE: LIVE GOOGLE MAP & HIGH-RES STATIC MASTER PLAN
+      ========================================================================= */}
+      <section className="py-20 sm:py-24 bg-[#0A0E17] text-white relative overflow-hidden border-t border-white/10">
+        {/* Architectural Ambient Radial Glow */}
+        <div
+          aria-hidden="true"
+          className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full pointer-events-none"
+          style={{ background: 'radial-gradient(circle, rgba(208, 154, 22, 0.08) 0%, rgba(0,0,0,0) 70%)' }}
+        />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          {/* Section Header */}
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#D09A16] block mb-2">
+              {mapShowcase.badge || 'Strategic Cartography & Master Planning'}
+            </span>
+
+            <LuxuryTextReveal
+              as="h2"
+              text={mapShowcase.title || `${corridor.corridorName} Strategic Location & Master Plan`}
+              className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white"
+              delay={0.08}
+            />
+
+            <p className="text-xs sm:text-sm text-slate-300 mt-3 font-sans leading-relaxed">
+              {mapShowcase.description || `Explore the geographic positioning of ${corridor.corridorName} alongside the official sector master layout planning and arterial road grid.`}
+            </p>
+          </div>
+
+          {/* Dual Maps Grid: Google Map & Static Map */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+            {/* Map 1: Interactive Live Google Map */}
+            <div className="rounded-3xl bg-[#141E36] border border-white/10 p-6 sm:p-7 shadow-[0_12px_40px_rgba(0,0,0,0.5)] flex flex-col justify-between group hover:border-[#D09A16]/50 transition-all duration-300">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2.5">
+                    <div className="p-2 rounded-xl bg-[#D09A16]/10 text-[#D09A16] border border-[#D09A16]/20">
+                      <MapPin size={18} />
+                    </div>
+                    <div>
+                      <h3 className="font-serif font-bold text-base sm:text-lg text-white">
+                        Live Geographic Navigation
+                      </h3>
+                      <span className="text-[11px] text-slate-400">
+                        Interactive Google Maps satellite &amp; transit network
+                      </span>
+                    </div>
+                  </div>
+                  <span className="px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold uppercase tracking-wider">
+                    Live GPS
+                  </span>
+                </div>
+
+                {/* Google Map Iframe Container */}
+                <div className="relative aspect-[16/11] w-full rounded-2xl overflow-hidden border border-white/10 bg-[#0A0E17]">
+                  {mapShowcase.googleMapEmbed ? (
+                    <iframe
+                      src={mapShowcase.googleMapEmbed}
+                      title={`${corridor.corridorName} Google Map Embed`}
+                      className="w-full h-full border-0 filter contrast-[1.05] brightness-[0.95]"
+                      loading="lazy"
+                      allowFullScreen
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center text-slate-400">
+                      <MapPin size={32} className="text-[#D09A16] mb-2" />
+                      <p className="text-xs">Live map navigation active for {corridor.corridorName}.</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
+                <span className="text-[11px] text-slate-400 flex items-center gap-1.5">
+                  <Navigation size={13} className="text-[#D09A16]" />
+                  <span>Interactive pinch-to-zoom &amp; route planning</span>
+                </span>
+                <a
+                  href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(corridor.corridorName + ' Gurugram Haryana')}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#D09A16] hover:text-[#E5AC2B] transition-colors"
+                >
+                  <span>Open Full Map</span>
+                  <ArrowUpRight size={13} />
+                </a>
+              </div>
+            </div>
+
+            {/* Map 2: High-Resolution Static Master Plan / Layout Blueprint */}
+            <div className="rounded-3xl bg-[#141E36] border border-white/10 p-6 sm:p-7 shadow-[0_12px_40px_rgba(0,0,0,0.5)] flex flex-col justify-between group hover:border-[#D09A16]/50 transition-all duration-300">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-2.5">
+                    <div className="p-2 rounded-xl bg-[#D09A16]/10 text-[#D09A16] border border-[#D09A16]/20">
+                      <Layers size={18} />
+                    </div>
+                    <div>
+                      <h3 className="font-serif font-bold text-base sm:text-lg text-white">
+                        Sector Master Layout Plan
+                      </h3>
+                      <span className="text-[11px] text-slate-400">
+                        Official zoning blueprint &amp; plot cartography
+                      </span>
+                    </div>
+                  </div>
+                  <span className="px-2.5 py-1 rounded-full bg-[#D09A16]/15 border border-[#D09A16]/30 text-[#D09A16] text-[10px] font-bold uppercase tracking-wider">
+                    Master Blueprint
+                  </span>
+                </div>
+
+                {/* Static Map Image Preview with Click-To-Enlarge */}
+                <div
+                  onClick={() => setIsMapModalOpen(true)}
+                  className="relative aspect-[16/11] w-full rounded-2xl overflow-hidden border border-white/10 bg-[#0A0E17] group/img cursor-pointer"
+                >
+                  <Image
+                    src={mapShowcase.staticMapImage || 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80'}
+                    alt={`${corridor.corridorName} Master Plan Map`}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover group-hover/img:scale-105 transition-transform duration-500 ease-out"
+                  />
+                  <div className="absolute inset-0 bg-black/40 group-hover/img:bg-black/20 transition-colors flex items-center justify-center">
+                    <div className="px-4 py-2.5 rounded-xl bg-black/75 backdrop-blur-md border border-[#D09A16]/50 text-white text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-lg group-hover/img:scale-105 transition-transform">
+                      <Maximize2 size={14} className="text-[#D09A16]" />
+                      <span>Click to Inspect High-Res</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
+                <span className="text-[11px] text-slate-400">
+                  Tap image to inspect full sector blueprint
+                </span>
+                <button
+                  type="button"
+                  onClick={() => setIsMapModalOpen(true)}
+                  className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#D09A16] hover:text-[#E5AC2B] transition-colors cursor-pointer"
+                >
+                  <span>Enlarge Blueprint</span>
+                  <ArrowUpRight size={13} />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Fullscreen Master Plan Lightbox Modal */}
+        <AnimatePresence>
+          {isMapModalOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col items-center justify-center p-4 sm:p-6"
+              onClick={() => setIsMapModalOpen(false)}
+            >
+              <div
+                className="relative max-w-6xl w-full max-h-[92vh] bg-[#141E36] rounded-3xl border border-[#D09A16]/40 overflow-hidden shadow-2xl flex flex-col"
+                onClick={(e) => e.stopPropagation()}
+              >
+                <div className="p-4 sm:p-5 border-b border-white/10 flex items-center justify-between bg-[#0E162B]">
+                  <div>
+                    <h3 className="font-serif font-bold text-lg text-white">
+                      {corridor.corridorName} — Official Master Layout &amp; Zoning Blueprint
+                    </h3>
+                    <p className="text-xs text-slate-400">High-resolution cartographic survey</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setIsMapModalOpen(false)}
+                    className="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-colors cursor-pointer flex items-center gap-1"
+                  >
+                    <X size={16} />
+                    <span className="hidden sm:inline">Close</span>
+                  </button>
+                </div>
+                <div className="relative w-full h-[72vh] bg-[#0A0E17] overflow-auto flex items-center justify-center p-4">
+                  <img
+                    src={mapShowcase.staticMapImage || 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1600&q=85'}
+                    alt={`${corridor.corridorName} Master Plan`}
+                    className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                  />
+                </div>
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </section>
     </div>
   );
 }

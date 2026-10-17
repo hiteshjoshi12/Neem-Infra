@@ -17,6 +17,7 @@ import {
   Check,
   X
 } from 'lucide-react';
+import Image from 'next/image';
 import Link from 'next/link';
 import LuxuryTextReveal from '@/components/ui/LuxuryTextReveal';
 import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
@@ -77,15 +78,35 @@ export default function AboutWhyChooseUs() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.7 }}
-          className="bg-white rounded-3xl p-6 sm:p-10 border border-[#17213D]/10 hover:border-[#D09A16]/50 shadow-[0_20px_50px_rgba(23,33,61,0.05)] mb-10 relative overflow-hidden"
+          className="bg-white rounded-3xl p-6 sm:p-10 border border-[#17213D]/10 hover:border-[#D09A16]/50 shadow-[0_20px_50px_rgba(23,33,61,0.05)] mb-10 relative overflow-hidden group"
         >
+          {leadPillar.image && (
+            <div className="relative aspect-[21/9] sm:aspect-[28/9] w-full rounded-2xl overflow-hidden mb-8 border border-[#17213D]/5 bg-[#17213D]/5">
+              <Image
+                src={leadPillar.image}
+                alt={leadPillar.title}
+                fill
+                sizes="(max-width: 1200px) 100vw, 1100px"
+                className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#17213D]/70 via-black/20 to-transparent" />
+              <div className="absolute bottom-4 left-4 sm:left-6 flex items-center gap-2">
+                <span className="px-3 py-1 rounded-full bg-[#D09A16] text-[#0E162B] text-[10px] font-bold tracking-widest uppercase shadow-md">
+                  Pillar 01 • {leadPillar.badge}
+                </span>
+              </div>
+            </div>
+          )}
+
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             
             <div className="lg:col-span-8 space-y-4">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D09A16]/10 text-[#D09A16] text-[11px] font-bold uppercase tracking-widest">
-                <Award size={13} />
-                <span>Pillar 01 • {leadPillar.badge}</span>
-              </div>
+              {!leadPillar.image && (
+                <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D09A16]/10 text-[#D09A16] text-[11px] font-bold uppercase tracking-widest">
+                  <Award size={13} />
+                  <span>Pillar 01 • {leadPillar.badge}</span>
+                </div>
+              )}
 
               <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#17213D] tracking-tight">
                 {leadPillar.title}
@@ -138,7 +159,7 @@ export default function AboutWhyChooseUs() {
             const IconComp = PILLAR_ICONS[idx + 1] || ShieldCheck;
             return (
               <motion.div
-                key={pillar.id}
+                key={pillar.id || idx}
                 initial={{ opacity: 0, y: 25 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -147,14 +168,36 @@ export default function AboutWhyChooseUs() {
                 className="group bg-white rounded-3xl p-6 sm:p-7 border border-[#17213D]/10 hover:border-[#D09A16]/60 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center justify-between mb-5">
-                    <div className="w-11 h-11 rounded-2xl bg-[#D09A16]/10 text-[#D09A16] flex items-center justify-center font-bold group-hover:bg-[#17213D] group-hover:text-white transition-colors">
-                      <IconComp size={20} />
+                  {/* Pillar Card Image with Glassmorphic Badging */}
+                  {pillar.image ? (
+                    <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden mb-5 bg-[#17213D]/5 border border-[#17213D]/5">
+                      <Image
+                        src={pillar.image}
+                        alt={pillar.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 380px"
+                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#17213D]/70 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                      
+                      <div className="absolute top-3 left-3 w-9 h-9 rounded-xl bg-[#17213D]/80 backdrop-blur-md text-[#D09A16] border border-white/10 flex items-center justify-center font-bold shadow-md">
+                        <IconComp size={18} />
+                      </div>
+
+                      <span className="absolute top-3 right-3 text-[10px] font-bold uppercase tracking-widest text-[#17213D] bg-[#F7F5EF]/95 backdrop-blur-md px-2.5 py-1 rounded-full shadow-md border border-[#D09A16]/20">
+                        {pillar.badge}
+                      </span>
                     </div>
-                    <span className="text-[10px] font-bold uppercase tracking-widest text-[#D09A16] bg-[#D09A16]/10 px-2.5 py-1 rounded-full">
-                      {pillar.badge}
-                    </span>
-                  </div>
+                  ) : (
+                    <div className="flex items-center justify-between mb-5">
+                      <div className="w-11 h-11 rounded-2xl bg-[#D09A16]/10 text-[#D09A16] flex items-center justify-center font-bold group-hover:bg-[#17213D] group-hover:text-white transition-colors">
+                        <IconComp size={20} />
+                      </div>
+                      <span className="text-[10px] font-bold uppercase tracking-widest text-[#D09A16] bg-[#D09A16]/10 px-2.5 py-1 rounded-full">
+                        {pillar.badge}
+                      </span>
+                    </div>
+                  )}
 
                   <h4 className="font-serif font-bold text-lg text-[#17213D] group-hover:text-[#D09A16] transition-colors leading-snug mb-3">
                     {pillar.title}

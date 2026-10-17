@@ -180,7 +180,9 @@ const PAGE_CONFIGS = {
       { id: 'locationSection', label: 'Urban Balance & Callout' },
       { id: 'whyLiveHere', label: 'Why Live Here (8 Pillars)' },
       { id: 'nearestPlaces', label: 'Commute & Landmarks' },
-      { id: 'howWeHelp', label: 'Turnkey Platform & Authority' },
+      { id: 'howWeHelp', label: 'How We Help (Turnkey)' },
+      { id: 'whyChooseSaudagar', label: 'Why Choose Saudagar' },
+      { id: 'mapShowcase', label: 'Strategic & Static Maps' },
       { id: 'faqs', label: 'Corridor FAQs' }
     ]
   },
@@ -1153,10 +1155,48 @@ export default function AdminPageCMS() {
 
             {activeSectionTab === 'teamMembers' && (
               <div className="space-y-6">
-                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Senior Principals &amp; Transaction Specialists</h3>
+                <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                  <div>
+                    <h3 className="text-sm font-semibold text-white">Senior Principals &amp; Transaction Specialists (Carousel)</h3>
+                    <p className="text-[11px] text-slate-400">Add or manage corridor advisors. 3 appear on the front view with carousel sliding for additional members.</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const current = formData?.teamMembers || [];
+                      const newAdvisor = {
+                        name: 'New Senior Advisor',
+                        designation: 'Luxury Corridor Specialist',
+                        focus: 'DLF Phase 1–5 & Golf Course Rd',
+                        bio: 'Specializing in high-value builder floors, plot acquisitions, and private off-market mandates across prime DLF micro-markets.',
+                        image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80'
+                      };
+                      updateField('teamMembers', [...current, newAdvisor]);
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Plus size={13} />
+                    <span>Add Senior Advisor</span>
+                  </button>
+                </div>
                 {(formData?.teamMembers || []).map((member, idx) => (
-                  <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                    <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Advisor #{idx + 1}: {member.name}</h4>
+                  <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4 relative group">
+                    <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                      <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Advisor #{idx + 1}: {member.name}</h4>
+                      {(formData?.teamMembers || []).length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const next = (formData?.teamMembers || []).filter((_, i) => i !== idx);
+                            updateField('teamMembers', next);
+                          }}
+                          className="p-1 rounded-md text-red-400 hover:bg-red-500/10 transition-colors"
+                          title="Delete Advisor"
+                        >
+                          <Trash2 size={13} />
+                        </button>
+                      )}
+                    </div>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <FormField label="Full Name" value={member.name} onChange={(val) => updateField(`teamMembers.${idx}.name`, val)} />
                       <FormField label="Role / Designation" value={member.designation} onChange={(val) => updateField(`teamMembers.${idx}.designation`, val)} />
@@ -1519,10 +1559,48 @@ export default function AdminPageCMS() {
 
                 {/* Senior Team Specialists */}
                 <div className="space-y-4 pt-4 border-t border-white/10">
-                  <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider">Senior Team Specialists</h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider">Senior Team Specialists (Core Advisory &amp; Operations Carousel)</h4>
+                      <p className="text-[11px] text-slate-400">Add or manage team members. 3 appear in the front view, and remaining members cycle in the carousel.</p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const current = formData?.leadership?.teamMembers || [];
+                        const newMember = {
+                          name: 'New Advisory Member',
+                          designation: 'Senior Transaction Specialist',
+                          image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80'
+                        };
+                        updateField('leadership.teamMembers', [...current, newMember]);
+                      }}
+                      className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                    >
+                      <Plus size={13} />
+                      <span>Add Team Member</span>
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {(formData?.leadership?.teamMembers || []).map((m, idx) => (
-                      <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
+                      <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3 relative group">
+                        <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                          <span className="text-[11px] font-bold text-[#D09A16] uppercase tracking-wider">Member #{idx + 1}</span>
+                          {(formData?.leadership?.teamMembers || []).length > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const next = (formData?.leadership?.teamMembers || []).filter((_, i) => i !== idx);
+                                updateField('leadership.teamMembers', next);
+                              }}
+                              className="p-1 rounded-md text-red-400 hover:bg-red-500/10 transition-colors"
+                              title="Delete Member"
+                            >
+                              <Trash2 size={13} />
+                            </button>
+                          )}
+                        </div>
                         <FormField label="Name" value={m.name} onChange={(val) => updateField(`leadership.teamMembers.${idx}.name`, val)} />
                         <FormField label="Designation" value={m.designation} onChange={(val) => updateField(`leadership.teamMembers.${idx}.designation`, val)} />
                         <ImageUploadInput
@@ -1591,6 +1669,15 @@ export default function AdminPageCMS() {
                         <FormField label="Title" value={pillar.title} onChange={(val) => updateField(`whyChooseUs.pillars.${pIdx}.title`, val)} />
                       </div>
                       <TextAreaField label="Description" value={pillar.description} onChange={(val) => updateField(`whyChooseUs.pillars.${pIdx}.description`, val)} rows={2} />
+
+                      {/* Pillar Image */}
+                      <ImageUploadInput
+                        label={`Pillar #${pillar.number || pIdx + 1} Image`}
+                        value={pillar.image || ''}
+                        onChange={(val) => updateField(`whyChooseUs.pillars.${pIdx}.image`, val)}
+                        folder="/saudagar-properties/about"
+                        description={`Upload or browse an image for Pillar ${pillar.number || pIdx + 1} (${pillar.badge || 'Strategic Pillar'})`}
+                      />
 
                       {/* 3 Pillar Bullets */}
                       <div className="space-y-2 pt-2 border-t border-white/10">
@@ -2224,6 +2311,12 @@ export default function AdminPageCMS() {
                         <FormField label="Transit Time" value={place.time} onChange={(val) => updateField(`nearestPlaces.places.${idx}.time`, val)} />
                       </div>
                       <FormField label="Category" value={place.category} onChange={(val) => updateField(`nearestPlaces.places.${idx}.category`, val)} />
+                      <ImageUploadInput
+                        label="Landmark Photo"
+                        description="High-resolution photo of this landmark or connectivity hub."
+                        value={place.image}
+                        onChange={(url) => updateField(`nearestPlaces.places.${idx}.image`, url)}
+                      />
                       <TextAreaField label="Commute Details" value={place.desc} onChange={(val) => updateField(`nearestPlaces.places.${idx}.desc`, val)} rows={2} />
                     </div>
                   ))}
@@ -2234,16 +2327,23 @@ export default function AdminPageCMS() {
             {activeSectionTab === 'howWeHelp' && (
               <div className="space-y-6">
                 <div className="border-b border-white/10 pb-2">
-                  <h3 className="text-sm font-semibold text-white">Turnkey Platform &amp; Founders Advisory Mandate</h3>
-                  <p className="text-[11px] text-slate-400">Customize Section 6 client acquisition services, checklist, and leadership credentials.</p>
+                  <h3 className="text-sm font-semibold text-white">How Can We Help You? (Turnkey Acquisition Platform)</h3>
+                  <p className="text-[11px] text-slate-400">Customize client acquisition services, narrative, checklist, and advisory feature photo.</p>
                 </div>
 
                 <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">How Can We Help You? (Left Column)</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <FormField label="Badge" value={formData?.howWeHelp?.badge} onChange={(val) => updateField('howWeHelp.badge', val)} />
+                    <FormField label="Badge" value={formData?.howWeHelp?.badge} onChange={(val) => updateField('howWeHelp.badge', val)} placeholder="Turnkey Acquisition Platform" />
                     <FormField label="Section Title" value={formData?.howWeHelp?.title} onChange={(val) => updateField('howWeHelp.title', val)} />
                   </div>
+
+                  <ImageUploadInput
+                    label="Turnkey Platform Advisory Photo"
+                    description="Grand feature photo displayed beside the editorial narrative and services checklist."
+                    value={formData?.howWeHelp?.image}
+                    onChange={(url) => updateField('howWeHelp.image', url)}
+                  />
+
                   <ListField
                     label="Editorial Narrative Paragraphs"
                     description="Separate paragraphs by pressing Enter."
@@ -2251,28 +2351,139 @@ export default function AdminPageCMS() {
                     onChange={(val) => updateField('howWeHelp.paragraphs', val)}
                     rows={4}
                   />
+
                   <ListField
                     label="Services Checklist (Bullet Items)"
+                    description="Services verified for this corridor."
                     items={formData?.howWeHelp?.servicesChecklist || []}
                     onChange={(val) => updateField('howWeHelp.servicesChecklist', val)}
                     rows={4}
                   />
                 </div>
+              </div>
+            )}
+
+            {activeSectionTab === 'whyChooseSaudagar' && (
+              <div className="space-y-6">
+                <div className="border-b border-white/10 pb-2">
+                  <h3 className="text-sm font-semibold text-white">Why Choose Saudagar Properties</h3>
+                  <p className="text-[11px] text-slate-400">Customize the 25+ years corridor authority section, image, and founders signature desk.</p>
+                </div>
 
                 <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Why Choose Saudagar Properties (Right Card)</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <FormField label="Badge" value={formData?.whyChooseSaudagar?.badge} onChange={(val) => updateField('whyChooseSaudagar.badge', val)} />
-                    <FormField label="Card Title" value={formData?.whyChooseSaudagar?.title} onChange={(val) => updateField('whyChooseSaudagar.title', val)} />
+                    <FormField label="Badge" value={formData?.whyChooseSaudagar?.badge} onChange={(val) => updateField('whyChooseSaudagar.badge', val)} placeholder="25+ Years Experience" />
+                    <FormField label="Section Title" value={formData?.whyChooseSaudagar?.title} onChange={(val) => updateField('whyChooseSaudagar.title', val)} />
                     <FormField label="Founder Name" value={formData?.whyChooseSaudagar?.founderName} onChange={(val) => updateField('whyChooseSaudagar.founderName', val)} placeholder="Arun Sharma & Suneeta Chawla" />
                     <FormField label="Founder Designation" value={formData?.whyChooseSaudagar?.founderTitle} onChange={(val) => updateField('whyChooseSaudagar.founderTitle', val)} placeholder="Founders, Saudagar Properties Pvt Ltd" />
                   </div>
+
+                  <ImageUploadInput
+                    label="Corridor Authority Feature Image"
+                    description="Showcases premier corridor architecture with 25+ years badge overlay."
+                    value={formData?.whyChooseSaudagar?.image}
+                    onChange={(url) => updateField('whyChooseSaudagar.image', url)}
+                  />
+
                   <TextAreaField
                     label="Authority Narrative Content"
                     value={formData?.whyChooseSaudagar?.content}
                     onChange={(val) => updateField('whyChooseSaudagar.content', val)}
-                    rows={5}
+                    rows={6}
                   />
+                </div>
+              </div>
+            )}
+
+            {activeSectionTab === 'mapShowcase' && (
+              <div className="space-y-6">
+                <div className="border-b border-white/10 pb-2">
+                  <h3 className="text-sm font-semibold text-white">Strategic Cartography &amp; Master Plan Maps</h3>
+                  <p className="text-[11px] text-slate-400">
+                    Configure both the live interactive Google Map embed and upload the high-resolution static layout / master plan image.
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <FormField
+                    label="Section Badge"
+                    value={formData?.mapShowcase?.badge}
+                    onChange={(val) => updateField('mapShowcase.badge', val)}
+                    placeholder="Strategic Cartography & Master Planning"
+                  />
+                  <FormField
+                    label="Section Title"
+                    value={formData?.mapShowcase?.title}
+                    onChange={(val) => updateField('mapShowcase.title', val)}
+                    placeholder="Strategic Location & Master Plan"
+                  />
+                </div>
+
+                <TextAreaField
+                  label="Section Description"
+                  value={formData?.mapShowcase?.description}
+                  onChange={(val) => updateField('mapShowcase.description', val)}
+                  rows={2}
+                  placeholder="Explore the geographic positioning alongside official sector master layout planning."
+                />
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 pt-2">
+                  {/* Map 1: Google Map Embed */}
+                  <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
+                    <div>
+                      <span className="text-xs font-bold text-[#D09A16] uppercase tracking-wider block mb-1">
+                        Map 1: Live Interactive Google Map Embed
+                      </span>
+                      <p className="text-[11px] text-slate-400">
+                        Paste the Google Maps embed URL (the URL inside the src attribute of Google Maps &apos;Share &gt; Embed a map&apos; iframe).
+                      </p>
+                    </div>
+                    <TextAreaField
+                      label="Google Maps Embed URL (iframe src)"
+                      value={formData?.mapShowcase?.googleMapEmbed}
+                      onChange={(val) => updateField('mapShowcase.googleMapEmbed', val)}
+                      rows={3}
+                      placeholder="https://www.google.com/maps/embed?pb=..."
+                    />
+                    {formData?.mapShowcase?.googleMapEmbed && (
+                      <div className="aspect-[16/10] w-full rounded-xl overflow-hidden border border-white/10 mt-2 bg-slate-900">
+                        <iframe
+                          src={formData.mapShowcase.googleMapEmbed}
+                          title="Google Map Preview"
+                          className="w-full h-full border-0"
+                          loading="lazy"
+                        />
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Map 2: Static Map Image */}
+                  <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
+                    <div>
+                      <span className="text-xs font-bold text-[#D09A16] uppercase tracking-wider block mb-1">
+                        Map 2: High-Resolution Static Master Plan / Layout Blueprint
+                      </span>
+                      <p className="text-[11px] text-slate-400">
+                        Upload your static layout map or sector zoning blueprint. Visitors can click to inspect it in full high resolution.
+                      </p>
+                    </div>
+                    <ImageUploadInput
+                      label="Master Plan / Static Map Image"
+                      description="Upload layout map via ImageKit or paste image URL."
+                      value={formData?.mapShowcase?.staticMapImage}
+                      onChange={(url) => updateField('mapShowcase.staticMapImage', url)}
+                    />
+                    {formData?.mapShowcase?.staticMapImage && (
+                      <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden border border-white/10 mt-2 bg-slate-900">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img
+                          src={formData.mapShowcase.staticMapImage}
+                          alt="Static Map Blueprint Preview"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    )}
+                  </div>
                 </div>
               </div>
             )}
