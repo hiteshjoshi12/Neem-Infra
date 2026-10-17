@@ -704,19 +704,19 @@ function PropertyListingCard({ property, index = 0 }) {
     >
       <div>
         {/* Card Image */}
-        <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-slate-900 mb-4 border border-[#17213D]/5">
+        <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-slate-100 mb-4 border border-[#17213D]/5">
           <Image
             src={property.img || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"}
             alt={property.title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 380px"
-            className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+            className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
             loading="lazy"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black/65 via-transparent to-transparent pointer-events-none" />
 
           {/* Floating Badges */}
-          <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
+          <div className="absolute top-3 left-3 z-20 flex flex-wrap gap-1.5">
             {property.tag ? (
               <span className="px-2.5 py-1 rounded-full bg-[#0A0E17]/85 backdrop-blur-md text-[#D09A16] text-[9px] font-bold uppercase tracking-wider border border-white/15">
                 {property.tag}

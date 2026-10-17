@@ -260,7 +260,7 @@ export default function TeamInteractiveShowcase({ founders, teamMembers, advisor
                         sizes="(max-width: 768px) 100vw, 33vw"
                         className="object-cover object-top group-hover:scale-105 transition-transform duration-500 filter brightness-95"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E17] via-transparent to-transparent opacity-80" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E17] via-transparent to-transparent opacity-80 pointer-events-none" />
                       
                       {/* Focus Badge */}
                       <div className="absolute bottom-3 left-3 right-3 px-3 py-1.5 rounded-xl bg-[#0A0E17]/85 backdrop-blur-md border border-white/15 text-[11px] font-semibold text-[#D09A16] flex items-center gap-1.5 truncate">

@@ -20,7 +20,7 @@ export async function GET(req, { params }) {
   try {
     await connectDB();
     const { id } = await params;
-    const property = await Property.findById(id);
+    const property = await Property.findById(id).lean();
 
     if (!property) {
       return NextResponse.json({ success: false, message: 'Property not found' }, { status: 404 });
@@ -52,7 +52,7 @@ export async function PUT(req, { params }) {
       return NextResponse.json({ success: false, message: 'Property not found' }, { status: 404 });
     }
 
-    invalidateCache('prop_cache');
+    invalidateCache('props');
 
     return NextResponse.json({
       success: true,
@@ -76,7 +76,7 @@ export async function DELETE(req, { params }) {
       return NextResponse.json({ success: false, message: 'Property not found' }, { status: 404 });
     }
 
-    invalidateCache('prop_cache');
+    invalidateCache('props');
 
     return NextResponse.json({
       success: true,

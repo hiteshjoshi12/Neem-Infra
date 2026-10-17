@@ -46,7 +46,7 @@ export const CmsProvider = ({ children }) => {
     isFetchingRef.current = true;
     try {
       const [secResult, propResult, testResult] = await Promise.allSettled([
-        api.getSections(true),
+        api.getSections(force),
         api.getProperties({ all: false }),
         api.getTestimonials()
       ]);

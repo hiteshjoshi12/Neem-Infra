@@ -190,7 +190,7 @@ export default function HowWeWorkProcess() {
         ".process-gold-line",
         {
           scaleX: 0,
-          transformOrigin: "left center",
+          transformOrigin: "0% 50%",
         },
         {
           scaleX: 1,

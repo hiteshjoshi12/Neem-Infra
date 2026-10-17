@@ -126,7 +126,9 @@ const propertySchema = new mongoose.Schema(
 
 // Performance Indexes for fast catalog browsing and micro-market filtering
 propertySchema.index({ isActive: 1, isFeatured: 1, order: 1 });
+propertySchema.index({ isActive: 1, order: 1, createdAt: -1 });
 propertySchema.index({ isActive: 1, category: 1, createdAt: -1 });
+propertySchema.index({ isActive: 1, priceNumeric: 1 });
 propertySchema.index({ location: 1 });
 propertySchema.index({ createdAt: -1 });
 

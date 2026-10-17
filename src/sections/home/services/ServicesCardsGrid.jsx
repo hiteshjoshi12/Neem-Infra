@@ -125,17 +125,16 @@ export default function ServicesCardsGrid() {
             className="group relative flex flex-col h-full rounded-3xl bg-white border border-[#17213D]/10 shadow-[0_12px_35px_-10px_rgba(23,33,61,0.06)] hover:shadow-[0_25px_50px_-10px_rgba(208, 154, 22,0.22)] hover:border-[#D09A16]/50 hover:-translate-y-2 transition-all duration-300 overflow-hidden transform-gpu cursor-pointer no-underline block"
           >
             {/* Top Image Preview with Dark Vignette */}
-            <div className="relative h-52 sm:h-56 w-full overflow-hidden">
+            <div className="relative h-52 sm:h-56 w-full overflow-hidden bg-slate-100">
               <Image
                 src={service.bgImage}
                 alt={service.title}
-                width={800}
-                height={500}
+                fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 380px"
                 loading="lazy"
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-out"
+                className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0E162B] via-[#0E162B]/35 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0E162B] via-[#0E162B]/35 to-transparent pointer-events-none" />
 
               {/* Category Badge & Number Indicator */}
               <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">

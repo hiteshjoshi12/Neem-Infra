@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import Testimonial from '@/models/Testimonial';
 import { requireAdmin } from '@/lib/auth/authGuard';
+import { invalidateCache } from '@/lib/cache/apiCache';
 
 export async function PUT(req, { params }) {
   try {
@@ -13,11 +14,13 @@ export async function PUT(req, { params }) {
     const testimonial = await Testimonial.findByIdAndUpdate(id, body, {
       new: true,
       runValidators: true
-    });
+    }).lean();
 
     if (!testimonial) {
       return NextResponse.json({ success: false, message: 'Testimonial not found' }, { status: 404 });
     }
+
+    invalidateCache('testimonials');
 
     return NextResponse.json({
       success: true,
@@ -40,6 +43,8 @@ export async function DELETE(req, { params }) {
     if (!testimonial) {
       return NextResponse.json({ success: false, message: 'Testimonial not found' }, { status: 404 });
     }
+
+    invalidateCache('testimonials');
 
     return NextResponse.json({
       success: true,

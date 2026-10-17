@@ -24,16 +24,12 @@ async function executeRequest(endpoint, options = {}) {
 
   const headers = {
     'Content-Type': 'application/json',
-    'Cache-Control': 'no-cache, no-store, must-revalidate',
-    'Pragma': 'no-cache',
-    'Expires': '0',
     ...(token ? { Authorization: `Bearer ${token}` } : {}),
     ...options.headers
   };
 
   try {
     const res = await fetch(`${API_BASE_URL}${endpoint}`, {
-      cache: 'no-store',
       ...options,
       headers
     });
@@ -87,26 +83,24 @@ export const api = {
 
   // Sections & Pages CMS
   getSections: (fresh = false) =>
-    request(`/sections${fresh ? '?fresh=1' : ''}`, { cache: 'no-store' }),
+    request(`/sections${fresh ? '?fresh=1' : ''}`),
 
   getSection: (sectionKey) =>
-    request(`/sections/${sectionKey}?t=${Date.now()}`, { cache: 'no-store' }),
+    request(`/sections/${sectionKey}`),
 
   updateSection: (sectionKey, data, title) =>
     request(`/sections/${sectionKey}`, {
       method: 'PUT',
-      cache: 'no-store',
       body: JSON.stringify({ data, title })
     }),
 
-  getPages: () => request(`/pages?t=${Date.now()}`, { cache: 'no-store' }),
+  getPages: () => request('/pages'),
 
-  getPage: (pageKey) => request(`/pages/${pageKey}?t=${Date.now()}`, { cache: 'no-store' }),
+  getPage: (pageKey) => request(`/pages/${pageKey}`),
 
   updatePage: (pageKey, data, title) =>
     request(`/pages/${pageKey}`, {
       method: 'PUT',
-      cache: 'no-store',
       body: JSON.stringify({ data, title })
     }),
 

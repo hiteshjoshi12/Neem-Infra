@@ -2474,12 +2474,12 @@ export default function AdminPageCMS() {
                       onChange={(url) => updateField('mapShowcase.staticMapImage', url)}
                     />
                     {formData?.mapShowcase?.staticMapImage && (
-                      <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden border border-white/10 mt-2 bg-slate-900">
+                      <div className="relative aspect-[16/10] w-full rounded-xl overflow-hidden border border-white/10 mt-2 bg-slate-950 flex items-center justify-center p-2">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={formData.mapShowcase.staticMapImage}
                           alt="Static Map Blueprint Preview"
-                          className="w-full h-full object-cover"
+                          className="max-w-full max-h-full object-contain"
                         />
                       </div>
                     )}

@@ -54,7 +54,7 @@ export default function OurServicesSection() {
         lineRef.current,
         {
           scaleX: 0,
-          transformOrigin: 'center',
+          transformOrigin: '50% 50%',
         },
         {
           scaleX: 1,

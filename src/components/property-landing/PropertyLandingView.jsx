@@ -675,16 +675,16 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                 className="group rounded-3xl bg-white border border-[#E5DFD5] hover:border-[#D09A16]/60 transition-all duration-300 flex flex-col justify-between shadow-[0_4px_20px_rgba(23,33,61,0.06)] hover:shadow-[0_16px_35px_rgba(208,154,22,0.14)] overflow-hidden"
               >
                 <div>
-                  {/* Landmark Photographic Banner */}
+                  {/* Landmark Photographic Banner - Full Bleed Edge-to-Edge */}
                   <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
                     <Image
                       src={place.image || 'https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=800&q=80'}
                       alt={place.name}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                      className="object-cover group-hover:scale-105 transition-transform duration-500 ease-out"
+                      className="object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent pointer-events-none" />
 
                     {/* Category Tag on Top Left */}
                     <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md border border-white/40 text-[10px] font-bold uppercase tracking-wider text-[#17213D] shadow-xs">
@@ -801,9 +801,9 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                     alt="Saudagar Properties Turnkey Acquisition Advisory"
                     fill
                     sizes="(max-width: 1024px) 100vw, 40vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0E162B] via-transparent to-transparent opacity-80" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0E162B] via-transparent to-transparent opacity-80 pointer-events-none" />
                 </div>
 
                 {/* Floating Glassmorphism Advisory Badge */}
@@ -847,9 +847,9 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                     alt={whyChooseSaudagar.title || 'Why Choose Saudagar Properties'}
                     fill
                     sizes="(max-width: 1024px) 100vw, 40vw"
-                    className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                    className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none" />
                 </div>
 
                 {/* Top Badge */}
@@ -1340,7 +1340,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                   </span>
                 </div>
 
-                {/* Static Map Image Preview with Click-To-Enlarge */}
+                {/* Static Map Image Preview with Click-To-Enlarge - Full Bleed */}
                 <div
                   onClick={() => setIsMapModalOpen(true)}
                   className="relative aspect-[16/11] w-full rounded-2xl overflow-hidden border border-white/10 bg-[#0A0E17] group/img cursor-pointer"
@@ -1350,9 +1350,9 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                     alt={`${corridor.corridorName} Master Plan Map`}
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
-                    className="object-cover group-hover/img:scale-105 transition-transform duration-500 ease-out"
+                    className="object-cover object-center group-hover/img:scale-105 transition-transform duration-500 ease-out"
                   />
-                  <div className="absolute inset-0 bg-black/40 group-hover/img:bg-black/20 transition-colors flex items-center justify-center">
+                  <div className="absolute inset-0 bg-black/35 group-hover/img:bg-black/15 transition-colors flex items-center justify-center">
                     <div className="px-4 py-2.5 rounded-xl bg-black/75 backdrop-blur-md border border-[#D09A16]/50 text-white text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-lg group-hover/img:scale-105 transition-transform">
                       <Maximize2 size={14} className="text-[#D09A16]" />
                       <span>Click to Inspect High-Res</span>

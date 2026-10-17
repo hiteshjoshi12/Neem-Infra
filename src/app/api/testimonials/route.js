@@ -4,15 +4,27 @@ import Testimonial from '@/models/Testimonial';
 import { requireAdmin } from '@/lib/auth/authGuard';
 import { getCached, setCached, invalidateCache } from '@/lib/cache/apiCache';
 
+const CACHE_TTL = 60_000; // 60 seconds — testimonials change very infrequently
+
 export async function GET(req) {
   try {
-    await connectDB();
     const { searchParams } = new URL(req.url);
     const all = searchParams.get('all');
     
-    const filter = all ? {} : { isActive: true };
+    const cacheKey = `testimonials:${all || 'active'}`;
+    const cached = getCached(cacheKey, CACHE_TTL);
+    if (cached) {
+      return NextResponse.json(cached, {
+        headers: {
+          'Cache-Control': 'private, max-age=30',
+          'X-Cache': 'HIT',
+        }
+      });
+    }
 
-    const testimonials = await Testimonial.find(filter).sort({ order: 1, createdAt: -1 });
+    await connectDB();
+    const filter = all ? {} : { isActive: true };
+    const testimonials = await Testimonial.find(filter).sort({ order: 1, createdAt: -1 }).lean();
 
     const responsePayload = {
       success: true,
@@ -20,11 +32,12 @@ export async function GET(req) {
       data: testimonials
     };
 
+    setCached(cacheKey, responsePayload);
+
     return NextResponse.json(responsePayload, {
       headers: {
-        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0'
+        'Cache-Control': 'private, max-age=30',
+        'X-Cache': 'MISS',
       }
     });
   } catch (error) {
@@ -38,7 +51,7 @@ export async function POST(req) {
     await connectDB();
     const body = await req.json();
     const testimonial = await Testimonial.create(body);
-    invalidateCache('testimonials_cache');
+    invalidateCache('testimonials');
     
     return NextResponse.json({
       success: true,

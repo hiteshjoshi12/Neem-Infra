@@ -81,7 +81,7 @@ export default function AboutWhyChooseUs() {
           className="bg-white rounded-3xl p-6 sm:p-10 border border-[#17213D]/10 hover:border-[#D09A16]/50 shadow-[0_20px_50px_rgba(23,33,61,0.05)] mb-10 relative overflow-hidden group"
         >
           {leadPillar.image && (
-            <div className="relative aspect-[21/9] sm:aspect-[28/9] w-full rounded-2xl overflow-hidden mb-8 border border-[#17213D]/5 bg-[#17213D]/5">
+            <div className="relative aspect-[21/9] sm:aspect-[28/9] w-full rounded-2xl overflow-hidden mb-8 border border-[#17213D]/10 bg-slate-100">
               <Image
                 src={leadPillar.image}
                 alt={leadPillar.title}
@@ -89,8 +89,8 @@ export default function AboutWhyChooseUs() {
                 sizes="(max-width: 1200px) 100vw, 1100px"
                 className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#17213D]/70 via-black/20 to-transparent" />
-              <div className="absolute bottom-4 left-4 sm:left-6 flex items-center gap-2">
+              <div className="absolute inset-0 bg-gradient-to-t from-[#17213D]/70 via-black/20 to-transparent pointer-events-none" />
+              <div className="absolute bottom-4 left-4 sm:left-6 z-20 flex items-center gap-2">
                 <span className="px-3 py-1 rounded-full bg-[#D09A16] text-[#0E162B] text-[10px] font-bold tracking-widest uppercase shadow-md">
                   Pillar 01 • {leadPillar.badge}
                 </span>
@@ -170,15 +170,15 @@ export default function AboutWhyChooseUs() {
                 <div>
                   {/* Pillar Card Image with Glassmorphic Badging */}
                   {pillar.image ? (
-                    <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden mb-5 bg-[#17213D]/5 border border-[#17213D]/5">
+                    <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden mb-5 bg-slate-100 border border-[#17213D]/10">
                       <Image
                         src={pillar.image}
                         alt={pillar.title}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 380px"
-                        className="object-cover transition-transform duration-700 group-hover:scale-105"
+                        className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#17213D]/70 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#17213D]/70 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity pointer-events-none" />
                       
                       <div className="absolute top-3 left-3 w-9 h-9 rounded-xl bg-[#17213D]/80 backdrop-blur-md text-[#D09A16] border border-white/10 flex items-center justify-center font-bold shadow-md">
                         <IconComp size={18} />

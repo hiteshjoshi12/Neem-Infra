@@ -182,13 +182,13 @@ export default function LiveArticlePreview({
         ========================================================== */}
         {formData.featuredImage ? (
           <figure className="my-6 rounded-2xl overflow-hidden border border-black/10 shadow-md bg-white">
-            <div className="relative aspect-video w-full">
+            <div className="relative aspect-video w-full bg-slate-100 overflow-hidden">
               <Image
                 src={formData.featuredImage}
                 alt={formData.featuredImageAlt || formData.title || 'Featured Image'}
                 fill
                 unoptimized
-                className="object-cover"
+                className="object-cover object-center"
                 sizes="(max-width: 1024px) 100vw, 800px"
               />
             </div>

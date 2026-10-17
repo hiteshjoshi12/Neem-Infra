@@ -49,4 +49,7 @@ const testimonialSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// Compound index matching the sort pattern in GET /api/testimonials
+testimonialSchema.index({ isActive: 1, order: 1, createdAt: -1 });
+
 export default mongoose.models.Testimonial || mongoose.model('Testimonial', testimonialSchema);

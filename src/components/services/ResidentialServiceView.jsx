@@ -302,20 +302,20 @@ export default function ResidentialServiceView({
               className="bg-white rounded-3xl border border-[#E2DDD5] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 grid grid-cols-1 lg:grid-cols-12 group"
             >
               {/* Image Column */}
-              <div className="lg:col-span-5 relative min-h-[300px] lg:min-h-full overflow-hidden">
+              <div className="lg:col-span-5 relative min-h-[300px] lg:min-h-full overflow-hidden bg-slate-100">
                 <Image
                   src={item.image}
                   alt={item.alt || `${item.title} - Saudagar Properties`}
                   fill
                   sizes="(max-width: 1024px) 100vw, 40vw"
                   loading="lazy"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent lg:hidden" />
-                <div className="absolute top-5 left-5 bg-[#0E162B]/85 backdrop-blur-md px-3.5 py-1 rounded-full text-[11px] font-semibold text-[#D09A16] uppercase tracking-wider">
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent lg:hidden pointer-events-none" />
+                <div className="absolute top-5 left-5 z-20 bg-[#0E162B]/85 backdrop-blur-md px-3.5 py-1 rounded-full text-[11px] font-semibold text-[#D09A16] uppercase tracking-wider">
                   {item.locations}
                 </div>
-                <div className="absolute bottom-5 left-5 right-5 text-white lg:hidden">
+                <div className="absolute bottom-5 left-5 right-5 text-white lg:hidden z-20">
                   <h3 className="text-2xl font-serif font-bold text-white mb-1">{item.title}</h3>
                   <p className="text-xs text-[#D09A16] font-medium">{item.specs}</p>
                 </div>
@@ -590,15 +590,15 @@ export default function ResidentialServiceView({
               whileHover={{ y: -5 }}
               className="bg-white rounded-2xl border border-[#E2DDD5] overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col group"
             >
-              <div className="relative h-48 w-full overflow-hidden bg-slate-900">
+              <div className="relative h-48 w-full overflow-hidden bg-slate-100">
                 <Image
                   src={prop.img || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80"}
                   alt={prop.title}
                   fill
                   sizes="(max-width: 768px) 100vw, 300px"
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute top-3 left-3 bg-[#0A0E17]/90 backdrop-blur-md border border-white/15 text-[#D09A16] px-2.5 py-0.5 rounded text-[10px] font-bold uppercase">
+                <div className="absolute top-3 left-3 z-20 bg-[#0A0E17]/90 backdrop-blur-md border border-white/15 text-[#D09A16] px-2.5 py-0.5 rounded text-[10px] font-bold uppercase">
                   {prop.tag || "For Sale"}
                 </div>
               </div>

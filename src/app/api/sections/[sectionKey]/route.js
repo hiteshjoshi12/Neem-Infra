@@ -8,7 +8,7 @@ export async function GET(req, { params }) {
   try {
     await connectDB();
     const { sectionKey } = await params;
-    const section = await SectionContent.findOne({ sectionKey });
+    const section = await SectionContent.findOne({ sectionKey }).lean();
 
     if (!section) {
       return NextResponse.json({ success: false, message: `Section '${sectionKey}' not found` }, { status: 404 });

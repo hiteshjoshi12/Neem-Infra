@@ -105,7 +105,7 @@ export default function ArticleImage({
         Container with explicit aspect ratio to ensure ZERO Cumulative Layout Shift (CLS)
         during image loading and decoding
       */}
-      <div className={`relative w-full ${aspectClass} overflow-hidden rounded-2xl md:rounded-3xl border border-[#17213D]/10 bg-slate-100 shadow-sm transition-all duration-300 group-hover:shadow-md`}>
+      <div className={`relative w-full ${aspectClass} overflow-hidden rounded-2xl md:rounded-3xl border border-[#17213D]/10 bg-slate-100 shadow-md transition-all duration-300 group-hover:shadow-lg`}>
         <Image
           src={trimmedSrc}
           alt={cleanAlt}
@@ -113,8 +113,8 @@ export default function ArticleImage({
           unoptimized={isUnoptimized}
           priority={priority}
           sizes={sizes}
-          quality={85}
-          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.01]"
+          quality={92}
+          className="object-cover object-center transition-transform duration-700 ease-out group-hover:scale-[1.01]"
         />
         {/* Subtle Luxury Gradient Overlay for depth */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />

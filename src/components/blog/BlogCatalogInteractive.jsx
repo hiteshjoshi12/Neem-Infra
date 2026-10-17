@@ -114,6 +114,7 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
                 <div className="bg-white rounded-3xl border border-[#17213D]/10 group-hover:border-[#D09A16]/60 p-6 sm:p-8 md:p-10 shadow-[0_20px_50px_rgba(23,33,61,0.06)] group-hover:shadow-[0_25px_60px_rgba(208,154,22,0.18)] transition-all duration-300 flex flex-col justify-between h-full">
                   <div>
                     {/* Image Container with Badges */}
+                    {/* Image Container with Badges - Full Bleed Edge-to-Edge */}
                     <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-slate-900 mb-8 border border-[#17213D]/10">
                       <Image
                         src={leadStory.featuredImage || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80"}
@@ -121,7 +122,7 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
                         fill
                         priority
                         sizes="(max-width: 1024px) 100vw, 66vw"
-                        className="object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
+                        className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E17]/80 via-transparent to-transparent pointer-events-none" />
                       
@@ -391,14 +392,14 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
                       className="group block cursor-pointer bg-white rounded-3xl border border-[#17213D]/10 hover:border-[#D09A16]/60 p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full"
                     >
                       <div>
-                        {/* Image Banner */}
-                        <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-slate-900 mb-5 border border-[#17213D]/5">
+                        {/* Image Banner - Full Bleed Edge-to-Edge */}
+                        <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-slate-100 mb-5 border border-[#17213D]/5">
                           <Image
                             src={post.featuredImage || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80"}
                             alt={post.title}
                             fill
                             sizes="(max-width: 768px) 100vw, 360px"
-                            className="object-cover group-hover:scale-105 transition-transform duration-500"
+                            className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
                             loading="lazy"
                           />
                           <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />

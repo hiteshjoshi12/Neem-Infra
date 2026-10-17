@@ -102,13 +102,13 @@ export default async function BlogTagPage({ params }) {
                 >
                   <div>
                     {post.featuredImage && (
-                      <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
+                      <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-100">
                         <Image
                           src={post.featuredImage}
                           alt={post.title}
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
-                          className="object-cover group-hover:scale-105 transition-transform duration-500"
+                          className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
                         />
                       </div>
                     )}

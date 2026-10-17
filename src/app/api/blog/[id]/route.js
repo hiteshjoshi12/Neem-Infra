@@ -7,7 +7,13 @@ export async function GET(req, { params }) {
   try {
     await connectDB();
     const { id } = await params;
-    const post = await BlogPost.findById(id).populate('author category tags location propertyType');
+    const post = await BlogPost.findById(id)
+      .populate('author', 'name slug avatar bio')
+      .populate('category', 'name slug')
+      .populate('tags', 'name slug')
+      .populate('location', 'name slug')
+      .populate('propertyType', 'name slug')
+      .lean();
     
     if (!post) {
       return NextResponse.json({ success: false, message: 'Post not found' }, { status: 404 });
@@ -30,6 +36,7 @@ export async function GET(req, { params }) {
 
 import { revalidatePath } from 'next/cache';
 import { clearBlogCache } from '@/services/blogService';
+import { invalidateCache } from '@/lib/cache/apiCache';
 
 export async function PUT(req, { params }) {
   try {
@@ -59,6 +66,7 @@ export async function PUT(req, { params }) {
     }
     
     clearBlogCache();
+    invalidateCache('blog');
     try {
       revalidatePath('/blog');
       if (post.slug) revalidatePath(`/blog/${post.slug}`);
@@ -90,6 +98,7 @@ export async function DELETE(req, { params }) {
     }
     
     clearBlogCache();
+    invalidateCache('blog');
     try {
       revalidatePath('/blog');
     } catch {

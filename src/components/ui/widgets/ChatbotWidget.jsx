@@ -135,7 +135,7 @@ export default function ChatbotWidget({ chatOpen, setChatOpen }) {
       <AnimatePresence>
         {chatOpen && (
           <motion.div 
-            initial={{ opacity: 0, y: 20, scale: 0.9, transformOrigin: "bottom right" }}
+            initial={{ opacity: 0, y: 20, scale: 0.9, transformOrigin: "100% 100%" }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             transition={{ duration: 0.25, ease: "easeOut" }}

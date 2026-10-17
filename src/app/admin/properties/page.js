@@ -242,13 +242,13 @@ export default function AdminProperties() {
               className="rounded-3xl bg-[#121724] border border-white/10 overflow-hidden shadow-lg flex flex-col justify-between group hover:border-[#D09A16]/50 transition-all duration-300"
             >
               {/* Image Preview with Badges */}
-              <div className="relative h-48 w-full overflow-hidden bg-slate-900">
+              <div className="relative h-48 w-full overflow-hidden bg-[#0C101A]">
                 <Image sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" width={800} height={600}
                   src={prop.img}
                   alt={prop.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                 />
-                <div className="absolute top-3 left-3 flex gap-2">
+                <div className="absolute top-3 left-3 flex gap-2 z-20">
                   <span className="px-2.5 py-1 rounded-full bg-[#1D263B]/90 backdrop-blur-md text-[10px] font-bold text-[#D09A16] uppercase tracking-wider border border-white/10">
                     {prop.tag || 'Luxury'}
                   </span>

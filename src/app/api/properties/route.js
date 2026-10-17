@@ -38,6 +38,8 @@ function generateSlug(title) {
     .replace(/(^-|-$)+/g, '');
 }
 
+const CACHE_TTL = 15_000; // 15 seconds for property listings
+
 export async function GET(req) {
   try {
     await connectDB();
@@ -52,6 +54,18 @@ export async function GET(req) {
     const maxPrice = searchParams.get('maxPrice');
     const all = searchParams.get('all');
     
+    // Build a cache key from significant query params
+    const cacheKey = `props:${all || ''}:${category || ''}:${location || ''}:${search || ''}:${bhk || ''}:${isFeatured || ''}:${sort || ''}:${minPrice || ''}:${maxPrice || ''}`;
+    const cached = getCached(cacheKey, CACHE_TTL);
+    if (cached) {
+      return NextResponse.json(cached, {
+        headers: {
+          'Cache-Control': 'private, max-age=10',
+          'X-Cache': 'HIT',
+        }
+      });
+    }
+
     const filter = {};
 
     if (!all) {
@@ -95,7 +109,19 @@ export async function GET(req) {
       ];
     }
 
-    let properties = await Property.find(filter).lean();
+    // Determine MongoDB sort to push sorting to the database instead of in-memory
+    let dbSort = {};
+    if (sort === 'price_asc') {
+      dbSort = { priceNumeric: 1 };
+    } else if (sort === 'price_desc') {
+      dbSort = { priceNumeric: -1 };
+    } else if (sort === 'newest') {
+      dbSort = { createdAt: -1 };
+    } else {
+      dbSort = { order: 1, createdAt: -1 };
+    }
+
+    let properties = await Property.find(filter).sort(dbSort).lean();
 
     // In-memory price range verification for unindexed/legacy items
     if (minNum !== null || maxNum !== null) {
@@ -107,28 +133,18 @@ export async function GET(req) {
       });
     }
 
-    // In-memory or database sorting
-    if (sort === 'price_asc') {
-      properties.sort((a, b) => (a.priceNumeric || parsePriceToNumber(a.price)) - (b.priceNumeric || parsePriceToNumber(b.price)));
-    } else if (sort === 'price_desc') {
-      properties.sort((a, b) => (b.priceNumeric || parsePriceToNumber(b.price)) - (a.priceNumeric || parsePriceToNumber(a.price)));
-    } else if (sort === 'newest') {
-      properties.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-    } else {
-      properties.sort((a, b) => (a.order || 0) - (b.order || 0) || new Date(b.createdAt) - new Date(a.createdAt));
-    }
-
     const responsePayload = {
       success: true,
       count: properties.length,
       data: properties
     };
 
+    setCached(cacheKey, responsePayload);
+
     return NextResponse.json(responsePayload, {
       headers: {
-        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0'
+        'Cache-Control': 'private, max-age=10',
+        'X-Cache': 'MISS',
       }
     });
   } catch (error) {
@@ -154,7 +170,7 @@ export async function POST(req) {
     if (body.images !== undefined) body.images = normalizeArrayField(body.images);
 
     const property = await Property.create(body);
-    invalidateCache('prop_cache');
+    invalidateCache('props');
     
     return NextResponse.json({
       success: true,

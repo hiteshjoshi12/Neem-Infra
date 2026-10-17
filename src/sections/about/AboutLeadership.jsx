@@ -216,14 +216,14 @@ export default function AboutLeadership() {
                     <div className="relative shrink-0">
                       <div className="absolute -inset-2 rounded-[26px] bg-gradient-to-tr from-[#D09A16]/30 via-[#D09A16]/20 to-[#D09A16]/30 opacity-70 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-                      <div className="relative w-36 h-44 sm:w-40 sm:h-48 rounded-2xl overflow-hidden border-2 border-white/20 shadow-2xl bg-slate-900">
+                      <div className="relative w-36 h-44 sm:w-40 sm:h-48 rounded-2xl overflow-hidden border-2 border-white/20 shadow-2xl bg-[#0C101A]">
                         <Image
                           src={leader.image}
                           alt={leader.name}
-                          width={160}
-                          height={192}
+                          fill
+                          sizes="160px"
                           loading="lazy"
-                          className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-108"
+                          className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent pointer-events-none" />
                       </div>

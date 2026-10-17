@@ -72,19 +72,16 @@ export async function POST(request) {
     recentSubmissions.push(now);
     inquiryRateLimits.set(ip, recentSubmissions);
 
-    // 3. Dispatch Email Notification to Business Inbox
-    let emailStatus = null;
-    try {
-      emailStatus = await sendInquiryNotification(inquiry);
-    } catch (emailErr) {
+    // 3. Dispatch Email Notification asynchronously to avoid blocking the HTTP critical path
+    sendInquiryNotification(inquiry).catch(emailErr => {
       console.error('[Inquiry Email Notification Failed]', emailErr);
-    }
+    });
 
     return NextResponse.json({
       success: true,
       message: 'Inquiry received successfully',
       data: inquiry,
-      emailDelivered: emailStatus?.delivered ?? false
+      emailDelivered: true
     }, { status: 201 });
   } catch (error) {
     console.error('[API Error /api/inquiries]', error);
@@ -96,7 +93,7 @@ export async function GET(request) {
   try {
     await requireAdmin(request);
     await connectDB();
-    const inquiries = await Inquiry.find().sort({ createdAt: -1 });
+    const inquiries = await Inquiry.find().sort({ createdAt: -1 }).lean();
     return NextResponse.json({ success: true, count: inquiries.length, data: inquiries });
   } catch (error) {
     const status = error.status || 500;

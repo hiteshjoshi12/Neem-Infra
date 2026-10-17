@@ -120,13 +120,13 @@ export default function ImageUploadInput({
       {/* Image Preview / Drop Zone */}
       {value ? (
         <div className="relative group rounded-2xl overflow-hidden border border-white/15 bg-slate-900/80 p-2 flex items-center gap-4">
-          <div className="relative w-28 h-20 rounded-xl overflow-hidden bg-slate-950 shrink-0 border border-white/10">
+          <div className="relative w-28 h-20 rounded-xl overflow-hidden bg-slate-800 shrink-0 border border-white/10">
             <Image
               src={value}
               alt="Uploaded Preview"
               fill
               sizes="112px"
-              className="object-cover"
+              className="object-cover object-center"
               unoptimized
             />
           </div>

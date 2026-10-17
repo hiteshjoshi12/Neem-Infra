@@ -117,6 +117,9 @@ const blogPostSchema = new mongoose.Schema(
 
 // Performance Indexes for high-traffic editorial queries
 blogPostSchema.index({ status: 1, publishedAt: -1 });
+blogPostSchema.index({ status: 1, createdAt: -1 });
+blogPostSchema.index({ createdAt: -1 });
+blogPostSchema.index({ slug: 1, status: 1 });
 blogPostSchema.index({ category: 1, status: 1 });
 blogPostSchema.index({ isPillar: 1 });
 blogPostSchema.index({ topicCluster: 1 });

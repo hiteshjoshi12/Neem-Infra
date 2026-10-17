@@ -259,16 +259,16 @@ export default function PropertyDetailClient({ property }) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
-                className="w-full h-full relative"
-              >
-                <Image
-                  src={allImages[activeImageIdx] || property.img}
-                  alt={property.title}
-                  fill
-                  sizes="(max-width: 1200px) 100vw, 1200px"
-                  className="object-cover object-center"
-                  priority
-                />
+                <div className="w-full h-full relative overflow-hidden bg-slate-100">
+                  <Image
+                    src={allImages[activeImageIdx] || property.img}
+                    alt={property.title}
+                    fill
+                    sizes="(max-width: 1200px) 100vw, 1200px"
+                    className="w-full h-full object-cover object-center"
+                    priority
+                  />
+                </div>
               </motion.div>
             </AnimatePresence>
 
@@ -343,13 +343,15 @@ export default function PropertyDetailClient({ property }) {
                       : 'border-transparent opacity-70 hover:opacity-100 hover:border-slate-300'
                   }`}
                 >
-                  <Image
-                    src={imgUrl}
-                    alt={`View ${idx + 1}`}
-                    fill
-                    sizes="112px"
-                    className="object-cover"
-                  />
+                  <div className="relative w-full h-full bg-slate-100 overflow-hidden">
+                    <Image
+                      src={imgUrl}
+                      alt={`View ${idx + 1}`}
+                      fill
+                      sizes="112px"
+                      className="object-cover object-center"
+                    />
+                  </div>
                 </button>
               ))}
             </div>

@@ -6,17 +6,27 @@ import Location from '../models/Location.js';
 import Tag from '../models/Tag.js';
 import PropertyType from '../models/PropertyType.js';
 
-// In-memory cache with 60s TTL to eliminate database roundtrips and make page navigation instant
+// In-memory cache with 30s TTL to eliminate database roundtrips and make page navigation instant
 const memoryCache = new Map();
-const CACHE_TTL_MS = 60 * 1000; // 60 seconds
+const CACHE_TTL_MS = 30 * 1000; // 30 seconds
 
-function getCached(_key) {
-  // Always return null to ensure database changes reflect immediately on the UI
-  return null;
+function getCached(key) {
+  const entry = memoryCache.get(key);
+  if (!entry) return null;
+  if (Date.now() - entry.timestamp > CACHE_TTL_MS) {
+    memoryCache.delete(key);
+    return null;
+  }
+  return entry.data;
 }
 
 function setCached(key, data) {
   memoryCache.set(key, { data, timestamp: Date.now() });
+}
+
+function toPlain(obj) {
+  if (!obj) return obj;
+  return JSON.parse(JSON.stringify(obj));
 }
 
 export function clearBlogCache() {
@@ -85,12 +95,12 @@ export async function getBlogPosts(options = {}) {
     }
 
     let query = BlogPost.find(filter)
-      .populate('author')
-      .populate('category')
-      .populate('tags')
-      .populate('location')
-      .populate('propertyType')
-      .populate('relatedPosts')
+      .select('title slug excerpt featuredImage featuredImageAlt featuredImageCaption featuredImageWidth featuredImageHeight status publishedAt readingTime author category tags location propertyType seoTitle seoDescription featured categorySlug authorSlug isPillar topicCluster parentPillarSlug focusKeyword secondaryKeywords directAnswer keyTakeaways faq tableOfContents createdAt updatedAt')
+      .populate('author', 'name slug avatar bio')
+      .populate('category', 'name slug')
+      .populate('tags', 'name slug')
+      .populate('location', 'name slug city')
+      .populate('propertyType', 'name slug')
       .sort({ publishedAt: -1, createdAt: -1 });
 
     if (limit) {
@@ -98,7 +108,7 @@ export async function getBlogPosts(options = {}) {
     }
 
     const posts = await query.lean().exec();
-    const result = posts && posts.length > 0 ? JSON.parse(JSON.stringify(posts)) : [];
+    const result = posts && posts.length > 0 ? toPlain(posts) : [];
     setCached(cacheKey, result);
     return result;
   } catch (error) {
@@ -115,21 +125,25 @@ export async function getBlogPostBySlug(slug) {
   try {
     await connectDB();
     const post = await BlogPost.findOne({ slug, status: 'published' })
-      .populate('author')
-      .populate('category')
-      .populate('tags')
-      .populate('location')
-      .populate('propertyType')
-      .populate('parentPillar')
-      .populate('childArticles')
+      .populate('author', 'name slug avatar bio')
+      .populate('category', 'name slug')
+      .populate('tags', 'name slug')
+      .populate('location', 'name slug city')
+      .populate('propertyType', 'name slug')
+      .populate('parentPillar', 'title slug excerpt')
+      .populate('childArticles', 'title slug excerpt readingTime featuredImage')
       .populate({
         path: 'relatedPosts',
-        populate: { path: 'author category' }
+        select: 'title slug excerpt featuredImage readingTime author category publishedAt',
+        populate: [
+          { path: 'author', select: 'name slug avatar' },
+          { path: 'category', select: 'name slug' }
+        ]
       })
       .lean()
       .exec();
 
-    const result = post ? JSON.parse(JSON.stringify(post)) : null;
+    const result = post ? toPlain(post) : null;
 
     if (result) {
       // Resolve parentPillar if not populated but slug exists
@@ -174,7 +188,7 @@ export async function getCategories() {
 
   try {
     await connectDB();
-    const categories = await Category.find().sort({ name: 1 }).lean().exec();
+    const categories = await Category.find().sort({ name: 1 }).select('name slug description').lean().exec();
     let result = [];
     if (categories && categories.length > 0) {
       const counts = await BlogPost.aggregate([
@@ -183,7 +197,7 @@ export async function getCategories() {
       ]);
       const countMap = Object.fromEntries(counts.map(c => [String(c._id), c.count]));
       result = categories.map(cat => ({
-        ...JSON.parse(JSON.stringify(cat)),
+        ...toPlain(cat),
         postCount: countMap[String(cat._id)] || 0
       }));
     }
@@ -203,7 +217,7 @@ export async function getCategoryBySlug(slug) {
   try {
     await connectDB();
     const cat = await Category.findOne({ slug }).lean().exec();
-    const result = cat ? JSON.parse(JSON.stringify(cat)) : null;
+    const result = cat ? toPlain(cat) : null;
     if (result) setCached(cacheKey, result);
     return result;
   } catch (error) {
@@ -228,7 +242,7 @@ export async function getTags() {
   try {
     await connectDB();
     const tags = await Tag.find().sort({ name: 1 }).lean().exec();
-    const result = (tags && tags.length > 0) ? JSON.parse(JSON.stringify(tags)) : [];
+    const result = (tags && tags.length > 0) ? toPlain(tags) : [];
     setCached(cacheKey, result);
     return result;
   } catch (error) {
@@ -245,7 +259,7 @@ export async function getTagBySlug(slug) {
   try {
     await connectDB();
     const tag = await Tag.findOne({ slug }).lean().exec();
-    const result = tag ? JSON.parse(JSON.stringify(tag)) : null;
+    const result = tag ? toPlain(tag) : null;
     if (result) setCached(cacheKey, result);
     return result;
   } catch (error) {
@@ -262,7 +276,7 @@ export async function getAuthors() {
   try {
     await connectDB();
     const authors = await Author.find().sort({ name: 1 }).lean().exec();
-    const result = (authors && authors.length > 0) ? JSON.parse(JSON.stringify(authors)) : [];
+    const result = (authors && authors.length > 0) ? toPlain(authors) : [];
     setCached(cacheKey, result);
     return result;
   } catch (error) {
@@ -279,7 +293,7 @@ export async function getAuthorBySlug(slug) {
   try {
     await connectDB();
     const author = await Author.findOne({ slug }).lean().exec();
-    const result = author ? JSON.parse(JSON.stringify(author)) : null;
+    const result = author ? toPlain(author) : null;
     if (result) setCached(cacheKey, result);
     return result;
   } catch (error) {

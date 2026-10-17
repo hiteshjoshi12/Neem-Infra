@@ -361,13 +361,13 @@ export default async function BlogPostPage({ params }) {
                         className="bg-white rounded-2xl overflow-hidden border border-[#17213D]/10 group hover:border-[#D09A16]/50 transition-all shadow-xs flex flex-col"
                       >
                         {rel.featuredImage && (
-                          <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
+                          <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-100">
                             <Image
                               src={rel.featuredImage}
                               alt={rel.title}
                               fill
                               sizes="(max-width: 768px) 100vw, 350px"
-                              className="object-cover group-hover:scale-105 transition-transform duration-500"
+                              className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
                               loading="lazy"
                             />
                           </div>

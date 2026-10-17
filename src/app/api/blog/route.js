@@ -2,40 +2,65 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import BlogPost from '@/models/BlogPost';
 import { requireAdmin } from '@/lib/auth/authGuard';
+import { getCached, setCached, invalidateCache } from '@/lib/cache/apiCache';
+import { revalidatePath } from 'next/cache';
+import { clearBlogCache } from '@/services/blogService';
+
+const CACHE_TTL = 30_000; // 30 seconds
 
 export async function GET(req) {
   try {
-    await connectDB();
     const { searchParams } = new URL(req.url);
     const status = searchParams.get('status');
+    const forceFresh = searchParams.get('fresh') === '1';
     
+    const cacheKey = `blog:${status || 'all'}`;
+    if (!forceFresh) {
+      const cached = getCached(cacheKey, CACHE_TTL);
+      if (cached) {
+        return NextResponse.json(cached, {
+          headers: {
+            'Cache-Control': 'private, max-age=15',
+            'X-Cache': 'HIT',
+          }
+        });
+      }
+    }
+
+    await connectDB();
     const filter = {};
     if (status) {
       filter.status = status;
     }
 
     const posts = await BlogPost.find(filter)
-      .populate('author category tags location propertyType')
-      .sort({ createdAt: -1 });
+      .select('title slug excerpt featuredImage featuredImageAlt status publishedAt readingTime author category tags location propertyType seoTitle seoDescription featured createdAt updatedAt categorySlug authorSlug')
+      .populate('author', 'name slug avatar')
+      .populate('category', 'name slug')
+      .populate('tags', 'name slug')
+      .populate('location', 'name slug')
+      .populate('propertyType', 'name slug')
+      .sort({ createdAt: -1 })
+      .lean();
 
-    return NextResponse.json({
+    const responsePayload = {
       success: true,
       count: posts.length,
       data: posts
-    }, {
+    };
+
+    setCached(cacheKey, responsePayload);
+
+    return NextResponse.json(responsePayload, {
       headers: {
-        'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0'
+        'Cache-Control': 'private, max-age=15',
+        'X-Cache': 'MISS',
       }
     });
   } catch (error) {
     return NextResponse.json({ success: false, message: error.message }, { status: 500 });
   }
 }
-
-import { revalidatePath } from 'next/cache';
-import { clearBlogCache } from '@/services/blogService';
 
 export async function POST(req) {
   try {
@@ -58,6 +83,7 @@ export async function POST(req) {
     
     // Invalidate caches
     clearBlogCache();
+    invalidateCache('blog');
     try {
       revalidatePath('/blog');
     } catch {

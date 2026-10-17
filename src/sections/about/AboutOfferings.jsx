@@ -173,17 +173,16 @@ export default function AboutOfferings() {
                 >
                   <div>
                     {/* Top Image Banner */}
-                    <div className="relative h-56 overflow-hidden">
+                    <div className="relative h-56 overflow-hidden bg-slate-900">
                       <Image
                         src={item.image}
                         alt={item.title}
-                        width={800}
-                        height={500}
+                        fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 380px"
                         loading="lazy"
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E17] via-black/40 to-transparent" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E17] via-black/40 to-transparent pointer-events-none" />
 
                       {/* Tag Badge */}
                       <div className="absolute top-4 left-4">

@@ -336,7 +336,7 @@ export default function DlfPropertyCallout() {
         ".dlf-gold-line",
         {
           scaleX: 0,
-          transformOrigin: "left center",
+          transformOrigin: "0% 50%",
         },
         {
           scaleX: 1,
