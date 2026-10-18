@@ -31,12 +31,6 @@ export default function HeroEditor({ formData, updateField }) {
           onChange={(e) => updateField('badge', e.target.value)}
         />
         <FormInput
-          label="Background Video MP4 URL"
-          placeholder="https://assets.mixkit.co/videos/...mp4"
-          value={formData.videoUrl}
-          onChange={(e) => updateField('videoUrl', e.target.value)}
-        />
-        <FormInput
           label="Headline Line 1"
           placeholder="Gurgaon's Premier"
           value={formData.headlinePrefix}
@@ -70,13 +64,48 @@ export default function HeroEditor({ formData, updateField }) {
         onChange={(e) => updateField('description', e.target.value)}
       />
 
-      {/* Hero Media Fallback Image */}
-      <ImageUploadInput
-        label="Hero Fallback Background Image"
-        value={formData.bgImage}
-        onChange={(val) => updateField('bgImage', val)}
-        folder="/saudagar-properties/hero"
-      />
+      {/* Hero Media: Desktop Video, Mobile Video, & Fallback/Poster */}
+      <div className="pt-6 border-t border-white/10 space-y-5">
+        <div>
+          <h4 className="text-sm font-serif font-bold text-[#D09A16]">
+            Hero Media &amp; Streaming Background Videos
+          </h4>
+          <p className="text-xs text-slate-400">
+            Upload cinematic MP4/WebM videos directly to ImageKit CDN for ultra-fast, zero-latency streaming.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <ImageUploadInput
+            label="Desktop Background Video (MP4/WebM)"
+            value={formData.videoUrl}
+            onChange={(val) => updateField('videoUrl', val)}
+            folder="/saudagar-properties/videos"
+            acceptVideo={true}
+            mediaType="video"
+            description="Landscape (16:9) cinematic walkthrough video for desktop displays"
+          />
+
+          <ImageUploadInput
+            label="Mobile Background Video (Optional MP4)"
+            value={formData.videoMobileUrl}
+            onChange={(val) => updateField('videoMobileUrl', val)}
+            folder="/saudagar-properties/videos"
+            acceptVideo={true}
+            mediaType="video"
+            description="Vertical (9:16) lightweight video stream optimized for mobile smartphones"
+          />
+        </div>
+
+        <ImageUploadInput
+          label="Hero Poster &amp; Fallback Image"
+          value={formData.bgImage}
+          onChange={(val) => updateField('bgImage', val)}
+          folder="/saudagar-properties/hero"
+          recommendedRatio="16:9"
+          description="High-resolution poster displayed while video streams load, or for devices with reduced motion"
+        />
+      </div>
 
       {/* Search Console & Trending Filters */}
       <div className="pt-6 border-t border-white/10 space-y-4">

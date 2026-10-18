@@ -8,6 +8,7 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
   {
     customPoster,
     videoUrl,
+    videoMobileUrl,
     className = "",
     videoRef: externalVideoRefProp,
     isPlaying: controlledIsPlaying,
@@ -137,7 +138,11 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
-  const posterSrc = customPoster || (isMobile ? "/videos/saudagar/poster-mobile.jpg" : "/videos/saudagar/poster.jpg");
+  const posterSrc =
+    customPoster ||
+    (isMobile
+      ? "https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/poster-mobile.jpg?tr=f-auto,q-80"
+      : "https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/poster.jpg?tr=f-auto,q-80");
 
   // Callback ref to attach video element to all refs immediately
   const handleVideoRef = (el) => {
@@ -221,18 +226,30 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
             isVideoLoaded ? "opacity-100" : "opacity-0"
           }`}
         >
-          {videoUrl ? (
-            <source src={videoUrl} type="video/mp4" />
+          {videoUrl || videoMobileUrl ? (
+            <>
+              {videoMobileUrl && (
+                <source
+                  src={videoMobileUrl}
+                  type="video/mp4"
+                  media="(max-width: 768px)"
+                />
+              )}
+              {videoUrl && <source src={videoUrl} type="video/mp4" />}
+            </>
           ) : (
             <>
-              {/* Mobile vertical optimized streams */}
+              {/* Mobile vertical optimized streams via ImageKit CDN */}
               <source
-                src="/videos/saudagar/saudagar-hero-mobile.mp4"
+                src="https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/saudagar-hero-mobile.mp4"
                 type="video/mp4"
                 media="(max-width: 768px)"
               />
-              {/* Desktop high-resolution streams */}
-              <source src="/videos/saudagar/saudagar-hero.mp4" type="video/mp4" />
+              {/* Desktop high-resolution streams via ImageKit CDN */}
+              <source
+                src="https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/saudagar-hero.mp4"
+                type="video/mp4"
+              />
             </>
           )}
         </video>

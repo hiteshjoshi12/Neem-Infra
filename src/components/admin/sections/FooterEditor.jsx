@@ -3,6 +3,7 @@ import { Share2, Plus, Trash2 } from 'lucide-react';
 import FormInput from '../common/FormInput';
 import FormTextarea from '../common/FormTextarea';
 import SectionHeader from '../common/SectionHeader';
+import ImageUploadInput from '../ImageUploadInput';
 
 export default function FooterEditor({ formData, updateField }) {
   const phones = formData.phones || [];
@@ -44,13 +45,17 @@ export default function FooterEditor({ formData, updateField }) {
         subtitle="Manage official footer branding, corporate email, addresses, social channels, and copyright notice"
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <FormInput
-          label="Footer Logo URL (Leave blank for default)"
-          placeholder="https://example.com/logo.png"
+      <div className="space-y-4">
+        <ImageUploadInput
+          label="Custom Footer Brand Logo"
           value={formData.logoUrl}
-          onChange={(e) => updateField('logoUrl', e.target.value)}
+          onChange={(val) => updateField('logoUrl', val)}
+          folder="/saudagar-properties/branding"
+          description="Upload footer logo (PNG with transparency, SVG, or WebP). Leave blank to use default."
         />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <FormInput
           type="email"
           label="Official Email"

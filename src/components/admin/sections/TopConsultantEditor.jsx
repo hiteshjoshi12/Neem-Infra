@@ -3,6 +3,7 @@ import { Award } from 'lucide-react';
 import FormInput from '../common/FormInput';
 import FormTextarea from '../common/FormTextarea';
 import SectionHeader from '../common/SectionHeader';
+import ImageUploadInput from '../ImageUploadInput';
 
 export default function TopConsultantEditor({ formData, updateField }) {
   return (
@@ -78,10 +79,15 @@ export default function TopConsultantEditor({ formData, updateField }) {
             value={formData.videoTour?.subtitle}
             onChange={(e) => updateField('videoTour.subtitle', e.target.value)}
           />
-          <FormInput
-            label="Poster Image URL"
+        </div>
+        <div className="mt-4">
+          <ImageUploadInput
+            label="Cinematic Tour Poster / Cover Image"
             value={formData.videoTour?.image}
-            onChange={(e) => updateField('videoTour.image', e.target.value)}
+            onChange={(val) => updateField('videoTour.image', val)}
+            folder="/saudagar-properties/consultant"
+            recommendedRatio="16:9"
+            description="Landscape luxury estate photograph displayed on the video tour showcase card"
           />
         </div>
       </div>

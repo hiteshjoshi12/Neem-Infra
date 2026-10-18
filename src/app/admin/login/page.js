@@ -6,7 +6,7 @@ import { motion } from 'framer-motion';
 import { Lock, Mail, Eye, EyeOff, ShieldCheck, ArrowRight } from 'lucide-react';
 import { useAuth } from '@/context/AuthContext';
 import Image from 'next/image';
-const logoImg = '/logo.png';
+const logoImg = 'https://ik.imagekit.io/saudagarproperties/saudagar-properties/branding/logo.png?tr=f-auto,q-80';
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('admin@saudagarproperties.com');

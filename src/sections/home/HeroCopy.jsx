@@ -50,8 +50,8 @@ export default function HeroCopy() {
   const [isMuted, setIsMuted] = useState(true);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
 
-  // Clean luxury villa video URL
-  const primaryVideoUrl = heroData.videoUrl || "https://assets.mixkit.co/videos/preview/mixkit-modern-luxury-villa-with-pool-and-palm-trees-43950-large.mp4";
+  // Clean luxury villa video URL via ImageKit CDN
+  const primaryVideoUrl = heroData.videoUrl || "https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/saudagar-hero.mp4";
 
   // Auto-rotate spotlight property every 3 seconds
   useEffect(() => {
@@ -175,6 +175,9 @@ export default function HeroCopy() {
         ref={videoRef}
         isPlaying={isPlaying}
         isMuted={isMuted}
+        videoUrl={heroData.videoUrl}
+        videoMobileUrl={heroData.videoMobileUrl}
+        customPoster={heroData.bgImage}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
         onMuteChange={(muted) => setIsMuted(muted)}

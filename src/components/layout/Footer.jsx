@@ -15,7 +15,7 @@ import {
   ArrowUpRight,
 } from 'lucide-react';
 
-const logoImg = '/logo.png';
+const logoImg = 'https://ik.imagekit.io/saudagarproperties/saudagar-properties/branding/logo.png?tr=f-auto,q-80';
 import { useCms } from '../../context/CmsContext';
 import Image from 'next/image';
 

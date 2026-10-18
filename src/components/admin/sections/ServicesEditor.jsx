@@ -3,6 +3,7 @@ import { Layers, ArrowUpRight, Plus, Trash2 } from 'lucide-react';
 import FormInput from '../common/FormInput';
 import FormTextarea from '../common/FormTextarea';
 import SectionHeader from '../common/SectionHeader';
+import ImageUploadInput from '../ImageUploadInput';
 
 const DEFAULT_PROCESS_STEPS = [
   {
@@ -155,11 +156,14 @@ export default function ServicesEditor({ formData, updateField, onNavigateTab })
                 value={card.description}
                 onChange={(e) => handleCardChange(cIdx, 'description', e.target.value)}
               />
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <FormInput
-                  label="Card Background Image URL"
+              <div className="space-y-3">
+                <ImageUploadInput
+                  label="Card Background Image"
                   value={card.bgImage}
-                  onChange={(e) => handleCardChange(cIdx, 'bgImage', e.target.value)}
+                  onChange={(val) => handleCardChange(cIdx, 'bgImage', val)}
+                  folder="/saudagar-properties/services"
+                  recommendedRatio="16:9"
+                  description="Backdrop image displayed behind service offerings"
                 />
                 <FormInput
                   label="CTA Button Text"

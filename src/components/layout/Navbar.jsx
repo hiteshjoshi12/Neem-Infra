@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ChevronDown, Phone, ArrowUpRight, Building2 } from 'lucide-react';
-const logoImg = '/logo.png';
+const logoImg = 'https://ik.imagekit.io/saudagarproperties/saudagar-properties/branding/logo.png?tr=f-auto,q-80';
 import { useCms } from '../../context/CmsContext';
 import Image from 'next/image';
 

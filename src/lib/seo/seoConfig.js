@@ -38,7 +38,7 @@ export const BUSINESS_INFO = {
   phone: ['+91 97185 11207', '+91 98112 21207'],
   email: 'Saudagar.Properties@Yahoo.In',
   url: SITE_URL,
-  logo: '/logo.png',
+  logo: 'https://ik.imagekit.io/saudagarproperties/saudagar-properties/branding/logo.png?tr=f-auto,q-80',
   socialProfiles: {
     // TODO: Replace '#' with actual profile URLs
     facebook: '#',

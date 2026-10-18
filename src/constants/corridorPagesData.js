@@ -186,7 +186,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "Adjacent (0 – 2 km)",
           "time": "2 Mins",
           "desc": "One of the prime business, fine dining, and ultra-luxury residential corridors in Gurugram.",
-          "image": "/images/landmarks/golf-course-road.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/golf-course-road.jpg?tr=f-auto,q-80"
         },
         {
           "name": "DLF Cyber City & Cyber Hub",
@@ -194,7 +194,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "3.5 km",
           "time": "5 Mins",
           "desc": "Direct connectivity to North India’s largest corporate IT and multinational commercial ecosystem.",
-          "image": "/images/landmarks/cyber-city-hub.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/cyber-city-hub.jpg?tr=f-auto,q-80"
         },
         {
           "name": "IGI Airport Terminal 3",
@@ -202,7 +202,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "12 km",
           "time": "18 Mins",
           "desc": "Rapid highway corridor commute to Indira Gandhi International Airport for frequent flyers.",
-          "image": "/images/landmarks/igi-airport-t3.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/igi-airport-t3.jpg?tr=f-auto,q-80"
         },
         {
           "name": "Gurugram Center via NH-48",
@@ -210,7 +210,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "14 km",
           "time": "15 Mins",
           "desc": "Swift access to central commercial districts, administrative hubs, and premier hospitals.",
-          "image": "/images/landmarks/delhi-gurgaon-expressway.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/delhi-gurgaon-expressway.jpg?tr=f-auto,q-80"
         },
         {
           "name": "New Delhi Railway Station",
@@ -218,7 +218,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "28 km via NH-48",
           "time": "35 Mins",
           "desc": "Effortless interstate connectivity for business commutes into Central Delhi.",
-          "image": "/images/landmarks/new-delhi-railway.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/new-delhi-railway.jpg?tr=f-auto,q-80"
         },
         {
           "name": "Capital City New Delhi",
@@ -226,7 +226,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "33.2 km",
           "time": "40 Mins",
           "desc": "Direct arterial transit via MG Road and Mehrauli corridor to Vasant Kunj and Saket.",
-          "image": "/images/landmarks/india-gate-delhi.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/india-gate-delhi.jpg?tr=f-auto,q-80"
         }
       ]
     },
@@ -244,7 +244,7 @@ export const CORRIDOR_PAGES_DATA = {
         "Confidential access to unlisted off-market plots and builder floors",
         "Comprehensive assistance with bank loans, registry, and MCG tax mutation"
       ],
-      "image": "/images/corridors/dlf-phase-1-how-we-help.jpg",
+      "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/corridors/dlf-phase-1-how-we-help.jpg?tr=f-auto,q-80",
       "cardBadgeTitle": "Turnkey Due Diligence",
       "cardBadgeDesc": "Title clearance, registry representation & architect consultation"
     },
@@ -252,7 +252,7 @@ export const CORRIDOR_PAGES_DATA = {
       "badge": "25+ Years of Local Authority",
       "title": "Why Choose Saudagar Properties for DLF Phase 1?",
       "content": "If you’re searching for the property in DLF Phase 1, Saudagar Properties is the most trusted name to guide your journey. With 25+ years of local expertise and a strong network across every block, we help buyers and investors discover verified listings that match their lifestyle and budget.\n\nOur team understands what truly defines the best property in DLF Phase 1 from premium builder floors to high-value plots and we make sure you get access to exclusive options that aren’t available on public portals. We believe in transparent dealings, genuine advice, and personalized support from the first enquiry to final possession. Whether you need a luxury home or a solid investment, our deep knowledge of the area ensures a smooth and confident decision-making process. With Saudagar Properties by your side, finding the best property in DLF Phase 1 becomes easy, reliable, and rewarding.",
-      "image": "/images/corridors/dlf-phase-1-why-choose.jpg",
+      "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/corridors/dlf-phase-1-why-choose.jpg?tr=f-auto,q-80",
       "stats": [
         {
           "value": "25+ Yrs",
@@ -473,7 +473,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "Adjacent (0.5 km)",
           "time": "2 Mins",
           "desc": "The locality is very close to Golf Course Road and MG Road. Top-rated properties in DLF Phase 2 are easily accessible from here.",
-          "image": "/images/landmarks/golf-course-road.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/golf-course-road.jpg?tr=f-auto,q-80"
         },
         {
           "name": "DLF Cyber City & Cyber Hub",
@@ -481,7 +481,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "500 meters",
           "time": "2 Mins Walk",
           "desc": "Strategically located near prominent commercial spots like Cyber City and Cyber Hub Gurgaon.",
-          "image": "/images/landmarks/cyber-city-hub.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/cyber-city-hub.jpg?tr=f-auto,q-80"
         },
         {
           "name": "Top Schools (DPS DLF City & Montessori)",
@@ -489,7 +489,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "In-Sector",
           "time": "3 Mins",
           "desc": "Schools such as Delhi Public School (DPS) DLF City, Sherwood Convent School, and American Montessori Public School are within the locality.",
-          "image": "/images/landmarks/school-campus-gurgaon.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/school-campus-gurgaon.jpg?tr=f-auto,q-80"
         },
         {
           "name": "Ambience Mall & MGF Metropolitan",
@@ -497,7 +497,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1.5 km",
           "time": "4 Mins",
           "desc": "Features retail infrastructure such as Ambience Mall, MGF Metropolitan Mall, Sahara Mall, and local shopping centers within the locality.",
-          "image": "/images/landmarks/ambience-mall.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/ambience-mall.jpg?tr=f-auto,q-80"
         },
         {
           "name": "IGI Airport Terminal 3",
@@ -505,7 +505,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "10 km",
           "time": "12 Mins",
           "desc": "Direct highway drive via NH-48 to Indira Gandhi International Airport for frequent domestic and international flyers.",
-          "image": "/images/landmarks/igi-airport-t3.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/igi-airport-t3.jpg?tr=f-auto,q-80"
         },
         {
           "name": "MG Road Metro Station",
@@ -513,7 +513,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1 km",
           "time": "3 Mins",
           "desc": "Direct rapid transit connection to Central and South Delhi alongside in-sector Rapid Metro stations.",
-          "image": "/images/landmarks/mg-road-metro.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/mg-road-metro.jpg?tr=f-auto,q-80"
         }
       ]
     },
@@ -531,7 +531,7 @@ export const CORRIDOR_PAGES_DATA = {
         "Complete assistance with DTCP/MCG permits, building sanctions and registry",
         "Live market trends, price benchmarks, and investment advisory"
       ],
-      "image": "/images/corridors/dlf-phase-2-how-we-help.jpg",
+      "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/corridors/dlf-phase-2-how-we-help.jpg?tr=f-auto,q-80",
       "cardBadgeTitle": "Turnkey Due Diligence",
       "cardBadgeDesc": "Title clearance, registry representation & architect consultation"
     },
@@ -539,7 +539,7 @@ export const CORRIDOR_PAGES_DATA = {
       "badge": "25+ Years at 38 Akashneem Marg",
       "title": "Why Choose Saudagar Properties for Finding a Property in DLF Phase 2?",
       "content": "If you’re looking for a property in DLF Phase 2, Saudagar Properties stands out as the ideal partner thanks to our deep knowledge of Phase 2’s blocks, transparent and verified listings, and a strong track record helping buyers and investors find suitable, well-located homes. We assist with property selection based on your budget and needs, guide you through legalities and paperwork, and help you access the best options (independent floors, apartments, gated communities) with strong growth and rental potential. With our local expertise and market insight, you get confidence and convenience, making your search for a top-rated property in DLF Phase 2 smooth and rewarding. Our team focuses on delivering the right property in DLF Phase 2 that aligns with your long-term goals, whether for end-use or investment. From site visits to final possession, we ensure every property in DLF Phase 2 is thoroughly evaluated for quality, location advantage, and future appreciation.",
-      "image": "/images/corridors/dlf-phase-2-why-choose.jpg",
+      "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/corridors/dlf-phase-2-why-choose.jpg?tr=f-auto,q-80",
       "stats": [
         {
           "value": "25+ Yrs",
@@ -760,7 +760,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1 km",
           "time": "3 Mins",
           "desc": "Very close to attractions such as Ambience Mall and Aravali Biodiversity Park while malls on MG Road including MGF Megacity Mall can be reached within 10-15 minutes.",
-          "image": "/images/landmarks/ambience-mall.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/ambience-mall.jpg?tr=f-auto,q-80"
         },
         {
           "name": "DLF Cyber City",
@@ -768,7 +768,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1.5 km",
           "time": "3 Mins",
           "desc": "Adjacent to Cyber City, the most famous commercial and tech hub of Gurgaon.",
-          "image": "/images/landmarks/cyber-city-hub.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/cyber-city-hub.jpg?tr=f-auto,q-80"
         },
         {
           "name": "Metro & Highway Arterials",
@@ -776,7 +776,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "In-Sector",
           "time": "2 Mins",
           "desc": "Well connected to MG Road, Delhi Metro (Guru Dronacharya), Rapid Metro (Moulsari Avenue & Phase 3), and NH-8 Expressway.",
-          "image": "/images/landmarks/rapid-metro-phase-2.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/rapid-metro-phase-2.jpg?tr=f-auto,q-80"
         },
         {
           "name": "Top Prominent Schools",
@@ -784,7 +784,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1.5 km",
           "time": "4 Mins",
           "desc": "Close to prominent schools such as The Shri Ram School, GD Goenka Global School, and Rabindranath World School.",
-          "image": "/images/landmarks/school-campus-gurgaon.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/school-campus-gurgaon.jpg?tr=f-auto,q-80"
         },
         {
           "name": "Healthcare Super-Specialties",
@@ -792,7 +792,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "2 km",
           "time": "5 Mins",
           "desc": "Hospitals such as Narayana Superspeciality and St. Stephen’s are within the immediate area.",
-          "image": "/images/landmarks/fortis-healthcare.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/fortis-healthcare.jpg?tr=f-auto,q-80"
         },
         {
           "name": "IGI Airport Terminal 3",
@@ -800,7 +800,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "13 km",
           "time": "14 Mins",
           "desc": "Only 13 km away from Indira Gandhi International Airport via signal-free NH-8.",
-          "image": "/images/landmarks/igi-airport-t3.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/igi-airport-t3.jpg?tr=f-auto,q-80"
         }
       ]
     },
@@ -818,7 +818,7 @@ export const CORRIDOR_PAGES_DATA = {
         "Comprehensive 30-year deed history, municipal sanction & registry vetting",
         "Personalized property search matching budget, timeline, and lifestyle"
       ],
-      "image": "/images/corridors/dlf-phase-3-how-we-help.jpg",
+      "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/corridors/dlf-phase-3-how-we-help.jpg?tr=f-auto,q-80",
       "cardBadgeTitle": "Turnkey Due Diligence",
       "cardBadgeDesc": "Title clearance, registry representation & architect consultation"
     },
@@ -826,7 +826,7 @@ export const CORRIDOR_PAGES_DATA = {
       "badge": "25+ Years of Local Authority",
       "title": "Why Choose Saudagar Properties for a Property in DLF Phase 3?",
       "content": "If you’re looking for a property in DLF Phase 3, this locality offers the ideal blend of connectivity, comfort, and lifestyle. With its gated communities, well-planned builder floors, luxury apartments and independent homes, DLF Phase 3 stays among Gurgaon’s most sought-after addresses. From excellent access to DLF Cyber City and major highways to top schools, reputed hospitals, malls, and green parks, every convenience is within reach. Whether you want a quiet, family-oriented home or a high-end investment, a premium property in DLF Phase 3 offers value, comfort, and long-term appreciation. With trusted property dealers in Gurugram to guide you, finding the right home becomes even easier and more reliable.",
-      "image": "/images/corridors/dlf-phase-3-why-choose.jpg",
+      "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/corridors/dlf-phase-3-why-choose.jpg?tr=f-auto,q-80",
       "stats": [
         {
           "value": "25+ Yrs",
@@ -1047,7 +1047,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "200 meters",
           "time": "2 Mins Walk",
           "desc": "Supermart 1 & 2, Galleria Market, Vyapar Kendra, and City Centre Mall make everyday shopping a delightful experience.",
-          "image": "/images/landmarks/galleria-market.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/galleria-market.jpg?tr=f-auto,q-80"
         },
         {
           "name": "Horizon Centre & DLF Centre Court",
@@ -1055,7 +1055,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1.2 km",
           "time": "3 Mins",
           "desc": "Top business hubs like One & Two Horizon Centre, DLF Centre Court, and Vipul Tech Square are just around the corner.",
-          "image": "/images/landmarks/dlf-office-towers.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/dlf-office-towers.jpg?tr=f-auto,q-80"
         },
         {
           "name": "Golf Course Road, MG Road & NH-48",
@@ -1063,7 +1063,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1 km",
           "time": "3 Mins",
           "desc": "Quick access to Golf Course Road, MG Road, and NH-48 ensures smooth travel across Gurgaon and Delhi.",
-          "image": "/images/landmarks/golf-course-road.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/golf-course-road.jpg?tr=f-auto,q-80"
         },
         {
           "name": "IFFCO Chowk & Huda City Centre",
@@ -1071,7 +1071,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1.5 km",
           "time": "4 Mins",
           "desc": "IFFCO Chowk and Huda City Centre Metro Stations on the Yellow Line offer effortless city connectivity.",
-          "image": "/images/landmarks/iffco-chowk.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/iffco-chowk.jpg?tr=f-auto,q-80"
         },
         {
           "name": "Max Hospital & Paras Hospital",
@@ -1079,7 +1079,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "2 km",
           "time": "5 Mins",
           "desc": "Max Hospital and Paras Hospital provide world-class healthcare within a short drive.",
-          "image": "/images/landmarks/fortis-healthcare.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/fortis-healthcare.jpg?tr=f-auto,q-80"
         },
         {
           "name": "The Shri Ram School & DPS",
@@ -1087,7 +1087,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1 km",
           "time": "3 Mins",
           "desc": "Leading schools such as Shri Ram School Aravali and Delhi Public School make it a family-friendly neighborhood.",
-          "image": "/images/landmarks/school-campus-gurgaon.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/school-campus-gurgaon.jpg?tr=f-auto,q-80"
         },
         {
           "name": "Workplaces in Cyber City & Udyog Vihar",
@@ -1095,7 +1095,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "3 km",
           "time": "7 Mins",
           "desc": "Workplaces in Cyber City and Udyog Vihar are nearby, ideal for professionals seeking convenience and lifestyle together.",
-          "image": "/images/landmarks/cyber-city-hub.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/cyber-city-hub.jpg?tr=f-auto,q-80"
         }
       ]
     },
@@ -1113,7 +1113,7 @@ export const CORRIDOR_PAGES_DATA = {
         "Dedicated legal guidance through final registration",
         "Confidential access to off-market park-facing homes"
       ],
-      "image": "/images/corridors/dlf-phase-4-how-we-help.jpg",
+      "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/corridors/dlf-phase-4-how-we-help.jpg?tr=f-auto,q-80",
       "cardBadgeTitle": "Turnkey Due Diligence",
       "cardBadgeDesc": "Title clearance, registry representation & architect consultation"
     },
@@ -1121,7 +1121,7 @@ export const CORRIDOR_PAGES_DATA = {
       "badge": "25+ Years Experience",
       "title": "Why Choose Saudagar for Property in DLF Phase 4?",
       "content": "Finding the right property in DLF Phase 4 requires local expertise, verified listings, and reliable guidance, all of which Saudagar Properties offers. As experienced property dealers in Gurugram, we help you identify premium homes that match your lifestyle, budget, and investment goals. From independent floors to gated-community apartments, our team ensures that every property is genuine, well-located, and offers long-term value. By providing personalized support, site visits, and transparent dealings, Saudagar Properties makes your buying journey smooth and confident. Whether you’re looking for a family home or a high-end investment, choosing Saudagar Properties guarantees access to the finest luxury property in DLF Phase 4 and a seamless experience from search to possession.",
-      "image": "/images/corridors/dlf-phase-4-why-choose.jpg",
+      "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/corridors/dlf-phase-4-why-choose.jpg?tr=f-auto,q-80",
       "stats": [
         {
           "value": "25+ Yrs",
@@ -1365,7 +1365,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "Within Locality",
           "time": "3–5 Mins",
           "desc": "Schools such as Delhi Public School Sushant Lok, Shalom Hills International School, Excelsior American School, and Chiranjiv Bharati School, are located in this area.",
-          "image": "/images/landmarks/school-campus-gurgaon.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/school-campus-gurgaon.jpg?tr=f-auto,q-80"
         },
         {
           "name": "Max, Paras & Fortis Hospitals",
@@ -1373,7 +1373,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1–2 km",
           "time": "3–5 Mins",
           "desc": "Some well-known hospitals such as Max Hospital, Paras Hospital, and Fortis Hospital, are also present in the area, making it an ideal choice for those searching for the top property in Sushant Lok.",
-          "image": "/images/landmarks/fortis-healthcare.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/fortis-healthcare.jpg?tr=f-auto,q-80"
         },
         {
           "name": "Leading Banking Institutions",
@@ -1381,7 +1381,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "500 meters",
           "time": "2 Mins Walk",
           "desc": "Banking institutions such as ICICI Bank, Punjab National Bank, The Royal Bank of Scotland, State Bank of India, IndusInd Bank Ltd, and more are at a close distance.",
-          "image": "/images/landmarks/dlf-office-towers.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/dlf-office-towers.jpg?tr=f-auto,q-80"
         },
         {
           "name": "HUDA City Centre Metro & MG Road",
@@ -1389,7 +1389,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1 km",
           "time": "3 Mins",
           "desc": "Direct Yellow Line metro connection ensuring fast, effortless commutes into central and south Delhi.",
-          "image": "/images/landmarks/huda-city-centre.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/huda-city-centre.jpg?tr=f-auto,q-80"
         },
         {
           "name": "Gold Souk Mall & Galleria",
@@ -1397,7 +1397,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1 km",
           "time": "3 Mins",
           "desc": "Galleria Market, Supermart, and Gold Souk Mall provide premier shopping, cafes, and gourmet groceries.",
-          "image": "/images/landmarks/gold-souk-mall.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/gold-souk-mall.jpg?tr=f-auto,q-80"
         },
         {
           "name": "Golf Course Road & Cyber Hub",
@@ -1405,7 +1405,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "3 km",
           "time": "7 Mins",
           "desc": "Swift access to prime commercial, Michelin-standard dining, and multinational tech parks via Golf Course Road.",
-          "image": "/images/landmarks/golf-course-road.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/golf-course-road.jpg?tr=f-auto,q-80"
         }
       ]
     },
@@ -1423,7 +1423,7 @@ export const CORRIDOR_PAGES_DATA = {
         "Transparent negotiation with direct property owners",
         "Dedicated local experts with in-depth knowledge of Sectors 27, 28, and 43"
       ],
-      "image": "/images/corridors/shushant-lok-how-we-help.jpg",
+      "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/corridors/shushant-lok-how-we-help.jpg?tr=f-auto,q-80",
       "cardBadgeTitle": "Turnkey Due Diligence",
       "cardBadgeDesc": "Title clearance, registry representation & architect consultation"
     },
@@ -1431,7 +1431,7 @@ export const CORRIDOR_PAGES_DATA = {
       "badge": "25+ Years Experience",
       "title": "Why Choose Saudagar Properties for Property in Sushant Lok?",
       "content": "If you are searching for a property in Sushant Lok, Saudagar Properties is your trusted partner to find the ideal home. With our expertise in Gurugram’s real estate market, we guide you to select the top property in Sushant Lok that perfectly matches your lifestyle, budget, and investment goals. As experienced property dealers in gurugram, we provide verified listings, personalized support, and transparent guidance throughout your buying journey. From luxury builder floors to gated-community apartments, our team ensures access to premium options with long-term value. Choosing Saudagar Properties guarantees a seamless, confident experience from search to possession, making your dream home in Sushant Lok a reality.",
-      "image": "/images/corridors/shushant-lok-why-choose.jpg",
+      "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/corridors/shushant-lok-why-choose.jpg?tr=f-auto,q-80",
       "stats": [
         {
           "value": "25+ Yrs",
@@ -1675,7 +1675,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "Direct Access",
           "time": "Immediate",
           "desc": "Udyog Vihar is located close to Delhi and Gurgaon border so both the cities are easily accessible in no time.",
-          "image": "/images/landmarks/delhi-gurgaon-expressway.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/delhi-gurgaon-expressway.jpg?tr=f-auto,q-80"
         },
         {
           "name": "Indira Gandhi International Airport",
@@ -1683,7 +1683,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "8 km",
           "time": "10–12 Mins",
           "desc": "It is at a distance of 8 km from Indira Gandhi International Airport on NH-8, making international and domestic client transit swift.",
-          "image": "/images/landmarks/igi-airport-t3.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/igi-airport-t3.jpg?tr=f-auto,q-80"
         },
         {
           "name": "DLF Phase 3 Rapid Metro & Sikandarpur",
@@ -1691,7 +1691,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1 km",
           "time": "3 Mins",
           "desc": "DLF Phase 3 is the nearest rapid metro station, which in turn is connected to Sikandarpur metro station. This smooth connectivity makes commercial property in Udyog Vihar even more convenient for daily travel and business operations.",
-          "image": "/images/landmarks/rapid-metro-phase-2.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/rapid-metro-phase-2.jpg?tr=f-auto,q-80"
         },
         {
           "name": "Prominent NCR Connectivity & Expressways",
@@ -1699,7 +1699,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "Direct Link",
           "time": "Seamless",
           "desc": "Several other locations are there that connects you to different parts of Gurgaon and Delhi smoothly.",
-          "image": "/images/landmarks/iffco-chowk.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/iffco-chowk.jpg?tr=f-auto,q-80"
         },
         {
           "name": "DLF Cyber City & Ambience Mall",
@@ -1707,7 +1707,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1.5 km",
           "time": "3 Mins",
           "desc": "Located opposite Cyber City and 2 km from Ambience Mall, offering premium entertainment, dining, and corporate networking.",
-          "image": "/images/landmarks/cyber-city-hub.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/cyber-city-hub.jpg?tr=f-auto,q-80"
         },
         {
           "name": "Central Gurugram Commercial Hub",
@@ -1715,7 +1715,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "5 km",
           "time": "10 Mins",
           "desc": "Frictionless connectivity across major corporate parks, banking complexes, and five-star business hotels.",
-          "image": "/images/landmarks/gurgaon-skyline.jpg"
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/landmarks/gurgaon-skyline.jpg?tr=f-auto,q-80"
         }
       ]
     },
@@ -1733,7 +1733,7 @@ export const CORRIDOR_PAGES_DATA = {
         "HSIIDC plot transfer, due diligence, and statutory approvals",
         "Pre-leased commercial asset acquisition with 8.5%–9.5% net yields"
       ],
-      "image": "/images/corridors/udyog-vihar-how-we-help.jpg",
+      "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/corridors/udyog-vihar-how-we-help.jpg?tr=f-auto,q-80",
       "cardBadgeTitle": "Turnkey Commercial Due Diligence",
       "cardBadgeDesc": "HSIIDC title clearance, lease structuring & fire NOC approvals"
     },
@@ -1741,7 +1741,7 @@ export const CORRIDOR_PAGES_DATA = {
       "badge": "25+ Years Commercial Authority",
       "title": "Why Choose Saudagar Properties for Property in Udyog Vihar?",
       "content": "If you are looking for a property in Udyog Vihar, Saudagar Properties is your trusted partner to secure a premium, well‑located workspace. With deep experience in Gurugram real estate and an extensive network of verified listings, we help you find commercial spaces that perfectly fit your business needs and growth plans. As seasoned property dealers in Gurugram, we offer transparent deals, guided site visits, and personalised support, ensuring that you get a commercial property in Udyog Vihar that offers excellent connectivity, professional ambience, ample parking, and strong long‑term value. Partner with us for a seamless, hassle‑free acquisition of commercial spaces in Udyog Vihar and make your business setup smooth and efficient.",
-      "image": "/images/corridors/udyog-vihar-why-choose.jpg",
+      "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/corridors/udyog-vihar-why-choose.jpg?tr=f-auto,q-80",
       "stats": [
         {
           "value": "25+ Yrs",

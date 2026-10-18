@@ -1,18 +1,32 @@
 "use client";
 
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import { Upload, X, CheckCircle2, AlertCircle, RefreshCw, Link as LinkIcon, Image as ImageIcon } from 'lucide-react';
+import {
+  Upload,
+  X,
+  CheckCircle2,
+  AlertCircle,
+  RefreshCw,
+  Link as LinkIcon,
+  Image as ImageIcon,
+  Video,
+  Play,
+  Film,
+  ExternalLink
+} from 'lucide-react';
 
 export default function ImageUploadInput({
   label = "Upload Image",
   value = "",
   onChange,
   folder = "/saudagar-properties/general",
-  description = "Browse image from your computer to upload directly to ImageKit.io",
+  description = "Browse file from your computer to upload directly to ImageKit.io CDN",
   recommendedRatio = "",
   cardContext = "",
-  required = false
+  required = false,
+  acceptVideo = false,
+  mediaType = "image" // "image" | "video" | "all"
 }) {
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
@@ -21,9 +35,29 @@ export default function ImageUploadInput({
   const [imageMeta, setImageMeta] = useState(null);
   const fileInputRef = useRef(null);
 
-  // Measure natural dimensions and calculate exact aspect ratio
-  React.useEffect(() => {
-    if (!value || typeof window === 'undefined') {
+  // Determine whether this input accepts videos
+  const allowsVideo = acceptVideo || mediaType === 'video' || mediaType === 'all';
+
+  // Check if current value represents a video file
+  const isVideoUrl = (url) => {
+    if (!url || typeof url !== 'string') return false;
+    const cleanUrl = url.toLowerCase().split('?')[0];
+    return (
+      cleanUrl.endsWith('.mp4') ||
+      cleanUrl.endsWith('.webm') ||
+      cleanUrl.endsWith('.mov') ||
+      cleanUrl.endsWith('.ogg') ||
+      cleanUrl.endsWith('.mkv') ||
+      url.includes('/videos/') ||
+      url.includes('fileType=video')
+    );
+  };
+
+  const isCurrentValueVideo = isVideoUrl(value);
+
+  // Measure natural dimensions and calculate aspect ratio for images
+  useEffect(() => {
+    if (!value || typeof window === 'undefined' || isCurrentValueVideo) {
       setImageMeta(null);
       return;
     }
@@ -90,19 +124,33 @@ export default function ImageUploadInput({
     img.onerror = () => {
       setImageMeta(null);
     };
-  }, [value, recommendedRatio]);
+  }, [value, recommendedRatio, isCurrentValueVideo]);
 
   const handleFileUpload = async (file) => {
     if (!file) return;
 
-    if (!file.type.startsWith('image/')) {
-      setError('Please select a valid image file (PNG, JPG, WEBP, etc.)');
+    const isVideo = file.type.startsWith('video/');
+    const isImage = file.type.startsWith('image/');
+
+    if (mediaType === 'video' && !isVideo) {
+      setError('Please select a valid video file (MP4, WebM, MOV, etc.)');
       return;
     }
 
-    // Limit to 15MB
-    if (file.size > 15 * 1024 * 1024) {
-      setError('File size exceeds 15MB limit.');
+    if (!allowsVideo && !isImage) {
+      setError('Please select a valid image file (PNG, JPG, WebP, SVG, etc.)');
+      return;
+    }
+
+    if (!isVideo && !isImage) {
+      setError('Please select a supported image or video file.');
+      return;
+    }
+
+    // Size limit: 100MB for video, 25MB for images
+    const maxSizeBytes = isVideo ? 100 * 1024 * 1024 : 25 * 1024 * 1024;
+    if (file.size > maxSizeBytes) {
+      setError(`File size (${(file.size / (1024 * 1024)).toFixed(1)}MB) exceeds limit of ${isVideo ? '100MB' : '25MB'}.`);
       return;
     }
 
@@ -112,7 +160,12 @@ export default function ImageUploadInput({
 
       const formData = new FormData();
       formData.append('file', file);
-      formData.append('folder', folder);
+      // Auto-assign folder if generic
+      let targetFolder = folder;
+      if (isVideo && folder === '/saudagar-properties/general') {
+        targetFolder = '/saudagar-properties/videos';
+      }
+      formData.append('folder', targetFolder);
 
       const token = typeof window !== 'undefined' ? localStorage.getItem('saudagar_admin_token') : null;
 
@@ -127,7 +180,7 @@ export default function ImageUploadInput({
       if (data.success && data.url) {
         onChange(data.url);
       } else {
-        setError(data.message || 'Failed to upload image to ImageKit');
+        setError(data.message || 'Failed to upload media to ImageKit');
       }
     } catch (err) {
       setError(err.message || 'Network error during upload');
@@ -153,6 +206,14 @@ export default function ImageUploadInput({
     }
   };
 
+  // Determine accept attribute
+  let acceptAttr = "image/*";
+  if (mediaType === 'video') {
+    acceptAttr = "video/mp4,video/webm,video/quicktime,video/*";
+  } else if (allowsVideo) {
+    acceptAttr = "image/*,video/mp4,video/webm,video/quicktime,video/*";
+  }
+
   return (
     <div className="space-y-2">
       <div className="flex items-center justify-between">
@@ -160,7 +221,13 @@ export default function ImageUploadInput({
           {label} {required && <span className="text-[#D09A16]">*</span>}
         </label>
         <div className="flex items-center gap-2">
-          {recommendedRatio && (
+          {allowsVideo && (
+            <span className="text-[10px] text-sky-400 font-mono bg-sky-500/10 px-2 py-0.5 rounded border border-sky-500/20 flex items-center gap-1">
+              <Film size={10} />
+              <span>Video Supported</span>
+            </span>
+          )}
+          {recommendedRatio && !isCurrentValueVideo && (
             <span className="text-[10px] text-[#D09A16] font-mono bg-[#D09A16]/10 px-2 py-0.5 rounded border border-[#D09A16]/20">
               Target: {recommendedRatio}
             </span>
@@ -183,7 +250,7 @@ export default function ImageUploadInput({
         <p className="text-[11px] text-slate-400">{description}</p>
       )}
 
-      {/* Hidden file input */}
+      {/* Hidden native file input */}
       <input
         type="file"
         ref={fileInputRef}
@@ -192,56 +259,122 @@ export default function ImageUploadInput({
             handleFileUpload(e.target.files[0]);
           }
         }}
-        accept="image/*"
+        accept={acceptAttr}
         className="hidden"
       />
 
-      {/* Image Preview / Drop Zone */}
+      {/* Media Preview / Drop Zone */}
       {value ? (
         <div className="space-y-2">
-          <div className="relative group rounded-2xl overflow-hidden border border-white/15 bg-slate-900/80 p-2.5 flex items-center gap-4">
-            <div className="relative w-28 h-20 rounded-xl overflow-hidden bg-slate-800 shrink-0 border border-white/10">
-              <Image
-                src={value}
-                alt="Uploaded Preview"
-                fill
-                sizes="112px"
-                className="object-cover object-center"
-                unoptimized
-              />
-            </div>
-
-            <div className="flex-1 min-w-0 pr-2">
-              <div className="flex items-center gap-2 text-xs font-semibold text-white truncate">
-                <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
-                <span className="truncate">{value}</span>
+          {isCurrentValueVideo ? (
+            /* Video Preview Component */
+            <div className="rounded-2xl overflow-hidden border border-sky-500/30 bg-slate-900/90 p-3.5 space-y-3">
+              <div className="relative rounded-xl overflow-hidden bg-black/80 aspect-video max-h-56 flex items-center justify-center border border-white/10">
+                <video
+                  src={value}
+                  controls
+                  muted
+                  playsInline
+                  preload="metadata"
+                  className="w-full h-full object-contain"
+                />
               </div>
-              <p className="text-[11px] text-slate-400 mt-0.5">
-                Optimized &amp; hosted on ImageKit.io
-              </p>
 
-              <div className="flex items-center gap-2 mt-2">
-                <button
-                  type="button"
-                  onClick={() => fileInputRef.current?.click()}
-                  disabled={uploading}
-                  className="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white text-[11px] font-medium transition-colors cursor-pointer"
-                >
-                  Replace Image
-                </button>
-                <button
-                  type="button"
-                  onClick={() => onChange('')}
-                  className="px-2.5 py-1 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 text-[11px] font-medium transition-colors cursor-pointer"
-                >
-                  Remove
-                </button>
+              <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-1.5 text-xs font-semibold text-white truncate">
+                    <Film size={14} className="text-sky-400 shrink-0" />
+                    <span className="truncate">{value}</span>
+                  </div>
+                  <p className="text-[11px] text-sky-400/90 mt-0.5 flex items-center gap-1.5 font-medium">
+                    <CheckCircle2 size={12} className="text-emerald-400" />
+                    <span>Hosted on ImageKit.io High-Speed Video Streaming CDN</span>
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2 shrink-0">
+                  <a
+                    href={value}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white text-[11px] font-medium transition-colors flex items-center gap-1"
+                  >
+                    <ExternalLink size={11} />
+                    <span>Open</span>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={uploading}
+                    className="px-2.5 py-1 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] border border-[#D09A16]/30 text-[11px] font-medium transition-colors cursor-pointer"
+                  >
+                    Replace Video
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onChange('')}
+                    className="px-2.5 py-1 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 text-[11px] font-medium transition-colors cursor-pointer"
+                  >
+                    Remove
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            /* Image Preview Component */
+            <div className="relative group rounded-2xl overflow-hidden border border-white/15 bg-slate-900/80 p-2.5 flex items-center gap-4">
+              <div className="relative w-28 h-20 rounded-xl overflow-hidden bg-slate-800 shrink-0 border border-white/10">
+                <Image
+                  src={value}
+                  alt="Uploaded Preview"
+                  fill
+                  sizes="112px"
+                  className="object-cover object-center"
+                  unoptimized
+                />
+              </div>
 
-          {/* Aspect Ratio Diagnostic Inspector Bar */}
-          {imageMeta && (
+              <div className="flex-1 min-w-0 pr-2">
+                <div className="flex items-center gap-2 text-xs font-semibold text-white truncate">
+                  <CheckCircle2 size={13} className="text-emerald-400 shrink-0" />
+                  <span className="truncate">{value}</span>
+                </div>
+                <p className="text-[11px] text-slate-400 mt-0.5">
+                  Optimized &amp; hosted on ImageKit.io
+                </p>
+
+                <div className="flex items-center gap-2 mt-2">
+                  <a
+                    href={value}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-2 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white text-[11px] font-medium transition-colors flex items-center gap-1"
+                  >
+                    <ExternalLink size={10} />
+                    <span>View</span>
+                  </a>
+                  <button
+                    type="button"
+                    onClick={() => fileInputRef.current?.click()}
+                    disabled={uploading}
+                    className="px-2.5 py-1 rounded-lg bg-white/10 hover:bg-white/20 text-white text-[11px] font-medium transition-colors cursor-pointer"
+                  >
+                    Replace
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => onChange('')}
+                    className="px-2.5 py-1 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 text-[11px] font-medium transition-colors cursor-pointer"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Aspect Ratio Diagnostic Inspector Bar for Images */}
+          {imageMeta && !isCurrentValueVideo && (
             <div
               className={`p-2.5 rounded-xl border text-[11px] flex flex-wrap items-center justify-between gap-2 ${
                 imageMeta.fitStatus === 'match'
@@ -286,19 +419,21 @@ export default function ImageUploadInput({
             <div className="flex flex-col items-center justify-center py-4">
               <RefreshCw size={26} className="text-[#D09A16] animate-spin mb-2" />
               <p className="text-xs font-semibold text-white">Uploading to ImageKit.io...</p>
-              <p className="text-[11px] text-slate-400 mt-0.5">Optimizing format and generating CDN URLs</p>
+              <p className="text-[11px] text-slate-400 mt-0.5">Optimizing format and generating CDN streaming links</p>
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center">
               <div className="w-12 h-12 rounded-2xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-[#D09A16] mb-3 group-hover:scale-105 transition-transform">
-                <Upload size={20} />
+                {allowsVideo ? <Video size={22} /> : <Upload size={20} />}
               </div>
               <p className="text-xs font-semibold text-white">
-                <span className="text-[#D09A16]">Click to browse</span> or drag and drop image here
+                <span className="text-[#D09A16]">Click to browse</span> or drag and drop {allowsVideo ? 'media (image or video)' : 'image'} here
               </p>
               <p className="text-[11px] text-slate-400 mt-1">
-                PNG, JPG, WEBP, SVG up to 15MB
-                {recommendedRatio && (
+                {allowsVideo
+                  ? 'MP4, WebM, MOV (up to 100MB) or PNG, JPG, WebP, SVG (up to 25MB)'
+                  : 'PNG, JPG, WEBP, SVG up to 25MB'}
+                {recommendedRatio && !allowsVideo && (
                   <span className="text-[#D09A16] font-medium block mt-0.5">
                     Recommended Card Ratio: {recommendedRatio} {cardContext ? `(${cardContext})` : ''}
                   </span>
@@ -316,7 +451,7 @@ export default function ImageUploadInput({
             type="url"
             value={value}
             onChange={(e) => onChange(e.target.value)}
-            placeholder="https://ik.imagekit.io/saudagar/..."
+            placeholder="https://ik.imagekit.io/saudagarproperties/..."
             className="w-full px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 focus:border-[#D09A16] text-white text-xs outline-none transition-colors font-mono"
           />
         </div>
@@ -331,3 +466,5 @@ export default function ImageUploadInput({
     </div>
   );
 }
+
+export { ImageUploadInput as MediaUploadInput };

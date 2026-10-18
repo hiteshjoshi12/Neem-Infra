@@ -1371,12 +1371,20 @@ export default function AdminPageCMS() {
                   <h3 className="text-sm font-semibold text-white">Video Showcase &amp; Legacy</h3>
                   <p className="text-xs text-slate-400">Configure the corporate cinema film player and legacy narrative</p>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                   <FormField label="Badge" value={formData?.videoShowcase?.badge} onChange={(val) => updateField('videoShowcase.badge', val)} placeholder="Cinematic Film & Legacy" />
-                  <FormField label="Video MP4 URL" value={formData?.videoShowcase?.videoUrl} onChange={(val) => updateField('videoShowcase.videoUrl', val)} placeholder="https://.../video.mp4" />
                   <FormField label="Title Main" value={formData?.videoShowcase?.titleMain} onChange={(val) => updateField('videoShowcase.titleMain', val)} placeholder="Inside Saudagar Properties: " />
                   <FormField label="Title Highlight" value={formData?.videoShowcase?.titleItalic} onChange={(val) => updateField('videoShowcase.titleItalic', val)} placeholder="Two Decades of Excellence" />
                 </div>
+                <ImageUploadInput
+                  label="Video Showcase MP4 Film"
+                  value={formData?.videoShowcase?.videoUrl}
+                  onChange={(val) => updateField('videoShowcase.videoUrl', val)}
+                  folder="/saudagar-properties/videos"
+                  acceptVideo={true}
+                  mediaType="video"
+                  description="Upload full cinematic corporate film MP4 or paste video stream link"
+                />
                 <TextAreaField label="Subtitle" value={formData?.videoShowcase?.subtitle} onChange={(val) => updateField('videoShowcase.subtitle', val)} rows={3} />
               </div>
             )}

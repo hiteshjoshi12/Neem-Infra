@@ -3,6 +3,7 @@ import { TrendingUp, Plus, Trash2, Sparkles, Image as ImageIcon, MapPin, Phone, 
 import FormInput from '../common/FormInput';
 import FormTextarea from '../common/FormTextarea';
 import SectionHeader from '../common/SectionHeader';
+import ImageUploadInput from '../ImageUploadInput';
 
 export default function DlfCalloutEditor({ formData, updateField }) {
   const statsCards = formData.statsCards || [];
@@ -109,11 +110,13 @@ export default function DlfCalloutEditor({ formData, updateField }) {
             </h4>
           </div>
 
-          <FormInput
-            label="Image URL"
-            placeholder="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85"
+          <ImageUploadInput
+            label="Architectural Image"
             value={formData.image}
-            onChange={(e) => updateField('image', e.target.value)}
+            onChange={(val) => updateField('image', val)}
+            folder="/saudagar-properties/dlf-callout"
+            recommendedRatio="16:9"
+            description="Luxury architectural photography displayed on the right-hand feature showcase card"
           />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

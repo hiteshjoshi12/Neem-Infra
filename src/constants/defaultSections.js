@@ -94,8 +94,9 @@ export const DEFAULT_SECTIONS = {
     searchButtonText: "Explore",
     trendingLabel: "Trending:",
     trendingTags: ["DLF Phase 1 Floors", "Sushant Lok Villas", "Golf Course Ext.", "Under 5 Cr"],
-    videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-modern-luxury-villa-with-pool-and-palm-trees-43950-large.mp4",
-    bgImage: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80"
+    videoUrl: "https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/saudagar-hero.mp4",
+    videoMobileUrl: "https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/saudagar-hero-mobile.mp4",
+    bgImage: "https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/poster.jpg?tr=f-auto,q-80"
   },
   topConsultant: {
     badge: "Bespoke Real Estate Advisory",
@@ -512,7 +513,7 @@ export const DEFAULT_SECTIONS = {
       titleMain: "Inside Saudagar Properties: ",
       titleItalic: "Two Decades of Excellence",
       subtitle: "Take an exclusive inside look at our bespoke advisory, hands-on founder dedication, and turnkey property acquisitions across DLF Gurugram.",
-      videoUrl: "https://saudagarproperties.com/wp-content/uploads/2025/06/FINAL-ONE_2.mp4"
+      videoUrl: "https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/saudagar-hero.mp4"
     },
     offerings: {
       badge: "Prime Real Estate Portfolio",

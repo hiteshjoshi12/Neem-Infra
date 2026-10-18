@@ -7,8 +7,27 @@ import { requireAdmin } from '@/lib/auth/authGuard';
 // Dynamic route configuration
 export const dynamic = 'force-dynamic';
 
-const ALLOWED_MIME_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/avif'];
-const MAX_FILE_SIZE_BYTES = 10 * 1024 * 1024; // 10MB
+const ALLOWED_IMAGE_TYPES = [
+  'image/jpeg',
+  'image/png',
+  'image/webp',
+  'image/avif',
+  'image/svg+xml',
+  'image/gif',
+  'image/x-icon',
+  'image/vnd.microsoft.icon'
+];
+
+const ALLOWED_VIDEO_TYPES = [
+  'video/mp4',
+  'video/webm',
+  'video/quicktime',
+  'video/ogg',
+  'video/x-matroska'
+];
+
+const MAX_IMAGE_SIZE_BYTES = 25 * 1024 * 1024; // 25MB
+const MAX_VIDEO_SIZE_BYTES = 100 * 1024 * 1024; // 100MB
 
 function getImageKitInstance() {
   const publicKey = process.env.IMAGEKIT_PUBLIC_KEY;
@@ -39,18 +58,28 @@ export async function POST(req) {
       );
     }
 
+    const isVideo = ALLOWED_VIDEO_TYPES.includes(file.type);
+    const isImage = ALLOWED_IMAGE_TYPES.includes(file.type);
+
     // 1. Validate MIME Type
-    if (!ALLOWED_MIME_TYPES.includes(file.type)) {
+    if (!isVideo && !isImage) {
       return NextResponse.json(
-        { success: false, message: `Unsupported image format (${file.type}). Allowed formats: JPEG, PNG, WebP, AVIF.` },
+        {
+          success: false,
+          message: `Unsupported file format (${file.type}). Allowed image formats: JPEG, PNG, WebP, AVIF, SVG, GIF. Allowed video formats: MP4, WebM, MOV, OGG.`
+        },
         { status: 400 }
       );
     }
 
     // 2. Validate File Size
-    if (file.size > MAX_FILE_SIZE_BYTES) {
+    const maxSize = isVideo ? MAX_VIDEO_SIZE_BYTES : MAX_IMAGE_SIZE_BYTES;
+    if (file.size > maxSize) {
       return NextResponse.json(
-        { success: false, message: 'File size exceeds maximum permitted limit of 10MB.' },
+        {
+          success: false,
+          message: `File size (${(file.size / (1024 * 1024)).toFixed(1)}MB) exceeds maximum permitted limit of ${isVideo ? '100MB for videos' : '25MB for images'}.`
+        },
         { status: 400 }
       );
     }
@@ -75,6 +104,8 @@ export async function POST(req) {
         url: uploadResponse.url,
         fileId: uploadResponse.fileId,
         name: uploadResponse.name,
+        fileType: isVideo ? 'video' : 'image',
+        size: file.size,
         thumbnailUrl: uploadResponse.thumbnailUrl || uploadResponse.url,
         folder: uploadResponse.filePath || folder,
         provider: 'imagekit'

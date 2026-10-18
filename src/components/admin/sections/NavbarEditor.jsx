@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Globe, Plus, Trash2, ChevronDown, ChevronRight, Layers, Link2 } from 'lucide-react';
 import FormInput from '../common/FormInput';
 import SectionHeader from '../common/SectionHeader';
+import ImageUploadInput from '../ImageUploadInput';
 
 export default function NavbarEditor({ formData, updateField }) {
   const links = formData.links || [];
@@ -77,13 +78,17 @@ export default function NavbarEditor({ formData, updateField }) {
         subtitle="Manage the global logo, contact numbers, CTA button, and top navigation menu links with interactive dropdown items"
       />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <FormInput
-          label="Custom Logo Image URL (Leave blank to use default)"
-          placeholder="https://example.com/logo.png"
+      <div className="space-y-4">
+        <ImageUploadInput
+          label="Custom Navbar Brand Logo"
           value={formData.logoUrl}
-          onChange={(e) => updateField('logoUrl', e.target.value)}
+          onChange={(val) => updateField('logoUrl', val)}
+          folder="/saudagar-properties/branding"
+          description="Upload brand logo (PNG with transparency, SVG, or WebP). Leave blank to use default."
         />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <FormInput
           label="Display Phone Number"
           placeholder="+91 98112 21207"

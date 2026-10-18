@@ -28,7 +28,7 @@ export default function AboutVideoShowcase() {
   const [showControls, setShowControls] = useState(true);
   const controlsTimeoutRef = useRef(null);
 
-  const videoUrl = cms.videoUrl || "https://saudagarproperties.com/wp-content/uploads/2025/06/FINAL-ONE_2.mp4";
+  const videoUrl = cms.videoUrl || "https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/saudagar-hero.mp4";
 
   const formatTime = (seconds) => {
     if (isNaN(seconds)) return '0:00';
