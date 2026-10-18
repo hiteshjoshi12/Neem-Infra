@@ -106,13 +106,25 @@ export default async function BlogCategoryPage({ params }) {
                 >
                   <div>
                     {post.featuredImage && (
-                      <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-100">
+                      <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#0A0E17] border-b border-[#17213D]/10">
+                        {/* Ambient Blurred Backdrop */}
+                        <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
+                          <Image
+                            src={post.featuredImage}
+                            alt=""
+                            fill
+                            sizes="100px"
+                            className="object-cover blur-xl scale-125 brightness-75"
+                            aria-hidden="true"
+                          />
+                        </div>
+                        {/* Full Uncut Foreground Image */}
                         <Image
                           src={post.featuredImage}
                           alt={post.title}
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 400px"
-                          className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                          className="object-contain object-center group-hover:scale-[1.02] transition-transform duration-500 relative z-10"
                         />
                       </div>
                     )}

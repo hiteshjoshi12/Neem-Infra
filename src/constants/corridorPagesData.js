@@ -23,24 +23,30 @@ export const CORRIDOR_PAGES_DATA = {
       ],
       "galleryImages": [
         {
-          "url": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85",
+          "url": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&h=1000&q=85",
           "title": "Stately Modern Villa & Lawn",
           "tag": "Prime Estate"
         },
         {
-          "url": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=85",
+          "url": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1600&h=1000&q=85",
           "title": "Grand Double-Height Living Room",
           "tag": "Italian Marble Suite"
         },
         {
-          "url": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=85",
+          "url": "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1600&h=1000&q=85",
           "title": "Private Garden & Sunken Courtyard",
           "tag": "Outdoor Serenity"
         }
       ],
-      "bgImage": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80",
+      "bgImage": "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2400&h=1028&q=85",
       "directPhone": "+91 98112 21207",
-      "whatsappNumber": "919718511207"
+      "whatsappNumber": "919718511207",
+      "trustBadges": [
+        "25+ Years Authority",
+        "100% Freehold Title Vetted",
+        "Direct Seller Mandates"
+      ],
+      "intelligenceTagline": "DLF Phase 1 Micro-Market Intelligence"
     },
     "metrics": [
       {
@@ -67,6 +73,7 @@ export const CORRIDOR_PAGES_DATA = {
     "overview": {
       "tag": "Locality Profile & Distinct Character",
       "title": "Luxury Properties and Plots in DLF Phase 1, Gurugram",
+      "image": "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1280&h=800&q=85",
       "paragraphs": [
         "Situated in the prime locality of Gurugram, DLF Phase 1 is renowned for offering the best property in DLF Phase 1, perfectly blending luxury, comfort, and superior connectivity. This upscale neighborhood is known for its wide roads, lush green surroundings, and world-class infrastructure, making it one of the most prestigious and desirable residential areas in Gurugram.",
         "Whether you’re searching for ready-to-move villas, modern builder floors, or DLF Phase 1 plots, this locality offers a wide range of opportunities for both homebuyers and investors. Each property here reflects sophistication and is surrounded by a peaceful environment that truly enhances your lifestyle."
@@ -108,7 +115,11 @@ export const CORRIDOR_PAGES_DATA = {
       "tag": "Strategic Urban Equilibrium",
       "title": "Property in DLF Phase 1, Gurugram",
       "subtitle": "Elite Lifestyle & Enduring Capital Appreciation",
-      "description": "If you’re looking for the best property in DLF Phase 1, you’ll find premium options thoughtfully designed for an elite lifestyle and long-term property appreciation. Strategically located, DLF Phase 1 Gurugram provides quick access to MG Road, Golf Course Road, Cyber City, and other major business hubs, ensuring a seamless balance between work, leisure, and family life.\n\nWith reputed schools, hospitals, shopping centers, and entertainment zones nearby, living in this area means unmatched convenience. As trusted property dealers in DLF Phase 1 Gurugram, we help you discover your dream home and secure the perfect investment with confidence."
+      "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1280&h=800&q=85",
+      "description": "If you’re looking for the best property in DLF Phase 1, you’ll find premium options thoughtfully designed for an elite lifestyle and long-term property appreciation. Strategically located, DLF Phase 1 Gurugram provides quick access to MG Road, Golf Course Road, Cyber City, and other major business hubs, ensuring a seamless balance between work, leisure, and family life.\n\nWith reputed schools, hospitals, shopping centers, and entertainment zones nearby, living in this area means unmatched convenience. As trusted property dealers in DLF Phase 1 Gurugram, we help you discover your dream home and secure the perfect investment with confidence.",
+      "cardBadge": "Prime Location Estate",
+      "cardTag": "Direct Sector Mandate",
+      "cardTitle": "DLF Phase 1 Prime Micro-Market"
     },
     "quickCallout": {
       "badge": "Confidential Advisory Desk",
@@ -175,7 +186,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "Adjacent (0 – 2 km)",
           "time": "2 Mins",
           "desc": "One of the prime business, fine dining, and ultra-luxury residential corridors in Gurugram.",
-          "image": "https://saudagarproperties.com/wp-content/uploads/2026/07/Luxury-Property-in-Gurgaon.jpg"
+          "image": "/images/landmarks/golf-course-road.jpg"
         },
         {
           "name": "DLF Cyber City & Cyber Hub",
@@ -183,7 +194,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "3.5 km",
           "time": "5 Mins",
           "desc": "Direct connectivity to North India’s largest corporate IT and multinational commercial ecosystem.",
-          "image": "https://saudagarproperties.com/wp-content/uploads/2026/06/Office-Space-in-Gurgaon.jpg"
+          "image": "/images/landmarks/cyber-city-hub.jpg"
         },
         {
           "name": "IGI Airport Terminal 3",
@@ -191,7 +202,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "12 km",
           "time": "18 Mins",
           "desc": "Rapid highway corridor commute to Indira Gandhi International Airport for frequent flyers.",
-          "image": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/igi-airport-t3.jpg"
         },
         {
           "name": "Gurugram Center via NH-48",
@@ -199,7 +210,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "14 km",
           "time": "15 Mins",
           "desc": "Swift access to central commercial districts, administrative hubs, and premier hospitals.",
-          "image": "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/delhi-gurgaon-expressway.jpg"
         },
         {
           "name": "New Delhi Railway Station",
@@ -207,7 +218,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "28 km via NH-48",
           "time": "35 Mins",
           "desc": "Effortless interstate connectivity for business commutes into Central Delhi.",
-          "image": "https://images.unsplash.com/photo-1474487548417-781cb71495f3?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/new-delhi-railway.jpg"
         },
         {
           "name": "Capital City New Delhi",
@@ -215,7 +226,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "33.2 km",
           "time": "40 Mins",
           "desc": "Direct arterial transit via MG Road and Mehrauli corridor to Vasant Kunj and Saket.",
-          "image": "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/india-gate-delhi.jpg"
         }
       ]
     },
@@ -233,13 +244,29 @@ export const CORRIDOR_PAGES_DATA = {
         "Confidential access to unlisted off-market plots and builder floors",
         "Comprehensive assistance with bank loans, registry, and MCG tax mutation"
       ],
-      "image": "https://saudagarproperties.com/wp-content/uploads/2026/01/Property-Dealers-in-Gurugram.png"
+      "image": "/images/corridors/dlf-phase-1-how-we-help.jpg",
+      "cardBadgeTitle": "Turnkey Due Diligence",
+      "cardBadgeDesc": "Title clearance, registry representation & architect consultation"
     },
     "whyChooseSaudagar": {
       "badge": "25+ Years of Local Authority",
       "title": "Why Choose Saudagar Properties for DLF Phase 1?",
       "content": "If you’re searching for the property in DLF Phase 1, Saudagar Properties is the most trusted name to guide your journey. With 25+ years of local expertise and a strong network across every block, we help buyers and investors discover verified listings that match their lifestyle and budget.\n\nOur team understands what truly defines the best property in DLF Phase 1 from premium builder floors to high-value plots and we make sure you get access to exclusive options that aren’t available on public portals. We believe in transparent dealings, genuine advice, and personalized support from the first enquiry to final possession. Whether you need a luxury home or a solid investment, our deep knowledge of the area ensures a smooth and confident decision-making process. With Saudagar Properties by your side, finding the best property in DLF Phase 1 becomes easy, reliable, and rewarding.",
-      "image": "https://saudagarproperties.com/wp-content/uploads/2026/03/4-BHK-Independent-Floor-DLF-Phase-1.jpg"
+      "image": "/images/corridors/dlf-phase-1-why-choose.jpg",
+      "stats": [
+        {
+          "value": "25+ Yrs",
+          "label": "Micro-Market Authority"
+        },
+        {
+          "value": "100%",
+          "label": "Clean Freehold Titles"
+        },
+        {
+          "value": "₹500+ Cr",
+          "label": "Transactions Facilitated"
+        }
+      ]
     },
     "faqs": [
       {
@@ -269,6 +296,23 @@ export const CORRIDOR_PAGES_DATA = {
       "subtitle": "Interactive Google Maps navigation paired with verified high-resolution master layout plan.",
       "googleMapEmbed": "https://maps.google.com/maps?q=DLF+Phase+1+Gurugram&t=&z=14&ie=UTF8&iwloc=&output=embed",
       "staticMapImage": "https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1600&q=80"
+    },
+    "inventorySection": {
+      "badge": "Verified Real Estate",
+      "title": "Available Properties in DLF Phase 1",
+      "linkText": "View Full Catalog"
+    },
+    "inquiryForm": {
+      "badge": "Confidential Inquiry Desk",
+      "title": "Consult Directly for DLF Phase 1",
+      "description": "Fill out the form below. Arun Sharma or our senior partners will contact you within 2 business hours.",
+      "confidentialityNote": "Strict client confidentiality. Zero spam.",
+      "buttonText": "Send Inquiry"
+    },
+    "faqsInfo": {
+      "badge": "Expert Guidance & Insights",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Key questions answered regarding acquisitions, pricing benchmarks, and zoning in DLF Phase 1."
     }
   },
   "dlf-phase-2": {
@@ -288,28 +332,35 @@ export const CORRIDOR_PAGES_DATA = {
       ],
       "galleryImages": [
         {
-          "url": "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1600&q=85",
+          "url": "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1600&h=1000&q=85",
           "title": "Contemporary Minimalist Villa",
           "tag": "Akashneem Marg"
         },
         {
-          "url": "https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=85",
+          "url": "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1600&h=1000&q=85",
           "title": "Open-Plan Designer Dining Atrium",
           "tag": "Turnkey Interiors"
         },
         {
-          "url": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=85",
+          "url": "https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1600&h=1000&q=85",
           "title": "Luxury Residence with Stilt Parking",
           "tag": "Stilt + 4 Structure"
         }
       ],
-      "bgImage": "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=2400&q=80",
+      "bgImage": "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=2400&h=1028&q=85",
       "directPhone": "+91 98112 21207",
-      "whatsappNumber": "919718511207"
+      "whatsappNumber": "919718511207",
+      "trustBadges": [
+        "25+ Years Authority",
+        "100% Freehold Title Vetted",
+        "Direct Seller Mandates"
+      ],
+      "intelligenceTagline": "DLF Phase 2 Micro-Market Intelligence"
     },
     "overview": {
       "tag": "Experience the Charm of DLF Phase 2",
       "title": "Top-Rated Luxury Properties and Floors in DLF Phase 2, Gurugram",
+      "image": "https://images.unsplash.com/photo-1600573472592-401b489a3cdc?auto=format&fit=crop&w=1280&h=800&q=85",
       "paragraphs": [
         "DLF Phase 2 presents well-organized residential buildings that reflect comfort and sophistication. The top-rated property in DLF Phase 2 offers modern facilities and a luxurious lifestyle for discerning buyers. Many houses are designed by award-winning architects, combining commercial and residential spaces with well-planned interiors and exteriors. The area represents urban-chic living with a calm environment and excellent connectivity. These homes showcase class and convenience, supported by world-class infrastructure. Explore luxury apartments in DLF Phase 2 to experience elegant living and find your ideal home or investment.",
         "A range of amenities is available within a short distance from this locality, allowing residents to spend more time at home rather than struggling for essentials. Builders and property managers have installed proper safety measures, ensuring families can live happily, peacefully, and securely. If you are looking to buy or rent houses of unmatched quality, this locality is one of the best options. As a trusted property dealer in Gurugram, we help buyers explore property in DLF Phase 2 and make informed decisions. Experience comfort, elegance, and modern living with a top-rated property in DLF Phase 2, perfectly suited for families and investors alike."
@@ -334,6 +385,16 @@ export const CORRIDOR_PAGES_DATA = {
             "Complete FAR redevelopment potential",
             "Long-standing capital appreciation track record"
           ]
+        },
+        {
+          "title": "Freehold Residential Plots",
+          "specs": "300 to 1,000 Sq. Yds • Akashneem & Jacaranda Marg",
+          "price": "₹4.20 Lakh / Sq. Yd Onwards",
+          "highlights": [
+            "100% Freehold conveyance with clean registry titles",
+            "Prime addresses along Akashneem Marg & Jacaranda Marg",
+            "Unrivaled capital growth driven by Cyber City proximity"
+          ]
         }
       ]
     },
@@ -341,7 +402,11 @@ export const CORRIDOR_PAGES_DATA = {
       "tag": "Strategic Urban Equilibrium",
       "title": "Why You Should Stay in DLF Phase 2?",
       "subtitle": "Elite Living & Enduring Capital Appreciation",
-      "description": "DLF Phase 2 is one of the most prominent localities for residential properties in Gurugram. The area offers excellent connectivity and a modern lifestyle, making it ideal for families and investors. With well-planned infrastructure, the top-rated property in DLF Phase 2 provides a secure and comfortable living environment. The locality features a mix of multi-story apartments and villas, as well as commercial spaces for daily needs. Residents can enjoy nearby parks, schools, and shopping centers. Discover the charm of luxury homes in DLF Phase 2 and experience elegance combined with convenience in one of Gurugram’s most sought-after neighborhoods.\n\nChoosing the right property in DLF Phase 2 ensures long-term value, superior living standards, and strong appreciation potential. Whether for self-use or investment, a property in DLF Phase 2 offers the perfect balance of comfort, connectivity, and premium lifestyle."
+      "image": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1280&h=800&q=85",
+      "description": "DLF Phase 2 is one of the most prominent localities for residential properties in Gurugram. The area offers excellent connectivity and a modern lifestyle, making it ideal for families and investors. With well-planned infrastructure, the top-rated property in DLF Phase 2 provides a secure and comfortable living environment. The locality features a mix of multi-story apartments and villas, as well as commercial spaces for daily needs. Residents can enjoy nearby parks, schools, and shopping centers. Discover the charm of luxury homes in DLF Phase 2 and experience elegance combined with convenience in one of Gurugram’s most sought-after neighborhoods.\n\nChoosing the right property in DLF Phase 2 ensures long-term value, superior living standards, and strong appreciation potential. Whether for self-use or investment, a property in DLF Phase 2 offers the perfect balance of comfort, connectivity, and premium lifestyle.",
+      "cardBadge": "Prime Location Estate",
+      "cardTag": "Direct Sector Mandate",
+      "cardTitle": "DLF Phase 2 Prime Micro-Market"
     },
     "quickCallout": {
       "badge": "Confidential Advisory Desk",
@@ -384,6 +449,16 @@ export const CORRIDOR_PAGES_DATA = {
           "number": "06",
           "title": "High Appreciation & Investment Returns",
           "desc": "Offers strong investment potential with high appreciation value, making it an ideal choice for buying a property in DLF Phase 2."
+        },
+        {
+          "number": "07",
+          "title": "Unrivalled Commercial & Corporate Proximity",
+          "desc": "Direct adjacency to Fortune 500 headquarters in Cyber City and Horizon Center makes it the premier address for corporate leaders and founders."
+        },
+        {
+          "number": "08",
+          "title": "Generational Wealth & Steady Capital Growth",
+          "desc": "Consistent double-digit land appreciation and premium resale demand make DLF Phase 2 a blue-chip asset for generational real estate preservation."
         }
       ]
     },
@@ -398,7 +473,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "Adjacent (0.5 km)",
           "time": "2 Mins",
           "desc": "The locality is very close to Golf Course Road and MG Road. Top-rated properties in DLF Phase 2 are easily accessible from here.",
-          "image": "https://saudagarproperties.com/wp-content/uploads/2026/07/Luxury-Property-in-Gurgaon.jpg"
+          "image": "/images/landmarks/golf-course-road.jpg"
         },
         {
           "name": "DLF Cyber City & Cyber Hub",
@@ -406,7 +481,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "500 meters",
           "time": "2 Mins Walk",
           "desc": "Strategically located near prominent commercial spots like Cyber City and Cyber Hub Gurgaon.",
-          "image": "https://saudagarproperties.com/wp-content/uploads/2026/06/Office-Space-in-Gurgaon.jpg"
+          "image": "/images/landmarks/cyber-city-hub.jpg"
         },
         {
           "name": "Top Schools (DPS DLF City & Montessori)",
@@ -414,7 +489,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "In-Sector",
           "time": "3 Mins",
           "desc": "Schools such as Delhi Public School (DPS) DLF City, Sherwood Convent School, and American Montessori Public School are within the locality.",
-          "image": "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/school-campus-gurgaon.jpg"
         },
         {
           "name": "Ambience Mall & MGF Metropolitan",
@@ -422,7 +497,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1.5 km",
           "time": "4 Mins",
           "desc": "Features retail infrastructure such as Ambience Mall, MGF Metropolitan Mall, Sahara Mall, and local shopping centers within the locality.",
-          "image": "https://images.unsplash.com/photo-1567449303078-57ad995bd302?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/ambience-mall.jpg"
         },
         {
           "name": "IGI Airport Terminal 3",
@@ -430,7 +505,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "10 km",
           "time": "12 Mins",
           "desc": "Direct highway drive via NH-48 to Indira Gandhi International Airport for frequent domestic and international flyers.",
-          "image": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/igi-airport-t3.jpg"
         },
         {
           "name": "MG Road Metro Station",
@@ -438,7 +513,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1 km",
           "time": "3 Mins",
           "desc": "Direct rapid transit connection to Central and South Delhi alongside in-sector Rapid Metro stations.",
-          "image": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/mg-road-metro.jpg"
         }
       ]
     },
@@ -456,13 +531,29 @@ export const CORRIDOR_PAGES_DATA = {
         "Complete assistance with DTCP/MCG permits, building sanctions and registry",
         "Live market trends, price benchmarks, and investment advisory"
       ],
-      "image": "https://saudagarproperties.com/wp-content/uploads/2026/03/4-BHK-Independent-Floor-DLF-Phase-1.jpg"
+      "image": "/images/corridors/dlf-phase-2-how-we-help.jpg",
+      "cardBadgeTitle": "Turnkey Due Diligence",
+      "cardBadgeDesc": "Title clearance, registry representation & architect consultation"
     },
     "whyChooseSaudagar": {
       "badge": "25+ Years at 38 Akashneem Marg",
       "title": "Why Choose Saudagar Properties for Finding a Property in DLF Phase 2?",
       "content": "If you’re looking for a property in DLF Phase 2, Saudagar Properties stands out as the ideal partner thanks to our deep knowledge of Phase 2’s blocks, transparent and verified listings, and a strong track record helping buyers and investors find suitable, well-located homes. We assist with property selection based on your budget and needs, guide you through legalities and paperwork, and help you access the best options (independent floors, apartments, gated communities) with strong growth and rental potential. With our local expertise and market insight, you get confidence and convenience, making your search for a top-rated property in DLF Phase 2 smooth and rewarding. Our team focuses on delivering the right property in DLF Phase 2 that aligns with your long-term goals, whether for end-use or investment. From site visits to final possession, we ensure every property in DLF Phase 2 is thoroughly evaluated for quality, location advantage, and future appreciation.",
-      "image": "https://saudagarproperties.com/wp-content/uploads/2026/01/Property-Dealers-in-Gurugram.png"
+      "image": "/images/corridors/dlf-phase-2-why-choose.jpg",
+      "stats": [
+        {
+          "value": "25+ Yrs",
+          "label": "Micro-Market Authority"
+        },
+        {
+          "value": "100%",
+          "label": "Clean Freehold Titles"
+        },
+        {
+          "value": "₹500+ Cr",
+          "label": "Transactions Facilitated"
+        }
+      ]
     },
     "faqs": [
       {
@@ -492,6 +583,23 @@ export const CORRIDOR_PAGES_DATA = {
       "subtitle": "Interactive Google Maps navigation paired with verified high-resolution master layout plan.",
       "googleMapEmbed": "https://maps.google.com/maps?q=DLF+Phase+2+Gurugram&t=&z=14&ie=UTF8&iwloc=&output=embed",
       "staticMapImage": "https://images.unsplash.com/photo-1577083552431-6e5fd01aa342?auto=format&fit=crop&w=1600&q=80"
+    },
+    "inventorySection": {
+      "badge": "Verified Real Estate",
+      "title": "Available Properties in DLF Phase 2",
+      "linkText": "View Full Catalog"
+    },
+    "inquiryForm": {
+      "badge": "Confidential Inquiry Desk",
+      "title": "Consult Directly for DLF Phase 2",
+      "description": "Fill out the form below. Arun Sharma or our senior partners will contact you within 2 business hours.",
+      "confidentialityNote": "Strict client confidentiality. Zero spam.",
+      "buttonText": "Send Inquiry"
+    },
+    "faqsInfo": {
+      "badge": "Expert Guidance & Insights",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Key questions answered regarding acquisitions, pricing benchmarks, and zoning in DLF Phase 2."
     }
   },
   "dlf-phase-3": {
@@ -511,28 +619,35 @@ export const CORRIDOR_PAGES_DATA = {
       ],
       "galleryImages": [
         {
-          "url": "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=1600&q=85",
+          "url": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&h=1000&q=85",
           "title": "Architectural Multi-Level Duplex",
           "tag": "Bespoke Residence"
         },
         {
-          "url": "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1200&q=85",
+          "url": "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1600&h=1000&q=85",
           "title": "Handcrafted Lounge & Timber Deck",
           "tag": "Executive Living"
         },
         {
-          "url": "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=1200&q=85",
+          "url": "https://images.unsplash.com/photo-1600573472550-8090b5e0745e?auto=format&fit=crop&w=1600&h=1000&q=85",
           "title": "Sunset Penthouse Terrace",
           "tag": "Private Rooftop"
         }
       ],
-      "bgImage": "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=2400&q=80",
+      "bgImage": "https://images.unsplash.com/photo-1613490493576-7fde63acd811?auto=format&fit=crop&w=2400&h=1028&q=85",
       "directPhone": "+91 98112 21207",
-      "whatsappNumber": "919718511207"
+      "whatsappNumber": "919718511207",
+      "trustBadges": [
+        "25+ Years Authority",
+        "100% Freehold Title Vetted",
+        "Direct Seller Mandates"
+      ],
+      "intelligenceTagline": "DLF Phase 3 Micro-Market Intelligence"
     },
     "overview": {
       "tag": "Urban Sophistication & Comfort",
       "title": "Premium Properties and Luxury Floors in DLF Phase 3, Gurugram",
+      "image": "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1280&h=800&q=85",
       "paragraphs": [
         "If you are looking for a premium property in DLF Phase 3, you are choosing one of Gurugram’s most prestigious, well-connected neighborhoods. Gurugram DLF Phase 3 offers a mix of modern amenities, greenery, and convenience, with easy access to business hubs, schools, malls, and healthcare. For those seeking luxury living, there are numerous properties in DLF Phase 3 that combine comfort.",
         "At Saudagar Properties, we help you find premium property in DLF Phase 3 that truly matches your lifestyle and investment goals. Our curated listings in DLF Phase 3 Gurugram include luxury builder floors, modern apartments, and high-value plots designed for those who appreciate quality and comfort. The area’s connectivity to NH-8, Golf Course Road, and Delhi makes it a preferred destination for homebuyers and investors. Whether you’re seeking a residence with elegance or an asset that grows in value, DLF Phase 3 in Gurgaon offers it all. Discover how this upscale neighborhood combines sophistication, security, and convenience, redefining what premium living in Gurugram really means."
@@ -557,6 +672,16 @@ export const CORRIDOR_PAGES_DATA = {
             "Sanctionable for Stilt + 4 development",
             "Clear ownership chain with DLF NOC"
           ]
+        },
+        {
+          "title": "Independent Kothis & Gated Enclaves",
+          "specs": "300 to 500 Sq. Yds • Cyber Hub & Moulsari Proximity",
+          "price": "₹9.50 Cr – ₹22.00 Cr",
+          "highlights": [
+            "Pedestrian access to DLF Cyber City & Ambience Mall",
+            "High rental yield cash flows from corporate tenancies",
+            "100% freehold titles with private basements & terrace"
+          ]
         }
       ]
     },
@@ -564,7 +689,11 @@ export const CORRIDOR_PAGES_DATA = {
       "tag": "Strategic Urban Equilibrium",
       "title": "Why You Should Stay in DLF Phase 3?",
       "subtitle": "Surrounded by Corporate Hubs, Metro Lines & Posh Ambience",
-      "description": "DLF Phase 3 is surrounded by numerous corporate offices, shopping malls, metro stations, and a wide range of modern conveniences, making it an ideal choice for professionals and families alike. Living in this upscale locality offers the perfect balance of a peaceful, posh environment with easy access to Gurgaon’s bustling business hubs. Investing in a premium property in DLF Phase 3 allows residents to enjoy modern amenities, luxury living, and excellent connectivity. Whether you work in Cyber Hub, MG Road, or nearby commercial centers, residing in DLF Phase 3 ensures you enjoy both comfort and convenience.\n\nWith well-maintained parks, top schools, and immediate proximity to the Delhi border, DLF Phase 3 continues to deliver resilient capital appreciation and robust rental income."
+      "image": "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1280&h=800&q=85",
+      "description": "DLF Phase 3 is surrounded by numerous corporate offices, shopping malls, metro stations, and a wide range of modern conveniences, making it an ideal choice for professionals and families alike. Living in this upscale locality offers the perfect balance of a peaceful, posh environment with easy access to Gurgaon’s bustling business hubs. Investing in a premium property in DLF Phase 3 allows residents to enjoy modern amenities, luxury living, and excellent connectivity. Whether you work in Cyber Hub, MG Road, or nearby commercial centers, residing in DLF Phase 3 ensures you enjoy both comfort and convenience.\n\nWith well-maintained parks, top schools, and immediate proximity to the Delhi border, DLF Phase 3 continues to deliver resilient capital appreciation and robust rental income.",
+      "cardBadge": "Prime Location Estate",
+      "cardTag": "Direct Sector Mandate",
+      "cardTitle": "DLF Phase 3 Prime Micro-Market"
     },
     "quickCallout": {
       "badge": "Confidential Advisory Desk",
@@ -602,6 +731,21 @@ export const CORRIDOR_PAGES_DATA = {
           "number": "05",
           "title": "Prominent Premium Landmarks",
           "desc": "Ambience Lagoon, Garden Estate, and Ambience Caitriona are a few prominent premium properties in DLF Phase 3 that showcase luxury and modern living."
+        },
+        {
+          "number": "06",
+          "title": "Immediate Delhi Border Accessibility",
+          "desc": "Situated right at the Delhi-Gurugram threshold, providing 10-minute access to South Delhi and Vasant Kunj via NH-48."
+        },
+        {
+          "number": "07",
+          "title": "Vibrant Lifestyle & Retail Density",
+          "desc": "Surrounded by Ambience Mall, DLF Cyber Hub, and in-sector retail arcades offering world-class dining, fitness, and entertainment."
+        },
+        {
+          "number": "08",
+          "title": "Resilient High-Yield Rental Market",
+          "desc": "Continuous influx of multinational corporate executives ensures year-round occupancy and attractive rental yields between 4.5%–5.2%."
         }
       ]
     },
@@ -616,7 +760,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1 km",
           "time": "3 Mins",
           "desc": "Very close to attractions such as Ambience Mall and Aravali Biodiversity Park while malls on MG Road including MGF Megacity Mall can be reached within 10-15 minutes.",
-          "image": "https://images.unsplash.com/photo-1567449303078-57ad995bd302?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/ambience-mall.jpg"
         },
         {
           "name": "DLF Cyber City",
@@ -624,7 +768,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1.5 km",
           "time": "3 Mins",
           "desc": "Adjacent to Cyber City, the most famous commercial and tech hub of Gurgaon.",
-          "image": "https://saudagarproperties.com/wp-content/uploads/2026/06/Office-Space-in-Gurgaon.jpg"
+          "image": "/images/landmarks/cyber-city-hub.jpg"
         },
         {
           "name": "Metro & Highway Arterials",
@@ -632,7 +776,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "In-Sector",
           "time": "2 Mins",
           "desc": "Well connected to MG Road, Delhi Metro (Guru Dronacharya), Rapid Metro (Moulsari Avenue & Phase 3), and NH-8 Expressway.",
-          "image": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/rapid-metro-phase-2.jpg"
         },
         {
           "name": "Top Prominent Schools",
@@ -640,7 +784,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1.5 km",
           "time": "4 Mins",
           "desc": "Close to prominent schools such as The Shri Ram School, GD Goenka Global School, and Rabindranath World School.",
-          "image": "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/school-campus-gurgaon.jpg"
         },
         {
           "name": "Healthcare Super-Specialties",
@@ -648,7 +792,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "2 km",
           "time": "5 Mins",
           "desc": "Hospitals such as Narayana Superspeciality and St. Stephen’s are within the immediate area.",
-          "image": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/fortis-healthcare.jpg"
         },
         {
           "name": "IGI Airport Terminal 3",
@@ -656,7 +800,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "13 km",
           "time": "14 Mins",
           "desc": "Only 13 km away from Indira Gandhi International Airport via signal-free NH-8.",
-          "image": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/igi-airport-t3.jpg"
         }
       ]
     },
@@ -674,13 +818,29 @@ export const CORRIDOR_PAGES_DATA = {
         "Comprehensive 30-year deed history, municipal sanction & registry vetting",
         "Personalized property search matching budget, timeline, and lifestyle"
       ],
-      "image": "https://saudagarproperties.com/wp-content/uploads/2026/03/Duplex-Villa-in-DLF-Phase-1.jpg"
+      "image": "/images/corridors/dlf-phase-3-how-we-help.jpg",
+      "cardBadgeTitle": "Turnkey Due Diligence",
+      "cardBadgeDesc": "Title clearance, registry representation & architect consultation"
     },
     "whyChooseSaudagar": {
       "badge": "25+ Years of Local Authority",
       "title": "Why Choose Saudagar Properties for a Property in DLF Phase 3?",
       "content": "If you’re looking for a property in DLF Phase 3, this locality offers the ideal blend of connectivity, comfort, and lifestyle. With its gated communities, well-planned builder floors, luxury apartments and independent homes, DLF Phase 3 stays among Gurgaon’s most sought-after addresses. From excellent access to DLF Cyber City and major highways to top schools, reputed hospitals, malls, and green parks, every convenience is within reach. Whether you want a quiet, family-oriented home or a high-end investment, a premium property in DLF Phase 3 offers value, comfort, and long-term appreciation. With trusted property dealers in Gurugram to guide you, finding the right home becomes even easier and more reliable.",
-      "image": "https://saudagarproperties.com/wp-content/uploads/2026/07/Luxury-Property-in-Gurgaon.jpg"
+      "image": "/images/corridors/dlf-phase-3-why-choose.jpg",
+      "stats": [
+        {
+          "value": "25+ Yrs",
+          "label": "Micro-Market Authority"
+        },
+        {
+          "value": "100%",
+          "label": "Clean Freehold Titles"
+        },
+        {
+          "value": "₹500+ Cr",
+          "label": "Transactions Facilitated"
+        }
+      ]
     },
     "faqs": [
       {
@@ -710,6 +870,23 @@ export const CORRIDOR_PAGES_DATA = {
       "subtitle": "Interactive Google Maps navigation paired with verified high-resolution master layout plan.",
       "googleMapEmbed": "https://maps.google.com/maps?q=DLF+Phase+3+Gurugram&t=&z=14&ie=UTF8&iwloc=&output=embed",
       "staticMapImage": "https://images.unsplash.com/photo-1569336415962-a4bd9f69cd83?auto=format&fit=crop&w=1600&q=80"
+    },
+    "inventorySection": {
+      "badge": "Verified Real Estate",
+      "title": "Available Properties in DLF Phase 3",
+      "linkText": "View Full Catalog"
+    },
+    "inquiryForm": {
+      "badge": "Confidential Inquiry Desk",
+      "title": "Consult Directly for DLF Phase 3",
+      "description": "Fill out the form below. Arun Sharma or our senior partners will contact you within 2 business hours.",
+      "confidentialityNote": "Strict client confidentiality. Zero spam.",
+      "buttonText": "Send Inquiry"
+    },
+    "faqsInfo": {
+      "badge": "Expert Guidance & Insights",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Key questions answered regarding acquisitions, pricing benchmarks, and zoning in DLF Phase 3."
     }
   },
   "dlf-phase-4": {
@@ -729,28 +906,35 @@ export const CORRIDOR_PAGES_DATA = {
       ],
       "galleryImages": [
         {
-          "url": "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=1600&q=85",
+          "url": "https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=1600&h=1000&q=85",
           "title": "Park-Facing Stately Residence",
           "tag": "Galleria Precinct"
         },
         {
-          "url": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1200&q=85",
+          "url": "https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1600&h=1000&q=85",
           "title": "Master Suite with Balcony Views",
           "tag": "Modern Comfort"
         },
         {
-          "url": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=85",
+          "url": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1600&h=1000&q=85",
           "title": "Sunlit Family Living & Lounge",
           "tag": "Family First"
         }
       ],
-      "bgImage": "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=2400&q=80",
+      "bgImage": "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?auto=format&fit=crop&w=2400&h=1028&q=85",
       "directPhone": "+91 98112 21207",
-      "whatsappNumber": "919718511207"
+      "whatsappNumber": "919718511207",
+      "trustBadges": [
+        "25+ Years Authority",
+        "100% Freehold Title Vetted",
+        "Direct Seller Mandates"
+      ],
+      "intelligenceTagline": "DLF Phase 4 Micro-Market Intelligence"
     },
     "overview": {
       "tag": "Experience Premium Living in DLF Phase 4",
       "title": "Luxury Properties and Builder Floors in DLF Phase 4, Gurugram",
+      "image": "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=1280&h=800&q=85",
       "paragraphs": [
         "Among the most premium localities of Gurgaon, DLF Phase 4 offers an exceptional mix of luxury and convenience. The area is home to several luxury properties in DLF Phase 4 options, including builder floors, high-end apartments, and elegant villas surrounded by lush greenery. Its seamless connectivity to Golf Course Road, MG Road, and Cyber City makes it one of the most preferred addresses for modern families and professionals. With reputed schools, malls, and hospitals nearby, this locality perfectly blends peaceful living with city comfort. The strong demand for real estate in Gurugram has made DLF Phase 4 a highly desirable choice for both homebuyers and investors seeking long-term growth and a sophisticated lifestyle.",
         "At Saudagar Properties, we take pride in helping clients find the perfect home that matches their lifestyle and investment goals. Our expert team specializes in connecting you with the best luxury property in DLF Phase 4 and other prime localities of Gurugram. As one of the most trusted real estate brokers in Gurgaon, we provide end-to-end guidance from exploring verified listings to understanding the latest property prices and market trends. Whether you’re looking for a luxury apartment, a spacious builder floor, or a commercial space for business, our professionals ensure transparency, trust, and a smooth buying experience. With years of experience as reliable property dealers in Gurgaon, we help you make confident and profitable real estate decisions while ensuring complete satisfaction at every step of your property journey."
@@ -775,6 +959,16 @@ export const CORRIDOR_PAGES_DATA = {
             "100% Freehold conveyance and clear chain of title",
             "Unmatched family living environment"
           ]
+        },
+        {
+          "title": "Freehold Residential Plots",
+          "specs": "250 to 500 Sq. Yds • Galleria & Golf Course Enclaves",
+          "price": "₹4.00 Lakh / Sq. Yd Onwards",
+          "highlights": [
+            "Centrally positioned between Galleria Market & Golf Course Rd",
+            "Sanctionable for high-spec Stilt + 4 architectural build",
+            "100% clean title certification with DLF master file scrutiny"
+          ]
         }
       ]
     },
@@ -782,7 +976,11 @@ export const CORRIDOR_PAGES_DATA = {
       "tag": "Strategic Urban Equilibrium",
       "title": "Why You Should Stay in DLF Phase 4?",
       "subtitle": "Class, Security & Enduring Real Estate Value",
-      "description": "DLF Phase 4 is one of the most preferred residential areas in Gurugram, offering everything you need for a balanced lifestyle. The locality is known for its modern infrastructure, clean surroundings, and excellent road and metro connectivity to major business hubs like Cyber City and Golf Course Road. With top schools, hospitals, malls, and restaurants nearby, residents enjoy unmatched comfort and convenience. The area features well-planned builder floors, apartments, and villas surrounded by lush greenery, offering both space and serenity.\n\nChoosing a luxury property in DLF Phase 4 means selecting a lifestyle characterized by class, security, and long-term real estate value. Whether you’re a working professional or a family, this locality provides the perfect combination of peace, accessibility, and urban sophistication making it one of the best places to live in real estate in Gurgaon."
+      "image": "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1280&h=800&q=85",
+      "description": "DLF Phase 4 is one of the most preferred residential areas in Gurugram, offering everything you need for a balanced lifestyle. The locality is known for its modern infrastructure, clean surroundings, and excellent road and metro connectivity to major business hubs like Cyber City and Golf Course Road. With top schools, hospitals, malls, and restaurants nearby, residents enjoy unmatched comfort and convenience. The area features well-planned builder floors, apartments, and villas surrounded by lush greenery, offering both space and serenity.\n\nChoosing a luxury property in DLF Phase 4 means selecting a lifestyle characterized by class, security, and long-term real estate value. Whether you’re a working professional or a family, this locality provides the perfect combination of peace, accessibility, and urban sophistication making it one of the best places to live in real estate in Gurgaon.",
+      "cardBadge": "Prime Location Estate",
+      "cardTag": "Direct Sector Mandate",
+      "cardTitle": "DLF Phase 4 Prime Micro-Market"
     },
     "quickCallout": {
       "badge": "Confidential Advisory Desk",
@@ -820,6 +1018,21 @@ export const CORRIDOR_PAGES_DATA = {
           "number": "05",
           "title": "Swift Connectivity to Core Job Hubs",
           "desc": "Job hubs of Golf Course Road, Cyber City, and Udyog Vihar have easy connectivity from this area, making a luxury property in DLF Phase 4 an ideal choice for working professionals."
+        },
+        {
+          "number": "06",
+          "title": "Galleria Market & High-Street Convenience",
+          "desc": "Home to Gurgaon’s most iconic open-air retail promenade, offering cafes, gourmet groceries, and essential services within walking reach."
+        },
+        {
+          "number": "07",
+          "title": "Lush Green Parks & Low-Density Living",
+          "desc": "Abundant manicured neighborhood parks and wide tree-lined avenues provide a clean, family-friendly sanctuary in the center of the city."
+        },
+        {
+          "number": "08",
+          "title": "High Freehold Land Value & Liquidity",
+          "desc": "Extremely limited plot supply and prime central location ensure effortless asset liquidity and exceptional long-term capital preservation."
         }
       ]
     },
@@ -834,7 +1047,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "200 meters",
           "time": "2 Mins Walk",
           "desc": "Supermart 1 & 2, Galleria Market, Vyapar Kendra, and City Centre Mall make everyday shopping a delightful experience.",
-          "image": "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/galleria-market.jpg"
         },
         {
           "name": "Horizon Centre & DLF Centre Court",
@@ -842,7 +1055,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1.2 km",
           "time": "3 Mins",
           "desc": "Top business hubs like One & Two Horizon Centre, DLF Centre Court, and Vipul Tech Square are just around the corner.",
-          "image": "https://saudagarproperties.com/wp-content/uploads/2026/06/Office-Space-in-Gurgaon.jpg"
+          "image": "/images/landmarks/dlf-office-towers.jpg"
         },
         {
           "name": "Golf Course Road, MG Road & NH-48",
@@ -850,7 +1063,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1 km",
           "time": "3 Mins",
           "desc": "Quick access to Golf Course Road, MG Road, and NH-48 ensures smooth travel across Gurgaon and Delhi.",
-          "image": "https://saudagarproperties.com/wp-content/uploads/2026/07/Luxury-Property-in-Gurgaon.jpg"
+          "image": "/images/landmarks/golf-course-road.jpg"
         },
         {
           "name": "IFFCO Chowk & Huda City Centre",
@@ -858,7 +1071,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1.5 km",
           "time": "4 Mins",
           "desc": "IFFCO Chowk and Huda City Centre Metro Stations on the Yellow Line offer effortless city connectivity.",
-          "image": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/iffco-chowk.jpg"
         },
         {
           "name": "Max Hospital & Paras Hospital",
@@ -866,7 +1079,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "2 km",
           "time": "5 Mins",
           "desc": "Max Hospital and Paras Hospital provide world-class healthcare within a short drive.",
-          "image": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/fortis-healthcare.jpg"
         },
         {
           "name": "The Shri Ram School & DPS",
@@ -874,7 +1087,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1 km",
           "time": "3 Mins",
           "desc": "Leading schools such as Shri Ram School Aravali and Delhi Public School make it a family-friendly neighborhood.",
-          "image": "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/school-campus-gurgaon.jpg"
         },
         {
           "name": "Workplaces in Cyber City & Udyog Vihar",
@@ -882,7 +1095,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "3 km",
           "time": "7 Mins",
           "desc": "Workplaces in Cyber City and Udyog Vihar are nearby, ideal for professionals seeking convenience and lifestyle together.",
-          "image": "https://saudagarproperties.com/wp-content/uploads/2026/06/Office-Space-in-Gurgaon.jpg"
+          "image": "/images/landmarks/cyber-city-hub.jpg"
         }
       ]
     },
@@ -900,13 +1113,29 @@ export const CORRIDOR_PAGES_DATA = {
         "Dedicated legal guidance through final registration",
         "Confidential access to off-market park-facing homes"
       ],
-      "image": "https://saudagarproperties.com/wp-content/uploads/2026/07/Luxury-Property-in-Gurgaon.jpg"
+      "image": "/images/corridors/dlf-phase-4-how-we-help.jpg",
+      "cardBadgeTitle": "Turnkey Due Diligence",
+      "cardBadgeDesc": "Title clearance, registry representation & architect consultation"
     },
     "whyChooseSaudagar": {
       "badge": "25+ Years Experience",
       "title": "Why Choose Saudagar for Property in DLF Phase 4?",
       "content": "Finding the right property in DLF Phase 4 requires local expertise, verified listings, and reliable guidance, all of which Saudagar Properties offers. As experienced property dealers in Gurugram, we help you identify premium homes that match your lifestyle, budget, and investment goals. From independent floors to gated-community apartments, our team ensures that every property is genuine, well-located, and offers long-term value. By providing personalized support, site visits, and transparent dealings, Saudagar Properties makes your buying journey smooth and confident. Whether you’re looking for a family home or a high-end investment, choosing Saudagar Properties guarantees access to the finest luxury property in DLF Phase 4 and a seamless experience from search to possession.",
-      "image": "https://saudagarproperties.com/wp-content/uploads/2026/03/Duplex-Villa-in-DLF-Phase-1.jpg"
+      "image": "/images/corridors/dlf-phase-4-why-choose.jpg",
+      "stats": [
+        {
+          "value": "25+ Yrs",
+          "label": "Micro-Market Authority"
+        },
+        {
+          "value": "100%",
+          "label": "Clean Freehold Titles"
+        },
+        {
+          "value": "₹500+ Cr",
+          "label": "Transactions Facilitated"
+        }
+      ]
     },
     "faqs": [
       {
@@ -936,6 +1165,23 @@ export const CORRIDOR_PAGES_DATA = {
       "subtitle": "Interactive Google Maps navigation paired with verified high-resolution master layout plan.",
       "googleMapEmbed": "https://maps.google.com/maps?q=DLF+Phase+4+Gurugram&t=&z=14&ie=UTF8&iwloc=&output=embed",
       "staticMapImage": "https://images.unsplash.com/photo-1526778548025-fa2f459cd5c1?auto=format&fit=crop&w=1600&q=80"
+    },
+    "inventorySection": {
+      "badge": "Verified Real Estate",
+      "title": "Available Properties in DLF Phase 4",
+      "linkText": "View Full Catalog"
+    },
+    "inquiryForm": {
+      "badge": "Confidential Inquiry Desk",
+      "title": "Consult Directly for DLF Phase 4",
+      "description": "Fill out the form below. Arun Sharma or our senior partners will contact you within 2 business hours.",
+      "confidentialityNote": "Strict client confidentiality. Zero spam.",
+      "buttonText": "Send Inquiry"
+    },
+    "faqsInfo": {
+      "badge": "Expert Guidance & Insights",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Key questions answered regarding acquisitions, pricing benchmarks, and zoning in DLF Phase 4."
     }
   },
   "shushant-lok": {
@@ -955,24 +1201,30 @@ export const CORRIDOR_PAGES_DATA = {
       ],
       "galleryImages": [
         {
-          "url": "https://images.unsplash.com/photo-1512915922686-57c11dde9b6b?auto=format&fit=crop&w=1600&q=85",
+          "url": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&h=1000&q=85",
           "title": "Sprawling Estate with Green Canopies",
           "tag": "Low-Density Oasis"
         },
         {
-          "url": "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1200&q=85",
+          "url": "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=1600&h=1000&q=85",
           "title": "Alfresco Garden Patio & Deck",
           "tag": "Verdant Living"
         },
         {
-          "url": "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1200&q=85",
+          "url": "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1600&h=1000&q=85",
           "title": "Designer Marble Spa Bath",
           "tag": "Luxury Finishes"
         }
       ],
-      "bgImage": "https://images.unsplash.com/photo-1512915922686-57c11dde9b6b?auto=format&fit=crop&w=2400&q=80",
+      "bgImage": "https://images.unsplash.com/photo-1512915922686-57c11dde9b6b?auto=format&fit=crop&w=2400&h=1028&q=85",
       "directPhone": "+91 98112 21207",
-      "whatsappNumber": "919718511207"
+      "whatsappNumber": "919718511207",
+      "trustBadges": [
+        "25+ Years Authority",
+        "100% Freehold Title Vetted",
+        "Direct Seller Mandates"
+      ],
+      "intelligenceTagline": "Sushant Lok Micro-Market Intelligence"
     },
     "metrics": [
       {
@@ -999,6 +1251,7 @@ export const CORRIDOR_PAGES_DATA = {
     "overview": {
       "tag": "Organized Layout & Premium Living",
       "title": "Experience the Charm of Sushant Lok Phase 1 Gurgaon",
+      "image": "https://images.unsplash.com/photo-1600573472592-401b489a3cdc?auto=format&fit=crop&w=1280&h=800&q=85",
       "paragraphs": [
         "Sushant Lok Phase 1 Gurgaon is considered one of the most well-established parts of the locality and is known for its organised layout and premium residential environment. This phase offers a balanced mix of modern infrastructure and peaceful surroundings, making it a preferred choice for those seeking the top property in Sushant Lok. Wide roads, maintained parks, and high-quality construction add great value to the area. Homebuyers can explore a range of luxury residences, including well-designed builder floors, spacious apartments, and elegant villas that enhance the overall appeal of this location. Its strategic location near schools, hospitals, malls, and business districts makes it suitable for both families and working professionals. With rising demand and strong connectivity, Sushant Lok Phase 1 Gurgaon continues to be one of the most trusted and desirable neighbourhoods for people planning to invest in this premium part of the city.",
         "Sushant Lok is an upscale locality in Gurgaon. It was developed under the banner of Ansals and the area cuts through three prominent sectors Sector 27, 28, and 43. Currently, it is one of the best areas in the real estate segment in Gurgaon, especially for those searching for the top Property in Sushant Lok. The plots constructed in the area along with villas in Sushant Lok, modern flats in Sushant Lok, and premium apartments in Sushant Lok make its presence look livelier. There are also several luxury apartments built in this area for residential purposes. Individuals seeking premium residential projects that offer luxury and comfort should consider this locality for their needs, including spacious Sushant Lok plots for long-term investment. Localities such as Vasant Kunj, Sector 65, Sector 104, and Rohini Sector 24 are available in close vicinity. As a customer, if you want to invest in a residential property in Sushant Lok, we at Saudagar Properties are the best real estate agency in Gurugram available to assist you throughout the process."
@@ -1039,9 +1292,13 @@ export const CORRIDOR_PAGES_DATA = {
     "locationSection": {
       "badge": "Strategic Location & Connectivity",
       "title": "Why You Should Stay in Sushant Lok?",
+      "image": "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1280&h=800&q=85",
       "description": "Connectivity is one of the primary reasons to choose staying in the Sushant Lok area. Whether you are searching for a flat in Sushant Lok or exploring the top property in Sushant Lok, this locality offers an unmatched blend of comfort and accessibility. Sushant Lok Phase 1 Gurgaon, in particular, is known for its well-planned infrastructure, smooth road network, and proximity to major commercial hubs. The area is conveniently connected to metro stations, business districts, healthcare centres, and schools, making daily travel effortless. Its strategic location ensures that residents enjoy a balanced lifestyle with easy access to essential amenities.",
       "linkText": "Contact Saudagar Properties",
-      "linkUrl": "/contact"
+      "linkUrl": "/contact",
+      "cardBadge": "Prime Location Estate",
+      "cardTag": "Direct Sector Mandate",
+      "cardTitle": "Sushant Lok Prime Micro-Market"
     },
     "quickCallout": {
       "badge": "Direct Inquiry Desk",
@@ -1079,6 +1336,21 @@ export const CORRIDOR_PAGES_DATA = {
           "number": "05",
           "title": "Generous Plots & Peaceful Living",
           "desc": "Organised layouts across Sectors 27, 28, and 43 feature wide roads, maintained parks, and high-quality construction with peaceful surroundings."
+        },
+        {
+          "number": "06",
+          "title": "World-Class Multi-Specialty Healthcare",
+          "desc": "Immediate proximity to Fortis Memorial Research Institute, Max Healthcare, and Paras Hospital guarantees elite medical care minutes away."
+        },
+        {
+          "number": "07",
+          "title": "Top Tier Educational Hub",
+          "desc": "Anchored by DPS Sushant Lok, Excelsior American School, and The Shri Ram School, offering premier schooling right in your neighborhood."
+        },
+        {
+          "number": "08",
+          "title": "Peaceful Gated Enclaves & High ROI",
+          "desc": "Well-guarded blocks with active RWA security, community parks, and consistent appreciation make Sushant Lok a prime residential investment."
         }
       ]
     },
@@ -1093,7 +1365,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "Within Locality",
           "time": "3–5 Mins",
           "desc": "Schools such as Delhi Public School Sushant Lok, Shalom Hills International School, Excelsior American School, and Chiranjiv Bharati School, are located in this area.",
-          "image": "https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/school-campus-gurgaon.jpg"
         },
         {
           "name": "Max, Paras & Fortis Hospitals",
@@ -1101,7 +1373,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1–2 km",
           "time": "3–5 Mins",
           "desc": "Some well-known hospitals such as Max Hospital, Paras Hospital, and Fortis Hospital, are also present in the area, making it an ideal choice for those searching for the top property in Sushant Lok.",
-          "image": "https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/fortis-healthcare.jpg"
         },
         {
           "name": "Leading Banking Institutions",
@@ -1109,7 +1381,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "500 meters",
           "time": "2 Mins Walk",
           "desc": "Banking institutions such as ICICI Bank, Punjab National Bank, The Royal Bank of Scotland, State Bank of India, IndusInd Bank Ltd, and more are at a close distance.",
-          "image": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/dlf-office-towers.jpg"
         },
         {
           "name": "HUDA City Centre Metro & MG Road",
@@ -1117,7 +1389,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1 km",
           "time": "3 Mins",
           "desc": "Direct Yellow Line metro connection ensuring fast, effortless commutes into central and south Delhi.",
-          "image": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/huda-city-centre.jpg"
         },
         {
           "name": "Gold Souk Mall & Galleria",
@@ -1125,7 +1397,15 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1 km",
           "time": "3 Mins",
           "desc": "Galleria Market, Supermart, and Gold Souk Mall provide premier shopping, cafes, and gourmet groceries.",
-          "image": "https://images.unsplash.com/photo-1567449303078-57ad995bd302?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/gold-souk-mall.jpg"
+        },
+        {
+          "name": "Golf Course Road & Cyber Hub",
+          "category": "Corporate & Fine Dining",
+          "distance": "3 km",
+          "time": "7 Mins",
+          "desc": "Swift access to prime commercial, Michelin-standard dining, and multinational tech parks via Golf Course Road.",
+          "image": "/images/landmarks/golf-course-road.jpg"
         }
       ]
     },
@@ -1143,13 +1423,29 @@ export const CORRIDOR_PAGES_DATA = {
         "Transparent negotiation with direct property owners",
         "Dedicated local experts with in-depth knowledge of Sectors 27, 28, and 43"
       ],
-      "image": "https://saudagarproperties.com/wp-content/uploads/2026/03/4-BHK-Independent-Floor-DLF-Phase-1.jpg"
+      "image": "/images/corridors/shushant-lok-how-we-help.jpg",
+      "cardBadgeTitle": "Turnkey Due Diligence",
+      "cardBadgeDesc": "Title clearance, registry representation & architect consultation"
     },
     "whyChooseSaudagar": {
       "badge": "25+ Years Experience",
       "title": "Why Choose Saudagar Properties for Property in Sushant Lok?",
       "content": "If you are searching for a property in Sushant Lok, Saudagar Properties is your trusted partner to find the ideal home. With our expertise in Gurugram’s real estate market, we guide you to select the top property in Sushant Lok that perfectly matches your lifestyle, budget, and investment goals. As experienced property dealers in gurugram, we provide verified listings, personalized support, and transparent guidance throughout your buying journey. From luxury builder floors to gated-community apartments, our team ensures access to premium options with long-term value. Choosing Saudagar Properties guarantees a seamless, confident experience from search to possession, making your dream home in Sushant Lok a reality.",
-      "image": "https://saudagarproperties.com/wp-content/uploads/2026/01/Property-Dealers-in-Gurugram.png"
+      "image": "/images/corridors/shushant-lok-why-choose.jpg",
+      "stats": [
+        {
+          "value": "25+ Yrs",
+          "label": "Micro-Market Authority"
+        },
+        {
+          "value": "100%",
+          "label": "Clean Freehold Titles"
+        },
+        {
+          "value": "₹500+ Cr",
+          "label": "Transactions Facilitated"
+        }
+      ]
     },
     "faqs": [
       {
@@ -1179,6 +1475,23 @@ export const CORRIDOR_PAGES_DATA = {
       "subtitle": "Interactive Google Maps navigation paired with verified high-resolution master layout plan.",
       "googleMapEmbed": "https://maps.google.com/maps?q=Sushant+Lok+1+Gurugram&t=&z=14&ie=UTF8&iwloc=&output=embed",
       "staticMapImage": "https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1600&q=80"
+    },
+    "inventorySection": {
+      "badge": "Verified Real Estate",
+      "title": "Available Properties in Sushant Lok",
+      "linkText": "View Full Catalog"
+    },
+    "inquiryForm": {
+      "badge": "Confidential Inquiry Desk",
+      "title": "Consult Directly for Sushant Lok",
+      "description": "Fill out the form below. Arun Sharma or our senior partners will contact you within 2 business hours.",
+      "confidentialityNote": "Strict client confidentiality. Zero spam.",
+      "buttonText": "Send Inquiry"
+    },
+    "faqsInfo": {
+      "badge": "Expert Guidance & Insights",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Key questions answered regarding acquisitions, pricing benchmarks, and zoning in Sushant Lok."
     }
   },
   "udyog-vihar": {
@@ -1198,24 +1511,30 @@ export const CORRIDOR_PAGES_DATA = {
       ],
       "galleryImages": [
         {
-          "url": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=85",
+          "url": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1600&h=1000&q=85",
           "title": "Grade-A Glass Commercial Tower",
           "tag": "Highway Frontage"
         },
         {
-          "url": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=85",
+          "url": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1600&h=1000&q=85",
           "title": "Modern Corporate Boardroom",
           "tag": "Pre-Leased Asset"
         },
         {
-          "url": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1200&q=85",
+          "url": "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=1600&h=1000&q=85",
           "title": "Sunlit Multi-Floor Office Atrium",
           "tag": "Institutional Grade"
         }
       ],
-      "bgImage": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=80",
+      "bgImage": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&h=1028&q=85",
       "directPhone": "+91 98112 21207",
-      "whatsappNumber": "919718511207"
+      "whatsappNumber": "919718511207",
+      "trustBadges": [
+        "25+ Years Authority",
+        "100% Freehold & HSIIDC Vetted",
+        "Direct Seller Mandates"
+      ],
+      "intelligenceTagline": "Udyog Vihar Micro-Market Intelligence"
     },
     "metrics": [
       {
@@ -1242,6 +1561,7 @@ export const CORRIDOR_PAGES_DATA = {
     "overview": {
       "tag": "Premier Commercial & Industrial Hub",
       "title": "Commercial Property & Office Spaces in Udyog Vihar, Gurgaon",
+      "image": "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1280&h=800&q=85",
       "paragraphs": [
         "Udyog Vihar is a prominent commercial hub in Gurgaon, home to numerous industrial units, corporate offices, and fast-growing enterprises. Its strategic location near the Delhi–Gurgaon border and NH-8 makes it a preferred destination for companies seeking seamless connectivity and strong business infrastructure. Divided into five well-planned phases, the area offers convenience, reliability, and cost-effective workspaces for all business categories. Whether you’re a startup, a well-known brand, or an expanding enterprise, commercial property in Udyog Vihar provides unmatched advantages for growth. Establishing your presence here with the right office space in Udyog Vihar ensures better accessibility, credibility, and long-term business success. This locality continues to remain one of the most dependable choices for setting up operations in Gurgaon.",
         "Commercial property in Udyog Vihar is spread across a total area of 728 acres, covering all five phases with well-planned infrastructure. The locality is beautifully designed with wide roads, smooth connectivity, and direct access to the Delhi–Gurgaon Expressway via NH-8, making it ideal for businesses of every scale. At Saudagar Properties, we assist you in finding the right industrial or commercial setup that matches your business needs. As top property dealers in Gurgaon, we provide a smooth, hassle-free search experience backed by strong market expertise and reliable connections. Our team ensures transparent deals and guides you through every step of the leasing or buying process. With premium options, quick support, and a client-first approach, securing your ideal workspace becomes effortless with our guidance, securing the best commercial property in Udyog Vihar becomes quick and easy."
@@ -1282,9 +1602,13 @@ export const CORRIDOR_PAGES_DATA = {
     "locationSection": {
       "badge": "Prime Corporate Location",
       "title": "Why You Should Get Office Space in Udyog Vihar?",
+      "image": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1280&h=800&q=85",
       "description": "At Saudagar Properties, we help you find the most suitable industrial or commercial setup tailored to your business needs in Udyog Vihar. As the top-most property dealers in Gurgaon, we ensure a smooth and hassle-free search backed by professional expertise and trusted market connections. Our team offers transparent guidance to help you choose the best property in Udyog Vihar based on your goals and budget. Whether you’re looking for premium commercial property in Udyog Vihar or planning to set up a modern office space in Udyog Vihar, we provide complete support from site visits to final documentation. With our experience, strong network, and client-first approach, your property search becomes faster, easier, and more reliable. We ensure you get the best options that match your long-term business needs and operational plans.",
       "linkText": "Contact Saudagar Properties",
-      "linkUrl": "/contact"
+      "linkUrl": "/contact",
+      "cardBadge": "Premier Corporate Hub",
+      "cardTag": "Direct Industrial Mandate",
+      "cardTitle": "Udyog Vihar Strategic Corporate Hub"
     },
     "quickCallout": {
       "badge": "Corporate Advisory Desk",
@@ -1322,6 +1646,21 @@ export const CORRIDOR_PAGES_DATA = {
           "number": "05",
           "title": "High Capital Appreciation & Lease Yields",
           "desc": "Offering strong investment potential and 8.5% to 9.5% commercial lease yields, securing a commercial property in Udyog Vihar guarantees long-term growth and high appreciation."
+        },
+        {
+          "number": "06",
+          "title": "Unrivalled NH-48 & Airport Highway Frontage",
+          "desc": "Direct access to the 8-lane expressway puts Indira Gandhi International Airport just 10 minutes away for swift executive travel."
+        },
+        {
+          "number": "07",
+          "title": "Institutional Grade-A Building Compliances",
+          "desc": "Streamlined approvals for high floor-area-ratio (FAR), power backups, central HVAC, and complete fire-safety statutory clearances."
+        },
+        {
+          "number": "08",
+          "title": "Stable Institutional Tenants & Long Leases",
+          "desc": "Strong tenant covenant from Fortune 500 corporations, fintech leaders, and global tech firms guarantees dependable multi-year rental cash flows."
         }
       ]
     },
@@ -1336,7 +1675,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "Direct Access",
           "time": "Immediate",
           "desc": "Udyog Vihar is located close to Delhi and Gurgaon border so both the cities are easily accessible in no time.",
-          "image": "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/delhi-gurgaon-expressway.jpg"
         },
         {
           "name": "Indira Gandhi International Airport",
@@ -1344,7 +1683,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "8 km",
           "time": "10–12 Mins",
           "desc": "It is at a distance of 8 km from Indira Gandhi International Airport on NH-8, making international and domestic client transit swift.",
-          "image": "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/igi-airport-t3.jpg"
         },
         {
           "name": "DLF Phase 3 Rapid Metro & Sikandarpur",
@@ -1352,7 +1691,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1 km",
           "time": "3 Mins",
           "desc": "DLF Phase 3 is the nearest rapid metro station, which in turn is connected to Sikandarpur metro station. This smooth connectivity makes commercial property in Udyog Vihar even more convenient for daily travel and business operations.",
-          "image": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/rapid-metro-phase-2.jpg"
         },
         {
           "name": "Prominent NCR Connectivity & Expressways",
@@ -1360,7 +1699,7 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "Direct Link",
           "time": "Seamless",
           "desc": "Several other locations are there that connects you to different parts of Gurgaon and Delhi smoothly.",
-          "image": "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?auto=format&fit=crop&w=800&q=80"
+          "image": "/images/landmarks/iffco-chowk.jpg"
         },
         {
           "name": "DLF Cyber City & Ambience Mall",
@@ -1368,7 +1707,15 @@ export const CORRIDOR_PAGES_DATA = {
           "distance": "1.5 km",
           "time": "3 Mins",
           "desc": "Located opposite Cyber City and 2 km from Ambience Mall, offering premium entertainment, dining, and corporate networking.",
-          "image": "https://saudagarproperties.com/wp-content/uploads/2026/06/Office-Space-in-Gurgaon.jpg"
+          "image": "/images/landmarks/cyber-city-hub.jpg"
+        },
+        {
+          "name": "Central Gurugram Commercial Hub",
+          "category": "Corporate District",
+          "distance": "5 km",
+          "time": "10 Mins",
+          "desc": "Frictionless connectivity across major corporate parks, banking complexes, and five-star business hotels.",
+          "image": "/images/landmarks/gurgaon-skyline.jpg"
         }
       ]
     },
@@ -1386,13 +1733,29 @@ export const CORRIDOR_PAGES_DATA = {
         "HSIIDC plot transfer, due diligence, and statutory approvals",
         "Pre-leased commercial asset acquisition with 8.5%–9.5% net yields"
       ],
-      "image": "https://saudagarproperties.com/wp-content/uploads/2026/06/Office-Space-in-Gurgaon.jpg"
+      "image": "/images/corridors/udyog-vihar-how-we-help.jpg",
+      "cardBadgeTitle": "Turnkey Commercial Due Diligence",
+      "cardBadgeDesc": "HSIIDC title clearance, lease structuring & fire NOC approvals"
     },
     "whyChooseSaudagar": {
       "badge": "25+ Years Commercial Authority",
       "title": "Why Choose Saudagar Properties for Property in Udyog Vihar?",
       "content": "If you are looking for a property in Udyog Vihar, Saudagar Properties is your trusted partner to secure a premium, well‑located workspace. With deep experience in Gurugram real estate and an extensive network of verified listings, we help you find commercial spaces that perfectly fit your business needs and growth plans. As seasoned property dealers in Gurugram, we offer transparent deals, guided site visits, and personalised support, ensuring that you get a commercial property in Udyog Vihar that offers excellent connectivity, professional ambience, ample parking, and strong long‑term value. Partner with us for a seamless, hassle‑free acquisition of commercial spaces in Udyog Vihar and make your business setup smooth and efficient.",
-      "image": "https://saudagarproperties.com/wp-content/uploads/2026/06/Office-Space-in-Gurgaon.jpg"
+      "image": "/images/corridors/udyog-vihar-why-choose.jpg",
+      "stats": [
+        {
+          "value": "25+ Yrs",
+          "label": "Corporate Authority"
+        },
+        {
+          "value": "100%",
+          "label": "HSIIDC Mutation Vetted"
+        },
+        {
+          "value": "₹500+ Cr",
+          "label": "Leases Facilitated"
+        }
+      ]
     },
     "faqs": [
       {
@@ -1422,6 +1785,23 @@ export const CORRIDOR_PAGES_DATA = {
       "subtitle": "Interactive Google Maps navigation paired with verified high-resolution master layout plan.",
       "googleMapEmbed": "https://maps.google.com/maps?q=Udyog+Vihar+Gurugram&t=&z=14&ie=UTF8&iwloc=&output=embed",
       "staticMapImage": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80"
+    },
+    "inventorySection": {
+      "badge": "Verified Commercial & Industrial",
+      "title": "Available Commercial Properties in Udyog Vihar",
+      "linkText": "View Full Catalog"
+    },
+    "inquiryForm": {
+      "badge": "Confidential Commercial Desk",
+      "title": "Consult Directly for Udyog Vihar",
+      "description": "Fill out the form below. Arun Sharma or our corporate leasing principals will contact you within 2 business hours.",
+      "confidentialityNote": "Strict corporate confidentiality. Zero spam.",
+      "buttonText": "Send Inquiry"
+    },
+    "faqsInfo": {
+      "badge": "Corporate Advisory & Insights",
+      "title": "Frequently Asked Questions",
+      "subtitle": "Key questions answered regarding acquisitions, lease yields, and HSIIDC zoning in Udyog Vihar."
     }
   }
 };

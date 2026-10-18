@@ -35,6 +35,9 @@ function GsapCounter({ end, suffix = "+" }) {
     const el = numRef.current;
     if (!el) return;
 
+    // Start counter visually at 0
+    el.textContent = "0";
+
     const reduceMotion =
       typeof window !== "undefined" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -53,7 +56,7 @@ function GsapCounter({ end, suffix = "+" }) {
       if (hasRun || !el) return;
       hasRun = true;
 
-      const duration = 2000;
+      const duration = 2200;
       const startTime = performance.now();
       const isEndLarge = targetEnd >= 1000;
 
@@ -92,19 +95,13 @@ function GsapCounter({ end, suffix = "+" }) {
             }
           });
         },
-        { threshold: 0.15, rootMargin: "0px 0px -30px 0px" }
+        { threshold: 0.2, rootMargin: "0px 0px -40px 0px" }
       );
 
       observer.observe(el);
 
-      // Fallback timer: guarantees execution after 800ms if observer is delayed
-      const fallbackTimer = setTimeout(() => {
-        runAnimation();
-      }, 800);
-
       return () => {
         observer.disconnect();
-        clearTimeout(fallbackTimer);
       };
     } else {
       runAnimation();
@@ -113,11 +110,7 @@ function GsapCounter({ end, suffix = "+" }) {
 
   return (
     <span className="tabular-nums">
-      <span ref={numRef}>
-        {targetEnd >= 1000
-          ? targetEnd.toLocaleString("en-IN")
-          : targetEnd}
-      </span>
+      <span ref={numRef}>0</span>
       <span className="ml-0.5 font-light text-[#D09A16]">{suffix}</span>
     </span>
   );

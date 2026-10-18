@@ -153,132 +153,229 @@ export default function AboutWhyChooseUs() {
           </div>
         </motion.div>
 
-        {/* 2. THE 6 PILLARS LUXURY GRID (Pillars 2 to 7) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          {gridPillars.map((pillar, idx) => {
-            const IconComp = PILLAR_ICONS[idx + 1] || ShieldCheck;
-            return (
-              <motion.div
-                key={pillar.id || idx}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: idx * 0.08 }}
-                whileHover={{ y: -6 }}
-                className="group bg-white rounded-3xl p-6 sm:p-7 border border-[#17213D]/10 hover:border-[#D09A16]/60 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
-              >
-                <div>
-                  {/* Pillar Card Image with Glassmorphic Badging */}
-                  {pillar.image ? (
-                    <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden mb-5 bg-slate-100 border border-[#17213D]/10">
-                      <Image
-                        src={pillar.image}
-                        alt={pillar.title}
-                        fill
-                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 380px"
-                        className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#17213D]/70 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity pointer-events-none" />
-                      
-                      <div className="absolute top-3 left-3 w-9 h-9 rounded-xl bg-[#17213D]/80 backdrop-blur-md text-[#D09A16] border border-white/10 flex items-center justify-center font-bold shadow-md">
-                        <IconComp size={18} />
+        {/* 2. THE 6 PILLARS LUXURY SECTION (Pillars 2 to 7) */}
+        <div className="mt-16 pt-16 border-t border-[#17213D]/10 mb-16">
+          <div className="max-w-3xl mb-12">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[#D09A16] text-xs font-bold uppercase tracking-[0.2em] mb-3">
+              <ShieldCheck size={13} />
+              <span>{cms?.gridBadge || "Core Strategic Advisory Pillars • Generational Authority"}</span>
+            </div>
+
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#17213D] mb-3">
+              {cms?.gridTitle || "Strategic Pillars of Client Excellence & Asset Protection"}
+            </h3>
+
+            <p className="text-sm sm:text-base text-[#566078] leading-relaxed font-sans max-w-2xl">
+              {cms?.gridSubtitle || "Beyond founder-level representation, Saudagar Properties adheres to six rigorous advisory disciplines that eliminate transaction vulnerabilities, preserve sovereign family capital, and secure premier freehold estates across Gurugram."}
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {gridPillars.map((pillar, idx) => {
+              const IconComp = PILLAR_ICONS[idx + 1] || ShieldCheck;
+              return (
+                <motion.div
+                  key={pillar.id || idx}
+                  initial={{ opacity: 0, y: 25 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: idx * 0.08 }}
+                  whileHover={{ y: -6 }}
+                  className="group bg-white rounded-3xl p-6 sm:p-7 border border-[#17213D]/10 hover:border-[#D09A16]/60 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between"
+                >
+                  <div>
+                    {/* Pillar Card Image with Glassmorphic Badging */}
+                    {pillar.image ? (
+                      <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden mb-5 bg-slate-100 border border-[#17213D]/10">
+                        <Image
+                          src={pillar.image}
+                          alt={pillar.title}
+                          fill
+                          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 380px"
+                          className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-[#17213D]/70 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity pointer-events-none" />
+                        
+                        <div className="absolute top-3 left-3 w-9 h-9 rounded-xl bg-[#17213D]/80 backdrop-blur-md text-[#D09A16] border border-white/10 flex items-center justify-center font-bold shadow-md">
+                          <IconComp size={18} />
+                        </div>
+
+                        <span className="absolute top-3 right-3 text-[10px] font-bold uppercase tracking-widest text-[#17213D] bg-[#F7F5EF]/95 backdrop-blur-md px-2.5 py-1 rounded-full shadow-md border border-[#D09A16]/20">
+                          {pillar.badge}
+                        </span>
                       </div>
-
-                      <span className="absolute top-3 right-3 text-[10px] font-bold uppercase tracking-widest text-[#17213D] bg-[#F7F5EF]/95 backdrop-blur-md px-2.5 py-1 rounded-full shadow-md border border-[#D09A16]/20">
-                        {pillar.badge}
-                      </span>
-                    </div>
-                  ) : (
-                    <div className="flex items-center justify-between mb-5">
-                      <div className="w-11 h-11 rounded-2xl bg-[#D09A16]/10 text-[#D09A16] flex items-center justify-center font-bold group-hover:bg-[#17213D] group-hover:text-white transition-colors">
-                        <IconComp size={20} />
+                    ) : (
+                      <div className="flex items-center justify-between mb-5">
+                        <div className="w-11 h-11 rounded-2xl bg-[#D09A16]/10 text-[#D09A16] flex items-center justify-center font-bold group-hover:bg-[#17213D] group-hover:text-white transition-colors">
+                          <IconComp size={20} />
+                        </div>
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#D09A16] bg-[#D09A16]/10 px-2.5 py-1 rounded-full">
+                          {pillar.badge}
+                        </span>
                       </div>
-                      <span className="text-[10px] font-bold uppercase tracking-widest text-[#D09A16] bg-[#D09A16]/10 px-2.5 py-1 rounded-full">
-                        {pillar.badge}
-                      </span>
-                    </div>
-                  )}
+                    )}
 
-                  <h4 className="font-serif font-bold text-lg text-[#17213D] group-hover:text-[#D09A16] transition-colors leading-snug mb-3">
-                    {pillar.title}
-                  </h4>
+                    <h4 className="font-serif font-bold text-lg text-[#17213D] group-hover:text-[#D09A16] transition-colors leading-snug mb-3">
+                      {pillar.title}
+                    </h4>
 
-                  <p className="text-xs text-[#566078] leading-relaxed font-sans mb-5 line-clamp-3">
-                    {pillar.description}
-                  </p>
-                </div>
+                    <p className="text-xs text-[#566078] leading-relaxed font-sans mb-5 line-clamp-3">
+                      {pillar.description}
+                    </p>
+                  </div>
 
-                <div className="pt-4 border-t border-[#17213D]/10 space-y-2">
-                  {pillar.bullets.slice(0, 2).map((bullet, bIdx) => (
-                    <div key={bIdx} className="flex items-start gap-2 text-[11px] text-[#475569]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16] shrink-0 mt-1.5" />
-                      <span>{bullet}</span>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            );
-          })}
+                  <div className="pt-4 border-t border-[#17213D]/10 space-y-2">
+                    {pillar.bullets.slice(0, 2).map((bullet, bIdx) => (
+                      <div key={bIdx} className="flex items-start gap-2 text-[11px] text-[#475569]">
+                        <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16] shrink-0 mt-1.5" />
+                        <span>{bullet}</span>
+                      </div>
+                    ))}
+                  </div>
+                </motion.div>
+              );
+            })}
+          </div>
         </div>
 
-        {/* 3. FIDUCIARY COMPARISON MATRIX */}
-        <div className="bg-white rounded-3xl p-6 sm:p-10 border border-[#17213D]/10 shadow-[0_15px_35px_rgba(23,33,61,0.04)]">
-          <div className="text-center max-w-2xl mx-auto mb-8">
-            <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#D09A16] block mb-2">
-              Transparency Benchmark
-            </span>
-            <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#17213D]">
-              Traditional Brokerage vs. <span className="italic font-serif text-[#D09A16]">Saudagar Advisory</span>
+        {/* 3. FIDUCIARY COMPARISON DOSSIER - BESPOKE EDITORIAL REDESIGN */}
+        <div className="bg-[#090D18] rounded-3xl p-6 sm:p-10 md:p-12 border border-[#D09A16]/30 shadow-[0_25px_60px_rgba(0,0,0,0.6)] relative overflow-hidden text-white">
+          {/* Subtle Ambient Radial Glow */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -top-32 -right-32 w-[32rem] h-[32rem] rounded-full bg-[#D09A16]/10 blur-[100px]"
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute -bottom-32 -left-32 w-[32rem] h-[32rem] rounded-full bg-[#D09A16]/5 blur-[100px]"
+          />
+
+          {/* Dossier Header */}
+          <div className="max-w-3xl mx-auto text-center mb-12 sm:mb-14 relative z-10">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D09A16]/15 border border-[#D09A16]/30 text-[#D09A16] text-[10px] sm:text-xs font-bold uppercase tracking-[0.25em] mb-3">
+              <Scale size={13} />
+              <span>Fiduciary Due Diligence Benchmark</span>
+            </div>
+            <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white tracking-tight">
+              Traditional Brokerage <span className="text-slate-500 font-light font-sans text-xl sm:text-2xl">vs.</span>{" "}
+              <span className="italic font-serif text-[#D09A16]">Saudagar Advisory</span>
             </h3>
+            <p className="text-xs sm:text-sm text-slate-300/90 mt-3 max-w-xl mx-auto leading-relaxed font-sans">
+              A transparent side-by-side comparative examination of standard market intermediary practices against Saudagar Properties&apos; rigorous fiduciary representation standard.
+            </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {(cms?.comparisonMatrix && Array.isArray(cms.comparisonMatrix) && cms.comparisonMatrix.length > 0
-              ? cms.comparisonMatrix
-              : TRADITIONAL_VS_SAUDAGAR
-            ).map((item, idx) => (
-              <div 
-                key={idx}
-                className="p-5 rounded-2xl bg-[#F7F5EF] border border-[#17213D]/10 space-y-3"
-              >
-                <div className="text-xs font-bold uppercase tracking-wider text-[#17213D]">
-                  {item.feature}
-                </div>
-                
-                <div className="flex items-start gap-2 text-xs text-rose-700 bg-rose-50/80 p-2.5 rounded-xl border border-rose-200">
-                  <X size={14} className="shrink-0 mt-0.5 text-rose-500" />
-                  <span>{item.traditional}</span>
-                </div>
-
-                <div className="flex items-start gap-2 text-xs text-emerald-800 bg-emerald-50/80 p-2.5 rounded-xl border border-emerald-200 font-semibold">
-                  <Check size={14} className="shrink-0 mt-0.5 text-emerald-600" />
-                  <span>{item.saudagar}</span>
-                </div>
+          {/* Side-by-Side Comparative Dossier Matrix */}
+          <div className="relative z-10 max-w-5xl mx-auto">
+            {/* Ledger Column Headers (Desktop) */}
+            <div className="hidden md:grid md:grid-cols-12 gap-6 pb-4 mb-2 border-b border-white/10 text-xs font-bold uppercase tracking-[0.2em]">
+              <div className="col-span-4 text-slate-400 flex items-center gap-2">
+                <span>Advisory Criterion</span>
               </div>
-            ))}
-          </div>
+              <div className="col-span-4 text-slate-400 pl-4 border-l border-white/10">
+                <span>Standard Brokerage</span>
+              </div>
+              <div className="col-span-4 text-[#D09A16] pl-4 border-l border-[#D09A16]/30 flex items-center justify-between">
+                <span>Saudagar Protocol</span>
+                <span className="text-[9px] px-2 py-0.5 rounded-full bg-[#D09A16]/20 border border-[#D09A16]/40 text-[#D09A16] uppercase font-mono tracking-widest">
+                  Fiduciary
+                </span>
+              </div>
+            </div>
 
-          {/* Action Footer */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-8 pt-6 border-t border-[#17213D]/10">
-            <span className="text-xs text-[#566078]">
-              Ready to experience fiduciary property representation in Gurugram?
-            </span>
-            <div className="flex items-center gap-3">
-              <a
-                href="https://wa.me/919718511207"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-5 py-2.5 rounded-xl bg-white border border-[#17213D]/20 hover:border-[#D09A16] text-[#17213D] text-xs font-bold transition-colors inline-flex items-center gap-2"
-              >
-                <WhatsAppIcon size={14} className="text-[#25D366]" />
-                <span>WhatsApp Advisor</span>
-              </a>
-              <Link
-                href="/contact"
-                className="px-6 py-2.5 rounded-xl bg-[#17213D] hover:bg-[#D09A16] text-white hover:text-[#0A0E17] text-xs font-bold uppercase tracking-wider transition-all"
-              >
-                Contact Founders
-              </Link>
+            {/* Dossier Comparative Rows */}
+            <div className="space-y-4 sm:space-y-3">
+              {(cms?.comparisonMatrix && Array.isArray(cms.comparisonMatrix) && cms.comparisonMatrix.length > 0
+                ? cms.comparisonMatrix
+                : TRADITIONAL_VS_SAUDAGAR
+              ).map((item, idx) => (
+                <div 
+                  key={idx}
+                  className="rounded-2xl bg-[#0E1526]/80 hover:bg-[#111A30] border border-white/[0.08] hover:border-[#D09A16]/40 transition-all duration-300 p-5 sm:p-6 shadow-sm group"
+                >
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-center">
+                    
+                    {/* 1. Feature Criterion */}
+                    <div className="md:col-span-4 flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-xl bg-white/[0.04] border border-white/10 text-[#D09A16] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                        <span className="font-mono text-xs font-bold">0{idx + 1}</span>
+                      </div>
+                      <div>
+                        <div className="text-sm font-serif font-bold text-white group-hover:text-[#D09A16] transition-colors">
+                          {item.feature}
+                        </div>
+                        <div className="text-[10px] text-slate-400 uppercase tracking-wider font-sans">
+                          Comparative Standard
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* 2. Traditional Brokerage (Muted, Objective Risk Reality) */}
+                    <div className="md:col-span-4 md:pl-4 md:border-l md:border-white/10">
+                      <div className="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-1.5 md:hidden">
+                        Standard Brokerage:
+                      </div>
+                      <div className="flex items-start gap-2.5 text-xs text-slate-300 leading-relaxed font-sans">
+                        <div className="w-4 h-4 rounded-full bg-rose-500/10 border border-rose-500/30 flex items-center justify-center shrink-0 mt-0.5">
+                          <X size={10} className="text-rose-400" />
+                        </div>
+                        <span className="opacity-80">{item.traditional}</span>
+                      </div>
+                    </div>
+
+                    {/* 3. Saudagar Advisory (Elevated, Fiduciary Excellence) */}
+                    <div className="md:col-span-4 md:pl-4 md:border-l md:border-[#D09A16]/30">
+                      <div className="text-[10px] font-bold uppercase tracking-wider text-[#D09A16] mb-1.5 md:hidden flex items-center gap-1.5">
+                        <Sparkles size={11} />
+                        <span>Saudagar Advisory:</span>
+                      </div>
+                      <div className="flex items-start gap-2.5 text-xs font-medium text-emerald-200 leading-relaxed font-sans bg-emerald-950/20 p-2.5 rounded-xl border border-emerald-500/20">
+                        <div className="w-4 h-4 rounded-full bg-emerald-500/20 border border-emerald-400/50 flex items-center justify-center shrink-0 mt-0.5">
+                          <Check size={10} className="text-emerald-400" />
+                        </div>
+                        <span className="text-emerald-100 font-semibold">{item.saudagar}</span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Fiduciary Assurance Banner */}
+            <div className="mt-8 p-4 rounded-2xl bg-[#D09A16]/[0.08] border border-[#D09A16]/20 flex flex-wrap items-center justify-between gap-3 text-xs text-slate-200">
+              <div className="flex items-center gap-2">
+                <ShieldCheck size={16} className="text-[#D09A16] shrink-0" />
+                <span className="font-semibold text-white">Guaranteed Fiduciary Protocol:</span>
+                <span className="text-slate-300 hidden sm:inline">100% Freehold Conveyance • Verified 30-Year Tehsil Chain • Zero Hidden Broker Markups</span>
+              </div>
+              <span className="text-[10px] font-mono uppercase tracking-widest text-[#D09A16] bg-[#D09A16]/10 px-2 py-0.5 rounded">
+                ISO & RERA Compliant
+              </span>
+            </div>
+
+            {/* Action Footer */}
+            <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-8 pt-6 border-t border-white/10">
+              <span className="text-xs text-slate-300">
+                Ready to experience confidential, founder-led property representation in Gurugram?
+              </span>
+              <div className="flex items-center gap-3">
+                <a
+                  href="https://wa.me/919718511207"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-5 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 hover:border-[#D09A16] text-white text-xs font-semibold transition-all inline-flex items-center gap-2"
+                >
+                  <WhatsAppIcon size={14} className="text-[#25D366]" />
+                  <span>WhatsApp Principal</span>
+                </a>
+                <Link
+                  href="/contact"
+                  className="px-6 py-2.5 rounded-xl bg-[#D09A16] hover:bg-[#E5AC2B] text-[#0A0E17] text-xs font-bold uppercase tracking-wider transition-all shadow-lg hover:shadow-[0_0_20px_rgba(208,154,22,0.4)]"
+                >
+                  Schedule Consultation
+                </Link>
+              </div>
             </div>
           </div>
         </div>

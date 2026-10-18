@@ -48,6 +48,8 @@ export default function LuxuryTextReveal({
     },
   };
 
+  const highlightWords = highlightText ? highlightText.trim().split(/\s+/) : [];
+
   return (
     <Component className={`font-serif tracking-tight leading-tight ${className}`}>
       <motion.span
@@ -58,7 +60,7 @@ export default function LuxuryTextReveal({
         className="inline-block"
       >
         {words.map((word, idx) => (
-          <span key={idx} className="inline-block overflow-hidden mr-[0.26em] align-top">
+          <span key={`w-${idx}`} className="inline-block overflow-hidden mr-[0.26em] align-top">
             <motion.span
               variants={wordVariants}
               className="inline-block origin-bottom"
@@ -68,16 +70,16 @@ export default function LuxuryTextReveal({
           </span>
         ))}
 
-        {highlightText && (
-          <span className="inline-block overflow-hidden align-top">
+        {highlightWords.map((word, idx) => (
+          <span key={`h-${idx}`} className="inline-block overflow-hidden mr-[0.28em] pr-2 -mr-1 align-top">
             <motion.span
               variants={wordVariants}
-              className="inline-block italic text-[#D09A16] font-serif font-normal"
+              className="inline-block italic text-[#B48216] font-serif font-bold tracking-normal"
             >
-              {highlightText}
+              {word}
             </motion.span>
           </span>
-        )}
+        ))}
       </motion.span>
     </Component>
   );

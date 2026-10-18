@@ -531,7 +531,7 @@ export const DEFAULT_SECTIONS = {
             "Sky Penthouses on Golf Course Road",
             "Vastu-compliant architectural layouts"
           ],
-          image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+          image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1280&h=800&q=85",
           ctaText: "Explore Residential",
           ctaLink: "/services/residential"
         },
@@ -546,7 +546,7 @@ export const DEFAULT_SECTIONS = {
             "Flexible Leasing & Purchase Terms",
             "Strategic High-Footfall Commercial Hubs"
           ],
-          image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
+          image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1280&h=800&q=85",
           ctaText: "Inquire Office Spaces",
           ctaLink: "/services/commercial"
         },
@@ -561,7 +561,7 @@ export const DEFAULT_SECTIONS = {
             "Exponential Annual Capital Appreciation",
             "Thorough Due Diligence & Clean Titles"
           ],
-          image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80",
+          image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1280&h=800&q=85",
           ctaText: "Discover Land Deals",
           ctaLink: "/services/industrial"
         }
@@ -707,6 +707,9 @@ export const DEFAULT_SECTIONS = {
       titleMain: "The Saudagar Distinction: 7 Strategic Pillars of Trust & ",
       titleItalic: "Market Leadership",
       subtitle: "Why India's top corporate leaders, NRI investors, and high-net-worth families partner exclusively with our advisory desk for DLF Gurugram properties.",
+      gridBadge: "Core Strategic Advisory Pillars • Generational Authority",
+      gridTitle: "Strategic Pillars of Client Excellence & Asset Protection",
+      gridSubtitle: "Beyond founder-level representation, Saudagar Properties adheres to six rigorous advisory disciplines that eliminate transaction vulnerabilities, preserve sovereign family capital, and secure premier freehold estates across Gurugram.",
       pillars: [
         {
           id: "dlf-authority",
@@ -714,7 +717,7 @@ export const DEFAULT_SECTIONS = {
           badge: "25+ Year Legacy",
           title: "Proven Real Estate Authority Across DLF Phase 1, 2, 3, 4 & 5",
           description: "Headquartered at 38, Akashneem Marg, DLF Phase 2, Saudagar Properties brings unmatched ancestral registry knowledge and original DLF allotment file scrutiny to every transaction.",
-          image: "https://saudagarproperties.com/wp-content/uploads/2026/01/Property-Dealers-in-Gurugram.png",
+          image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&h=600&q=85",
           bullets: [
             "Original master allotment file validation back to 1999",
             "Direct seller-to-buyer negotiations eliminating broker markups",
@@ -727,7 +730,7 @@ export const DEFAULT_SECTIONS = {
           badge: "Stilt + 4 Sanctions",
           title: "Luxury Independent Builder Floors: 300 to 1,000 Sq. Yd. Specifications",
           description: "Curated single-floor luxury residences with dedicated stilt parking, private automated elevators, separate servant quarters, and independent terrace rights under modern DTCP guidelines.",
-          image: "https://saudagarproperties.com/wp-content/uploads/2026/03/4-BHK-Independent-Floor-DLF-Phase-1.jpg",
+          image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1280&h=800&q=85",
           bullets: [
             "Occupation certificate (OC) cleared builder floors",
             "Private elevator landings & Italian marble layouts",
@@ -740,7 +743,7 @@ export const DEFAULT_SECTIONS = {
           badge: "Ultra-HNI Corridors",
           title: "Golf Course Road & Golf Course Extension Ultra-Luxury Penthouses",
           description: "Strategic acquisition advisory for DLF Golf Links flagship estates (The Camellias, The Aralias, The Magnolias) and gated golf-facing duplex penthouses commanding enduring global liquidity.",
-          image: "https://saudagarproperties.com/wp-content/uploads/2026/07/Luxury-Property-in-Gurgaon.jpg",
+          image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1280&h=800&q=85",
           bullets: [
             "Confidential resales in DLF Golf Links developments",
             "Panoramic views of the Aravalli biodiversity range",
@@ -753,7 +756,7 @@ export const DEFAULT_SECTIONS = {
           badge: "100% Clean Titles",
           title: "Fiduciary Legal Title Due Diligence & 30-Year Deed Tracing",
           description: "Zero-compromise legal scrutiny: 30-year chain of title investigation at Gurugram Tehsil, verified Non-Encumbrance Certificates (NEC), DTCP zoning checks, and Haryana RERA compliance.",
-          image: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80",
+          image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1280&h=800&q=85",
           bullets: [
             "30-year deed tracing to original master allotments",
             "Non-Encumbrance Certificate (NEC) verification",
@@ -766,7 +769,7 @@ export const DEFAULT_SECTIONS = {
           badge: "8%–10% Rental ROI",
           title: "Grade-A Corporate Offices & Pre-Leased Assets in Cyber City",
           description: "Institutional commercial advisory delivering stable, inflation-hedged net rental yields through pre-leased Grade-A office floors, corporate headquarters relocations, and high-footfall SCO plots.",
-          image: "https://saudagarproperties.com/wp-content/uploads/2026/06/Office-Space-in-Gurgaon.jpg",
+          image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1280&h=800&q=85",
           bullets: [
             "Pre-leased assets with 9-year institutional corporate leases",
             "Blue-chip tenants in DLF Cyber City & Horizon Center",
@@ -779,7 +782,7 @@ export const DEFAULT_SECTIONS = {
           badge: "Global Diaspora Desk",
           title: "Dedicated NRI Real Estate Desk: FEMA Compliance & Repatriation",
           description: "End-to-end advisory for diaspora families across USA, UK, UAE, and Singapore: FEMA compliance, NRE/NRO banking, Form 15CA/15CB capital repatriation, and legal Power of Attorney execution.",
-          image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80",
+          image: "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1280&h=800&q=85",
           bullets: [
             "Full compliance with FEMA and RBI guidelines",
             "Special Power of Attorney (PoA) drafting and registration",
@@ -792,7 +795,7 @@ export const DEFAULT_SECTIONS = {
           badge: "Private Off-Market",
           title: "Generational Wealth Advisory & Confidential Off-Market Mandates",
           description: "Discreet private registry of unlisted DLF Phase 1–2 kothis, trophy plots, and family estate mandates, combined with Section 54/54EC capital gains tax optimization for long-term wealth preservation.",
-          image: "https://saudagarproperties.com/wp-content/uploads/2026/03/Duplex-Villa-in-DLF-Phase-1.jpg",
+          image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1280&h=800&q=85",
           bullets: [
             "Exclusive access to confidential, off-market estates",
             "Strict Non-Disclosure Agreements (NDAs) protecting privacy",
@@ -873,7 +876,7 @@ export const DEFAULT_SECTIONS = {
       titleMain: "Luxury Residential Real Estate in ",
       titleItalic: "DLF Gurugram",
       subtitle: "Bespoke builder floors, signature freehold plots, and iconic independent kothis across DLF Phase 1–5, Sushant Lok & Golf Course Road.",
-      bgImage: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=80",
+      bgImage: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2400&h=1028&q=85",
       ctaPhone: "+91 98112 21207",
       ctaText: "Private Consultation",
       heroCard: {
@@ -901,7 +904,7 @@ export const DEFAULT_SECTIONS = {
         locations: "DLF Phase 1, 2, 3, 4 & Sushant Lok",
         specs: "4 BHK • 300 to 500 Sq. Yds • Private Lift & Terrace",
         price: "₹4.50 Cr – ₹12.00 Cr",
-        image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1280&h=800&q=85",
         metrics: [
           { label: "Built-Up Area", val: "2,800 - 4,500 Sq. Ft." },
           { label: "Stilt Parking", val: "2 - 3 Dedicated Covered Bays" },
@@ -920,7 +923,7 @@ export const DEFAULT_SECTIONS = {
         locations: "DLF Phase 1 & 2 Prime Avenues",
         specs: "500 to 1,000 Sq. Yds • Bespoke Architecture",
         price: "₹14.00 Cr – ₹35.00 Cr",
-        image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1280&h=800&q=85",
         metrics: [
           { label: "Plot Footprint", val: "500 to 1,000 Sq. Yds" },
           { label: "Frontage", val: "50 to 80 Ft. Road Facing" },
@@ -939,7 +942,7 @@ export const DEFAULT_SECTIONS = {
         locations: "DLF Phase 1–4, Sushant Lok 1",
         specs: "215 to 1,000 Sq. Yds • Immediate Registry",
         price: "₹3.50 Lakh – ₹4.80 Lakh / Sq. Yd",
-        image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=1280&h=800&q=85",
         metrics: [
           { label: "Dimensions", val: "Standard & Corner Rectangular" },
           { label: "Clearance", val: "Clear Chain of Title with DLF NOC" },
@@ -958,7 +961,7 @@ export const DEFAULT_SECTIONS = {
         locations: "Golf Course Road & DLF Phase 5",
         specs: "4 & 5 BHK • 4,500 to 11,000 Sq. Ft",
         price: "₹18.00 Cr – ₹65.00 Cr",
-        image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?auto=format&fit=crop&w=1280&h=800&q=85",
         metrics: [
           { label: "Ceiling Height", val: "12 Ft. Double-Height Living" },
           { label: "Balcony Decks", val: "Wraparound Aravalli Views" },
@@ -1121,7 +1124,7 @@ export const DEFAULT_SECTIONS = {
       titleMain: "Commercial Real Estate & Grade-A Offices in ",
       titleItalic: "DLF Cyber City & Gurugram",
       subtitle: "Corporate office leasing, high-street retail spaces, and institutional pre-leased assets with high rental yields.",
-      bgImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1600&q=80",
+      bgImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&h=1028&q=85",
       ctaPhone: "+91 98112 21207",
       ctaText: "Corporate Consultation",
       heroCard: {
@@ -1150,7 +1153,7 @@ export const DEFAULT_SECTIONS = {
         specs: "2,500 to 50,000+ Sq. Ft. • Bare-Shell & Fully Fitted",
         price: "Lease: ₹90 – ₹220 / Sq. Ft. / Month",
         pricing: "Lease: ₹90 – ₹220 / Sq. Ft. / Month",
-        image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1280&h=800&q=85",
         alt: "Grade-A Corporate Office Space in Cyber City Gurugram - Saudagar Properties",
         metrics: [
           { label: "Floor Plates", val: "15,000 - 35,000 Sq. Ft." },
@@ -1171,7 +1174,7 @@ export const DEFAULT_SECTIONS = {
         specs: "₹5 Cr to ₹100+ Cr Ticket Size",
         price: "Assured Net Yield: 7.8% – 9.4% ROI",
         pricing: "Assured Net Yield: 7.8% – 9.4% ROI",
-        image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&w=1280&h=800&q=85",
         alt: "Pre-Leased Commercial Investment Assets in Gurugram - Saudagar Properties",
         metrics: [
           { label: "Tenant Profile", val: "Fortune 500 MNCs & Scheduled Banks" },
@@ -1192,7 +1195,7 @@ export const DEFAULT_SECTIONS = {
         specs: "500 to 10,000 Sq. Ft. • Maximum Footfall Frontage",
         price: "Sale: ₹18,000 – ₹45,000 / Sq. Ft.",
         pricing: "Sale: ₹18,000 – ₹45,000 / Sq. Ft.",
-        image: "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1555529669-e69e7aa0ba9a?auto=format&fit=crop&w=1280&h=800&q=85",
         alt: "High-Street Retail and Showrooms in Galleria Market - Saudagar Properties",
         metrics: [
           { label: "Catchment", val: "50,000+ Affluent High-Net-Worth Households" },
@@ -1213,7 +1216,7 @@ export const DEFAULT_SECTIONS = {
         specs: "100 to 250 Sq. Yds • Basement + G + 4 Approvals",
         price: "₹4.50 Cr – ₹16.00 Cr",
         pricing: "₹4.50 Cr – ₹16.00 Cr",
-        image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1280&h=800&q=85",
         alt: "SCO Commercial Plots along Golf Course Extension Road - Saudagar Properties",
         metrics: [
           { label: "Land Ownership", val: "100% Freehold Land & Terrace" },
@@ -1375,7 +1378,7 @@ export const DEFAULT_SECTIONS = {
       titleMain: "Industrial Plots, Warehouses & Logistics Hubs in ",
       titleItalic: "Udyog Vihar & Gurugram",
       subtitle: "Strategic industrial land parcels, Grade-A logistics warehouses, and build-to-suit manufacturing assets.",
-      bgImage: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1600&q=80",
+      bgImage: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=2400&h=1028&q=85",
       ctaPhone: "+91 98112 21207",
       ctaText: "Industrial Consultation",
       heroCard: {
@@ -1404,7 +1407,7 @@ export const DEFAULT_SECTIONS = {
         specs: "50,000 to 500,000+ Sq. Ft. • 12m Clear Height",
         price: "Lease: ₹22 – ₹38 / Sq. Ft. / Month",
         pricing: "Lease: ₹22 – ₹38 / Sq. Ft. / Month",
-        image: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1553413077-190dd305871c?auto=format&fit=crop&w=1280&h=800&q=85",
         alt: "Grade-A Industrial Logistics Warehouses in Gurugram - Saudagar Properties",
         metrics: [
           { label: "Clear Height", val: "10.5m to 12.5m Clear Eaves" },
@@ -1425,7 +1428,7 @@ export const DEFAULT_SECTIONS = {
         specs: "500 to 5,000+ Sq. Yds • Ready for Construction",
         price: "Sale: ₹80,000 – ₹1.60 Lakh / Sq. Yd",
         pricing: "Sale: ₹80,000 – ₹1.60 Lakh / Sq. Yd",
-        image: "https://images.unsplash.com/photo-1590496793929-36417d3117de?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1590496793929-36417d3117de?auto=format&fit=crop&w=1280&h=800&q=85",
         alt: "Industrial Freehold Plots in Udyog Vihar and IMT Manesar - Saudagar Properties",
         metrics: [
           { label: "Zoning", val: "HSIIDC Industrial Sanctioned" },
@@ -1446,7 +1449,7 @@ export const DEFAULT_SECTIONS = {
         specs: "10,000 to 100,000 Sq. Ft. • Multi-Level Options",
         price: "Lease: ₹35 – ₹70 / Sq. Ft. / Month",
         pricing: "Lease: ₹35 – ₹70 / Sq. Ft. / Month",
-        image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1280&h=800&q=85",
         alt: "Manufacturing Factories and Industrial Sheds in Gurugram - Saudagar Properties",
         metrics: [
           { label: "Gantry Cranes", val: "5 to 20 Ton Overhead Crane Rails" },
@@ -1467,7 +1470,7 @@ export const DEFAULT_SECTIONS = {
         specs: "Custom Land Parcels from 2 to 50 Acres",
         price: "Bespoke Institutional Turnkey Mandates",
         pricing: "Bespoke Institutional Turnkey Mandates",
-        image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=800&q=80",
+        image: "https://images.unsplash.com/photo-1587293852726-70cdb56c2866?auto=format&fit=crop&w=1280&h=800&q=85",
         alt: "Build-to-Suit Industrial Facilities and Warehouses - Saudagar Properties",
         metrics: [
           { label: "Land Area", val: "2 to 50+ Contiguous Acres" },

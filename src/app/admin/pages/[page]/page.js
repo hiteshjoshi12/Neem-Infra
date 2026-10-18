@@ -182,6 +182,8 @@ const PAGE_CONFIGS = {
       { id: 'nearestPlaces', label: 'Commute & Landmarks' },
       { id: 'howWeHelp', label: 'How We Help (Turnkey)' },
       { id: 'whyChooseSaudagar', label: 'Why Choose Saudagar' },
+      { id: 'inventorySection', label: 'Verified Inventory' },
+      { id: 'inquiryForm', label: 'Inquiry Desk Copy' },
       { id: 'mapShowcase', label: 'Strategic & Static Maps' },
       { id: 'faqs', label: 'Corridor FAQs' }
     ]
@@ -1654,12 +1656,42 @@ export default function AdminPageCMS() {
 
                 {/* 7 Strategic Pillars */}
                 <div className="space-y-6 pt-4 border-t border-white/10">
-                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">7 Strategic Distinction Pillars</h4>
+                  <div className="border-b border-white/10 pb-4">
+                    <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">7 Strategic Distinction Pillars</h4>
+                    <p className="text-[11px] text-slate-400">Pillar #1 is displayed as the prominent lead hero card. Pillars #2–7 are featured in a dedicated 6-card grid below.</p>
+                  </div>
+
+                  {/* 6-Card Dedicated Section Header Settings */}
+                  <div className="p-4 rounded-xl bg-[#D09A16]/5 border border-[#D09A16]/20 space-y-3">
+                    <h5 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">6 Strategic Pillars Section Header (Pillars 2–7)</h5>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <FormField
+                        label="6-Pillars Badge"
+                        value={formData?.whyChooseUs?.gridBadge}
+                        onChange={(val) => updateField('whyChooseUs.gridBadge', val)}
+                        placeholder="Core Strategic Advisory Pillars • Generational Authority"
+                      />
+                      <FormField
+                        label="6-Pillars Section Heading"
+                        value={formData?.whyChooseUs?.gridTitle}
+                        onChange={(val) => updateField('whyChooseUs.gridTitle', val)}
+                        placeholder="Strategic Pillars of Client Excellence & Asset Protection"
+                      />
+                    </div>
+                    <TextAreaField
+                      label="6-Pillars Introductory Paragraph"
+                      value={formData?.whyChooseUs?.gridSubtitle}
+                      onChange={(val) => updateField('whyChooseUs.gridSubtitle', val)}
+                      placeholder="Beyond founder-level representation, Saudagar Properties adheres to six rigorous advisory disciplines..."
+                      rows={2}
+                    />
+                  </div>
+
                   {(formData?.whyChooseUs?.pillars || []).map((pillar, pIdx) => (
                     <div key={pIdx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
                       <div className="flex items-center justify-between border-b border-white/10 pb-2">
                         <h5 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">
-                          Pillar #{pillar.number || pIdx + 1} {pIdx === 0 ? '(Lead Hero Card)' : ''}: {pillar.title}
+                          Pillar #{pillar.number || pIdx + 1} {pIdx === 0 ? '(Lead Hero Card - 21:9)' : '(Card Grid - 16:10)'}: {pillar.title}
                         </h5>
                         <span className="text-[10px] text-slate-400">{pillar.badge}</span>
                       </div>
@@ -1676,6 +1708,8 @@ export default function AdminPageCMS() {
                         value={pillar.image || ''}
                         onChange={(val) => updateField(`whyChooseUs.pillars.${pIdx}.image`, val)}
                         folder="/saudagar-properties/about"
+                        recommendedRatio={pIdx === 0 ? "21:9" : "16:10"}
+                        cardContext={pIdx === 0 ? "Lead Hero Card Banner" : "Pillar Card Stage"}
                         description={`Upload or browse an image for Pillar ${pillar.number || pIdx + 1} (${pillar.badge || 'Strategic Pillar'})`}
                       />
 
@@ -1919,10 +1953,13 @@ export default function AdminPageCMS() {
                 </div>
                 <TextAreaField label="Corridor Overview Subtitle" value={formData?.hero?.subtitle} onChange={(val) => updateField('hero.subtitle', val)} rows={3} />
                 <ImageUploadInput
-                  label="Corridor Hero Main Background Image"
+                  label="Corridor Hero Main Background Banner Image"
                   value={formData?.hero?.bgImage}
                   onChange={(val) => updateField('hero.bgImage', val)}
                   folder="/saudagar-properties/corridors"
+                  recommendedRatio="21:9"
+                  cardContext="Hero Backdrop Banner"
+                  description="Wide panoramic architectural banner displayed in the masthead header"
                 />
 
                 <div className="pt-2">
@@ -1933,6 +1970,27 @@ export default function AdminPageCMS() {
                     onChange={(val) => updateField('hero.keyHighlights', val)}
                     placeholder="100% Freehold Conveyance&#10;250 to 1,000 Sq. Yds Footprints&#10;Direct Access to Golf Course Rd"
                     rows={4}
+                  />
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                  <ListField
+                    label="Trust Credentials Strip (Under Action Buttons)"
+                    description="Three institutional trust badges displayed below the Call and WhatsApp buttons."
+                    items={formData?.hero?.trustBadges || [
+                      '25+ Years Authority',
+                      '100% Freehold Title Vetted',
+                      'Direct Seller Mandates'
+                    ]}
+                    onChange={(val) => updateField('hero.trustBadges', val)}
+                    rows={3}
+                  />
+                  <FormField
+                    label="Micro-Market Intelligence Strip Tagline"
+                    description="Header text for the bottom intelligence bar."
+                    value={formData?.hero?.intelligenceTagline}
+                    onChange={(val) => updateField('hero.intelligenceTagline', val)}
+                    placeholder="e.g. DLF Phase 1 Micro-Market Intelligence"
                   />
                 </div>
 
@@ -1979,6 +2037,8 @@ export default function AdminPageCMS() {
                           value={img.url}
                           onChange={(val) => updateField(`hero.galleryImages.${idx}.url`, val)}
                           folder="/saudagar-properties/corridors"
+                          recommendedRatio="16:10"
+                          cardContext="Perspective Stage Card"
                         />
                         <FormField label="Title / Caption" value={img.title} onChange={(val) => updateField(`hero.galleryImages.${idx}.title`, val)} />
                         <FormField label="Badge / Tag" value={img.tag} onChange={(val) => updateField(`hero.galleryImages.${idx}.tag`, val)} placeholder="e.g. Featured Estate" />
@@ -2053,6 +2113,17 @@ export default function AdminPageCMS() {
                   <FormField label="Tag" value={formData?.overview?.tag} onChange={(val) => updateField('overview.tag', val)} />
                   <FormField label="Overview Title" value={formData?.overview?.title} onChange={(val) => updateField('overview.title', val)} />
                 </div>
+                
+                {/* Locality Profile Architectural Image */}
+                <ImageUploadInput
+                  label="Locality Profile Architectural Showcase Image"
+                  value={formData?.overview?.image}
+                  onChange={(val) => updateField('overview.image', val)}
+                  folder="/saudagar-properties/corridors"
+                  recommendedRatio="16:10"
+                  cardContext="Locality Profile Right Card"
+                  description="High-resolution architectural image displayed beside the locality profile narrative"
+                />
                 <div className="space-y-3">
                   <label className="block text-xs font-semibold text-slate-200">Editorial Paragraphs</label>
                   {(formData?.overview?.paragraphs || []).map((para, idx) => (
@@ -2181,19 +2252,35 @@ export default function AdminPageCMS() {
                 </div>
 
                 <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Right Column: Advisory Callout Card</h4>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <FormField label="Badge" value={formData?.quickCallout?.badge} onChange={(val) => updateField('quickCallout.badge', val)} />
-                    <FormField label="Card Title" value={formData?.quickCallout?.title} onChange={(val) => updateField('quickCallout.title', val)} />
-                    <FormField label="Hotline Direct Phone" value={formData?.quickCallout?.phone} onChange={(val) => updateField('quickCallout.phone', val)} />
-                    <FormField label="WhatsApp Action URL" value={formData?.quickCallout?.whatsappUrl} onChange={(val) => updateField('quickCallout.whatsappUrl', val)} />
+                  <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                    <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Right Column: Architectural Image Showcase</h4>
+                    <span className="text-[10px] text-emerald-400 font-semibold bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-500/30">
+                      Replaces CTA Box
+                    </span>
                   </div>
-                  <TextAreaField
-                    label="Card Subtitle / Guidance"
-                    value={formData?.quickCallout?.subtitle}
-                    onChange={(val) => updateField('quickCallout.subtitle', val)}
-                    rows={2}
+                  
+                  <ImageUploadInput
+                    label="Urban Balance Architectural Showcase Image"
+                    value={formData?.locationSection?.image}
+                    onChange={(val) => updateField('locationSection.image', val)}
+                    folder="/saudagar-properties/corridors"
+                    recommendedRatio="16:10"
+                    cardContext="Section 3 Architectural Card"
+                    description="High-resolution estate perspective image displayed on the right side of Section 3"
                   />
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <FormField label="Floating Photo Badge" value={formData?.locationSection?.cardBadge} onChange={(val) => updateField('locationSection.cardBadge', val)} placeholder="Prime Location Estate" />
+                    <FormField label="Caption Tag" value={formData?.locationSection?.cardTag} onChange={(val) => updateField('locationSection.cardTag', val)} placeholder="Direct Sector Mandate" />
+                    <FormField label="Caption Headline" value={formData?.locationSection?.cardTitle} onChange={(val) => updateField('locationSection.cardTitle', val)} placeholder="Prime Micro-Market" />
+                  </div>
+
+                  <div className="pt-3 border-t border-white/10 space-y-3">
+                    <h5 className="text-[11px] font-bold text-slate-300 uppercase tracking-wider">Fallback Advisory Hotlines</h5>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <FormField label="Hotline Direct Phone" value={formData?.quickCallout?.phone} onChange={(val) => updateField('quickCallout.phone', val)} />
+                      <FormField label="WhatsApp Action URL" value={formData?.quickCallout?.whatsappUrl} onChange={(val) => updateField('quickCallout.whatsappUrl', val)} />
+                    </div>
+                  </div>
                 </div>
               </div>
             )}
@@ -2344,6 +2431,23 @@ export default function AdminPageCMS() {
                     onChange={(url) => updateField('howWeHelp.image', url)}
                   />
 
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                    <FormField
+                      label="Advisory Glassmorphism Card Title"
+                      description="Badge headline overlaid on the advisory image."
+                      value={formData?.howWeHelp?.cardBadgeTitle}
+                      onChange={(val) => updateField('howWeHelp.cardBadgeTitle', val)}
+                      placeholder="Turnkey Due Diligence"
+                    />
+                    <FormField
+                      label="Advisory Glassmorphism Card Description"
+                      description="Subtitle text overlaid on the advisory image."
+                      value={formData?.howWeHelp?.cardBadgeDesc}
+                      onChange={(val) => updateField('howWeHelp.cardBadgeDesc', val)}
+                      placeholder="Title clearance, registry representation & architect consultation"
+                    />
+                  </div>
+
                   <ListField
                     label="Editorial Narrative Paragraphs"
                     description="Separate paragraphs by pressing Enter."
@@ -2367,7 +2471,7 @@ export default function AdminPageCMS() {
               <div className="space-y-6">
                 <div className="border-b border-white/10 pb-2">
                   <h3 className="text-sm font-semibold text-white">Why Choose Saudagar Properties</h3>
-                  <p className="text-[11px] text-slate-400">Customize the 25+ years corridor authority section, image, and founders signature desk.</p>
+                  <p className="text-[11px] text-slate-400">Customize the 25+ years corridor authority section, image, founders signature desk, and institutional metric cards.</p>
                 </div>
 
                 <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
@@ -2391,6 +2495,121 @@ export default function AdminPageCMS() {
                     onChange={(val) => updateField('whyChooseSaudagar.content', val)}
                     rows={6}
                   />
+
+                  {/* 3 Institutional Stat Pillars */}
+                  <div className="pt-3 border-t border-white/10 space-y-3">
+                    <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">3 Institutional Stat Pillars</h4>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 space-y-2">
+                        <FormField label="Pillar 1 Value" value={formData?.whyChooseSaudagar?.stats?.[0]?.value || '25+ Yrs'} onChange={(val) => updateField('whyChooseSaudagar.stats.0.value', val)} />
+                        <FormField label="Pillar 1 Label" value={formData?.whyChooseSaudagar?.stats?.[0]?.label || 'Micro-Market Authority'} onChange={(val) => updateField('whyChooseSaudagar.stats.0.label', val)} />
+                      </div>
+                      <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 space-y-2">
+                        <FormField label="Pillar 2 Value" value={formData?.whyChooseSaudagar?.stats?.[1]?.value || '100%'} onChange={(val) => updateField('whyChooseSaudagar.stats.1.value', val)} />
+                        <FormField label="Pillar 2 Label" value={formData?.whyChooseSaudagar?.stats?.[1]?.label || 'Clean Freehold Titles'} onChange={(val) => updateField('whyChooseSaudagar.stats.1.label', val)} />
+                      </div>
+                      <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 space-y-2">
+                        <FormField label="Pillar 3 Value" value={formData?.whyChooseSaudagar?.stats?.[2]?.value || '₹500+ Cr'} onChange={(val) => updateField('whyChooseSaudagar.stats.2.value', val)} />
+                        <FormField label="Pillar 3 Label" value={formData?.whyChooseSaudagar?.stats?.[2]?.label || 'Transactions Facilitated'} onChange={(val) => updateField('whyChooseSaudagar.stats.2.label', val)} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeSectionTab === 'inventorySection' && (
+              <div className="space-y-6">
+                <div className="border-b border-white/10 pb-2">
+                  <h3 className="text-sm font-semibold text-white">Curated Verified Inventory Showcase</h3>
+                  <p className="text-[11px] text-slate-400">
+                    Customize the heading, eyebrow badge, and catalog link for properties matching this corridor.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FormField
+                      label="Section Eyebrow Badge"
+                      value={formData?.inventorySection?.badge}
+                      onChange={(val) => updateField('inventorySection.badge', val)}
+                      placeholder="Verified Real Estate"
+                    />
+                    <FormField
+                      label="Section Title"
+                      value={formData?.inventorySection?.title}
+                      onChange={(val) => updateField('inventorySection.title', val)}
+                      placeholder={`Available Properties in ${CORRIDOR_LIST.find(c => c.slug === selectedCorridor)?.name || 'Corridor'}`}
+                    />
+                  </div>
+                  <FormField
+                    label="View Full Catalog Button Text"
+                    value={formData?.inventorySection?.linkText}
+                    onChange={(val) => updateField('inventorySection.linkText', val)}
+                    placeholder="View Full Catalog"
+                  />
+                  
+                  <div className="p-4 rounded-xl bg-emerald-950/20 border border-emerald-500/30 flex items-start gap-3">
+                    <CheckCircle2 size={18} className="text-emerald-400 shrink-0 mt-0.5" />
+                    <div className="text-xs text-emerald-200">
+                      <p className="font-semibold mb-1">Dynamic Database Inventory Integration</p>
+                      <p className="text-emerald-300/80 leading-relaxed text-[11px]">
+                        Property cards displayed in this section are automatically pulled from the live properties database matching the location name (&ldquo;{CORRIDOR_LIST.find(c => c.slug === selectedCorridor)?.name}&rdquo;). To add or edit inventory items, use the <Link href="/admin/properties" className="underline font-bold text-white hover:text-[#D09A16]">Properties Manager</Link>.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {activeSectionTab === 'inquiryForm' && (
+              <div className="space-y-6">
+                <div className="border-b border-white/10 pb-2">
+                  <h3 className="text-sm font-semibold text-white">Direct Property Inquiry &amp; Consultation Form Copy</h3>
+                  <p className="text-[11px] text-slate-400">
+                    Customize the confidential advisory desk copy, heading, description, button label, and privacy notice.
+                  </p>
+                </div>
+
+                <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FormField
+                      label="Eyebrow Badge"
+                      value={formData?.inquiryForm?.badge}
+                      onChange={(val) => updateField('inquiryForm.badge', val)}
+                      placeholder="Confidential Inquiry Desk"
+                    />
+                    <FormField
+                      label="Section Headline"
+                      value={formData?.inquiryForm?.title}
+                      onChange={(val) => updateField('inquiryForm.title', val)}
+                      placeholder={`Consult Directly for ${CORRIDOR_LIST.find(c => c.slug === selectedCorridor)?.name || 'Corridor'}`}
+                    />
+                  </div>
+
+                  <TextAreaField
+                    label="Editorial Guidance Description"
+                    description="Explains response timeline and senior partner consultation."
+                    value={formData?.inquiryForm?.description}
+                    onChange={(val) => updateField('inquiryForm.description', val)}
+                    rows={2}
+                    placeholder="Fill out the form below. Arun Sharma or our senior partners will contact you within 2 business hours."
+                  />
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FormField
+                      label="Confidentiality Assurance Note"
+                      value={formData?.inquiryForm?.confidentialityNote}
+                      onChange={(val) => updateField('inquiryForm.confidentialityNote', val)}
+                      placeholder="Strict client confidentiality. Zero spam."
+                    />
+                    <FormField
+                      label="Submit Button Text"
+                      value={formData?.inquiryForm?.buttonText}
+                      onChange={(val) => updateField('inquiryForm.buttonText', val)}
+                      placeholder="Send Inquiry"
+                    />
+                  </div>
                 </div>
               </div>
             )}
@@ -2491,7 +2710,10 @@ export default function AdminPageCMS() {
             {activeSectionTab === 'faqs' && (
               <div className="space-y-5">
                 <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                  <h3 className="text-sm font-semibold text-white">Frequently Asked Questions</h3>
+                  <div>
+                    <h3 className="text-sm font-semibold text-white">Frequently Asked Questions &amp; Section Header</h3>
+                    <p className="text-[11px] text-slate-400">Manage FAQ header copy, badge, and accordion questions &amp; answers.</p>
+                  </div>
                   <button
                     type="button"
                     onClick={() => {
@@ -2505,7 +2727,32 @@ export default function AdminPageCMS() {
                   </button>
                 </div>
 
-                <div className="space-y-4">
+                <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FormField
+                      label="Section Badge"
+                      value={formData?.faqsInfo?.badge}
+                      onChange={(val) => updateField('faqsInfo.badge', val)}
+                      placeholder="Expert Guidance & Insights"
+                    />
+                    <FormField
+                      label="Section Title"
+                      value={formData?.faqsInfo?.title}
+                      onChange={(val) => updateField('faqsInfo.title', val)}
+                      placeholder="Frequently Asked Questions"
+                    />
+                  </div>
+                  <TextAreaField
+                    label="Section Subtitle"
+                    value={formData?.faqsInfo?.subtitle}
+                    onChange={(val) => updateField('faqsInfo.subtitle', val)}
+                    rows={2}
+                    placeholder={`Key questions answered regarding acquisitions, pricing benchmarks, and zoning in ${CORRIDOR_LIST.find(c => c.slug === selectedCorridor)?.name || 'this corridor'}.`}
+                  />
+                </div>
+
+                <div className="space-y-4 pt-2">
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wider">Accordion Q&amp;A Items</h4>
                   {(formData?.faqs || []).map((faq, idx) => (
                     <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3 relative group">
                       <div className="flex items-center justify-between">

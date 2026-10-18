@@ -127,11 +127,34 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
     if (onMuteChange) onMuteChange(nextMuted);
   };
 
-  const posterSrc = customPoster || "/videos/saudagar/poster.jpg";
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const posterSrc = customPoster || (isMobile ? "/videos/saudagar/poster-mobile.jpg" : "/videos/saudagar/poster.jpg");
 
   // Callback ref to attach video element to all refs immediately
   const handleVideoRef = (el) => {
     internalVideoRef.current = el;
+    if (el) {
+      el.muted = true;
+      el.defaultMuted = true;
+      if (!prefersReducedMotion && el.paused) {
+        el.play()
+          .then(() => {
+            setInternalPlaying(true);
+            setIsVideoLoaded(true);
+            if (onPlay) onPlay();
+          })
+          .catch(() => {});
+      }
+    }
     if (forwardedRef) {
       if (typeof forwardedRef === "function") {
         forwardedRef(el);
@@ -152,15 +175,15 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
     <div
       className={`absolute inset-0 z-0 overflow-hidden pointer-events-none select-none ${className}`}
     >
-      {/* 1. LCP Instant Poster Image Fallback */}
+      {/* 1. LCP Instant Poster Image Fallback (Exact First Frame of Video) */}
       <Image
         src={posterSrc}
         alt="Saudagar Luxury Properties Architecture"
         fill
         priority
-        quality={88}
+        quality={90}
         sizes="100vw"
-        className={`w-full h-full object-cover transition-opacity duration-1000 ${
+        className={`w-full h-full object-cover transition-opacity duration-500 ${
           isVideoLoaded && !prefersReducedMotion ? "opacity-0" : "opacity-100"
         }`}
       />
@@ -173,8 +196,10 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
           loop
           muted={isMuted}
           playsInline
-          preload="metadata"
+          webkit-playsinline="true"
+          preload="auto"
           poster={posterSrc}
+          onCanPlay={() => setIsVideoLoaded(true)}
           onLoadedData={() => setIsVideoLoaded(true)}
           onPlaying={() => {
             setIsVideoLoaded(true);
@@ -192,7 +217,7 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
               if (onMuteChange) onMuteChange(muted);
             }
           }}
-          className={`w-full h-full object-cover transition-opacity duration-1000 filter brightness-[1.03] contrast-[1.02] saturate-[1.03] ${
+          className={`w-full h-full object-cover transition-opacity duration-500 filter brightness-[1.03] contrast-[1.02] saturate-[1.03] ${
             isVideoLoaded ? "opacity-100" : "opacity-0"
           }`}
         >
@@ -213,12 +238,12 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
         </video>
       )}
 
-      {/* 3. Subtle Neutral Vignette Overlays (Significantly reduced blue tint to let vibrant video shine) */}
+      {/* 3. Subtle Neutral Vignette Overlays (Significantly reduced to let vibrant video shine clearly) */}
       {/* Light ambient film tint to keep sunny daylight while ensuring text readability */}
-      <div className="absolute inset-0 bg-black/20 pointer-events-none" />
+      <div className="absolute inset-0 bg-black/10 pointer-events-none" />
 
       {/* Soft directional gradient for editorial headline clarity (neutral, non-blue) */}
-      <div className="absolute inset-0 bg-gradient-to-r from-black/35 via-black/10 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-black/25 via-black/5 to-transparent pointer-events-none" />
 
       {/* Delicate top vignette for floating navbar readability */}
       <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/60 via-black/20 to-transparent pointer-events-none" />

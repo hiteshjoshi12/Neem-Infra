@@ -259,6 +259,8 @@ export default function PropertyDetailClient({ property }) {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.5, ease: "easeInOut" }}
+                className="w-full h-full"
+              >
                 <div className="w-full h-full relative overflow-hidden bg-slate-100">
                   <Image
                     src={allImages[activeImageIdx] || property.img}

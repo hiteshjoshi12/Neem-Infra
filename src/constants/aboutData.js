@@ -5,7 +5,7 @@ export const WHY_CHOOSE_US_PILLARS = [
     badge: "25+ Year Legacy",
     title: "Proven Real Estate Authority Across DLF Phase 1, 2, 3, 4 & 5",
     description: "Headquartered at 38, Akashneem Marg, DLF Phase 2, Saudagar Properties brings unmatched ancestral registry knowledge and original DLF allotment file scrutiny to every transaction.",
-    image: "https://saudagarproperties.com/wp-content/uploads/2026/01/Property-Dealers-in-Gurugram.png",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&h=600&q=85",
     bullets: [
       "Original master allotment file validation back to 1999",
       "Direct seller-to-buyer negotiations eliminating broker markups",
@@ -18,7 +18,7 @@ export const WHY_CHOOSE_US_PILLARS = [
     badge: "Stilt + 4 Sanctions",
     title: "Luxury Independent Builder Floors: 300 to 1,000 Sq. Yd. Specifications",
     description: "Curated single-floor luxury residences with dedicated stilt parking, private automated elevators, separate servant quarters, and independent terrace rights under modern DTCP guidelines.",
-    image: "https://saudagarproperties.com/wp-content/uploads/2026/03/4-BHK-Independent-Floor-DLF-Phase-1.jpg",
+    image: "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1280&h=800&q=85",
     bullets: [
       "Occupation certificate (OC) cleared builder floors",
       "Private elevator landings & Italian marble layouts",
@@ -31,7 +31,7 @@ export const WHY_CHOOSE_US_PILLARS = [
     badge: "Ultra-HNI Corridors",
     title: "Golf Course Road & Golf Course Extension Ultra-Luxury Penthouses",
     description: "Strategic acquisition advisory for DLF Golf Links flagship estates (The Camellias, The Aralias, The Magnolias) and gated golf-facing duplex penthouses commanding enduring global liquidity.",
-    image: "https://saudagarproperties.com/wp-content/uploads/2026/07/Luxury-Property-in-Gurgaon.jpg",
+    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1280&h=800&q=85",
     bullets: [
       "Confidential resales in DLF Golf Links developments",
       "Panoramic views of the Aravalli biodiversity range",
@@ -44,7 +44,7 @@ export const WHY_CHOOSE_US_PILLARS = [
     badge: "100% Clean Titles",
     title: "Fiduciary Legal Title Due Diligence & 30-Year Deed Tracing",
     description: "Zero-compromise legal scrutiny: 30-year chain of title investigation at Gurugram Tehsil, verified Non-Encumbrance Certificates (NEC), DTCP zoning checks, and Haryana RERA compliance.",
-    image: "https://images.unsplash.com/photo-1450133064473-71024230f91b?auto=format&fit=crop&w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?auto=format&fit=crop&w=1280&h=800&q=85",
     bullets: [
       "30-year deed tracing to original master allotments",
       "Non-Encumbrance Certificate (NEC) verification",
@@ -57,7 +57,7 @@ export const WHY_CHOOSE_US_PILLARS = [
     badge: "8%–10% Rental ROI",
     title: "Grade-A Corporate Offices & Pre-Leased Assets in Cyber City",
     description: "Institutional commercial advisory delivering stable, inflation-hedged net rental yields through pre-leased Grade-A office floors, corporate headquarters relocations, and high-footfall SCO plots.",
-    image: "https://saudagarproperties.com/wp-content/uploads/2026/06/Office-Space-in-Gurgaon.jpg",
+    image: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1280&h=800&q=85",
     bullets: [
       "Pre-leased assets with 9-year institutional corporate leases",
       "Blue-chip tenants in DLF Cyber City & Horizon Center",
@@ -70,7 +70,7 @@ export const WHY_CHOOSE_US_PILLARS = [
     badge: "Global Diaspora Desk",
     title: "Dedicated NRI Real Estate Desk: FEMA Compliance & Repatriation",
     description: "End-to-end advisory for diaspora families across USA, UK, UAE, and Singapore: FEMA compliance, NRE/NRO banking, Form 15CA/15CB capital repatriation, and legal Power of Attorney execution.",
-    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?auto=format&fit=crop&w=1200&q=80",
+    image: "https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=1280&h=800&q=85",
     bullets: [
       "Full compliance with FEMA and RBI guidelines",
       "Special Power of Attorney (PoA) drafting and registration",
@@ -83,7 +83,7 @@ export const WHY_CHOOSE_US_PILLARS = [
     badge: "Private Off-Market",
     title: "Generational Wealth Advisory & Confidential Off-Market Mandates",
     description: "Discreet private registry of unlisted DLF Phase 1–2 kothis, trophy plots, and family estate mandates, combined with Section 54/54EC capital gains tax optimization for long-term wealth preservation.",
-    image: "https://saudagarproperties.com/wp-content/uploads/2026/03/Duplex-Villa-in-DLF-Phase-1.jpg",
+    image: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1280&h=800&q=85",
     bullets: [
       "Exclusive access to confidential, off-market estates",
       "Strict Non-Disclosure Agreements (NDAs) protecting privacy",

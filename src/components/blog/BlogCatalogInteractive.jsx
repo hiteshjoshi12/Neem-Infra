@@ -16,7 +16,9 @@ import {
   User, 
   ArrowUpRight,
   FileText,
-  PhoneCall
+  PhoneCall,
+  LayoutList,
+  LayoutGrid
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
 import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
@@ -34,6 +36,7 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
   const { sections } = useCms();
   const cms = sections?.page_blog || initialData || DEFAULT_SECTIONS.page_blog;
   const [selectedCategory, setSelectedCategory] = useState('all');
+  const [viewMode, setViewMode] = useState('expanded'); // 'expanded' | 'grid'
 
   // Filter posts based on category
   const filteredPosts = useMemo(() => {
@@ -113,40 +116,52 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
               >
                 <div className="bg-white rounded-3xl border border-[#17213D]/10 group-hover:border-[#D09A16]/60 p-6 sm:p-8 md:p-10 shadow-[0_20px_50px_rgba(23,33,61,0.06)] group-hover:shadow-[0_25px_60px_rgba(208,154,22,0.18)] transition-all duration-300 flex flex-col justify-between h-full">
                   <div>
-                    {/* Image Container with Badges */}
-                    {/* Image Container with Badges - Full Bleed Edge-to-Edge */}
-                    <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-slate-900 mb-8 border border-[#17213D]/10">
+                    {/* Meta Header Strip Above Image (Never blocks image artwork) */}
+                    <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+                      <div className="flex items-center gap-2.5">
+                        <span className="px-3.5 py-1.5 rounded-full bg-[#17213D] text-[#D09A16] border border-[#D09A16]/40 text-[10px] font-bold uppercase tracking-[0.2em] shadow-sm">
+                          Cover Story • High Impact
+                        </span>
+                        {leadStory.category && (
+                          <span className="px-3.5 py-1.5 rounded-full bg-[#D09A16]/10 text-[#17213D] border border-[#D09A16]/30 text-[10px] font-bold uppercase tracking-wider">
+                            {leadStory.category.name}
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-3 text-xs text-[#566078]">
+                        <span className="flex items-center gap-1.5 font-medium">
+                          <Clock size={13} className="text-[#D09A16]" />
+                          <span>{leadStory.readingTime || 7} min read</span>
+                        </span>
+                        <span className="font-mono text-[11px] text-[#D09A16] font-bold tracking-wider">
+                          VERIFIED DISPATCH
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Image Container: Enlarged Aspect Ratio, Ambient Backdrop, Full Uncut Image */}
+                    <div className="relative aspect-[16/10] sm:aspect-[3/2] w-full rounded-2xl overflow-hidden bg-[#0A0E17] mb-8 border border-[#17213D]/10 shadow-inner group-hover:border-[#D09A16]/40 transition-colors">
+                      {/* Ambient Blurred Backdrop */}
+                      <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
+                        <Image
+                          src={leadStory.featuredImage || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80"}
+                          alt=""
+                          fill
+                          sizes="100px"
+                          className="object-cover blur-2xl scale-125 brightness-75"
+                          aria-hidden="true"
+                        />
+                      </div>
+
+                      {/* Full Foreground Image - 100% visible, zero cropping */}
                       <Image
                         src={leadStory.featuredImage || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80"}
                         alt={leadStory.featuredImageAlt || leadStory.title}
                         fill
                         priority
                         sizes="(max-width: 1024px) 100vw, 66vw"
-                        className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
+                        className="object-contain object-center group-hover:scale-[1.02] transition-transform duration-700 ease-out relative z-10"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E17]/80 via-transparent to-transparent pointer-events-none" />
-                      
-                      {/* Floating Luxury Badges */}
-                      <div className="absolute top-4 left-4 flex flex-wrap items-center gap-2">
-                        <span className="px-3.5 py-1.5 rounded-full bg-[#0A0E17]/90 backdrop-blur-md text-[#D09A16] border border-[#D09A16]/40 text-[10px] font-bold uppercase tracking-[0.2em] shadow-lg">
-                          Cover Story • High Impact
-                        </span>
-                        {leadStory.category && (
-                          <span className="px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-[#17213D] text-[10px] font-bold uppercase tracking-wider shadow-sm">
-                            {leadStory.category.name}
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs text-slate-200">
-                        <span className="flex items-center gap-1.5">
-                          <Clock size={13} className="text-[#D09A16]" />
-                          <span>{leadStory.readingTime || 7} min read</span>
-                        </span>
-                        <span className="font-mono text-[11px] text-[#D09A16] font-semibold">
-                          VERIFIED DISPATCH
-                        </span>
-                      </div>
                     </div>
 
                     {/* Headline & Excerpt */}
@@ -322,8 +337,9 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
           </div>
 
           {/* Controls Bar: Category Filter Pills (No search bar) */}
-          <div className="bg-white rounded-2xl p-2.5 sm:p-3.5 border border-[#17213D]/10 shadow-[0_4px_20px_rgba(23,33,61,0.03)] mb-8">
-            <div className="flex items-center gap-2 overflow-x-auto luxury-scrollbar py-0.5 px-0.5">
+          {/* Controls Bar: Category Filter Pills + View Switcher */}
+          <div className="bg-white rounded-2xl p-2.5 sm:p-3.5 border border-[#17213D]/10 shadow-[0_4px_20px_rgba(23,33,61,0.03)] mb-8 flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2 overflow-x-auto luxury-scrollbar py-0.5 px-0.5 flex-1 min-w-0">
               <button
                 onClick={() => setSelectedCategory('all')}
                 className={`relative px-4 sm:px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap shrink-0 ${
@@ -365,6 +381,34 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
                 );
               })}
             </div>
+
+            {/* View Switcher: Expanded Editorial vs Magazine Grid */}
+            <div className="hidden sm:flex items-center gap-1 pl-3 border-l border-[#17213D]/10 shrink-0">
+              <button
+                onClick={() => setViewMode('expanded')}
+                title="Expanded Editorial Cards (Full Width)"
+                className={`px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold ${
+                  viewMode === 'expanded'
+                    ? 'bg-[#17213D] text-[#D09A16] shadow-sm'
+                    : 'text-[#566078] hover:text-[#17213D] hover:bg-[#F7F5EF]'
+                }`}
+              >
+                <LayoutList size={15} />
+                <span className="hidden md:inline">Expanded</span>
+              </button>
+              <button
+                onClick={() => setViewMode('grid')}
+                title="Grid Cards"
+                className={`px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold ${
+                  viewMode === 'grid'
+                    ? 'bg-[#17213D] text-[#D09A16] shadow-sm'
+                    : 'text-[#566078] hover:text-[#17213D] hover:bg-[#F7F5EF]'
+                }`}
+              >
+                <LayoutGrid size={15} />
+                <span className="hidden md:inline">Grid</span>
+              </button>
+            </div>
           </div>
 
           {/* MAIN ARTICLES GRID + EDITORIAL SIDEBAR */}
@@ -384,60 +428,164 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
               </div>
 
               {filteredPosts.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  {filteredPosts.map((post) => (
-                    <Link
-                      key={post._id || post.slug}
-                      href={`/blog/${post.slug}`}
-                      className="group block cursor-pointer bg-white rounded-3xl border border-[#17213D]/10 hover:border-[#D09A16]/60 p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full"
-                    >
-                      <div>
-                        {/* Image Banner - Full Bleed Edge-to-Edge */}
-                        <div className="relative aspect-[16/9] w-full rounded-2xl overflow-hidden bg-slate-100 mb-5 border border-[#17213D]/5">
-                          <Image
-                            src={post.featuredImage || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80"}
-                            alt={post.title}
-                            fill
-                            sizes="(max-width: 768px) 100vw, 360px"
-                            className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
-                            loading="lazy"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                viewMode === 'expanded' ? (
+                  /* =========================================================
+                     MODE 1: EXPANDED EDITORIAL CARDS (LARGE FORMAT)
+                     • Full-width cards with spacious image container
+                     • Entire graphic displayed without any cropping
+                     • Clear editorial typography & breathing room
+                  ========================================================= */
+                  <div className="space-y-8">
+                    {filteredPosts.map((post) => (
+                      <Link
+                        key={post._id || post.slug}
+                        href={`/blog/${post.slug}`}
+                        className="group block cursor-pointer bg-white rounded-3xl border border-[#17213D]/10 hover:border-[#D09A16]/60 p-6 sm:p-7 shadow-sm hover:shadow-xl transition-all duration-300"
+                      >
+                        <div className="flex flex-col md:flex-row items-stretch gap-6 md:gap-8">
+                          {/* Large Sized Image Container with Ambient Backdrop */}
+                          <div className="relative w-full md:w-[46%] aspect-[4/3] sm:aspect-[16/10] md:aspect-auto md:min-h-[260px] rounded-2xl overflow-hidden bg-[#0A0E17] border border-[#17213D]/10 shrink-0 shadow-inner group-hover:border-[#D09A16]/40 transition-colors">
+                            {/* Ambient Blurred Backdrop */}
+                            <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
+                              <Image
+                                src={post.featuredImage || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80"}
+                                alt=""
+                                fill
+                                sizes="100px"
+                                className="object-cover blur-xl scale-125 brightness-75"
+                                aria-hidden="true"
+                              />
+                            </div>
+                            {/* Full Uncut Foreground Image */}
+                            <Image
+                              src={post.featuredImage || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80"}
+                              alt={post.title}
+                              fill
+                              sizes="(max-width: 768px) 100vw, 420px"
+                              className="object-contain object-center group-hover:scale-[1.02] transition-transform duration-500 relative z-10"
+                              loading="lazy"
+                            />
+                          </div>
 
-                          {post.category && (
-                            <div className="absolute top-3 left-3">
-                              <span className="px-3 py-1 rounded-full bg-[#0A0E17]/85 backdrop-blur-md text-[#D09A16] text-[10px] font-bold uppercase tracking-wider border border-white/15">
+                          {/* Content Area */}
+                          <div className="flex flex-col justify-between flex-1 py-1">
+                            <div>
+                              {/* Meta Header */}
+                              <div className="flex flex-wrap items-center gap-2 mb-3">
+                                {post.category && (
+                                  <span className="px-3 py-1 rounded-full bg-[#D09A16]/10 text-[#17213D] border border-[#D09A16]/30 text-[10px] font-bold uppercase tracking-wider">
+                                    {post.category.name}
+                                  </span>
+                                )}
+                                <span className="text-slate-400 text-xs">•</span>
+                                <span className="text-xs text-[#8892A6] flex items-center gap-1 font-medium">
+                                  <Clock size={12} className="text-[#D09A16]" />
+                                  <span>{post.readingTime || 5} min read</span>
+                                </span>
+                              </div>
+
+                              {/* Title */}
+                              <h3 className="font-serif font-bold text-xl sm:text-2xl text-[#17213D] group-hover:text-[#D09A16] transition-colors leading-snug mb-3">
+                                {post.title}
+                              </h3>
+
+                              {/* Excerpt */}
+                              <p className="text-sm text-[#566078] line-clamp-3 leading-relaxed mb-6 font-sans">
+                                {post.excerpt}
+                              </p>
+                            </div>
+
+                            {/* Card Footer */}
+                            <div className="pt-4 border-t border-[#17213D]/10 flex items-center justify-between text-xs">
+                              <span className="text-[#8892A6] font-medium">
+                                {post.author?.name || 'Saudagar Research Desk'}
+                              </span>
+                              <div className="font-bold uppercase tracking-wider text-[#17213D] group-hover:text-[#D09A16] flex items-center gap-1.5 transition-colors">
+                                <span>Read Full Dossier</span>
+                                <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                ) : (
+                  /* =========================================================
+                     MODE 2: MAGAZINE GRID (ENLARGED CARDS)
+                     • Increased container height with 4:3 native ratio
+                     • Ambient blurred backdrop + 100% uncut image
+                     • Meta badges placed cleanly above image
+                  ========================================================= */
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {filteredPosts.map((post) => (
+                      <Link
+                        key={post._id || post.slug}
+                        href={`/blog/${post.slug}`}
+                        className="group block cursor-pointer bg-white rounded-3xl border border-[#17213D]/10 hover:border-[#D09A16]/60 p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full"
+                      >
+                        <div>
+                          {/* Top Meta Bar */}
+                          <div className="flex items-center justify-between gap-2 mb-3.5">
+                            {post.category ? (
+                              <span className="px-3 py-1 rounded-full bg-[#D09A16]/10 text-[#17213D] border border-[#D09A16]/30 text-[10px] font-bold uppercase tracking-wider">
                                 {post.category.name}
                               </span>
+                            ) : <span />}
+                            <span className="text-xs text-[#8892A6] flex items-center gap-1 font-medium">
+                              <Clock size={12} className="text-[#D09A16]" />
+                              <span>{post.readingTime || 5} min read</span>
+                            </span>
+                          </div>
+
+                          {/* Image Container: Increased Height, Aspect-[4/3] Native Ratio */}
+                          <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-[#0A0E17] mb-5 border border-[#17213D]/10 shadow-inner group-hover:border-[#D09A16]/40 transition-colors">
+                            {/* Ambient Blurred Backdrop */}
+                            <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
+                              <Image
+                                src={post.featuredImage || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80"}
+                                alt=""
+                                fill
+                                sizes="100px"
+                                className="object-cover blur-xl scale-125 brightness-75"
+                                aria-hidden="true"
+                              />
                             </div>
-                          )}
+                            {/* Full Uncut Foreground Image */}
+                            <Image
+                              src={post.featuredImage || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80"}
+                              alt={post.title}
+                              fill
+                              sizes="(max-width: 768px) 100vw, 380px"
+                              className="object-contain object-center group-hover:scale-[1.02] transition-transform duration-500 relative z-10"
+                              loading="lazy"
+                            />
+                          </div>
+
+                          {/* Title & Excerpt */}
+                          <h3 className="font-serif font-bold text-lg sm:text-xl text-[#17213D] group-hover:text-[#D09A16] transition-colors leading-snug line-clamp-2 mb-3">
+                            {post.title}
+                          </h3>
+
+                          <p className="text-xs text-[#566078] line-clamp-3 leading-relaxed mb-6 font-sans">
+                            {post.excerpt}
+                          </p>
                         </div>
 
-                        {/* Title & Excerpt */}
-                        <h3 className="font-serif font-bold text-lg sm:text-xl text-[#17213D] group-hover:text-[#D09A16] transition-colors leading-snug line-clamp-2 mb-3">
-                          {post.title}
-                        </h3>
-
-                        <p className="text-xs text-[#566078] line-clamp-3 leading-relaxed mb-6 font-sans">
-                          {post.excerpt}
-                        </p>
-                      </div>
-
-                      {/* Card Footer */}
-                      <div className="pt-4 border-t border-[#17213D]/10 flex items-center justify-between text-xs text-[#8892A6]">
-                        <span className="flex items-center gap-1.5 font-medium">
-                          <Clock size={12} className="text-[#D09A16]" />
-                          <span>{post.readingTime || 5} min read</span>
-                        </span>
-
-                        <div className="font-bold uppercase tracking-wider text-[#17213D] group-hover:text-[#D09A16] flex items-center gap-1 transition-colors">
-                          <span>Read Dossier</span>
-                          <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
+                        {/* Card Footer */}
+                        <div className="pt-4 border-t border-[#17213D]/10 flex items-center justify-between text-xs text-[#8892A6]">
+                          <span className="font-medium text-[#8892A6]">
+                            {post.author?.name || 'Saudagar Desk'}
+                          </span>
+                          <div className="font-bold uppercase tracking-wider text-[#17213D] group-hover:text-[#D09A16] flex items-center gap-1 transition-colors">
+                            <span>Read Dossier</span>
+                            <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
+                          </div>
                         </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
+                      </Link>
+                    ))}
+                  </div>
+                )
               ) : (
                 /* Empty Category State */
                 <div className="bg-white rounded-3xl p-12 text-center border border-[#17213D]/10 shadow-sm">
