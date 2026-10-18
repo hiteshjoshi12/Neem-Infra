@@ -175,9 +175,9 @@ export default function HeroCopy() {
         ref={videoRef}
         isPlaying={isPlaying}
         isMuted={isMuted}
-        videoUrl={heroData.videoUrl}
-        videoMobileUrl={heroData.videoMobileUrl}
-        customPoster={heroData.bgImage}
+        videoUrl={primaryVideoUrl}
+        videoMobileUrl={heroData.videoMobileUrl || "https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/saudagar-hero-mobile.mp4"}
+        customPoster={heroData.bgImage || "https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/poster.jpg?tr=f-auto,q-80"}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
         onMuteChange={(muted) => setIsMuted(muted)}

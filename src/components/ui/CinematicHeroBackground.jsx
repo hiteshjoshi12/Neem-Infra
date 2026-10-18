@@ -4,6 +4,11 @@ import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from "re
 import Image from "next/image";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 
+const DEFAULT_DESKTOP_VIDEO = "https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/saudagar-hero.mp4";
+const DEFAULT_MOBILE_VIDEO = "https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/saudagar-hero-mobile.mp4";
+const DEFAULT_DESKTOP_POSTER = "https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/poster.jpg?tr=f-auto,q-80";
+const DEFAULT_MOBILE_POSTER = "https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/poster-mobile.jpg?tr=f-auto,q-80";
+
 const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
   {
     customPoster,
@@ -25,6 +30,7 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
   const [internalMuted, setInternalMuted] = useState(true);
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
   const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   // Derive active states: controlled if passed, otherwise internal
   const isPlaying = controlledIsPlaying !== undefined ? controlledIsPlaying : internalPlaying;
@@ -33,7 +39,7 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
   // Sync ref with parent forwardedRef
   useImperativeHandle(forwardedRef, () => internalVideoRef.current, []);
 
-  // Sync with videoRef prop if parent passed videoRef as a prop
+  // Sync with external videoRef prop if passed
   useEffect(() => {
     if (externalVideoRefProp) {
       if (typeof externalVideoRefProp === "function") {
@@ -44,10 +50,18 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
     }
   }, [externalVideoRefProp]);
 
+  // Check mobile viewport width
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
+    checkMobile();
+    window.addEventListener("resize", checkMobile, { passive: true });
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   // Check prefers-reduced-motion media query
   useEffect(() => {
     if (typeof window === "undefined") return;
-
     const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
     setPrefersReducedMotion(mediaQuery.matches);
 
@@ -56,21 +70,66 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
     return () => mediaQuery.removeEventListener("change", handler);
   }, []);
 
-  // Ensure autoplay on mount if video is present and not reduced motion
-  useEffect(() => {
-    if (prefersReducedMotion || !internalVideoRef.current) return;
-    const playPromise = internalVideoRef.current.play();
+  // Compute active video source and poster
+  const activeVideoSrc = isMobile && videoMobileUrl
+    ? videoMobileUrl
+    : (videoUrl || DEFAULT_DESKTOP_VIDEO);
+
+  const posterSrc = customPoster || (isMobile ? DEFAULT_MOBILE_POSTER : DEFAULT_DESKTOP_POSTER);
+
+  // Helper to ensure autoplay runs cleanly across all browser security policies
+  const attemptPlayback = (videoEl) => {
+    if (!videoEl || prefersReducedMotion) return;
+
+    // Explicitly enforce muted DOM properties (bypasses browser autoplay restrictions)
+    videoEl.muted = true;
+    videoEl.defaultMuted = true;
+    videoEl.playsInline = true;
+    videoEl.setAttribute("muted", "");
+    videoEl.setAttribute("playsinline", "");
+    videoEl.setAttribute("webkit-playsinline", "true");
+
+    const playPromise = videoEl.play();
     if (playPromise !== undefined) {
       playPromise
         .then(() => {
           setInternalPlaying(true);
+          setIsVideoLoaded(true);
           if (onPlay) onPlay();
         })
         .catch(() => {
-          // Autoplay policy fallback
+          // If browser policy deferred autoplay, resume on first user interaction anywhere
+          const resumeOnInteraction = () => {
+            if (videoEl && videoEl.paused) {
+              videoEl.play()
+                .then(() => {
+                  setInternalPlaying(true);
+                  setIsVideoLoaded(true);
+                  if (onPlay) onPlay();
+                })
+                .catch(() => {});
+            }
+            window.removeEventListener("pointerdown", resumeOnInteraction);
+            window.removeEventListener("touchstart", resumeOnInteraction);
+            window.removeEventListener("scroll", resumeOnInteraction);
+            window.removeEventListener("keydown", resumeOnInteraction);
+          };
+
+          window.addEventListener("pointerdown", resumeOnInteraction, { once: true, passive: true });
+          window.addEventListener("touchstart", resumeOnInteraction, { once: true, passive: true });
+          window.addEventListener("scroll", resumeOnInteraction, { once: true, passive: true });
+          window.addEventListener("keydown", resumeOnInteraction, { once: true, passive: true });
         });
     }
-  }, [prefersReducedMotion, onPlay]);
+  };
+
+  // Trigger playback whenever active source changes or component mounts
+  useEffect(() => {
+    const video = internalVideoRef.current;
+    if (video) {
+      attemptPlayback(video);
+    }
+  }, [activeVideoSrc, prefersReducedMotion]);
 
   // Controlled Play/Pause Sync
   useEffect(() => {
@@ -79,7 +138,7 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
 
     if (controlledIsPlaying === true) {
       if (video.paused) {
-        video.play().catch(() => {});
+        attemptPlayback(video);
       }
     } else if (controlledIsPlaying === false) {
       if (!video.paused) {
@@ -128,37 +187,11 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
     if (onMuteChange) onMuteChange(nextMuted);
   };
 
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined") return;
-    const checkMobile = () => setIsMobile(window.innerWidth <= 768);
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
-
-  const posterSrc =
-    customPoster ||
-    (isMobile
-      ? "https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/poster-mobile.jpg?tr=f-auto,q-80"
-      : "https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/poster.jpg?tr=f-auto,q-80");
-
-  // Callback ref to attach video element to all refs immediately
+  // Callback ref to attach video element and trigger autoplay immediately
   const handleVideoRef = (el) => {
     internalVideoRef.current = el;
     if (el) {
-      el.muted = true;
-      el.defaultMuted = true;
-      if (!prefersReducedMotion && el.paused) {
-        el.play()
-          .then(() => {
-            setInternalPlaying(true);
-            setIsVideoLoaded(true);
-            if (onPlay) onPlay();
-          })
-          .catch(() => {});
-      }
+      attemptPlayback(el);
     }
     if (forwardedRef) {
       if (typeof forwardedRef === "function") {
@@ -176,6 +209,13 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
     }
   };
 
+  const handleMediaReady = () => {
+    setIsVideoLoaded(true);
+    if (internalVideoRef.current && internalVideoRef.current.paused && isPlaying) {
+      attemptPlayback(internalVideoRef.current);
+    }
+  };
+
   return (
     <div
       className={`absolute inset-0 z-0 overflow-hidden pointer-events-none select-none ${className}`}
@@ -188,7 +228,7 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
         priority
         quality={90}
         sizes="100vw"
-        className={`w-full h-full object-cover transition-opacity duration-500 ${
+        className={`w-full h-full object-cover transition-opacity duration-700 ${
           isVideoLoaded && !prefersReducedMotion ? "opacity-0" : "opacity-100"
         }`}
       />
@@ -196,7 +236,9 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
       {/* 2. Cinematic Remotion Video Layer */}
       {!prefersReducedMotion && (
         <video
+          key={activeVideoSrc}
           ref={handleVideoRef}
+          src={activeVideoSrc}
           autoPlay
           loop
           muted={isMuted}
@@ -204,12 +246,18 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
           webkit-playsinline="true"
           preload="auto"
           poster={posterSrc}
-          onCanPlay={() => setIsVideoLoaded(true)}
-          onLoadedData={() => setIsVideoLoaded(true)}
+          onLoadedMetadata={handleMediaReady}
+          onCanPlay={handleMediaReady}
+          onLoadedData={handleMediaReady}
           onPlaying={() => {
             setIsVideoLoaded(true);
             setInternalPlaying(true);
             if (onPlay) onPlay();
+          }}
+          onTimeUpdate={(e) => {
+            if (e.currentTarget.currentTime > 0.05 && !isVideoLoaded) {
+              setIsVideoLoaded(true);
+            }
           }}
           onPause={() => {
             setInternalPlaying(false);
@@ -222,44 +270,16 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
               if (onMuteChange) onMuteChange(muted);
             }
           }}
-          className={`w-full h-full object-cover transition-opacity duration-500 filter brightness-[1.03] contrast-[1.02] saturate-[1.03] ${
-            isVideoLoaded ? "opacity-100" : "opacity-0"
-          }`}
+          className="w-full h-full object-cover filter brightness-[1.03] contrast-[1.02] saturate-[1.03]"
         >
-          {videoUrl || videoMobileUrl ? (
-            <>
-              {videoMobileUrl && (
-                <source
-                  src={videoMobileUrl}
-                  type="video/mp4"
-                  media="(max-width: 768px)"
-                />
-              )}
-              {videoUrl && <source src={videoUrl} type="video/mp4" />}
-            </>
-          ) : (
-            <>
-              {/* Mobile vertical optimized streams via ImageKit CDN */}
-              <source
-                src="https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/saudagar-hero-mobile.mp4"
-                type="video/mp4"
-                media="(max-width: 768px)"
-              />
-              {/* Desktop high-resolution streams via ImageKit CDN */}
-              <source
-                src="https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/saudagar-hero.mp4"
-                type="video/mp4"
-              />
-            </>
-          )}
+          <source src={activeVideoSrc} type="video/mp4" />
         </video>
       )}
 
-      {/* 3. Subtle Neutral Vignette Overlays (Significantly reduced to let vibrant video shine clearly) */}
-      {/* Light ambient film tint to keep sunny daylight while ensuring text readability */}
+      {/* 3. Subtle Neutral Vignette Overlays (Delicate film tint) */}
       <div className="absolute inset-0 bg-black/10 pointer-events-none" />
 
-      {/* Soft directional gradient for editorial headline clarity (neutral, non-blue) */}
+      {/* Soft directional gradient for editorial headline clarity */}
       <div className="absolute inset-0 bg-gradient-to-r from-black/25 via-black/5 to-transparent pointer-events-none" />
 
       {/* Delicate top vignette for floating navbar readability */}
