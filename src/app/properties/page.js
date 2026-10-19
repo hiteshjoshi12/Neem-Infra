@@ -8,13 +8,16 @@ import PropertiesCatalogClient from '@/components/properties/PropertiesCatalogCl
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-export const metadata = buildPageMetadata({
-  title: 'Luxury Properties & Builder Floors DLF Gurugram',
-  description: 'Explore verified ready-to-move luxury builder floors, kothis, and commercial spaces across DLF Phase 1–5, Sushant Lok, and Golf Course Road.',
-  path: '/properties',
-  canonical: '/properties',
-  keywords: ['Luxury Builder Floors', 'DLF Phase 1-5', 'Gurugram Properties', 'Ready to Move', 'Saudagar Properties'],
-});
+import { getDynamicPageSeo } from '@/lib/seo/dynamicSeo';
+
+export async function generateMetadata() {
+  return await getDynamicPageSeo('/properties', {
+    title: 'Luxury Properties & Builder Floors DLF Gurugram | Saudagar Properties',
+    description: 'Explore verified ready-to-move luxury builder floors, kothis, and commercial spaces across DLF Phase 1–5, Sushant Lok, and Golf Course Road.',
+    canonical: '/properties',
+    keywords: ['Luxury Builder Floors', 'DLF Phase 1-5', 'Gurugram Properties', 'Ready to Move', 'Saudagar Properties'],
+  });
+}
 
 function PropertiesCatalogSkeleton() {
   return (

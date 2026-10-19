@@ -8,36 +8,15 @@ import SectionContent from '@/models/SectionContent';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
+import { getDynamicPageSeo } from '@/lib/seo/dynamicSeo';
+
 export async function generateMetadata() {
-  const seoData = PAGE_SEO['/services/commercial'];
-  return {
-    title: { absolute: seoData.title },
-    description: seoData.description,
-    alternates: {
-      canonical: `${SITE_URL}${seoData.canonical}`,
-    },
-    openGraph: {
-      title: seoData.title,
-      description: seoData.description,
-      url: `${SITE_URL}${seoData.canonical}`,
-      type: 'website',
-      siteName: SITE_NAME,
-      images: [
-        {
-          url: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80',
-          width: 1200,
-          height: 630,
-          alt: 'Grade-A Commercial Real Estate in Cyber City Gurugram - Saudagar Properties',
-        },
-      ],
-    },
-    twitter: {
-      card: 'summary_large_image',
-      title: seoData.title,
-      description: seoData.description,
-      images: ['https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80'],
-    },
-  };
+  const fallbackSeo = PAGE_SEO['/services/commercial'];
+  return await getDynamicPageSeo('/services/commercial', {
+    title: fallbackSeo?.title,
+    description: fallbackSeo?.description,
+    canonical: '/services/commercial',
+  });
 }
 
 async function getCommercialData() {

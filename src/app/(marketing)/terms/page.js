@@ -21,15 +21,15 @@ async function getTermsData() {
   return DEFAULT_SECTIONS.page_terms;
 }
 
+import { getDynamicPageSeo } from '@/lib/seo/dynamicSeo';
+
 export async function generateMetadata() {
-  const seoData = PAGE_SEO['/terms'];
-  return {
-    title: { absolute: seoData.title },
-    description: seoData.description,
-    alternates: {
-      canonical: seoData.canonical,
-    },
-  };
+  const fallback = PAGE_SEO['/terms'];
+  return await getDynamicPageSeo('/terms', {
+    title: fallback?.title,
+    description: fallback?.description,
+    canonical: '/terms',
+  });
 }
 
 export default async function Terms() {

@@ -23,7 +23,14 @@ import {
   FileText,
   Compass,
   PanelLeftClose,
-  PanelLeftOpen
+  PanelLeftOpen,
+  Search,
+  Globe,
+  CornerUpRight,
+  Activity,
+  Zap,
+  Database,
+  Image as ImageIcon
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import Image from 'next/image';
@@ -96,6 +103,21 @@ export default function AdminLayout({ children }) {
       ]
     },
     {
+      group: 'SEO & Growth Engine',
+      items: [
+        { label: 'SEO Command Center', to: '/admin/seo', icon: Search, pill: 'Suite' },
+        { label: 'Pages & Meta Tags', to: '/admin/seo/pages', icon: FileText, pill: 'Meta' },
+        { label: 'Blog Categories', to: '/admin/seo/categories', icon: Layers },
+        { label: '301/302 Redirects', to: '/admin/seo/redirects', icon: CornerUpRight },
+        { label: 'Image Alt Text Hub', to: '/admin/seo/images', icon: ImageIcon },
+        { label: 'Robots.txt & Sitemap', to: '/admin/seo/robots-sitemap', icon: Globe },
+        { label: 'Analytics & Search Console', to: '/admin/seo/integrations', icon: Activity },
+        { label: 'Speed & Core Web Vitals', to: '/admin/seo/speed', icon: Zap },
+        { label: 'Custom 404 Experience', to: '/admin/seo/404', icon: Compass },
+        { label: 'Website Backups', to: '/admin/seo/backups', icon: Database },
+      ]
+    },
+    {
       group: 'Website Pages (CMS)',
       items: [
         { label: 'All Pages Hub', to: '/admin/pages', icon: Layers, pill: '12 Pages' },
@@ -123,6 +145,36 @@ export default function AdminLayout({ children }) {
   const getHeaderInfo = () => {
     if (pathname === '/admin/dashboard') {
       return { title: 'Dashboard Overview', desc: 'Platform activity, stats, and shortcuts' };
+    }
+    if (pathname === '/admin/seo') {
+      return { title: 'SEO Command Center', desc: 'Real-time search engine optimization, meta health, and vitals' };
+    }
+    if (pathname.startsWith('/admin/seo/pages')) {
+      return { title: 'Pages & Meta Tags Hub', desc: 'Manage titles, descriptions, H1, canonicals, and robots for all pages' };
+    }
+    if (pathname === '/admin/seo/categories') {
+      return { title: 'Blog Categories & Taxonomies', desc: 'Manage editorial categories and topical clusters' };
+    }
+    if (pathname === '/admin/seo/redirects') {
+      return { title: '301/302 Redirect Manager', desc: 'Intercept URLs, preserve link equity, and prevent broken links' };
+    }
+    if (pathname === '/admin/seo/images') {
+      return { title: 'Image Alt Text Hub', desc: 'Audit and update descriptive alt text across all media' };
+    }
+    if (pathname === '/admin/seo/robots-sitemap') {
+      return { title: 'Robots.txt & XML Sitemap', desc: 'Crawler directives, user-agents, and auto-generated sitemap' };
+    }
+    if (pathname === '/admin/seo/integrations') {
+      return { title: 'Search & Tracking Integrations', desc: 'Google Analytics 4, Tag Manager, and Search Console verification' };
+    }
+    if (pathname === '/admin/seo/speed') {
+      return { title: 'Website Speed & Core Web Vitals', desc: 'LCP, INP, CLS benchmarks and performance directives' };
+    }
+    if (pathname === '/admin/seo/404') {
+      return { title: 'Custom 404 Page Manager', desc: 'Destination-not-found messaging, shortcuts, and advisory CTA' };
+    }
+    if (pathname === '/admin/seo/backups') {
+      return { title: 'Website Backups & Recovery', desc: 'Full database snapshots and 1-click restore' };
     }
     if (pathname === '/admin/pages') {
       return { title: 'Website Pages CMS Hub', desc: 'Manage all 12 public website pages and micro-market corridors' };

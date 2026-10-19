@@ -24,7 +24,7 @@ import {
   FileText,
   Plus,
   Edit3,
-  Sliders
+  Sliders,
 } from 'lucide-react';
 import api from '@/services/api';
 
@@ -115,6 +115,15 @@ export default function AdminDashboard() {
       link: '/admin/pages',
       color: '#F59E0B',
       badge: 'Unified CMS'
+    },
+    {
+      title: 'SEO Command Center',
+      value: 'Health 95%',
+      subtext: 'Meta tags, redirects, sitemap & CWV',
+      icon: Search,
+      link: '/admin/seo',
+      color: '#EAB308',
+      badge: 'Growth Engine'
     }
   ];
 

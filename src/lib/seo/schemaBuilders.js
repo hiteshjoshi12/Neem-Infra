@@ -128,6 +128,8 @@ export function buildOrganizationSchema() {
   });
 }
 
+export const buildRealEstateAgentSchema = buildOrganizationSchema;
+
 /**
  * 5. Author Schema (Person)
  * References a real author profile URL when available.

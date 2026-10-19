@@ -17,15 +17,14 @@ const NewsletterSection = nextDynamic(() => import('@/sections/home/NewsletterSe
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
+import { getDynamicPageSeo } from '@/lib/seo/dynamicSeo';
+
 export async function generateMetadata() {
-  const seoData = PAGE_SEO['/'];
-  return {
-    title: { absolute: seoData.title },
-    description: seoData.description,
-    alternates: {
-      canonical: seoData.canonical,
-    },
-  };
+  return await getDynamicPageSeo('/', {
+    title: PAGE_SEO['/']?.title,
+    description: PAGE_SEO['/']?.description,
+    canonical: '/',
+  });
 }
 
 export default function Home() {

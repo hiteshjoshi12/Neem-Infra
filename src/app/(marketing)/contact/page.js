@@ -2,6 +2,7 @@ import ContactClient from '@/sections/contact/ContactClient';
 import LocationMap from '@/sections/home/LocationMap';
 import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
 import { PAGE_SEO, BREADCRUMBS } from '@/lib/seo/seoConfig';
+import { getDynamicPageSeo, getDynamicBreadcrumbs } from '@/lib/seo/dynamicSeo';
 import { connectDB } from '@/lib/mongodb';
 import SectionContent from '@/models/SectionContent';
 
@@ -9,18 +10,11 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export async function generateMetadata() {
-  const seoData = PAGE_SEO['/contact'] || {
-    title: 'Contact Us | Saudagar Properties Gurugram',
-    description: 'Connect with our senior partners for luxury real estate advisory in Gurugram.',
+  return await getDynamicPageSeo('/contact', {
+    title: PAGE_SEO['/contact']?.title,
+    description: PAGE_SEO['/contact']?.description,
     canonical: '/contact',
-  };
-  return {
-    title: { absolute: seoData.title },
-    description: seoData.description,
-    alternates: {
-      canonical: seoData.canonical,
-    },
-  };
+  });
 }
 
 async function getContactData() {

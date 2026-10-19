@@ -217,6 +217,92 @@ export const api = {
   deleteLocation: (id) =>
     request(`/locations/${id}`, {
       method: 'DELETE'
+    }),
+
+  // SEO Management Suite
+  getSeoSettings: () => request('/seo/settings'),
+  updateSeoSettings: (data) =>
+    request('/seo/settings', {
+      method: 'PUT',
+      body: JSON.stringify(data)
+    }),
+
+  getSeoPages: (params = {}) => {
+    const query = new URLSearchParams(params).toString();
+    return request(`/seo/pages${query ? `?${query}` : ''}`);
+  },
+  getSeoPage: (id) => request(`/seo/pages/${id}`),
+  createSeoPage: (pageData) =>
+    request('/seo/pages', {
+      method: 'POST',
+      body: JSON.stringify(pageData)
+    }),
+  updateSeoPage: (id, pageData) =>
+    request(`/seo/pages/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(pageData)
+    }),
+  deleteSeoPage: (id) =>
+    request(`/seo/pages/${id}`, {
+      method: 'DELETE'
+    }),
+
+  getRedirects: (params = {}) => {
+    const query = new URLSearchParams(params).toString();
+    return request(`/seo/redirects${query ? `?${query}` : ''}`);
+  },
+  createRedirect: (redirectData) =>
+    request('/seo/redirects', {
+      method: 'POST',
+      body: JSON.stringify(redirectData)
+    }),
+  updateRedirect: (id, redirectData) =>
+    request(`/seo/redirects/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(redirectData)
+    }),
+  deleteRedirect: (id) =>
+    request(`/seo/redirects/${id}`, {
+      method: 'DELETE'
+    }),
+  testRedirect: (path) => request(`/seo/redirects/lookup?path=${encodeURIComponent(path)}`),
+
+  getImageAltList: (params = {}) => {
+    const query = new URLSearchParams(params).toString();
+    return request(`/seo/images${query ? `?${query}` : ''}`);
+  },
+  updateImageAlt: (data) =>
+    request('/seo/images', {
+      method: 'PUT',
+      body: JSON.stringify(data)
+    }),
+
+  getCategoriesList: () => request('/seo/categories'),
+  createCategory: (data) =>
+    request('/seo/categories', {
+      method: 'POST',
+      body: JSON.stringify(data)
+    }),
+  updateCategory: (id, data) =>
+    request(`/seo/categories/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(data)
+    }),
+  deleteCategory: (id) =>
+    request(`/seo/categories/${id}`, {
+      method: 'DELETE'
+    }),
+
+  getSeoBackups: () => request('/seo/backups'),
+  createSeoBackup: (label) =>
+    request('/seo/backups', {
+      method: 'POST',
+      body: JSON.stringify({ label })
+    }),
+  restoreSeoBackup: (payload) =>
+    request('/seo/backups/restore', {
+      method: 'POST',
+      body: JSON.stringify(payload)
     })
 };
 

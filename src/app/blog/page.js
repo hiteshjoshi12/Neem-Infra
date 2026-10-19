@@ -40,11 +40,12 @@ async function getBlogPageCms() {
   }
 }
 
+import { getDynamicPageSeo } from '@/lib/seo/dynamicSeo';
+
 export async function generateMetadata() {
-  return buildPageMetadata({
+  return await getDynamicPageSeo('/blog', {
     title: 'The Gurugram Real Estate Journal | DLF Luxury Advisory',
     description: 'Expert research, independent builder floor pricing benchmarks, and corridor analysis across DLF Phase 1–5, Sushant Lok, and Golf Course Road Gurugram.',
-    path: '/blog',
     canonical: '/blog',
     keywords: [
       'DLF Gurugram Real Estate',
@@ -55,7 +56,8 @@ export async function generateMetadata() {
       'NRI Property Advisory Gurugram'
     ],
   });
-}export default async function BlogIndexPage() {
+}
+export default async function BlogIndexPage() {
   const [allPosts, categories, blogCms] = await Promise.all([
     getBlogPosts({ limit: 100 }),
     getCategories(),

@@ -2,6 +2,7 @@ import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
 import OrganizationJsonLd from '@/components/seo/OrganizationJsonLd';
 import TeamClientView from '@/components/team/TeamClientView';
 import { PAGE_SEO, BREADCRUMBS } from '@/lib/seo/seoConfig';
+import { getDynamicPageSeo, getDynamicBreadcrumbs } from '@/lib/seo/dynamicSeo';
 import { connectDB } from '@/lib/mongodb';
 import SectionContent from '@/models/SectionContent';
 
@@ -9,25 +10,11 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 export async function generateMetadata() {
-  const seoData = PAGE_SEO['/team'] || {
-    title: 'Our Leadership & Advisory Team | Saudagar Properties Gurugram',
-    description: 'Meet the founders, leadership, and senior luxury real estate specialists behind Saudagar Properties with 25+ years of authority in DLF Phase 1–5.',
+  return await getDynamicPageSeo('/team', {
+    title: PAGE_SEO['/team']?.title,
+    description: PAGE_SEO['/team']?.description,
     canonical: '/team',
-  };
-
-  return {
-    title: { absolute: seoData.title },
-    description: seoData.description,
-    alternates: {
-      canonical: seoData.canonical,
-    },
-    openGraph: {
-      title: seoData.title,
-      description: seoData.description,
-      url: 'https://www.saudagarproperties.com/team',
-      type: 'website',
-    },
-  };
+  });
 }
 
 async function getTeamData() {

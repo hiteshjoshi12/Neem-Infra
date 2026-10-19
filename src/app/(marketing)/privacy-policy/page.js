@@ -21,15 +21,15 @@ async function getPrivacyData() {
   return DEFAULT_SECTIONS.page_privacy;
 }
 
+import { getDynamicPageSeo } from '@/lib/seo/dynamicSeo';
+
 export async function generateMetadata() {
-  const seoData = PAGE_SEO['/privacy-policy'];
-  return {
-    title: { absolute: seoData.title },
-    description: seoData.description,
-    alternates: {
-      canonical: seoData.canonical,
-    },
-  };
+  const fallback = PAGE_SEO['/privacy-policy'];
+  return await getDynamicPageSeo('/privacy-policy', {
+    title: fallback?.title,
+    description: fallback?.description,
+    canonical: '/privacy-policy',
+  });
 }
 
 export default async function PrivacyPolicy() {
