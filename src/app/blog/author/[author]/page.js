@@ -70,15 +70,15 @@ export default async function BlogAuthorPage({ params }) {
     <PublicLayout asMain={false}>
       {profileSchema && <JsonLd data={profileSchema} />}
 
-      <main className="w-full bg-[#FAF8F5] pt-28 md:pt-36 pb-20 selection:bg-[#D09A16] selection:text-[#0E162B]">
+      <main className="w-full bg-brand-ivory-warm pt-28 md:pt-36 pb-20 selection:bg-brand-gold selection:text-brand-navy-deep">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb Navigation */}
           <Breadcrumbs items={breadcrumbs} />
 
           {/* Author Profile Card Header */}
-          <header className="bg-white rounded-3xl p-8 sm:p-12 border border-[#17213D]/10 shadow-[0_20px_50px_-15px_rgba(23,33,61,0.06)] mb-16">
+          <header className="bg-white rounded-3xl p-8 sm:p-12 border border-brand-navy/10 shadow-[0_20px_50px_-15px_rgba(23,33,61,0.06)] mb-16">
             <div className="flex flex-col md:flex-row items-center md:items-start gap-8">
-              <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-4 border-[#D09A16] bg-[#17213D]/5 flex-shrink-0 shadow-md">
+              <div className="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full overflow-hidden border-4 border-brand-gold bg-brand-navy/5 flex-shrink-0 shadow-md">
                 {authorDoc?.image ? (
                   <Image
                     src={authorDoc.image}
@@ -89,39 +89,39 @@ export default async function BlogAuthorPage({ params }) {
                     className="object-cover"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center font-serif text-3xl font-bold text-[#17213D]">
+                  <div className="w-full h-full flex items-center justify-center font-serif text-3xl font-bold text-brand-navy">
                     {authorName.charAt(0)}
                   </div>
                 )}
               </div>
 
               <div className="flex-1 text-center md:text-left">
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-[#D09A16]/10 text-[#D09A16] border border-[#D09A16]/30 mb-3">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-brand-gold/10 text-brand-gold border border-brand-gold/30 mb-3">
                   <Award size={13} />
                   <span>Senior Editorial Contributor</span>
                 </div>
 
-                <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#17213D] mb-2">
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-brand-navy mb-2">
                   {authorName}
                 </h1>
 
-                <p className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-[#566078] mb-4">
+                <p className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-brand-slate mb-4">
                   {authorDoc?.jobTitle || 'Senior Luxury Property Consultant'}
                 </p>
 
-                <p className="text-sm sm:text-base text-[#475569] leading-relaxed max-w-3xl mb-6 font-sans">
+                <p className="text-sm sm:text-base text-brand-slate leading-relaxed max-w-3xl mb-6 font-sans">
                   {authorDoc?.bio || 'Advising high-net-worth investors and families on prime real estate assets across DLF Gurugram.'}
                 </p>
 
                 {authorDoc?.expertise && authorDoc.expertise.length > 0 && (
                   <div className="flex flex-wrap items-center justify-center md:justify-start gap-2 mb-6">
-                    <span className="text-xs font-bold uppercase tracking-wider text-[#8892A6]">
+                    <span className="text-xs font-bold uppercase tracking-wider text-brand-muted">
                       Specialties:
                     </span>
                     {authorDoc.expertise.map((exp, i) => (
                       <span
                         key={i}
-                        className="px-3 py-1 text-xs font-medium rounded-full bg-[#FAF8F5] border border-[#17213D]/10 text-[#17213D]"
+                        className="px-3 py-1 text-xs font-medium rounded-full bg-brand-ivory-warm border border-brand-navy/10 text-brand-navy"
                       >
                         {exp}
                       </span>
@@ -129,14 +129,14 @@ export default async function BlogAuthorPage({ params }) {
                   </div>
                 )}
 
-                <div className="pt-4 border-t border-[#17213D]/10 flex flex-wrap items-center justify-between gap-4">
-                  <div className="flex items-center gap-4 text-[#566078]">
+                <div className="pt-4 border-t border-brand-navy/10 flex flex-wrap items-center justify-between gap-4">
+                  <div className="flex items-center gap-4 text-brand-slate">
                     {authorDoc?.socialProfiles?.linkedin && (
                       <a
                         href={authorDoc.socialProfiles.linkedin}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-[#D09A16] transition-colors"
+                        className="hover:text-brand-gold transition-colors"
                         aria-label={`${authorName} on LinkedIn`}
                       >
                         <LinkedinIcon />
@@ -147,7 +147,7 @@ export default async function BlogAuthorPage({ params }) {
                         href={authorDoc.socialProfiles.twitter}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="hover:text-[#D09A16] transition-colors"
+                        className="hover:text-brand-gold transition-colors"
                         aria-label={`${authorName} on Twitter`}
                       >
                         <TwitterIcon />
@@ -155,8 +155,8 @@ export default async function BlogAuthorPage({ params }) {
                     )}
                   </div>
 
-                  <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#17213D]">
-                    <BookOpen size={14} className="text-[#D09A16]" />
+                  <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-navy">
+                    <BookOpen size={14} className="text-brand-gold" />
                     <span>{posts.length} Published Articles</span>
                   </div>
                 </div>
@@ -166,7 +166,7 @@ export default async function BlogAuthorPage({ params }) {
 
           {/* Published Articles Section */}
           <section aria-labelledby="author-articles-heading">
-            <h2 id="author-articles-heading" className="text-2xl sm:text-3xl font-serif font-bold text-[#17213D] mb-8 pb-4 border-b border-[#17213D]/10">
+            <h2 id="author-articles-heading" className="text-2xl sm:text-3xl font-serif font-bold text-brand-navy mb-8 pb-4 border-b border-brand-navy/10">
               Articles by {authorName}
             </h2>
 
@@ -175,11 +175,11 @@ export default async function BlogAuthorPage({ params }) {
                 {posts.map((post) => (
                   <article
                     key={post._id || post.slug}
-                    className="bg-white rounded-2xl overflow-hidden border border-[#17213D]/10 group hover:border-[#D09A16]/50 transition-all shadow-xs flex flex-col justify-between"
+                    className="bg-white rounded-2xl overflow-hidden border border-brand-navy/10 group hover:border-brand-gold/50 transition-all shadow-xs flex flex-col justify-between"
                   >
                     <div>
                       {post.featuredImage && (
-                        <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#0A0E17] border-b border-[#17213D]/10">
+                        <div className="relative aspect-[4/3] w-full overflow-hidden bg-brand-obsidian border-b border-brand-navy/10">
                           {/* Ambient Blurred Backdrop */}
                           <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
                             <Image
@@ -203,27 +203,27 @@ export default async function BlogAuthorPage({ params }) {
                       )}
                       <div className="p-6">
                         {post.category && (
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-[#D09A16] block mb-2">
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-gold block mb-2">
                             {post.category.name}
                           </span>
                         )}
-                        <h3 className="font-serif font-bold text-xl text-[#17213D] group-hover:text-[#D09A16] transition-colors leading-snug line-clamp-2 mb-3">
+                        <h3 className="font-serif font-bold text-xl text-brand-navy group-hover:text-brand-gold transition-colors leading-snug line-clamp-2 mb-3">
                           <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                         </h3>
-                        <p className="text-sm text-[#566078] line-clamp-2 leading-relaxed mb-4">
+                        <p className="text-sm text-brand-slate line-clamp-2 leading-relaxed mb-4">
                           {post.excerpt}
                         </p>
                       </div>
                     </div>
 
-                    <div className="px-6 pb-6 pt-3 border-t border-[#17213D]/5 flex items-center justify-between text-xs text-[#8892A6]">
+                    <div className="px-6 pb-6 pt-3 border-t border-brand-navy/5 flex items-center justify-between text-xs text-brand-muted">
                       <div className="flex items-center gap-1.5">
-                        <Clock size={13} className="text-[#D09A16]" />
+                        <Clock size={13} className="text-brand-gold" />
                         <span>{post.readingTime || 5} min read</span>
                       </div>
                       <Link
                         href={`/blog/${post.slug}`}
-                        className="inline-flex items-center gap-1 font-bold text-[#17213D] group-hover:text-[#D09A16] transition-colors"
+                        className="inline-flex items-center gap-1 font-bold text-brand-navy group-hover:text-brand-gold transition-colors"
                       >
                         <span>Read</span>
                         <ArrowRight size={13} />
@@ -233,14 +233,14 @@ export default async function BlogAuthorPage({ params }) {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-20 bg-white rounded-3xl border border-[#17213D]/10 p-8">
-                <h3 className="font-serif font-bold text-xl text-[#17213D] mb-2">No Articles Currently Published</h3>
-                <p className="text-sm text-[#566078] mb-6">
+              <div className="text-center py-20 bg-white rounded-3xl border border-brand-navy/10 p-8">
+                <h3 className="font-serif font-bold text-xl text-brand-navy mb-2">No Articles Currently Published</h3>
+                <p className="text-sm text-brand-slate mb-6">
                   Check back soon for new real estate analysis from {authorName}.
                 </p>
                 <Link
                   href="/blog"
-                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#17213D] text-[#F7F5EF] text-xs font-bold uppercase tracking-wider"
+                  className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-brand-navy text-brand-ivory text-xs font-bold uppercase tracking-wider"
                 >
                   Return to Blog Home
                 </Link>

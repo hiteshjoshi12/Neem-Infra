@@ -83,13 +83,13 @@ export default function OurServicesSection() {
         relative
         w-full
         overflow-hidden
-        bg-[#EFEBE1]
-        text-[#17213D]
+        bg-brand-cream
+        text-brand-navy
         py-16
         sm:py-20
         md:py-24
         border-t
-        border-[#17213D]/[0.08]
+        border-brand-navy/[0.08]
       "
     >
       {/* =====================================================
@@ -106,7 +106,7 @@ export default function OurServicesSection() {
             absolute
             inset-0
             opacity-[0.012]
-            bg-[radial-gradient(#182345_1px,transparent_1px)]
+            bg-[radial-gradient(var(--color-brand-navy-gradient)_1px,transparent_1px)]
             [background-size:40px_40px]
           "
         />
@@ -120,7 +120,7 @@ export default function OurServicesSection() {
             h-[420px]
             w-[420px]
             rounded-full
-            bg-[#D09A16]/[0.035]
+            bg-brand-gold/[0.035]
             blur-[110px]
           "
         />
@@ -133,7 +133,7 @@ export default function OurServicesSection() {
             h-[350px]
             w-[350px]
             rounded-full
-            bg-[#182345]/[0.025]
+            bg-brand-navy-gradient/[0.025]
             blur-[100px]
           "
         />
@@ -151,19 +151,19 @@ export default function OurServicesSection() {
         >
           {/* Eyebrow */}
           <div className="mb-4 inline-flex items-center gap-2.5">
-            <span className="h-px w-8 bg-[#D09A16]" />
+            <span className="h-px w-8 bg-brand-gold" />
 
             <Sparkles
               size={12}
               strokeWidth={1.7}
-              className="text-[#D09A16]"
+              className="text-brand-gold"
             />
 
-            <span className="text-[9px] font-semibold uppercase tracking-[0.28em] text-[#182345]/70 sm:text-[10px]">
+            <span className="text-[9px] font-semibold uppercase tracking-[0.28em] text-brand-navy-gradient/70 sm:text-[10px]">
               {badge}
             </span>
 
-            <span className="h-px w-8 bg-[#D09A16]" />
+            <span className="h-px w-8 bg-brand-gold" />
           </div>
 
           {/* Heading */}
@@ -178,24 +178,24 @@ export default function OurServicesSection() {
               font-normal
               leading-[1.08]
               tracking-tight
-              text-[#182345]
+              text-brand-navy-gradient
             "
           >
             {titleMain}{' '}
-            <span className="font-light italic text-[#D09A16]">
+            <span className="font-light italic text-brand-gold">
               {titleItalic}
             </span>
           </h2>
 
           {/* Description */}
-          <p className="mx-auto mt-4 max-w-2xl text-sm sm:text-base md:text-lg leading-relaxed text-[#566078] font-normal">
+          <p className="mx-auto mt-4 max-w-2xl text-sm sm:text-base md:text-lg leading-relaxed text-brand-slate font-normal">
             {description}
           </p>
 
           {/* Decorative line */}
           <div
             ref={lineRef}
-            className="mx-auto mt-6 h-px w-20 bg-[#D09A16]/60"
+            className="mx-auto mt-6 h-px w-20 bg-brand-gold/60"
           />
         </header>
 

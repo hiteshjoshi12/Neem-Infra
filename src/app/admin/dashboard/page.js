@@ -150,11 +150,11 @@ export default function AdminDashboard() {
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Welcome Hero Banner */}
       <div className="relative rounded-2xl bg-gradient-to-r from-[#111A30] via-[#0E1424] to-[#0A0F1D] p-6 sm:p-8 border border-white/[0.08] shadow-lg overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-[#D09A16]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-brand-gold/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-1.5">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[10px] font-bold tracking-wider text-[#D09A16] uppercase">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-[10px] font-bold tracking-wider text-brand-gold uppercase">
               <Sparkles size={12} />
               <span>Saudagar Properties Control Suite</span>
             </div>
@@ -169,7 +169,7 @@ export default function AdminDashboard() {
           <div className="flex flex-wrap items-center gap-2.5">
             <Link
               href="/admin/pages"
-              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-[#D09A16] to-[#D09A16] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-[0_2px_10px_rgba(208,154,22,0.2)]"
+              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-brand-gold to-brand-gold hover:brightness-110 text-brand-dark font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-[0_2px_10px_rgba(208,154,22,0.2)]"
             >
               <span>Pages CMS Hub</span>
               <ArrowUpRight size={14} />
@@ -195,7 +195,7 @@ export default function AdminDashboard() {
             <Link
               key={idx}
               href={item.link}
-              className="group p-5 rounded-2xl bg-[#0E1424] border border-white/[0.08] hover:border-[#D09A16]/50 transition-all duration-200 shadow-sm hover:-translate-y-0.5 block"
+              className="group p-5 rounded-2xl bg-[#0E1424] border border-white/[0.08] hover:border-brand-gold/50 transition-all duration-200 shadow-sm hover:-translate-y-0.5 block"
             >
               <div className="flex items-center justify-between mb-3">
                 <div
@@ -212,7 +212,7 @@ export default function AdminDashboard() {
               <div className="text-2xl sm:text-3xl font-serif font-bold text-white mb-0.5">
                 {loading ? '...' : item.value}
               </div>
-              <h3 className="text-xs font-bold text-slate-200 mb-0.5 group-hover:text-[#D09A16] transition-colors">
+              <h3 className="text-xs font-bold text-slate-200 mb-0.5 group-hover:text-brand-gold transition-colors">
                 {item.title}
               </h3>
               <p className="text-[11px] text-slate-400">
@@ -226,7 +226,7 @@ export default function AdminDashboard() {
       {/* Quick Action Command Strip */}
       <div className="p-4 rounded-2xl bg-[#0E1424] border border-white/[0.08] flex flex-wrap items-center justify-between gap-3">
         <span className="text-xs font-bold text-slate-300 uppercase tracking-wider flex items-center gap-1.5">
-          <Sliders size={13} className="text-[#D09A16]" />
+          <Sliders size={13} className="text-brand-gold" />
           <span>Quick Actions</span>
         </span>
         <div className="flex flex-wrap items-center gap-2">
@@ -234,28 +234,28 @@ export default function AdminDashboard() {
             href="/admin/properties/new"
             className="px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors"
           >
-            <Plus size={13} className="text-[#D09A16]" />
+            <Plus size={13} className="text-brand-gold" />
             <span>Add Property</span>
           </Link>
           <Link
             href="/admin/blog/new"
             className="px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors"
           >
-            <Plus size={13} className="text-[#D09A16]" />
+            <Plus size={13} className="text-brand-gold" />
             <span>Create Article</span>
           </Link>
           <Link
             href="/admin/sections"
             className="px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors"
           >
-            <Edit3 size={13} className="text-[#D09A16]" />
+            <Edit3 size={13} className="text-brand-gold" />
             <span>Edit Homepage</span>
           </Link>
           <Link
             href="/admin/inquiries"
             className="px-3.5 py-1.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-semibold flex items-center gap-1.5 transition-colors"
           >
-            <Inbox size={13} className="text-[#D09A16]" />
+            <Inbox size={13} className="text-brand-gold" />
             <span>Review Leads ({stats.inquiriesCount})</span>
           </Link>
         </div>
@@ -271,7 +271,7 @@ export default function AdminDashboard() {
               <h3 className="text-sm font-serif font-bold text-white">Website Pages CMS Matrix</h3>
               <p className="text-xs text-slate-400">Directly jump into any page or corridor editor</p>
             </div>
-            <Link href="/admin/pages" className="text-xs text-[#D09A16] hover:underline font-semibold flex items-center gap-1">
+            <Link href="/admin/pages" className="text-xs text-brand-gold hover:underline font-semibold flex items-center gap-1">
               <span>View Master Hub (12)</span>
               <ChevronRight size={13} />
             </Link>
@@ -290,7 +290,7 @@ export default function AdminDashboard() {
                 onClick={() => setCmsTab(tab.id)}
                 className={`flex-1 py-1.5 px-2 rounded-lg text-[11px] font-semibold transition-all cursor-pointer ${
                   cmsTab === tab.id
-                    ? 'bg-[#D09A16] text-[#0C101A] font-bold shadow-sm'
+                    ? 'bg-brand-gold text-brand-dark font-bold shadow-sm'
                     : 'text-slate-400 hover:text-white'
                 }`}
               >
@@ -306,14 +306,14 @@ export default function AdminDashboard() {
               return (
                 <div
                   key={i}
-                  className="p-3.5 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.04] hover:border-[#D09A16]/40 transition-all flex flex-col justify-between group"
+                  className="p-3.5 rounded-xl bg-white/[0.02] hover:bg-white/[0.05] border border-white/[0.04] hover:border-brand-gold/40 transition-all flex flex-col justify-between group"
                 >
                   <div className="flex items-center justify-between gap-2 mb-2">
                     <div className="flex items-center gap-2">
-                      <div className="w-7 h-7 rounded-lg bg-white/5 text-[#D09A16] flex items-center justify-center">
+                      <div className="w-7 h-7 rounded-lg bg-white/5 text-brand-gold flex items-center justify-center">
                         <Icon size={14} />
                       </div>
-                      <span className="text-xs font-semibold text-white group-hover:text-[#D09A16] transition-colors truncate">
+                      <span className="text-xs font-semibold text-white group-hover:text-brand-gold transition-colors truncate">
                         {p.name}
                       </span>
                     </div>
@@ -333,7 +333,7 @@ export default function AdminDashboard() {
                       </Link>
                       <Link
                         href={p.editUrl}
-                        className="px-2 py-0.5 rounded-md bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-semibold text-[10px] uppercase tracking-wider transition-colors flex items-center gap-1"
+                        className="px-2 py-0.5 rounded-md bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold font-semibold text-[10px] uppercase tracking-wider transition-colors flex items-center gap-1"
                       >
                         <Edit3 size={10} />
                         <span>Edit</span>
@@ -353,7 +353,7 @@ export default function AdminDashboard() {
               <h3 className="text-sm font-serif font-bold text-white">Client Inquiries Inbox</h3>
               <p className="text-xs text-slate-400">Latest website submissions &amp; requests</p>
             </div>
-            <Link href="/admin/inquiries" className="text-xs text-[#D09A16] hover:underline font-semibold flex items-center gap-1">
+            <Link href="/admin/inquiries" className="text-xs text-brand-gold hover:underline font-semibold flex items-center gap-1">
               <span>All Leads ({stats.inquiriesCount})</span>
               <ChevronRight size={13} />
             </Link>
@@ -378,7 +378,7 @@ export default function AdminDashboard() {
                   <div className="min-w-0 space-y-1">
                     <div className="flex items-center gap-2">
                       <p className="text-xs font-semibold text-white truncate">{inq.name || inq.email}</p>
-                      <span className="px-1.5 py-0.2 rounded bg-[#D09A16]/15 text-[#D09A16] text-[9px] font-bold uppercase tracking-wider">
+                      <span className="px-1.5 py-0.2 rounded bg-brand-gold/15 text-brand-gold text-[9px] font-bold uppercase tracking-wider">
                         {inq.type?.replace(/_/g, ' ') || 'Lead'}
                       </span>
                     </div>

@@ -218,7 +218,7 @@ export default function ImageUploadInput({
     <div className="space-y-2">
       <div className="flex items-center justify-between">
         <label className="block text-xs font-semibold text-slate-200">
-          {label} {required && <span className="text-[#D09A16]">*</span>}
+          {label} {required && <span className="text-brand-gold">*</span>}
         </label>
         <div className="flex items-center gap-2">
           {allowsVideo && (
@@ -228,7 +228,7 @@ export default function ImageUploadInput({
             </span>
           )}
           {recommendedRatio && !isCurrentValueVideo && (
-            <span className="text-[10px] text-[#D09A16] font-mono bg-[#D09A16]/10 px-2 py-0.5 rounded border border-[#D09A16]/20">
+            <span className="text-[10px] text-brand-gold font-mono bg-brand-gold/10 px-2 py-0.5 rounded border border-brand-gold/20">
               Target: {recommendedRatio}
             </span>
           )}
@@ -238,7 +238,7 @@ export default function ImageUploadInput({
           <button
             type="button"
             onClick={() => setShowManualInput(!showManualInput)}
-            className="text-[11px] text-[#D09A16] hover:underline flex items-center gap-1 cursor-pointer"
+            className="text-[11px] text-brand-gold hover:underline flex items-center gap-1 cursor-pointer"
           >
             <LinkIcon size={11} />
             <span>{showManualInput ? "Hide Link" : "Paste URL"}</span>
@@ -306,7 +306,7 @@ export default function ImageUploadInput({
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
                     disabled={uploading}
-                    className="px-2.5 py-1 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] border border-[#D09A16]/30 text-[11px] font-medium transition-colors cursor-pointer"
+                    className="px-2.5 py-1 rounded-lg bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold border border-brand-gold/30 text-[11px] font-medium transition-colors cursor-pointer"
                   >
                     Replace Video
                   </button>
@@ -411,30 +411,30 @@ export default function ImageUploadInput({
           onClick={() => fileInputRef.current?.click()}
           className={`border-2 border-dashed rounded-2xl p-6 text-center cursor-pointer transition-all ${
             isDragging
-              ? 'border-[#D09A16] bg-[#D09A16]/10 scale-[1.01]'
-              : 'border-white/15 hover:border-[#D09A16]/60 bg-white/[0.02] hover:bg-white/[0.04]'
+              ? 'border-brand-gold bg-brand-gold/10 scale-[1.01]'
+              : 'border-white/15 hover:border-brand-gold/60 bg-white/[0.02] hover:bg-white/[0.04]'
           }`}
         >
           {uploading ? (
             <div className="flex flex-col items-center justify-center py-4">
-              <RefreshCw size={26} className="text-[#D09A16] animate-spin mb-2" />
+              <RefreshCw size={26} className="text-brand-gold animate-spin mb-2" />
               <p className="text-xs font-semibold text-white">Uploading to ImageKit.io...</p>
               <p className="text-[11px] text-slate-400 mt-0.5">Optimizing format and generating CDN streaming links</p>
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center">
-              <div className="w-12 h-12 rounded-2xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-[#D09A16] mb-3 group-hover:scale-105 transition-transform">
+              <div className="w-12 h-12 rounded-2xl bg-white/[0.06] border border-white/10 flex items-center justify-center text-brand-gold mb-3 group-hover:scale-105 transition-transform">
                 {allowsVideo ? <Video size={22} /> : <Upload size={20} />}
               </div>
               <p className="text-xs font-semibold text-white">
-                <span className="text-[#D09A16]">Click to browse</span> or drag and drop {allowsVideo ? 'media (image or video)' : 'image'} here
+                <span className="text-brand-gold">Click to browse</span> or drag and drop {allowsVideo ? 'media (image or video)' : 'image'} here
               </p>
               <p className="text-[11px] text-slate-400 mt-1">
                 {allowsVideo
                   ? 'MP4, WebM, MOV (up to 100MB) or PNG, JPG, WebP, SVG (up to 25MB)'
                   : 'PNG, JPG, WEBP, SVG up to 25MB'}
                 {recommendedRatio && !allowsVideo && (
-                  <span className="text-[#D09A16] font-medium block mt-0.5">
+                  <span className="text-brand-gold font-medium block mt-0.5">
                     Recommended Card Ratio: {recommendedRatio} {cardContext ? `(${cardContext})` : ''}
                   </span>
                 )}
@@ -452,7 +452,7 @@ export default function ImageUploadInput({
             value={value}
             onChange={(e) => onChange(e.target.value)}
             placeholder="https://ik.imagekit.io/saudagarproperties/..."
-            className="w-full px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 focus:border-[#D09A16] text-white text-xs outline-none transition-colors font-mono"
+            className="w-full px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 focus:border-brand-gold text-white text-xs outline-none transition-colors font-mono"
           />
         </div>
       )}

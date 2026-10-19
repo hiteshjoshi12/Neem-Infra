@@ -125,7 +125,7 @@ export default function ChatbotWidget({ chatOpen, setChatOpen }) {
         <button 
           onClick={() => setChatOpen(!chatOpen)}
           aria-label="Toggle Chatbot"
-          className="relative w-12 h-12 rounded-full bg-[#17213D] text-[#D09A16] flex items-center justify-center shadow-[0_10px_30px_rgba(29,38,59,0.5)] hover:shadow-[0_15px_35px_rgba(29,38,59,0.6)] border border-[#17213D] transition-all duration-300 hover:bg-[#D09A16] hover:text-[#17213D] hover:scale-105 active:scale-95 cursor-pointer z-50"
+          className="relative w-12 h-12 rounded-full bg-brand-navy text-brand-gold flex items-center justify-center shadow-[0_10px_30px_rgba(29,38,59,0.5)] hover:shadow-[0_15px_35px_rgba(29,38,59,0.6)] border border-brand-navy transition-all duration-300 hover:bg-brand-gold hover:text-brand-navy hover:scale-105 active:scale-95 cursor-pointer z-50"
         >
           {chatOpen ? <X size={22} className="animate-in fade-in zoom-in" /> : <Bot size={22} className="animate-in fade-in zoom-in" />}
         </button>
@@ -139,30 +139,30 @@ export default function ChatbotWidget({ chatOpen, setChatOpen }) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="fixed bottom-[96px] right-4 sm:right-6 w-[320px] sm:w-[360px] bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-[#E8E4DA] z-[70] overflow-hidden flex flex-col pointer-events-auto"
+            className="fixed bottom-[96px] right-4 sm:right-6 w-[320px] sm:w-[360px] bg-white rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-brand-cream-border z-[70] overflow-hidden flex flex-col pointer-events-auto"
             style={{ maxHeight: '600px', height: 'calc(100vh - 120px)' }}
           >
             {/* Header */}
-            <div className="bg-gradient-to-r from-[#17213D] to-[#2a3652] p-4 flex items-center justify-between text-white shrink-0 shadow-md z-10">
+            <div className="bg-gradient-to-r from-brand-navy to-brand-navy-surface p-4 flex items-center justify-between text-white shrink-0 shadow-md z-10">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center border border-white/20">
-                  <Bot size={20} className="text-[#D09A16]" />
+                  <Bot size={20} className="text-brand-gold" />
                 </div>
                 <div>
                   <h3 className="font-serif font-bold text-lg leading-tight tracking-wide">Saudagar Assistant</h3>
-                  <p className="text-xs text-[#D09A16] flex items-center gap-1.5 mt-0.5">
+                  <p className="text-xs text-brand-gold flex items-center gap-1.5 mt-0.5">
                     <span className="w-1.5 h-1.5 rounded-full bg-green-500 animate-pulse"></span>
                     Online
                   </p>
                 </div>
               </div>
-              <button onClick={() => setChatOpen(false)} className="text-[#CBD5E1] hover:text-white transition-colors">
+              <button onClick={() => setChatOpen(false)} className="text-brand-text-on-dark-muted hover:text-white transition-colors">
                 <X size={20} />
               </button>
             </div>
 
             {/* Messages Area */}
-            <div className="flex-1 overflow-y-auto p-5 space-y-4 bg-[#FAF8F5]">
+            <div className="flex-1 overflow-y-auto p-5 space-y-4 bg-brand-ivory-warm">
               {chatHistory.map((msg, idx) => (
                 <motion.div 
                   initial={{ opacity: 0, y: 10 }}
@@ -170,7 +170,7 @@ export default function ChatbotWidget({ chatOpen, setChatOpen }) {
                   key={idx} 
                   className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                 >
-                  <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-[13px] sm:text-sm leading-relaxed ${msg.sender === 'user' ? 'bg-[#1D263B] text-white rounded-br-sm shadow-sm' : 'bg-white text-[#475569] border border-[#E8E4DA] rounded-bl-sm shadow-sm'}`}>
+                  <div className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-[13px] sm:text-sm leading-relaxed ${msg.sender === 'user' ? 'bg-brand-navy text-white rounded-br-sm shadow-sm' : 'bg-white text-brand-slate border border-brand-cream-border rounded-bl-sm shadow-sm'}`}>
                     {msg.text}
                   </div>
                 </motion.div>
@@ -178,10 +178,10 @@ export default function ChatbotWidget({ chatOpen, setChatOpen }) {
               
               {isTyping && (
                 <div className="flex justify-start">
-                  <div className="max-w-[85%] rounded-2xl px-4 py-3 text-[13px] bg-white text-[#475569] border border-[#E8E4DA] rounded-bl-sm shadow-sm flex items-center gap-1.5">
-                    <span className="w-1.5 h-1.5 bg-[#CBD5E1] rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
-                    <span className="w-1.5 h-1.5 bg-[#CBD5E1] rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
-                    <span className="w-1.5 h-1.5 bg-[#CBD5E1] rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
+                  <div className="max-w-[85%] rounded-2xl px-4 py-3 text-[13px] bg-white text-brand-slate border border-brand-cream-border rounded-bl-sm shadow-sm flex items-center gap-1.5">
+                    <span className="w-1.5 h-1.5 bg-brand-text-on-dark-muted rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></span>
+                    <span className="w-1.5 h-1.5 bg-brand-text-on-dark-muted rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></span>
+                    <span className="w-1.5 h-1.5 bg-brand-text-on-dark-muted rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></span>
                   </div>
                 </div>
               )}
@@ -189,15 +189,15 @@ export default function ChatbotWidget({ chatOpen, setChatOpen }) {
             </div>
 
             {/* Input Area */}
-            <div className="bg-white border-t border-[#E8E4DA] shrink-0">
+            <div className="bg-white border-t border-brand-cream-border shrink-0">
               {/* Quick Questions Row (Hidden Scrollbar) */}
-              <div className="p-3 border-b border-[#E8E4DA]/50 overflow-x-auto whitespace-nowrap [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+              <div className="p-3 border-b border-brand-cream-border/50 overflow-x-auto whitespace-nowrap [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 <div className="flex gap-2">
                   {quickFaqs.map((faq, idx) => (
                      <button 
                        key={idx}
                        onClick={() => handleSendMessage(null, faq.q)}
-                       className="text-[11px] bg-[#FAF8F5] hover:bg-[#E8E4DA] text-[#1D263B] border border-[#E8E4DA] rounded-full px-3 py-1.5 transition-colors font-medium hover:shadow-sm"
+                       className="text-[11px] bg-brand-ivory-warm hover:bg-brand-cream text-brand-navy border border-brand-cream-border rounded-full px-3 py-1.5 transition-colors font-medium hover:shadow-sm"
                      >
                        {faq.q}
                      </button>
@@ -212,12 +212,12 @@ export default function ChatbotWidget({ chatOpen, setChatOpen }) {
                   placeholder="Ask a question..."
                   value={userInput}
                   onChange={(e) => setUserInput(e.target.value)}
-                  className="flex-1 bg-[#FAF8F5] border border-[#E8E4DA] rounded-full px-4 py-2 text-sm focus:outline-none focus:border-[#D09A16] focus:ring-1 focus:ring-[#D09A16] text-[#1D263B] transition-all"
+                  className="flex-1 bg-brand-ivory-warm border border-brand-cream-border rounded-full px-4 py-2 text-sm focus:outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold text-brand-navy transition-all"
                 />
                 <button
                   type="submit"
                   disabled={!userInput.trim() || isTyping}
-                  className="w-9 h-9 rounded-full bg-[#1D263B] text-white flex items-center justify-center shrink-0 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-[#2a3652] transition-colors"
+                  className="w-9 h-9 rounded-full bg-brand-navy text-white flex items-center justify-center shrink-0 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-brand-navy-surface transition-colors"
                 >
                   <Send size={14} className="ml-0.5" />
                 </button>

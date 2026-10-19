@@ -74,7 +74,7 @@ export default function LuxuryTextReveal({
           <span key={`h-${idx}`} className="inline-block overflow-hidden mr-[0.28em] pr-2 -mr-1 align-top">
             <motion.span
               variants={wordVariants}
-              className="inline-block italic text-[#B48216] font-serif font-bold tracking-normal"
+              className="inline-block italic text-brand-gold font-serif font-bold tracking-normal"
             >
               {word}
             </motion.span>

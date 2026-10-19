@@ -162,7 +162,7 @@ export default function PropertyDetailClient({ property }) {
   ];
 
   return (
-    <div className="w-full min-h-screen bg-[#F7F5EF] text-[#17213D] pb-24 selection:bg-[#D09A16] selection:text-[#0E162B]">
+    <div className="w-full min-h-screen bg-brand-ivory text-brand-navy pb-24 selection:bg-brand-gold selection:text-brand-navy-deep">
       
       {/* =========================================================================
           SECTION 1: EDITORIAL HEADER
@@ -171,18 +171,34 @@ export default function PropertyDetailClient({ property }) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
-        className="relative overflow-hidden bg-[#0A0E17] text-white pt-28 pb-12 sm:pt-32 sm:pb-16 border-b border-white/10"
+        className="relative overflow-hidden bg-brand-obsidian text-white pt-28 pb-12 sm:pt-32 sm:pb-16 border-b border-white/10"
       >
+        {/* Architectural Backdrop Image */}
+        {(property?.image || property?.images?.[0]) && (
+          <div className="absolute inset-0 z-0 opacity-60 pointer-events-none select-none">
+            <Image
+              src={property.image || property.images[0]}
+              alt={property.title}
+              fill
+              priority
+              sizes="100vw"
+              className="w-full h-full object-cover filter brightness-[0.75] contrast-[1.1]"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-brand-obsidian/95 via-brand-obsidian/75 to-brand-obsidian/90" />
+            <div className="absolute inset-0 bg-gradient-to-t from-brand-obsidian via-transparent to-brand-obsidian/70" />
+          </div>
+        )}
+
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           {/* Top Bar: Clean Breadcrumb & Share */}
           <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
             <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400">
-              <Link href="/" className="hover:text-[#D09A16] transition-colors">Home</Link>
+              <Link href="/" className="hover:text-brand-gold transition-colors">Home</Link>
               <span className="text-slate-600">/</span>
-              <Link href="/properties" className="hover:text-[#D09A16] transition-colors">Properties</Link>
+              <Link href="/properties" className="hover:text-brand-gold transition-colors">Properties</Link>
               <span className="text-slate-600">/</span>
-              <span className="text-[#D09A16] truncate max-w-[200px] sm:max-w-xs">{property.location}</span>
+              <span className="text-brand-gold truncate max-w-[200px] sm:max-w-xs">{property.location}</span>
             </div>
 
             <div className="flex items-center gap-3">
@@ -190,7 +206,7 @@ export default function PropertyDetailClient({ property }) {
                 onClick={handleShare}
                 className="px-3.5 py-1.5 rounded-lg bg-white/[0.06] hover:bg-white/[0.12] border border-white/10 text-xs text-slate-300 hover:text-white transition-all flex items-center gap-1.5 cursor-pointer"
               >
-                {copied ? <Check size={13} className="text-[#D09A16]" /> : <Share2 size={13} />}
+                {copied ? <Check size={13} className="text-brand-gold" /> : <Share2 size={13} />}
                 <span>{copied ? 'Link Copied' : 'Share'}</span>
               </button>
 
@@ -207,7 +223,7 @@ export default function PropertyDetailClient({ property }) {
           {/* Title and Price */}
           <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pt-2">
             <div className="max-w-3xl space-y-2">
-              <p className="text-xs uppercase tracking-[0.25em] font-semibold text-[#D09A16]">
+              <p className="text-xs uppercase tracking-[0.25em] font-semibold text-brand-gold">
                 {property.location} • {property.category ? `${property.category} Property` : 'Residential Luxury'}
               </p>
 
@@ -225,7 +241,7 @@ export default function PropertyDetailClient({ property }) {
               <span className="text-[10px] uppercase tracking-wider text-slate-400 font-medium block mb-1">
                 Asking Valuation
               </span>
-              <div className="text-3xl sm:text-4xl font-serif font-bold text-[#D09A16] tracking-tight">
+              <div className="text-3xl sm:text-4xl font-serif font-bold text-brand-gold tracking-tight">
                 {property.price}
               </div>
               <span className="text-[11px] text-slate-400 block mt-0.5">
@@ -245,12 +261,12 @@ export default function PropertyDetailClient({ property }) {
         transition={{ duration: 0.5, delay: 0.1 }}
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8"
       >
-        <div className="bg-white rounded-3xl p-4 sm:p-5 border border-[#E2DDD5] shadow-sm">
+        <div className="bg-white rounded-3xl p-4 sm:p-5 border border-brand-cream-border shadow-sm">
           {/* Main Viewer */}
           <div 
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
-            className="group relative aspect-[16/9] md:aspect-[21/9] w-full rounded-2xl overflow-hidden bg-slate-900 mb-4 border border-[#E2DDD5]/50 select-none"
+            className="group relative aspect-[16/9] md:aspect-[21/9] w-full rounded-2xl overflow-hidden bg-slate-900 mb-4 border border-brand-cream-border/50 select-none"
           >
             <AnimatePresence mode="wait">
               <motion.div
@@ -311,7 +327,7 @@ export default function PropertyDetailClient({ property }) {
               {allImages.length > 1 && (
                 <>
                   <span className="text-slate-400">•</span>
-                  <span className="text-[#D09A16] text-[11px] font-medium tracking-wide">
+                  <span className="text-brand-gold text-[11px] font-medium tracking-wide">
                     {isHovered ? "Paused" : "Auto-advance"}
                   </span>
                 </>
@@ -326,7 +342,7 @@ export default function PropertyDetailClient({ property }) {
                   initial={{ width: "0%" }}
                   animate={{ width: "100%" }}
                   transition={{ duration: 4.5, ease: "linear" }}
-                  className="h-full bg-[#D09A16]"
+                  className="h-full bg-brand-gold"
                 />
               </div>
             )}
@@ -341,7 +357,7 @@ export default function PropertyDetailClient({ property }) {
                   onClick={() => setActiveImageIdx(idx)}
                   className={`relative w-24 sm:w-28 aspect-[16/10] rounded-xl overflow-hidden shrink-0 border-2 transition-all cursor-pointer ${
                     activeImageIdx === idx
-                      ? 'border-[#D09A16] shadow-sm scale-[1.02]'
+                      ? 'border-brand-gold shadow-sm scale-[1.02]'
                       : 'border-transparent opacity-70 hover:opacity-100 hover:border-slate-300'
                   }`}
                 >
@@ -376,9 +392,9 @@ export default function PropertyDetailClient({ property }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E2DDD5] shadow-sm"
+              className="bg-white rounded-3xl p-6 sm:p-8 border border-brand-cream-border shadow-sm"
             >
-              <h2 className="text-xl font-serif font-bold text-[#17213D] mb-6 pb-3 border-b border-[#F0ECE1]">
+              <h2 className="text-xl font-serif font-bold text-brand-navy mb-6 pb-3 border-b border-brand-cream-border">
                 Property Specifications
               </h2>
 
@@ -386,10 +402,10 @@ export default function PropertyDetailClient({ property }) {
                 {specifications.map((spec, idx) => (
                   <div 
                     key={idx} 
-                    className="flex items-baseline justify-between py-2 border-b border-[#F7F5EF] text-xs sm:text-sm"
+                    className="flex items-baseline justify-between py-2 border-b border-brand-ivory text-xs sm:text-sm"
                   >
-                    <span className="text-[#566078] font-medium">{spec.label}</span>
-                    <span className="font-semibold text-[#17213D] text-right font-serif">{spec.value}</span>
+                    <span className="text-brand-slate font-medium">{spec.label}</span>
+                    <span className="font-semibold text-brand-navy text-right font-serif">{spec.value}</span>
                   </div>
                 ))}
               </div>
@@ -401,13 +417,13 @@ export default function PropertyDetailClient({ property }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E2DDD5] shadow-sm space-y-4"
+              className="bg-white rounded-3xl p-6 sm:p-8 border border-brand-cream-border shadow-sm space-y-4"
             >
-              <h2 className="text-xl font-serif font-bold text-[#17213D] pb-3 border-b border-[#F0ECE1]">
+              <h2 className="text-xl font-serif font-bold text-brand-navy pb-3 border-b border-brand-cream-border">
                 Architectural Overview
               </h2>
               
-              <div className="text-sm sm:text-base text-[#475569] leading-relaxed font-sans whitespace-pre-wrap">
+              <div className="text-sm sm:text-base text-brand-slate leading-relaxed font-sans whitespace-pre-wrap">
                 {property.desc}
               </div>
             </motion.div>
@@ -418,16 +434,16 @@ export default function PropertyDetailClient({ property }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E2DDD5] shadow-sm"
+              className="bg-white rounded-3xl p-6 sm:p-8 border border-brand-cream-border shadow-sm"
             >
-              <h2 className="text-xl font-serif font-bold text-[#17213D] mb-6 pb-3 border-b border-[#F0ECE1]">
+              <h2 className="text-xl font-serif font-bold text-brand-navy mb-6 pb-3 border-b border-brand-cream-border">
                 Key Inclusions &amp; Specifications
               </h2>
 
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
                 {featuresList.map((feat, idx) => (
-                  <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-[#334155]">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16] mt-2 shrink-0" />
+                  <div key={idx} className="flex items-start gap-2.5 text-xs sm:text-sm text-brand-slate">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-gold mt-2 shrink-0" />
                     <span>{feat}</span>
                   </div>
                 ))}
@@ -440,16 +456,16 @@ export default function PropertyDetailClient({ property }) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5 }}
-              className="bg-white rounded-3xl p-6 sm:p-8 border border-[#E2DDD5] shadow-sm"
+              className="bg-white rounded-3xl p-6 sm:p-8 border border-brand-cream-border shadow-sm"
             >
-              <h2 className="text-xl font-serif font-bold text-[#17213D] mb-6 pb-3 border-b border-[#F0ECE1]">
+              <h2 className="text-xl font-serif font-bold text-brand-navy mb-6 pb-3 border-b border-brand-cream-border">
                 Proximity &amp; Connectivity
               </h2>
 
               <div className="space-y-3">
                 {landmarksList.map((landmark, idx) => (
-                  <div key={idx} className="flex items-center gap-2.5 text-xs sm:text-sm text-[#475569] py-1 border-b border-[#F7F5EF] last:border-none">
-                    <MapPin size={13} className="text-[#D09A16] shrink-0" />
+                  <div key={idx} className="flex items-center gap-2.5 text-xs sm:text-sm text-brand-slate py-1 border-b border-brand-ivory last:border-none">
+                    <MapPin size={13} className="text-brand-gold shrink-0" />
                     <span>{landmark}</span>
                   </div>
                 ))}
@@ -464,16 +480,16 @@ export default function PropertyDetailClient({ property }) {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}
-              className="sticky top-24 bg-white rounded-3xl p-6 sm:p-7 border border-[#E2DDD5] shadow-md space-y-6"
+              className="sticky top-24 bg-white rounded-3xl p-6 sm:p-7 border border-brand-cream-border shadow-md space-y-6"
             >
               <div>
-                <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-[#D09A16] mb-1">
+                <p className="text-[10px] uppercase tracking-[0.2em] font-bold text-brand-gold mb-1">
                   Private Client Desk
                 </p>
-                <h3 className="text-xl font-serif font-bold text-[#17213D]">
+                <h3 className="text-xl font-serif font-bold text-brand-navy">
                   Inquire or Schedule Viewing
                 </h3>
-                <p className="text-xs text-[#566078] mt-1.5 leading-relaxed">
+                <p className="text-xs text-brand-slate mt-1.5 leading-relaxed">
                   Connect with our senior partners for verified title records and discreet on-site viewings.
                 </p>
               </div>
@@ -494,23 +510,23 @@ export default function PropertyDetailClient({ property }) {
                 {/* Direct Call Button */}
                 <a
                   href="tel:+919811221207"
-                  className="w-full py-3.5 px-4 rounded-xl bg-[#0A0E17] hover:bg-[#17213D] text-[#F7F5EF] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer"
+                  className="w-full py-3.5 px-4 rounded-xl bg-brand-obsidian hover:bg-brand-navy text-brand-ivory font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer"
                 >
-                  <Phone size={14} className="text-[#D09A16]" />
+                  <Phone size={14} className="text-brand-gold" />
                   <span>Call +91 98112 21207</span>
                 </a>
 
                 {/* Schedule Viewing Modal Trigger */}
                 <button
                   onClick={() => setIsScheduleOpen(true)}
-                  className="w-full py-3 px-4 rounded-xl bg-[#F7F5EF] hover:bg-[#EDE8DE] text-[#17213D] border border-[#E2DDD5] font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer"
+                  className="w-full py-3 px-4 rounded-xl bg-brand-ivory hover:bg-brand-cream text-brand-navy border border-brand-cream-border font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all cursor-pointer"
                 >
-                  <Calendar size={14} className="text-[#D09A16]" />
+                  <Calendar size={14} className="text-brand-gold" />
                   <span>Request Private Viewing</span>
                 </button>
               </div>
 
-              <div className="pt-4 border-t border-[#F0ECE1] text-[11px] text-[#8A95A7] space-y-1">
+              <div className="pt-4 border-t border-brand-cream-border text-[11px] text-brand-slate-light space-y-1">
                 <p>• 100% Freehold Title Verification</p>
                 <p>• Direct Partner Accompaniment</p>
                 <p>• Confidential Buyer Privacy Guaranteed</p>
@@ -539,18 +555,18 @@ export default function PropertyDetailClient({ property }) {
               initial={{ opacity: 0, scale: 0.95, y: 15 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 15 }}
-              className="relative z-10 w-full max-w-lg bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#E2DDD5]"
+              className="relative z-10 w-full max-w-lg bg-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-brand-cream-border"
             >
-              <div className="flex items-center justify-between pb-4 border-b border-[#F0ECE1] mb-5">
+              <div className="flex items-center justify-between pb-4 border-b border-brand-cream-border mb-5">
                 <div>
-                  <h3 className="font-serif text-xl font-bold text-[#17213D]">
+                  <h3 className="font-serif text-xl font-bold text-brand-navy">
                     Schedule Private Inspection
                   </h3>
-                  <p className="text-xs text-[#566078] mt-0.5">{property.title}</p>
+                  <p className="text-xs text-brand-slate mt-0.5">{property.title}</p>
                 </div>
                 <button
                   onClick={() => setIsScheduleOpen(false)}
-                  className="w-8 h-8 rounded-full bg-[#F7F5EF] hover:bg-slate-200 flex items-center justify-center text-slate-500 cursor-pointer"
+                  className="w-8 h-8 rounded-full bg-brand-ivory hover:bg-slate-200 flex items-center justify-center text-slate-500 cursor-pointer"
                 >
                   <X size={16} />
                 </button>
@@ -558,71 +574,71 @@ export default function PropertyDetailClient({ property }) {
 
               {scheduleSent ? (
                 <div className="py-8 text-center space-y-3">
-                  <div className="w-12 h-12 rounded-full bg-[#D09A16]/20 text-[#D09A16] flex items-center justify-center mx-auto">
+                  <div className="w-12 h-12 rounded-full bg-brand-gold/20 text-brand-gold flex items-center justify-center mx-auto">
                     <Check size={24} />
                   </div>
-                  <h4 className="font-serif text-lg font-bold text-[#17213D]">
+                  <h4 className="font-serif text-lg font-bold text-brand-navy">
                     Inspection Request Received
                   </h4>
-                  <p className="text-xs text-[#566078]">
+                  <p className="text-xs text-brand-slate">
                     Our advisory desk will confirm your preferred viewing slot shortly.
                   </p>
                 </div>
               ) : (
                 <form onSubmit={handleScheduleSubmit} className="space-y-4 text-xs">
                   <div>
-                    <label className="block text-[#17213D] font-semibold mb-1">Your Name *</label>
+                    <label className="block text-brand-navy font-semibold mb-1">Your Name *</label>
                     <input
                       type="text"
                       required
                       placeholder="e.g. Rajiv Malhotra"
                       value={scheduleForm.name}
                       onChange={(e) => setScheduleForm({ ...scheduleForm, name: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#E2DDD5] text-[#17213D] focus:outline-none focus:border-[#D09A16]"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-brand-ivory border border-brand-cream-border text-brand-navy focus:outline-none focus:border-brand-gold"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[#17213D] font-semibold mb-1">Contact Phone (WhatsApp) *</label>
+                    <label className="block text-brand-navy font-semibold mb-1">Contact Phone (WhatsApp) *</label>
                     <input
                       type="tel"
                       required
                       placeholder="+91 98XXX XXXXX"
                       value={scheduleForm.phone}
                       onChange={(e) => setScheduleForm({ ...scheduleForm, phone: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#E2DDD5] text-[#17213D] focus:outline-none focus:border-[#D09A16]"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-brand-ivory border border-brand-cream-border text-brand-navy focus:outline-none focus:border-brand-gold"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[#17213D] font-semibold mb-1">Email Address</label>
+                    <label className="block text-brand-navy font-semibold mb-1">Email Address</label>
                     <input
                       type="email"
                       placeholder="e.g. rajiv@example.com"
                       value={scheduleForm.email}
                       onChange={(e) => setScheduleForm({ ...scheduleForm, email: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#E2DDD5] text-[#17213D] focus:outline-none focus:border-[#D09A16]"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-brand-ivory border border-brand-cream-border text-brand-navy focus:outline-none focus:border-brand-gold"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[#17213D] font-semibold mb-1">Preferred Date / Time</label>
+                    <label className="block text-brand-navy font-semibold mb-1">Preferred Date / Time</label>
                     <input
                       type="date"
                       value={scheduleForm.preferredDate}
                       onChange={(e) => setScheduleForm({ ...scheduleForm, preferredDate: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#E2DDD5] text-[#17213D] focus:outline-none focus:border-[#D09A16]"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-brand-ivory border border-brand-cream-border text-brand-navy focus:outline-none focus:border-brand-gold"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[#17213D] font-semibold mb-1">Special Requirements</label>
+                    <label className="block text-brand-navy font-semibold mb-1">Special Requirements</label>
                     <textarea
                       rows={2}
                       placeholder="e.g. Prefer afternoon viewing, require floor plans in advance"
                       value={scheduleForm.notes}
                       onChange={(e) => setScheduleForm({ ...scheduleForm, notes: e.target.value })}
-                      className="w-full px-3.5 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#E2DDD5] text-[#17213D] focus:outline-none focus:border-[#D09A16]"
+                      className="w-full px-3.5 py-2.5 rounded-xl bg-brand-ivory border border-brand-cream-border text-brand-navy focus:outline-none focus:border-brand-gold"
                     />
                   </div>
 
@@ -635,7 +651,7 @@ export default function PropertyDetailClient({ property }) {
                   <button
                     type="submit"
                     disabled={scheduleLoading}
-                    className="w-full py-3.5 rounded-xl bg-[#0A0E17] hover:bg-[#D09A16] disabled:opacity-60 disabled:cursor-not-allowed text-white hover:text-[#0A0E17] font-bold uppercase tracking-wider text-xs transition-colors cursor-pointer mt-2 flex items-center justify-center gap-2"
+                    className="w-full py-3.5 rounded-xl bg-brand-obsidian hover:bg-brand-gold disabled:opacity-60 disabled:cursor-not-allowed text-white hover:text-brand-obsidian font-bold uppercase tracking-wider text-xs transition-colors cursor-pointer mt-2 flex items-center justify-center gap-2"
                   >
                     {scheduleLoading ? (
                       <>

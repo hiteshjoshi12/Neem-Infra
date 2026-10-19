@@ -41,7 +41,7 @@ export default function TeamClientView({
       {/* =========================================================================
           1. EDITORIAL HEADER & TEAM MISSION (DARK LUXURY OPENING SCREEN)
       ========================================================================= */}
-      <section className="relative overflow-hidden bg-[#0A0E17] text-white pt-32 sm:pt-36 pb-20 md:pb-24 border-b border-white/10">
+      <section className="relative overflow-hidden bg-brand-obsidian text-white pt-32 sm:pt-36 pb-20 md:pb-24 border-b border-white/10">
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-80">
           <Image
             src={heroData?.bgImage || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80"}
@@ -51,7 +51,7 @@ export default function TeamClientView({
             priority
             className="object-cover object-center brightness-[0.85] contrast-[1.05]"
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0A0E17]/80 via-[#0A0E17]/45 to-[#0A0E17]/95" />
+          <div className="absolute inset-0 bg-gradient-to-b from-brand-obsidian/80 via-brand-obsidian/45 to-brand-obsidian/95" />
         </div>
 
         <div
@@ -61,23 +61,23 @@ export default function TeamClientView({
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-8">
-            <Link href="/" className="hover:text-[#D09A16] transition-colors">Home</Link>
+            <Link href="/" className="hover:text-brand-gold transition-colors">Home</Link>
             <span className="text-slate-600">/</span>
-            <span className="text-[#D09A16] flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16] shadow-[0_0_8px_#D09A16]" />
+            <span className="text-brand-gold flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-gold shadow-[0_0_8px_var(--color-brand-gold)]" />
               <span>Our Team</span>
             </span>
           </div>
 
           <div className="text-center max-w-4xl mx-auto">
-            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-[#D09A16]/40 text-xs font-bold uppercase tracking-[0.2em] text-[#D09A16] mb-6 backdrop-blur-md shadow-[0_0_20px_rgba(208,154,22,0.15)]">
-              <Users size={14} className="text-[#D09A16]" />
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-brand-gold/40 text-xs font-bold uppercase tracking-[0.2em] text-brand-gold mb-6 backdrop-blur-md shadow-[0_0_20px_rgba(208,154,22,0.15)]">
+              <Users size={14} className="text-brand-gold" />
               <span>{heroData?.badge || "Saudagar Properties Advisory Board"}</span>
             </div>
 
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-white tracking-tight leading-tight mb-6">
               {heroData?.titleMain || "Our Leadership & "}{' '}
-              <span className="italic font-serif text-[#D09A16]">{heroData?.titleItalic || "Advisory Principals"}</span>
+              <span className="italic font-serif text-brand-gold">{heroData?.titleItalic || "Advisory Principals"}</span>
             </h1>
 
             <p className="text-base sm:text-lg text-slate-300 leading-relaxed font-sans max-w-3xl mx-auto">
@@ -86,8 +86,8 @@ export default function TeamClientView({
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-12 pt-8 border-t border-white/10">
               {heroStats.map((stat, idx) => (
-                <div key={idx} className="p-4 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 text-center hover:border-[#D09A16]/40 transition-colors">
-                  <span className={`block text-2xl sm:text-3xl font-serif font-bold ${stat.highlight ? 'text-[#D09A16]' : 'text-white'}`}>
+                <div key={idx} className="p-4 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 text-center hover:border-brand-gold/40 transition-colors">
+                  <span className={`block text-2xl sm:text-3xl font-serif font-bold ${stat.highlight ? 'text-brand-gold' : 'text-white'}`}>
                     {stat.value}
                   </span>
                   <span className="text-xs uppercase tracking-wider text-slate-400 font-semibold">

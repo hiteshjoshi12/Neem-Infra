@@ -108,7 +108,7 @@ export default function Hero() {
 
   return (
     <section
-      className="relative z-30 w-full min-h-[90vh] lg:min-h-screen flex flex-col justify-center pt-28 pb-20 lg:pb-32 overflow-visible bg-[#070B16]"
+      className="relative z-30 w-full min-h-[90vh] lg:min-h-screen flex flex-col justify-center pt-28 pb-20 lg:pb-32 overflow-visible bg-brand-obsidian"
     >
       {/* Production Cinematic Remotion Hero Video Background Layer with Built-in Luxury Controls */}
       <CinematicHeroBackground showControls={true} />
@@ -125,8 +125,8 @@ export default function Hero() {
               transition={{ duration: 0.6, ease: "easeOut" }}
               className="mb-6 flex items-center gap-4"
             >
-              <span className="w-8 h-[1px] bg-[#D09A16]"></span>
-              <span className="text-xs md:text-sm tracking-[0.25em] text-[#D09A16] uppercase font-semibold">
+              <span className="w-8 h-[1px] bg-brand-gold"></span>
+              <span className="text-xs md:text-sm tracking-[0.25em] text-brand-gold uppercase font-semibold">
                 {heroData.badge || "Luxury Builder Floors & Estates"}
               </span>
             </motion.div>
@@ -136,11 +136,11 @@ export default function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="text-[clamp(2.15rem,4.2vw,4.25rem)] font-serif text-[#F7F5EF] leading-[1.15] tracking-tight max-w-[920px] mb-3.5 sm:mb-4 drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)]"
+              className="text-[clamp(2.15rem,4.2vw,4.25rem)] font-serif text-brand-ivory leading-[1.15] tracking-tight max-w-[920px] mb-3.5 sm:mb-4 drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)]"
             >
               <span className="block">Gurgaon&apos;s Premier</span>
               <span className="block">
-                <span className="italic font-normal text-[#D09A16]">Real Estate</span> Partner.
+                <span className="italic font-normal text-brand-gold">Real Estate</span> Partner.
               </span>
             </motion.h1>
 
@@ -163,15 +163,15 @@ export default function Hero() {
             >
               <form
                 onSubmit={handleSearch}
-                className="bg-white border border-[#E2DDD5] hover:border-[#D09A16]/40 rounded-2xl p-2 sm:p-2.5 shadow-[0_20px_55px_rgba(0,0,0,0.4)] hover:shadow-[0_24px_65px_rgba(0,0,0,0.48)] flex flex-col lg:flex-row gap-2 lg:gap-0 items-center relative z-40 transition-all duration-300 min-h-[74px]"
+                className="bg-white border border-brand-cream-border hover:border-brand-gold/40 rounded-2xl p-2 sm:p-2.5 shadow-[0_20px_55px_rgba(0,0,0,0.4)] hover:shadow-[0_24px_65px_rgba(0,0,0,0.48)] flex flex-col lg:flex-row gap-2 lg:gap-0 items-center relative z-40 transition-all duration-300 min-h-[74px]"
               >
                 {/* Field 1: Keyword Search */}
-                <div className="flex-[1.2] w-full flex items-center gap-2.5 px-3.5 sm:px-4 py-2 lg:border-r border-[#EBE7DF]">
-                  <div className="w-7 h-7 rounded-lg bg-[#D09A16]/10 flex items-center justify-center flex-shrink-0">
-                    <Search className="text-[#D09A16] w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
+                <div className="flex-[1.2] w-full flex items-center gap-2.5 px-3.5 sm:px-4 py-2 lg:border-r border-brand-cream-border">
+                  <div className="w-7 h-7 rounded-lg bg-brand-gold/10 flex items-center justify-center flex-shrink-0">
+                    <Search className="text-brand-gold w-3.5 h-3.5 flex-shrink-0" aria-hidden="true" />
                   </div>
                   <div className="flex flex-col flex-1 min-w-0 text-left">
-                    <span className="text-[10px] font-semibold uppercase tracking-wider text-[#8A95A7] leading-none mb-0.5">
+                    <span className="text-[10px] font-semibold uppercase tracking-wider text-brand-slate-light leading-none mb-0.5">
                       Search / Keyword
                     </span>
                     <input
@@ -180,14 +180,14 @@ export default function Hero() {
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       placeholder={heroData.searchPlaceholder || "Search DLF builder floors, villas..."}
-                      className="w-full bg-transparent border-none outline-none text-[#17213D] placeholder-[#94A3B8] font-medium text-xs sm:text-[13px] truncate"
+                      className="w-full bg-transparent border-none outline-none text-brand-navy placeholder-brand-text-dim font-medium text-xs sm:text-[13px] truncate"
                     />
                   </div>
                   {searchQuery && (
                     <button
                       type="button"
                       onClick={() => setSearchQuery("")}
-                      className="text-xs text-[#94A3B8] hover:text-[#17213D] p-1 flex-shrink-0"
+                      className="text-xs text-brand-text-dim hover:text-brand-navy p-1 flex-shrink-0"
                       title="Clear search"
                     >
                       ✕
@@ -196,7 +196,7 @@ export default function Hero() {
                 </div>
 
                 {/* Custom Dropdown Filters Container */}
-                <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-2 lg:gap-0 divide-y sm:divide-y-0 sm:divide-x divide-[#EBE7DF] relative text-[#17213D]">
+                <div className="w-full lg:w-auto flex flex-col sm:flex-row gap-2 lg:gap-0 divide-y sm:divide-y-0 sm:divide-x divide-brand-cream-border relative text-brand-navy">
 
                   <CustomSelect
                     icon={MapPin}
@@ -243,7 +243,7 @@ export default function Hero() {
                 <button
                   type="submit"
                   aria-label="Search and explore properties"
-                  className="group/btn w-full lg:w-auto mt-2 lg:mt-0 lg:ml-2 bg-[#D09A16] hover:bg-[#D09A16] text-[#0E162B] px-7 py-3.5 rounded-xl text-xs uppercase tracking-widest font-bold transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg cursor-pointer flex-shrink-0"
+                  className="group/btn w-full lg:w-auto mt-2 lg:mt-0 lg:ml-2 bg-brand-gold hover:bg-brand-gold text-brand-navy-deep px-7 py-3.5 rounded-xl text-xs uppercase tracking-widest font-bold transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg cursor-pointer flex-shrink-0"
                 >
                   <span>{heroData.searchButtonText || "Explore"}</span>
                   <ArrowUpRight size={15} className="group-hover/btn:translate-x-1 transition-transform duration-200" />
@@ -257,7 +257,7 @@ export default function Hero() {
                 transition={{ duration: 0.8, delay: 0.6 }}
                 className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 relative z-10"
               >
-                <span className="text-[#D09A16] text-xs font-semibold tracking-widest uppercase">
+                <span className="text-brand-gold text-xs font-semibold tracking-widest uppercase">
                   {heroData.trendingLabel || "Trending"}
                 </span>
                 <div className="flex flex-wrap gap-2">
@@ -269,7 +269,7 @@ export default function Hero() {
                       key={tag}
                       type="button"
                       aria-label={`Search trending category: ${tag}`}
-                      className="px-4 py-1.5 rounded-full border border-white/20 text-[#C9CED9] text-xs font-medium hover:border-[#D09A16] hover:text-[#D09A16] hover:bg-[#202B4A]/60 transition-all duration-300 bg-[#17213D]/70 backdrop-blur-md shadow-sm cursor-pointer"
+                      className="px-4 py-1.5 rounded-full border border-white/20 text-white text-xs font-medium hover:border-brand-gold hover:text-brand-navy hover:bg-white transition-all duration-300 bg-white/15 backdrop-blur-md shadow-sm cursor-pointer"
                     >
                       {tag}
                     </button>
@@ -301,28 +301,28 @@ export default function Hero() {
                 animate={{ opacity: 1, y: 0, scale: 1 }}
                 exit={{ opacity: 0, y: -12, scale: 0.98 }}
                 transition={{ duration: 0.35, ease: "easeInOut" }}
-                className="bg-[#202B4A]/90 backdrop-blur-2xl border border-white/15 rounded-3xl p-6 text-white shadow-[0_30px_70px_rgba(0,0,0,0.5)] relative overflow-hidden group hover:border-[#D09A16]/60 transition-all duration-500"
+                className="bg-white/95 backdrop-blur-2xl border border-brand-cream-border rounded-3xl p-6 text-brand-navy shadow-[0_25px_60px_rgba(0,0,0,0.35)] relative overflow-hidden group hover:border-brand-gold/60 transition-all duration-500"
               >
                 {/* Header with live status and counter indicator */}
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-[#D09A16] shadow-[0_0_10px_#D09A16] animate-pulse" />
-                    <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-[#D09A16]">
+                    <span className="w-2.5 h-2.5 rounded-full bg-brand-gold shadow-[0_0_10px_var(--color-brand-gold)] animate-pulse" />
+                    <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-brand-gold-deep">
                       {heroData.spotlight?.badge || "Featured Property"}
                     </span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <span className="text-[10px] text-[#9DA6B8] font-mono font-semibold">
+                    <span className="text-[10px] text-brand-slate-light font-mono font-semibold">
                       {String(currentCardIndex + 1).padStart(2, '0')}/{String(cardList.length).padStart(2, '0')}
                     </span>
-                    <span className="px-2.5 py-1 rounded-full bg-white/10 text-[10px] uppercase tracking-wider text-[#C9CED9] truncate max-w-[120px]">
+                    <span className="px-2.5 py-1 rounded-full bg-brand-ivory border border-brand-cream-border text-[10px] uppercase tracking-wider text-brand-navy font-medium truncate max-w-[120px]">
                       {currentProperty.location || heroData.spotlight?.tag || "DLF Phase 1"}
                     </span>
                   </div>
                 </div>
 
                 {/* Property Image Showcase */}
-                <div className="relative h-44 rounded-2xl overflow-hidden mb-4 border border-white/10 bg-[#0E162B]">
+                <div className="relative h-44 rounded-2xl overflow-hidden mb-4 border border-brand-cream-border bg-brand-cream">
                   <Image
                     loader={unsplashLoader}
                     src={currentProperty.img || (currentProperty.images && currentProperty.images[0]) || heroData.spotlight?.image || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c"}
@@ -332,46 +332,46 @@ export default function Hero() {
                     sizes="(max-width: 1024px) 100vw, 400px"
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                   />
-                  <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/75 backdrop-blur-md text-white text-[10px] font-medium border border-white/10">
+                  <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-brand-navy text-[10px] font-bold border border-brand-cream-border shadow-xs">
                     {currentProperty.tag || "Exclusive Listing"}
                   </div>
                 </div>
 
                 {/* Title & Specifications */}
-                <h2 className="text-lg font-serif text-white mb-1 truncate" title={currentProperty.title}>
+                <h2 className="text-lg font-serif font-bold text-brand-navy mb-1 truncate" title={currentProperty.title}>
                   {currentProperty.title || "Ultra-Luxury Independent Floor"}
                 </h2>
-                <p className="text-xs text-[#C9CED9] font-light mb-4 line-clamp-1">
+                <p className="text-xs text-brand-slate font-light mb-4 line-clamp-1">
                   {currentProperty.specs || currentProperty.desc || "4 BHK • DLF Phase Gurgaon"}
                 </p>
 
                 {/* Price and CTA */}
-                <div className="flex items-center justify-between pt-3 border-t border-white/15">
+                <div className="flex items-center justify-between pt-3 border-t border-brand-cream-border">
                   <div>
-                    <span className="block text-[9px] uppercase tracking-widest text-[#9DA6B8]">
+                    <span className="block text-[9px] uppercase tracking-widest text-brand-slate-light">
                       {heroData.spotlight?.startingAtLabel || "Starting At"}
                     </span>
-                    <span className="text-base font-semibold text-[#D09A16]">
+                    <span className="text-base font-bold text-brand-gold-deep">
                       {currentProperty.price || "₹4.50 Cr."}
                     </span>
                   </div>
                   <a
                     href={currentProperty.link || `tel:${heroData.spotlight?.phone || '+919811221207'}`}
                     aria-label={`Enquire about ${currentProperty.title || 'Featured Property'}`}
-                    className="px-4 py-2 rounded-full bg-[#D09A16] text-[#0E162B] text-[11px] font-bold uppercase tracking-wider hover:bg-[#D09A16] transition-colors shadow-md cursor-pointer"
+                    className="px-4 py-2 rounded-full bg-gradient-to-r from-brand-gold to-brand-gold-light text-white text-[11px] font-bold uppercase tracking-wider hover:brightness-105 transition-all shadow-sm cursor-pointer"
                   >
                     {heroData.spotlight?.ctaText || "Enquire"}
                   </a>
                 </div>
 
                 {/* 3-Second Cycle Progress Bar Indicator */}
-                <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-white/10">
+                <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-brand-cream-border">
                   <motion.div
                     key={`bar-${currentCardIndex}`}
                     initial={{ width: "0%" }}
                     animate={{ width: "100%" }}
                     transition={{ duration: 3, ease: "linear" }}
-                    className="h-full bg-[#D09A16]"
+                    className="h-full bg-brand-gold"
                   />
                 </div>
               </motion.div>

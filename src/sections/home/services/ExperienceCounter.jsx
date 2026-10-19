@@ -141,10 +141,10 @@ export default function ExperienceCounter() {
           overflow-hidden
           rounded-[28px]
           border
-          border-[#D09A16]/25
-          bg-[#0E162B]
-          text-[#F7F5EF]
-          shadow-[0_25px_80px_-25px_rgba(14,22,43,0.85)]
+          border-brand-gold/30
+          bg-white
+          text-brand-navy
+          shadow-[0_20px_60px_rgba(23,33,61,0.06)]
           transition-all
           duration-700
           sm:rounded-[36px]
@@ -161,8 +161,8 @@ export default function ExperienceCounter() {
             pointer-events-none
             absolute
             inset-0
-            opacity-[0.03]
-            [background-image:linear-gradient(to_right,#D09A16_1px,transparent_1px),linear-gradient(to_bottom,#D09A16_1px,transparent_1px)]
+            opacity-[0.025]
+            [background-image:linear-gradient(to_right,var(--color-brand-navy)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-brand-navy)_1px,transparent_1px)]
             [background-size:60px_60px]
           "
         />
@@ -179,7 +179,7 @@ export default function ExperienceCounter() {
             h-[2px]
             bg-gradient-to-r
             from-transparent
-            via-[#D09A16]
+            via-brand-gold
             to-transparent
           "
         />
@@ -195,7 +195,7 @@ export default function ExperienceCounter() {
             h-[420px]
             w-[420px]
             rounded-full
-            bg-[radial-gradient(circle,rgba(208, 154, 22,0.12)_0%,transparent_70%)]
+            bg-[radial-gradient(circle,rgba(197,155,39,0.08)_0%,transparent_70%)]
             blur-[90px]
           "
         />
@@ -210,7 +210,7 @@ export default function ExperienceCounter() {
             h-[450px]
             w-[450px]
             rounded-full
-            bg-[radial-gradient(circle,rgba(32,43,74,0.45)_0%,transparent_70%)]
+            bg-[radial-gradient(circle,rgba(244,241,234,0.7)_0%,transparent_70%)]
             blur-[90px]
           "
         />
@@ -232,16 +232,16 @@ export default function ExperienceCounter() {
               w-[420px]
               rounded-full
               border
-              border-[#D09A16]/[0.07]
+              border-brand-gold/[0.07]
             "
           />
 
           {/* Blueprint Drafting Coordinate Tags */}
-          <div className="absolute left-7 top-6 select-none font-mono text-[8px] font-semibold tracking-[0.25em] text-[#D09A16]/40 sm:left-10 sm:top-7">
+          <div className="absolute left-7 top-6 select-none font-mono text-[8px] font-semibold tracking-[0.25em] text-brand-gold/40 sm:left-10 sm:top-7">
             + DLF-PHASE-II // LAT: 28.4848° N
           </div>
 
-          <div className="absolute right-7 top-6 select-none font-mono text-[8px] font-semibold tracking-[0.25em] text-[#D09A16]/40 sm:right-10 sm:top-7">
+          <div className="absolute right-7 top-6 select-none font-mono text-[8px] font-semibold tracking-[0.25em] text-brand-gold/40 sm:right-10 sm:top-7">
             ELEV: 220M // EST. 1999 +
           </div>
         </motion.div>
@@ -255,15 +255,18 @@ export default function ExperienceCounter() {
           {/* ---------------------------------------------------
               SECTION EYEBROW
           ---------------------------------------------------- */}
+          {/* ---------------------------------------------------
+              SECTION EYEBROW
+          ---------------------------------------------------- */}
           <div className="mb-6 flex items-center gap-3 sm:mb-8">
-            <span className="h-px w-8 bg-[#D09A16] sm:w-10" />
+            <span className="h-px w-8 bg-brand-gold sm:w-10" />
 
-            <div className="inline-flex items-center gap-2 rounded-full border border-[#D09A16]/30 bg-[#202B4A]/60 px-3 py-1 text-[8px] font-bold uppercase tracking-[0.22em] text-[#D09A16] shadow-sm sm:text-[9px]">
-              <Sparkles size={11} className="text-[#D09A16]" />
+            <div className="inline-flex items-center gap-2 rounded-full border border-brand-gold/40 bg-brand-gold/10 px-3.5 py-1 text-[8px] font-bold uppercase tracking-[0.22em] text-brand-navy shadow-xs sm:text-[9px]">
+              <Sparkles size={11} className="text-brand-gold" />
               <span>THE SAUDAGAR ADVANTAGE</span>
             </div>
 
-            <span className="h-px flex-1 max-w-[60px] bg-[#D09A16]/30" />
+            <span className="h-px flex-1 max-w-[60px] bg-brand-gold/30" />
           </div>
 
           {/* ---------------------------------------------------
@@ -277,19 +280,19 @@ export default function ExperienceCounter() {
                 LEFT: 3D EXPERIENCE NUMBER HERO (4 COLS)
             ================================================== */}
             <div className="lg:col-span-4">
-              <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-[#D09A16]/20 bg-[#17213D]/70 px-6 py-6 text-center backdrop-blur-md sm:px-8 sm:py-7">
+              <div className="relative flex flex-col items-center justify-center overflow-hidden rounded-2xl border border-brand-gold/30 bg-brand-ivory px-6 py-6 text-center shadow-xs sm:px-8 sm:py-7">
 
                 {/* Corner Crosshairs */}
-                <div aria-hidden="true" className="pointer-events-none absolute left-2.5 top-2.5 select-none font-mono text-[8px] text-[#D09A16]/30">
+                <div aria-hidden="true" className="pointer-events-none absolute left-2.5 top-2.5 select-none font-mono text-[8px] text-brand-gold/50">
                   +
                 </div>
-                <div aria-hidden="true" className="pointer-events-none absolute right-2.5 top-2.5 select-none font-mono text-[8px] text-[#D09A16]/30">
+                <div aria-hidden="true" className="pointer-events-none absolute right-2.5 top-2.5 select-none font-mono text-[8px] text-brand-gold/50">
                   +
                 </div>
-                <div aria-hidden="true" className="pointer-events-none absolute bottom-2.5 left-2.5 select-none font-mono text-[8px] text-[#D09A16]/30">
+                <div aria-hidden="true" className="pointer-events-none absolute bottom-2.5 left-2.5 select-none font-mono text-[8px] text-brand-gold/50">
                   +
                 </div>
-                <div aria-hidden="true" className="pointer-events-none absolute bottom-2.5 right-2.5 select-none font-mono text-[8px] text-[#D09A16]/30">
+                <div aria-hidden="true" className="pointer-events-none absolute bottom-2.5 right-2.5 select-none font-mono text-[8px] text-brand-gold/50">
                   +
                 </div>
 
@@ -306,20 +309,20 @@ export default function ExperienceCounter() {
                     rounded-full
                     border
                     border-dashed
-                    border-[#D09A16]/25
+                    border-brand-gold/30
                     sm:h-[240px]
                     sm:w-[240px]
                   "
                 >
-                  <div className="absolute -top-1 left-1/2 h-2.5 w-2.5 -translate-x-1/2 rounded-full border border-[#D09A16] bg-[#0E162B] shadow-[0_0_10px_rgba(208, 154, 22,0.9)]" />
+                  <div className="absolute -top-1 left-1/2 h-2.5 w-2.5 -translate-x-1/2 rounded-full border border-brand-gold bg-white shadow-[0_0_10px_rgba(197,155,39,0.5)]" />
                 </motion.div>
 
                 {/* 3D Numerical Typography Composition */}
                 <div className="relative z-10 flex flex-col items-center">
                   <div className="mb-2 inline-flex items-center gap-1.5">
-                    <span className="h-px w-4 bg-[#D09A16]" />
-                    <Award size={13} className="text-[#D09A16]" />
-                    <span className="h-px w-4 bg-[#D09A16]" />
+                    <span className="h-px w-4 bg-brand-gold" />
+                    <Award size={13} className="text-brand-gold" />
+                    <span className="h-px w-4 bg-brand-gold" />
                   </div>
 
                   {/* Multi-layered 3D Number */}
@@ -338,7 +341,7 @@ export default function ExperienceCounter() {
                         font-bold
                         leading-none
                         tracking-[-0.08em]
-                        text-[#D09A16]/10
+                        text-brand-gold/15
                         blur-[1px]
                         sm:text-[98px]
                         lg:text-[112px]
@@ -357,8 +360,8 @@ export default function ExperienceCounter() {
                         font-bold
                         leading-none
                         tracking-[-0.08em]
-                        text-[#F7F5EF]
-                        drop-shadow-[0_20px_30px_rgba(0,0,0,0.8)]
+                        text-brand-navy
+                        drop-shadow-[0_10px_20px_rgba(23,33,61,0.12)]
                         sm:text-[98px]
                         lg:text-[112px]
                       "
@@ -375,8 +378,8 @@ export default function ExperienceCounter() {
                         font-serif
                         text-4xl
                         font-light
-                        text-[#D09A16]
-                        drop-shadow-[0_8px_16px_rgba(208, 154, 22,0.45)]
+                        text-brand-gold
+                        drop-shadow-[0_4px_10px_rgba(197,155,39,0.3)]
                         sm:text-5xl
                         lg:text-6xl
                       "
@@ -386,13 +389,13 @@ export default function ExperienceCounter() {
                   </div>
 
                   {/* Authority Label */}
-                  <p className="mt-2 font-serif text-xs font-semibold uppercase tracking-[0.25em] text-[#D09A16] sm:text-sm">
+                  <p className="mt-2 font-serif text-xs font-bold uppercase tracking-[0.25em] text-brand-navy sm:text-sm">
                     {counterLabel}
                   </p>
 
-                  <div className="my-2 h-px w-12 bg-gradient-to-r from-transparent via-[#D09A16]/40 to-transparent" />
+                  <div className="my-2 h-px w-12 bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent" />
 
-                  <p className="max-w-[220px] text-[11px] leading-4 text-[#C9CED9]/70">
+                  <p className="max-w-[220px] text-[11px] leading-4 text-brand-slate">
                     {counterSublabel}
                   </p>
                 </div>
@@ -405,7 +408,7 @@ export default function ExperienceCounter() {
             ================================================== */}
             <div className="flex flex-col justify-center lg:col-span-8">
               <div className="inline-flex items-center gap-2">
-                <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#D09A16]">
+                <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-brand-gold">
                   {badge}
                 </span>
               </div>
@@ -416,10 +419,10 @@ export default function ExperienceCounter() {
                   mt-2
                   font-serif
                   text-2xl
-                  font-normal
+                  font-bold
                   leading-[1.15]
                   tracking-[-0.025em]
-                  text-white
+                  text-brand-navy
                   sm:text-3xl
                   lg:text-[38px]
                 "
@@ -427,13 +430,13 @@ export default function ExperienceCounter() {
                 {headline}
               </h3>
 
-              <p className="mt-3.5 max-w-2xl text-xs leading-relaxed text-[#C9CED9] sm:text-[13px] sm:leading-6">
+              <p className="mt-3.5 max-w-2xl text-xs leading-relaxed text-brand-slate sm:text-[13px] sm:leading-6">
                 {description}
               </p>
 
               {/* Authority tag line */}
-              <div className="mt-4 flex items-center gap-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-[#C9CED9]/50">
-                <span className="h-1.5 w-1.5 rounded-full bg-[#D09A16]" />
+              <div className="mt-4 flex items-center gap-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-brand-slate/75">
+                <span className="h-1.5 w-1.5 rounded-full bg-brand-gold" />
                 <span>Premier Real Estate Consultancy · DLF Gurugram</span>
               </div>
             </div>
@@ -443,7 +446,7 @@ export default function ExperienceCounter() {
           {/* ---------------------------------------------------
               DIVIDER LINE BETWEEN TIERS
           ---------------------------------------------------- */}
-          <div className="my-7 h-px w-full bg-gradient-to-r from-transparent via-white/10 to-transparent sm:my-8" />
+          <div className="my-7 h-px w-full bg-gradient-to-r from-transparent via-brand-navy/10 to-transparent sm:my-8" />
 
           {/* ---------------------------------------------------
               BOTTOM TIER: 4 PROOF BOXES IN 1 HORIZONTAL ROW
@@ -471,20 +474,19 @@ export default function ExperienceCounter() {
                     overflow-hidden
                     rounded-2xl
                     border
-                    border-[#D09A16]/20
-                    bg-[#202B4A]/80
+                    border-brand-gold/30
+                    bg-brand-ivory
                     p-4.5
-                    backdrop-blur-md
-                    shadow-[0_15px_40px_-20px_rgba(0,0,0,0.6)]
+                    shadow-xs
                     transition-all
                     duration-400
                     hover:-translate-y-1.5
-                    hover:border-[#D09A16]/55
-                    hover:bg-[#202B4A]/95
-                    hover:shadow-[0_20px_50px_-15px_rgba(208, 154, 22,0.2)]
+                    hover:border-brand-gold
+                    hover:bg-white
+                    hover:shadow-[0_15px_35px_rgba(197,155,39,0.12)]
                     focus:outline-none
                     focus:ring-1
-                    focus:ring-[#D09A16]
+                    focus:ring-brand-gold
                     sm:p-5
                   "
                 >
@@ -500,12 +502,12 @@ export default function ExperienceCounter() {
                       w-3.5
                       border-r
                       border-t
-                      border-[#D09A16]/30
+                      border-brand-gold/30
                       transition-all
                       duration-300
                       group-hover:h-5
                       group-hover:w-5
-                      group-hover:border-[#D09A16]
+                      group-hover:border-brand-gold
                     "
                   />
 
@@ -522,45 +524,45 @@ export default function ExperienceCounter() {
                           justify-center
                           rounded-xl
                           border
-                          border-[#D09A16]/30
-                          bg-[#D09A16]/10
-                          text-[#D09A16]
+                          border-brand-gold/30
+                          bg-brand-gold/10
+                          text-brand-gold
                           transition-all
                           duration-400
                           group-hover:scale-105
-                          group-hover:border-[#D09A16]
-                          group-hover:bg-[#D09A16]
-                          group-hover:text-[#0E162B]
+                          group-hover:border-brand-gold
+                          group-hover:bg-brand-gold
+                          group-hover:text-white
                         "
                       >
                         <IconComp size={16} strokeWidth={1.6} />
                       </div>
 
                       <div className="flex items-center gap-1.5">
-                        <span className="font-mono text-[9px] font-semibold tracking-wider text-[#D09A16]/50">
+                        <span className="font-mono text-[9px] font-semibold tracking-wider text-brand-gold/70">
                           0{idx + 1}
                         </span>
                         <ArrowUpRight
                           size={13}
                           className="
-                            text-[#D09A16]/40
+                            text-brand-gold/60
                             transition-transform
                             duration-300
                             group-hover:-translate-y-0.5
                             group-hover:translate-x-0.5
-                            group-hover:text-[#D09A16]
+                            group-hover:text-brand-gold
                           "
                         />
                       </div>
                     </div>
 
                     {/* Card Title */}
-                    <h4 className="mt-3 font-serif text-[15px] font-normal tracking-[-0.01em] text-white transition-colors group-hover:text-[#F7F5EF] sm:text-base">
+                    <h4 className="mt-3 font-serif text-[15px] font-bold tracking-[-0.01em] text-brand-navy sm:text-base">
                       {item.title}
                     </h4>
 
                     {/* Card Description */}
-                    <p className="mt-1.5 text-[11px] leading-relaxed text-[#C9CED9]/75 sm:text-xs">
+                    <p className="mt-1.5 text-[11px] leading-relaxed text-brand-slate sm:text-xs">
                       {item.desc}
                     </p>
                   </div>
@@ -572,10 +574,10 @@ export default function ExperienceCounter() {
                       mt-3.5
                       h-[1px]
                       w-full
-                      bg-white/5
+                      bg-brand-navy/5
                       transition-colors
                       duration-400
-                      group-hover:bg-[#D09A16]/40
+                      group-hover:bg-brand-gold/50
                     "
                   />
                 </article>
@@ -587,17 +589,17 @@ export default function ExperienceCounter() {
           {/* ---------------------------------------------------
               BOTTOM ARCHITECTURAL GROUNDING RIBBON
           ---------------------------------------------------- */}
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-white/10 pt-5 sm:mt-9 sm:pt-6">
-            <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5 text-[8.5px] font-semibold uppercase tracking-[0.2em] text-[#C9CED9]/50">
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-brand-navy/10 pt-5 sm:mt-9 sm:pt-6">
+            <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5 text-[8.5px] font-semibold uppercase tracking-[0.2em] text-brand-slate/75">
               <span>DLF PHASE 1–5 SPECIALISTS</span>
-              <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
+              <span className="h-1 w-1 rounded-full bg-brand-gold" />
               <span>RERA COMPLIANT ADVISORY</span>
-              <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
+              <span className="h-1 w-1 rounded-full bg-brand-gold" />
               <span>CONFIDENTIAL TRANSACTIONS</span>
             </div>
 
-            <div className="flex items-center gap-2 text-[8.5px] font-semibold uppercase tracking-[0.2em] text-[#D09A16]">
-              <Award size={12} className="text-[#D09A16]" />
+            <div className="flex items-center gap-2 text-[8.5px] font-semibold uppercase tracking-[0.2em] text-brand-gold">
+              <Award size={12} className="text-brand-gold" />
               <span>SAUDAGAR PROPERTIES PVT LTD</span>
             </div>
           </div>

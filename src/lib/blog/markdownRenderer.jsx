@@ -81,7 +81,7 @@ function parseInline(text) {
           href={rawUrl}
           target={isExternal ? '_blank' : undefined}
           rel={isExternal ? 'noopener noreferrer' : undefined}
-          className="text-[#D09A16] hover:text-[#B5986D] underline underline-offset-4 font-medium transition-colors"
+          className="text-brand-gold hover:text-brand-gold-deep underline underline-offset-4 font-medium transition-colors"
         >
           {linkText}
         </Link>
@@ -110,7 +110,7 @@ function parseBoldItalic(text) {
 
   return boldParts.map((chunk, i) => {
     if (i % 2 === 1) {
-      return <strong key={i} className="font-semibold text-[#17213D]">{chunk}</strong>;
+      return <strong key={i} className="font-semibold text-brand-navy">{chunk}</strong>;
     }
     const subItalics = chunk.split(/\*(.*?)\*/g);
     return subItalics.map((sub, j) => (j % 2 === 1 ? <em key={`${i}-${j}`} className="italic">{sub}</em> : sub));
@@ -137,7 +137,7 @@ export function MarkdownRenderer({ content = '' }) {
       const fullText = currentParagraph.join(' ').trim();
       if (fullText) {
         elements.push(
-          <p key={`p-${elements.length}`} className="text-[#334155] text-base md:text-lg leading-relaxed mb-6 font-sans">
+          <p key={`p-${elements.length}`} className="text-brand-slate text-base md:text-lg leading-relaxed mb-6 font-sans">
             {parseInline(fullText)}
           </p>
         );
@@ -150,7 +150,7 @@ export function MarkdownRenderer({ content = '' }) {
     if (currentList) {
       if (currentList.type === 'ul') {
         elements.push(
-          <ul key={`ul-${elements.length}`} className="space-y-3 mb-6 ml-6 list-disc text-[#334155] text-base md:text-lg leading-relaxed marker:text-[#D09A16]">
+          <ul key={`ul-${elements.length}`} className="space-y-3 mb-6 ml-6 list-disc text-brand-slate text-base md:text-lg leading-relaxed marker:text-brand-gold">
             {currentList.items.map((item, i) => (
               <li key={i}>{parseInline(item)}</li>
             ))}
@@ -158,7 +158,7 @@ export function MarkdownRenderer({ content = '' }) {
         );
       } else {
         elements.push(
-          <ol key={`ol-${elements.length}`} className="space-y-3 mb-6 ml-6 list-decimal text-[#334155] text-base md:text-lg leading-relaxed marker:font-bold marker:text-[#D09A16]">
+          <ol key={`ol-${elements.length}`} className="space-y-3 mb-6 ml-6 list-decimal text-brand-slate text-base md:text-lg leading-relaxed marker:font-bold marker:text-brand-gold">
             {currentList.items.map((item, i) => (
               <li key={i}>{parseInline(item)}</li>
             ))}
@@ -178,11 +178,11 @@ export function MarkdownRenderer({ content = '' }) {
           key={`quote-${elements.length}`} 
           className={`border-l-4 p-6 my-8 rounded-r-2xl shadow-xs ${
             isAdvisory 
-              ? 'border-[#D09A16] bg-[#FAF8F5]' 
-              : 'border-[#17213D] bg-[#F7F5EF]'
+              ? 'border-brand-gold bg-brand-ivory-warm' 
+              : 'border-brand-navy bg-brand-ivory'
           }`}
         >
-          <p className="font-serif italic text-base md:text-lg text-[#17213D] leading-relaxed mb-0">
+          <p className="font-serif italic text-base md:text-lg text-brand-navy leading-relaxed mb-0">
             {parseInline(text)}
           </p>
         </blockquote>
@@ -194,11 +194,11 @@ export function MarkdownRenderer({ content = '' }) {
   const flushTable = () => {
     if (currentTable) {
       elements.push(
-        <div key={`table-${elements.length}`} className="overflow-x-auto my-8 border border-[#17213D]/10 rounded-2xl shadow-xs bg-white">
+        <div key={`table-${elements.length}`} className="overflow-x-auto my-8 border border-brand-navy/10 rounded-2xl shadow-xs bg-white">
           <table className="w-full text-left text-sm md:text-base border-collapse">
             {currentTable.headers.length > 0 && (
               <thead>
-                <tr className="bg-[#17213D] text-[#F7F5EF] divide-x divide-white/10">
+                <tr className="bg-brand-navy text-brand-ivory divide-x divide-white/10">
                   {currentTable.headers.map((h, i) => (
                     <th key={i} className="px-5 py-3.5 font-serif font-semibold text-xs md:text-sm tracking-wider uppercase">
                       {parseInline(h)}
@@ -207,11 +207,11 @@ export function MarkdownRenderer({ content = '' }) {
                 </tr>
               </thead>
             )}
-            <tbody className="divide-y divide-[#17213D]/10">
+            <tbody className="divide-y divide-brand-navy/10">
               {currentTable.rows.map((row, i) => (
-                <tr key={i} className={i % 2 === 0 ? 'bg-white hover:bg-[#F7F5EF]/60 transition-colors' : 'bg-[#FAF8F5] hover:bg-[#F7F5EF] transition-colors'}>
+                <tr key={i} className={i % 2 === 0 ? 'bg-white hover:bg-brand-ivory/60 transition-colors' : 'bg-brand-ivory-warm hover:bg-brand-ivory transition-colors'}>
                   {row.map((cell, j) => (
-                    <td key={j} className="px-5 py-3.5 text-[#334155] align-top">
+                    <td key={j} className="px-5 py-3.5 text-brand-slate align-top">
                       {parseInline(cell)}
                     </td>
                   ))}
@@ -244,7 +244,7 @@ export function MarkdownRenderer({ content = '' }) {
       flushList();
       flushBlockquote();
       flushTable();
-      elements.push(<hr key={`hr-${elements.length}`} className="my-10 border-t border-[#17213D]/15" />);
+      elements.push(<hr key={`hr-${elements.length}`} className="my-10 border-t border-brand-navy/15" />);
       continue;
     }
 
@@ -266,7 +266,7 @@ export function MarkdownRenderer({ content = '' }) {
         <h2
           key={`h2-${elements.length}`}
           id={id}
-          className="scroll-mt-28 text-2xl md:text-3xl font-serif font-bold text-[#17213D] mt-12 mb-5 tracking-tight group"
+          className="scroll-mt-28 text-2xl md:text-3xl font-serif font-bold text-brand-navy mt-12 mb-5 tracking-tight group"
         >
           {parseInline(rawTitle)}
         </h2>
@@ -297,9 +297,9 @@ export function MarkdownRenderer({ content = '' }) {
           <h3
             key={`h3-${elements.length}`}
             id={id}
-            className="scroll-mt-28 flex items-center gap-3 text-xl md:text-2xl font-serif font-bold text-[#17213D] mt-8 mb-4 tracking-tight"
+            className="scroll-mt-28 flex items-center gap-3 text-xl md:text-2xl font-serif font-bold text-brand-navy mt-8 mb-4 tracking-tight"
           >
-            <span className="inline-flex items-center justify-center h-7 w-7 rounded-lg bg-[#17213D] text-[#D09A16] text-xs font-bold shrink-0">
+            <span className="inline-flex items-center justify-center h-7 w-7 rounded-lg bg-brand-navy text-brand-gold text-xs font-bold shrink-0">
               {stepNum}
             </span>
             <span className="flex-1">{parseInline(`Step ${stepNum}: ${stepText}`)}</span>
@@ -310,7 +310,7 @@ export function MarkdownRenderer({ content = '' }) {
           <h3
             key={`h3-${elements.length}`}
             id={id}
-            className="scroll-mt-28 text-xl md:text-2xl font-serif font-semibold text-[#17213D] mt-8 mb-4 tracking-tight"
+            className="scroll-mt-28 text-xl md:text-2xl font-serif font-semibold text-brand-navy mt-8 mb-4 tracking-tight"
           >
             {parseInline(rawTitle)}
           </h3>

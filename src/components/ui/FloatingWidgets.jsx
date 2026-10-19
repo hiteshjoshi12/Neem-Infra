@@ -49,9 +49,9 @@ export default function FloatingWidgets() {
         <button
           onClick={() => setShowLeftWidgets(!showLeftWidgets)}
           aria-label="Toggle Quick Contacts"
-          className="w-12 h-12 rounded-full bg-[#17213D] text-[#D09A16] border border-[#17213D] flex items-center justify-center shadow-2xl pointer-events-auto hover:bg-[#D09A16] hover:text-[#17213D] hover:scale-105 transition-all duration-300"
+          className="w-12 h-12 rounded-full bg-brand-navy text-brand-gold border border-brand-navy flex items-center justify-center shadow-2xl pointer-events-auto hover:bg-brand-gold hover:text-brand-navy hover:scale-105 transition-all duration-300"
         >
-          {showLeftWidgets ? <X size={22} /> : <MapPin size={22} className="fill-[#D09A16]/20" />}
+          {showLeftWidgets ? <X size={22} /> : <MapPin size={22} className="fill-brand-gold/20" />}
         </button>
       </aside>
 

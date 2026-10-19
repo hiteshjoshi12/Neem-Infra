@@ -121,7 +121,7 @@ export default function ServicesEditor({ formData, updateField, onNavigateTab })
 
       {/* Sub-section 1: Service Cards */}
       <div className="pt-6 border-t border-white/10 space-y-4">
-        <h4 className="text-sm font-serif font-bold text-[#D09A16]">
+        <h4 className="text-sm font-serif font-bold text-brand-gold">
           1. Three Core Service Pillars (Residential, Commercial, Industrial)
         </h4>
         <div className="space-y-4">
@@ -131,7 +131,7 @@ export default function ServicesEditor({ formData, updateField, onNavigateTab })
                 <span className="text-xs font-bold text-white uppercase tracking-wider">
                   Card #{cIdx + 1}: {card.title} ({card.category})
                 </span>
-                <span className="text-[10px] text-[#D09A16] uppercase tracking-widest">{card.id}</span>
+                <span className="text-[10px] text-brand-gold uppercase tracking-widest">{card.id}</span>
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <FormInput
@@ -179,7 +179,7 @@ export default function ServicesEditor({ formData, updateField, onNavigateTab })
 
       {/* Sub-section 2: Experience Counter Spotlight */}
       <div className="pt-6 border-t border-white/10 space-y-4">
-        <h4 className="text-sm font-serif font-bold text-[#D09A16]">
+        <h4 className="text-sm font-serif font-bold text-brand-gold">
           2. 25+ Years Experience Counter Spotlight
         </h4>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -218,7 +218,7 @@ export default function ServicesEditor({ formData, updateField, onNavigateTab })
       <div className="pt-6 border-t border-white/10 space-y-6">
         <div className="flex items-center justify-between">
           <div>
-            <h4 className="text-sm font-serif font-bold text-[#D09A16]">
+            <h4 className="text-sm font-serif font-bold text-brand-gold">
               3. How Do We Work? Process Methodology ({steps.length} Steps)
             </h4>
             <p className="text-xs text-slate-400">
@@ -286,7 +286,7 @@ export default function ServicesEditor({ formData, updateField, onNavigateTab })
               <div key={sIdx} className="p-5 rounded-2xl bg-white/[0.03] border border-white/5 space-y-4 relative group">
                 <div className="flex items-center justify-between border-b border-white/5 pb-3">
                   <div className="flex items-center gap-2">
-                    <span className="px-2.5 py-0.5 rounded-full bg-[#D09A16]/15 text-[#D09A16] text-[10px] font-bold tracking-wider uppercase">
+                    <span className="px-2.5 py-0.5 rounded-full bg-brand-gold/15 text-brand-gold text-[10px] font-bold tracking-wider uppercase">
                       {st.phase || `STEP ${sIdx + 1}`}
                     </span>
                     <span className="text-xs font-bold text-white">
@@ -358,9 +358,9 @@ export default function ServicesEditor({ formData, updateField, onNavigateTab })
       </div>
 
       {/* Sub-section 4: DLF Property Callout Banner & Stats */}
-      <div className="p-6 rounded-2xl bg-gradient-to-br from-[#182345]/70 to-[#0F182F]/90 border border-[#D09A16]/30 shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div className="p-6 rounded-2xl bg-gradient-to-br from-brand-navy-gradient/70 to-[#0F182F]/90 border border-brand-gold/30 shadow-lg flex flex-col md:flex-row md:items-center justify-between gap-6">
         <div className="space-y-2 max-w-xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[#D09A16] text-[10px] font-bold uppercase tracking-wider">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-[10px] font-bold uppercase tracking-wider">
             <span>Part 4 of Our Services Flow</span>
           </div>
           <h4 className="text-base font-serif font-bold text-white">
@@ -375,7 +375,7 @@ export default function ServicesEditor({ formData, updateField, onNavigateTab })
           <button
             type="button"
             onClick={() => onNavigateTab('dlfCallout')}
-            className="px-5 py-3 rounded-xl bg-[#D09A16] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shrink-0 cursor-pointer shadow-md transition-all"
+            className="px-5 py-3 rounded-xl bg-brand-gold hover:brightness-110 text-brand-dark font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 shrink-0 cursor-pointer shadow-md transition-all"
           >
             <span>Open DLF Callout & Stats CMS</span>
             <ArrowUpRight size={15} />

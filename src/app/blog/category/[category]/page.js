@@ -54,21 +54,21 @@ export default async function BlogCategoryPage({ params }) {
     <PublicLayout asMain={false}>
       <BreadcrumbJsonLd items={breadcrumbs} />
 
-      <main className="w-full bg-[#FAF8F5] pt-28 md:pt-36 pb-20 selection:bg-[#D09A16] selection:text-[#0E162B]">
+      <main className="w-full bg-brand-ivory-warm pt-28 md:pt-36 pb-20 selection:bg-brand-gold selection:text-brand-navy-deep">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb Navigation */}
           <Breadcrumbs items={breadcrumbs} />
 
           {/* Category Header */}
-          <header className="mb-12 pb-8 border-b border-[#17213D]/10">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-[#D09A16]/10 text-[#D09A16] border border-[#D09A16]/30 mb-4">
+          <header className="mb-12 pb-8 border-b border-brand-navy/10">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest bg-brand-gold/10 text-brand-gold border border-brand-gold/30 mb-4">
               <Sparkles size={12} />
               <span>Topic Category</span>
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#17213D] mb-4">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-brand-navy mb-4">
               {categoryName}
             </h1>
-            <p className="text-base sm:text-lg text-[#566078] max-w-2xl leading-relaxed">
+            <p className="text-base sm:text-lg text-brand-slate max-w-2xl leading-relaxed">
               {cat?.description || `Authoritative insights, analyses, and guides classified under ${categoryName}.`}
             </p>
           </header>
@@ -77,7 +77,7 @@ export default async function BlogCategoryPage({ params }) {
           <div className="flex items-center gap-2 overflow-x-auto pb-6 mb-8 scrollbar-none text-xs">
             <Link
               href="/blog"
-              className="px-3.5 py-1.5 rounded-full border border-[#17213D]/10 hover:border-[#D09A16] bg-white text-[#17213D] font-medium transition-colors"
+              className="px-3.5 py-1.5 rounded-full border border-brand-navy/10 hover:border-brand-gold bg-white text-brand-navy font-medium transition-colors"
             >
               All Articles
             </Link>
@@ -87,8 +87,8 @@ export default async function BlogCategoryPage({ params }) {
                 href={`/blog/category/${c.slug}`}
                 className={`px-3.5 py-1.5 rounded-full font-medium transition-colors flex-shrink-0 ${
                   c.slug === category
-                    ? 'bg-[#17213D] text-[#F7F5EF] shadow-xs'
-                    : 'border border-[#17213D]/10 hover:border-[#D09A16] bg-white text-[#17213D]'
+                    ? 'bg-brand-navy text-brand-ivory shadow-xs'
+                    : 'border border-brand-navy/10 hover:border-brand-gold bg-white text-brand-navy'
                 }`}
               >
                 {c.name}
@@ -102,11 +102,11 @@ export default async function BlogCategoryPage({ params }) {
               {posts.map((post) => (
                 <article
                   key={post._id || post.slug}
-                  className="bg-white rounded-2xl overflow-hidden border border-[#17213D]/10 group hover:border-[#D09A16]/50 transition-all shadow-xs flex flex-col justify-between"
+                  className="bg-white rounded-2xl overflow-hidden border border-brand-navy/10 group hover:border-brand-gold/50 transition-all shadow-xs flex flex-col justify-between"
                 >
                   <div>
                     {post.featuredImage && (
-                      <div className="relative aspect-[4/3] w-full overflow-hidden bg-[#0A0E17] border-b border-[#17213D]/10">
+                      <div className="relative aspect-[4/3] w-full overflow-hidden bg-brand-obsidian border-b border-brand-navy/10">
                         {/* Ambient Blurred Backdrop */}
                         <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
                           <Image
@@ -129,23 +129,23 @@ export default async function BlogCategoryPage({ params }) {
                       </div>
                     )}
                     <div className="p-6">
-                      <h2 className="font-serif font-bold text-xl text-[#17213D] group-hover:text-[#D09A16] transition-colors leading-snug line-clamp-2 mb-3">
+                      <h2 className="font-serif font-bold text-xl text-brand-navy group-hover:text-brand-gold transition-colors leading-snug line-clamp-2 mb-3">
                         <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                       </h2>
-                      <p className="text-sm text-[#566078] line-clamp-2 leading-relaxed mb-4">
+                      <p className="text-sm text-brand-slate line-clamp-2 leading-relaxed mb-4">
                         {post.excerpt}
                       </p>
                     </div>
                   </div>
 
-                  <div className="px-6 pb-6 pt-3 border-t border-[#17213D]/5 flex items-center justify-between text-xs text-[#8892A6]">
+                  <div className="px-6 pb-6 pt-3 border-t border-brand-navy/5 flex items-center justify-between text-xs text-brand-muted">
                     <div className="flex items-center gap-1.5">
-                      <Clock size={13} className="text-[#D09A16]" />
+                      <Clock size={13} className="text-brand-gold" />
                       <span>{post.readingTime || 5} min read</span>
                     </div>
                     <Link
                       href={`/blog/${post.slug}`}
-                      className="inline-flex items-center gap-1 font-bold text-[#17213D] group-hover:text-[#D09A16] transition-colors"
+                      className="inline-flex items-center gap-1 font-bold text-brand-navy group-hover:text-brand-gold transition-colors"
                     >
                       <span>Read</span>
                       <ArrowRight size={13} />
@@ -155,14 +155,14 @@ export default async function BlogCategoryPage({ params }) {
               ))}
             </div>
           ) : (
-            <div className="text-center py-20 bg-white rounded-3xl border border-[#17213D]/10 p-8">
-              <h3 className="font-serif font-bold text-xl text-[#17213D] mb-2">No Articles Found</h3>
-              <p className="text-sm text-[#566078] mb-6">
+            <div className="text-center py-20 bg-white rounded-3xl border border-brand-navy/10 p-8">
+              <h3 className="font-serif font-bold text-xl text-brand-navy mb-2">No Articles Found</h3>
+              <p className="text-sm text-brand-slate mb-6">
                 We are actively curating insights for this topic. Explore all available articles below.
               </p>
               <Link
                 href="/blog"
-                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-[#17213D] text-[#F7F5EF] text-xs font-bold uppercase tracking-wider"
+                className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-brand-navy text-brand-ivory text-xs font-bold uppercase tracking-wider"
               >
                 Return to Blog Home
               </Link>

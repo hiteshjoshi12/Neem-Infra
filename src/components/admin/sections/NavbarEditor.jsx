@@ -137,7 +137,7 @@ export default function NavbarEditor({ formData, updateField }) {
       <div className="pt-6 border-t border-white/10 space-y-4">
         <div className="flex items-center justify-between">
           <div>
-            <h4 className="text-sm font-serif font-bold text-[#D09A16]">
+            <h4 className="text-sm font-serif font-bold text-brand-gold">
               Navigation Menu Links ({links.length})
             </h4>
             <p className="text-xs text-slate-400">
@@ -147,7 +147,7 @@ export default function NavbarEditor({ formData, updateField }) {
           <button
             type="button"
             onClick={handleAddLink}
-            className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 border border-[#D09A16]/40 text-xs text-[#D09A16] font-semibold flex items-center gap-1.5 cursor-pointer transition-colors"
+            className="px-3 py-1.5 rounded-lg bg-brand-gold/20 hover:bg-brand-gold/30 border border-brand-gold/40 text-xs text-brand-gold font-semibold flex items-center gap-1.5 cursor-pointer transition-colors"
           >
             <Plus size={13} />
             <span>Add Menu Link</span>
@@ -185,7 +185,7 @@ export default function NavbarEditor({ formData, updateField }) {
                       onClick={() => toggleDropdownExpand(idx)}
                       className={`px-3 py-2 rounded-xl border text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer ${
                         hasDropdown
-                          ? 'bg-[#D09A16]/15 border-[#D09A16]/40 text-[#D09A16]'
+                          ? 'bg-brand-gold/15 border-brand-gold/40 text-brand-gold'
                           : 'bg-white/5 border-white/10 text-slate-400 hover:text-white'
                       }`}
                       title="Manage Dropdown Sub-menu"
@@ -208,16 +208,16 @@ export default function NavbarEditor({ formData, updateField }) {
 
                 {/* Dropdown Items Sub-Manager (Always visible when expanded or has items) */}
                 {isExpanded && (
-                  <div className="mt-3 p-4 rounded-xl bg-[#0B0F19]/90 border border-[#D09A16]/20 space-y-3">
+                  <div className="mt-3 p-4 rounded-xl bg-[#0B0F19]/90 border border-brand-gold/20 space-y-3">
                     <div className="flex items-center justify-between pb-2 border-b border-white/10">
-                      <div className="flex items-center gap-2 text-xs font-semibold text-[#D09A16]">
+                      <div className="flex items-center gap-2 text-xs font-semibold text-brand-gold">
                         <Layers size={14} />
                         <span>Dropdown Items for &ldquo;{link.label || 'Link'}&rdquo;</span>
                       </div>
                       <button
                         type="button"
                         onClick={() => handleAddDropdownItem(idx)}
-                        className="px-2.5 py-1 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] text-[11px] font-semibold flex items-center gap-1 transition-colors cursor-pointer"
+                        className="px-2.5 py-1 rounded-lg bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold text-[11px] font-semibold flex items-center gap-1 transition-colors cursor-pointer"
                       >
                         <Plus size={12} />
                         <span>Add Dropdown Item</span>
@@ -243,7 +243,7 @@ export default function NavbarEditor({ formData, updateField }) {
                                   value={sub.label || ''}
                                   onChange={(e) => handleDropdownItemChange(idx, sIdx, 'label', e.target.value)}
                                   placeholder="Property in DLF Phase 1"
-                                  className="w-full bg-[#121724] border border-white/15 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-[#D09A16]"
+                                  className="w-full bg-[#121724] border border-white/15 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-brand-gold"
                                 />
                               </div>
                               <div>
@@ -253,7 +253,7 @@ export default function NavbarEditor({ formData, updateField }) {
                                   value={sub.href || ''}
                                   onChange={(e) => handleDropdownItemChange(idx, sIdx, 'href', e.target.value)}
                                   placeholder="/services/residential"
-                                  className="w-full bg-[#121724] border border-white/15 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-[#D09A16]"
+                                  className="w-full bg-[#121724] border border-white/15 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-brand-gold"
                                 />
                               </div>
                               <div>
@@ -263,7 +263,7 @@ export default function NavbarEditor({ formData, updateField }) {
                                   value={sub.desc || ''}
                                   onChange={(e) => handleDropdownItemChange(idx, sIdx, 'desc', e.target.value)}
                                   placeholder="Ultra-luxury villas & floors"
-                                  className="w-full bg-[#121724] border border-white/15 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-[#D09A16]"
+                                  className="w-full bg-[#121724] border border-white/15 rounded-lg px-2.5 py-1.5 text-xs text-white outline-none focus:border-brand-gold"
                                 />
                               </div>
                             </div>

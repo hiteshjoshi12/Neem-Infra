@@ -37,15 +37,15 @@ export default function MapsWidget({ gmapsUrl }) {
           justify-center
           rounded-full
           border
-          border-[#D09A16]/60
-          bg-[#182345]
-          text-[#D09A16]
+          border-brand-gold/60
+          bg-brand-navy-gradient
+          text-brand-gold
           shadow-[0_10px_30px_rgba(24,35,69,0.28)]
           transition-all
           duration-300
-          hover:border-[#D09A16]
-          hover:bg-[#D09A16]
-          hover:text-[#182345]
+          hover:border-brand-gold
+          hover:bg-brand-gold
+          hover:text-brand-navy-gradient
           hover:shadow-[0_12px_35px_rgba(208,154,22,0.28)]
           hover:scale-105
           active:scale-95
@@ -59,10 +59,10 @@ export default function MapsWidget({ gmapsUrl }) {
             inset-[4px]
             rounded-full
             border
-            border-[#D09A16]/20
+            border-brand-gold/20
             transition-all
             duration-300
-            group-hover:border-[#182345]/20
+            group-hover:border-brand-navy-gradient/20
           "
         />
 
@@ -82,10 +82,10 @@ export default function MapsWidget({ gmapsUrl }) {
             h-1.5
             w-1.5
             rounded-full
-            bg-[#D09A16]
+            bg-brand-gold
             transition-colors
             duration-300
-            group-hover:bg-[#182345]
+            group-hover:bg-brand-navy-gradient
           "
         />
       </a>
@@ -113,8 +113,8 @@ export default function MapsWidget({ gmapsUrl }) {
           whitespace-nowrap
           rounded-lg
           border
-          border-[#D09A16]/20
-          bg-[#182345]/95
+          border-brand-gold/20
+          bg-brand-navy-gradient/95
           px-4
           py-2.5
           opacity-0
@@ -128,7 +128,7 @@ export default function MapsWidget({ gmapsUrl }) {
         "
       >
         <div>
-          <p className="text-[8px] font-semibold uppercase tracking-[0.22em] text-[#D09A16]">
+          <p className="text-[8px] font-semibold uppercase tracking-[0.22em] text-brand-gold">
             Location
           </p>
 
@@ -140,7 +140,7 @@ export default function MapsWidget({ gmapsUrl }) {
         <ArrowUpRight
           size={13}
           strokeWidth={1.6}
-          className="text-[#D09A16]"
+          className="text-brand-gold"
         />
       </a>
     </motion.div>

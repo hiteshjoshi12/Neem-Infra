@@ -197,11 +197,11 @@ export default function AdminPagesHub() {
     <div className="space-y-8 max-w-7xl mx-auto">
       {/* Header Banner */}
       <div className="relative rounded-2xl bg-gradient-to-r from-[#111A30] via-[#0E1424] to-[#0A0F1D] p-6 sm:p-8 border border-white/[0.08] shadow-lg overflow-hidden">
-        <div className="absolute top-0 right-0 w-80 h-80 bg-[#D09A16]/10 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-0 right-0 w-80 h-80 bg-brand-gold/10 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="space-y-1.5">
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[10px] font-bold tracking-wider text-[#D09A16] uppercase">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-[10px] font-bold tracking-wider text-brand-gold uppercase">
               <Sparkles size={12} />
               <span>Full Site CMS Suite</span>
             </div>
@@ -237,13 +237,13 @@ export default function AdminPagesHub() {
               onClick={() => setActiveCategory(cat.id)}
               className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer ${
                 activeCategory === cat.id
-                  ? 'bg-[#D09A16] text-[#0C101A] shadow-md shadow-[#D09A16]/20'
+                  ? 'bg-brand-gold text-brand-dark shadow-md shadow-brand-gold/20'
                   : 'bg-white/5 hover:bg-white/10 text-slate-300'
               }`}
             >
               <span>{cat.label}</span>
               <span className={`px-1.5 py-0.2 rounded-full text-[10px] ${
-                activeCategory === cat.id ? 'bg-[#0C101A]/20 text-[#0C101A]' : 'bg-white/10 text-slate-400'
+                activeCategory === cat.id ? 'bg-brand-dark/20 text-brand-dark' : 'bg-white/10 text-slate-400'
               }`}>
                 {cat.count}
               </span>
@@ -259,7 +259,7 @@ export default function AdminPagesHub() {
             placeholder="Search pages or sections..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 focus:border-[#D09A16] text-white text-xs outline-none placeholder:text-slate-500 transition-colors"
+            className="w-full pl-9 pr-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 focus:border-brand-gold text-white text-xs outline-none placeholder:text-slate-500 transition-colors"
           />
         </div>
       </div>
@@ -274,12 +274,12 @@ export default function AdminPagesHub() {
               initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: idx * 0.04 }}
-              className="group p-5 rounded-2xl bg-[#0E1424] border border-white/[0.08] hover:border-[#D09A16]/50 transition-all duration-200 shadow-sm flex flex-col justify-between"
+              className="group p-5 rounded-2xl bg-[#0E1424] border border-white/[0.08] hover:border-brand-gold/50 transition-all duration-200 shadow-sm flex flex-col justify-between"
             >
               <div>
                 {/* Card Top: Icon & Route Pill */}
                 <div className="flex items-center justify-between gap-2 mb-3.5">
-                  <div className="w-10 h-10 rounded-xl bg-[#D09A16]/10 text-[#D09A16] border border-[#D09A16]/20 flex items-center justify-center transition-transform group-hover:scale-105">
+                  <div className="w-10 h-10 rounded-xl bg-brand-gold/10 text-brand-gold border border-brand-gold/20 flex items-center justify-center transition-transform group-hover:scale-105">
                     <Icon size={19} />
                   </div>
                   <div className="flex items-center gap-2">
@@ -295,10 +295,10 @@ export default function AdminPagesHub() {
 
                 {/* Title & Badge */}
                 <div className="mb-2">
-                  <div className="inline-block text-[10px] font-bold uppercase tracking-wider text-[#D09A16] mb-1">
+                  <div className="inline-block text-[10px] font-bold uppercase tracking-wider text-brand-gold mb-1">
                     {page.badge}
                   </div>
-                  <h3 className="text-base font-serif font-bold text-white group-hover:text-[#D09A16] transition-colors">
+                  <h3 className="text-base font-serif font-bold text-white group-hover:text-brand-gold transition-colors">
                     {page.title}
                   </h3>
                 </div>
@@ -312,7 +312,7 @@ export default function AdminPagesHub() {
                 <div className="pt-3 border-t border-white/[0.06] mb-5">
                   <div className="flex items-center justify-between text-[11px] text-slate-400 mb-2">
                     <span className="font-semibold text-slate-300">CMS Section Blocks</span>
-                    <span className="font-mono text-[#D09A16] font-bold">{page.sectionsCount} Sections</span>
+                    <span className="font-mono text-brand-gold font-bold">{page.sectionsCount} Sections</span>
                   </div>
                   <div className="flex flex-wrap gap-1.5 max-h-16 overflow-hidden">
                     {page.sections.slice(0, 4).map((sec, sIdx) => (
@@ -336,7 +336,7 @@ export default function AdminPagesHub() {
               <div className="flex items-center gap-2 pt-2">
                 <Link
                   href={page.editUrl}
-                  className="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-[#D09A16] to-[#D09A16] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_2px_10px_rgba(208,154,22,0.2)]"
+                  className="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-brand-gold to-brand-gold hover:brightness-110 text-brand-dark font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_2px_10px_rgba(208,154,22,0.2)]"
                 >
                   <Edit3 size={13} />
                   <span>Edit Content</span>

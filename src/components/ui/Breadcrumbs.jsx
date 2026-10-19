@@ -18,16 +18,16 @@ export default function Breadcrumbs({ items = [] }) {
                   /
                 </li>
               )}
-              <li className={isLast ? 'text-[#D09A16]' : 'text-slate-500'}>
+              <li className={isLast ? 'text-brand-gold' : 'text-slate-500'}>
                 {isLast ? (
                   <span aria-current="page" className="flex items-center gap-1.5 truncate max-w-[260px] sm:max-w-md">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16] shadow-[0_0_8px_#D09A16] shrink-0" />
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-gold shadow-[0_0_8px_var(--color-brand-gold)] shrink-0" />
                     <span className="truncate">{item.name}</span>
                   </span>
                 ) : (
                   <Link
                     href={item.url}
-                    className="hover:text-[#D09A16] transition-colors"
+                    className="hover:text-brand-gold transition-colors"
                   >
                     {item.name}
                   </Link>

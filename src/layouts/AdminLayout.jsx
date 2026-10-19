@@ -188,16 +188,16 @@ export default function AdminLayout({ children }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#090D16] text-slate-100 flex flex-col md:flex-row antialiased">
+    <div className="min-h-screen bg-brand-obsidian text-slate-100 flex flex-col md:flex-row antialiased">
       {/* ===================== SIDEBAR (Desktop) ===================== */}
       <aside
         className={`hidden md:flex flex-col ${isSidebarCollapsed ? 'w-20' : 'w-72'
-          } bg-[#0E1424] border-r border-white/[0.08] shrink-0 select-none transition-all duration-300 ease-in-out`}
+          } bg-brand-navy-deep border-r border-white/[0.08] shrink-0 select-none transition-all duration-300 ease-in-out`}
       >
         {/* Brand Header */}
         <div className={`p-4 border-b border-white/[0.08] flex items-center ${isSidebarCollapsed ? 'justify-center flex-col gap-2' : 'justify-between'}`}>
           <Link href="/admin/dashboard" className="flex items-center gap-3 group">
-            <div className="p-2 rounded-xl bg-white border border-[#D09A16]/50 shadow-md group-hover:scale-105 transition-transform shrink-0">
+            <div className="p-2 rounded-xl bg-white border border-brand-gold/50 shadow-md group-hover:scale-105 transition-transform shrink-0">
               <Image
                 sizes="32px"
                 width={800}
@@ -211,7 +211,7 @@ export default function AdminLayout({ children }) {
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
                   <span className="text-sm font-serif font-bold text-white tracking-wide truncate">Saudagar</span>
-                  <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-[#D09A16]/20 text-[#D09A16] border border-[#D09A16]/30 uppercase">
+                  <span className="px-1.5 py-0.5 rounded text-[9px] font-bold bg-brand-gold/20 text-brand-gold border border-brand-gold/30 uppercase">
                     CMS
                   </span>
                 </div>
@@ -223,7 +223,7 @@ export default function AdminLayout({ children }) {
           {/* Toggle Sidebar Button */}
           <button
             onClick={toggleSidebar}
-            className={`p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer ${isSidebarCollapsed ? 'mt-1 text-[#D09A16]' : ''
+            className={`p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer ${isSidebarCollapsed ? 'mt-1 text-brand-gold' : ''
               }`}
             title={isSidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
             aria-label="Toggle Sidebar"
@@ -255,14 +255,14 @@ export default function AdminLayout({ children }) {
                     title={isSidebarCollapsed ? item.label : undefined}
                     className={`relative flex items-center ${isSidebarCollapsed ? 'justify-center px-2 py-2.5' : 'justify-between px-3.5 py-2.5'
                       } rounded-xl text-xs font-medium transition-all duration-200 ${active
-                        ? 'bg-[#D09A16]/15 text-[#E6C673] font-semibold shadow-sm border border-[#D09A16]/30'
+                        ? 'bg-brand-gold/15 text-brand-gold-light font-semibold shadow-sm border border-brand-gold/30'
                         : 'text-slate-300 hover:text-white hover:bg-white/[0.05]'
                       }`}
                   >
                     <div className={`flex items-center ${isSidebarCollapsed ? 'justify-center' : 'gap-3'} min-w-0`}>
                       <Icon
                         size={18}
-                        className={`shrink-0 transition-colors ${active ? 'text-[#D09A16]' : 'text-slate-400'
+                        className={`shrink-0 transition-colors ${active ? 'text-brand-gold' : 'text-slate-400'
                           }`}
                       />
                       {!isSidebarCollapsed && (
@@ -278,7 +278,7 @@ export default function AdminLayout({ children }) {
 
                     {!isSidebarCollapsed && item.badge !== undefined && item.badge > 0 && (
                       <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold shrink-0 ${active
-                          ? 'bg-[#D09A16] text-[#0E1424]'
+                          ? 'bg-brand-gold text-brand-navy-deep'
                           : 'bg-white/10 text-slate-300'
                         }`}>
                         {item.badge}
@@ -286,11 +286,11 @@ export default function AdminLayout({ children }) {
                     )}
 
                     {isSidebarCollapsed && item.badge !== undefined && item.badge > 0 && (
-                      <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-[#D09A16]" />
+                      <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-brand-gold" />
                     )}
 
                     {active && (
-                      <span className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-[#D09A16]" />
+                      <span className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-brand-gold" />
                     )}
                   </Link>
                 );
@@ -300,12 +300,12 @@ export default function AdminLayout({ children }) {
         </nav>
 
         {/* User Card & Action Footer */}
-        <div className="p-3 border-t border-white/[0.08] space-y-2 bg-[#0A0F1D]">
+        <div className="p-3 border-t border-white/[0.08] space-y-2 bg-brand-navy-deep">
           {!isSidebarCollapsed ? (
             <>
               <div className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-center justify-between">
                 <div className="flex items-center gap-2.5 min-w-0">
-                  <div className="w-8 h-8 rounded-lg bg-[#D09A16]/15 border border-[#D09A16]/30 text-[#D09A16] flex items-center justify-center font-bold text-xs shrink-0">
+                  <div className="w-8 h-8 rounded-lg bg-brand-gold/15 border border-brand-gold/30 text-brand-gold flex items-center justify-center font-bold text-xs shrink-0">
                     <Shield size={15} />
                   </div>
                   <div className="min-w-0">
@@ -338,7 +338,7 @@ export default function AdminLayout({ children }) {
           ) : (
             <div className="flex flex-col items-center gap-2 py-1">
               <div
-                className="w-9 h-9 rounded-xl bg-[#D09A16]/15 border border-[#D09A16]/30 text-[#D09A16] flex items-center justify-center font-bold text-xs shrink-0 cursor-pointer"
+                className="w-9 h-9 rounded-xl bg-brand-gold/15 border border-brand-gold/30 text-brand-gold flex items-center justify-center font-bold text-xs shrink-0 cursor-pointer"
                 title={`${admin?.name || 'Administrator'} (${admin?.email || 'admin@saudagar.com'})`}
               >
                 <Shield size={16} />
@@ -369,7 +369,7 @@ export default function AdminLayout({ children }) {
       </aside>
 
       {/* ===================== MOBILE HEADER ===================== */}
-      <div className="md:hidden bg-[#0E1424] border-b border-white/[0.08] px-4 py-3 flex items-center justify-between sticky top-0 z-50">
+      <div className="md:hidden bg-brand-navy-deep border-b border-white/[0.08] px-4 py-3 flex items-center justify-between sticky top-0 z-50">
         <Link href="/admin/dashboard" className="flex items-center gap-2.5">
           <div className="p-1 rounded-lg bg-white">
             <Image width={100} height={40} src={logoImg} alt="Saudagar" className="h-5 w-auto" />
@@ -390,7 +390,7 @@ export default function AdminLayout({ children }) {
 
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-x-0 top-[57px] bottom-0 bg-[#090D16]/98 backdrop-blur-2xl z-40 p-4 flex flex-col justify-between overflow-y-auto">
+        <div className="md:hidden fixed inset-x-0 top-[57px] bottom-0 bg-brand-obsidian/98 backdrop-blur-2xl z-40 p-4 flex flex-col justify-between overflow-y-auto">
           <nav className="space-y-4">
             {navGroups.map((group, gIdx) => (
               <div key={gIdx} className="space-y-1">
@@ -406,12 +406,12 @@ export default function AdminLayout({ children }) {
                       href={item.to}
                       onClick={() => setMobileMenuOpen(false)}
                       className={`flex items-center justify-between px-3.5 py-3 rounded-xl text-xs font-medium transition-all ${active
-                          ? 'bg-[#D09A16]/15 text-[#E6C673] font-semibold border border-[#D09A16]/30'
+                          ? 'bg-brand-gold/15 text-brand-gold-light font-semibold border border-brand-gold/30'
                           : 'text-slate-300 hover:bg-white/5'
                         }`}
                     >
                       <div className="flex items-center gap-3">
-                        <Icon size={18} className={active ? 'text-[#D09A16]' : 'text-slate-400'} />
+                        <Icon size={18} className={active ? 'text-brand-gold' : 'text-slate-400'} />
                         <span>{item.label}</span>
                       </div>
                       <div className="flex items-center gap-1.5">
@@ -421,7 +421,7 @@ export default function AdminLayout({ children }) {
                           </span>
                         )}
                         {item.badge !== undefined && item.badge > 0 && (
-                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#D09A16] text-[#0E1424]">
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-bold bg-brand-gold text-brand-navy-deep">
                             {item.badge}
                           </span>
                         )}
@@ -458,9 +458,9 @@ export default function AdminLayout({ children }) {
       )}
 
       {/* ===================== MAIN CONTENT WRAPPER ===================== */}
-      <div className="flex-1 flex flex-col min-w-0 bg-[#090D16]">
+      <div className="flex-1 flex flex-col min-w-0 bg-brand-obsidian">
         {/* Top Header / Breadcrumb Bar */}
-        <header className="hidden md:flex items-center justify-between px-6 lg:px-8 py-3.5 border-b border-white/[0.08] bg-[#0E1424]/70 backdrop-blur-md sticky top-0 z-20">
+        <header className="hidden md:flex items-center justify-between px-6 lg:px-8 py-3.5 border-b border-white/[0.08] bg-brand-navy-deep/70 backdrop-blur-md sticky top-0 z-20">
           <div className="flex items-center gap-3">
             <button
               onClick={toggleSidebar}
@@ -470,7 +470,7 @@ export default function AdminLayout({ children }) {
             >
               {isSidebarCollapsed ? (
                 <>
-                  <PanelLeftOpen size={16} className="text-[#D09A16]" />
+                  <PanelLeftOpen size={16} className="text-brand-gold" />
                   <span className="text-[11px] font-medium text-slate-300">Expand</span>
                 </>
               ) : (
@@ -487,7 +487,7 @@ export default function AdminLayout({ children }) {
               <div className="flex items-center gap-2 text-[11px] text-slate-400">
                 <span>Saudagar Admin</span>
                 <ChevronRight size={12} className="text-slate-500" />
-                <span className="text-[#D09A16] font-semibold">{currentTitle}</span>
+                <span className="text-brand-gold font-semibold">{currentTitle}</span>
               </div>
               <h2 className="text-base font-serif font-bold text-white leading-tight">
                 {currentTitle}
@@ -510,7 +510,7 @@ export default function AdminLayout({ children }) {
               className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-white/5 hover:bg-white/10 border border-white/10 text-xs text-slate-200 hover:text-white transition-colors"
             >
               <span>View Live Website</span>
-              <ExternalLink size={12} className="text-[#D09A16]" />
+              <ExternalLink size={12} className="text-brand-gold" />
             </a>
           </div>
         </header>

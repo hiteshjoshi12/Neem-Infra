@@ -91,7 +91,7 @@ export default async function BlogPostPage({ params }) {
       {/* Real-time Interaction, Scroll Depth & Conversion Analytics Tracker */}
       <BlogAnalyticsTracker post={post} />
 
-      <main className="w-full bg-[#FAF8F5] pt-28 md:pt-36 pb-20 selection:bg-[#D09A16] selection:text-[#0E162B]">
+      <main className="w-full bg-brand-ivory-warm pt-28 md:pt-36 pb-20 selection:bg-brand-gold selection:text-brand-navy-deep">
         <article className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* =========================================================
               ARTICLE HEADER
@@ -105,7 +105,7 @@ export default async function BlogPostPage({ params }) {
               <div className="mb-4">
                 <Link
                   href={`/blog/category/${post.category.slug}`}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-bold tracking-[0.2em] uppercase bg-[#D09A16]/10 text-[#D09A16] border border-[#D09A16]/25 hover:bg-[#D09A16] hover:text-[#0E162B] transition-all"
+                  className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-bold tracking-[0.2em] uppercase bg-brand-gold/10 text-brand-gold border border-brand-gold/25 hover:bg-brand-gold hover:text-brand-navy-deep transition-all"
                 >
                   <Sparkles size={11} />
                   <span>{post.category.name}</span>
@@ -114,13 +114,13 @@ export default async function BlogPostPage({ params }) {
             )}
 
             {/* H1 Title */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl/tight font-serif font-bold text-[#17213D] tracking-tight mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl/tight font-serif font-bold text-brand-navy tracking-tight mb-6">
               {post.title}
             </h1>
 
             {/* Short summary / dek */}
             {post.excerpt && (
-              <p className="text-lg sm:text-xl text-[#475569] font-serif italic leading-relaxed mb-6 border-l-2 border-[#D09A16] pl-4 sm:pl-6">
+              <p className="text-lg sm:text-xl text-brand-slate font-serif italic leading-relaxed mb-6 border-l-2 border-brand-gold pl-4 sm:pl-6">
                 {post.excerpt}
               </p>
             )}
@@ -140,14 +140,14 @@ export default async function BlogPostPage({ params }) {
             )}
 
             {/* Author & Meta Line */}
-            <div className="flex flex-wrap items-center justify-between gap-4 py-5 border-y border-[#17213D]/10 text-xs sm:text-sm text-[#566078]">
+            <div className="flex flex-wrap items-center justify-between gap-4 py-5 border-y border-brand-navy/10 text-xs sm:text-sm text-brand-slate">
               <div className="flex items-center gap-3">
                 {post.author && (
                   <Link
                     href={`/blog/author/${post.author.slug}`}
                     className="flex items-center gap-3 group"
                   >
-                    <div className="relative w-11 h-11 rounded-full overflow-hidden border border-[#D09A16]/40 bg-[#17213D]/5">
+                    <div className="relative w-11 h-11 rounded-full overflow-hidden border border-brand-gold/40 bg-brand-navy/5">
                       {post.author.image ? (
                         <Image
                           src={post.author.image}
@@ -157,16 +157,16 @@ export default async function BlogPostPage({ params }) {
                           className="object-cover"
                         />
                       ) : (
-                        <span className="w-full h-full flex items-center justify-center font-serif font-bold text-[#17213D]">
+                        <span className="w-full h-full flex items-center justify-center font-serif font-bold text-brand-navy">
                           {post.author.name.charAt(0)}
                         </span>
                       )}
                     </div>
                     <div>
-                      <span className="block font-serif font-semibold text-[#17213D] group-hover:text-[#D09A16] transition-colors">
+                      <span className="block font-serif font-semibold text-brand-navy group-hover:text-brand-gold transition-colors">
                         {post.author.name}
                       </span>
-                      <span className="text-[11px] text-[#8892A6]">
+                      <span className="text-[11px] text-brand-muted">
                         {post.author.jobTitle || 'Property Consultant'}
                       </span>
                     </div>
@@ -174,21 +174,21 @@ export default async function BlogPostPage({ params }) {
                 )}
               </div>
 
-              <div className="flex flex-wrap items-center gap-4 text-xs text-[#566078]">
+              <div className="flex flex-wrap items-center gap-4 text-xs text-brand-slate">
                 {formattedPublishedDate && (
                   <div className="flex items-center gap-1.5">
-                    <Calendar size={14} className="text-[#D09A16]" />
+                    <Calendar size={14} className="text-brand-gold" />
                     <time dateTime={post.publishedAt}>Published {formattedPublishedDate}</time>
                   </div>
                 )}
                 {formattedUpdatedDate && (
-                  <div className="flex items-center gap-1.5 text-[#17213D] font-medium">
-                    <Calendar size={14} className="text-[#D09A16]" />
+                  <div className="flex items-center gap-1.5 text-brand-navy font-medium">
+                    <Calendar size={14} className="text-brand-gold" />
                     <span>Last materially updated: {formattedUpdatedDate}</span>
                   </div>
                 )}
                 <div className="flex items-center gap-1.5">
-                  <Clock size={14} className="text-[#D09A16]" />
+                  <Clock size={14} className="text-brand-gold" />
                   <span>{post.readingTime || 5} min read</span>
                 </div>
               </div>
@@ -222,20 +222,20 @@ export default async function BlogPostPage({ params }) {
               )}
 
               {/* Quick Advisory CTA Widget */}
-              <div className="bg-[#17213D] text-[#F7F5EF] p-6 rounded-2xl border border-[#D09A16]/30 shadow-sm">
-                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#D09A16] mb-2">
+              <div className="bg-brand-navy text-brand-ivory p-6 rounded-2xl border border-brand-gold/30 shadow-sm">
+                <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-gold mb-2">
                   <Building2 size={14} />
                   <span>Confidential Advisory</span>
                 </div>
-                <h4 className="font-serif font-bold text-lg text-[#F7F5EF] mb-2">
+                <h4 className="font-serif font-bold text-lg text-brand-ivory mb-2">
                   Prime DLF Corridors
                 </h4>
-                <p className="text-xs text-[#C9CED9] leading-relaxed mb-4">
+                <p className="text-xs text-brand-text-on-dark-muted leading-relaxed mb-4">
                   Looking for builder floors or commercial investments in {primaryLocation}?
                 </p>
                 <Link
                   href="/contact"
-                  className="block text-center py-2.5 px-4 rounded-xl bg-[#D09A16] hover:bg-[#D09A16] text-[#0E162B] font-bold text-xs uppercase tracking-wider transition-colors shadow-xs"
+                  className="block text-center py-2.5 px-4 rounded-xl bg-brand-gold hover:bg-brand-gold text-brand-navy-deep font-bold text-xs uppercase tracking-wider transition-colors shadow-xs"
                 >
                   Consult Senior Partner
                 </Link>
@@ -268,18 +268,18 @@ export default async function BlogPostPage({ params }) {
 
               {/* Expert Advisory Perspective */}
               {post.expertPerspective?.quote && (
-                <section aria-label="Expert Advisory Perspective" className="my-10 rounded-2xl border-l-4 border-[#D09A16] bg-[#FAF8F5] p-6 sm:p-7 shadow-xs">
-                  <div className="flex items-center gap-2 mb-2 text-[#D09A16] text-xs font-bold uppercase tracking-wider">
+                <section aria-label="Expert Advisory Perspective" className="my-10 rounded-2xl border-l-4 border-brand-gold bg-brand-ivory-warm p-6 sm:p-7 shadow-xs">
+                  <div className="flex items-center gap-2 mb-2 text-brand-gold text-xs font-bold uppercase tracking-wider">
                     <Sparkles size={14} />
                     <span>Expert Perspective</span>
                   </div>
-                  <blockquote className="font-serif italic text-base sm:text-lg text-[#17213D] leading-relaxed mb-3">
+                  <blockquote className="font-serif italic text-base sm:text-lg text-brand-navy leading-relaxed mb-3">
                     &ldquo;{post.expertPerspective.quote}&rdquo;
                   </blockquote>
-                  <div className="text-xs text-[#566078] font-medium">
+                  <div className="text-xs text-brand-slate font-medium">
                     — {post.expertPerspective.authorName || post.author?.name || 'Saudagar Properties Senior Advisory'}
                     {post.expertPerspective.authorRole && (
-                      <span className="text-[#8892A6]">, {post.expertPerspective.authorRole}</span>
+                      <span className="text-brand-muted">, {post.expertPerspective.authorRole}</span>
                     )}
                   </div>
                 </section>
@@ -308,15 +308,15 @@ export default async function BlogPostPage({ params }) {
 
               {/* Tags Section */}
               {post.tags && post.tags.length > 0 && (
-                <div className="flex flex-wrap items-center gap-2 my-8 pt-6 border-t border-[#17213D]/10">
-                  <span className="text-xs font-semibold uppercase tracking-wider text-[#566078]">
+                <div className="flex flex-wrap items-center gap-2 my-8 pt-6 border-t border-brand-navy/10">
+                  <span className="text-xs font-semibold uppercase tracking-wider text-brand-slate">
                     Topics:
                   </span>
                   {post.tags.map((tag) => (
                     <Link
                       key={tag._id || tag.slug}
                       href={`/blog/tag/${tag.slug}`}
-                      className="text-xs px-3 py-1 rounded-full bg-white border border-[#17213D]/10 text-[#17213D] hover:border-[#D09A16] hover:text-[#D09A16] transition-colors"
+                      className="text-xs px-3 py-1 rounded-full bg-white border border-brand-navy/10 text-brand-navy hover:border-brand-gold hover:text-brand-gold transition-colors"
                     >
                       #{tag.name}
                     </Link>
@@ -342,13 +342,13 @@ export default async function BlogPostPage({ params }) {
               {/* Related Articles */}
               {relatedPosts && relatedPosts.length > 0 && (
                 <section aria-labelledby="related-heading" className="my-16">
-                  <div className="flex items-center justify-between mb-8 pb-4 border-b border-[#17213D]/10">
-                    <h2 id="related-heading" className="font-serif font-bold text-2xl sm:text-3xl text-[#17213D]">
+                  <div className="flex items-center justify-between mb-8 pb-4 border-b border-brand-navy/10">
+                    <h2 id="related-heading" className="font-serif font-bold text-2xl sm:text-3xl text-brand-navy">
                       Related Editorial Insights
                     </h2>
                     <Link
                       href="/blog"
-                      className="text-xs font-bold text-[#D09A16] hover:underline uppercase tracking-wider"
+                      className="text-xs font-bold text-brand-gold hover:underline uppercase tracking-wider"
                     >
                       View All Insights →
                     </Link>
@@ -358,7 +358,7 @@ export default async function BlogPostPage({ params }) {
                     {relatedPosts.map((rel) => (
                       <div
                         key={rel._id || rel.slug}
-                        className="bg-white rounded-2xl overflow-hidden border border-[#17213D]/10 group hover:border-[#D09A16]/50 transition-all shadow-xs flex flex-col"
+                        className="bg-white rounded-2xl overflow-hidden border border-brand-navy/10 group hover:border-brand-gold/50 transition-all shadow-xs flex flex-col"
                       >
                         {rel.featuredImage && (
                           <div className="relative aspect-[16/9] w-full overflow-hidden bg-slate-100">
@@ -375,22 +375,22 @@ export default async function BlogPostPage({ params }) {
                         <div className="p-5 flex-1 flex flex-col justify-between">
                           <div>
                             {rel.category && (
-                              <span className="text-[10px] font-bold uppercase tracking-widest text-[#D09A16] block mb-2">
+                              <span className="text-[10px] font-bold uppercase tracking-widest text-brand-gold block mb-2">
                                 {rel.category.name}
                               </span>
                             )}
-                            <h3 className="font-serif font-bold text-base text-[#17213D] group-hover:text-[#D09A16] transition-colors line-clamp-2 mb-2">
+                            <h3 className="font-serif font-bold text-base text-brand-navy group-hover:text-brand-gold transition-colors line-clamp-2 mb-2">
                               <Link href={`/blog/${rel.slug}`}>{rel.title}</Link>
                             </h3>
-                            <p className="text-xs text-[#566078] line-clamp-2 leading-relaxed">
+                            <p className="text-xs text-brand-slate line-clamp-2 leading-relaxed">
                               {rel.excerpt}
                             </p>
                           </div>
-                          <div className="mt-4 pt-3 border-t border-[#17213D]/5 flex items-center justify-between text-[11px] text-[#8892A6]">
+                          <div className="mt-4 pt-3 border-t border-brand-navy/5 flex items-center justify-between text-[11px] text-brand-muted">
                             <span>{rel.readingTime || 5} min read</span>
                             <Link
                               href={`/blog/${rel.slug}`}
-                              className="font-bold text-[#17213D] group-hover:text-[#D09A16] transition-colors"
+                              className="font-bold text-brand-navy group-hover:text-brand-gold transition-colors"
                             >
                               Read →
                             </Link>
@@ -407,18 +407,18 @@ export default async function BlogPostPage({ params }) {
           {/* =========================================================
               FINAL ARTICLE FOOTER & CTA
           ========================================================== */}
-          <footer className="mt-16 pt-12 border-t border-[#17213D]/10">
-            <div className="relative overflow-hidden bg-[#0E162B] text-[#F7F5EF] rounded-3xl p-8 sm:p-12 text-center border border-[#D09A16]/40 shadow-xl max-w-4xl mx-auto">
-              <h2 className="font-serif font-bold text-2xl sm:text-4xl text-[#F7F5EF] mb-4">
+          <footer className="mt-16 pt-12 border-t border-brand-navy/10">
+            <div className="relative overflow-hidden bg-brand-navy-deep text-brand-ivory rounded-3xl p-8 sm:p-12 text-center border border-brand-gold/40 shadow-xl max-w-4xl mx-auto">
+              <h2 className="font-serif font-bold text-2xl sm:text-4xl text-brand-ivory mb-4">
                 Schedule a Private Real Estate Consultation
               </h2>
-              <p className="text-sm sm:text-base text-[#C9CED9] max-w-xl mx-auto leading-relaxed mb-8">
+              <p className="text-sm sm:text-base text-brand-text-on-dark-muted max-w-xl mx-auto leading-relaxed mb-8">
                 Whether acquiring a luxury builder floor in DLF Phase 1–5 or allocating capital to Grade-A commercial pre-leased assets, connect directly with Saudagar Properties.
               </p>
               <div className="flex flex-wrap items-center justify-center gap-4">
                 <Link
                   href="/contact"
-                  className="px-8 py-3.5 rounded-full bg-[#D09A16] hover:bg-[#D09A16] text-[#0E162B] font-bold text-xs uppercase tracking-wider transition-all shadow-md active:scale-95"
+                  className="px-8 py-3.5 rounded-full bg-brand-gold hover:bg-brand-gold text-brand-navy-deep font-bold text-xs uppercase tracking-wider transition-all shadow-md active:scale-95"
                 >
                   Book Private Advisory
                 </Link>

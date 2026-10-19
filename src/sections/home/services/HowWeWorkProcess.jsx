@@ -81,20 +81,20 @@ function LightBackdrop() {
       aria-hidden="true"
     >
       {/* Blueprint Coordinate Grid Overlay (Light Theme) */}
-      <div className="absolute inset-0 opacity-[0.025] bg-[linear-gradient(to_right,#17213D_1px,transparent_1px),linear-gradient(to_bottom,#17213D_1px,transparent_1px)] bg-[size:72px_72px]" />
+      <div className="absolute inset-0 opacity-[0.025] bg-[linear-gradient(to_right,var(--color-brand-navy)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-brand-navy)_1px,transparent_1px)] bg-[size:72px_72px]" />
 
       {/* Ambient Warm Gold Radial Glows */}
-      <div className="absolute -right-36 -top-36 h-[540px] w-[540px] rounded-full bg-[#D09A16]/[0.06] blur-[140px]" />
-      <div className="absolute -bottom-36 -left-36 h-[500px] w-[500px] rounded-full bg-[#17213D]/[0.035] blur-[130px]" />
+      <div className="absolute -right-36 -top-36 h-[540px] w-[540px] rounded-full bg-brand-gold/[0.06] blur-[140px]" />
+      <div className="absolute -bottom-36 -left-36 h-[500px] w-[500px] rounded-full bg-brand-navy/[0.035] blur-[130px]" />
 
       {/* Architectural Vertical Hairline Columns */}
-      <div className="absolute left-[14%] top-0 h-full w-px bg-[#17213D]/[0.03]" />
-      <div className="absolute left-[36%] top-0 h-full w-px bg-[#17213D]/[0.02]" />
-      <div className="absolute right-[28%] top-0 h-full w-px bg-[#17213D]/[0.03]" />
-      <div className="absolute right-[8%] top-0 h-full w-px bg-[#17213D]/[0.02]" />
+      <div className="absolute left-[14%] top-0 h-full w-px bg-brand-navy/[0.03]" />
+      <div className="absolute left-[36%] top-0 h-full w-px bg-brand-navy/[0.02]" />
+      <div className="absolute right-[28%] top-0 h-full w-px bg-brand-navy/[0.03]" />
+      <div className="absolute right-[8%] top-0 h-full w-px bg-brand-navy/[0.02]" />
 
       {/* Top Gold Horizon Beam */}
-      <div className="absolute left-0 right-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#D09A16]/40 to-transparent" />
+      <div className="absolute left-0 right-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-brand-gold/40 to-transparent" />
     </div>
   );
 }
@@ -242,14 +242,14 @@ export default function HowWeWorkProcess() {
         relative
         w-full
         overflow-hidden
-        bg-[#F7F5EF]
-        text-[#17213D]
+        bg-brand-ivory
+        text-brand-navy
         py-16
         sm:py-20
         md:py-24
         border-t
         border-b
-        border-[#17213D]/[0.08]
+        border-brand-navy/[0.08]
       "
     >
       <LightBackdrop />
@@ -263,43 +263,43 @@ export default function HowWeWorkProcess() {
         <header className="process-editorial-header mx-auto mb-14 max-w-3xl text-center lg:mb-16">
 
           {/* Eyebrow Badge */}
-          <div className="inline-flex items-center gap-2.5 rounded-full border border-[#D09A16]/30 bg-[#D09A16]/10 px-4 py-1.5 backdrop-blur-sm">
-            <Sparkles size={11} className="text-[#A87505]" />
-            <span className="text-[9px] font-bold uppercase tracking-[0.26em] text-[#A87505]">
+          <div className="inline-flex items-center gap-2.5 rounded-full border border-brand-gold/30 bg-brand-gold/10 px-4 py-1.5 backdrop-blur-sm">
+            <Sparkles size={11} className="text-brand-gold-deep" />
+            <span className="text-[9px] font-bold uppercase tracking-[0.26em] text-brand-gold-deep">
               {badge}
             </span>
           </div>
 
           {/* Location Annotation */}
-          <div className="mt-4 flex items-center justify-center gap-2.5 text-[8px] font-bold uppercase tracking-[0.24em] text-[#17213D]/40">
-            <span className="h-1.5 w-1.5 rounded-full bg-[#D09A16]" />
+          <div className="mt-4 flex items-center justify-center gap-2.5 text-[8px] font-bold uppercase tracking-[0.24em] text-brand-navy/40">
+            <span className="h-1.5 w-1.5 rounded-full bg-brand-gold" />
             <span>THE THREE-STAGE PROTOCOL</span>
             <span>·</span>
-            <span className="text-[#A87505]">DLF GURUGRAM DESK</span>
+            <span className="text-brand-gold-deep">DLF GURUGRAM DESK</span>
           </div>
 
           {/* Large Serif Title */}
           <h2
             id="how-we-work-heading"
-            className="mt-4 font-serif text-4xl font-normal leading-[1.05] tracking-tight text-[#17213D] sm:text-5xl lg:text-6xl"
+            className="mt-4 font-serif text-4xl font-normal leading-[1.05] tracking-tight text-brand-navy sm:text-5xl lg:text-6xl"
           >
             {titleMain}{" "}
-            <span className="font-light italic text-[#A87505]">
+            <span className="font-light italic text-brand-gold-deep">
               {titleItalic}
             </span>
           </h2>
 
           {/* Editorial Description */}
-          <p className="mt-5 text-sm font-light leading-relaxed text-[#17213D]/65 sm:text-base">
+          <p className="mt-5 text-sm font-light leading-relaxed text-brand-navy/65 sm:text-base">
             {description}
           </p>
 
           {/* Brand Philosophy Anchor */}
-          <div className="mt-6 flex items-center justify-center gap-3 text-[7px] font-semibold uppercase tracking-[0.28em] text-[#17213D]/30">
+          <div className="mt-6 flex items-center justify-center gap-3 text-[7px] font-semibold uppercase tracking-[0.28em] text-brand-navy/30">
             <span>CURATED</span>
-            <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
+            <span className="h-1 w-1 rounded-full bg-brand-gold" />
             <span>CONSIDERED</span>
-            <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
+            <span className="h-1 w-1 rounded-full bg-brand-gold" />
             <span>TRANSPARENT</span>
           </div>
 
@@ -312,12 +312,12 @@ export default function HowWeWorkProcess() {
         <div className="process-strip-container relative">
 
           {/* Top Architectural Gold Hairline */}
-          <div className="h-px w-full overflow-hidden bg-[#17213D]/10">
-            <div className="process-gold-line h-full w-full origin-left scale-x-0 bg-gradient-to-r from-[#D09A16] via-[#D09A16]/40 to-transparent" />
+          <div className="h-px w-full overflow-hidden bg-brand-navy/10">
+            <div className="process-gold-line h-full w-full origin-left scale-x-0 bg-gradient-to-r from-brand-gold via-brand-gold/40 to-transparent" />
           </div>
 
           {/* Process Strip Columns: Direct on Light Luxury Canvas */}
-          <div className="grid grid-cols-1 divide-y divide-[#17213D]/10 lg:grid-cols-3 lg:divide-x lg:divide-y-0">
+          <div className="grid grid-cols-1 divide-y divide-brand-navy/10 lg:grid-cols-3 lg:divide-x lg:divide-y-0">
             {steps.map((step, index) => {
               const Icon = step.icon || Compass;
 
@@ -329,7 +329,7 @@ export default function HowWeWorkProcess() {
                     group relative
                     px-0 py-8
                     transition-colors duration-500
-                    hover:bg-[#17213D]/[0.015]
+                    hover:bg-brand-navy/[0.015]
                     sm:py-10
                     lg:px-8 lg:py-12
                     xl:px-10
@@ -338,21 +338,21 @@ export default function HowWeWorkProcess() {
                   {/* Step Header: Numeral & Icon */}
                   <div className="flex items-center justify-between">
                     <div className="flex items-baseline gap-3">
-                      <span className="font-serif text-3xl font-light leading-none text-[#D09A16] sm:text-4xl">
+                      <span className="font-serif text-3xl font-light leading-none text-brand-gold sm:text-4xl">
                         {step.step}
                       </span>
-                      <span className="text-[8px] font-bold uppercase tracking-[0.24em] text-[#17213D]/50">
+                      <span className="text-[8px] font-bold uppercase tracking-[0.24em] text-brand-navy/50">
                         {step.phaseTag}
                       </span>
                     </div>
 
-                    <div className="flex h-9 w-9 items-center justify-center rounded-full border border-[#D09A16]/30 bg-[#D09A16]/[0.08] text-[#A87505] transition-colors duration-300 group-hover:border-[#D09A16] group-hover:bg-[#D09A16] group-hover:text-white">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-full border border-brand-gold/30 bg-brand-gold/[0.08] text-brand-gold-deep transition-colors duration-300 group-hover:border-brand-gold group-hover:bg-brand-gold group-hover:text-white">
                       <Icon size={16} strokeWidth={1.7} />
                     </div>
                   </div>
 
                   {/* Architectural Photo Window */}
-                  <div className="relative my-6 h-48 w-full overflow-hidden rounded-xl border border-[#17213D]/10 transition-colors duration-500 group-hover:border-[#D09A16]/40 sm:h-52">
+                  <div className="relative my-6 h-48 w-full overflow-hidden rounded-xl border border-brand-navy/10 transition-colors duration-500 group-hover:border-brand-gold/40 sm:h-52">
                     <Image
                       src={step.image}
                       alt={step.title}
@@ -362,32 +362,32 @@ export default function HowWeWorkProcess() {
                     />
 
                     {/* Architectural Vignette */}
-                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#17213D]/80 via-transparent to-transparent" />
+                    <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-brand-navy/80 via-transparent to-transparent" />
 
                     {/* Metadata Watermark inside image */}
                     <div className="pointer-events-none absolute bottom-3 left-4 right-4 flex items-center justify-between font-mono text-[7px] uppercase tracking-[0.22em] text-white/90">
-                      <span className="text-[#E0C070]">{step.badge}</span>
+                      <span className="text-brand-gold-light">{step.badge}</span>
                       <span className="text-white/60">DLF GURUGRAM</span>
                     </div>
                   </div>
 
                   {/* Stage Headline */}
-                  <h3 className="font-serif text-xl font-normal leading-tight text-[#17213D] transition-colors duration-300 group-hover:text-[#A87505] sm:text-2xl">
+                  <h3 className="font-serif text-xl font-normal leading-tight text-brand-navy transition-colors duration-300 group-hover:text-brand-gold-deep sm:text-2xl">
                     {step.title}
                   </h3>
 
                   {/* Stage Description */}
-                  <p className="mt-3 text-xs font-light leading-relaxed text-[#17213D]/70 sm:text-[13px]">
+                  <p className="mt-3 text-xs font-light leading-relaxed text-brand-navy/70 sm:text-[13px]">
                     {step.imageText}
                   </p>
 
                   {/* Expandable Protocol Brief Drawer */}
-                  <div className="mt-6 border-t border-[#17213D]/10 pt-4">
+                  <div className="mt-6 border-t border-brand-navy/10 pt-4">
                     <button
                       type="button"
                       onClick={() => handleToggle(index)}
                       aria-expanded={expandedIndex === index}
-                      className="flex w-full cursor-pointer items-center justify-between text-[9px] font-bold uppercase tracking-[0.18em] text-[#17213D] transition-colors duration-300 hover:text-[#A87505]"
+                      className="flex w-full cursor-pointer items-center justify-between text-[9px] font-bold uppercase tracking-[0.18em] text-brand-navy transition-colors duration-300 hover:text-brand-gold-deep"
                     >
                       <span>
                         {expandedIndex === index
@@ -395,25 +395,24 @@ export default function HowWeWorkProcess() {
                           : "Explore Stage Protocol"}
                       </span>
 
-                      <span className="flex h-6 w-6 items-center justify-center rounded-full border border-[#D09A16]/30 text-[#A87505] transition-all duration-300 group-hover:border-[#D09A16]">
+                      <span className="flex h-6 w-6 items-center justify-center rounded-full border border-brand-gold/30 text-brand-gold-deep transition-all duration-300 group-hover:border-brand-gold">
                         <ArrowUpRight
                           size={12}
-                          className={`transition-transform duration-300 ${
-                            expandedIndex === index ? "rotate-90" : ""
-                          }`}
+                          className={`transition-transform duration-300 ${expandedIndex === index ? "rotate-90" : ""
+                            }`}
                         />
                       </span>
                     </button>
 
                     {expandedIndex === index && (
-                      <div className="mt-3.5 rounded-xl border border-[#17213D]/10 bg-[#EFEBE1]/70 p-4 transition-all duration-300">
+                      <div className="mt-3.5 rounded-xl border border-brand-navy/10 bg-brand-cream/70 p-4 transition-all duration-300">
                         <div className="mb-2 flex items-center gap-2">
-                          <span className="h-px w-5 bg-[#D09A16]" />
-                          <span className="text-[7px] font-bold uppercase tracking-[0.2em] text-[#A87505]">
+                          <span className="h-px w-5 bg-brand-gold" />
+                          <span className="text-[7px] font-bold uppercase tracking-[0.2em] text-brand-gold-deep">
                             ADVISORY DIRECTIVE
                           </span>
                         </div>
-                        <p className="text-[11px] font-normal leading-relaxed text-[#17213D]/75">
+                        <p className="text-[11px] font-normal leading-relaxed text-brand-navy/75">
                           {step.chatText}
                         </p>
                       </div>
@@ -421,9 +420,9 @@ export default function HowWeWorkProcess() {
                   </div>
 
                   {/* Architectural Blueprint Footer */}
-                  <div className="mt-6 flex items-center justify-between font-mono text-[7px] uppercase tracking-[0.22em] text-[#17213D]/35">
+                  <div className="mt-6 flex items-center justify-between font-mono text-[7px] uppercase tracking-[0.22em] text-brand-navy/35">
                     <span>SAUDAGAR PROPERTIES</span>
-                    <span className="text-[#A87505]">
+                    <span className="text-brand-gold-deep">
                       STAGE {step.step} / 03
                     </span>
                   </div>
@@ -433,15 +432,11 @@ export default function HowWeWorkProcess() {
           </div>
 
           {/* Bottom Architectural Hairline */}
-          <div className="h-px w-full bg-[#17213D]/10" />
+          <div className="h-px w-full bg-brand-navy/10" />
 
         </div>
 
-        {/* Minimal Micro Trust Statement */}
-        <div className="mt-10 flex items-center justify-center gap-3 text-center text-[8px] uppercase tracking-[0.24em] text-[#17213D]/40">
-          <Check size={11} className="text-[#A87505]" />
-          <span>Client Confidentiality Guaranteed Throughout All 3 Stages</span>
-        </div>
+
 
       </div>
     </section>

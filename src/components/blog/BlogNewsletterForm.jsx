@@ -40,7 +40,7 @@ export default function BlogNewsletterForm({ placeholder = "Enter your confident
 
   if (submitted) {
     return (
-      <div className="flex items-center justify-center gap-2.5 p-4 rounded-2xl bg-[#D09A16]/15 border border-[#D09A16]/30 text-[#D09A16] text-xs font-semibold max-w-md mx-auto mb-6">
+      <div className="flex items-center justify-center gap-2.5 p-4 rounded-2xl bg-brand-gold/15 border border-brand-gold/30 text-brand-gold text-xs font-semibold max-w-md mx-auto mb-6">
         <CheckCircle2 size={16} className="shrink-0" />
         <span>Thank you for joining our private advisory registry.</span>
       </div>
@@ -55,15 +55,15 @@ export default function BlogNewsletterForm({ placeholder = "Enter your confident
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder={placeholder}
-        className="w-full px-5 py-3.5 rounded-2xl bg-white/[0.06] border border-white/15 text-white placeholder-slate-400 text-xs outline-none focus:border-[#D09A16] focus:ring-1 focus:ring-[#D09A16] shadow-sm transition-all"
+        className="w-full px-5 py-3.5 rounded-2xl bg-white/[0.06] border border-white/15 text-white placeholder-slate-400 text-xs outline-none focus:border-brand-gold focus:ring-1 focus:ring-brand-gold shadow-sm transition-all"
       />
       <button
         type="submit"
         disabled={loading}
-        className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-[#D09A16] hover:bg-[#E5AC2B] disabled:opacity-60 text-[#0A0E17] font-bold text-xs uppercase tracking-wider transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer shrink-0"
+        className="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-brand-gold hover:bg-brand-gold-light disabled:opacity-60 text-brand-obsidian font-bold text-xs uppercase tracking-wider transition-all shadow-md active:scale-95 flex items-center justify-center gap-2 cursor-pointer shrink-0"
       >
         {loading ? (
-          <div className="w-4 h-4 border-2 border-[#0A0E17] border-t-transparent rounded-full animate-spin" />
+          <div className="w-4 h-4 border-2 border-brand-obsidian border-t-transparent rounded-full animate-spin" />
         ) : (
           <>
             <span>{buttonText}</span>

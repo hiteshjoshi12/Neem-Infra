@@ -54,16 +54,16 @@ export default function ScrollToTopWidget({ isHidden }) {
           transition={{ duration: 0.25 }}
           className="pointer-events-auto group relative flex items-center mb-4"
         >
-          <span className="hidden sm:block absolute right-full mr-3.5 px-3 py-1 rounded-full bg-[#1D263B]/90 backdrop-blur-md text-[11px] font-medium tracking-wide text-[#E2E8F0] shadow-lg border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
+          <span className="hidden sm:block absolute right-full mr-3.5 px-3 py-1 rounded-full bg-brand-navy/90 backdrop-blur-md text-[11px] font-medium tracking-wide text-brand-text-on-dark shadow-lg border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
             Back to top
           </span>
           <button
             onClick={scrollToTop}
-            className="relative w-11 h-11 rounded-full bg-[#1D263B]/95 backdrop-blur-xl text-[#D09A16] flex items-center justify-center shadow-[0_5px_15px_rgba(20,25,35,0.3)] border border-[#D09A16]/30 hover:border-[#D09A16] transition-all duration-300 hover:scale-105 active:scale-95 group/btn cursor-pointer"
+            className="relative w-11 h-11 rounded-full bg-brand-navy/95 backdrop-blur-xl text-brand-gold flex items-center justify-center shadow-[0_5px_15px_rgba(20,25,35,0.3)] border border-brand-gold/30 hover:border-brand-gold transition-all duration-300 hover:scale-105 active:scale-95 group/btn cursor-pointer"
           >
             <svg className="absolute inset-0 w-full h-full -rotate-90 pointer-events-none p-[2px]" viewBox="0 0 44 44">
               <circle cx="22" cy="22" r={radius} className="stroke-white/10" strokeWidth="2.5" fill="none" />
-              <circle ref={progressCircleRef} cx="22" cy="22" r={radius} className="stroke-[#D09A16]" strokeWidth="2.5" strokeDasharray={circumference} strokeDashoffset={circumference} strokeLinecap="round" fill="none" />
+              <circle ref={progressCircleRef} cx="22" cy="22" r={radius} className="stroke-brand-gold" strokeWidth="2.5" strokeDasharray={circumference} strokeDashoffset={circumference} strokeLinecap="round" fill="none" />
             </svg>
             <ArrowUp size={16} className="transform group-hover/btn:-translate-y-0.5 transition-transform duration-300 relative z-10" />
           </button>

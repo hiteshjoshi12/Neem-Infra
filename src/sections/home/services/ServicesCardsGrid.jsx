@@ -122,7 +122,7 @@ export default function ServicesCardsGrid() {
             href={targetUrl}
             prefetch={true}
             ref={(el) => (cardRefs.current[index] = el)}
-            className="group relative flex flex-col h-full rounded-3xl bg-white border border-[#17213D]/10 shadow-[0_12px_35px_-10px_rgba(23,33,61,0.06)] hover:shadow-[0_25px_50px_-10px_rgba(208, 154, 22,0.22)] hover:border-[#D09A16]/50 hover:-translate-y-2 transition-all duration-300 overflow-hidden transform-gpu cursor-pointer no-underline block"
+            className="group relative flex flex-col h-full rounded-3xl bg-white border border-brand-navy/10 shadow-[0_12px_35px_-10px_rgba(23,33,61,0.06)] hover:shadow-[0_25px_50px_-10px_rgba(208, 154, 22,0.22)] hover:border-brand-gold/50 hover:-translate-y-2 transition-all duration-300 overflow-hidden transform-gpu cursor-pointer no-underline block"
           >
             {/* Top Image Preview with Dark Vignette */}
             <div className="relative h-52 sm:h-56 w-full overflow-hidden bg-slate-100">
@@ -134,28 +134,28 @@ export default function ServicesCardsGrid() {
                 loading="lazy"
                 className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0E162B] via-[#0E162B]/35 to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-brand-navy-deep via-brand-navy-deep/35 to-transparent pointer-events-none" />
 
               {/* Category Badge & Number Indicator */}
               <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
-                <span className="px-3.5 py-1 rounded-full bg-[#17213D]/90 backdrop-blur-md border border-white/20 text-white text-[10px] font-bold tracking-widest uppercase shadow-sm">
+                <span className="px-3.5 py-1 rounded-full bg-brand-navy/90 backdrop-blur-md border border-white/20 text-white text-[10px] font-bold tracking-widest uppercase shadow-sm">
                   {service.category}
                 </span>
-                <span className="w-8 h-8 rounded-full bg-white/90 backdrop-blur-md border border-[#17213D]/15 text-[#D09A16] flex items-center justify-center text-xs font-bold font-serif shadow-sm">
+                <span className="w-8 h-8 rounded-full bg-white/90 backdrop-blur-md border border-brand-navy/15 text-brand-gold flex items-center justify-center text-xs font-bold font-serif shadow-sm">
                   {service.id}
                 </span>
               </div>
 
               {/* Title & Icon overlaid at the bottom of the image */}
               <div className="absolute bottom-4 left-5 right-5 flex items-center gap-3">
-                <div className="w-11 h-11 rounded-2xl bg-[#D09A16] text-[#0E162B] flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 shrink-0">
+                <div className="w-11 h-11 rounded-2xl bg-brand-gold text-brand-navy-deep flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform duration-300 shrink-0">
                   <IconComponent size={22} />
                 </div>
                 <div>
                   <h3 className="text-2xl font-serif font-bold text-white tracking-wide">
                     {service.title}
                   </h3>
-                  <p className="text-[11px] text-[#D09A16] font-medium">
+                  <p className="text-[11px] text-brand-gold font-medium">
                     {service.badge}
                   </p>
                 </div>
@@ -164,15 +164,15 @@ export default function ServicesCardsGrid() {
 
             {/* Card Content */}
             <div className="p-6 sm:p-7 flex flex-col justify-between flex-grow bg-white">
-              <p className="text-[#566078] text-xs sm:text-sm font-normal leading-relaxed mb-6">
+              <p className="text-brand-slate text-xs sm:text-sm font-normal leading-relaxed mb-6">
                 {service.description}
               </p>
 
               {/* Bulleted Micro-Highlights */}
-              <div className="pt-4 border-t border-[#17213D]/[0.08] space-y-2 mb-6">
+              <div className="pt-4 border-t border-brand-navy/[0.08] space-y-2 mb-6">
                 {service.highlights.map((item, i) => (
-                  <div key={i} className="flex items-center gap-2.5 text-xs text-[#17213D] font-medium">
-                    <CheckCircle2 size={14} className="text-[#D09A16] shrink-0" />
+                  <div key={i} className="flex items-center gap-2.5 text-xs text-brand-navy font-medium">
+                    <CheckCircle2 size={14} className="text-brand-gold shrink-0" />
                     <span>{item}</span>
                   </div>
                 ))}
@@ -180,15 +180,15 @@ export default function ServicesCardsGrid() {
 
               {/* Explore Service Action Indicator */}
               <div
-                className="w-full py-3.5 px-5 rounded-2xl bg-[#F7F5EF] group-hover:bg-[#17213D] text-[#17213D] group-hover:text-[#F7F5EF] border border-[#17213D]/12 group-hover:border-[#17213D] text-xs font-semibold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 shadow-sm"
+                className="w-full py-3.5 px-5 rounded-2xl bg-brand-navy group-hover:bg-brand-gold text-white group-hover:text-brand-navy font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 shadow-md group-hover:shadow-lg"
               >
                 <span>{service.ctaText || `Explore ${service.title}`}</span>
-                <ArrowRight size={14} className="text-[#D09A16] group-hover:translate-x-1.5 transition-transform" />
+                <ArrowRight size={14} className="text-brand-gold group-hover:text-brand-navy group-hover:translate-x-1.5 transition-transform" />
               </div>
             </div>
 
             {/* Bottom Champagne Gold Hover Glow Line */}
-            <div className="h-1 w-full bg-gradient-to-r from-transparent via-[#D09A16] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+            <div className="h-1 w-full bg-gradient-to-r from-transparent via-brand-gold to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
           </Link>
         );
       })}

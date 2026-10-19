@@ -71,20 +71,20 @@ export default function AboutConsultationCta() {
   }, []);
 
   return (
-    <section ref={containerRef} className="relative py-12 md:py-16 bg-[#070A11] text-white overflow-hidden">
+    <section ref={containerRef} className="relative py-12 md:py-16 bg-brand-ivory-warm text-brand-navy border-t border-brand-cream-border overflow-hidden">
       {/* Ambient Luxury Light Beams */}
-      <div className="absolute top-0 right-1/4 w-[600px] h-[350px] bg-[#D09A16]/12 blur-[130px] rounded-full pointer-events-none" />
-      <div className="absolute bottom-0 left-1/4 w-[500px] h-[300px] bg-amber-500/8 blur-[120px] rounded-full pointer-events-none" />
+      <div className="absolute top-0 right-1/4 w-[600px] h-[350px] bg-brand-gold/10 blur-[130px] rounded-full pointer-events-none" />
+      <div className="absolute bottom-0 left-1/4 w-[500px] h-[300px] bg-brand-gold/10 blur-[120px] rounded-full pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
         {/* Main Consultation Chassis */}
         <div
           ref={chassisRef}
-          className="relative rounded-3xl sm:rounded-[36px] p-8 sm:p-12 lg:p-14 bg-gradient-to-br from-[#101522]/95 via-[#0C101A]/95 to-[#080B12]/98 border border-[#D09A16]/35 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.85),0_0_50px_rgba(208, 154, 22,0.15)] backdrop-blur-2xl overflow-hidden"
+          className="relative rounded-3xl sm:rounded-[36px] p-8 sm:p-12 lg:p-14 bg-gradient-to-br from-brand-ivory-warm via-white to-brand-cream/60 border border-brand-cream-border shadow-[0_25px_60px_-15px_rgba(17,24,39,0.08),0_0_40px_rgba(197,154,39,0.08)] backdrop-blur-2xl overflow-hidden"
         >
           {/* Subtle Golden Radial Glow */}
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-[#D09A16]/15 rounded-full blur-3xl pointer-events-none" />
+          <div className="absolute -top-24 -right-24 w-96 h-96 bg-brand-gold/10 rounded-full blur-3xl pointer-events-none" />
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-12 items-center">
 
@@ -92,20 +92,20 @@ export default function AboutConsultationCta() {
             <div ref={leftColRef} className="lg:col-span-7 space-y-6 text-center lg:text-left">
 
               {/* Headline */}
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-white leading-[1.15]">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif text-brand-navy leading-[1.15]">
                 {cms.titleMain || "Request a Private "} <br />
-                <span className="italic font-light text-[#D09A16] drop-shadow-[0_0_30px_rgba(208, 154, 22,0.35)]">
+                <span className="italic font-light text-brand-gold-deep">
                   {cms.titleItalic || "Executive Consultation"}
                 </span>
               </h2>
 
               {/* Authentic Copy */}
-              <p className="text-sm sm:text-base text-slate-300 font-light leading-relaxed max-w-xl mx-auto lg:mx-0">
+              <p className="text-sm sm:text-base text-brand-slate font-light leading-relaxed max-w-xl mx-auto lg:mx-0">
                 {cms.subtitle || "Reach out to get all support that will help you to make a wise decision and invest in the right property. Our founders and senior consultants personally guide your acquisition with complete legal transparency."}
               </p>
 
               {/* VIP Assurances */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-xs text-slate-300">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 text-xs text-brand-slate">
                 {(cms.assurances && Array.isArray(cms.assurances) && cms.assurances.length > 0
                   ? cms.assurances
                   : [
@@ -116,8 +116,8 @@ export default function AboutConsultationCta() {
                     ]
                 ).map((assurance, aIdx) => (
                   <div key={aIdx} className="flex items-center gap-2 justify-center lg:justify-start">
-                    <CheckCircle2 size={15} className="text-[#D09A16] shrink-0" />
-                    <span>{assurance}</span>
+                    <CheckCircle2 size={15} className="text-brand-gold-deep shrink-0" />
+                    <span className="text-brand-navy font-medium">{assurance}</span>
                   </div>
                 ))}
               </div>
@@ -126,7 +126,7 @@ export default function AboutConsultationCta() {
               <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-3">
                 <a
                   href={`tel:${phone.replace(/\s+/g, '')}`}
-                  className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-[#D09A16] to-[#D09A16] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-[0.16em] flex items-center gap-2.5 transition-all shadow-[0_10px_30px_rgba(208, 154, 22,0.35)] hover:-translate-y-0.5 cursor-pointer"
+                  className="px-7 py-3.5 rounded-2xl bg-gradient-to-r from-brand-gold to-brand-gold-light hover:brightness-105 text-white font-bold text-xs uppercase tracking-[0.16em] flex items-center gap-2.5 transition-all shadow-[0_10px_25px_rgba(197,154,39,0.3)] hover:-translate-y-0.5 cursor-pointer"
                 >
                   <Phone size={15} />
                   <span>Call Direct: {phone}</span>
@@ -136,7 +136,7 @@ export default function AboutConsultationCta() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-7 py-3.5 rounded-2xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs uppercase tracking-[0.16em] flex items-center gap-2.5 transition-all shadow-[0_10px_25px_rgba(37,211,102,0.3)] hover:-translate-y-0.5 cursor-pointer"
+                  className="px-7 py-3.5 rounded-2xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold text-xs uppercase tracking-[0.16em] flex items-center gap-2.5 transition-all shadow-[0_10px_25px_rgba(37,211,102,0.25)] hover:-translate-y-0.5 cursor-pointer"
                 >
                   <WhatsAppIcon size={16} />
                   <span>WhatsApp Concierge</span>
@@ -152,36 +152,36 @@ export default function AboutConsultationCta() {
                 href={gmapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group p-4 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-[#D09A16]/50 transition-colors duration-300 flex items-center justify-between cursor-pointer"
+                className="group p-4 rounded-2xl bg-white/80 hover:bg-white border border-brand-cream-border hover:border-brand-gold/60 shadow-sm transition-all duration-300 flex items-center justify-between cursor-pointer"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-11 h-11 rounded-xl bg-[#D09A16]/15 border border-[#D09A16]/30 text-[#D09A16] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                  <div className="w-11 h-11 rounded-xl bg-brand-gold/10 border border-brand-gold/25 text-brand-gold-deep flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                     <MapPin size={18} />
                   </div>
                   <div>
-                    <div className="text-[10px] font-mono tracking-widest text-[#D09A16] uppercase">
+                    <div className="text-[10px] font-mono tracking-widest text-brand-gold-deep uppercase">
                       Headquarters & Lounge
                     </div>
-                    <div className="text-xs sm:text-sm font-semibold text-white group-hover:text-[#D09A16] transition-colors">
+                    <div className="text-xs sm:text-sm font-semibold text-brand-navy group-hover:text-brand-gold-deep transition-colors">
                       38, Akashneem Marg, DLF Phase 2
                     </div>
-                    <div className="text-[11px] text-slate-400">Gurugram, Haryana 122002</div>
+                    <div className="text-[11px] text-brand-slate">Gurugram, Haryana 122002</div>
                   </div>
                 </div>
-                <ExternalLink size={15} className="text-slate-500 group-hover:text-[#D09A16] transition-colors" />
+                <ExternalLink size={15} className="text-brand-slate-light group-hover:text-brand-gold-deep transition-colors" />
               </a>
 
               {/* Phone Hotline Pod */}
-              <div className="group p-4 rounded-2xl bg-white/[0.04] border border-white/10 hover:border-[#D09A16]/50 transition-colors duration-300 flex items-center justify-between">
+              <div className="group p-4 rounded-2xl bg-white/80 border border-brand-cream-border hover:border-brand-gold/60 shadow-sm transition-all duration-300 flex items-center justify-between">
                 <div className="flex items-center gap-4">
-                  <div className="w-11 h-11 rounded-xl bg-[#D09A16]/15 border border-[#D09A16]/30 text-[#D09A16] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                  <div className="w-11 h-11 rounded-xl bg-brand-gold/10 border border-brand-gold/25 text-brand-gold-deep flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                     <Phone size={18} />
                   </div>
                   <div>
-                    <div className="text-[10px] font-mono tracking-widest text-[#D09A16] uppercase">
+                    <div className="text-[10px] font-mono tracking-widest text-brand-gold-deep uppercase">
                       Founders&apos; Direct Hotlines
                     </div>
-                    <div className="text-xs sm:text-sm font-semibold text-white">
+                    <div className="text-xs sm:text-sm font-semibold text-brand-navy">
                       +91 98112 21207 / +91 97185 11207
                     </div>
                   </div>
@@ -191,22 +191,22 @@ export default function AboutConsultationCta() {
               {/* Email Pod */}
               <a
                 href="mailto:saudagar.properties@yahoo.in"
-                className="group p-4 rounded-2xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 hover:border-[#D09A16]/50 transition-colors duration-300 flex items-center justify-between cursor-pointer"
+                className="group p-4 rounded-2xl bg-white/80 hover:bg-white border border-brand-cream-border hover:border-brand-gold/60 shadow-sm transition-all duration-300 flex items-center justify-between cursor-pointer"
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-11 h-11 rounded-xl bg-[#D09A16]/15 border border-[#D09A16]/30 text-[#D09A16] flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
+                  <div className="w-11 h-11 rounded-xl bg-brand-gold/10 border border-brand-gold/25 text-brand-gold-deep flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform">
                     <Mail size={18} />
                   </div>
                   <div>
-                    <div className="text-[10px] font-mono tracking-widest text-[#D09A16] uppercase">
+                    <div className="text-[10px] font-mono tracking-widest text-brand-gold-deep uppercase">
                       Direct Email Inquiries
                     </div>
-                    <div className="text-xs sm:text-sm font-semibold text-white group-hover:text-[#D09A16] transition-colors">
+                    <div className="text-xs sm:text-sm font-semibold text-brand-navy group-hover:text-brand-gold-deep transition-colors">
                       saudagar.properties@yahoo.in
                     </div>
                   </div>
                 </div>
-                <ExternalLink size={15} className="text-slate-500 group-hover:text-[#D09A16] transition-colors" />
+                <ExternalLink size={15} className="text-brand-slate-light group-hover:text-brand-gold-deep transition-colors" />
               </a>
 
             </div>

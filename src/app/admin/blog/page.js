@@ -91,7 +91,7 @@ export default function AdminBlogDashboard() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-white/10">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[10px] font-bold tracking-wider text-[#D09A16] uppercase mb-2">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-[10px] font-bold tracking-wider text-brand-gold uppercase mb-2">
             <BookOpen size={12} />
             <span>Blog & Article CMS</span>
           </div>
@@ -116,7 +116,7 @@ export default function AdminBlogDashboard() {
 
           <Link
             href="/admin/blog/new"
-            className="px-5 py-2.5 rounded-xl bg-[#D09A16] hover:bg-[#b8850f] text-[#0A0E17] font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg cursor-pointer"
+            className="px-5 py-2.5 rounded-xl bg-brand-gold hover:bg-[#b8850f] text-brand-obsidian font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-lg cursor-pointer"
           >
             <Plus size={15} />
             <span>New Article</span>
@@ -133,7 +133,7 @@ export default function AdminBlogDashboard() {
 
       {/* Metrics Row */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        <div className="p-4 rounded-2xl bg-[#0E162B] border border-white/10 flex items-center justify-between">
+        <div className="p-4 rounded-2xl bg-brand-navy-deep border border-white/10 flex items-center justify-between">
           <div>
             <span className="text-slate-400 text-[11px] font-bold uppercase tracking-wider block">Total Articles</span>
             <span className="text-2xl font-serif font-bold text-white mt-1 block">{metrics.total}</span>
@@ -143,7 +143,7 @@ export default function AdminBlogDashboard() {
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#0E162B] border border-white/10 flex items-center justify-between">
+        <div className="p-4 rounded-2xl bg-brand-navy-deep border border-white/10 flex items-center justify-between">
           <div>
             <span className="text-emerald-400 text-[11px] font-bold uppercase tracking-wider block">Live & Published</span>
             <span className="text-2xl font-serif font-bold text-white mt-1 block">{metrics.published}</span>
@@ -153,7 +153,7 @@ export default function AdminBlogDashboard() {
           </div>
         </div>
 
-        <div className="p-4 rounded-2xl bg-[#0E162B] border border-white/10 flex items-center justify-between">
+        <div className="p-4 rounded-2xl bg-brand-navy-deep border border-white/10 flex items-center justify-between">
           <div>
             <span className="text-amber-400 text-[11px] font-bold uppercase tracking-wider block">Drafts</span>
             <span className="text-2xl font-serif font-bold text-white mt-1 block">{metrics.drafts}</span>
@@ -165,7 +165,7 @@ export default function AdminBlogDashboard() {
       </div>
 
       {/* Filter and Search Bar */}
-      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3 bg-[#0E162B] border border-white/10 rounded-2xl">
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-3 p-3 bg-brand-navy-deep border border-white/10 rounded-2xl">
         <div className="relative w-full sm:w-80">
           <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400" />
           <input
@@ -173,7 +173,7 @@ export default function AdminBlogDashboard() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search by title or slug..."
-            className="w-full pl-9 pr-3 py-2 bg-white/[0.04] border border-white/10 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#D09A16]"
+            className="w-full pl-9 pr-3 py-2 bg-white/[0.04] border border-white/10 rounded-xl text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-gold"
           />
         </div>
 
@@ -188,7 +188,7 @@ export default function AdminBlogDashboard() {
               onClick={() => setStatusFilter(tab.id)}
               className={`px-3 py-1.5 rounded-xl text-xs font-semibold transition-all cursor-pointer whitespace-nowrap ${
                 statusFilter === tab.id
-                  ? 'bg-[#D09A16] text-[#0A0E17]'
+                  ? 'bg-brand-gold text-brand-obsidian'
                   : 'bg-white/5 text-slate-400 hover:text-white hover:bg-white/10'
               }`}
             >
@@ -199,10 +199,10 @@ export default function AdminBlogDashboard() {
       </div>
 
       {/* Articles Table */}
-      <div className="bg-[#0E162B] border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
+      <div className="bg-brand-navy-deep border border-white/10 rounded-2xl overflow-hidden shadow-2xl">
         {loading ? (
           <div className="p-16 text-center text-slate-400 text-xs">
-            <div className="w-6 h-6 border-2 border-[#D09A16] border-t-transparent rounded-full animate-spin mx-auto mb-3" />
+            <div className="w-6 h-6 border-2 border-brand-gold border-t-transparent rounded-full animate-spin mx-auto mb-3" />
             Loading articles...
           </div>
         ) : filteredBlogs.length === 0 ? (
@@ -210,7 +210,7 @@ export default function AdminBlogDashboard() {
             <p>No articles found matching your query.</p>
             <Link
               href="/admin/blog/new"
-              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-[#D09A16] text-[#0A0E17] font-bold text-xs"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-brand-gold text-brand-obsidian font-bold text-xs"
             >
               <Plus size={14} />
               <span>Create New Article</span>
@@ -233,7 +233,7 @@ export default function AdminBlogDashboard() {
                 {filteredBlogs.map((blog) => (
                   <tr key={blog._id} className="hover:bg-white/[0.02] transition-colors group">
                     <td className="px-5 py-4 max-w-sm">
-                      <p className="font-serif font-bold text-white text-sm group-hover:text-[#D09A16] transition-colors line-clamp-1 mb-0.5">
+                      <p className="font-serif font-bold text-white text-sm group-hover:text-brand-gold transition-colors line-clamp-1 mb-0.5">
                         {blog.title}
                       </p>
                       <p className="text-[11px] text-slate-500 font-mono">
@@ -243,7 +243,7 @@ export default function AdminBlogDashboard() {
 
                     <td className="px-5 py-4 whitespace-nowrap">
                       {blog.category?.name ? (
-                        <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-[#D09A16]/10 text-[#D09A16] border border-[#D09A16]/20">
+                        <span className="px-2.5 py-1 rounded-full text-[10px] font-bold bg-brand-gold/10 text-brand-gold border border-brand-gold/20">
                           {blog.category.name}
                         </span>
                       ) : (
@@ -294,7 +294,7 @@ export default function AdminBlogDashboard() {
 
                         <Link
                           href={`/admin/blog/${blog._id}/edit`}
-                          className="p-1.5 rounded-lg bg-white/5 hover:bg-[#D09A16] text-slate-300 hover:text-[#0A0E17] transition-all"
+                          className="p-1.5 rounded-lg bg-white/5 hover:bg-brand-gold text-slate-300 hover:text-brand-obsidian transition-all"
                           title="Edit article"
                         >
                           <Pencil size={14} />

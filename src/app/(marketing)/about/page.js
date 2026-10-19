@@ -24,7 +24,7 @@ export default function About() {
   const breadcrumbs = BREADCRUMBS['/about'];
 
   return (
-    <div className="w-full min-h-screen bg-[#0A0E17] text-[#17213D] selection:bg-[#D09A16] selection:text-[#0A0E17]">
+    <div className="w-full min-h-screen bg-brand-ivory text-brand-navy selection:bg-brand-gold selection:text-brand-navy-deep">
       <BreadcrumbJsonLd items={breadcrumbs} />
 
       {/* 1. Hero Section & Mission Statement */}

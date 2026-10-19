@@ -51,7 +51,7 @@ export default async function TeamPage() {
   ];
 
   return (
-    <div className="w-full min-h-screen bg-[#F7F5EF] text-[#17213D] selection:bg-[#D09A16] selection:text-[#0A0E17]">
+    <div className="w-full min-h-screen bg-brand-ivory text-brand-navy selection:bg-brand-gold selection:text-brand-obsidian">
       <BreadcrumbJsonLd items={breadcrumbs} />
       <OrganizationJsonLd />
       <TeamClientView

@@ -48,7 +48,7 @@ export default function DlfCalloutEditor({ formData, updateField }) {
       ======================================================== */}
       <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 space-y-6">
         <div className="flex items-center gap-2 pb-3 border-b border-white/10">
-          <Sparkles size={16} className="text-[#D09A16]" />
+          <Sparkles size={16} className="text-brand-gold" />
           <h3 className="text-base font-serif font-bold text-white">
             1. Top Editorial Hero & Architectural Visual
           </h3>
@@ -104,7 +104,7 @@ export default function DlfCalloutEditor({ formData, updateField }) {
         {/* Architectural Image & Overlay Coordinates */}
         <div className="pt-4 border-t border-white/5 space-y-4">
           <div className="flex items-center gap-2">
-            <ImageIcon size={14} className="text-[#D09A16]" />
+            <ImageIcon size={14} className="text-brand-gold" />
             <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider">
               Right-Side Architectural Image & Coordinates
             </h4>
@@ -142,7 +142,7 @@ export default function DlfCalloutEditor({ formData, updateField }) {
       <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 space-y-6">
         <div className="flex items-center justify-between pb-3 border-b border-white/10">
           <div className="flex items-center gap-2">
-            <TrendingUp size={16} className="text-[#D09A16]" />
+            <TrendingUp size={16} className="text-brand-gold" />
             <div>
               <h3 className="text-base font-serif font-bold text-white">
                 2. Horizontal Metric Stats Strip ({statsCards.length} Metrics)
@@ -156,7 +156,7 @@ export default function DlfCalloutEditor({ formData, updateField }) {
           <button
             type="button"
             onClick={handleAddStat}
-            className="px-3.5 py-1.5 rounded-lg bg-[#D09A16] text-[#0C101A] hover:brightness-110 text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-sm transition-all"
+            className="px-3.5 py-1.5 rounded-lg bg-brand-gold text-brand-dark hover:brightness-110 text-xs font-bold flex items-center gap-1.5 cursor-pointer shadow-sm transition-all"
           >
             <Plus size={14} />
             <span>Add Metric</span>
@@ -165,9 +165,9 @@ export default function DlfCalloutEditor({ formData, updateField }) {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {statsCards.map((stat, sIdx) => (
-            <div key={sIdx} className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 space-y-3 relative group hover:border-[#D09A16]/40 transition-colors">
+            <div key={sIdx} className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 space-y-3 relative group hover:border-brand-gold/40 transition-colors">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">
+                <span className="text-xs font-bold text-brand-gold uppercase tracking-wider">
                   Metric #{sIdx + 1}
                 </span>
                 <button
@@ -217,7 +217,7 @@ export default function DlfCalloutEditor({ formData, updateField }) {
       ======================================================== */}
       <div className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 space-y-6">
         <div className="flex items-center gap-2 pb-3 border-b border-white/10">
-          <Phone size={16} className="text-[#D09A16]" />
+          <Phone size={16} className="text-brand-gold" />
           <div>
             <h3 className="text-base font-serif font-bold text-white">
               3. Private Property Desk CTA Panel

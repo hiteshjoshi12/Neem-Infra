@@ -75,7 +75,7 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://ik.imagekit.io" crossOrigin="anonymous" />
         <link rel="dns-prefetch" href="https://ik.imagekit.io" />
       </head>
-      <body className="min-h-full flex flex-col font-sans bg-[#F7F5EF] text-[#121A2F]" suppressHydrationWarning>
+      <body className="min-h-full flex flex-col font-sans bg-brand-ivory text-brand-text-dark" suppressHydrationWarning>
         {gaId && (
           <>
             <Script

@@ -18,8 +18,8 @@ export const metadata = buildPageMetadata({
 
 function PropertiesCatalogSkeleton() {
   return (
-    <div className="w-full min-h-screen bg-[#F7F5EF] animate-pulse">
-      <div className="bg-[#0A0E17] pt-28 pb-10 sm:pt-32 sm:pb-12">
+    <div className="w-full min-h-screen bg-brand-ivory animate-pulse">
+      <div className="bg-brand-obsidian pt-28 pb-10 sm:pt-32 sm:pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="h-4 w-32 bg-white/10 rounded mb-4" />
           <div className="h-10 w-80 bg-white/20 rounded mb-3" />

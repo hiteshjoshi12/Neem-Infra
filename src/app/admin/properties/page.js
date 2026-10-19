@@ -189,7 +189,7 @@ export default function AdminProperties() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold tracking-[0.2em] text-[#D09A16] uppercase mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold tracking-[0.2em] text-brand-gold uppercase mb-2">
             <Building size={12} />
             <span>Inventory Management</span>
           </div>
@@ -203,7 +203,7 @@ export default function AdminProperties() {
 
         <button
           onClick={openCreateModal}
-          className="px-6 py-3.5 rounded-xl bg-[#D09A16] hover:bg-[#B5986D] text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_6px_20px_rgba(208, 154, 22,0.3)] active:scale-95 cursor-pointer"
+          className="px-6 py-3.5 rounded-xl bg-brand-gold hover:bg-[#B5986D] text-brand-dark font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_6px_20px_rgba(208, 154, 22,0.3)] active:scale-95 cursor-pointer"
         >
           <Plus size={16} />
           <span>Add New Property</span>
@@ -221,7 +221,7 @@ export default function AdminProperties() {
       {/* Properties Grid */}
       {loading ? (
         <div className="py-20 text-center text-slate-400 text-xs flex flex-col items-center justify-center gap-3">
-          <RefreshCw size={24} className="animate-spin text-[#D09A16]" />
+          <RefreshCw size={24} className="animate-spin text-brand-gold" />
           <span>Loading luxury portfolio...</span>
         </div>
       ) : properties.length === 0 ? (
@@ -229,7 +229,7 @@ export default function AdminProperties() {
           <p className="text-sm text-slate-300 mb-4">No properties listed yet.</p>
           <button
             onClick={openCreateModal}
-            className="px-5 py-2.5 rounded-xl bg-[#D09A16] text-[#0C101A] text-xs font-bold uppercase tracking-wider"
+            className="px-5 py-2.5 rounded-xl bg-brand-gold text-brand-dark text-xs font-bold uppercase tracking-wider"
           >
             Create First Listing
           </button>
@@ -239,17 +239,17 @@ export default function AdminProperties() {
           {properties.map((prop) => (
             <div
               key={prop._id}
-              className="rounded-3xl bg-[#121724] border border-white/10 overflow-hidden shadow-lg flex flex-col justify-between group hover:border-[#D09A16]/50 transition-all duration-300"
+              className="rounded-3xl bg-[#121724] border border-white/10 overflow-hidden shadow-lg flex flex-col justify-between group hover:border-brand-gold/50 transition-all duration-300"
             >
               {/* Image Preview with Badges */}
-              <div className="relative h-48 w-full overflow-hidden bg-[#0C101A]">
+              <div className="relative h-48 w-full overflow-hidden bg-brand-dark">
                 <Image sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" width={800} height={600}
                   src={prop.img}
                   alt={prop.title}
                   className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                 />
                 <div className="absolute top-3 left-3 flex gap-2 z-20">
-                  <span className="px-2.5 py-1 rounded-full bg-[#1D263B]/90 backdrop-blur-md text-[10px] font-bold text-[#D09A16] uppercase tracking-wider border border-white/10">
+                  <span className="px-2.5 py-1 rounded-full bg-[#1D263B]/90 backdrop-blur-md text-[10px] font-bold text-brand-gold uppercase tracking-wider border border-white/10">
                     {prop.tag || 'Luxury'}
                   </span>
                   <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider ${
@@ -258,7 +258,7 @@ export default function AdminProperties() {
                     {prop.isActive ? 'Active' : 'Draft'}
                   </span>
                 </div>
-                <div className="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-[#D09A16] font-serif font-bold text-sm">
+                <div className="absolute bottom-3 right-3 px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-brand-gold font-serif font-bold text-sm">
                   {prop.price}
                 </div>
               </div>
@@ -270,7 +270,7 @@ export default function AdminProperties() {
                     {prop.title}
                   </h3>
                   <div className="flex items-center gap-1.5 text-slate-400 text-xs mb-2">
-                    <MapPin size={13} className="text-[#D09A16] shrink-0" />
+                    <MapPin size={13} className="text-brand-gold shrink-0" />
                     <span className="truncate">{prop.location}</span>
                   </div>
                   <p className="text-[11px] text-slate-300 font-light line-clamp-2 leading-relaxed">
@@ -285,7 +285,7 @@ export default function AdminProperties() {
                   <div className="flex items-center gap-1.5">
                     <button
                       onClick={() => openEditModal(prop)}
-                      className="p-2 rounded-lg bg-white/5 hover:bg-[#D09A16] hover:text-[#0C101A] text-slate-300 transition-colors cursor-pointer"
+                      className="p-2 rounded-lg bg-white/5 hover:bg-brand-gold hover:text-brand-dark text-slate-300 transition-colors cursor-pointer"
                       title="Edit"
                     >
                       <Pencil size={14} />
@@ -332,8 +332,8 @@ export default function AdminProperties() {
               <form onSubmit={handleSubmit} className="space-y-6 text-xs">
                 {/* PART 1: CORE COMMERCIAL IDENTIFIERS */}
                 <div>
-                  <h4 className="text-[11px] font-bold text-[#D09A16] uppercase tracking-wider mb-3 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16]" />
+                  <h4 className="text-[11px] font-bold text-brand-gold uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-gold" />
                     <span>1. Core Listing Information</span>
                   </h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -345,7 +345,7 @@ export default function AdminProperties() {
                         value={formData.title}
                         onChange={(e) => setFormData({ ...formData, title: e.target.value })}
                         placeholder="4 BHK Luxury Independent Floor in DLF Phase 1"
-                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-brand-gold"
                       />
                     </div>
 
@@ -356,7 +356,7 @@ export default function AdminProperties() {
                         value={formData.slug}
                         onChange={(e) => setFormData({ ...formData, slug: e.target.value })}
                         placeholder="e.g. 4-bhk-floor-dlf-phase-1"
-                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-brand-gold"
                       />
                     </div>
 
@@ -368,7 +368,7 @@ export default function AdminProperties() {
                         value={formData.price}
                         onChange={(e) => setFormData({ ...formData, price: e.target.value })}
                         placeholder="₹4.25 Cr"
-                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-brand-gold"
                       />
                     </div>
 
@@ -380,7 +380,7 @@ export default function AdminProperties() {
                         value={formData.location}
                         onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                         placeholder="DLF Phase 1, Gurugram"
-                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-brand-gold"
                       />
                     </div>
 
@@ -389,7 +389,7 @@ export default function AdminProperties() {
                       <select
                         value={formData.category}
                         onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                        className="w-full bg-[#121724] border border-white/20 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
+                        className="w-full bg-[#121724] border border-white/20 rounded-xl px-3 py-2.5 text-white outline-none focus:border-brand-gold"
                       >
                         <option value="residential">Builder Floor</option>
                         <option value="villa">Luxury Villa / Kothi</option>
@@ -406,7 +406,7 @@ export default function AdminProperties() {
                         value={formData.tag}
                         onChange={(e) => setFormData({ ...formData, tag: e.target.value })}
                         placeholder="FOR SALE • DLF PHASE 1"
-                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-brand-gold"
                       />
                     </div>
 
@@ -417,7 +417,7 @@ export default function AdminProperties() {
                         value={formData.specs}
                         onChange={(e) => setFormData({ ...formData, specs: e.target.value })}
                         placeholder="4 BHK • 4 Baths • 500 Sq. Yds."
-                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-brand-gold"
                       />
                     </div>
                   </div>
@@ -425,8 +425,8 @@ export default function AdminProperties() {
 
                 {/* PART 2: ARCHITECTURAL SPECIFICATIONS (BUILDS VIEW DETAILS PAGE) */}
                 <div className="pt-2 border-t border-white/10">
-                  <h4 className="text-[11px] font-bold text-[#D09A16] uppercase tracking-wider mb-3 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16]" />
+                  <h4 className="text-[11px] font-bold text-brand-gold uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-gold" />
                     <span>2. Architectural & Unit Specifications</span>
                   </h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
@@ -437,7 +437,7 @@ export default function AdminProperties() {
                         value={formData.bhk}
                         onChange={(e) => setFormData({ ...formData, bhk: e.target.value })}
                         placeholder="4 BHK"
-                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                       />
                     </div>
 
@@ -448,7 +448,7 @@ export default function AdminProperties() {
                         value={formData.bathrooms}
                         onChange={(e) => setFormData({ ...formData, bathrooms: e.target.value })}
                         placeholder="4 Baths + Powder"
-                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                       />
                     </div>
 
@@ -459,7 +459,7 @@ export default function AdminProperties() {
                         value={formData.plotArea}
                         onChange={(e) => setFormData({ ...formData, plotArea: e.target.value })}
                         placeholder="500 Sq. Yds."
-                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                       />
                     </div>
 
@@ -470,7 +470,7 @@ export default function AdminProperties() {
                         value={formData.builtUpArea}
                         onChange={(e) => setFormData({ ...formData, builtUpArea: e.target.value })}
                         placeholder="3,800 Sq. Ft."
-                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                       />
                     </div>
 
@@ -481,7 +481,7 @@ export default function AdminProperties() {
                         value={formData.facing}
                         onChange={(e) => setFormData({ ...formData, facing: e.target.value })}
                         placeholder="North-East (Park Facing)"
-                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                       />
                     </div>
 
@@ -492,7 +492,7 @@ export default function AdminProperties() {
                         value={formData.floor}
                         onChange={(e) => setFormData({ ...formData, floor: e.target.value })}
                         placeholder="2nd Floor of 4"
-                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                       />
                     </div>
 
@@ -503,7 +503,7 @@ export default function AdminProperties() {
                         value={formData.furnishing}
                         onChange={(e) => setFormData({ ...formData, furnishing: e.target.value })}
                         placeholder="Semi-Furnished (Italian Modular)"
-                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                       />
                     </div>
 
@@ -514,7 +514,7 @@ export default function AdminProperties() {
                         value={formData.parking}
                         onChange={(e) => setFormData({ ...formData, parking: e.target.value })}
                         placeholder="2 Stilt Car Parks"
-                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                       />
                     </div>
 
@@ -525,7 +525,7 @@ export default function AdminProperties() {
                         value={formData.possession}
                         onChange={(e) => setFormData({ ...formData, possession: e.target.value })}
                         placeholder="Ready to Move (Immediate / OC Received)"
-                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                       />
                     </div>
 
@@ -536,7 +536,7 @@ export default function AdminProperties() {
                         value={formData.reraNumber}
                         onChange={(e) => setFormData({ ...formData, reraNumber: e.target.value })}
                         placeholder="Freehold Municipal Sanction • Clean 30-Yr Title"
-                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                       />
                     </div>
                   </div>
@@ -544,8 +544,8 @@ export default function AdminProperties() {
 
                 {/* PART 3: AMENITIES & TRANSIT CONNECTIVITY */}
                 <div className="pt-2 border-t border-white/10">
-                  <h4 className="text-[11px] font-bold text-[#D09A16] uppercase tracking-wider mb-3 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16]" />
+                  <h4 className="text-[11px] font-bold text-brand-gold uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-gold" />
                     <span>3. Key Amenities & Nearby Landmarks</span>
                   </h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -558,7 +558,7 @@ export default function AdminProperties() {
                         value={formData.features}
                         onChange={(e) => setFormData({ ...formData, features: e.target.value })}
                         placeholder="Private Automated Elevator, Italian Botticino Marble, 100% DG Power Backup, Dedicated Servant Room, Vastu-Compliant"
-                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl p-3 text-white outline-none focus:border-[#D09A16]"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl p-3 text-white outline-none focus:border-brand-gold"
                       />
                     </div>
 
@@ -571,7 +571,7 @@ export default function AdminProperties() {
                         value={formData.nearbyLandmarks}
                         onChange={(e) => setFormData({ ...formData, nearbyLandmarks: e.target.value })}
                         placeholder="DLF Cyber City — 6 Mins&#10;MG Road Metro Station — 4 Mins&#10;Shiv Nadar School — 8 Mins&#10;Fortis & Max Hospital — 10 Mins"
-                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl p-3 text-white outline-none focus:border-[#D09A16]"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl p-3 text-white outline-none focus:border-brand-gold"
                       />
                     </div>
                   </div>
@@ -579,8 +579,8 @@ export default function AdminProperties() {
 
                 {/* PART 4: IMAGERY & MEDIA */}
                 <div className="pt-2 border-t border-white/10">
-                  <h4 className="text-[11px] font-bold text-[#D09A16] uppercase tracking-wider mb-3 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16]" />
+                  <h4 className="text-[11px] font-bold text-brand-gold uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-gold" />
                     <span>4. Gallery & Media Assets (ImageKit Enabled)</span>
                   </h4>
                   <div className="space-y-4">
@@ -601,7 +601,7 @@ export default function AdminProperties() {
                         value={formData.images}
                         onChange={(e) => setFormData({ ...formData, images: e.target.value })}
                         placeholder="https://images.unsplash.com/...&#10;https://images.unsplash.com/..."
-                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl p-3 text-white outline-none focus:border-[#D09A16] mb-2 font-mono text-xs"
+                        className="w-full bg-white/[0.05] border border-white/15 rounded-xl p-3 text-white outline-none focus:border-brand-gold mb-2 font-mono text-xs"
                       />
                       <ImageUploadInput
                         label="Browse & Add Gallery Photo"
@@ -623,8 +623,8 @@ export default function AdminProperties() {
 
                 {/* PART 5: ARCHITECTURAL OVERVIEW */}
                 <div className="pt-2 border-t border-white/10">
-                  <h4 className="text-[11px] font-bold text-[#D09A16] uppercase tracking-wider mb-3 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16]" />
+                  <h4 className="text-[11px] font-bold text-brand-gold uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand-gold" />
                     <span>5. Architectural Narrative & Overview *</span>
                   </h4>
                   <div>
@@ -634,7 +634,7 @@ export default function AdminProperties() {
                       value={formData.desc}
                       onChange={(e) => setFormData({ ...formData, desc: e.target.value })}
                       placeholder="Newly constructed, ready-to-move builder floor strategically located in DLF Phase 1. Park facing with top schools & markets nearby. Featuring expansive balconies, independent terrace rights, dedicated stilt car parking..."
-                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl p-3 text-white outline-none focus:border-[#D09A16]"
+                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl p-3 text-white outline-none focus:border-brand-gold"
                     />
                   </div>
                 </div>
@@ -646,7 +646,7 @@ export default function AdminProperties() {
                       type="checkbox"
                       checked={formData.isActive}
                       onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
-                      className="w-4 h-4 accent-[#D09A16]"
+                      className="w-4 h-4 accent-brand-gold"
                     />
                     <span>Active & Visible on Website</span>
                   </label>
@@ -656,7 +656,7 @@ export default function AdminProperties() {
                       type="checkbox"
                       checked={formData.isFeatured}
                       onChange={(e) => setFormData({ ...formData, isFeatured: e.target.checked })}
-                      className="w-4 h-4 accent-[#D09A16]"
+                      className="w-4 h-4 accent-brand-gold"
                     />
                     <span>Highlight in Featured Portfolio</span>
                   </label>
@@ -673,7 +673,7 @@ export default function AdminProperties() {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="px-6 py-2.5 rounded-xl bg-[#D09A16] hover:bg-[#E5AC2B] text-[#0C101A] font-bold uppercase tracking-wider transition-colors disabled:opacity-60 cursor-pointer shadow-md"
+                    className="px-6 py-2.5 rounded-xl bg-brand-gold hover:bg-brand-gold-light text-brand-dark font-bold uppercase tracking-wider transition-colors disabled:opacity-60 cursor-pointer shadow-md"
                   >
                     {submitting ? 'Saving Property...' : editingId ? 'Update Property Dossier' : 'Create Property Dossier'}
                   </button>

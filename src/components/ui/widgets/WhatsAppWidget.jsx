@@ -25,10 +25,10 @@ export default function WhatsAppWidget({ whatsappUrlLink }) {
         href={whatsappUrlLink} 
         target="_blank" 
         rel="noopener noreferrer" 
-        className="hidden sm:flex absolute left-full ml-3.5 items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#1D263B]/95 backdrop-blur-xl border border-[#25D366]/40 text-white shadow-xl opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto whitespace-nowrap"
+        className="hidden sm:flex absolute left-full ml-3.5 items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-navy/95 backdrop-blur-xl border border-[#25D366]/40 text-white shadow-xl opacity-0 -translate-x-3 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300 pointer-events-none group-hover:pointer-events-auto whitespace-nowrap"
       >
         <span className="w-2 h-2 rounded-full bg-[#25D366] animate-pulse" />
-        <span className="text-xs font-semibold tracking-wide text-[#E2E8F0]">Chat on WhatsApp</span>
+        <span className="text-xs font-semibold tracking-wide text-brand-text-on-dark">Chat on WhatsApp</span>
       </a>
     </motion.div>
   );

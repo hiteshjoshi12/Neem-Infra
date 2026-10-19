@@ -84,12 +84,12 @@ export default function InternalLinkModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="relative w-full max-w-2xl bg-[#0E162B] border border-white/15 rounded-2xl shadow-2xl overflow-hidden text-slate-200 flex flex-col max-h-[85vh]">
+      <div className="relative w-full max-w-2xl bg-brand-navy-deep border border-white/15 rounded-2xl shadow-2xl overflow-hidden text-slate-200 flex flex-col max-h-[85vh]">
         
         {/* Header */}
         <div className="flex items-center justify-between p-4 sm:p-5 border-b border-white/10 bg-[#121B35]">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#D09A16]/20 border border-[#D09A16]/30 flex items-center justify-center text-[#D09A16]">
+            <div className="w-8 h-8 rounded-lg bg-brand-gold/20 border border-brand-gold/30 flex items-center justify-center text-brand-gold">
               <LinkIcon size={16} />
             </div>
             <div>
@@ -109,19 +109,19 @@ export default function InternalLinkModal({
 
         {/* Selected Text Notification */}
         {selectedText && (
-          <div className="px-5 py-2 bg-[#D09A16]/10 border-b border-[#D09A16]/20 text-[11px] text-[#D09A16] flex items-center gap-2">
+          <div className="px-5 py-2 bg-brand-gold/10 border-b border-brand-gold/20 text-[11px] text-brand-gold flex items-center gap-2">
             <Check size={13} />
             <span>Linking highlighted text: <strong>&ldquo;{selectedText}&rdquo;</strong></span>
           </div>
         )}
 
         {/* Navigation Tabs */}
-        <div className="flex items-center gap-1 p-2 border-b border-white/10 bg-[#0E162B] overflow-x-auto text-xs font-semibold">
+        <div className="flex items-center gap-1 p-2 border-b border-white/10 bg-brand-navy-deep overflow-x-auto text-xs font-semibold">
           <button
             type="button"
             onClick={() => setActiveTab('blogs')}
             className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
-              activeTab === 'blogs' ? 'bg-[#D09A16] text-[#0A0E17] font-bold' : 'text-slate-400 hover:text-white'
+              activeTab === 'blogs' ? 'bg-brand-gold text-brand-obsidian font-bold' : 'text-slate-400 hover:text-white'
             }`}
           >
             <BookOpen size={13} />
@@ -132,7 +132,7 @@ export default function InternalLinkModal({
             type="button"
             onClick={() => setActiveTab('corridors')}
             className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
-              activeTab === 'corridors' ? 'bg-[#D09A16] text-[#0A0E17] font-bold' : 'text-slate-400 hover:text-white'
+              activeTab === 'corridors' ? 'bg-brand-gold text-brand-obsidian font-bold' : 'text-slate-400 hover:text-white'
             }`}
           >
             <Compass size={13} />
@@ -143,7 +143,7 @@ export default function InternalLinkModal({
             type="button"
             onClick={() => setActiveTab('properties')}
             className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
-              activeTab === 'properties' ? 'bg-[#D09A16] text-[#0A0E17] font-bold' : 'text-slate-400 hover:text-white'
+              activeTab === 'properties' ? 'bg-brand-gold text-brand-obsidian font-bold' : 'text-slate-400 hover:text-white'
             }`}
           >
             <Building2 size={13} />
@@ -154,7 +154,7 @@ export default function InternalLinkModal({
             type="button"
             onClick={() => setActiveTab('services')}
             className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
-              activeTab === 'services' ? 'bg-[#D09A16] text-[#0A0E17] font-bold' : 'text-slate-400 hover:text-white'
+              activeTab === 'services' ? 'bg-brand-gold text-brand-obsidian font-bold' : 'text-slate-400 hover:text-white'
             }`}
           >
             <Briefcase size={13} />
@@ -165,7 +165,7 @@ export default function InternalLinkModal({
             type="button"
             onClick={() => setActiveTab('custom')}
             className={`px-3 py-1.5 rounded-lg flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap ${
-              activeTab === 'custom' ? 'bg-[#D09A16] text-[#0A0E17] font-bold' : 'text-slate-400 hover:text-white'
+              activeTab === 'custom' ? 'bg-brand-gold text-brand-obsidian font-bold' : 'text-slate-400 hover:text-white'
             }`}
           >
             <Globe size={13} />
@@ -183,7 +183,7 @@ export default function InternalLinkModal({
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder={`Search ${activeTab}...`}
-                className="w-full pl-9 pr-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#D09A16]"
+                className="w-full pl-9 pr-4 py-2 rounded-xl bg-white/5 border border-white/10 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-gold"
               />
             </div>
           </div>
@@ -204,14 +204,14 @@ export default function InternalLinkModal({
                     key={blog._id || blog.slug}
                     type="button"
                     onClick={() => handleSelectLink(blog.title, `/blog/${blog.slug}`)}
-                    className="w-full p-3 rounded-xl bg-white/[0.03] hover:bg-[#D09A16]/10 border border-white/10 hover:border-[#D09A16]/50 text-left transition-all flex items-start justify-between gap-3 group cursor-pointer"
+                    className="w-full p-3 rounded-xl bg-white/[0.03] hover:bg-brand-gold/10 border border-white/10 hover:border-brand-gold/50 text-left transition-all flex items-start justify-between gap-3 group cursor-pointer"
                   >
                     <div className="min-w-0">
-                      <div className="text-xs font-semibold text-white group-hover:text-[#D09A16] transition-colors leading-snug">
+                      <div className="text-xs font-semibold text-white group-hover:text-brand-gold transition-colors leading-snug">
                         {blog.title}
                       </div>
                       <div className="text-[11px] text-slate-400 mt-1 flex items-center gap-2">
-                        <span className="font-mono text-[#D09A16]">/blog/{blog.slug}</span>
+                        <span className="font-mono text-brand-gold">/blog/{blog.slug}</span>
                         {blog.category?.name && (
                           <span className="px-1.5 py-0.5 rounded bg-white/5 text-[10px]">
                             {blog.category.name}
@@ -219,7 +219,7 @@ export default function InternalLinkModal({
                         )}
                       </div>
                     </div>
-                    <ArrowRight size={14} className="text-slate-500 group-hover:text-[#D09A16] group-hover:translate-x-0.5 transition-all shrink-0 mt-1" />
+                    <ArrowRight size={14} className="text-slate-500 group-hover:text-brand-gold group-hover:translate-x-0.5 transition-all shrink-0 mt-1" />
                   </button>
                 ))
               )}
@@ -234,20 +234,20 @@ export default function InternalLinkModal({
                   key={corridor.path}
                   type="button"
                   onClick={() => handleSelectLink(corridor.name, corridor.path)}
-                  className="w-full p-3 rounded-xl bg-white/[0.03] hover:bg-[#D09A16]/10 border border-white/10 hover:border-[#D09A16]/50 text-left transition-all flex items-start justify-between gap-3 group cursor-pointer"
+                  className="w-full p-3 rounded-xl bg-white/[0.03] hover:bg-brand-gold/10 border border-white/10 hover:border-brand-gold/50 text-left transition-all flex items-start justify-between gap-3 group cursor-pointer"
                 >
                   <div className="min-w-0">
-                    <div className="text-xs font-semibold text-white group-hover:text-[#D09A16] transition-colors">
+                    <div className="text-xs font-semibold text-white group-hover:text-brand-gold transition-colors">
                       {corridor.name}
                     </div>
-                    <div className="text-[11px] text-slate-400 mt-0.5 font-mono text-[#D09A16]">
+                    <div className="text-[11px] text-slate-400 mt-0.5 font-mono text-brand-gold">
                       {corridor.path}
                     </div>
                     <div className="text-[11px] text-slate-400 mt-1">
                       {corridor.desc}
                     </div>
                   </div>
-                  <ArrowRight size={14} className="text-slate-500 group-hover:text-[#D09A16] group-hover:translate-x-0.5 transition-all shrink-0 mt-1" />
+                  <ArrowRight size={14} className="text-slate-500 group-hover:text-brand-gold group-hover:translate-x-0.5 transition-all shrink-0 mt-1" />
                 </button>
               ))}
             </div>
@@ -269,20 +269,20 @@ export default function InternalLinkModal({
                       key={prop._id || propSlug}
                       type="button"
                       onClick={() => handleSelectLink(prop.title, propUrl)}
-                      className="w-full p-3 rounded-xl bg-white/[0.03] hover:bg-[#D09A16]/10 border border-white/10 hover:border-[#D09A16]/50 text-left transition-all flex items-start justify-between gap-3 group cursor-pointer"
+                      className="w-full p-3 rounded-xl bg-white/[0.03] hover:bg-brand-gold/10 border border-white/10 hover:border-brand-gold/50 text-left transition-all flex items-start justify-between gap-3 group cursor-pointer"
                     >
                       <div className="min-w-0">
-                        <div className="text-xs font-semibold text-white group-hover:text-[#D09A16] transition-colors">
+                        <div className="text-xs font-semibold text-white group-hover:text-brand-gold transition-colors">
                           {prop.title}
                         </div>
-                        <div className="text-[11px] text-[#D09A16] font-mono mt-0.5">
+                        <div className="text-[11px] text-brand-gold font-mono mt-0.5">
                           {propUrl} • {prop.price || 'Price upon request'}
                         </div>
                         <div className="text-[11px] text-slate-400 mt-1">
                           {prop.location} • {prop.bhk || prop.propertyType || 'Luxury Residence'}
                         </div>
                       </div>
-                      <ArrowRight size={14} className="text-slate-500 group-hover:text-[#D09A16] group-hover:translate-x-0.5 transition-all shrink-0 mt-1" />
+                      <ArrowRight size={14} className="text-slate-500 group-hover:text-brand-gold group-hover:translate-x-0.5 transition-all shrink-0 mt-1" />
                     </button>
                   );
                 })
@@ -298,20 +298,20 @@ export default function InternalLinkModal({
                   key={serv.path}
                   type="button"
                   onClick={() => handleSelectLink(serv.name, serv.path)}
-                  className="w-full p-3 rounded-xl bg-white/[0.03] hover:bg-[#D09A16]/10 border border-white/10 hover:border-[#D09A16]/50 text-left transition-all flex items-start justify-between gap-3 group cursor-pointer"
+                  className="w-full p-3 rounded-xl bg-white/[0.03] hover:bg-brand-gold/10 border border-white/10 hover:border-brand-gold/50 text-left transition-all flex items-start justify-between gap-3 group cursor-pointer"
                 >
                   <div className="min-w-0">
-                    <div className="text-xs font-semibold text-white group-hover:text-[#D09A16] transition-colors">
+                    <div className="text-xs font-semibold text-white group-hover:text-brand-gold transition-colors">
                       {serv.name}
                     </div>
-                    <div className="text-[11px] text-slate-400 mt-0.5 font-mono text-[#D09A16]">
+                    <div className="text-[11px] text-slate-400 mt-0.5 font-mono text-brand-gold">
                       {serv.path}
                     </div>
                     <div className="text-[11px] text-slate-400 mt-1">
                       {serv.desc}
                     </div>
                   </div>
-                  <ArrowRight size={14} className="text-slate-500 group-hover:text-[#D09A16] group-hover:translate-x-0.5 transition-all shrink-0 mt-1" />
+                  <ArrowRight size={14} className="text-slate-500 group-hover:text-brand-gold group-hover:translate-x-0.5 transition-all shrink-0 mt-1" />
                 </button>
               ))}
             </div>
@@ -329,7 +329,7 @@ export default function InternalLinkModal({
                   value={customText}
                   onChange={(e) => setCustomText(e.target.value)}
                   placeholder="e.g. Haryana Town and Country Planning"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/15 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#D09A16]"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/15 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-gold"
                 />
               </div>
 
@@ -343,13 +343,13 @@ export default function InternalLinkModal({
                   value={customUrl}
                   onChange={(e) => setCustomUrl(e.target.value)}
                   placeholder="e.g. https://tcpharyana.gov.in or /about"
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/15 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-[#D09A16]"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-white/5 border border-white/15 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-brand-gold"
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full py-3 rounded-xl bg-[#D09A16] hover:bg-[#E5AA1E] text-[#0E162B] font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
+                className="w-full py-3 rounded-xl bg-brand-gold hover:bg-[#E5AA1E] text-brand-navy-deep font-bold text-xs uppercase tracking-wider transition-colors cursor-pointer"
               >
                 Insert Custom Link
               </button>

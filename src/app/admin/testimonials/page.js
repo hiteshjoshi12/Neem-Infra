@@ -133,7 +133,7 @@ export default function AdminTestimonials() {
       {/* Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold tracking-[0.2em] text-[#D09A16] uppercase mb-2">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-[10px] font-bold tracking-[0.2em] text-brand-gold uppercase mb-2">
             <Quote size={12} />
             <span>Reputation & Reviews</span>
           </div>
@@ -147,7 +147,7 @@ export default function AdminTestimonials() {
 
         <button
           onClick={openCreateModal}
-          className="px-6 py-3.5 rounded-xl bg-[#D09A16] hover:bg-[#B5986D] text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_6px_20px_rgba(208, 154, 22,0.3)] active:scale-95 cursor-pointer"
+          className="px-6 py-3.5 rounded-xl bg-brand-gold hover:bg-[#B5986D] text-brand-dark font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_6px_20px_rgba(208, 154, 22,0.3)] active:scale-95 cursor-pointer"
         >
           <Plus size={16} />
           <span>Add Testimonial</span>
@@ -165,7 +165,7 @@ export default function AdminTestimonials() {
       {/* Grid */}
       {loading ? (
         <div className="py-20 text-center text-slate-400 text-xs flex flex-col items-center justify-center gap-3">
-          <RefreshCw size={24} className="animate-spin text-[#D09A16]" />
+          <RefreshCw size={24} className="animate-spin text-brand-gold" />
           <span>Loading client reviews...</span>
         </div>
       ) : testimonials.length === 0 ? (
@@ -173,7 +173,7 @@ export default function AdminTestimonials() {
           <p className="text-sm text-slate-300 mb-4">No testimonials available yet.</p>
           <button
             onClick={openCreateModal}
-            className="px-5 py-2.5 rounded-xl bg-[#D09A16] text-[#0C101A] text-xs font-bold uppercase tracking-wider"
+            className="px-5 py-2.5 rounded-xl bg-brand-gold text-brand-dark text-xs font-bold uppercase tracking-wider"
           >
             Add First Review
           </button>
@@ -183,16 +183,16 @@ export default function AdminTestimonials() {
           {testimonials.map((item) => (
             <div
               key={item._id}
-              className="rounded-3xl bg-[#121724] border border-white/10 p-6 flex flex-col justify-between group hover:border-[#D09A16]/50 transition-all duration-300 shadow-lg"
+              className="rounded-3xl bg-[#121724] border border-white/10 p-6 flex flex-col justify-between group hover:border-brand-gold/50 transition-all duration-300 shadow-lg"
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
-                  <div className="flex text-[#D09A16] gap-1">
+                  <div className="flex text-brand-gold gap-1">
                     {[...Array(item.rating || 5)].map((_, i) => (
                       <Star key={i} size={14} fill="#D09A16" />
                     ))}
                   </div>
-                  <span className="px-2.5 py-0.5 rounded-full bg-white/5 text-[10px] font-semibold text-[#D09A16] border border-white/10">
+                  <span className="px-2.5 py-0.5 rounded-full bg-white/5 text-[10px] font-semibold text-brand-gold border border-white/10">
                     {item.tag}
                   </span>
                 </div>
@@ -207,18 +207,18 @@ export default function AdminTestimonials() {
                   <Image sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" width={800} height={600}
                     src={item.avatar}
                     alt={item.name}
-                    className="w-10 h-10 rounded-full object-cover border border-[#D09A16]/40"
+                    className="w-10 h-10 rounded-full object-cover border border-brand-gold/40"
                   />
                   <div>
                     <h4 className="text-xs font-bold text-white">{item.name}</h4>
-                    <p className="text-[10px] text-[#D09A16]">{item.role}, {item.location}</p>
+                    <p className="text-[10px] text-brand-gold">{item.role}, {item.location}</p>
                   </div>
                 </div>
 
                 <div className="flex items-center gap-1.5">
                   <button
                     onClick={() => openEditModal(item)}
-                    className="p-2 rounded-lg bg-white/5 hover:bg-[#D09A16] hover:text-[#0C101A] text-slate-300 transition-colors"
+                    className="p-2 rounded-lg bg-white/5 hover:bg-brand-gold hover:text-brand-dark text-slate-300 transition-colors"
                   >
                     <Pencil size={13} />
                   </button>
@@ -264,7 +264,7 @@ export default function AdminTestimonials() {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       placeholder="Deepak Arora"
-                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                     />
                   </div>
                   <div>
@@ -275,7 +275,7 @@ export default function AdminTestimonials() {
                       value={formData.role}
                       onChange={(e) => setFormData({ ...formData, role: e.target.value })}
                       placeholder="Investor / Homeowner"
-                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                     />
                   </div>
                 </div>
@@ -289,7 +289,7 @@ export default function AdminTestimonials() {
                       value={formData.location}
                       onChange={(e) => setFormData({ ...formData, location: e.target.value })}
                       placeholder="Dubai, UAE"
-                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                     />
                   </div>
                   <div>
@@ -300,7 +300,7 @@ export default function AdminTestimonials() {
                       max={5}
                       value={formData.rating}
                       onChange={(e) => setFormData({ ...formData, rating: Number(e.target.value) })}
-                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                      className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                     />
                   </div>
                 </div>
@@ -311,7 +311,7 @@ export default function AdminTestimonials() {
                     type="text"
                     value={formData.avatar}
                     onChange={(e) => setFormData({ ...formData, avatar: e.target.value })}
-                    className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                    className="w-full bg-white/[0.05] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                   />
                 </div>
 
@@ -323,7 +323,7 @@ export default function AdminTestimonials() {
                     value={formData.quote}
                     onChange={(e) => setFormData({ ...formData, quote: e.target.value })}
                     placeholder="From before-sales to handover, customer satisfaction is in Saudagar Properties' DNA..."
-                    className="w-full bg-white/[0.05] border border-white/15 rounded-xl p-3 text-white outline-none focus:border-[#D09A16]"
+                    className="w-full bg-white/[0.05] border border-white/15 rounded-xl p-3 text-white outline-none focus:border-brand-gold"
                   />
                 </div>
 
@@ -338,7 +338,7 @@ export default function AdminTestimonials() {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="px-6 py-2 rounded-xl bg-[#D09A16] text-[#0C101A] font-bold uppercase tracking-wider"
+                    className="px-6 py-2 rounded-xl bg-brand-gold text-brand-dark font-bold uppercase tracking-wider"
                   >
                     {submitting ? 'Saving...' : editingId ? 'Update Review' : 'Add Review'}
                   </button>

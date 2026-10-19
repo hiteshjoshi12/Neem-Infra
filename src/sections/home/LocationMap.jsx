@@ -247,9 +247,9 @@ export default function LocationMap() {
         w-full
         overflow-hidden
         border-t
-        border-[#17213D]/[0.08]
-        bg-[#EFEBE1]
-        text-[#17213D]
+        border-brand-navy/[0.08]
+        bg-brand-cream
+        text-brand-navy
         py-16
         sm:py-20
         lg:py-24
@@ -270,7 +270,7 @@ export default function LocationMap() {
           h-[500px]
           w-[500px]
           rounded-full
-          bg-[#D09A16]/[0.035]
+          bg-brand-gold/[0.035]
           blur-[110px]
         "
       />
@@ -285,7 +285,7 @@ export default function LocationMap() {
           h-[450px]
           w-[450px]
           rounded-full
-          bg-[#17213D]/[0.02]
+          bg-brand-navy/[0.02]
           blur-[110px]
         "
       />
@@ -297,7 +297,7 @@ export default function LocationMap() {
           absolute
           inset-0
           opacity-[0.018]
-          [background-image:linear-gradient(to_right,#17213D_1px,transparent_1px),linear-gradient(to_bottom,#17213D_1px,transparent_1px)]
+          [background-image:linear-gradient(to_right,var(--color-brand-navy)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-brand-navy)_1px,transparent_1px)]
           [background-size:100px_100px]
         "
       />
@@ -356,7 +356,7 @@ export default function LocationMap() {
                 gap-2
                 rounded-full
                 border
-                border-[#D09A16]/30
+                border-brand-gold/30
                 bg-white
                 px-3.5
                 py-1.5
@@ -364,14 +364,14 @@ export default function LocationMap() {
                 font-bold
                 uppercase
                 tracking-[0.23em]
-                text-[#D09A16]
+                text-brand-gold
                 shadow-sm
               "
             >
 
               <Sparkles
                 size={11}
-                className="text-[#D09A16]"
+                className="text-brand-gold"
               />
 
               {badge}
@@ -389,7 +389,7 @@ export default function LocationMap() {
                 font-normal
                 leading-[1.05]
                 tracking-[-0.04em]
-                text-[#17213D]
+                text-brand-navy
                 sm:text-5xl
                 lg:text-6xl
               "
@@ -402,7 +402,7 @@ export default function LocationMap() {
                   ml-2
                   italic
                   font-light
-                  text-[#D09A16]
+                  text-brand-gold
                 "
               >
                 {titleItalic}
@@ -419,7 +419,7 @@ export default function LocationMap() {
                 max-w-xl
                 text-xs
                 leading-6
-                text-[#566078]
+                text-brand-slate
                 sm:text-sm
               "
             >
@@ -445,20 +445,20 @@ export default function LocationMap() {
               gap-3
               self-start
               rounded-full
-              bg-[#17213D]
+              bg-brand-navy
               px-6
               py-3.5
               text-[8px]
               font-bold
               uppercase
               tracking-[0.18em]
-              text-[#F7F5EF]
+              text-brand-ivory
               shadow-[0_12px_30px_rgba(23,33,61,0.15)]
               transition-all
               duration-300
               hover:-translate-y-1
-              hover:bg-[#D09A16]
-              hover:text-[#0E162B]
+              hover:bg-brand-gold
+              hover:text-brand-navy-deep
               md:self-end
             "
           >
@@ -503,7 +503,7 @@ export default function LocationMap() {
               overflow-hidden
               rounded-[28px]
               border
-              border-[#17213D]/10
+              border-brand-navy/10
               bg-white
               shadow-[0_25px_75px_rgba(23,33,61,0.08)]
               will-change-transform
@@ -549,7 +549,7 @@ export default function LocationMap() {
                 absolute
                 inset-0
                 bg-gradient-to-t
-                from-[#17213D]/25
+                from-brand-navy/25
                 via-transparent
                 to-transparent
               "
@@ -605,7 +605,7 @@ export default function LocationMap() {
                       inline-flex
                       items-center
                       gap-2
-                      text-[#D09A16]
+                      text-brand-gold
                     "
                   >
 
@@ -634,7 +634,7 @@ export default function LocationMap() {
                       text-xl
                       font-normal
                       leading-tight
-                      text-[#17213D]
+                      text-brand-navy
                       sm:text-2xl
                     "
                     itemProp="name"
@@ -657,9 +657,9 @@ export default function LocationMap() {
                     justify-center
                     rounded-full
                     border
-                    border-[#D09A16]/30
-                    bg-[#F7F5EF]
-                    text-[#D09A16]
+                    border-brand-gold/30
+                    bg-brand-ivory
+                    text-brand-gold
                     sm:flex
                   "
                 >
@@ -682,7 +682,7 @@ export default function LocationMap() {
                   not-italic
                   text-xs
                   leading-5
-                  text-[#566078]
+                  text-brand-slate
                 "
                 itemProp="address"
                 itemScope
@@ -707,7 +707,7 @@ export default function LocationMap() {
                   flex-col
                   gap-4
                   border-t
-                  border-[#17213D]/[0.08]
+                  border-brand-navy/[0.08]
                   pt-4
                   sm:flex-row
                   sm:items-center
@@ -729,39 +729,39 @@ export default function LocationMap() {
 
                   <span
                     className="
-                      text-[7px]
+                      text-xs
                       font-bold
                       uppercase
-                      tracking-[0.18em]
-                      text-[#17213D]/40
+                      tracking-[0.16em]
+                      text-black
                     "
                   >
                     DLF Phase 2
                   </span>
 
-                  <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-brand-gold" />
 
                   <span
                     className="
-                      text-[7px]
+                      text-xs
                       font-bold
                       uppercase
-                      tracking-[0.18em]
-                      text-[#17213D]/40
+                      tracking-[0.16em]
+                      text-black
                     "
                   >
                     Gurugram
                   </span>
 
-                  <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
+                  <span className="h-1.5 w-1.5 rounded-full bg-brand-gold" />
 
                   <span
                     className="
-                      text-[7px]
+                      text-xs
                       font-bold
                       uppercase
-                      tracking-[0.18em]
-                      text-[#17213D]/40
+                      tracking-[0.16em]
+                      text-black
                     "
                   >
                     Haryana
@@ -786,9 +786,9 @@ export default function LocationMap() {
                     font-bold
                     uppercase
                     tracking-[0.16em]
-                    text-[#D09A16]
+                    text-brand-gold
                     transition-colors
-                    hover:text-[#17213D]
+                    hover:text-brand-navy
                   "
                 >
 
@@ -848,53 +848,53 @@ export default function LocationMap() {
 
           <span
             className="
-              text-[7px]
+              text-xs sm:text-sm
               font-bold
               uppercase
-              tracking-[0.2em]
-              text-[#17213D]/30
+              tracking-[0.18em]
+              text-black
             "
           >
             Luxury Real Estate
           </span>
 
-          <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
+          <span className="h-1.5 w-1.5 rounded-full bg-brand-gold" />
 
           <span
             className="
-              text-[7px]
+              text-xs sm:text-sm
               font-bold
               uppercase
-              tracking-[0.2em]
-              text-[#17213D]/30
+              tracking-[0.18em]
+              text-black
             "
           >
             DLF Phase 2
           </span>
 
-          <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
+          <span className="h-1.5 w-1.5 rounded-full bg-brand-gold" />
 
           <span
             className="
-              text-[7px]
+              text-xs sm:text-sm
               font-bold
               uppercase
-              tracking-[0.2em]
-              text-[#17213D]/30
+              tracking-[0.18em]
+              text-black
             "
           >
             Gurugram
           </span>
 
-          <span className="h-1 w-1 rounded-full bg-[#D09A16]" />
+          <span className="h-1.5 w-1.5 rounded-full bg-brand-gold" />
 
           <span
             className="
-              text-[7px]
+              text-xs sm:text-sm
               font-bold
               uppercase
-              tracking-[0.2em]
-              text-[#17213D]/30
+              tracking-[0.18em]
+              text-black
             "
           >
             Haryana

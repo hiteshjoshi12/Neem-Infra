@@ -42,7 +42,7 @@ export default async function Contact() {
   ];
 
   return (
-    <div className="w-full flex flex-col min-h-screen bg-[#FAF8F5]">
+    <div className="w-full flex flex-col min-h-screen bg-brand-ivory-warm">
       <BreadcrumbJsonLd items={breadcrumbs} />
 
       {/* Client Component containing animations and form */}

@@ -101,10 +101,10 @@ export default function AboutHero() {
   return (
     <section
       ref={heroRef}
-      className="relative min-h-[88vh] flex flex-col justify-center pt-28 pb-10 md:pt-36 md:pb-14 overflow-hidden bg-[#0A0E17] text-white"
+      className="relative min-h-[88vh] flex flex-col justify-center pt-28 pb-10 md:pt-36 md:pb-14 overflow-hidden bg-brand-obsidian text-white border-b border-white/10"
     >
-      {/* 1. Cinematic Background Image - Clearly Visible with Rich Ambient Tones */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-85">
+      {/* 1. Cinematic Background Image - Clearly Visible */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-80">
         <Image
           ref={bgImgRef}
           src={cms.hero?.bgImage || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80"}
@@ -113,11 +113,11 @@ export default function AboutHero() {
           height={1350}
           priority
           sizes="100vw"
-          className="w-full h-full object-cover object-center brightness-[0.80] contrast-[1.05] scale-105"
+          className="w-full h-full object-cover object-center brightness-[0.88] contrast-[1.05]"
         />
-        {/* Layered Scrim for Text Readability without Blacking out Architecture */}
-        <div className="absolute inset-0 bg-gradient-to-r from-[#0A0E17]/85 via-[#0A0E17]/50 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E17]/90 via-transparent to-[#0A0E17]/40" />
+        {/* Soft directional gradient for editorial clarity while keeping image visible */}
+        <div className="absolute inset-0 bg-gradient-to-r from-brand-obsidian/85 via-brand-obsidian/45 to-transparent pointer-events-none" />
+        <div className="absolute inset-0 bg-gradient-to-t from-brand-obsidian via-transparent to-brand-obsidian/60 pointer-events-none" />
       </div>
 
       {/* 2. Ambient Golden Light Beams */}
@@ -131,17 +131,17 @@ export default function AboutHero() {
       />
 
       {/* 3. Architectural Accent Rings */}
-      <div className="absolute top-24 right-1/4 w-80 h-80 rounded-full border border-[#D09A16]/15 pointer-events-none" />
-      <div className="absolute top-36 right-1/4 w-56 h-56 rounded-full border border-dashed border-[#D09A16]/20 pointer-events-none" />
+      <div className="absolute top-24 right-1/4 w-80 h-80 rounded-full border border-brand-gold/15 pointer-events-none" />
+      <div className="absolute top-36 right-1/4 w-56 h-56 rounded-full border border-dashed border-brand-gold/20 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 w-full">
 
         {/* Breadcrumb Navigation */}
         <div className="about-hero-anim flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-8">
-          <Link href="/" className="hover:text-[#D09A16] transition-colors">Home</Link>
+          <Link href="/" className="hover:text-brand-gold transition-colors">Home</Link>
           <span className="text-slate-600">/</span>
-          <span className="text-[#D09A16] flex items-center gap-1.5">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16] shadow-[0_0_8px_#D09A16]" />
+          <span className="text-brand-gold flex items-center gap-1.5">
+            <span className="w-1.5 h-1.5 rounded-full bg-brand-gold shadow-[0_0_8px_var(--color-brand-gold)]" />
             <span>About Us</span>
           </span>
         </div>
@@ -153,21 +153,21 @@ export default function AboutHero() {
           <div ref={leftContentRef} className="lg:col-span-7 space-y-6 text-center lg:text-left">
 
             {/* Gold Badge */}
-            <div className="about-hero-anim inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/[0.06] border border-[#D09A16]/40 backdrop-blur-xl text-[#D09A16] text-xs font-bold tracking-[0.25em] uppercase shadow-[0_0_25px_rgba(208, 154, 22,0.2)]">
-              <Sparkles size={14} className="text-[#D09A16]" />
+            <div className="about-hero-anim inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/10 border border-brand-gold/40 text-brand-gold text-xs font-bold tracking-[0.25em] uppercase shadow-sm backdrop-blur-md">
+              <Sparkles size={14} className="text-brand-gold" />
               <span>{cms.hero?.badge || "About Saudagar Properties • 25+ Years Legacy"}</span>
             </div>
 
             {/* High-Impact Serif Headline */}
             <h1 className="about-hero-anim text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-serif text-white leading-[1.1] tracking-tight">
               {cms.hero?.titleMain || "25+ Years of Leadership in "} <br />
-              <span className="italic font-light text-[#D09A16] drop-shadow-[0_0_35px_rgba(208, 154, 22,0.4)]">
+              <span className="italic font-light text-brand-gold">
                 {cms.hero?.titleItalic || "DLF Gurugram"}
               </span>
             </h1>
 
             {/* Authenticated Copy */}
-            <p className="about-hero-anim text-sm sm:text-base md:text-lg text-slate-300 font-light leading-relaxed max-w-2xl mx-auto lg:mx-0">
+            <p className="about-hero-anim text-sm sm:text-base md:text-lg text-slate-200 font-light leading-relaxed max-w-2xl mx-auto lg:mx-0">
               {cms.hero?.description || "At Saudagar Properties, we aim to assist our customers by providing them optimal property solutions across commercial, industrial, and residential sectors in DLF Gurugram."}
             </p>
 
@@ -175,26 +175,26 @@ export default function AboutHero() {
             <div className="about-hero-anim flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
               <a
                 href="#video-tour"
-                className="px-8 py-4 rounded-2xl bg-gradient-to-r from-[#D09A16] to-[#D09A16] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-[0.18em] flex items-center gap-3 transition-all duration-300 shadow-[0_10px_30px_rgba(208, 154, 22,0.4)] hover:shadow-[0_15px_40px_rgba(208, 154, 22,0.6)] hover:-translate-y-0.5 cursor-pointer group"
+                className="px-8 py-4 rounded-2xl bg-brand-gold hover:bg-brand-gold-light text-brand-navy font-extrabold text-xs uppercase tracking-[0.18em] flex items-center gap-3 transition-all duration-300 shadow-[0_10px_25px_rgba(201,160,80,0.35)] hover:shadow-[0_15px_35px_rgba(201,160,80,0.45)] hover:-translate-y-0.5 cursor-pointer group"
               >
-                <div className="w-6 h-6 rounded-full bg-[#0C101A] text-[#D09A16] flex items-center justify-center">
-                  <Play size={10} className="fill-[#D09A16] ml-0.5" />
+                <div className="w-6 h-6 rounded-full bg-brand-navy text-brand-gold flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <Play size={10} className="fill-brand-gold ml-0.5" />
                 </div>
                 <span>{cms.hero?.watchFilmText || "Watch Corporate Film"}</span>
               </a>
 
               <a
                 href="#proposition"
-                className="px-8 py-4 rounded-2xl bg-white/[0.05] hover:bg-white/[0.1] text-white border border-white/20 hover:border-[#D09A16] font-bold text-xs uppercase tracking-[0.18em] transition-all duration-300 backdrop-blur-md hover:-translate-y-0.5 cursor-pointer flex items-center gap-2"
+                className="px-8 py-4 rounded-2xl bg-white/10 hover:bg-white text-white hover:text-brand-obsidian border border-white/20 hover:border-white font-bold text-xs uppercase tracking-[0.18em] transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 cursor-pointer flex items-center gap-2.5 backdrop-blur-md"
               >
                 <span>{cms.hero?.propositionBtnText || "Our Proposition"}</span>
-                <ArrowRight size={14} className="text-[#D09A16]" />
+                <ArrowRight size={14} className="text-brand-gold group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
 
             {/* Direct Verification Micro-badge */}
-            <div className="about-hero-anim flex items-center justify-center lg:justify-start gap-2 pt-2 text-xs text-slate-400">
-              <CheckCircle2 size={15} className="text-[#D09A16]" />
+            <div className="about-hero-anim flex items-center justify-center lg:justify-start gap-2 pt-2 text-xs text-slate-300">
+              <CheckCircle2 size={15} className="text-brand-gold" />
               <span>{cms.hero?.addressBadge || "Headquartered at 38, Akashneem Marg, DLF Phase 2, Gurugram"}</span>
             </div>
 
@@ -207,17 +207,17 @@ export default function AboutHero() {
               className="relative w-full max-w-md"
             >
               {/* Outer 3D Halo Glow */}
-              <div className="absolute -inset-4 bg-gradient-to-tr from-[#D09A16]/30 to-[#D09A16]/10 rounded-[36px] blur-2xl pointer-events-none" />
+              <div className="absolute -inset-4 bg-gradient-to-tr from-brand-gold/30 to-brand-gold/10 rounded-[36px] blur-2xl pointer-events-none" />
 
               {/* 3D Tilt Card Container */}
               <Tilt3DCard maxTilt={8} className="w-full">
                 {activeProperty ? (
-                  <div className="relative rounded-[32px] overflow-hidden border border-[#D09A16]/40 bg-gradient-to-b from-slate-900/95 via-slate-950/95 to-black/95 p-5 sm:p-6 backdrop-blur-2xl shadow-[0_25px_60px_-15px_rgba(0,0,0,0.9),0_0_50px_rgba(208,154,22,0.25)] flex flex-col justify-between">
+                  <div className="relative rounded-[32px] overflow-hidden border border-white/15 bg-brand-navy-surface/90 p-5 sm:p-6 shadow-[0_25px_60px_rgba(0,0,0,0.5)] backdrop-blur-2xl flex flex-col justify-between text-white">
 
                     {/* Header Badge & 5s Live Pulse Indicator */}
                     <div className="flex items-center justify-between gap-2 mb-3">
-                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#D09A16]/15 border border-[#D09A16]/40 text-[#D09A16] text-[10px] font-bold uppercase tracking-widest">
-                        <span className="w-2 h-2 rounded-full bg-[#D09A16] animate-pulse" />
+                      <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-brand-gold/15 border border-brand-gold/40 text-brand-gold text-[10px] font-bold uppercase tracking-widest">
+                        <span className="w-2 h-2 rounded-full bg-brand-gold animate-pulse" />
                         <span>Live Portfolio • Rotates Every 5s</span>
                       </span>
                       <span className="text-[11px] font-mono text-slate-400">
@@ -226,7 +226,7 @@ export default function AboutHero() {
                     </div>
 
                     {/* Animated Visual Card Header */}
-                    <div className="relative h-56 sm:h-60 rounded-2xl overflow-hidden border border-white/10 shadow-lg bg-slate-950 mb-4">
+                    <div className="relative h-56 sm:h-60 rounded-2xl overflow-hidden border border-white/15 shadow-sm bg-black/40 mb-4">
                       <AnimatePresence mode="wait">
                         <motion.div
                           key={activeProperty.id || activeProperty._id}
@@ -246,7 +246,7 @@ export default function AboutHero() {
                           <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/20" />
                           
                           {/* Floating Property Tag */}
-                          <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-slate-950/85 backdrop-blur-md border border-[#D09A16]/50 text-[#D09A16] text-[10px] font-bold tracking-widest uppercase shadow-md">
+                          <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-slate-950/85 backdrop-blur-md border border-brand-gold/50 text-brand-gold text-[10px] font-bold tracking-widest uppercase shadow-md">
                             {activeProperty.tag || "DLF Freehold"}
                           </div>
 
@@ -260,7 +260,7 @@ export default function AboutHero() {
                             <h4 className="text-sm font-serif font-bold text-white leading-snug line-clamp-1 mb-1">
                               {activeProperty.title}
                             </h4>
-                            <div className="flex items-center gap-1.5 text-[11px] text-[#D09A16] font-medium">
+                            <div className="flex items-center gap-1.5 text-[11px] text-brand-gold font-medium">
                               <MapPin size={12} className="shrink-0" />
                               <span className="truncate">{activeProperty.location}</span>
                             </div>
@@ -279,17 +279,17 @@ export default function AboutHero() {
                         transition={{ duration: 0.35 }}
                         className="space-y-3 mb-4"
                       >
-                        <div className="p-3 rounded-xl bg-white/[0.04] border border-white/10 flex items-center justify-between">
-                          <div className="text-xs text-slate-300">
+                        <div className="p-3 rounded-xl bg-white/5 border border-white/10 flex items-center justify-between">
+                          <div className="text-xs text-white">
                             <span className="font-semibold text-white block mb-0.5">Specifications:</span>
-                            <span className="text-[11px] text-slate-400">{activeProperty.specs}</span>
+                            <span className="text-[11px] text-slate-300">{activeProperty.specs}</span>
                           </div>
-                          <span className="px-2.5 py-1 rounded-md bg-[#D09A16]/20 border border-[#D09A16]/40 text-[#D09A16] text-[10px] font-bold uppercase tracking-wider shrink-0">
+                          <span className="px-2.5 py-1 rounded-md bg-brand-gold/20 border border-brand-gold/40 text-brand-gold text-[10px] font-bold uppercase tracking-wider shrink-0">
                             Verified Title
                           </span>
                         </div>
 
-                        <p className="text-[11px] text-slate-400 leading-relaxed line-clamp-2 px-1">
+                        <p className="text-[11px] text-slate-300 leading-relaxed line-clamp-2 px-1">
                           {activeProperty.desc}
                         </p>
                       </motion.div>
@@ -302,7 +302,7 @@ export default function AboutHero() {
                         initial={{ width: "0%" }}
                         animate={{ width: "100%" }}
                         transition={{ duration: 5, ease: "linear" }}
-                        className="h-full bg-gradient-to-r from-[#D09A16] to-[#F1C40F]"
+                        className="h-full bg-gradient-to-r from-brand-gold to-brand-gold-light"
                       />
                     </div>
 
@@ -317,8 +317,8 @@ export default function AboutHero() {
                             aria-label={`Show property ${idx + 1}`}
                             className={`h-2 rounded-full transition-all cursor-pointer ${
                               idx === currentPropIndex 
-                                ? 'w-6 bg-[#D09A16]' 
-                                : 'w-2 bg-white/30 hover:bg-white/60'
+                                ? 'w-6 bg-brand-gold' 
+                                : 'w-2 bg-white/20 hover:bg-white/40'
                             }`}
                           />
                         ))}
@@ -327,7 +327,7 @@ export default function AboutHero() {
                       {/* View All Link */}
                       <Link
                         href="/properties"
-                        className="inline-flex items-center gap-1.5 text-xs font-bold text-[#D09A16] hover:text-[#E5AC2B] transition-colors"
+                        className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-gold hover:text-brand-gold-light transition-colors"
                       >
                         <span>Explore Catalog</span>
                         <ArrowRight size={13} />
@@ -335,8 +335,8 @@ export default function AboutHero() {
                     </div>
                   </div>
                 ) : (
-                  <div className="relative rounded-[32px] overflow-hidden border border-[#D09A16]/40 bg-gradient-to-b from-slate-900/95 via-slate-950/95 to-black/95 p-6 backdrop-blur-2xl text-center">
-                    <span className="text-[#D09A16] font-serif text-lg font-bold block mb-2">Saudagar Properties</span>
+                  <div className="relative rounded-[32px] overflow-hidden border border-brand-gold/40 bg-gradient-to-b from-slate-900/95 via-slate-950/95 to-black/95 p-6 backdrop-blur-2xl text-center">
+                    <span className="text-brand-gold font-serif text-lg font-bold block mb-2">Saudagar Properties</span>
                     <p className="text-xs text-slate-300">DLF Phase 1–5 Premier Real Estate Advisory</p>
                   </div>
                 )}
@@ -349,7 +349,7 @@ export default function AboutHero() {
         {/* 4. BOTTOM 3D METRIC STRIP */}
         <div
           ref={metricStripRef}
-          className="rounded-3xl p-6 sm:p-8 bg-gradient-to-r from-white/[0.06] via-white/[0.03] to-white/[0.06] border border-white/15 backdrop-blur-2xl shadow-[0_20px_50px_rgba(0,0,0,0.5)]"
+          className="rounded-3xl p-6 sm:p-8 bg-brand-navy-surface/90 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl text-white"
         >
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
             {stats.map((st, idx) => {
@@ -357,13 +357,13 @@ export default function AboutHero() {
               return (
                 <div
                   key={idx}
-                  className="group flex flex-col justify-between p-3 rounded-2xl hover:bg-white/[0.03] transition-colors"
+                  className="group flex flex-col justify-between p-3 rounded-2xl hover:bg-white/5 transition-colors"
                 >
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="w-8 h-8 rounded-xl bg-[#D09A16]/15 text-[#D09A16] flex items-center justify-center shrink-0">
+                    <div className="w-8 h-8 rounded-xl bg-brand-gold/15 text-brand-gold flex items-center justify-center shrink-0">
                       <Icon size={16} />
                     </div>
-                    <span className="text-2xl sm:text-3xl font-serif font-bold text-white group-hover:text-[#D09A16] transition-colors">
+                    <span className="text-2xl sm:text-3xl font-serif font-bold text-white group-hover:text-brand-gold transition-colors">
                       <AnimatedCounter
                         value={st.value}
                         prefix={st.prefix || ''}

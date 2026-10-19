@@ -110,12 +110,12 @@ export default function CuratedCorridors() {
   return (
     <section
       ref={sectionRef}
-      className="relative w-full bg-[#0E162B] text-[#F7F5EF] pt-12 pb-10 md:pt-16 md:pb-14 overflow-hidden border-t border-white/[0.08]"
+      className="relative w-full bg-brand-ivory-warm text-brand-navy pt-12 pb-10 md:pt-16 md:pb-14 overflow-hidden border-t border-brand-cream-border"
       onMouseEnter={() => setIsPaused(true)}
       onMouseLeave={() => setIsPaused(false)}
     >
       {/* Background Architectural Glow */}
-      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(#C6A24A_1px,transparent_1px)] [background-size:32px_32px]" />
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none bg-[radial-gradient(var(--color-brand-gold)_1px,transparent_1px)] [background-size:32px_32px]" />
 
       {/* Header Section */}
       <div
@@ -125,17 +125,17 @@ export default function CuratedCorridors() {
         {/* Left Side: Titles and Description */}
         <div className="max-w-2xl">
           <div className="flex items-center gap-3 mb-3">
-            <span className="w-8 h-[1px] bg-[#C6A24A]" />
-            <span className="text-[11px] sm:text-xs tracking-[0.25em] text-[#C6A24A] uppercase font-semibold">
+            <span className="w-8 h-[1px] bg-brand-gold" />
+            <span className="text-[11px] sm:text-xs tracking-[0.25em] text-brand-gold uppercase font-semibold">
               {corridorData.badge || "Featured Portfolio"}
             </span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-[#F7F5EF] leading-tight mb-4">
-            {corridorData.titleMain || "Featured"} <span className="italic text-[#C6A24A] font-light">{corridorData.titleItalic || "Properties"}</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-brand-navy leading-tight mb-4">
+            {corridorData.titleMain || "Featured"} <span className="italic text-brand-gold font-light">{corridorData.titleItalic || "Properties"}</span>
           </h2>
 
-          <p className="text-[#C9CED9] font-normal text-sm sm:text-base md:text-lg leading-relaxed">
+          <p className="text-brand-slate font-normal text-sm sm:text-base md:text-lg leading-relaxed">
             {corridorData.description || "Handpicked luxury builder floors and independent villas in DLF Phase 1–4, Sushant Lok & Udyog Vihar."}
           </p>
         </div>
@@ -148,7 +148,7 @@ export default function CuratedCorridors() {
               <button
                 key={idx}
                 onClick={() => setCurrentIndex(idx)}
-                className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${currentIndex === idx ? 'w-6 sm:w-8 bg-[#C6A24A]' : 'w-2 bg-white/20'
+                className={`h-1.5 rounded-full transition-all duration-500 cursor-pointer ${currentIndex === idx ? 'w-6 sm:w-8 bg-brand-gold' : 'w-2 bg-brand-navy/20'
                   }`}
                 aria-label={`Go to slide ${idx + 1}`}
               />
@@ -158,14 +158,14 @@ export default function CuratedCorridors() {
           <div className="flex gap-2.5">
             <button
               onClick={handlePrev}
-              className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border border-white/10 bg-[#202B4A] flex items-center justify-center text-white hover:border-[#C6A24A] hover:text-[#C6A24A] transition-colors duration-300 shadow-md cursor-pointer"
+              className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border border-brand-navy/15 bg-white flex items-center justify-center text-brand-navy hover:border-brand-gold hover:text-brand-gold hover:bg-brand-ivory transition-all duration-300 shadow-sm cursor-pointer"
               aria-label="Previous Property"
             >
               <ChevronLeft strokeWidth={1.8} size={18} />
             </button>
             <button
               onClick={handleNext}
-              className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border border-white/10 bg-[#202B4A] flex items-center justify-center text-white hover:border-[#C6A24A] hover:text-[#C6A24A] transition-colors duration-300 shadow-md cursor-pointer"
+              className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14 rounded-full border border-brand-navy/15 bg-white flex items-center justify-center text-brand-navy hover:border-brand-gold hover:text-brand-gold hover:bg-brand-ivory transition-all duration-300 shadow-sm cursor-pointer"
               aria-label="Next Property"
             >
               <ChevronRight strokeWidth={1.8} size={18} />
@@ -208,7 +208,7 @@ export default function CuratedCorridors() {
                   duration: 0.8,
                   ease: [0.16, 1, 0.3, 1],
                 }}
-                className={`absolute w-[92%] sm:w-[80%] md:w-[60%] max-w-[620px] h-[410px] sm:h-[450px] md:h-[480px] rounded-3xl overflow-hidden shadow-[0_25px_60px_-10px_rgba(0,0,0,0.6)] border border-white/20 bg-[#202B4A] ${isCenter ? 'cursor-default' : 'cursor-pointer'
+                className={`absolute w-[92%] sm:w-[80%] md:w-[60%] max-w-[620px] h-[410px] sm:h-[450px] md:h-[480px] rounded-3xl overflow-hidden shadow-[0_25px_60px_-10px_rgba(0,0,0,0.6)] border border-white/20 bg-brand-navy-surface ${isCenter ? 'cursor-default' : 'cursor-pointer'
                   }`}
                 onClick={() => {
                   if (!isCenter) setCurrentIndex(index);
@@ -226,7 +226,7 @@ export default function CuratedCorridors() {
                 />
 
                 {/* Dark Gradient Overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0E162B] via-[#0E162B]/50 to-transparent" />
+                <div className="absolute inset-0 bg-gradient-to-t from-brand-navy-deep via-brand-navy-deep/50 to-transparent" />
 
                 {/* Content Overlay */}
                 <motion.div
@@ -235,10 +235,10 @@ export default function CuratedCorridors() {
                   transition={{ duration: 0.4, delay: isCenter ? 0.15 : 0 }}
                 >
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
-                    <span className="px-2.5 py-1 rounded-full bg-[#C6A24A] text-[9px] sm:text-[10px] font-bold tracking-[0.16em] uppercase text-[#0E162B] shadow-sm">
+                    <span className="px-2.5 py-1 rounded-full bg-brand-gold text-[9px] sm:text-[10px] font-bold tracking-[0.16em] uppercase text-brand-navy-deep shadow-sm">
                       {item.tag}
                     </span>
-                    <span className="text-lg sm:text-xl md:text-2xl font-serif text-[#C6A24A] font-bold">
+                    <span className="text-lg sm:text-xl md:text-2xl font-serif text-brand-gold font-bold">
                       {item.price}
                     </span>
                   </div>
@@ -247,20 +247,20 @@ export default function CuratedCorridors() {
                     {item.title}
                   </h3>
 
-                  <div className="flex items-center gap-1.5 sm:gap-2 text-[#CBD5E1] text-[10px] sm:text-xs mb-2 md:mb-3">
-                    <MapPin size={12} className="text-[#C6A24A] flex-shrink-0" />
+                  <div className="flex items-center gap-1.5 sm:gap-2 text-brand-text-on-dark-muted text-[10px] sm:text-xs mb-2 md:mb-3">
+                    <MapPin size={12} className="text-brand-gold flex-shrink-0" />
                     <span className="truncate">{item.location}</span>
                     <span className="mx-0.5">•</span>
                     <span className="truncate">{item.specs}</span>
                   </div>
 
-                  <p className="text-[#C9CED9] font-normal text-[11px] sm:text-xs md:text-sm leading-relaxed mb-4 line-clamp-2">
+                  <p className="text-brand-text-on-dark-muted font-normal text-[11px] sm:text-xs md:text-sm leading-relaxed mb-4 line-clamp-2">
                     {item.desc}
                   </p>
 
                   <div className="flex items-center justify-between pt-3 border-t border-white/15">
                     <Link href={item.link || (item.slug ? `/properties/${item.slug}` : '/properties')}
-                      className="inline-flex items-center gap-2 bg-[#C6A24A] hover:bg-[#D8BD73] text-[#0E162B] px-4 py-2 sm:px-6 sm:py-2.5 rounded-full text-[10px] sm:text-xs font-bold tracking-widest uppercase transition-colors duration-300 shadow-md group"
+                      className="inline-flex items-center gap-2 bg-brand-gold hover:bg-brand-gold-light text-brand-navy-deep px-4 py-2 sm:px-6 sm:py-2.5 rounded-full text-[10px] sm:text-xs font-bold tracking-widest uppercase transition-colors duration-300 shadow-md group"
                     >
                       <span>View Details</span>
                       <ArrowUpRight size={14} className="transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
@@ -280,12 +280,12 @@ export default function CuratedCorridors() {
       {/* Master Directory CTA */}
       <div ref={ctaRef} className="container mx-auto px-5 md:px-12 mt-6 sm:mt-8 flex justify-center">
         <Link href={corridorData.ctaLink || "/ready-to-move"}
-          className="group relative px-6 py-3.5 sm:px-8 sm:py-4 bg-[#202B4A] hover:bg-[#273459] text-white border border-[#C6A24A]/40 hover:border-[#C6A24A] overflow-hidden rounded-full flex items-center gap-3 sm:gap-4 shadow-lg hover:shadow-xl transition-all duration-300"
+          className="group relative px-6 py-3.5 sm:px-8 sm:py-4 bg-brand-navy hover:bg-brand-navy-deep text-white border border-brand-gold/40 hover:border-brand-gold overflow-hidden rounded-full flex items-center gap-3 sm:gap-4 shadow-md hover:shadow-xl transition-all duration-300"
         >
-          <span className="relative z-10 text-[11px] sm:text-xs font-semibold tracking-widest uppercase text-[#F7F5EF]">
+          <span className="relative z-10 text-[11px] sm:text-xs font-semibold tracking-widest uppercase text-brand-ivory">
             {corridorData.ctaText || "View Complete Featured Inventory"}
           </span>
-          <div className="relative z-10 w-7 h-7 rounded-full bg-[#C6A24A] text-[#0E162B] flex items-center justify-center transition-transform group-hover:scale-105">
+          <div className="relative z-10 w-7 h-7 rounded-full bg-brand-gold text-brand-navy-deep flex items-center justify-center transition-transform group-hover:scale-105">
             <ArrowUpRight size={14} />
           </div>
         </Link>

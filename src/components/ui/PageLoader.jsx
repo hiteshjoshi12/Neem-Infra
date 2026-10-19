@@ -36,7 +36,7 @@ export default function PageLoader() {
   }, []);
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#070A11] text-white overflow-hidden select-none">
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-brand-ivory text-brand-navy overflow-hidden select-none">
       {/* 3D Dynamic Keyframe Styles */}
       <style>{`
         @keyframes rotateTower3D {
@@ -74,7 +74,7 @@ export default function PageLoader() {
       <div
         className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{
-          background: 'radial-gradient(circle, rgba(208, 154, 22,0.12) 0%, rgba(208, 154, 22,0.02) 50%, transparent 70%)'
+          background: 'radial-gradient(circle, rgba(197, 154, 22,0.14) 0%, rgba(250,248,245,0) 70%)'
         }}
       />
       <div
@@ -86,9 +86,9 @@ export default function PageLoader() {
 
       {/* Blueprint Architectural Grid Background */}
       <div
-        className="absolute inset-0 opacity-[0.035] pointer-events-none"
+        className="absolute inset-0 opacity-[0.04] pointer-events-none"
         style={{
-          backgroundImage: `linear-gradient(to right, rgba(208, 154, 22,0.3) 1px, transparent 1px), linear-gradient(to bottom, rgba(208, 154, 22,0.3) 1px, transparent 1px)`,
+          backgroundImage: `linear-gradient(to right, rgba(197, 154, 22,0.4) 1px, transparent 1px), linear-gradient(to bottom, rgba(197, 154, 22,0.4) 1px, transparent 1px)`,
           backgroundSize: '40px 40px'
         }}
       />
@@ -99,16 +99,16 @@ export default function PageLoader() {
         {/* Orbital Gold Rings (Floor Horizon) */}
         <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
           <div
-            className="w-44 h-44 rounded-full border border-[#D09A16]/30 anim-orbit-ring"
+            className="w-44 h-44 rounded-full border border-brand-gold/40 anim-orbit-ring"
             style={{ transformStyle: 'preserve-3d' }}
           >
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-[#D09A16] shadow-[0_0_12px_#D09A16]" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-2 h-2 rounded-full bg-brand-gold shadow-[0_0_12px_var(--color-brand-gold)]" />
           </div>
           <div
-            className="w-32 h-32 rounded-full border border-dashed border-[#D09A16]/20 anim-orbit-ring-rev"
+            className="w-32 h-32 rounded-full border border-dashed border-brand-gold/30 anim-orbit-ring-rev"
             style={{ transformStyle: 'preserve-3d' }}
           >
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-amber-400" />
+            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full bg-brand-gold-deep" />
           </div>
         </div>
 
@@ -122,7 +122,7 @@ export default function PageLoader() {
         >
           {/* Internal Glowing Gold Core */}
           <div
-            className="absolute inset-x-2 inset-y-4 rounded-xl bg-gradient-to-t from-[#D09A16] to-amber-300 opacity-75 blur-md"
+            className="absolute inset-x-2 inset-y-4 rounded-xl bg-gradient-to-t from-brand-gold to-amber-300 opacity-60 blur-md"
             style={{
               transform: 'translateZ(0px)',
               animation: 'pulseGlow 2.5s ease-in-out infinite'
@@ -131,71 +131,71 @@ export default function PageLoader() {
 
           {/* FRONT FACE (Glass Curtain Wall) */}
           <div
-            className="absolute inset-0 rounded-lg border border-[#D09A16]/60 bg-gradient-to-b from-[#151C2C]/90 via-[#0E1420]/90 to-[#070A11]/95 backdrop-blur-md overflow-hidden p-1.5 flex flex-col justify-between shadow-[0_0_15px_rgba(208, 154, 22,0.3)]"
+            className="absolute inset-0 rounded-lg border border-brand-gold/60 bg-gradient-to-b from-white/95 via-brand-ivory-warm/95 to-brand-cream/95 backdrop-blur-md overflow-hidden p-1.5 flex flex-col justify-between shadow-[0_0_15px_rgba(197,154,39,0.2)]"
             style={{ transform: 'translateZ(32px)' }}
           >
             {/* Windows Pattern */}
             <div className="grid grid-cols-2 gap-1 h-full">
               {[...Array(8)].map((_, i) => (
-                <div key={i} className="rounded-xs bg-[#D09A16]/15 border border-[#D09A16]/25" />
+                <div key={i} className="rounded-xs bg-brand-gold/15 border border-brand-gold/25" />
               ))}
             </div>
             {/* Floor separator lines */}
-            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_11px,rgba(208, 154, 22,0.3)_12px)] bg-[size:100%_12px] pointer-events-none" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_11px,var(--color-brand-cream-border)_12px)] bg-[size:100%_12px] pointer-events-none" />
           </div>
 
           {/* BACK FACE */}
           <div
-            className="absolute inset-0 rounded-lg border border-[#D09A16]/40 bg-[#0C101A]/90 backdrop-blur-md overflow-hidden p-1.5 flex flex-col justify-between"
+            className="absolute inset-0 rounded-lg border border-brand-gold/40 bg-white/90 backdrop-blur-md overflow-hidden p-1.5 flex flex-col justify-between"
             style={{ transform: 'rotateY(180deg) translateZ(32px)' }}
           >
             <div className="grid grid-cols-2 gap-1 h-full">
               {[...Array(8)].map((_, i) => (
-                <div key={i} className="rounded-xs bg-[#D09A16]/10 border border-[#D09A16]/20" />
+                <div key={i} className="rounded-xs bg-brand-gold/10 border border-brand-gold/20" />
               ))}
             </div>
           </div>
 
           {/* RIGHT FACE */}
           <div
-            className="absolute inset-0 rounded-lg border border-[#D09A16]/50 bg-gradient-to-b from-[#101524]/90 via-[#0A0E18]/90 to-[#070A11]/95 backdrop-blur-md overflow-hidden p-1.5 flex flex-col justify-between"
+            className="absolute inset-0 rounded-lg border border-brand-gold/50 bg-gradient-to-b from-brand-ivory-warm/95 via-brand-cream/90 to-brand-ivory/95 backdrop-blur-md overflow-hidden p-1.5 flex flex-col justify-between"
             style={{ transform: 'rotateY(90deg) translateZ(32px)' }}
           >
             <div className="grid grid-cols-2 gap-1 h-full">
               {[...Array(8)].map((_, i) => (
-                <div key={i} className="rounded-xs bg-[#D09A16]/15 border border-[#D09A16]/25" />
+                <div key={i} className="rounded-xs bg-brand-gold/15 border border-brand-gold/25" />
               ))}
             </div>
-            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_11px,rgba(208, 154, 22,0.25)_12px)] bg-[size:100%_12px] pointer-events-none" />
+            <div className="absolute inset-0 bg-[linear-gradient(to_bottom,transparent_11px,var(--color-brand-cream-border)_12px)] bg-[size:100%_12px] pointer-events-none" />
           </div>
 
           {/* LEFT FACE */}
           <div
-            className="absolute inset-0 rounded-lg border border-[#D09A16]/40 bg-[#0C101A]/90 backdrop-blur-md overflow-hidden p-1.5 flex flex-col justify-between"
+            className="absolute inset-0 rounded-lg border border-brand-gold/40 bg-white/90 backdrop-blur-md overflow-hidden p-1.5 flex flex-col justify-between"
             style={{ transform: 'rotateY(-90deg) translateZ(32px)' }}
           >
             <div className="grid grid-cols-2 gap-1 h-full">
               {[...Array(8)].map((_, i) => (
-                <div key={i} className="rounded-xs bg-[#D09A16]/10 border border-[#D09A16]/20" />
+                <div key={i} className="rounded-xs bg-brand-gold/10 border border-brand-gold/20" />
               ))}
             </div>
           </div>
 
           {/* TOP FACE (Penthouse Terrace / Spire) */}
           <div
-            className="absolute inset-x-0 top-0 h-16 rounded-md border border-[#D09A16]/80 bg-gradient-to-br from-[#D09A16]/40 to-amber-400/20 backdrop-blur-md flex items-center justify-center shadow-lg"
+            className="absolute inset-x-0 top-0 h-16 rounded-md border border-brand-gold/80 bg-gradient-to-br from-brand-gold/40 to-amber-400/20 backdrop-blur-md flex items-center justify-center shadow-sm"
             style={{
               transform: 'rotateX(90deg) translateZ(16px)',
               transformOrigin: 'top'
             }}
           >
             {/* Spire Beacon */}
-            <div className="w-3 h-3 rounded-full bg-white shadow-[0_0_15px_#FFF] animate-ping" />
+            <div className="w-3 h-3 rounded-full bg-brand-gold shadow-[0_0_15px_var(--color-brand-gold)] animate-ping" />
           </div>
 
           {/* BOTTOM BASE SHADOW */}
           <div
-            className="absolute inset-x-0 bottom-0 h-16 rounded-md bg-black/80 blur-md pointer-events-none"
+            className="absolute inset-x-0 bottom-0 h-16 rounded-md bg-brand-cream-border/60 blur-md pointer-events-none"
             style={{
               transform: 'rotateX(-90deg) translateZ(16px)',
               transformOrigin: 'bottom'
@@ -205,57 +205,57 @@ export default function PageLoader() {
 
         {/* 3D Blueprint Foundation Platform */}
         <div
-          className="absolute -bottom-4 w-36 h-36 rounded-2xl border border-[#D09A16]/30 bg-gradient-to-tr from-[#D09A16]/10 to-transparent pointer-events-none"
+          className="absolute -bottom-4 w-36 h-36 rounded-2xl border border-brand-gold/40 bg-gradient-to-tr from-brand-gold/15 to-transparent pointer-events-none"
           style={{
             transform: 'rotateX(72deg) rotateZ(45deg)',
             transformStyle: 'preserve-3d',
-            boxShadow: '0 0 35px rgba(208, 154, 22,0.2)'
+            boxShadow: '0 0 35px rgba(197, 154, 22,0.15)'
           }}
         >
-          <div className="absolute inset-2 border border-dashed border-[#D09A16]/30 rounded-xl" />
+          <div className="absolute inset-2 border border-dashed border-brand-gold/30 rounded-xl" />
         </div>
       </div>
 
       {/* ================= BRANDING & EDITORIAL DETAILS ================= */}
       <div className="text-center space-y-3 z-10 max-w-sm px-4">
         {/* Prestige Pill */}
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/[0.04] border border-[#D09A16]/35 text-[#D09A16] text-[10px] font-bold font-mono tracking-[0.25em] uppercase shadow-sm">
-          <Sparkles size={11} className="text-[#D09A16]" />
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white border border-brand-gold/35 text-brand-gold-deep text-[10px] font-bold font-mono tracking-[0.25em] uppercase shadow-xs">
+          <Sparkles size={11} className="text-brand-gold-deep" />
           <span>Saudagar Properties • Est. 1999</span>
         </div>
 
         {/* Brand Headline */}
-        <h2 className="text-xl sm:text-2xl font-serif tracking-wide text-white leading-tight">
-          Pioneering <span className="italic font-light text-[#D09A16]">DLF Gurugram</span> Real Estate
+        <h2 className="text-xl sm:text-2xl font-serif tracking-wide text-brand-navy leading-tight">
+          Pioneering <span className="italic font-light text-brand-gold-deep">DLF Gurugram</span> Real Estate
         </h2>
 
         {/* Status Text Ticker */}
         <div className="h-5 flex items-center justify-center">
-          <p className="text-xs text-slate-400 font-medium transition-opacity duration-300">
+          <p className="text-xs text-brand-slate font-medium transition-opacity duration-300">
             {LOADING_STATUSES[statusIdx]}
           </p>
         </div>
 
         {/* High-End Champagne Gold Progress Bar */}
         <div className="w-56 mx-auto pt-2 space-y-1.5">
-          <div className="relative w-full h-1.5 rounded-full bg-white/10 overflow-hidden border border-white/5">
+          <div className="relative w-full h-1.5 rounded-full bg-brand-cream-border overflow-hidden">
             {/* Animated Fill Bar */}
             <div
-              className="h-full rounded-full bg-gradient-to-r from-[#D09A16] via-[#E6D5BC] to-[#D09A16] transition-all duration-300 shadow-[0_0_12px_#D09A16]"
+              className="h-full rounded-full bg-gradient-to-r from-brand-gold to-brand-gold-light transition-all duration-300 shadow-[0_0_8px_var(--color-brand-gold)]"
               style={{ width: `${progress}%` }}
             />
           </div>
 
-          <div className="flex items-center justify-between text-[10px] font-mono text-slate-500">
+          <div className="flex items-center justify-between text-[10px] font-mono text-brand-slate-light">
             <span>VIP EXPERIENCE</span>
-            <span className="text-[#D09A16] font-bold">{progress}%</span>
+            <span className="text-brand-gold-deep font-bold">{progress}%</span>
           </div>
         </div>
       </div>
 
       {/* Bottom Coordinates & Credibility */}
-      <div className="absolute bottom-6 flex items-center gap-2 text-[10px] font-mono text-slate-600 tracking-widest uppercase">
-        <Compass size={11} className="text-[#D09A16]/60" />
+      <div className="absolute bottom-6 flex items-center gap-2 text-[10px] font-mono text-brand-slate-light tracking-widest uppercase">
+        <Compass size={11} className="text-brand-gold-deep/60" />
         <span>DLF Phase 2 • 28.4595° N, 77.0266° E</span>
       </div>
     </div>

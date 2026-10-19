@@ -38,8 +38,6 @@ const AI_ENGINES = [
 
     badge: "AI SEARCH",
 
-    accent: "#10A37F",
-
     description:
       "Evaluate Saudagar Properties using OpenAI's conversational intelligence.",
 
@@ -64,8 +62,6 @@ const AI_ENGINES = [
     subtitle: "Answer Engine",
 
     badge: "LIVE RESEARCH",
-
-    accent: "#22B8CD",
 
     description:
       "Run a live research query across web sources and citations.",
@@ -93,8 +89,6 @@ const AI_ENGINES = [
     subtitle: "Google AI",
 
     badge: "AI DISCOVERY",
-
-    accent: "#9D6CE5",
 
     description:
       "Explore Google's AI ecosystem with the same pre-engineered property query.",
@@ -132,14 +126,14 @@ function AIEngineCard({ engine, index, cardRef }) {
         overflow-hidden
         rounded-[22px]
         border
-        border-[#17213D]/10
+        border-brand-navy/10
         bg-white
         p-6
         shadow-[0_10px_35px_rgba(23,33,61,0.04)]
         transition-all
         duration-500
         hover:-translate-y-1.5
-        hover:border-[#D09A16]/40
+        hover:border-brand-gold/40
         hover:shadow-[0_20px_55px_rgba(23,33,61,0.09)]
       "
     >
@@ -157,7 +151,7 @@ function AIEngineCard({ engine, index, cardRef }) {
           h-[2px]
           origin-left
           scale-x-0
-          bg-[#D09A16]
+          bg-brand-gold
           transition-transform
           duration-500
           group-hover:scale-x-100
@@ -178,10 +172,10 @@ function AIEngineCard({ engine, index, cardRef }) {
           font-serif
           text-[90px]
           leading-none
-          text-[#17213D]/[0.03]
+          text-brand-navy/[0.03]
           transition-colors
           duration-500
-          group-hover:text-[#D09A16]/[0.08]
+          group-hover:text-brand-gold/[0.08]
         "
       >
         0{index + 1}
@@ -205,15 +199,15 @@ function AIEngineCard({ engine, index, cardRef }) {
             justify-center
             rounded-2xl
             border
-            border-[#17213D]/10
-            bg-[#F7F5EF]
-            text-[#17213D]
+            border-brand-navy/10
+            bg-brand-ivory
+            text-brand-navy
             transition-all
             duration-500
             group-hover:scale-105
-            group-hover:border-[#D09A16]
-            group-hover:bg-[#D09A16]
-            group-hover:text-[#0E162B]
+            group-hover:border-brand-gold
+            group-hover:bg-brand-gold
+            group-hover:text-brand-navy-deep
           "
         >
           {engine.icon}
@@ -226,15 +220,15 @@ function AIEngineCard({ engine, index, cardRef }) {
           className="
             rounded-full
             border
-            border-[#D09A16]/25
-            bg-[#F7F5EF]
+            border-brand-gold/25
+            bg-brand-ivory
             px-2.5
             py-1
             text-[7px]
             font-bold
             uppercase
             tracking-[0.18em]
-            text-[#D09A16]
+            text-brand-gold
           "
         >
           {engine.badge}
@@ -255,7 +249,7 @@ function AIEngineCard({ engine, index, cardRef }) {
             text-[24px]
             font-normal
             tracking-[-0.025em]
-            text-[#17213D]
+            text-brand-navy
           "
         >
           {engine.name}
@@ -269,7 +263,7 @@ function AIEngineCard({ engine, index, cardRef }) {
             font-bold
             uppercase
             tracking-[0.2em]
-            text-[#D09A16]
+            text-brand-gold
           "
         >
           {engine.subtitle}
@@ -282,7 +276,7 @@ function AIEngineCard({ engine, index, cardRef }) {
             min-h-[48px]
             text-xs
             leading-5
-            text-[#566078]
+            text-brand-slate
           "
         >
           {engine.description}
@@ -304,7 +298,7 @@ function AIEngineCard({ engine, index, cardRef }) {
           items-center
           justify-between
           border-t
-          border-[#17213D]/[0.08]
+          border-brand-navy/[0.08]
           pt-4
         "
       >
@@ -315,9 +309,9 @@ function AIEngineCard({ engine, index, cardRef }) {
             font-bold
             uppercase
             tracking-[0.18em]
-            text-[#17213D]
+            text-brand-navy
             transition-colors
-            group-hover:text-[#D09A16]
+            group-hover:text-brand-gold
           "
         >
           Ask {engine.name}
@@ -333,13 +327,13 @@ function AIEngineCard({ engine, index, cardRef }) {
             justify-center
             rounded-full
             border
-            border-[#D09A16]/30
-            text-[#D09A16]
+            border-brand-gold/30
+            text-brand-gold
             transition-all
             duration-300
-            group-hover:border-[#D09A16]
-            group-hover:bg-[#D09A16]
-            group-hover:text-[#0E162B]
+            group-hover:border-brand-gold
+            group-hover:bg-brand-gold
+            group-hover:text-brand-navy-deep
           "
         >
           <ArrowUpRight
@@ -438,8 +432,8 @@ export default function AiShowcaseSection() {
         w-full
         overflow-hidden
         border-t
-        border-[#17213D]/[0.08]
-        bg-[#F7F5EF]
+        border-brand-navy/[0.08]
+        bg-brand-ivory
         py-16
         sm:py-20
         lg:py-24
@@ -459,7 +453,7 @@ export default function AiShowcaseSection() {
           h-[450px]
           w-[450px]
           rounded-full
-          bg-[#D09A16]/[0.04]
+          bg-brand-gold/[0.04]
           blur-[100px]
         "
       />
@@ -471,7 +465,7 @@ export default function AiShowcaseSection() {
           absolute
           inset-0
           opacity-[0.018]
-          [background-image:linear-gradient(to_right,#17213D_1px,transparent_1px),linear-gradient(to_bottom,#17213D_1px,transparent_1px)]
+          [background-image:linear-gradient(to_right,var(--color-brand-navy)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-brand-navy)_1px,transparent_1px)]
           [background-size:100px_100px]
         "
       />
@@ -517,7 +511,7 @@ export default function AiShowcaseSection() {
               gap-2
               rounded-full
               border
-              border-[#D09A16]/30
+              border-brand-gold/30
               bg-white
               px-3.5
               py-1.5
@@ -525,14 +519,14 @@ export default function AiShowcaseSection() {
               font-bold
               uppercase
               tracking-[0.22em]
-              text-[#D09A16]
+              text-brand-gold
               shadow-sm
             "
           >
 
             <Sparkles
               size={11}
-              className="text-[#D09A16]"
+              className="text-brand-gold"
             />
 
             AI Authority Check
@@ -549,7 +543,7 @@ export default function AiShowcaseSection() {
               font-normal
               leading-[1.05]
               tracking-[-0.04em]
-              text-[#17213D]
+              text-brand-navy
               sm:text-5xl
             "
           >
@@ -560,7 +554,7 @@ export default function AiShowcaseSection() {
                 ml-2
                 italic
                 font-light
-                text-[#D09A16]
+                text-brand-gold
               "
             >
               sees us.
@@ -578,7 +572,7 @@ export default function AiShowcaseSection() {
               max-w-xl
               text-xs
               leading-6
-              text-[#566078]
+              text-brand-slate
               sm:text-sm
             "
           >
@@ -603,7 +597,7 @@ export default function AiShowcaseSection() {
               className="
                 h-px
                 w-8
-                bg-[#D09A16]/40
+                bg-brand-gold/40
               "
             />
 
@@ -613,7 +607,7 @@ export default function AiShowcaseSection() {
                 font-bold
                 uppercase
                 tracking-[0.22em]
-                text-[#17213D]/40
+                text-brand-navy/40
               "
             >
               RERA · REPUTATION · LOCAL AUTHORITY
@@ -623,7 +617,7 @@ export default function AiShowcaseSection() {
               className="
                 h-px
                 w-8
-                bg-[#D09A16]/40
+                bg-brand-gold/40
               "
             />
 
@@ -679,7 +673,7 @@ export default function AiShowcaseSection() {
 
           <ShieldCheck
             size={13}
-            className="text-[#D09A16]"
+            className="text-brand-gold"
           />
 
           <span
@@ -688,7 +682,7 @@ export default function AiShowcaseSection() {
               font-bold
               uppercase
               tracking-[0.22em]
-              text-[#17213D]/40
+              text-brand-navy/40
             "
           >
             One verified query · Three independent AI engines

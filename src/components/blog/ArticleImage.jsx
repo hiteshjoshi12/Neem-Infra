@@ -60,22 +60,22 @@ export default function ArticleImage({
   if (!isValidImageSrc(trimmedSrc)) {
     return (
       <figure className={`my-8 sm:my-10 group ${className}`}>
-        <div className={`relative w-full ${aspectClass} overflow-hidden rounded-2xl md:rounded-3xl border border-dashed border-[#17213D]/20 bg-[#F7F5EF] flex flex-col items-center justify-center p-6 text-center shadow-xs`}>
-          <div className="w-12 h-12 rounded-2xl bg-[#D09A16]/10 text-[#D09A16] flex items-center justify-center mb-3">
+        <div className={`relative w-full ${aspectClass} overflow-hidden rounded-2xl md:rounded-3xl border border-dashed border-brand-navy/20 bg-brand-ivory flex flex-col items-center justify-center p-6 text-center shadow-xs`}>
+          <div className="w-12 h-12 rounded-2xl bg-brand-gold/10 text-brand-gold flex items-center justify-center mb-3">
             <Camera size={22} />
           </div>
-          <p className="font-serif font-bold text-sm text-[#17213D] max-w-md">
+          <p className="font-serif font-bold text-sm text-brand-navy max-w-md">
             {cleanAlt}
           </p>
-          <span className="text-[11px] text-[#8892A6] mt-1.5 font-mono">
+          <span className="text-[11px] text-brand-muted mt-1.5 font-mono">
             {trimmedSrc ? `[Unverified image path: ${trimmedSrc.slice(0, 40)}]` : '[Visual asset placeholder]'}
           </span>
         </div>
 
         {(caption || credit || source) && (
-          <figcaption className="mt-3 px-1 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 text-xs text-[#566078]">
+          <figcaption className="mt-3 px-1 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 text-xs text-brand-slate">
             {caption && (
-              <span className="font-sans italic text-[#566078] leading-relaxed">
+              <span className="font-sans italic text-brand-slate leading-relaxed">
                 {caption}
               </span>
             )}
@@ -105,7 +105,7 @@ export default function ArticleImage({
         Container with explicit aspect ratio to ensure ZERO Cumulative Layout Shift (CLS)
         during image loading and decoding
       */}
-      <div className={`relative w-full ${aspectClass} overflow-hidden rounded-2xl md:rounded-3xl border border-[#17213D]/10 bg-slate-100 shadow-md transition-all duration-300 group-hover:shadow-lg`}>
+      <div className={`relative w-full ${aspectClass} overflow-hidden rounded-2xl md:rounded-3xl border border-brand-navy/10 bg-slate-100 shadow-md transition-all duration-300 group-hover:shadow-lg`}>
         <Image
           src={trimmedSrc}
           alt={cleanAlt}
@@ -122,23 +122,23 @@ export default function ArticleImage({
 
       {/* Semantic Captions, Photographer Credits & Verified Source */}
       {(caption || credit || source) && (
-        <figcaption className="mt-3 px-1 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 text-xs text-[#566078]">
+        <figcaption className="mt-3 px-1 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-1.5 text-xs text-brand-slate">
           {caption && (
-            <span className="font-sans italic text-[#566078] leading-relaxed">
+            <span className="font-sans italic text-brand-slate leading-relaxed">
               {caption}
             </span>
           )}
 
-          <div className="flex items-center gap-3 shrink-0 text-[11px] text-[#8892A6]">
+          <div className="flex items-center gap-3 shrink-0 text-[11px] text-brand-muted">
             {credit && (
               <span className="inline-flex items-center gap-1">
-                <Camera size={11} className="text-[#D09A16]" />
+                <Camera size={11} className="text-brand-gold" />
                 <span>Photo: {credit}</span>
               </span>
             )}
             {source && (
-              <span className="inline-flex items-center gap-1 font-medium text-[#17213D]/70">
-                <ShieldCheck size={11} className="text-[#D09A16]" />
+              <span className="inline-flex items-center gap-1 font-medium text-brand-navy/70">
+                <ShieldCheck size={11} className="text-brand-gold" />
                 <span>Source: {source}</span>
               </span>
             )}

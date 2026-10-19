@@ -71,11 +71,11 @@ export async function generateMetadata() {
     <PublicLayout asMain={false}>
       <BreadcrumbJsonLd items={breadcrumbs} />
 
-      <main className="w-full bg-[#0A0E17] text-white selection:bg-[#D09A16] selection:text-[#0A0E17]">
+      <main className="w-full bg-brand-obsidian text-white selection:bg-brand-gold selection:text-brand-obsidian">
         {/* =========================================================================
             SECTION 1: DARK — LUXURY ARCHITECTURAL EDITORIAL MASTHEAD (OPENING SCREEN)
         ========================================================================= */}
-        <section className="relative overflow-hidden bg-[#0A0E17] text-white pt-32 sm:pt-36 pb-20 md:pb-24 border-b border-white/10">
+        <section className="relative overflow-hidden bg-brand-obsidian text-white pt-32 sm:pt-36 pb-20 md:pb-24 border-b border-white/10">
           {/* Architectural Background Vignette - Clearly Visible */}
           <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-80">
             <Image
@@ -86,7 +86,7 @@ export async function generateMetadata() {
               priority
               className="object-cover object-center brightness-[0.85] contrast-[1.05]"
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-[#0A0E17]/80 via-[#0A0E17]/45 to-[#0A0E17]/95" />
+            <div className="absolute inset-0 bg-gradient-to-b from-brand-obsidian/80 via-brand-obsidian/45 to-brand-obsidian/95" />
           </div>
 
           {/* Ambient Golden Glow Beams */}
@@ -99,17 +99,17 @@ export async function generateMetadata() {
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             {/* Illuminated Breadcrumb Navigation */}
             <div className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-8">
-              <Link href="/" className="hover:text-[#D09A16] transition-colors">Home</Link>
+              <Link href="/" className="hover:text-brand-gold transition-colors">Home</Link>
               <span className="text-slate-600">/</span>
-              <span className="text-[#D09A16] flex items-center gap-1.5">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16] shadow-[0_0_8px_#D09A16]" />
+              <span className="text-brand-gold flex items-center gap-1.5">
+                <span className="w-1.5 h-1.5 rounded-full bg-brand-gold shadow-[0_0_8px_var(--color-brand-gold)]" />
                 <span>The Gurugram Journal</span>
               </span>
             </div>
 
             <div className="max-w-4xl">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-white tracking-tight leading-[1.1] mb-6">
-                {blogCms.masthead?.titleMain || "The Gurugram Real Estate "} <span className="italic font-serif text-[#D09A16]">{blogCms.masthead?.titleItalic || "Journal"}</span>
+                {blogCms.masthead?.titleMain || "The Gurugram Real Estate "} <span className="italic font-serif text-brand-gold">{blogCms.masthead?.titleItalic || "Journal"}</span>
               </h1>
 
               <p className="text-base sm:text-lg md:text-xl text-slate-300 font-sans leading-relaxed max-w-3xl">
@@ -124,17 +124,17 @@ export async function generateMetadata() {
         ========================================================================= */}
         {blogCms.marketPulse && blogCms.marketPulse.length > 0 && (
           <section className="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-8 sm:-mt-10 mb-8">
-            <div className="bg-[#12192C]/95 backdrop-blur-xl border border-white/15 rounded-3xl p-5 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.35)]">
+            <div className="bg-brand-navy-surface/95 backdrop-blur-xl border border-white/15 rounded-3xl p-5 sm:p-7 shadow-[0_20px_50px_rgba(0,0,0,0.35)]">
               <div className="grid grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6 divide-y lg:divide-y-0 lg:divide-x divide-white/10">
                 {blogCms.marketPulse.map((pulse, pIdx) => (
                   <div key={pIdx} className={`flex flex-col justify-between ${pIdx > 0 ? 'pt-4 lg:pt-0 lg:pl-6' : ''}`}>
                     <div className="flex items-baseline gap-1.5 mb-1.5">
-                      <span className="w-2 h-2 rounded-full bg-[#D09A16] shadow-[0_0_8px_#D09A16] mr-1 self-center shrink-0" />
+                      <span className="w-2 h-2 rounded-full bg-brand-gold shadow-[0_0_8px_var(--color-brand-gold)] mr-1 self-center shrink-0" />
                       <span className="text-2xl sm:text-3xl font-serif font-bold text-white tracking-tight">
                         {pulse.value}
                       </span>
                       {pulse.unit && (
-                        <span className="text-xs font-semibold text-[#D09A16] uppercase tracking-wider">
+                        <span className="text-xs font-semibold text-brand-gold uppercase tracking-wider">
                           {pulse.unit}
                         </span>
                       )}
@@ -170,7 +170,7 @@ export async function generateMetadata() {
         {/* =========================================================================
             SECTION 5: DARK — PRIVATE MARKET DISPATCH & QUARTERLY HNI REPORT CONCIERGE
         ========================================================================= */}
-        <section className="py-20 md:py-24 bg-[#0A0E17] text-white border-t border-white/10 relative overflow-hidden">
+        <section className="py-20 md:py-24 bg-brand-obsidian text-white border-t border-white/10 relative overflow-hidden">
           {/* Ambient Beams */}
           <div 
             aria-hidden="true" 
@@ -179,13 +179,13 @@ export async function generateMetadata() {
           />
 
           <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
-            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white/[0.06] border border-[#D09A16]/40 text-[#D09A16] text-xs font-semibold uppercase tracking-[0.25em] mb-4 shadow-[0_0_20px_rgba(208,154,22,0.15)]">
-              <Mail size={13} className="text-[#D09A16]" />
+            <span className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-white/[0.06] border border-brand-gold/40 text-brand-gold text-xs font-semibold uppercase tracking-[0.25em] mb-4 shadow-[0_0_20px_rgba(208,154,22,0.15)]">
+              <Mail size={13} className="text-brand-gold" />
               <span>{blogCms.newsletter?.badge || "Quarterly DLF Market Intelligence Dispatch"}</span>
             </span>
 
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white mb-4 leading-tight">
-              {blogCms.newsletter?.titleMain || "Receive Off-Market Intelligence in "} <span className="italic font-serif text-[#D09A16]">{blogCms.newsletter?.titleItalic || "Your Private Inbox"}</span>
+              {blogCms.newsletter?.titleMain || "Receive Off-Market Intelligence in "} <span className="italic font-serif text-brand-gold">{blogCms.newsletter?.titleItalic || "Your Private Inbox"}</span>
             </h2>
 
             <p className="text-sm sm:text-base text-slate-300 leading-relaxed mb-8 max-w-2xl mx-auto font-sans">
@@ -200,14 +200,14 @@ export async function generateMetadata() {
 
             <div className="flex flex-wrap items-center justify-center gap-6 text-xs text-slate-400 pt-4 border-t border-white/10">
               <span className="flex items-center gap-1.5">
-                <ShieldCheck size={14} className="text-[#D09A16]" />
+                <ShieldCheck size={14} className="text-brand-gold" />
                 <span>{blogCms.newsletter?.privacyText || "Zero spam. Strict client privacy protocol."}</span>
               </span>
               <a 
                 href={`https://wa.me/${blogCms.newsletter?.whatsappNumber || '919718511207'}`} 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="text-[#D09A16] hover:underline flex items-center gap-1.5"
+                className="text-brand-gold hover:underline flex items-center gap-1.5"
               >
                 <WhatsAppIcon size={14} />
                 <span>{blogCms.newsletter?.whatsappText || "Or Request WhatsApp Dispatch Directly"}</span>

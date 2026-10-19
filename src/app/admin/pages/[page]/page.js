@@ -227,7 +227,7 @@ function FormField({ label, description, value, onChange, placeholder = '' }) {
         value={value || ''}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 focus:border-[#D09A16] text-white text-xs outline-none transition-colors"
+        className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 focus:border-brand-gold text-white text-xs outline-none transition-colors"
       />
     </div>
   );
@@ -247,7 +247,7 @@ function TextAreaField({ label, description, value, onChange, rows = 3, placehol
         value={value || ''}
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
-        className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 focus:border-[#D09A16] text-white text-xs outline-none transition-colors leading-relaxed"
+        className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 focus:border-brand-gold text-white text-xs outline-none transition-colors leading-relaxed"
       />
     </div>
   );
@@ -271,7 +271,7 @@ function ListField({ label, description, items = [], onChange, placeholder = 'On
           onChange(lines);
         }}
         placeholder={placeholder}
-        className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 focus:border-[#D09A16] text-white text-xs outline-none transition-colors leading-relaxed font-mono"
+        className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 focus:border-brand-gold text-white text-xs outline-none transition-colors leading-relaxed font-mono"
       />
     </div>
   );
@@ -407,7 +407,7 @@ export default function AdminPageCMS() {
             >
               <span>← All Pages Hub</span>
             </Link>
-            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[#D09A16] text-[11px] font-bold uppercase tracking-wider">
+            <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-[11px] font-bold uppercase tracking-wider">
               <PageIcon size={12} />
               <span>{config.isCorridor ? 'Corridor CMS' : 'Page CMS'}</span>
             </div>
@@ -435,7 +435,7 @@ export default function AdminPageCMS() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#D09A16] to-[#D09A16] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_4px_15px_rgba(208,154,22,0.3)] active:scale-95 cursor-pointer disabled:opacity-60"
+            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-gold to-brand-gold hover:brightness-110 text-brand-dark font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_4px_15px_rgba(208,154,22,0.3)] active:scale-95 cursor-pointer disabled:opacity-60"
           >
             {saving ? <RefreshCw size={14} className="animate-spin" /> : <Save size={14} />}
             <span>{saving ? 'Saving...' : 'Save Changes'}</span>
@@ -450,7 +450,7 @@ export default function AdminPageCMS() {
             <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
               Select Micro-Market Corridor to Edit:
             </span>
-            <span className="text-[11px] font-mono text-[#D09A16]">
+            <span className="text-[11px] font-mono text-brand-gold">
               Database Key: corridor_{selectedCorridor}
             </span>
           </div>
@@ -461,7 +461,7 @@ export default function AdminPageCMS() {
                 onClick={() => setSelectedCorridor(corridor.slug)}
                 className={`py-2 px-3 rounded-xl text-xs font-semibold text-center transition-all cursor-pointer ${
                   selectedCorridor === corridor.slug
-                    ? 'bg-[#D09A16] text-[#0C101A] font-bold shadow-md shadow-[#D09A16]/20'
+                    ? 'bg-brand-gold text-brand-dark font-bold shadow-md shadow-brand-gold/20'
                     : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/5'
                 }`}
               >
@@ -480,7 +480,7 @@ export default function AdminPageCMS() {
             onClick={() => setActiveSectionTab(sec.id)}
             className={`px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
               activeSectionTab === sec.id
-                ? 'bg-[#D09A16] text-[#0C101A] shadow-md'
+                ? 'bg-brand-gold text-brand-dark shadow-md'
                 : 'bg-white/5 hover:bg-white/10 text-slate-300'
             }`}
           >
@@ -603,7 +603,7 @@ export default function AdminPageCMS() {
                 />
 
                 <div className="pt-4 border-t border-white/10 space-y-4">
-                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Hero Right Showcase Card</h4>
+                  <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Hero Right Showcase Card</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <FormField label="Card Category Tag" value={formData?.hero?.heroCard?.tag} onChange={(val) => updateField('hero.heroCard.tag', val)} placeholder="e.g. Advisory Authority" />
                     <FormField label="Card Verified Badge" value={formData?.hero?.heroCard?.badge} onChange={(val) => updateField('hero.heroCard.badge', val)} placeholder="e.g. DLF Authorized Desk" />
@@ -638,7 +638,7 @@ export default function AdminPageCMS() {
                 <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Residential Asset Classes &amp; Typologies</h3>
                 {(formData?.assetClasses || []).map((item, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                    <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Asset Class #{idx + 1}: {item.title}</h4>
+                    <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Asset Class #{idx + 1}: {item.title}</h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <FormField label="Class Title" value={item.title} onChange={(val) => updateField(`assetClasses.${idx}.title`, val)} />
                       <FormField label="Locations" value={item.locations} onChange={(val) => updateField(`assetClasses.${idx}.locations`, val)} />
@@ -647,7 +647,7 @@ export default function AdminPageCMS() {
                     </div>
                     
                     <div className="pt-2">
-                      <span className="text-[11px] font-bold text-[#D09A16] uppercase tracking-wider block mb-2">Technical &amp; Typology Metrics</span>
+                      <span className="text-[11px] font-bold text-brand-gold uppercase tracking-wider block mb-2">Technical &amp; Typology Metrics</span>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                         {(item.metrics || [{ label: '', val: '' }, { label: '', val: '' }, { label: '', val: '' }, { label: '', val: '' }]).slice(0, 4).map((m, mIdx) => (
                           <div key={mIdx} className="p-3 rounded-xl bg-white/[0.03] border border-white/5 space-y-2">
@@ -681,7 +681,7 @@ export default function AdminPageCMS() {
                 <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Prime Micro-Market Intelligence Benchmarks</h3>
                 {(formData?.microMarkets || []).map((market, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                    <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Micro-Market #{idx + 1}: {market.phase}</h4>
+                    <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Micro-Market #{idx + 1}: {market.phase}</h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                       <FormField label="Corridor / Phase Name" value={market.phase} onChange={(val) => updateField(`microMarkets.${idx}.phase`, val)} />
                       <FormField label="Character Tag" value={market.character} onChange={(val) => updateField(`microMarkets.${idx}.character`, val)} />
@@ -771,7 +771,7 @@ export default function AdminPageCMS() {
                 />
 
                 <div className="pt-4 border-t border-white/10 space-y-4">
-                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Hero Right Showcase Card</h4>
+                  <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Hero Right Showcase Card</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <FormField label="Card Category Tag" value={formData?.hero?.heroCard?.tag} onChange={(val) => updateField('hero.heroCard.tag', val)} placeholder="e.g. Enterprise Advisory" />
                     <FormField label="Card Verified Badge" value={formData?.hero?.heroCard?.badge} onChange={(val) => updateField('hero.heroCard.badge', val)} placeholder="e.g. Corporate Tenant Desk" />
@@ -806,7 +806,7 @@ export default function AdminPageCMS() {
                 <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Office &amp; Retail Asset Classes</h3>
                 {(formData?.assetClasses || []).map((item, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                    <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Asset Class #{idx + 1}: {item.title}</h4>
+                    <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Asset Class #{idx + 1}: {item.title}</h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <FormField label="Title" value={item.title} onChange={(val) => updateField(`assetClasses.${idx}.title`, val)} />
                       <FormField label="Locations" value={item.locations} onChange={(val) => updateField(`assetClasses.${idx}.locations`, val)} />
@@ -815,7 +815,7 @@ export default function AdminPageCMS() {
                     </div>
 
                     <div className="pt-2">
-                      <span className="text-[11px] font-bold text-[#D09A16] uppercase tracking-wider block mb-2">Technical &amp; Asset Metrics</span>
+                      <span className="text-[11px] font-bold text-brand-gold uppercase tracking-wider block mb-2">Technical &amp; Asset Metrics</span>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                         {(item.metrics || [{ label: '', val: '' }, { label: '', val: '' }, { label: '', val: '' }, { label: '', val: '' }]).slice(0, 4).map((m, mIdx) => (
                           <div key={mIdx} className="p-3 rounded-xl bg-white/[0.03] border border-white/5 space-y-2">
@@ -849,7 +849,7 @@ export default function AdminPageCMS() {
                 <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Commercial Micro-Market Yield Benchmarks</h3>
                 {(formData?.yieldBenchmarks || []).map((market, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                    <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Commercial Hub #{idx + 1}: {market.hub}</h4>
+                    <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Commercial Hub #{idx + 1}: {market.hub}</h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                       <FormField label="Commercial Hub Name" value={market.hub} onChange={(val) => updateField(`yieldBenchmarks.${idx}.hub`, val)} />
                       <FormField label="Category / Asset Class" value={market.category} onChange={(val) => updateField(`yieldBenchmarks.${idx}.category`, val)} />
@@ -937,7 +937,7 @@ export default function AdminPageCMS() {
                 />
 
                 <div className="pt-4 border-t border-white/10 space-y-4">
-                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Hero Right Showcase Card</h4>
+                  <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Hero Right Showcase Card</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <FormField label="Card Category Tag" value={formData?.hero?.heroCard?.tag} onChange={(val) => updateField('hero.heroCard.tag', val)} placeholder="e.g. Industrial Desk" />
                     <FormField label="Card Verified Badge" value={formData?.hero?.heroCard?.badge} onChange={(val) => updateField('hero.heroCard.badge', val)} placeholder="e.g. HSIIDC & Legal Diligence" />
@@ -972,7 +972,7 @@ export default function AdminPageCMS() {
                 <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Industrial &amp; Logistics Asset Classes</h3>
                 {(formData?.assetClasses || []).map((item, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                    <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Asset Class #{idx + 1}: {item.title}</h4>
+                    <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Asset Class #{idx + 1}: {item.title}</h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <FormField label="Title" value={item.title} onChange={(val) => updateField(`assetClasses.${idx}.title`, val)} />
                       <FormField label="Locations" value={item.locations} onChange={(val) => updateField(`assetClasses.${idx}.locations`, val)} />
@@ -981,7 +981,7 @@ export default function AdminPageCMS() {
                     </div>
 
                     <div className="pt-2">
-                      <span className="text-[11px] font-bold text-[#D09A16] uppercase tracking-wider block mb-2">Technical &amp; Engineering Metrics</span>
+                      <span className="text-[11px] font-bold text-brand-gold uppercase tracking-wider block mb-2">Technical &amp; Engineering Metrics</span>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                         {(item.metrics || [{ label: '', val: '' }, { label: '', val: '' }, { label: '', val: '' }, { label: '', val: '' }]).slice(0, 4).map((m, mIdx) => (
                           <div key={mIdx} className="p-3 rounded-xl bg-white/[0.03] border border-white/5 space-y-2">
@@ -1015,7 +1015,7 @@ export default function AdminPageCMS() {
                 <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Prime NCR Logistics &amp; Industrial Corridors</h3>
                 {(formData?.corridors || []).map((corridor, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                    <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Corridor #{idx + 1}: {corridor.corridor || corridor.hub}</h4>
+                    <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Corridor #{idx + 1}: {corridor.corridor || corridor.hub}</h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                       <FormField label="Corridor / Hub Name" value={corridor.corridor || corridor.hub} onChange={(val) => { updateField(`corridors.${idx}.corridor`, val); updateField(`corridors.${idx}.hub`, val); }} />
                       <FormField label="Zoning / Category" value={corridor.zoning || corridor.category} onChange={(val) => { updateField(`corridors.${idx}.zoning`, val); updateField(`corridors.${idx}.category`, val); }} />
@@ -1105,7 +1105,7 @@ export default function AdminPageCMS() {
                 />
 
                 <div className="pt-4 border-t border-white/10 space-y-4">
-                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">4 Key Trust Metrics (Hero Strip)</h4>
+                  <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">4 Key Trust Metrics (Hero Strip)</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                     {(formData?.hero?.stats || [
                       { value: "25+", label: "Years of Trust", highlight: false },
@@ -1128,7 +1128,7 @@ export default function AdminPageCMS() {
                 <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Founders &amp; Leadership Principals</h3>
                 {(formData?.founders || []).map((f, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                    <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Leadership #{idx + 1}: {f.name}</h4>
+                    <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Leadership #{idx + 1}: {f.name}</h4>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <FormField label="Full Name" value={f.name} onChange={(val) => updateField(`founders.${idx}.name`, val)} />
                       <FormField label="Role / Title" value={f.role} onChange={(val) => updateField(`founders.${idx}.role`, val)} />
@@ -1175,7 +1175,7 @@ export default function AdminPageCMS() {
                       };
                       updateField('teamMembers', [...current, newAdvisor]);
                     }}
-                    className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                    className="px-3 py-1.5 rounded-lg bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
                   >
                     <Plus size={13} />
                     <span>Add Senior Advisor</span>
@@ -1184,7 +1184,7 @@ export default function AdminPageCMS() {
                 {(formData?.teamMembers || []).map((member, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4 relative group">
                     <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                      <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Advisor #{idx + 1}: {member.name}</h4>
+                      <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Advisor #{idx + 1}: {member.name}</h4>
                       {(formData?.teamMembers || []).length > 1 && (
                         <button
                           type="button"
@@ -1221,7 +1221,7 @@ export default function AdminPageCMS() {
                 <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">4 Core Fiduciary Advisory Pillars</h3>
                 {(formData?.advisoryPillars || []).map((pillar, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                    <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Fiduciary Pillar #{idx + 1}: {pillar.title}</h4>
+                    <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Fiduciary Pillar #{idx + 1}: {pillar.title}</h4>
                     <FormField label="Pillar Title" value={pillar.title} onChange={(val) => updateField(`advisoryPillars.${idx}.title`, val)} />
                     <TextAreaField label="Fiduciary Commitment Description" value={pillar.desc} onChange={(val) => updateField(`advisoryPillars.${idx}.desc`, val)} rows={2} />
                   </div>
@@ -1337,7 +1337,7 @@ export default function AdminPageCMS() {
 
                 <div className="pt-4 border-t border-white/10 space-y-4">
                   <div>
-                    <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Bottom 4 Metric Strip Counters</h4>
+                    <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Bottom 4 Metric Strip Counters</h4>
                     <p className="text-xs text-slate-400">Counters displayed in the floating glass strip at the bottom of the hero</p>
                   </div>
 
@@ -1349,7 +1349,7 @@ export default function AdminPageCMS() {
                       { value: 5000, suffix: "+", formatComma: true, label: "HNI Families & Corporates", subtext: "Enduring Relationships" }
                     ]).map((stat, sIdx) => (
                       <div key={sIdx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#D09A16]">Counter #{sIdx + 1}</span>
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-brand-gold">Counter #{sIdx + 1}</span>
                         <div className="grid grid-cols-3 gap-2">
                           <FormField label="Prefix" value={stat.prefix || ''} onChange={(val) => updateField(`hero.stats.${sIdx}.prefix`, val)} placeholder="₹" />
                           <FormField label="Value" value={stat.value} onChange={(val) => updateField(`hero.stats.${sIdx}.value`, Number(val) || val)} placeholder="25" />
@@ -1404,11 +1404,11 @@ export default function AdminPageCMS() {
                 <TextAreaField label="Section Subtitle" value={formData?.offerings?.subtitle} onChange={(val) => updateField('offerings.subtitle', val)} rows={2} />
 
                 <div className="space-y-6 pt-2">
-                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">3 Property Category Cards</h4>
+                  <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">3 Property Category Cards</h4>
                   {(formData?.offerings?.items || []).map((item, idx) => (
                     <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
                       <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                        <h5 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Card #{idx + 1}: {item.title}</h5>
+                        <h5 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Card #{idx + 1}: {item.title}</h5>
                         <span className="text-[10px] text-slate-400">{item.tag}</span>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -1462,11 +1462,11 @@ export default function AdminPageCMS() {
                 <TextAreaField label="Section Subtitle" value={formData?.proposition?.subtitle} onChange={(val) => updateField('proposition.subtitle', val)} rows={2} />
 
                 <div className="space-y-6 pt-2">
-                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">3 Pillars (Residential, Commercial, Industrial)</h4>
+                  <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">3 Pillars (Residential, Commercial, Industrial)</h4>
                   {(formData?.proposition?.pillars || []).map((pillar, idx) => (
                     <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
                       <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                        <h5 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Pillar #{pillar.number || idx + 1}: {pillar.title}</h5>
+                        <h5 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Pillar #{pillar.number || idx + 1}: {pillar.title}</h5>
                         <span className="text-[10px] text-slate-400">{pillar.tag}</span>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -1525,11 +1525,11 @@ export default function AdminPageCMS() {
 
                 {/* Visionary Founders */}
                 <div className="space-y-6 pt-2">
-                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Visionary Founders</h4>
+                  <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Visionary Founders</h4>
                   {(formData?.leadership?.founders || []).map((f, idx) => (
                     <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
                       <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                        <h5 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Founder #{idx + 1}: {f.name}</h5>
+                        <h5 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Founder #{idx + 1}: {f.name}</h5>
                         <span className="text-[10px] text-slate-400">{f.role}</span>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -1585,7 +1585,7 @@ export default function AdminPageCMS() {
                         };
                         updateField('leadership.teamMembers', [...current, newMember]);
                       }}
-                      className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                      className="px-3 py-1.5 rounded-lg bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
                     >
                       <Plus size={13} />
                       <span>Add Team Member</span>
@@ -1596,7 +1596,7 @@ export default function AdminPageCMS() {
                     {(formData?.leadership?.teamMembers || []).map((m, idx) => (
                       <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3 relative group">
                         <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                          <span className="text-[11px] font-bold text-[#D09A16] uppercase tracking-wider">Member #{idx + 1}</span>
+                          <span className="text-[11px] font-bold text-brand-gold uppercase tracking-wider">Member #{idx + 1}</span>
                           {(formData?.leadership?.teamMembers || []).length > 1 && (
                             <button
                               type="button"
@@ -1626,7 +1626,7 @@ export default function AdminPageCMS() {
 
                 {/* 3 Impact Stats */}
                 <div className="space-y-4 pt-4 border-t border-white/10">
-                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">3 Milestone Impact Counters</h4>
+                  <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">3 Milestone Impact Counters</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     {(formData?.leadership?.impactStats || [
                       { value: 100, suffix: "+", label: "CR Saves In Property Investment", desc: "Optimized value and negotiations" },
@@ -1634,7 +1634,7 @@ export default function AdminPageCMS() {
                       { value: 25, suffix: "+", label: "Years of Trust and Experience", desc: "DLF Gurugram market authority" }
                     ]).map((stat, stIdx) => (
                       <div key={stIdx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#D09A16]">Metric #{stIdx + 1}</span>
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-brand-gold">Metric #{stIdx + 1}</span>
                         <div className="grid grid-cols-2 gap-2">
                           <FormField label="Value" value={stat.value} onChange={(val) => updateField(`leadership.impactStats.${stIdx}.value`, Number(val) || val)} />
                           <FormField label="Suffix" value={stat.suffix} onChange={(val) => updateField(`leadership.impactStats.${stIdx}.suffix`, val)} />
@@ -1665,13 +1665,13 @@ export default function AdminPageCMS() {
                 {/* 7 Strategic Pillars */}
                 <div className="space-y-6 pt-4 border-t border-white/10">
                   <div className="border-b border-white/10 pb-4">
-                    <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">7 Strategic Distinction Pillars</h4>
+                    <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">7 Strategic Distinction Pillars</h4>
                     <p className="text-[11px] text-slate-400">Pillar #1 is displayed as the prominent lead hero card. Pillars #2–7 are featured in a dedicated 6-card grid below.</p>
                   </div>
 
                   {/* 6-Card Dedicated Section Header Settings */}
-                  <div className="p-4 rounded-xl bg-[#D09A16]/5 border border-[#D09A16]/20 space-y-3">
-                    <h5 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">6 Strategic Pillars Section Header (Pillars 2–7)</h5>
+                  <div className="p-4 rounded-xl bg-brand-gold/5 border border-brand-gold/20 space-y-3">
+                    <h5 className="text-xs font-bold text-brand-gold uppercase tracking-wider">6 Strategic Pillars Section Header (Pillars 2–7)</h5>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <FormField
                         label="6-Pillars Badge"
@@ -1698,7 +1698,7 @@ export default function AdminPageCMS() {
                   {(formData?.whyChooseUs?.pillars || []).map((pillar, pIdx) => (
                     <div key={pIdx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
                       <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                        <h5 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">
+                        <h5 className="text-xs font-bold text-brand-gold uppercase tracking-wider">
                           Pillar #{pillar.number || pIdx + 1} {pIdx === 0 ? '(Lead Hero Card - 21:9)' : '(Card Grid - 16:10)'}: {pillar.title}
                         </h5>
                         <span className="text-[10px] text-slate-400">{pillar.badge}</span>
@@ -1743,14 +1743,14 @@ export default function AdminPageCMS() {
                 {/* Fiduciary Comparison Matrix */}
                 <div className="space-y-4 pt-4 border-t border-white/10">
                   <div>
-                    <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Transparency Benchmark Comparison Matrix</h4>
+                    <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Transparency Benchmark Comparison Matrix</h4>
                     <p className="text-xs text-slate-400">4 benchmark comparisons between traditional brokerage and Saudagar advisory</p>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {(formData?.whyChooseUs?.comparisonMatrix || []).map((row, rIdx) => (
                       <div key={rIdx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-[#D09A16]">Benchmark #{rIdx + 1}</span>
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-brand-gold">Benchmark #{rIdx + 1}</span>
                         <FormField label="Feature Name" value={row.feature} onChange={(val) => updateField(`whyChooseUs.comparisonMatrix.${rIdx}.feature`, val)} placeholder="e.g. Deal Representation" />
                         <FormField label="Traditional Brokerage (Red ✕)" value={row.traditional} onChange={(val) => updateField(`whyChooseUs.comparisonMatrix.${rIdx}.traditional`, val)} placeholder="Volume brokers chasing quick turnover" />
                         <FormField label="Saudagar Advisory (Green ✓)" value={row.saudagar} onChange={(val) => updateField(`whyChooseUs.comparisonMatrix.${rIdx}.saudagar`, val)} placeholder="Founders personally attend every transaction" />
@@ -1873,7 +1873,7 @@ export default function AdminPageCMS() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   {(formData?.marketPulse || []).map((card, idx) => (
                     <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
-                      <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Indicator #{idx + 1}</h4>
+                      <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Indicator #{idx + 1}</h4>
                       <FormField label="Label" value={card.label} onChange={(val) => updateField(`marketPulse.${idx}.label`, val)} />
                       <div className="grid grid-cols-2 gap-2">
                         <FormField label="Value" value={card.value} onChange={(val) => updateField(`marketPulse.${idx}.value`, val)} />
@@ -1947,7 +1947,7 @@ export default function AdminPageCMS() {
                   <h3 className="text-sm font-semibold text-white">
                     Corridor Hero Masthead &amp; Key Highlights
                   </h3>
-                  <span className="text-xs text-[#D09A16] font-mono">
+                  <span className="text-xs text-brand-gold font-mono">
                     Editing: {CORRIDOR_LIST.find(c => c.slug === selectedCorridor)?.name}
                   </span>
                 </div>
@@ -2014,7 +2014,7 @@ export default function AdminPageCMS() {
                         const current = formData?.hero?.galleryImages || [];
                         updateField('hero.galleryImages', [...current, { url: '', title: 'Perspective View', tag: 'Luxury Estate' }]);
                       }}
-                      className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                      className="px-3 py-1.5 rounded-lg bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
                     >
                       <Plus size={13} />
                       <span>Add Perspective</span>
@@ -2025,7 +2025,7 @@ export default function AdminPageCMS() {
                     {(formData?.hero?.galleryImages || []).map((img, idx) => (
                       <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3 relative group">
                         <div className="flex items-center justify-between">
-                          <span className="text-xs font-bold text-[#D09A16]">Perspective 0{idx + 1}</span>
+                          <span className="text-xs font-bold text-brand-gold">Perspective 0{idx + 1}</span>
                           {(formData?.hero?.galleryImages || []).length > 1 && (
                             <button
                               type="button"
@@ -2067,7 +2067,7 @@ export default function AdminPageCMS() {
                       const current = formData?.metrics || [];
                       updateField('metrics', [...current, { label: 'Metric', value: '100%', desc: 'Description' }]);
                     }}
-                    className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                    className="px-3 py-1.5 rounded-lg bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
                   >
                     <Plus size={13} />
                     <span>Add Benchmark</span>
@@ -2077,7 +2077,7 @@ export default function AdminPageCMS() {
                   {(formData?.metrics || []).map((m, idx) => (
                     <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3 relative group">
                       <div className="flex items-center justify-between">
-                        <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Benchmark #{idx + 1}</h4>
+                        <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Benchmark #{idx + 1}</h4>
                         {(formData?.metrics || []).length > 1 && (
                           <button
                             type="button"
@@ -2111,7 +2111,7 @@ export default function AdminPageCMS() {
                       const current = formData?.overview?.paragraphs || [];
                       updateField('overview.paragraphs', [...current, 'New descriptive paragraph about this micro-market.']);
                     }}
-                    className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                    className="px-3 py-1.5 rounded-lg bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
                   >
                     <Plus size={13} />
                     <span>Add Paragraph</span>
@@ -2137,7 +2137,7 @@ export default function AdminPageCMS() {
                   {(formData?.overview?.paragraphs || []).map((para, idx) => (
                     <div key={idx} className="relative group p-3.5 rounded-xl bg-white/[0.02] border border-white/10 space-y-2">
                       <div className="flex items-center justify-between">
-                        <span className="text-[11px] font-bold text-[#D09A16]">Paragraph #{idx + 1}</span>
+                        <span className="text-[11px] font-bold text-brand-gold">Paragraph #{idx + 1}</span>
                         {(formData?.overview?.paragraphs || []).length > 1 && (
                           <button
                             type="button"
@@ -2185,7 +2185,7 @@ export default function AdminPageCMS() {
                         }
                       ]);
                     }}
-                    className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                    className="px-3 py-1.5 rounded-lg bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
                   >
                     <Plus size={13} />
                     <span>Add Typology</span>
@@ -2196,7 +2196,7 @@ export default function AdminPageCMS() {
                   {(formData?.overview?.typologies || []).map((t, idx) => (
                     <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-3.5 relative group">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-[#D09A16]">Typology #{idx + 1}</span>
+                        <span className="text-xs font-bold text-brand-gold">Typology #{idx + 1}</span>
                         {(formData?.overview?.typologies || []).length > 1 && (
                           <button
                             type="button"
@@ -2235,7 +2235,7 @@ export default function AdminPageCMS() {
                 </div>
 
                 <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                  <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Left Narrative Column</h4>
+                  <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Left Narrative Column</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <FormField label="Eyebrow Tag" value={formData?.locationSection?.tag} onChange={(val) => updateField('locationSection.tag', val)} />
                     <FormField label="Section Title" value={formData?.locationSection?.title} onChange={(val) => updateField('locationSection.title', val)} />
@@ -2261,7 +2261,7 @@ export default function AdminPageCMS() {
 
                 <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
                   <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                    <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">Right Column: Architectural Image Showcase</h4>
+                    <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Right Column: Architectural Image Showcase</h4>
                     <span className="text-[10px] text-emerald-400 font-semibold bg-emerald-950/40 px-2 py-0.5 rounded border border-emerald-500/30">
                       Replaces CTA Box
                     </span>
@@ -2307,7 +2307,7 @@ export default function AdminPageCMS() {
                       const nextNum = (current.length + 1).toString().padStart(2, '0');
                       updateField('whyLiveHere.pillars', [...current, { number: nextNum, title: 'Strategic Advantage', desc: 'Advantage description...' }]);
                     }}
-                    className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                    className="px-3 py-1.5 rounded-lg bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
                   >
                     <Plus size={13} />
                     <span>Add Reason</span>
@@ -2325,7 +2325,7 @@ export default function AdminPageCMS() {
                     {(formData?.whyLiveHere?.pillars || []).map((p, idx) => (
                       <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-2 relative group">
                         <div className="flex items-center justify-between">
-                          <span className="text-xs font-bold text-[#D09A16]">Pillar #{p.number || idx + 1}</span>
+                          <span className="text-xs font-bold text-brand-gold">Pillar #{p.number || idx + 1}</span>
                           {(formData?.whyLiveHere?.pillars || []).length > 1 && (
                             <button
                               type="button"
@@ -2369,7 +2369,7 @@ export default function AdminPageCMS() {
                         { name: 'New Landmark', category: 'Connectivity Hub', distance: '5 km', time: '8 Mins', desc: 'Direct transit access via highway.' }
                       ]);
                     }}
-                    className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                    className="px-3 py-1.5 rounded-lg bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
                   >
                     <Plus size={13} />
                     <span>Add Landmark</span>
@@ -2385,7 +2385,7 @@ export default function AdminPageCMS() {
                   {(formData?.nearestPlaces?.places || []).map((place, idx) => (
                     <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-2 relative group">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-[#D09A16]">Landmark #{idx + 1}</span>
+                        <span className="text-xs font-bold text-brand-gold">Landmark #{idx + 1}</span>
                         {(formData?.nearestPlaces?.places || []).length > 1 && (
                           <button
                             type="button"
@@ -2506,7 +2506,7 @@ export default function AdminPageCMS() {
 
                   {/* 3 Institutional Stat Pillars */}
                   <div className="pt-3 border-t border-white/10 space-y-3">
-                    <h4 className="text-xs font-bold text-[#D09A16] uppercase tracking-wider">3 Institutional Stat Pillars</h4>
+                    <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">3 Institutional Stat Pillars</h4>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 space-y-2">
                         <FormField label="Pillar 1 Value" value={formData?.whyChooseSaudagar?.stats?.[0]?.value || '25+ Yrs'} onChange={(val) => updateField('whyChooseSaudagar.stats.0.value', val)} />
@@ -2562,7 +2562,7 @@ export default function AdminPageCMS() {
                     <div className="text-xs text-emerald-200">
                       <p className="font-semibold mb-1">Dynamic Database Inventory Integration</p>
                       <p className="text-emerald-300/80 leading-relaxed text-[11px]">
-                        Property cards displayed in this section are automatically pulled from the live properties database matching the location name (&ldquo;{CORRIDOR_LIST.find(c => c.slug === selectedCorridor)?.name}&rdquo;). To add or edit inventory items, use the <Link href="/admin/properties" className="underline font-bold text-white hover:text-[#D09A16]">Properties Manager</Link>.
+                        Property cards displayed in this section are automatically pulled from the live properties database matching the location name (&ldquo;{CORRIDOR_LIST.find(c => c.slug === selectedCorridor)?.name}&rdquo;). To add or edit inventory items, use the <Link href="/admin/properties" className="underline font-bold text-white hover:text-brand-gold">Properties Manager</Link>.
                       </p>
                     </div>
                   </div>
@@ -2658,7 +2658,7 @@ export default function AdminPageCMS() {
                   {/* Map 1: Google Map Embed */}
                   <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
                     <div>
-                      <span className="text-xs font-bold text-[#D09A16] uppercase tracking-wider block mb-1">
+                      <span className="text-xs font-bold text-brand-gold uppercase tracking-wider block mb-1">
                         Map 1: Live Interactive Google Map Embed
                       </span>
                       <p className="text-[11px] text-slate-400">
@@ -2687,7 +2687,7 @@ export default function AdminPageCMS() {
                   {/* Map 2: Static Map Image */}
                   <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
                     <div>
-                      <span className="text-xs font-bold text-[#D09A16] uppercase tracking-wider block mb-1">
+                      <span className="text-xs font-bold text-brand-gold uppercase tracking-wider block mb-1">
                         Map 2: High-Resolution Static Master Plan / Layout Blueprint
                       </span>
                       <p className="text-[11px] text-slate-400">
@@ -2728,7 +2728,7 @@ export default function AdminPageCMS() {
                       const newFaqs = [...(formData?.faqs || []), { question: 'New Question', answer: 'New Answer' }];
                       updateField('faqs', newFaqs);
                     }}
-                    className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                    className="px-3 py-1.5 rounded-lg bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
                   >
                     <Plus size={13} />
                     <span>Add FAQ</span>
@@ -2764,7 +2764,7 @@ export default function AdminPageCMS() {
                   {(formData?.faqs || []).map((faq, idx) => (
                     <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3 relative group">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-[#D09A16]">FAQ #{idx + 1}</span>
+                        <span className="text-xs font-bold text-brand-gold">FAQ #{idx + 1}</span>
                         <button
                           type="button"
                           onClick={() => {
@@ -2811,7 +2811,7 @@ export default function AdminPageCMS() {
                       const newSecs = [...(formData?.sections || []), { heading: 'New Clause Heading', content: 'Clause content here...' }];
                       updateField('sections', newSecs);
                     }}
-                    className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                    className="px-3 py-1.5 rounded-lg bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
                   >
                     <Plus size={13} />
                     <span>Add Clause</span>
@@ -2822,7 +2822,7 @@ export default function AdminPageCMS() {
                   {(formData?.sections || []).map((sec, idx) => (
                     <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3 relative">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-[#D09A16]">Clause #{idx + 1}</span>
+                        <span className="text-xs font-bold text-brand-gold">Clause #{idx + 1}</span>
                         <button
                           type="button"
                           onClick={() => {
@@ -2869,7 +2869,7 @@ export default function AdminPageCMS() {
                       const newSecs = [...(formData?.sections || []), { heading: 'New Privacy Safeguard', content: 'Safeguard details here...' }];
                       updateField('sections', newSecs);
                     }}
-                    className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                    className="px-3 py-1.5 rounded-lg bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
                   >
                     <Plus size={13} />
                     <span>Add Article</span>
@@ -2880,7 +2880,7 @@ export default function AdminPageCMS() {
                   {(formData?.sections || []).map((sec, idx) => (
                     <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3 relative">
                       <div className="flex items-center justify-between">
-                        <span className="text-xs font-bold text-[#D09A16]">Article #{idx + 1}</span>
+                        <span className="text-xs font-bold text-brand-gold">Article #{idx + 1}</span>
                         <button
                           type="button"
                           onClick={() => {
@@ -2908,7 +2908,7 @@ export default function AdminPageCMS() {
           <button
             type="submit"
             disabled={saving}
-            className="px-7 py-3 rounded-xl bg-gradient-to-r from-[#D09A16] to-[#D09A16] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-[0_4px_15px_rgba(208,154,22,0.3)] active:scale-95 cursor-pointer disabled:opacity-60"
+            className="px-7 py-3 rounded-xl bg-gradient-to-r from-brand-gold to-brand-gold hover:brightness-110 text-brand-dark font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-[0_4px_15px_rgba(208,154,22,0.3)] active:scale-95 cursor-pointer disabled:opacity-60"
           >
             {saving ? <RefreshCw size={14} className="animate-spin" /> : <Save size={15} />}
             <span>{saving ? 'Saving...' : 'Save All Changes'}</span>

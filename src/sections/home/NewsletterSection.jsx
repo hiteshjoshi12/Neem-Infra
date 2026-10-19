@@ -111,10 +111,10 @@ export default function NewsletterSection({ isEmbedded = false }) {
         relative
         overflow-hidden
         rounded-3xl sm:rounded-[36px]
-        border border-[#D09A16]/30
-        bg-gradient-to-br from-[#0E162B] via-[#121B35] to-[#0A1020]
+        border border-brand-gold/35
+        bg-white
         p-7 sm:p-10 lg:p-12
-        shadow-[0_30px_90px_rgba(14,22,43,0.35)]
+        shadow-[0_25px_70px_rgba(23,33,61,0.08)]
       "
     >
       {/* =====================================================
@@ -124,37 +124,37 @@ export default function NewsletterSection({ isEmbedded = false }) {
       {/* Gold Ambient Glow in Top-Right */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-[#D09A16]/[0.14] blur-[100px] transition-all duration-700 group-hover/news:bg-[#D09A16]/20"
+        className="pointer-events-none absolute -right-24 -top-24 h-96 w-96 rounded-full bg-brand-gold/[0.08] blur-[100px] transition-all duration-700 group-hover/news:bg-brand-gold/[0.14]"
       />
 
-      {/* Deep Indigo Glow in Bottom-Left */}
+      {/* Subtle Warm Glow in Bottom-Left */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-[#1F2C54]/40 blur-[100px]"
+        className="pointer-events-none absolute -bottom-24 -left-24 h-80 w-80 rounded-full bg-brand-gold/[0.05] blur-[100px]"
       />
 
       {/* Architectural Coordinate Grid */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.035] bg-[linear-gradient(to_right,#D09A16_1px,transparent_1px),linear-gradient(to_bottom,#D09A16_1px,transparent_1px)] bg-[size:48px_48px]"
+        className="pointer-events-none absolute inset-0 opacity-[0.025] bg-[linear-gradient(to_right,var(--color-brand-navy)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-brand-navy)_1px,transparent_1px)] bg-[size:48px_48px]"
       />
 
       {/* Top Illuminated Gold Accent Line */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-0 right-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-[#D09A16] to-transparent opacity-85"
+        className="pointer-events-none absolute left-0 right-0 top-0 h-[2px] bg-gradient-to-r from-transparent via-brand-gold to-transparent opacity-85"
       />
 
       {/* Corner Architectural Crosshairs */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute left-3 top-3 select-none font-mono text-[9px] text-[#D09A16]/40"
+        className="pointer-events-none absolute left-3 top-3 select-none font-mono text-[9px] text-brand-gold/60"
       >
         +
       </div>
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute right-3 top-3 select-none font-mono text-[9px] text-[#D09A16]/40"
+        className="pointer-events-none absolute right-3 top-3 select-none font-mono text-[9px] text-brand-gold/60"
       >
         +
       </div>
@@ -169,12 +169,12 @@ export default function NewsletterSection({ isEmbedded = false }) {
         <div className="lg:col-span-7">
 
           {/* Eyebrow Badge with Pulsing Live Beacon */}
-          <div className="inline-flex items-center gap-2.5 rounded-full border border-[#D09A16]/30 bg-[#D09A16]/10 px-3.5 py-1.5 backdrop-blur-md">
+          <div className="inline-flex items-center gap-2.5 rounded-full border border-brand-gold/40 bg-brand-gold/10 px-3.5 py-1.5 backdrop-blur-md">
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#D09A16] opacity-75" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#D09A16]" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-brand-gold opacity-75" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-gold" />
             </span>
-            <span className="text-[9px] font-bold uppercase tracking-[0.26em] text-[#D09A16]">
+            <span className="text-[9px] font-bold uppercase tracking-[0.26em] text-brand-navy">
               {newsData.badge || "PRIVATE CLIENT INTELLIGENCE"}
             </span>
           </div>
@@ -182,17 +182,17 @@ export default function NewsletterSection({ isEmbedded = false }) {
           {/* Majestic Serif Headline */}
           <h2
             id="newsletter-heading"
-            className="mt-4 font-serif text-3xl font-normal leading-[1.08] tracking-tight text-[#F7F5EF] sm:text-4xl lg:text-[44px]"
+            className="mt-4 font-serif text-3xl font-normal leading-[1.08] tracking-tight text-brand-navy sm:text-4xl lg:text-[44px]"
           >
             {newsData.titleMain || "Stay ahead with"}{" "}
-            <span className="font-light italic text-[#D09A16]">
+            <span className="font-light italic text-brand-gold">
               {newsData.titleItalic || "Saudagar Properties"}
             </span>
             {newsData.titleSuffix ? ` ${newsData.titleSuffix}` : ""}
           </h2>
 
           {/* Curated Description */}
-          <p className="mt-3.5 max-w-xl text-xs font-light leading-relaxed text-[#C9CED9] sm:text-sm">
+          <p className="mt-3.5 max-w-xl text-xs font-light leading-relaxed text-brand-slate sm:text-sm">
             {newsData.description ||
               "Direct micro-market alerts, off-market builder floors in DLF Phase 1–5, and sovereign yield analytics delivered straight to your confidential inbox."}
           </p>
@@ -208,9 +208,9 @@ export default function NewsletterSection({ isEmbedded = false }) {
               return (
                 <div
                   key={idx}
-                  className="flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.035] px-3 py-1 text-[8px] font-semibold uppercase tracking-[0.18em] text-[#C9CED9]/80 backdrop-blur-sm"
+                  className="flex items-center gap-1.5 rounded-full border border-brand-navy/10 bg-brand-ivory px-3 py-1 text-[8px] font-semibold uppercase tracking-[0.18em] text-brand-slate"
                 >
-                  <Icon size={10} className="text-[#D09A16]" />
+                  <Icon size={10} className="text-brand-gold" />
                   <span>{pill.label}</span>
                 </div>
               );
@@ -226,9 +226,9 @@ export default function NewsletterSection({ isEmbedded = false }) {
                 </label>
 
                 {/* Frosted Capsule Input Wrapper */}
-                <div className="flex flex-col sm:flex-row items-stretch gap-2.5 rounded-2xl border border-[#D09A16]/35 bg-[#172347]/85 p-2 backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.35)] transition-all duration-300 focus-within:border-[#D09A16] focus-within:shadow-[0_0_35px_rgba(208, 154, 22,0.3)]">
+                <div className="flex flex-col sm:flex-row items-stretch gap-2.5 rounded-2xl border border-brand-gold/40 bg-brand-ivory p-2 shadow-[0_4px_20px_rgba(23,33,61,0.06)] transition-all duration-300 focus-within:border-brand-gold focus-within:bg-white focus-within:shadow-[0_0_25px_rgba(197,155,39,0.25)]">
                   <div className="flex min-w-0 flex-1 items-center gap-3 px-3.5 py-2">
-                    <Mail size={17} className="shrink-0 text-[#D09A16]" />
+                    <Mail size={17} className="shrink-0 text-brand-gold" />
                     <input
                       id="newsletter-email"
                       name="email"
@@ -241,7 +241,7 @@ export default function NewsletterSection({ isEmbedded = false }) {
                         newsData.placeholder ||
                         "Enter your confidential email..."
                       }
-                      className="w-full bg-transparent text-xs sm:text-sm text-[#F7F5EF] outline-none placeholder:text-[#8E97AB] font-light"
+                      className="w-full bg-transparent text-xs sm:text-sm text-brand-navy outline-none placeholder:text-brand-slate/60 font-light"
                     />
                   </div>
 
@@ -250,15 +250,15 @@ export default function NewsletterSection({ isEmbedded = false }) {
                     disabled={isLoading}
                     className="
                       group/btn relative inline-flex items-center justify-center gap-2.5 overflow-hidden rounded-xl
-                      bg-gradient-to-r from-[#D09A16] via-[#DFC06C] to-[#D09A16] bg-[length:200%_auto]
-                      px-7 py-3.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-[#0A1020]
-                      shadow-[0_8px_25px_rgba(208, 154, 22,0.3)] transition-all duration-500
-                      hover:bg-[position:right_center] hover:shadow-[0_12px_35px_rgba(208, 154, 22,0.5)] hover:-translate-y-0.5
+                      bg-gradient-to-r from-brand-gold via-brand-gold-light to-brand-gold bg-[length:200%_auto]
+                      px-7 py-3.5 text-[10px] sm:text-[11px] font-bold uppercase tracking-[0.2em] text-brand-obsidian
+                      shadow-[0_8px_25px_rgba(197,155,39,0.3)] transition-all duration-500
+                      hover:bg-[position:right_center] hover:shadow-[0_12px_35px_rgba(197,155,39,0.45)] hover:-translate-y-0.5
                       disabled:opacity-60 cursor-pointer
                     "
                   >
                     {isLoading ? (
-                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-[#0A1020] border-t-transparent" />
+                      <span className="h-4 w-4 animate-spin rounded-full border-2 border-brand-obsidian border-t-transparent" />
                     ) : (
                       <>
                         <span className="relative z-10">
@@ -275,8 +275,8 @@ export default function NewsletterSection({ isEmbedded = false }) {
                 </div>
 
                 {/* Privacy & Anti-Spam Guarantee Subtext */}
-                <div className="mt-3 flex items-center gap-2 px-1 text-[9px] sm:text-[10px] font-light text-[#C9CED9]/65">
-                  <ShieldCheck size={13} className="text-[#D09A16] shrink-0" />
+                <div className="mt-3 flex items-center gap-2 px-1 text-[9px] sm:text-[10px] font-light text-brand-slate">
+                  <ShieldCheck size={13} className="text-brand-gold shrink-0" />
                   <span>
                     {newsData.disclaimer ||
                       newsData.guaranteeText ||
@@ -286,16 +286,16 @@ export default function NewsletterSection({ isEmbedded = false }) {
               </form>
             ) : (
               /* Success Confirmation Panel */
-              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-[#D09A16]/40 bg-[#162348]/90 p-5 sm:p-6 backdrop-blur-xl shadow-lg">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 rounded-2xl border border-brand-gold/40 bg-brand-ivory p-5 sm:p-6 shadow-md">
                 <div className="flex items-center gap-3.5">
-                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[#D09A16]/20 text-[#D09A16]">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-brand-gold/20 text-brand-gold">
                     <CheckCircle2 size={22} />
                   </div>
                   <div>
-                    <h4 className="text-sm font-semibold text-[#F7F5EF]">
+                    <h4 className="text-sm font-semibold text-brand-navy">
                       {newsData.successTitle || "Subscription Confirmed"}
                     </h4>
-                    <p className="mt-0.5 text-xs text-[#C9CED9]/80 font-light">
+                    <p className="mt-0.5 text-xs text-brand-slate font-light">
                       {newsData.successMessage ||
                         "You have been added to our private advisory list. Exclusive market briefings are on their way."}
                     </p>
@@ -305,7 +305,7 @@ export default function NewsletterSection({ isEmbedded = false }) {
                 <button
                   type="button"
                   onClick={() => setIsSubmitted(false)}
-                  className="text-[9px] font-bold uppercase tracking-[0.2em] text-[#D09A16] hover:text-[#D09A16] underline underline-offset-4 cursor-pointer self-end sm:self-center"
+                  className="text-[9px] font-bold uppercase tracking-[0.2em] text-brand-gold hover:text-brand-gold-dark underline underline-offset-4 cursor-pointer self-end sm:self-center"
                 >
                   {newsData.subscribeAnotherText || "Subscribe Another"}
                 </button>
@@ -316,61 +316,61 @@ export default function NewsletterSection({ isEmbedded = false }) {
 
         {/* RIGHT: TANGIBLE "MARKET DISPATCH PREVIEW" CARD (5 COLS) */}
         <div ref={previewRef} className="lg:col-span-5 relative">
-          <div className="relative overflow-hidden rounded-2xl border border-[#D09A16]/25 bg-white/[0.035] p-6 sm:p-7 backdrop-blur-xl shadow-[0_20px_60px_rgba(0,0,0,0.45)]">
+          <div className="relative overflow-hidden rounded-2xl border border-brand-gold/30 bg-brand-ivory p-6 sm:p-7 shadow-[0_15px_40px_rgba(23,33,61,0.06)]">
 
             {/* Document Header */}
-            <div className="flex items-center justify-between border-b border-white/10 pb-4">
+            <div className="flex items-center justify-between border-b border-brand-navy/10 pb-4">
               <div className="flex items-center gap-2">
-                <FileText size={14} className="text-[#D09A16]" />
-                <span className="font-mono text-[8px] font-bold uppercase tracking-[0.22em] text-[#D09A16]">
+                <FileText size={14} className="text-brand-gold" />
+                <span className="font-mono text-[8px] font-bold uppercase tracking-[0.22em] text-brand-navy">
                   SAUDAGAR MARKET REPORT
                 </span>
               </div>
-              <span className="font-mono text-[8px] text-white/40">
+              <span className="font-mono text-[8px] text-brand-slate/60">
                 Q1 · 2026 EDITION
               </span>
             </div>
 
             {/* Document Body Teaser */}
             <div className="mt-5 space-y-4">
-              <div className="rounded-xl border border-white/[0.06] bg-[#121A33]/80 p-3.5">
-                <div className="flex items-center justify-between text-[8px] font-semibold uppercase tracking-[0.18em] text-[#C9CED9]/70">
+              <div className="rounded-xl border border-brand-gold/20 bg-white p-3.5 shadow-sm">
+                <div className="flex items-center justify-between text-[8px] font-semibold uppercase tracking-[0.18em] text-brand-slate">
                   <span>DLF Phase 1–5 Average Yield</span>
-                  <span className="font-mono text-[#D09A16]">+7.4% YOY</span>
+                  <span className="font-mono font-bold text-brand-gold">+7.4% YOY</span>
                 </div>
-                <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-white/10">
-                  <div className="h-full w-[74%] rounded-full bg-gradient-to-r from-[#D09A16] to-[#D09A16]" />
+                <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-brand-navy/10">
+                  <div className="h-full w-[74%] rounded-full bg-gradient-to-r from-brand-gold to-brand-gold-light" />
                 </div>
               </div>
 
               <div className="grid grid-cols-2 gap-3">
-                <div className="rounded-xl border border-white/[0.06] bg-[#121A33]/80 p-3">
-                  <span className="block text-[7px] font-bold uppercase tracking-[0.2em] text-[#C9CED9]/50">
+                <div className="rounded-xl border border-brand-gold/20 bg-white p-3 shadow-sm">
+                  <span className="block text-[7px] font-bold uppercase tracking-[0.2em] text-brand-slate">
                     Off-Market Assets
                   </span>
-                  <span className="mt-1 block font-serif text-lg text-[#F7F5EF]">
+                  <span className="mt-1 block font-serif text-lg font-bold text-brand-navy">
                     ₹180+ Cr
                   </span>
                 </div>
-                <div className="rounded-xl border border-white/[0.06] bg-[#121A33]/80 p-3">
-                  <span className="block text-[7px] font-bold uppercase tracking-[0.2em] text-[#C9CED9]/50">
+                <div className="rounded-xl border border-brand-gold/20 bg-white p-3 shadow-sm">
+                  <span className="block text-[7px] font-bold uppercase tracking-[0.2em] text-brand-slate">
                     Registry Verification
                   </span>
-                  <span className="mt-1 block font-serif text-lg text-[#D09A16]">
+                  <span className="mt-1 block font-serif text-lg font-bold text-brand-gold">
                     100% Legal
                   </span>
                 </div>
               </div>
 
-              <p className="text-[10px] leading-relaxed text-[#C9CED9]/60 italic font-serif">
+              <p className="text-[10px] leading-relaxed text-brand-slate italic font-serif">
                 “Discreet institutional intelligence on builder floors, villas, and commercial floors in Golf Course Rd corridor.”
               </p>
             </div>
 
             {/* Document Stamp Seal */}
-            <div className="mt-5 flex items-center justify-between border-t border-white/10 pt-3.5 font-mono text-[7px] uppercase tracking-[0.24em] text-white/35">
+            <div className="mt-5 flex items-center justify-between border-t border-brand-navy/10 pt-3.5 font-mono text-[7px] uppercase tracking-[0.24em] text-brand-slate/60">
               <span>DLF GURUGRAM DESK</span>
-              <span className="text-[#D09A16]">CONFIDENTIAL DISPATCH</span>
+              <span className="text-brand-gold font-bold">CONFIDENTIAL DISPATCH</span>
             </div>
           </div>
         </div>
@@ -386,7 +386,7 @@ export default function NewsletterSection({ isEmbedded = false }) {
   return (
     <section
       aria-labelledby="newsletter-heading"
-      className="w-full bg-[#EFEBE1] py-14 sm:py-16 md:py-20 border-t border-[#17213D]/[0.08]"
+      className="w-full bg-brand-cream py-14 sm:py-16 md:py-20 border-t border-brand-navy/[0.08]"
     >
       <div className="mx-auto max-w-7xl px-5 sm:px-8 md:px-12">{content}</div>
     </section>

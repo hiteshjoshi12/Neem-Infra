@@ -5,40 +5,70 @@
   --font-sans: var(--font-sans), "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
   --font-heading: var(--font-outfit), "Outfit", var(--font-sans), sans-serif;
   
-  --color-brand-navy: #17213D;
-  --color-brand-navy-deep: #0E162B;
-  --color-brand-navy-surface: #202B4A;
-  
-  --color-brand-gold: #D09A16;
-  --color-brand-gold-light: #E5AC2B;
-  --color-brand-gold-pale: #F3CA68;
+  /* ========================================================
+     MASTER LUXURY BRAND COLOR PALETTE (ROYAL SAPPHIRE NAVY, LIGHT ICE BLUE & RADIANT SHINY GOLD)
+     Logo-Matched Navy, Crisp Ice Blue, Porcelain White & Polished 24K Shiny Gold
+     ======================================================== */
 
-  --color-brand-ivory: #F7F5EF;
-  --color-brand-cream: #EFEBE1;
+  /* 1. Crisp & Radiant Shiny Gold (Vivid, Luminous, Specular Gleam) */
+  --color-brand-gold: #F0B92B;
+  --color-brand-gold-light: #FFDF78;
+  --color-brand-gold-pale: #FEF9EB;
+  --color-brand-gold-deep: #B58110;
+
+  /* 2. Deep Royal Navy & Midnight Obsidian (Harmonized with SP Logo) */
+  --color-brand-navy: #16243E;
+  --color-brand-navy-deep: #0C1527;
+  --color-brand-navy-surface: #1B2B4A;
+  --color-brand-navy-gradient: #16243E;
+  --color-brand-obsidian: #0A1222;
+  --color-brand-dark: #16243E;
+
+  /* 3. Luminous Dual-Tone Light Blue Canvas (Tone 1: Porcelain Silk • Tone 2: Soft Ice Blue Mist) */
+  --color-brand-ivory: #F8FAFD;
+  --color-brand-ivory-warm: #EAF2F9;
+  --color-brand-cream: #DFECF7;
+  --color-brand-cream-border: #C8DCF0;
   --color-brand-white: #FFFFFF;
 
-  --color-text-primary: #121A2F;
-  --color-text-secondary: #3B4863;
-  --color-text-on-dark: #F7F5EF;
-  --color-text-on-dark-muted: #CBD5E1;
+  /* 4. High-Contrast Typography & Royal Slate System */
+  --color-brand-text-dark: #0F172A;
+  --color-brand-slate: #2B3A55;
+  --color-brand-slate-light: #526585;
+  --color-brand-muted: #7E90B0;
+  --color-brand-text-on-dark: #FFFFFF;
+  --color-brand-text-on-dark-muted: #D1DDF0;
+  --color-brand-text-dim: #8FA3C7;
 
-  --color-border-light: rgba(23, 33, 61, 0.12);
-  --color-border-gold: rgba(208, 154, 22, 0.35);
+  /* Borders & Dividers */
+  --color-border-light: rgba(22, 36, 62, 0.10);
+  --color-border-gold: rgba(240, 185, 43, 0.45);
 }
 
 :root {
-  --brand-navy: #17213D;
-  --brand-navy-deep: #0E162B;
-  --brand-navy-surface: #202B4A;
-  --brand-gold: #D09A16;
-  --brand-gold-light: #E5AC2B;
-  --brand-gold-pale: #F3CA68;
-  --brand-ivory: #F7F5EF;
-  --brand-cream: #EFEBE1;
-  --text-primary: #121A2F;
-  --text-secondary: #3B4863;
-  --text-on-dark: #F7F5EF;
-  --text-on-dark-muted: #CBD5E1;
+  /* ========================================================
+     SEMANTIC ALIASES
+     Inherits 100% dynamically from @theme above.
+     DO NOT edit colors here - edit only in @theme above!
+     ======================================================== */
+  --brand-navy: var(--color-brand-navy);
+  --brand-navy-deep: var(--color-brand-navy-deep);
+  --brand-navy-surface: var(--color-brand-navy-surface);
+  --brand-navy-gradient: var(--color-brand-navy-gradient);
+  --brand-obsidian: var(--color-brand-obsidian);
+  --brand-dark: var(--color-brand-dark);
+  --brand-gold: var(--color-brand-gold);
+  --brand-gold-light: var(--color-brand-gold-light);
+  --brand-gold-pale: var(--color-brand-gold-pale);
+  --brand-gold-deep: var(--color-brand-gold-deep);
+  --brand-ivory: var(--color-brand-ivory);
+  --brand-ivory-warm: var(--color-brand-ivory-warm);
+  --brand-cream: var(--color-brand-cream);
+  --brand-cream-border: var(--color-brand-cream-border);
+  --text-primary: var(--color-brand-text-dark);
+  --text-secondary: var(--color-brand-slate);
+  --text-on-dark: var(--color-brand-text-on-dark);
+  --text-on-dark-muted: var(--color-brand-text-on-dark-muted);
 }
 
 html {
@@ -50,8 +80,8 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: #121A2F;
-  background-color: #F7F5EF;
+  color: var(--color-brand-text-dark);
+  background-color: var(--color-brand-ivory);
   letter-spacing: -0.01em;
 }
 
@@ -81,78 +111,88 @@ p {
 ======================================================== */
 
 .section-light {
-  background-color: #F7F5EF;
-  color: #121A2F;
+  background-color: var(--color-brand-ivory);
+  color: var(--color-brand-text-dark);
 }
 
 .section-cream {
-  background-color: #EFEBE1;
-  color: #121A2F;
+  background-color: var(--color-brand-cream);
+  color: var(--color-brand-text-dark);
 }
 
 .section-dark {
-  background-color: #0E162B;
-  color: #F7F5EF;
+  background-color: var(--color-brand-navy-deep);
+  color: var(--color-brand-text-on-dark);
 }
 
 .section-navy {
-  background-color: #17213D;
-  color: #F7F5EF;
+  background-color: var(--color-brand-navy);
+  color: var(--color-brand-text-on-dark);
 }
 
 .card-light {
-  background-color: #FFFFFF;
-  color: #121A2F;
-  border: 1px solid rgba(23, 33, 61, 0.08);
-  box-shadow: 0 20px 45px -10px rgba(23, 33, 61, 0.06);
+  background-color: var(--color-brand-white);
+  color: var(--color-brand-text-dark);
+  border: 1px solid var(--color-border-light);
+  box-shadow: 0 20px 45px -10px rgba(19, 30, 58, 0.06);
 }
 
 .card-dark {
-  background-color: #202B4A;
-  color: #F7F5EF;
+  background-color: var(--color-brand-navy-surface);
+  color: var(--color-brand-text-on-dark);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.4);
 }
 
 .text-brand {
-  color: #17213D;
+  color: var(--color-brand-navy);
 }
 
 .text-gold {
-  color: #D09A16;
+  color: var(--color-brand-gold);
 }
 
 .text-light {
-  color: #F7F5EF;
+  color: var(--color-brand-ivory);
 }
 
 .border-gold {
-  border-color: rgba(208, 154, 22, 0.35);
+  border-color: var(--color-border-gold);
 }
 
 .border-light {
-  border-color: rgba(23, 33, 61, 0.12);
+  border-color: var(--color-border-light);
+}
+
+.text-gold-shine {
+  background: linear-gradient(135deg, #FFDF78 0%, #F0B92B 50%, #C99318 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: inline-block;
 }
 
 .btn-gold {
-  background-color: #D09A16;
-  color: #0E162B;
+  background: linear-gradient(135deg, #FFDF78 0%, #F0B92B 50%, #D49D1D 100%);
+  color: #0A1222;
   font-weight: 700;
+  box-shadow: 0 4px 18px rgba(240, 185, 43, 0.35);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .btn-gold:hover {
-  background-color: #E5AC2B;
+  background: linear-gradient(135deg, #FFE894 0%, #F5C642 50%, #E0A625 100%);
+  box-shadow: 0 6px 24px rgba(240, 185, 43, 0.5);
+  transform: translateY(-1px);
 }
 
 .btn-navy {
-  background-color: #17213D;
-  color: #F7F5EF;
-  border: 1px solid rgba(208, 154, 22, 0.4);
+  background-color: var(--color-brand-navy);
+  color: var(--color-brand-text-on-dark);
+  border: 1px solid var(--color-border-gold);
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .btn-navy:hover {
-  background-color: #202B4A;
-  border-color: #D09A16;
+  background-color: var(--color-brand-navy-surface);
+  border-color: var(--color-brand-gold);
 }
 
 /* ========================================================
@@ -161,30 +201,30 @@ p {
    clearly readable with high-contrast background and text
 ======================================================== */
 select option {
-  background-color: #0F172A !important;
-  color: #F8FAFC !important;
+  background-color: var(--color-brand-navy-deep) !important;
+  color: var(--color-brand-text-on-dark) !important;
   padding: 8px 12px;
 }
 
 select optgroup {
-  background-color: #0F172A !important;
-  color: #94A3B8 !important;
+  background-color: var(--color-brand-navy-deep) !important;
+  color: var(--color-brand-text-dim) !important;
 }
 
 select:focus option:checked {
-  background-color: #1E293B !important;
-  color: #D09A16 !important;
+  background-color: var(--color-brand-navy-surface) !important;
+  color: var(--color-brand-gold) !important;
 }
 
 /* ========================================================
    ULTRA-PREMIUM SLEEK SCROLLBAR SYSTEM
-   Bespoke luxury scrollbar matching Saudagar Properties gold (#D09A16)
+   Bespoke luxury scrollbar matching Saudagar Properties gold
 ======================================================== */
 
 /* Standard Firefox Scrollbar */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(208, 154, 22, 0.4) transparent;
+  scrollbar-color: var(--color-brand-gold) transparent;
 }
 
 /* WebKit (Chrome, Edge, Safari, Opera) Vertical & Horizontal Scrollbars */
@@ -198,7 +238,7 @@ select:focus option:checked {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(208, 154, 22, 0.35);
+  background: color-mix(in srgb, var(--color-brand-gold) 35%, transparent);
   border-radius: 9999px;
   border: 1px solid transparent;
   background-clip: padding-box;
@@ -206,12 +246,12 @@ select:focus option:checked {
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #D09A16;
-  box-shadow: 0 0 10px rgba(208, 154, 22, 0.45);
+  background: var(--color-brand-gold);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--color-brand-gold) 45%, transparent);
 }
 
 ::-webkit-scrollbar-thumb:active {
-  background: #E5AC2B;
+  background: var(--color-brand-gold-light);
 }
 
 ::-webkit-scrollbar-corner {
@@ -221,7 +261,7 @@ select:focus option:checked {
 /* Container-specific luxury scrollbars for drawers, dropdowns, and cards */
 .luxury-scrollbar {
   scrollbar-width: thin;
-  scrollbar-color: rgba(208, 154, 22, 0.45) transparent;
+  scrollbar-color: color-mix(in srgb, var(--color-brand-gold) 45%, transparent) transparent;
 }
 
 .luxury-scrollbar::-webkit-scrollbar {
@@ -234,11 +274,11 @@ select:focus option:checked {
 }
 
 .luxury-scrollbar::-webkit-scrollbar-thumb {
-  background: rgba(208, 154, 22, 0.35);
+  background: color-mix(in srgb, var(--color-brand-gold) 35%, transparent);
   border-radius: 9999px;
 }
 
 .luxury-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #D09A16;
+  background: var(--color-brand-gold);
 }
 

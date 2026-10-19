@@ -32,7 +32,7 @@ export default function Home() {
   const breadcrumbs = BREADCRUMBS['/'];
 
   return (
-    <div className="w-full flex flex-col min-h-screen bg-[#F7F5EF] text-[#17213D] selection:bg-[#D09A16] selection:text-[#0E162B]">
+    <div className="w-full flex flex-col min-h-screen bg-brand-ivory text-brand-navy selection:bg-brand-gold selection:text-brand-navy-deep">
       <BreadcrumbJsonLd items={breadcrumbs} />
 
       {/* 1. Hero Section */}

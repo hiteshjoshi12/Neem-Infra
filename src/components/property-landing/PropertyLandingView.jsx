@@ -147,13 +147,16 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
   };
 
   return (
-    <div className="w-full min-h-screen bg-[#FAF8F5] text-[#17213D] selection:bg-[#D09A16] selection:text-[#0A0E17]">
+    <div className="w-full min-h-screen bg-brand-ivory-warm text-brand-navy selection:bg-brand-gold selection:text-brand-obsidian">
       {/* =========================================================================
           1. HERO MASTHEAD: LUXURY EDITORIAL SHOWCASE WITH HIGH-CONTRAST BACKDROP
       ========================================================================= */}
-      <section className="relative overflow-hidden pt-28 sm:pt-32 pb-16 lg:pb-20 bg-[#0A0E17] text-white border-b border-white/10">
-        {/* Architectural Hero Banner Backdrop Image */}
-        <div className="absolute inset-0 z-0 opacity-75 sm:opacity-80 pointer-events-none select-none">
+      {/* =========================================================================
+          1. HERO MASTHEAD: LUXURY EDITORIAL SHOWCASE WITH HIGH-CONTRAST DARK BACKDROP
+      ========================================================================= */}
+      <section className="relative overflow-hidden pt-28 sm:pt-32 pb-16 lg:pb-20 bg-brand-obsidian text-white border-b border-white/10">
+        {/* Architectural Hero Banner Backdrop Image with High Visibility Scrim */}
+        <div className="absolute inset-0 z-0 opacity-80 pointer-events-none select-none">
           <Image
             src={hero.bgImage || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=2400&q=85'}
             alt={`${corridor.corridorName} Architecture Banner`}
@@ -161,17 +164,16 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
             priority
             fetchPriority="high"
             sizes="100vw"
-            className="w-full h-full object-cover filter brightness-[0.80] contrast-[1.08]"
+            className="w-full h-full object-cover filter brightness-[0.88] contrast-[1.05]"
           />
-          {/* Multi-tier gradient overlay to ensure perfect text contrast while preserving image drama */}
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0A0E17]/95 via-[#0A0E17]/80 to-[#0A0E17]/45" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E17] via-transparent to-[#0A0E17]/50" />
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-obsidian/85 via-brand-obsidian/45 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-brand-obsidian/80 via-transparent to-brand-obsidian/60" />
         </div>
 
         {/* Subtle Architectural Grid Pattern */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-[0.035] bg-[linear-gradient(#ffffff_1px,transparent_1px),linear-gradient(90deg,#ffffff_1px,transparent_1px)] [background-size:40px_40px]"
+          className="pointer-events-none absolute inset-0 opacity-[0.04] bg-[linear-gradient(var(--color-brand-gold)_1px,transparent_1px),linear-gradient(90deg,var(--color-brand-gold)_1px,transparent_1px)] [background-size:40px_40px]"
         />
 
         {/* Radiant Warm Gold Ambient Radial Glow */}
@@ -179,19 +181,19 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
           aria-hidden="true"
           className="pointer-events-none absolute top-10 right-1/4 w-[600px] h-[400px] rounded-full"
           style={{
-            background: 'radial-gradient(circle, rgba(208,154,22,0.15) 0%, rgba(208,154,22,0) 70%)'
+            background: 'radial-gradient(circle, rgba(197,154,39,0.18) 0%, rgba(197,154,39,0) 70%)'
           }}
         />
 
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Breadcrumb Navigation */}
           <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-6">
-            <Link href="/" className="hover:text-[#D09A16] transition-colors">Home</Link>
-            <span className="text-slate-600">/</span>
-            <Link href="/properties" className="hover:text-[#D09A16] transition-colors">Properties</Link>
-            <span className="text-slate-600">/</span>
-            <span className="text-[#D09A16] font-bold flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16] shadow-[0_0_8px_#D09A16]" />
+            <Link href="/" className="hover:text-brand-gold transition-colors">Home</Link>
+            <span className="text-white/30">/</span>
+            <Link href="/properties" className="hover:text-brand-gold transition-colors">Properties</Link>
+            <span className="text-white/30">/</span>
+            <span className="text-brand-gold font-bold flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-brand-gold shadow-[0_0_8px_var(--color-brand-gold)]" />
               <span>{corridor.corridorName}</span>
             </span>
           </nav>
@@ -202,16 +204,16 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
             <div className="lg:col-span-7 space-y-6">
               {/* Eyebrow Pill + Starting Price Badge */}
               <div className="flex flex-wrap items-center gap-2.5">
-                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#D09A16]/20 border border-[#D09A16]/40 text-[#D09A16] text-[11px] font-bold uppercase tracking-[0.2em] shadow-xs backdrop-blur-sm">
-                  <Sparkles size={12} className="text-[#D09A16]" />
+                <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-brand-gold/20 border border-brand-gold/40 text-brand-gold text-[11px] font-bold uppercase tracking-[0.2em] shadow-xs backdrop-blur-sm">
+                  <Sparkles size={12} className="text-brand-gold" />
                   <span>{hero.badge}</span>
                 </div>
 
                 {hero.priceStarting && (
-                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-[11px] font-bold shadow-xs">
-                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_#34d399]" />
+                  <div className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-white text-[11px] font-bold shadow-xs backdrop-blur-sm">
+                    <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_6px_rgba(52,211,153,0.8)]" />
                     <span className="text-slate-300 font-medium">Starting at:</span>
-                    <span className="text-[#D09A16] font-bold">{hero.priceStarting}</span>
+                    <span className="text-brand-gold font-bold">{hero.priceStarting}</span>
                   </div>
                 )}
               </div>
@@ -236,9 +238,9 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                   {keyHighlights.map((highlight, hIdx) => (
                     <div
                       key={hIdx}
-                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 backdrop-blur-md border border-white/15 text-slate-200 text-xs font-semibold shadow-xs hover:border-[#D09A16]/60 hover:text-white transition-colors"
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/10 border border-white/15 text-white text-xs font-semibold shadow-xs hover:border-brand-gold/60 hover:text-brand-gold transition-colors backdrop-blur-sm"
                     >
-                      <CheckCircle2 size={13} className="text-[#D09A16] shrink-0" />
+                      <CheckCircle2 size={13} className="text-brand-gold shrink-0" />
                       <span>{highlight}</span>
                     </div>
                   ))}
@@ -249,9 +251,9 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
               <div className="flex flex-wrap items-center gap-3.5 pt-2">
                 <a
                   href={`tel:${hero.directPhone?.replace(/[\s-]/g, '') || '+919811221207'}`}
-                  className="px-6 py-3.5 rounded-xl bg-[#D09A16] hover:bg-[#b8850f] text-[#0A0E17] font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-md active:scale-95 cursor-pointer hover:shadow-lg"
+                  className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-brand-gold to-brand-gold-light hover:brightness-105 text-brand-obsidian font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-[0_10px_25px_rgba(197,154,39,0.3)] active:scale-95 cursor-pointer"
                 >
-                  <Phone size={14} className="text-[#0A0E17]" />
+                  <Phone size={14} className="text-brand-obsidian" />
                   <span>Call Direct: {hero.directPhone || '+91 98112 21207'}</span>
                 </a>
 
@@ -267,25 +269,25 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
 
                 <a
                   href="#inquiry-form"
-                  className="px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 text-white font-semibold text-xs uppercase tracking-wider flex items-center gap-1.5 transition-colors shadow-xs"
+                  className="px-5 py-3.5 rounded-xl bg-white/10 hover:bg-white/20 text-white hover:text-brand-gold border border-white/20 font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 transition-all shadow-md hover:shadow-xl cursor-pointer backdrop-blur-sm"
                 >
                   <span>Schedule Visit</span>
-                  <ArrowRight size={13} className="text-[#D09A16]" />
+                  <ArrowRight size={13} className="text-brand-gold" />
                 </a>
               </div>
 
               {/* Micro Trust Credentials Line */}
-              <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-slate-400 font-medium">
+              <div className="flex flex-wrap items-center gap-4 pt-2 text-xs text-slate-300 font-medium">
                 {(hero.trustBadges && hero.trustBadges.length > 0 ? hero.trustBadges : [
                   '25+ Years Authority',
                   '100% Freehold Title Vetted',
                   'Direct Seller Mandates'
                 ]).map((badge, bIdx) => (
                   <React.Fragment key={bIdx}>
-                    {bIdx > 0 && <span className="text-slate-600">•</span>}
+                    {bIdx > 0 && <span className="text-white/30">/</span>}
                     <span className="flex items-center gap-1.5">
-                      {bIdx === 0 ? <ShieldCheck size={14} className="text-[#D09A16]" /> : bIdx === 1 ? <Award size={14} className="text-[#D09A16]" /> : <Building2 size={14} className="text-[#D09A16]" />}
-                      <span className="text-slate-300">{badge}</span>
+                      {bIdx === 0 ? <ShieldCheck size={14} className="text-brand-gold" /> : bIdx === 1 ? <Award size={14} className="text-brand-gold" /> : <Building2 size={14} className="text-brand-gold" />}
+                      <span className="text-white font-medium">{badge}</span>
                     </span>
                   </React.Fragment>
                 ))}
@@ -298,13 +300,13 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                 {/* Ambient Behind-Glow */}
                 <div
                   aria-hidden="true"
-                  className="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-[#D09A16]/25 to-transparent blur-xl opacity-60 pointer-events-none"
+                  className="absolute -inset-2 rounded-3xl bg-gradient-to-tr from-brand-gold/25 to-transparent blur-xl opacity-60 pointer-events-none"
                 />
 
                 {/* Main Stage Image Card */}
-                <div className="relative rounded-3xl overflow-hidden bg-slate-900/90 backdrop-blur-md border border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+                <div className="relative rounded-3xl overflow-hidden bg-brand-navy-surface/90 border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl">
                   {/* Photo Display with Framer Motion AnimatePresence */}
-                  <div className="relative h-[360px] sm:h-[420px] w-full overflow-hidden bg-slate-950">
+                  <div className="relative h-[360px] sm:h-[420px] w-full overflow-hidden bg-brand-obsidian">
                     <AnimatePresence mode="wait">
                       <motion.div
                         key={activeImageIndex}
@@ -323,29 +325,29 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                           className="object-cover object-center"
                         />
                         {/* Subtle bottom vignette to ensure caption readability */}
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-transparent" />
+                        <div className="absolute inset-0 bg-gradient-to-t from-brand-obsidian/80 via-black/10 to-transparent" />
                       </motion.div>
                     </AnimatePresence>
 
                     {/* Top Badge: Floating Pill */}
                     <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
-                      <span className="px-3 py-1.5 rounded-full bg-[#0A0E17]/80 backdrop-blur-md text-[11px] font-bold text-white shadow-md border border-white/20 flex items-center gap-1.5">
-                        <Sparkles size={12} className="text-[#D09A16]" />
+                      <span className="px-3 py-1.5 rounded-full bg-brand-obsidian/85 backdrop-blur-md text-[11px] font-bold text-white shadow-sm border border-white/15 flex items-center gap-1.5">
+                        <Sparkles size={12} className="text-brand-gold" />
                         <span>{activeImage.tag || 'Verified Architecture'}</span>
                       </span>
                     </div>
 
                     {/* Top-Right Badge: Corridor Tag */}
                     <div className="absolute top-4 right-4 z-10">
-                      <span className="px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-[10px] font-bold text-[#D09A16] tracking-wider uppercase border border-white/20">
+                      <span className="px-3 py-1 rounded-full bg-brand-obsidian/85 backdrop-blur-md text-[10px] font-bold text-brand-gold tracking-wider uppercase border border-white/15 shadow-sm">
                         {corridor.corridorName}
                       </span>
                     </div>
 
                     {/* Bottom Overlay Card */}
-                    <div className="absolute bottom-3 left-3 right-3 z-10 p-3.5 rounded-2xl bg-[#0A0E17]/90 backdrop-blur-md border border-white/20 shadow-lg flex items-center justify-between gap-3">
+                    <div className="absolute bottom-3 left-3 right-3 z-10 p-3.5 rounded-2xl bg-brand-obsidian/85 backdrop-blur-md border border-white/15 shadow-md flex items-center justify-between gap-3">
                       <div className="min-w-0">
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-[#D09A16] block">
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-brand-gold block">
                           Featured Property View • 0{activeImageIndex + 1}/0{galleryImages.length}
                         </span>
                         <h4 className="text-sm font-serif font-bold text-white truncate">
@@ -355,10 +357,10 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
 
                       {hero.priceStarting && (
                         <div className="shrink-0 text-right">
-                          <span className="text-[10px] uppercase tracking-wider text-slate-400 block font-semibold">
+                          <span className="text-[10px] uppercase tracking-wider text-slate-300 block font-semibold">
                             Guideline
                           </span>
-                          <span className="text-xs font-serif font-bold text-[#D09A16]">
+                          <span className="text-xs font-serif font-bold text-brand-gold">
                             {hero.priceStarting}
                           </span>
                         </div>
@@ -368,7 +370,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
 
                   {/* Interactive Thumbnail Gallery Strip (3 Perspectives) */}
                   {galleryImages.length > 1 && (
-                    <div className="p-3 bg-[#0A0E17]/95 border-t border-white/10 flex items-center gap-2.5 overflow-x-auto">
+                    <div className="p-3 bg-brand-navy-surface/95 border-t border-white/10 flex items-center gap-2.5 overflow-x-auto">
                       {galleryImages.map((img, idx) => (
                         <button
                           key={idx}
@@ -376,8 +378,8 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                           onClick={() => setActiveImageIndex(idx)}
                           className={`group relative flex-1 min-w-[90px] h-16 rounded-xl overflow-hidden border-2 transition-all cursor-pointer text-left ${
                             activeImageIndex === idx
-                              ? 'border-[#D09A16] shadow-sm ring-2 ring-[#D09A16]/30 scale-[1.02]'
-                              : 'border-white/10 opacity-70 hover:opacity-100 hover:border-white/30'
+                              ? 'border-brand-gold shadow-sm ring-2 ring-brand-gold/30 scale-[1.02]'
+                              : 'border-white/20 opacity-70 hover:opacity-100 hover:border-brand-gold/60'
                           }`}
                         >
                           <Image
@@ -387,7 +389,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                             sizes="100px"
                             className="object-cover object-center"
                           />
-                          <div className="absolute inset-0 bg-black/40 group-hover:bg-black/15 transition-colors" />
+                          <div className="absolute inset-0 bg-black/25 group-hover:bg-transparent transition-colors" />
                           <div className="absolute bottom-1 left-1.5 right-1.5">
                             <span className="text-[9px] font-bold text-white uppercase tracking-wider drop-shadow-sm truncate block">
                               {img.tag || `View 0${idx + 1}`}
@@ -403,16 +405,16 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
           </div>
 
           {/* Micro-Market Intelligence Strip */}
-          <div className="mt-12 pt-6 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-xs">
-            <div className="flex items-center gap-2 text-slate-400 font-semibold uppercase tracking-wider text-[11px]">
-              <Navigation size={13} className="text-[#D09A16]" />
+          <div className="mt-12 pt-6 border-t border-brand-cream-border flex flex-wrap items-center justify-between gap-4 text-xs">
+            <div className="flex items-center gap-2 text-brand-slate font-semibold uppercase tracking-wider text-[11px]">
+              <Navigation size={13} className="text-brand-gold-deep" />
               <span>{hero.intelligenceTagline || `${corridor.corridorName} Micro-Market Intelligence`}</span>
             </div>
-            <div className="hidden sm:flex items-center gap-5 text-slate-400 text-[11px] font-medium">
+            <div className="hidden sm:flex items-center gap-5 text-brand-slate text-[11px] font-medium">
               <span>✦ Direct Builder &amp; Resale Mandates</span>
-              <span className="text-slate-600">•</span>
+              <span className="text-brand-cream-border">•</span>
               <span>✦ Real-Time On-Ground Inventory</span>
-              <span className="text-slate-600">•</span>
+              <span className="text-brand-cream-border">•</span>
               <span>✦ Zero Conflict of Interest</span>
             </div>
           </div>
@@ -424,19 +426,19 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
       ========================================================================= */}
       {metrics && metrics.length > 0 && (
         <section className="relative z-20 -mt-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 p-4 sm:p-5 rounded-3xl bg-[#0E162B]/95 backdrop-blur-xl border border-white/15 shadow-[0_20px_50px_rgba(0,0,0,0.6)]">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 p-4 sm:p-5 rounded-3xl bg-white/95 backdrop-blur-xl border border-brand-cream-border shadow-[0_20px_50px_rgba(17,24,39,0.08)]">
             {metrics.map((m, idx) => (
               <div
                 key={idx}
-                className="p-3.5 sm:p-4 rounded-2xl bg-white/[0.03] border border-white/10 hover:border-[#D09A16]/50 transition-colors flex flex-col justify-between"
+                className="p-3.5 sm:p-4 rounded-2xl bg-brand-ivory-warm border border-brand-cream-border hover:border-brand-gold/50 transition-colors flex flex-col justify-between"
               >
-                <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-[#D09A16] block mb-1">
+                <span className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-brand-gold-deep block mb-1">
                   {m.label}
                 </span>
-                <span className="text-lg sm:text-xl md:text-2xl font-serif font-bold text-white block mb-0.5">
+                <span className="text-lg sm:text-xl md:text-2xl font-serif font-bold text-brand-navy block mb-0.5">
                   {m.value}
                 </span>
-                <span className="text-[11px] text-slate-400 font-sans leading-tight">
+                <span className="text-[11px] text-brand-slate font-sans leading-tight">
                   {m.desc}
                 </span>
               </div>
@@ -446,19 +448,19 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
       )}
 
       {/* =========================================================================
-          2. LOCALITY PROFILE & 3 CORE PROPERTY TYPOLOGIES
+          2. LOCALITY PROFILE & 3 CORE PROPERTY TYPOLOGIES (LIGHT)
       ========================================================================= */}
-      <section className="py-20 bg-[#0E162B] text-white border-b border-white/10 relative overflow-hidden">
+      <section className="py-20 bg-brand-ivory-warm text-brand-navy border-b border-brand-cream-border relative overflow-hidden">
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute inset-0 opacity-[0.04] bg-[linear-gradient(#D09A16_1px,transparent_1px),linear-gradient(90deg,#D09A16_1px,transparent_1px)] [background-size:48px_48px]"
+          className="pointer-events-none absolute inset-0 opacity-[0.03] bg-[linear-gradient(var(--color-brand-gold)_1px,transparent_1px),linear-gradient(90deg,var(--color-brand-gold)_1px,transparent_1px)] [background-size:48px_48px]"
         />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* 2-Column Overview Narrative + Architectural Showcase */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center mb-14">
             <div className="lg:col-span-7">
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[#D09A16] text-[11px] font-bold uppercase tracking-[0.2em] mb-3">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-gold/15 border border-brand-gold/35 text-brand-gold-deep text-[11px] font-bold uppercase tracking-[0.2em] mb-3">
                 <Award size={13} />
                 <span>{overview.tag || 'Locality Profile'}</span>
               </div>
@@ -466,11 +468,11 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
               <LuxuryTextReveal
                 as="h2"
                 text={overview.title}
-                className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white tracking-tight leading-snug mb-4"
+                className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-brand-navy tracking-tight leading-snug mb-4"
                 delay={0.1}
               />
 
-              <div className="space-y-4 text-xs sm:text-sm text-slate-300 leading-relaxed font-sans">
+              <div className="space-y-4 text-xs sm:text-sm text-brand-slate leading-relaxed font-sans">
                 {(overview.paragraphs || []).map((p, idx) => (
                   <p key={idx}>{p}</p>
                 ))}
@@ -479,7 +481,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
 
             {/* Right Architectural Image Card */}
             <div className="lg:col-span-5">
-              <div className="relative rounded-3xl overflow-hidden border border-white/15 bg-slate-900 shadow-[0_20px_50px_rgba(0,0,0,0.5)] group">
+              <div className="relative rounded-3xl overflow-hidden border border-brand-cream-border bg-white shadow-md group">
                 <div className="relative aspect-[16/10] sm:aspect-[4/3] w-full overflow-hidden">
                   <Image
                     src={overview.image || galleryImages?.[1]?.url || galleryImages?.[0]?.url || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=85'}
@@ -488,14 +490,14 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                     sizes="(max-width: 1024px) 100vw, 45vw"
                     className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0E162B]/85 via-black/20 to-transparent pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/70 via-black/10 to-transparent pointer-events-none" />
                   
                   {/* Bottom Info Pill */}
                   <div className="absolute bottom-3.5 left-4 right-4 flex items-center justify-between">
-                    <span className="px-3 py-1 rounded-full bg-[#0E162B]/90 backdrop-blur-md text-[10px] font-bold text-[#D09A16] border border-[#D09A16]/30 uppercase tracking-wider shadow-sm">
+                    <span className="px-3 py-1 rounded-full bg-white/95 backdrop-blur-md text-[10px] font-bold text-brand-gold-deep border border-brand-cream-border uppercase tracking-wider shadow-sm">
                       {corridor.corridorName} Locality Profile
                     </span>
-                    <span className="text-[10px] text-white/90 font-semibold bg-black/40 px-2 py-0.5 rounded backdrop-blur-xs">
+                    <span className="text-[10px] text-brand-navy font-semibold bg-white/90 px-2 py-0.5 rounded backdrop-blur-xs border border-brand-cream-border shadow-xs">
                       100% Freehold
                     </span>
                   </div>
@@ -516,35 +518,35 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                   custom={idx}
                   variants={fadeUpVariant}
                   whileHover={{ y: -6 }}
-                  className="group relative rounded-3xl bg-[#141E36]/90 p-6 sm:p-7 border border-white/10 hover:border-[#D09A16]/60 shadow-[0_10px_30px_rgba(0,0,0,0.3)] hover:shadow-[0_20px_45px_rgba(208,154,22,0.15)] transition-all duration-300 flex flex-col justify-between overflow-hidden"
+                  className="group relative rounded-3xl bg-white p-6 sm:p-7 border border-brand-cream-border hover:border-brand-gold/60 shadow-sm hover:shadow-[0_20px_45px_rgba(197,154,39,0.15)] transition-all duration-300 flex flex-col justify-between overflow-hidden"
                 >
                   {/* Subtle Top Accent Hairline */}
-                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#D09A16]/40 to-transparent group-hover:via-[#D09A16] transition-all duration-500" />
+                  <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-gold/30 to-transparent group-hover:via-brand-gold transition-all duration-500" />
 
                   <div>
                     <div className="flex items-center justify-between mb-5">
-                      <div className="w-10 h-10 rounded-xl bg-[#D09A16]/15 text-[#D09A16] flex items-center justify-center font-bold border border-[#D09A16]/30 group-hover:scale-110 transition-transform">
+                      <div className="w-10 h-10 rounded-xl bg-brand-gold/10 text-brand-gold-deep flex items-center justify-center font-bold border border-brand-gold/25 group-hover:scale-110 transition-transform">
                         <Building2 size={20} />
                       </div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-slate-400 bg-white/[0.05] px-2.5 py-1 rounded-full border border-white/10">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-brand-slate-light bg-brand-ivory px-2.5 py-1 rounded-full border border-brand-cream-border">
                         Tier 1 Asset
                       </span>
                     </div>
 
-                    <span className="text-xs font-semibold text-[#D09A16] block uppercase tracking-wider mb-1.5">
+                    <span className="text-xs font-semibold text-brand-gold-deep block uppercase tracking-wider mb-1.5">
                       {t.specs}
                     </span>
-                    <h3 className="font-serif font-bold text-xl text-white mb-3 leading-snug group-hover:text-[#D09A16] transition-colors">
+                    <h3 className="font-serif font-bold text-xl text-brand-navy mb-3 leading-snug group-hover:text-brand-gold-deep transition-colors">
                       {t.title}
                     </h3>
-                    <div className="text-2xl font-serif font-bold text-white mb-5">
+                    <div className="text-2xl font-serif font-bold text-brand-navy mb-5">
                       {t.price}
                     </div>
 
-                    <div className="space-y-2.5 pt-4 border-t border-white/10">
+                    <div className="space-y-2.5 pt-4 border-t border-brand-cream-border">
                       {t.highlights.map((h, hIdx) => (
-                        <div key={hIdx} className="flex items-start gap-2 text-xs text-slate-300">
-                          <CheckCircle2 size={13} className="text-[#D09A16] shrink-0 mt-0.5" />
+                        <div key={hIdx} className="flex items-start gap-2 text-xs text-brand-slate">
+                          <CheckCircle2 size={13} className="text-brand-gold-deep shrink-0 mt-0.5" />
                           <span className="leading-relaxed">{h}</span>
                         </div>
                       ))}
@@ -554,7 +556,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                   <button
                     type="button"
                     onClick={() => handleSelectTypology(t.title)}
-                    className="mt-6 w-full py-3 rounded-xl bg-white/[0.08] group-hover:bg-[#D09A16] text-white group-hover:text-[#0A0E17] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-sm cursor-pointer border border-white/10 group-hover:border-[#D09A16]"
+                    className="mt-6 w-full py-3 rounded-xl bg-brand-ivory group-hover:bg-gradient-to-r group-hover:from-brand-gold group-hover:to-brand-gold-light text-brand-navy group-hover:text-white text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-xs cursor-pointer border border-brand-cream-border group-hover:border-brand-gold"
                   >
                     <span>Inquire Property</span>
                     <ArrowRight size={13} className="group-hover:translate-x-1 transition-transform" />
@@ -569,23 +571,23 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
       {/* =========================================================================
           3. STRATEGIC URBAN EQUILIBRIUM & CAPITAL APPRECIATION (LIGHT)
       ========================================================================= */}
-      <section className="py-20 bg-white text-[#17213D] border-b border-[#E8E2D9] relative overflow-hidden">
+      <section className="py-20 bg-white text-brand-navy border-b border-brand-cream-border relative overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
             {/* Left Narrative */}
             <div className="lg:col-span-7 space-y-4">
-              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#B48216] block">
+              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-brand-gold block">
                 {locationSection.tag || 'Strategic Urban Balance'}
               </span>
 
               <LuxuryTextReveal
                 as="h2"
                 text={locationSection.title}
-                className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#111827] tracking-tight leading-snug"
+                className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-brand-navy tracking-tight leading-snug"
                 delay={0.08}
               />
 
-              <div className="text-sm font-serif italic text-[#B48216]">
+              <div className="text-sm font-serif italic text-brand-gold">
                 {locationSection.subtitle}
               </div>
 
@@ -602,8 +604,8 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                       '100% Freehold Mutation'
                     ]
                 ).map((hl, hlIdx) => (
-                  <div key={hlIdx} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#FAF8F5] border border-[#E5DFD5] text-xs text-slate-700 font-medium shadow-xs">
-                    <CheckCircle2 size={13} className="text-[#D09A16]" />
+                  <div key={hlIdx} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-brand-ivory-warm border border-brand-cream-border text-xs text-slate-700 font-medium shadow-xs">
+                    <CheckCircle2 size={13} className="text-brand-gold" />
                     <span>{hl}</span>
                   </div>
                 ))}
@@ -612,7 +614,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
 
             {/* Right Architectural Image Showcase (Replaces CTA Box) */}
             <div className="lg:col-span-5">
-              <div className="relative rounded-3xl overflow-hidden border border-[#E5DFD5] bg-slate-900 shadow-[0_20px_45px_rgba(23,33,61,0.12)] group">
+              <div className="relative rounded-3xl overflow-hidden border border-brand-cream-border bg-slate-900 shadow-[0_20px_45px_rgba(23,33,61,0.12)] group">
                 <div className="relative aspect-[16/10] sm:aspect-[4/3] w-full overflow-hidden">
                   <Image
                     src={locationSection.image || galleryImages?.[2]?.url || galleryImages?.[0]?.url || 'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?auto=format&fit=crop&w=1200&q=85'}
@@ -625,8 +627,8 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                   
                   {/* Floating Micro-Badge */}
                   <div className="absolute top-4 left-4 z-10 flex items-center gap-2">
-                    <span className="px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-[11px] font-bold text-[#17213D] shadow-md border border-white/60 flex items-center gap-1.5">
-                      <Sparkles size={12} className="text-[#D09A16]" />
+                    <span className="px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-md text-[11px] font-bold text-brand-navy shadow-md border border-white/60 flex items-center gap-1.5">
+                      <Sparkles size={12} className="text-brand-gold" />
                       <span>{locationSection.cardBadge || 'Prime Location Estate'}</span>
                     </span>
                   </div>
@@ -634,19 +636,19 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                   {/* Bottom Caption Pill */}
                   <div className="absolute bottom-4 left-4 right-4 z-10 p-3 rounded-2xl bg-white/95 backdrop-blur-md border border-white/80 shadow-md flex items-center justify-between">
                     <div>
-                      <span className="text-[10px] font-bold uppercase tracking-wider text-[#B48216] block">
+                      <span className="text-[10px] font-bold uppercase tracking-wider text-brand-gold block">
                         {locationSection.cardTag || 'Direct Sector Mandate'}
                       </span>
-                      <h4 className="text-xs sm:text-sm font-serif font-bold text-[#17213D] truncate">
+                      <h4 className="text-xs sm:text-sm font-serif font-bold text-brand-navy truncate">
                         {locationSection.cardTitle || `${corridor.corridorName} Prime Micro-Market`}
                       </h4>
                     </div>
                     <Link
                       href="#inquiry-form"
-                      className="px-3 py-1.5 rounded-xl bg-[#17213D] hover:bg-[#223055] text-white text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 transition-colors shrink-0"
+                      className="px-3 py-1.5 rounded-xl bg-brand-navy hover:bg-brand-navy-surface text-white text-[10px] font-bold uppercase tracking-wider flex items-center gap-1 transition-colors shrink-0"
                     >
                       <span>Explore</span>
-                      <ArrowRight size={11} className="text-[#D09A16]" />
+                      <ArrowRight size={11} className="text-brand-gold" />
                     </Link>
                   </div>
                 </div>
@@ -657,23 +659,23 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
       </section>
 
       {/* =========================================================================
-          4. 8 STRATEGIC REASONS TO LIVE IN THIS CORRIDOR
+          4. 8 STRATEGIC REASONS TO LIVE IN THIS CORRIDOR (LIGHT)
       ========================================================================= */}
-      <section className="py-20 bg-[#0E162B] text-white border-b border-white/10 relative">
+      <section className="py-20 bg-brand-ivory text-brand-navy border-b border-brand-cream-border relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mb-12">
-            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#D09A16] block mb-2">
+            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-brand-gold-deep block mb-2">
               {whyLiveHere.badge || 'Location Supremacy'}
             </span>
 
             <LuxuryTextReveal
               as="h2"
               text={whyLiveHere.title}
-              className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white"
+              className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-brand-navy"
               delay={0.1}
             />
 
-            <p className="text-xs sm:text-sm text-slate-300 leading-relaxed mt-3">
+            <p className="text-xs sm:text-sm text-brand-slate leading-relaxed mt-3">
               {whyLiveHere.intro}
             </p>
           </div>
@@ -688,27 +690,27 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                 custom={idx}
                 variants={fadeUpVariant}
                 whileHover={{ y: -5 }}
-                className="group relative p-6 rounded-2xl bg-[#141E36]/90 border border-white/10 shadow-[0_4px_20px_rgba(0,0,0,0.3)] hover:border-[#D09A16]/50 transition-all flex flex-col justify-between overflow-hidden"
+                className="group relative p-6 rounded-2xl bg-white border border-brand-cream-border shadow-sm hover:border-brand-gold/50 hover:shadow-md transition-all flex flex-col justify-between overflow-hidden"
               >
                 {/* Architectural Numeral Watermark */}
-                <span className="absolute right-4 top-3 text-5xl font-serif font-bold text-white/[0.04] pointer-events-none select-none">
+                <span className="absolute right-4 top-3 text-5xl font-serif font-bold text-brand-navy/[0.04] pointer-events-none select-none">
                   0{idx + 1}
                 </span>
 
                 {/* Subtle Top Accent Hairline */}
-                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-[#D09A16]/30 to-transparent group-hover:via-[#D09A16] transition-all duration-500" />
+                <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-brand-gold/30 to-transparent group-hover:via-brand-gold transition-all duration-500" />
 
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <span className="text-2xl font-serif font-bold text-[#D09A16]">
+                    <span className="text-2xl font-serif font-bold text-brand-gold-deep">
                       {pillar.number}
                     </span>
-                    <ShieldCheck size={16} className="text-[#D09A16]" />
+                    <ShieldCheck size={16} className="text-brand-gold-deep" />
                   </div>
-                  <h3 className="font-serif font-bold text-base text-white mb-2 leading-snug group-hover:text-[#D09A16] transition-colors">
+                  <h3 className="font-serif font-bold text-base text-brand-navy mb-2 leading-snug group-hover:text-brand-gold-deep transition-colors">
                     {pillar.title}
                   </h3>
-                  <p className="text-xs text-slate-300 leading-relaxed font-sans">
+                  <p className="text-xs text-brand-slate leading-relaxed font-sans">
                     {pillar.desc}
                   </p>
                 </div>
@@ -721,7 +723,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
       {/* =========================================================================
           5. NEAREST PLACES & COMMUTE RADAR (LIGHT) WITH IMAGES
       ========================================================================= */}
-      <section className="py-20 sm:py-24 bg-[#FAF8F5] text-[#17213D] border-b border-[#E8E2D9] relative overflow-hidden">
+      <section className="py-20 sm:py-24 bg-brand-ivory-warm text-brand-navy border-b border-brand-cream-border relative overflow-hidden">
         <div
           aria-hidden="true"
           className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[500px] h-[300px] rounded-full pointer-events-none"
@@ -730,14 +732,14 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="max-w-3xl mb-14">
-            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#B48216] block mb-2">
+            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-brand-gold block mb-2">
               {nearestPlaces.badge || 'Transit Times & Connectivity'}
             </span>
 
             <LuxuryTextReveal
               as="h2"
               text={nearestPlaces.title}
-              className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#111827]"
+              className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-brand-navy"
               delay={0.08}
             />
 
@@ -756,7 +758,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                 custom={idx}
                 variants={fadeUpVariant}
                 whileHover={{ y: -6 }}
-                className="group rounded-3xl bg-white border border-[#E5DFD5] hover:border-[#D09A16]/60 transition-all duration-300 flex flex-col justify-between shadow-[0_4px_20px_rgba(23,33,61,0.06)] hover:shadow-[0_16px_35px_rgba(208,154,22,0.14)] overflow-hidden"
+                className="group rounded-3xl bg-white border border-brand-cream-border hover:border-brand-gold/60 transition-all duration-300 flex flex-col justify-between shadow-[0_4px_20px_rgba(23,33,61,0.06)] hover:shadow-[0_16px_35px_rgba(208,154,22,0.14)] overflow-hidden"
               >
                 <div>
                   {/* Landmark Photographic Banner - Full Bleed Edge-to-Edge */}
@@ -771,7 +773,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                     <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent pointer-events-none" />
 
                     {/* Category Tag on Top Left */}
-                    <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md border border-white/40 text-[10px] font-bold uppercase tracking-wider text-[#17213D] shadow-xs">
+                    <div className="absolute top-3 left-3 px-2.5 py-1 rounded-full bg-white/95 backdrop-blur-md border border-white/40 text-[10px] font-bold uppercase tracking-wider text-brand-navy shadow-xs">
                       {place.category}
                     </div>
 
@@ -783,14 +785,14 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
 
                     {/* Distance Tag on bottom */}
                     <div className="absolute bottom-2.5 left-3 text-white text-xs font-semibold flex items-center gap-1.5 drop-shadow-md">
-                      <Navigation size={13} className="text-[#D09A16]" />
+                      <Navigation size={13} className="text-brand-gold" />
                       <span>{place.distance} away</span>
                     </div>
                   </div>
 
                   {/* Content */}
                   <div className="p-5 sm:p-6">
-                    <h3 className="font-serif font-bold text-lg text-[#111827] mb-2 group-hover:text-[#B48216] transition-colors leading-snug">
+                    <h3 className="font-serif font-bold text-lg text-brand-navy mb-2 group-hover:text-brand-gold transition-colors leading-snug">
                       {place.name}
                     </h3>
                     <p className="text-xs text-slate-600 leading-relaxed font-sans line-clamp-3">
@@ -801,7 +803,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
 
                 {/* Subtle bottom gold hairline */}
                 <div className="px-5 sm:px-6 pb-5 pt-0">
-                  <div className="h-[2px] w-10 bg-[#D09A16]/30 group-hover:w-full group-hover:bg-[#D09A16] transition-all duration-300 rounded-full" />
+                  <div className="h-[2px] w-10 bg-brand-gold/30 group-hover:w-full group-hover:bg-brand-gold transition-all duration-300 rounded-full" />
                 </div>
               </motion.div>
             ))}
@@ -810,31 +812,31 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
       </section>
 
       {/* =========================================================================
-          6A. HOW CAN WE HELP YOU? (TURNKEY ADVISORY & ACQUISITION PLATFORM)
+          6A. HOW CAN WE HELP YOU? (TURNKEY ADVISORY & ACQUISITION PLATFORM - LIGHT)
       ========================================================================= */}
-      <section className="py-20 sm:py-24 bg-[#0E162B] text-white border-b border-white/10 relative overflow-hidden">
+      <section className="py-20 sm:py-24 bg-brand-ivory text-brand-navy border-b border-brand-cream-border relative overflow-hidden">
         <div
           aria-hidden="true"
           className="absolute -top-32 -left-32 w-[550px] h-[550px] rounded-full pointer-events-none"
-          style={{ background: 'radial-gradient(circle, rgba(208, 154, 22, 0.08) 0%, rgba(0,0,0,0) 70%)' }}
+          style={{ background: 'radial-gradient(circle, rgba(197, 154, 22, 0.08) 0%, rgba(250,248,245,0) 70%)' }}
         />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
             {/* Narrative & Checklist Column */}
             <div className="lg:col-span-7 space-y-6">
-              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#D09A16] block">
+              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-brand-gold-deep block">
                 {howWeHelp.badge || 'Turnkey Advisory & Acquisition Platform'}
               </span>
 
               <LuxuryTextReveal
                 as="h2"
                 text={howWeHelp.title}
-                className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white leading-tight"
+                className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-brand-navy leading-tight"
                 delay={0.08}
               />
 
-              <div className="space-y-3.5 text-xs sm:text-sm text-slate-300 leading-relaxed font-sans pt-1">
+              <div className="space-y-3.5 text-xs sm:text-sm text-brand-slate leading-relaxed font-sans pt-1">
                 {(howWeHelp.paragraphs || []).map((p, idx) => (
                   <p key={idx}>{p}</p>
                 ))}
@@ -846,9 +848,9 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                   {howWeHelp.servicesChecklist.map((item, idx) => (
                     <div
                       key={idx}
-                      className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 flex items-start gap-3 text-xs text-slate-200 font-medium hover:border-[#D09A16]/40 transition-colors"
+                      className="p-3.5 rounded-xl bg-white border border-brand-cream-border flex items-start gap-3 text-xs text-brand-navy font-medium hover:border-brand-gold/40 shadow-xs transition-colors"
                     >
-                      <CheckCircle2 size={16} className="text-[#D09A16] shrink-0 mt-0.5" />
+                      <CheckCircle2 size={16} className="text-brand-gold-deep shrink-0 mt-0.5" />
                       <span className="leading-snug">{item}</span>
                     </div>
                   ))}
@@ -859,7 +861,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
               <div className="pt-4 flex flex-wrap items-center gap-4">
                 <a
                   href="#inquiry-form"
-                  className="px-6 py-3 rounded-xl bg-[#D09A16] hover:bg-[#E5AC2B] text-[#0A0E17] font-bold text-xs uppercase tracking-wider transition-all shadow-md active:scale-95 inline-flex items-center gap-2"
+                  className="px-6 py-3 rounded-xl bg-gradient-to-r from-brand-gold to-brand-gold-light hover:brightness-105 text-white font-bold text-xs uppercase tracking-wider transition-all shadow-[0_10px_25px_rgba(197,154,39,0.3)] active:scale-95 inline-flex items-center gap-2 cursor-pointer"
                 >
                   <span>Request Private Consultation</span>
                   <ArrowRight size={14} />
@@ -868,7 +870,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                   href="https://wa.me/919718511207?text=Hello%20Saudagar%20Properties%2C%20I%20would%20like%20to%20consult%20regarding%20property%20acquisitions."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-5 py-3 rounded-xl bg-white/5 hover:bg-white/10 text-white font-bold text-xs uppercase tracking-wider border border-white/15 transition-all inline-flex items-center gap-2"
+                  className="px-5 py-3 rounded-xl bg-white hover:bg-brand-cream text-brand-navy font-bold text-xs uppercase tracking-wider border border-brand-cream-border transition-all inline-flex items-center gap-2 shadow-xs cursor-pointer"
                 >
                   <WhatsAppIcon size={15} />
                   <span>Direct Desk Hotline</span>
@@ -878,7 +880,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
 
             {/* Feature Image Column */}
             <div className="lg:col-span-5">
-              <div className="relative rounded-3xl overflow-hidden border border-[#D09A16]/30 shadow-[0_20px_50px_rgba(0,0,0,0.6)] group">
+              <div className="relative rounded-3xl overflow-hidden border border-brand-cream-border bg-white shadow-md group">
                 <div className="relative aspect-[4/3] sm:aspect-[1/1] w-full">
                   <Image
                     src={howWeHelp.image || 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=85'}
@@ -887,19 +889,19 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                     sizes="(max-width: 1024px) 100vw, 40vw"
                     className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0E162B] via-transparent to-transparent opacity-80 pointer-events-none" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/60 via-transparent to-transparent opacity-80 pointer-events-none" />
                 </div>
 
                 {/* Floating Glassmorphism Advisory Badge */}
-                <div className="absolute bottom-5 left-5 right-5 p-4 rounded-2xl bg-[#141E36]/90 backdrop-blur-md border border-[#D09A16]/30 text-white flex items-center gap-3.5 shadow-xl">
-                  <div className="p-2.5 rounded-xl bg-[#D09A16]/15 border border-[#D09A16]/30 text-[#D09A16] shrink-0">
+                <div className="absolute bottom-5 left-5 right-5 p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-brand-cream-border text-brand-navy flex items-center gap-3.5 shadow-lg">
+                  <div className="p-2.5 rounded-xl bg-brand-gold/15 border border-brand-gold/30 text-brand-gold-deep shrink-0">
                     <ShieldCheck size={22} />
                   </div>
                   <div>
-                    <span className="block text-xs font-bold text-white uppercase tracking-wider">
+                    <span className="block text-xs font-bold text-brand-navy uppercase tracking-wider">
                       {howWeHelp.cardBadgeTitle || 'Turnkey Due Diligence'}
                     </span>
-                    <span className="text-[11px] text-slate-300 leading-tight block">
+                    <span className="text-[11px] text-brand-slate leading-tight block">
                       {howWeHelp.cardBadgeDesc || 'Title clearance, registry representation & architect consultation'}
                     </span>
                   </div>
@@ -913,7 +915,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
       {/* =========================================================================
           6B. WHY CHOOSE SAUDAGAR PROPERTIES FOR THIS CORRIDOR
       ========================================================================= */}
-      <section className="py-20 sm:py-24 bg-[#FAF8F5] text-[#17213D] border-b border-[#E8E2D9] relative overflow-hidden">
+      <section className="py-20 sm:py-24 bg-brand-ivory-warm text-brand-navy border-b border-brand-cream-border relative overflow-hidden">
         <div
           aria-hidden="true"
           className="absolute bottom-0 right-0 w-[500px] h-[400px] rounded-full pointer-events-none"
@@ -924,7 +926,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
             {/* Left Column: Corridor Legacy Image */}
             <div className="lg:col-span-5 order-2 lg:order-1">
-              <div className="relative rounded-3xl overflow-hidden border border-[#E5DFD5] shadow-[0_16px_40px_rgba(23,33,61,0.08)] group bg-white">
+              <div className="relative rounded-3xl overflow-hidden border border-brand-cream-border shadow-[0_16px_40px_rgba(23,33,61,0.08)] group bg-white">
                 <div className="relative aspect-[4/3] sm:aspect-[1/1] w-full">
                   <Image
                     src={whyChooseSaudagar.image || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=85'}
@@ -937,15 +939,15 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                 </div>
 
                 {/* Top Badge */}
-                <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-[#17213D]/90 backdrop-blur-md text-[#D09A16] border border-[#D09A16]/30 text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-md">
+                <div className="absolute top-4 left-4 px-3 py-1.5 rounded-full bg-brand-navy/90 backdrop-blur-md text-brand-gold border border-brand-gold/30 text-[11px] font-bold uppercase tracking-wider flex items-center gap-1.5 shadow-md">
                   <Award size={14} />
                   <span>25+ Years Legacy</span>
                 </div>
 
                 {/* Bottom Signature Note */}
-                <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-[#E5DFD5] text-[#17213D] shadow-lg flex items-center justify-between">
+                <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-brand-cream-border text-brand-navy shadow-lg flex items-center justify-between">
                   <div>
-                    <span className="block text-xs font-bold text-[#111827]">
+                    <span className="block text-xs font-bold text-brand-navy">
                       {whyChooseSaudagar.founderName || 'Arun Sharma & Suneeta Chawla'}
                     </span>
                     <span className="text-[11px] text-slate-500">
@@ -954,7 +956,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                   </div>
                   <Link
                     href="/contact"
-                    className="px-3.5 py-1.5 rounded-lg bg-[#D09A16] hover:bg-[#E5AC2B] text-[#0A0E17] font-bold text-[11px] uppercase tracking-wider transition-colors shadow-xs"
+                    className="px-3.5 py-1.5 rounded-lg bg-brand-gold hover:bg-brand-gold-light text-brand-obsidian font-bold text-[11px] uppercase tracking-wider transition-colors shadow-xs"
                   >
                     Direct Desk
                   </Link>
@@ -964,14 +966,14 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
 
             {/* Right Column: Authority Narrative */}
             <div className="lg:col-span-7 order-1 lg:order-2 space-y-6">
-              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#B48216] block">
+              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-brand-gold block">
                 {whyChooseSaudagar.badge || 'Market Leadership & Uncompromising Integrity'}
               </span>
 
               <LuxuryTextReveal
                 as="h2"
                 text={whyChooseSaudagar.title}
-                className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#111827] leading-tight"
+                className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-brand-navy leading-tight"
                 delay={0.08}
               />
 
@@ -986,8 +988,8 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                   { value: '100%', label: 'Clean Freehold Titles' },
                   { value: '₹500+ Cr', label: 'Transactions Facilitated' }
                 ]).map((stat, sIdx) => (
-                  <div key={sIdx} className="p-3.5 rounded-2xl bg-white border border-[#E5DFD5] shadow-xs">
-                    <span className="text-lg font-serif font-bold text-[#B48216] block">{stat.value}</span>
+                  <div key={sIdx} className="p-3.5 rounded-2xl bg-white border border-brand-cream-border shadow-xs">
+                    <span className="text-lg font-serif font-bold text-brand-gold block">{stat.value}</span>
                     <span className="text-[11px] font-semibold text-slate-700">{stat.label}</span>
                   </div>
                 ))}
@@ -997,7 +999,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
               <div className="pt-2">
                 <Link
                   href="/team"
-                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#B48216] hover:text-[#9E6E00] group"
+                  className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-brand-gold hover:text-brand-gold-deep group"
                 >
                   <span>Meet Our Leadership &amp; Corridor Advisory Team</span>
                   <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
@@ -1012,23 +1014,23 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
           7. CURATED VERIFIED INVENTORY FOR THIS CORRIDOR (LIGHT)
       ========================================================================= */}
       {properties.length > 0 && (
-        <section className="py-20 bg-white text-[#17213D] border-b border-[#E8E2D9]">
+        <section className="py-20 bg-white text-brand-navy border-b border-brand-cream-border">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
               <div>
-                <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#B48216] block mb-2">
+                <span className="text-xs font-semibold uppercase tracking-[0.25em] text-brand-gold block mb-2">
                   {inventorySection.badge || 'Verified Real Estate'}
                 </span>
                 <LuxuryTextReveal
                   as="h2"
                   text={inventorySection.title || `Available Properties in ${corridor.corridorName}`}
-                  className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#111827]"
+                  className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-brand-navy"
                   delay={0.08}
                 />
               </div>
               <Link
                 href={`/properties?location=${corridor.slug}`}
-                className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#B48216] hover:text-[#9E6E00] hover:underline"
+                className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-brand-gold hover:text-brand-gold-deep hover:underline"
               >
                 <span>{inventorySection.linkText || 'View Full Catalog'}</span>
                 <ArrowRight size={14} />
@@ -1046,7 +1048,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                     viewport={{ once: true }}
                     custom={idx}
                     variants={fadeUpVariant}
-                    className="rounded-3xl bg-[#FAF8F5] border border-[#E5DFD5] hover:border-[#D09A16]/60 shadow-[0_4px_20px_rgba(23,33,61,0.06)] hover:shadow-[0_12px_35px_rgba(208,154,22,0.12)] overflow-hidden transition-all duration-300 flex flex-col justify-between"
+                    className="rounded-3xl bg-brand-ivory-warm border border-brand-cream-border hover:border-brand-gold/60 shadow-[0_4px_20px_rgba(23,33,61,0.06)] hover:shadow-[0_12px_35px_rgba(208,154,22,0.12)] overflow-hidden transition-all duration-300 flex flex-col justify-between"
                   >
                     <div>
                       <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
@@ -1057,16 +1059,16 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                           sizes="(max-width: 768px) 100vw, 33vw"
                           className="object-cover hover:scale-105 transition-transform duration-500"
                         />
-                        <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-[#D09A16] border border-[#D09A16]/40 text-[10px] font-bold uppercase tracking-wider">
+                        <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-black/70 backdrop-blur-md text-brand-gold border border-brand-gold/40 text-[10px] font-bold uppercase tracking-wider">
                           {p.category || 'Luxury Residence'}
                         </div>
                       </div>
 
                       <div className="p-6">
-                        <div className="text-xl font-serif font-bold text-[#B48216] mb-2">
+                        <div className="text-xl font-serif font-bold text-brand-gold mb-2">
                           {p.price}
                         </div>
-                        <h3 className="font-serif font-bold text-base text-[#111827] hover:text-[#B48216] transition-colors line-clamp-1 mb-2">
+                        <h3 className="font-serif font-bold text-base text-brand-navy hover:text-brand-gold transition-colors line-clamp-1 mb-2">
                           <Link href={detailUrl}>{p.title}</Link>
                         </h3>
                         <p className="text-xs text-slate-600 line-clamp-2 leading-relaxed mb-4">
@@ -1075,10 +1077,10 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                       </div>
                     </div>
 
-                    <div className="p-6 pt-0 flex items-center justify-between gap-3 border-t border-[#E5DFD5]">
+                    <div className="p-6 pt-0 flex items-center justify-between gap-3 border-t border-brand-cream-border">
                       <Link
                         href={detailUrl}
-                        className="flex-1 py-2.5 px-3 rounded-xl bg-[#17213D] hover:bg-[#23335D] text-white text-xs font-bold uppercase tracking-wider text-center transition-all shadow-xs"
+                        className="flex-1 py-2.5 px-3 rounded-xl bg-brand-navy hover:bg-brand-navy-deep text-white text-xs font-bold uppercase tracking-wider text-center transition-all shadow-xs"
                       >
                         Details
                       </Link>
@@ -1101,49 +1103,49 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
       )}
 
       {/* =========================================================================
-          8. DIRECT PROPERTY INQUIRY & CONSULTATION FORM
+          8. DIRECT PROPERTY INQUIRY & CONSULTATION FORM (LIGHT)
       ========================================================================= */}
-      <section id="inquiry-form" className="py-20 bg-[#0E162B] text-white border-b border-white/10">
+      <section id="inquiry-form" className="py-20 bg-brand-ivory text-brand-navy border-b border-brand-cream-border">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="rounded-3xl bg-[#141E36] p-8 sm:p-12 border border-white/10 shadow-[0_20px_60px_rgba(0,0,0,0.5)]">
+          <div className="rounded-3xl bg-white p-8 sm:p-12 border border-brand-cream-border shadow-[0_20px_60px_rgba(17,24,39,0.08)]">
             <div className="text-center max-w-xl mx-auto mb-8">
-              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#D09A16] block mb-2">
+              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-brand-gold-deep block mb-2">
                 {inquiryForm.badge || 'Confidential Inquiry Desk'}
               </span>
 
               <LuxuryTextReveal
                 as="h2"
                 text={inquiryForm.title || `Consult Directly for ${corridor.corridorName}`}
-                className="text-2xl sm:text-3xl font-serif font-bold text-white"
+                className="text-2xl sm:text-3xl font-serif font-bold text-brand-navy"
                 delay={0.08}
               />
 
-              <p className="text-xs sm:text-sm text-slate-300 mt-2 font-sans">
+              <p className="text-xs sm:text-sm text-brand-slate mt-2 font-sans">
                 {inquiryForm.description || 'Fill out the form below. Arun Sharma or our senior partners will contact you within 2 business hours.'}
               </p>
             </div>
 
             {submitted ? (
-              <div className="p-8 rounded-2xl bg-emerald-950/60 border border-emerald-500/40 text-center space-y-3">
-                <CheckCircle2 size={36} className="text-emerald-400 mx-auto" />
-                <h3 className="text-xl font-serif font-bold text-emerald-200">
+              <div className="p-8 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-3">
+                <CheckCircle2 size={36} className="text-emerald-600 mx-auto" />
+                <h3 className="text-xl font-serif font-bold text-emerald-900">
                   Inquiry Received Successfully
                 </h3>
-                <p className="text-xs sm:text-sm text-emerald-300 max-w-md mx-auto">
+                <p className="text-xs sm:text-sm text-emerald-800 max-w-md mx-auto">
                   Thank you for connecting with Saudagar Properties. A senior partner will reach out to you shortly on {formData.phone || 'your phone'}.
                 </p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-5">
                 {errorMsg && (
-                  <div className="p-3.5 rounded-xl bg-red-950/60 border border-red-500/40 text-red-300 text-xs text-center font-medium">
+                  <div className="p-3.5 rounded-xl bg-red-50 border border-red-200 text-red-600 text-xs text-center font-medium">
                     {errorMsg}
                   </div>
                 )}
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider">
+                    <label className="block text-xs font-bold text-brand-navy uppercase tracking-wider">
                       Your Name *
                     </label>
                     <input
@@ -1152,12 +1154,12 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                       placeholder="e.g. Rajiv Kapoor"
                       value={formData.name}
                       onChange={(e) => handleInputChange('name', e.target.value)}
-                      className="w-full px-4 py-3 rounded-xl bg-[#0A0E17] border border-white/15 focus:border-[#D09A16] text-white placeholder-slate-500 text-xs outline-none transition-colors"
+                      className="w-full px-4 py-3 rounded-xl bg-brand-ivory-warm border border-brand-cream-border focus:border-brand-gold text-brand-navy placeholder:text-brand-slate-light/60 text-xs outline-none transition-colors"
                     />
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider">
+                    <label className="block text-xs font-bold text-brand-navy uppercase tracking-wider">
                       Phone Number *
                     </label>
                     <input
@@ -1166,14 +1168,14 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                       placeholder="+91 98XXX XXXXX"
                       value={formData.phone}
                       onChange={(e) => handleInputChange('phone', e.target.value)}
-                      className="w-full px-4 py-3 rounded-xl bg-[#0A0E17] border border-white/15 focus:border-[#D09A16] text-white placeholder-slate-500 text-xs outline-none transition-colors"
+                      className="w-full px-4 py-3 rounded-xl bg-brand-ivory-warm border border-brand-cream-border focus:border-brand-gold text-brand-navy placeholder:text-brand-slate-light/60 text-xs outline-none transition-colors"
                     />
                   </div>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider">
+                    <label className="block text-xs font-bold text-brand-navy uppercase tracking-wider">
                       Email Address
                     </label>
                     <input
@@ -1181,30 +1183,30 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                       placeholder="e.g. rajiv@example.com"
                       value={formData.email}
                       onChange={(e) => handleInputChange('email', e.target.value)}
-                      className="w-full px-4 py-3 rounded-xl bg-[#0A0E17] border border-white/15 focus:border-[#D09A16] text-white placeholder-slate-500 text-xs outline-none transition-colors"
+                      className="w-full px-4 py-3 rounded-xl bg-brand-ivory-warm border border-brand-cream-border focus:border-brand-gold text-brand-navy placeholder:text-brand-slate-light/60 text-xs outline-none transition-colors"
                     />
                   </div>
 
                   <div className="space-y-1.5">
-                    <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider">
+                    <label className="block text-xs font-bold text-brand-navy uppercase tracking-wider">
                       Property Requirement
                     </label>
                     <select
                       value={formData.requirement}
                       onChange={(e) => handleInputChange('requirement', e.target.value)}
-                      className="w-full px-4 py-3 rounded-xl bg-[#0A0E17] border border-white/15 focus:border-[#D09A16] text-white text-xs outline-none transition-colors cursor-pointer"
+                      className="w-full px-4 py-3 rounded-xl bg-brand-ivory-warm border border-brand-cream-border focus:border-brand-gold text-brand-navy text-xs outline-none transition-colors cursor-pointer"
                     >
-                      <option value="Modern Builder Floors (Stilt + 4)" className="bg-[#0A0E17] text-white">Luxury Builder Floor (Stilt+4)</option>
-                      <option value="Independent Kothis & Bespoke Mansions" className="bg-[#0A0E17] text-white">Independent Kothi / Villa</option>
-                      <option value="Freehold Residential Plots" className="bg-[#0A0E17] text-white">Freehold Residential Plot</option>
-                      <option value="Commercial Office / Retail" className="bg-[#0A0E17] text-white">Commercial Office / Retail</option>
-                      <option value="Industrial Plot / Warehouse" className="bg-[#0A0E17] text-white">Industrial Plot / Warehouse</option>
+                      <option value="Modern Builder Floors (Stilt + 4)" className="bg-white text-brand-navy">Luxury Builder Floor (Stilt+4)</option>
+                      <option value="Independent Kothis & Bespoke Mansions" className="bg-white text-brand-navy">Independent Kothi / Villa</option>
+                      <option value="Freehold Residential Plots" className="bg-white text-brand-navy">Freehold Residential Plot</option>
+                      <option value="Commercial Office / Retail" className="bg-white text-brand-navy">Commercial Office / Retail</option>
+                      <option value="Industrial Plot / Warehouse" className="bg-white text-brand-navy">Industrial Plot / Warehouse</option>
                     </select>
                   </div>
                 </div>
 
                 <div className="space-y-1.5">
-                  <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider">
+                  <label className="block text-xs font-bold text-brand-navy uppercase tracking-wider">
                     Message / Preferred Plot Size or Timeline
                   </label>
                   <textarea
@@ -1212,20 +1214,20 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                     placeholder={`Tell us about your requirement in ${corridor.corridorName}...`}
                     value={formData.message}
                     onChange={(e) => handleInputChange('message', e.target.value)}
-                    className="w-full px-4 py-3 rounded-xl bg-[#0A0E17] border border-white/15 focus:border-[#D09A16] text-white placeholder-slate-500 text-xs outline-none transition-colors leading-relaxed"
+                    className="w-full px-4 py-3 rounded-xl bg-brand-ivory-warm border border-brand-cream-border focus:border-brand-gold text-brand-navy placeholder:text-brand-slate-light/60 text-xs outline-none transition-colors leading-relaxed"
                   />
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
-                  <div className="text-[11px] text-slate-400 flex items-center gap-1.5">
-                    <ShieldCheck size={14} className="text-[#D09A16]" />
+                  <div className="text-[11px] text-brand-slate flex items-center gap-1.5">
+                    <ShieldCheck size={14} className="text-brand-gold-deep" />
                     <span>{inquiryForm.confidentialityNote || 'Strict client confidentiality. Zero spam.'}</span>
                   </div>
 
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-[#D09A16] hover:bg-[#E5AC2B] text-[#0A0E17] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md active:scale-95 cursor-pointer disabled:opacity-60"
+                    className="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-gradient-to-r from-brand-gold to-brand-gold-light hover:brightness-105 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_10px_25px_rgba(197,154,39,0.3)] active:scale-95 cursor-pointer disabled:opacity-60"
                   >
                     <span>{submitting ? 'Submitting...' : (inquiryForm.buttonText || 'Send Inquiry')}</span>
                     <Send size={13} />
@@ -1241,17 +1243,17 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
           9. FREQUENTLY ASKED QUESTIONS (LIGHT ACCORDION)
       ========================================================================= */}
       {faqs.length > 0 && (
-        <section className="py-20 bg-[#FAF8F5] text-[#17213D] relative border-b border-[#E8E2D9]">
+        <section className="py-20 bg-brand-ivory-warm text-brand-navy relative border-b border-brand-cream-border">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center max-w-2xl mx-auto mb-14">
-              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#B48216] block mb-2">
+              <span className="text-xs font-semibold uppercase tracking-[0.25em] text-brand-gold block mb-2">
                 {faqsInfo.badge || 'Expert Guidance & Insights'}
               </span>
 
               <LuxuryTextReveal
                 as="h2"
                 text={faqsInfo.title || 'Frequently Asked Questions'}
-                className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#111827]"
+                className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-brand-navy"
                 delay={0.08}
               />
 
@@ -1268,8 +1270,8 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                     key={idx}
                     className={`rounded-2xl border transition-all overflow-hidden ${
                       isOpen
-                        ? 'bg-white border-[#D09A16]/50 shadow-md ring-1 ring-[#D09A16]/15'
-                        : 'bg-white border-[#E5DFD5] hover:border-[#D09A16]/40 shadow-xs'
+                        ? 'bg-white border-brand-gold/50 shadow-md ring-1 ring-brand-gold/15'
+                        : 'bg-white border-brand-cream-border hover:border-brand-gold/40 shadow-xs'
                     }`}
                   >
                     <button
@@ -1277,12 +1279,12 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                       onClick={() => toggleFaq(idx)}
                       className="w-full p-5 sm:p-6 text-left flex items-center justify-between gap-4 cursor-pointer select-none"
                     >
-                      <span className="font-serif font-bold text-base sm:text-lg text-[#111827]">
+                      <span className="font-serif font-bold text-base sm:text-lg text-brand-navy">
                         {faq.question}
                       </span>
                       <ChevronDown
                         size={18}
-                        className={`text-[#B48216] transition-transform duration-300 shrink-0 ${
+                        className={`text-brand-gold transition-transform duration-300 shrink-0 ${
                           isOpen ? 'rotate-180' : ''
                         }`}
                       />
@@ -1311,31 +1313,31 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
         </section>
       )}
       {/* =========================================================================
-          10. DUAL MAP SHOWCASE: LIVE GOOGLE MAP & HIGH-RES STATIC MASTER PLAN
+          10. DUAL MAP SHOWCASE: LIVE GOOGLE MAP & HIGH-RES STATIC MASTER PLAN (LIGHT)
       ========================================================================= */}
-      <section className="py-20 sm:py-24 bg-[#0A0E17] text-white relative overflow-hidden border-t border-white/10">
+      <section className="py-20 sm:py-24 bg-brand-ivory text-brand-navy relative overflow-hidden border-t border-brand-cream-border">
         {/* Architectural Ambient Radial Glow */}
         <div
           aria-hidden="true"
           className="absolute -top-40 left-1/2 -translate-x-1/2 w-[800px] h-[400px] rounded-full pointer-events-none"
-          style={{ background: 'radial-gradient(circle, rgba(208, 154, 22, 0.08) 0%, rgba(0,0,0,0) 70%)' }}
+          style={{ background: 'radial-gradient(circle, rgba(197, 154, 22, 0.08) 0%, rgba(250,248,245,0) 70%)' }}
         />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           {/* Section Header */}
           <div className="text-center max-w-3xl mx-auto mb-14">
-            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-[#D09A16] block mb-2">
+            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-brand-gold-deep block mb-2">
               {mapShowcase.badge || 'Strategic Cartography & Master Planning'}
             </span>
 
             <LuxuryTextReveal
               as="h2"
               text={mapShowcase.title || `${corridor.corridorName} Strategic Location & Master Plan`}
-              className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-white"
+              className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-brand-navy"
               delay={0.08}
             />
 
-            <p className="text-xs sm:text-sm text-slate-300 mt-3 font-sans leading-relaxed">
+            <p className="text-xs sm:text-sm text-brand-slate mt-3 font-sans leading-relaxed">
               {mapShowcase.description || `Explore the geographic positioning of ${corridor.corridorName} alongside the official sector master layout planning and arterial road grid.`}
             </p>
           </div>
@@ -1343,56 +1345,56 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
           {/* Dual Maps Grid: Google Map & Static Map */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
             {/* Map 1: Interactive Live Google Map */}
-            <div className="rounded-3xl bg-[#141E36] border border-white/10 p-6 sm:p-7 shadow-[0_12px_40px_rgba(0,0,0,0.5)] flex flex-col justify-between group hover:border-[#D09A16]/50 transition-all duration-300">
+            <div className="rounded-3xl bg-white border border-brand-cream-border p-6 sm:p-7 shadow-[0_12px_40px_rgba(17,24,39,0.06)] flex flex-col justify-between group hover:border-brand-gold/50 transition-all duration-300">
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2.5">
-                    <div className="p-2 rounded-xl bg-[#D09A16]/10 text-[#D09A16] border border-[#D09A16]/20">
+                    <div className="p-2 rounded-xl bg-brand-gold/10 text-brand-gold-deep border border-brand-gold/20">
                       <MapPin size={18} />
                     </div>
                     <div>
-                      <h3 className="font-serif font-bold text-base sm:text-lg text-white">
+                      <h3 className="font-serif font-bold text-base sm:text-lg text-brand-navy">
                         Live Geographic Navigation
                       </h3>
-                      <span className="text-[11px] text-slate-400">
+                      <span className="text-[11px] text-brand-slate">
                         Interactive Google Maps satellite &amp; transit network
                       </span>
                     </div>
                   </div>
-                  <span className="px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold uppercase tracking-wider">
+                  <span className="px-2.5 py-1 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-[10px] font-bold uppercase tracking-wider">
                     Live GPS
                   </span>
                 </div>
 
                 {/* Google Map Iframe Container */}
-                <div className="relative aspect-[16/11] w-full rounded-2xl overflow-hidden border border-white/10 bg-[#0A0E17]">
+                <div className="relative aspect-[16/11] w-full rounded-2xl overflow-hidden border border-brand-cream-border bg-brand-cream">
                   {mapShowcase.googleMapEmbed ? (
                     <iframe
                       src={mapShowcase.googleMapEmbed}
                       title={`${corridor.corridorName} Google Map Embed`}
-                      className="w-full h-full border-0 filter contrast-[1.05] brightness-[0.95]"
+                      className="w-full h-full border-0 filter contrast-[1.02]"
                       loading="lazy"
                       allowFullScreen
                     />
                   ) : (
-                    <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center text-slate-400">
-                      <MapPin size={32} className="text-[#D09A16] mb-2" />
+                    <div className="w-full h-full flex flex-col items-center justify-center p-6 text-center text-brand-slate">
+                      <MapPin size={32} className="text-brand-gold-deep mb-2" />
                       <p className="text-xs">Live map navigation active for {corridor.corridorName}.</p>
                     </div>
                   )}
                 </div>
               </div>
 
-              <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
-                <span className="text-[11px] text-slate-400 flex items-center gap-1.5">
-                  <Navigation size={13} className="text-[#D09A16]" />
+              <div className="mt-4 pt-4 border-t border-brand-cream-border flex items-center justify-between">
+                <span className="text-[11px] text-brand-slate flex items-center gap-1.5">
+                  <Navigation size={13} className="text-brand-gold-deep" />
                   <span>Interactive pinch-to-zoom &amp; route planning</span>
                 </span>
                 <a
                   href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(corridor.corridorName + ' Gurugram Haryana')}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-[#D09A16] hover:text-[#E5AC2B] transition-colors"
+                  className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-brand-gold-deep hover:text-brand-navy transition-colors"
                 >
                   <span>Open Full Map</span>
                   <ArrowUpRight size={13} />
@@ -1401,23 +1403,23 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
             </div>
 
             {/* Map 2: High-Resolution Static Master Plan / Layout Blueprint */}
-            <div className="rounded-3xl bg-[#141E36] border border-white/10 p-6 sm:p-7 shadow-[0_12px_40px_rgba(0,0,0,0.5)] flex flex-col justify-between group hover:border-[#D09A16]/50 transition-all duration-300">
+            <div className="rounded-3xl bg-white border border-brand-cream-border p-6 sm:p-7 shadow-[0_12px_40px_rgba(17,24,39,0.06)] flex flex-col justify-between group hover:border-brand-gold/50 transition-all duration-300">
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-2.5">
-                    <div className="p-2 rounded-xl bg-[#D09A16]/10 text-[#D09A16] border border-[#D09A16]/20">
+                    <div className="p-2 rounded-xl bg-brand-gold/10 text-brand-gold-deep border border-brand-gold/20">
                       <Layers size={18} />
                     </div>
                     <div>
-                      <h3 className="font-serif font-bold text-base sm:text-lg text-white">
+                      <h3 className="font-serif font-bold text-base sm:text-lg text-brand-navy">
                         Sector Master Layout Plan
                       </h3>
-                      <span className="text-[11px] text-slate-400">
+                      <span className="text-[11px] text-brand-slate">
                         Official zoning blueprint &amp; plot cartography
                       </span>
                     </div>
                   </div>
-                  <span className="px-2.5 py-1 rounded-full bg-[#D09A16]/15 border border-[#D09A16]/30 text-[#D09A16] text-[10px] font-bold uppercase tracking-wider">
+                  <span className="px-2.5 py-1 rounded-full bg-brand-gold/15 border border-brand-gold/30 text-brand-gold-deep text-[10px] font-bold uppercase tracking-wider">
                     Master Blueprint
                   </span>
                 </div>
@@ -1425,7 +1427,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                 {/* Static Map Image Preview with Click-To-Enlarge - Full Bleed */}
                 <div
                   onClick={() => setIsMapModalOpen(true)}
-                  className="relative aspect-[16/11] w-full rounded-2xl overflow-hidden border border-white/10 bg-[#0A0E17] group/img cursor-pointer"
+                  className="relative aspect-[16/11] w-full rounded-2xl overflow-hidden border border-brand-cream-border bg-brand-cream group/img cursor-pointer"
                 >
                   <Image
                     src={mapShowcase.staticMapImage || 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80'}
@@ -1434,23 +1436,23 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                     sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover object-center group-hover/img:scale-105 transition-transform duration-500 ease-out"
                   />
-                  <div className="absolute inset-0 bg-black/35 group-hover/img:bg-black/15 transition-colors flex items-center justify-center">
-                    <div className="px-4 py-2.5 rounded-xl bg-black/75 backdrop-blur-md border border-[#D09A16]/50 text-white text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-lg group-hover/img:scale-105 transition-transform">
-                      <Maximize2 size={14} className="text-[#D09A16]" />
+                  <div className="absolute inset-0 bg-black/25 group-hover/img:bg-black/10 transition-colors flex items-center justify-center">
+                    <div className="px-4 py-2.5 rounded-xl bg-white/95 backdrop-blur-md border border-brand-cream-border text-brand-navy text-xs font-bold uppercase tracking-wider flex items-center gap-2 shadow-lg group-hover/img:scale-105 transition-transform">
+                      <Maximize2 size={14} className="text-brand-gold-deep" />
                       <span>Click to Inspect High-Res</span>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div className="mt-4 pt-4 border-t border-white/10 flex items-center justify-between">
-                <span className="text-[11px] text-slate-400">
+              <div className="mt-4 pt-4 border-t border-brand-cream-border flex items-center justify-between">
+                <span className="text-[11px] text-brand-slate">
                   Tap image to inspect full sector blueprint
                 </span>
                 <button
                   type="button"
                   onClick={() => setIsMapModalOpen(true)}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-[#D09A16] hover:text-[#E5AC2B] transition-colors cursor-pointer"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold uppercase tracking-wider text-brand-gold-deep hover:text-brand-navy transition-colors cursor-pointer"
                 >
                   <span>Enlarge Blueprint</span>
                   <ArrowUpRight size={13} />
@@ -1467,30 +1469,30 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="fixed inset-0 z-50 bg-black/95 backdrop-blur-md flex flex-col items-center justify-center p-4 sm:p-6"
+              className="fixed inset-0 z-50 bg-black/75 backdrop-blur-md flex flex-col items-center justify-center p-4 sm:p-6"
               onClick={() => setIsMapModalOpen(false)}
             >
               <div
-                className="relative max-w-6xl w-full max-h-[92vh] bg-[#141E36] rounded-3xl border border-[#D09A16]/40 overflow-hidden shadow-2xl flex flex-col"
+                className="relative max-w-6xl w-full max-h-[92vh] bg-white rounded-3xl border border-brand-cream-border overflow-hidden shadow-2xl flex flex-col"
                 onClick={(e) => e.stopPropagation()}
               >
-                <div className="p-4 sm:p-5 border-b border-white/10 flex items-center justify-between bg-[#0E162B]">
+                <div className="p-4 sm:p-5 border-b border-brand-cream-border flex items-center justify-between bg-brand-ivory-warm">
                   <div>
-                    <h3 className="font-serif font-bold text-lg text-white">
+                    <h3 className="font-serif font-bold text-lg text-brand-navy">
                       {corridor.corridorName} — Official Master Layout &amp; Zoning Blueprint
                     </h3>
-                    <p className="text-xs text-slate-400">High-resolution cartographic survey</p>
+                    <p className="text-xs text-brand-slate">High-resolution cartographic survey</p>
                   </div>
                   <button
                     type="button"
                     onClick={() => setIsMapModalOpen(false)}
-                    className="p-2 rounded-xl bg-white/10 hover:bg-white/20 text-white text-xs font-bold transition-colors cursor-pointer flex items-center gap-1"
+                    className="p-2 rounded-xl bg-brand-cream hover:bg-brand-cream-border text-brand-navy text-xs font-bold transition-colors cursor-pointer flex items-center gap-1"
                   >
                     <X size={16} />
                     <span className="hidden sm:inline">Close</span>
                   </button>
                 </div>
-                <div className="relative w-full h-[72vh] bg-[#0A0E17] overflow-auto flex items-center justify-center p-4">
+                <div className="relative w-full h-[72vh] bg-brand-ivory overflow-auto flex items-center justify-center p-4">
                   <img
                     src={mapShowcase.staticMapImage || 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1600&q=85'}
                     alt={`${corridor.corridorName} Master Plan`}

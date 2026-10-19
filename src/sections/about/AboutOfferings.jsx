@@ -124,14 +124,13 @@ export default function AboutOfferings() {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative py-16 md:py-24 bg-[#0A0E17] text-white overflow-hidden border-t border-white/10">
+    <section ref={sectionRef} className="relative py-16 md:py-24 bg-brand-ivory text-brand-navy overflow-hidden border-t border-brand-cream-border">
       {/* Background accents */}
       <div 
         aria-hidden="true" 
         className="absolute top-1/2 left-1/4 -translate-y-1/2 w-[700px] h-[400px] rounded-full pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at center, rgba(208, 154, 22, 0.12) 0%, rgba(208, 154, 22, 0) 70%)' }}
+        style={{ background: 'radial-gradient(ellipse at center, rgba(208, 154, 22, 0.08) 0%, rgba(208, 154, 22, 0) 70%)' }}
       />
-      <div className="absolute top-0 right-0 w-96 h-96 bg-[#17213D]/40 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
@@ -140,16 +139,16 @@ export default function AboutOfferings() {
           ref={headerRef}
           className="text-center max-w-3xl mx-auto mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/[0.06] border border-[#D09A16]/40 text-[#D09A16] text-xs font-bold tracking-[0.25em] uppercase mb-4 shadow-[0_0_20px_rgba(208,154,22,0.15)]">
-            <Sparkles size={13} className="text-[#D09A16]" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-brand-gold/40 text-brand-gold text-xs font-bold tracking-[0.25em] uppercase mb-4 shadow-xs">
+            <Sparkles size={13} className="text-brand-gold" />
             <span>{cms.badge || "Prime Real Estate Portfolio"}</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-white leading-tight mb-4">
-            {cms.titleMain || "Our Core Property "} <span className="italic font-serif text-[#D09A16]">{cms.titleItalic || "Categories"}</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-brand-navy leading-tight mb-4">
+            {cms.titleMain || "Our Core Property "} <span className="italic font-serif text-brand-gold">{cms.titleItalic || "Categories"}</span>
           </h2>
 
-          <p className="text-sm sm:text-base text-slate-300 font-normal leading-relaxed">
+          <p className="text-sm sm:text-base text-brand-slate font-normal leading-relaxed">
             {cms.subtitle || "Whether you seek an illustrious residential address, high-end commercial headquarters, or strategic investment land, we curate the finest options in DLF Gurugram."}
           </p>
         </div>
@@ -169,11 +168,11 @@ export default function AboutOfferings() {
               >
                 <Tilt3DCard
                   maxTilt={6}
-                  className="group relative flex flex-col justify-between rounded-3xl bg-white/[0.04] border border-white/10 hover:border-[#D09A16]/60 overflow-hidden transition-all duration-300 shadow-xl hover:shadow-[0_20px_50px_rgba(208,154,22,0.2)] h-full backdrop-blur-md"
+                  className="group relative flex flex-col justify-between rounded-3xl bg-white border border-brand-cream-border hover:border-brand-gold/60 overflow-hidden transition-all duration-300 shadow-sm hover:shadow-[0_20px_50px_rgba(23,33,61,0.08)] h-full text-brand-navy"
                 >
                   <div>
                     {/* Top Image Banner */}
-                    <div className="relative h-56 overflow-hidden bg-slate-900">
+                    <div className="relative h-56 overflow-hidden bg-brand-ivory-warm">
                       <Image
                         src={item.image}
                         alt={item.title}
@@ -182,36 +181,36 @@ export default function AboutOfferings() {
                         loading="lazy"
                         className="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
                       />
-                      <div className="absolute inset-0 bg-gradient-to-t from-[#0A0E17] via-black/40 to-transparent pointer-events-none" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent pointer-events-none" />
 
                       {/* Tag Badge */}
                       <div className="absolute top-4 left-4">
-                        <span className="px-3 py-1.5 rounded-full bg-[#0A0E17]/90 backdrop-blur-md border border-white/15 text-[#D09A16] text-[10px] font-bold tracking-[0.2em] uppercase shadow-sm">
+                        <span className="px-3 py-1.5 rounded-full bg-white/95 backdrop-blur-md border border-brand-cream-border text-brand-navy text-[10px] font-bold tracking-[0.2em] uppercase shadow-sm">
                           {item.tag}
                         </span>
                       </div>
 
                       {/* Category Icon */}
-                      <div className="absolute bottom-4 right-4 w-12 h-12 rounded-2xl bg-[#0A0E17]/90 backdrop-blur-md border border-white/15 text-white group-hover:bg-[#D09A16] group-hover:text-[#0A0E17] flex items-center justify-center transition-colors duration-300 shadow-md">
+                      <div className="absolute bottom-4 right-4 w-12 h-12 rounded-2xl bg-white/95 backdrop-blur-md border border-brand-cream-border text-brand-navy group-hover:bg-brand-gold group-hover:text-white flex items-center justify-center transition-colors duration-300 shadow-md">
                         <Icon size={22} />
                       </div>
                     </div>
 
                     {/* Card Body */}
                     <div className="p-7">
-                      <h3 className="text-2xl font-serif font-bold text-white mb-3 group-hover:text-[#D09A16] transition-colors">
+                      <h3 className="text-2xl font-serif font-bold text-brand-navy mb-3 group-hover:text-brand-gold transition-colors">
                         {item.title}
                       </h3>
 
-                      <p className="text-xs sm:text-sm text-slate-300 font-normal leading-relaxed mb-6">
+                      <p className="text-xs sm:text-sm text-brand-slate font-normal leading-relaxed mb-6">
                         {item.description}
                       </p>
 
                       {/* Key Highlights Checklist */}
-                      <div className="space-y-2.5 pt-4 border-t border-white/10 mb-6">
+                      <div className="space-y-2.5 pt-4 border-t border-brand-cream-border mb-6">
                         {(item.features || []).map((feat, fIdx) => (
-                          <div key={fIdx} className="flex items-start gap-2.5 text-xs text-slate-200">
-                            <Check size={14} className="text-[#D09A16] shrink-0 mt-0.5" />
+                          <div key={fIdx} className="flex items-start gap-2.5 text-xs text-brand-navy">
+                            <Check size={14} className="text-brand-gold shrink-0 mt-0.5" />
                             <span className="font-medium">{feat}</span>
                           </div>
                         ))}
@@ -222,10 +221,10 @@ export default function AboutOfferings() {
                   {/* Bottom CTA Button */}
                   <div className="p-7 pt-0">
                     <Link href={item.ctaLink}
-                      className="w-full py-3.5 px-4 rounded-xl bg-white/10 hover:bg-[#D09A16] text-white hover:text-[#0A0E17] border border-white/15 hover:border-[#D09A16] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 shadow-sm group/btn"
+                      className="w-full py-3.5 px-4 rounded-xl bg-brand-navy hover:bg-brand-gold text-white hover:text-brand-navy font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all duration-300 shadow-md hover:shadow-lg group/btn cursor-pointer"
                     >
                       <span>{item.ctaText}</span>
-                      <ArrowUpRight size={14} className="text-[#D09A16] group-hover/btn:text-[#0A0E17] group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
+                      <ArrowUpRight size={14} className="text-brand-gold group-hover/btn:text-brand-navy group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-0.5 transition-transform" />
                     </Link>
                   </div>
                 </Tilt3DCard>

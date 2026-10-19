@@ -207,7 +207,7 @@ export default function AdminSectionsCMS() {
             >
               <span>← All Pages Hub</span>
             </Link>
-            <span className="px-2 py-0.5 rounded-full bg-[#D09A16]/10 text-[#D09A16] border border-[#D09A16]/30 text-[10px] font-bold uppercase tracking-wider">
+            <span className="px-2 py-0.5 rounded-full bg-brand-gold/10 text-brand-gold border border-brand-gold/30 text-[10px] font-bold uppercase tracking-wider">
               12 Sections
             </span>
           </div>
@@ -231,7 +231,7 @@ export default function AdminSectionsCMS() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#D09A16] to-[#D09A16] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_4px_15px_rgba(208,154,22,0.3)] active:scale-95 cursor-pointer disabled:opacity-60"
+            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-brand-gold to-brand-gold hover:brightness-110 text-brand-dark font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_4px_15px_rgba(208,154,22,0.3)] active:scale-95 cursor-pointer disabled:opacity-60"
           >
             {saving ? (
               <RefreshCw size={14} className="animate-spin" />
@@ -254,7 +254,7 @@ export default function AdminSectionsCMS() {
               onClick={() => handleTabChange(tab.id)}
               className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all duration-200 cursor-pointer flex items-center gap-2 ${
                 isActive
-                  ? 'bg-[#D09A16] text-[#0C101A] shadow-md'
+                  ? 'bg-brand-gold text-brand-dark shadow-md'
                   : 'bg-white/5 hover:bg-white/10 text-slate-300'
               }`}
             >
@@ -304,7 +304,7 @@ export default function AdminSectionsCMS() {
           <button
             type="submit"
             disabled={saving}
-            className="px-7 py-3 rounded-xl bg-gradient-to-r from-[#D09A16] to-[#D09A16] hover:brightness-110 text-[#0C101A] font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-[0_4px_15px_rgba(208,154,22,0.3)] active:scale-95 cursor-pointer disabled:opacity-60"
+            className="px-7 py-3 rounded-xl bg-gradient-to-r from-brand-gold to-brand-gold hover:brightness-110 text-brand-dark font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-[0_4px_15px_rgba(208,154,22,0.3)] active:scale-95 cursor-pointer disabled:opacity-60"
           >
             {saving ? <RefreshCw size={14} className="animate-spin" /> : <Save size={15} />}
             <span>{saving ? 'Saving...' : 'Save Changes'}</span>

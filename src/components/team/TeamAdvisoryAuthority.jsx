@@ -152,25 +152,25 @@ export default function TeamAdvisoryAuthority() {
   const currentDomain = teamAdvisoryDomains[activeTab];
 
   return (
-    <section className="py-20 md:py-28 bg-[#F7F5EF] text-[#17213D] border-t border-[#17213D]/10 relative overflow-hidden">
+    <section className="py-20 md:py-28 bg-brand-ivory text-brand-navy border-t border-brand-navy/10 relative overflow-hidden">
       {/* Subtle Luxury Watermark Grid */}
       <div 
         aria-hidden="true" 
-        className="pointer-events-none absolute inset-0 opacity-[0.03] bg-[linear-gradient(#D09A16_1px,transparent_1px),linear-gradient(90deg,#D09A16_1px,transparent_1px)] [background-size:48px_48px]" 
+        className="pointer-events-none absolute inset-0 opacity-[0.03] bg-[linear-gradient(var(--color-brand-gold)_1px,transparent_1px),linear-gradient(90deg,var(--color-brand-gold)_1px,transparent_1px)] [background-size:48px_48px]" 
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="max-w-3xl mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[#D09A16] text-xs font-bold uppercase tracking-[0.2em] mb-4">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-xs font-bold uppercase tracking-[0.2em] mb-4">
             <Sparkles size={13} />
             <span>Advisory Frameworks • SEO Keyword Authority</span>
           </div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#17213D] tracking-tight leading-tight mb-4">
-            Our Core Competencies &amp; <span className="italic font-serif text-[#D09A16]">Fiduciary Advisory Protocols</span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-brand-navy tracking-tight leading-tight mb-4">
+            Our Core Competencies &amp; <span className="italic font-serif text-brand-gold">Fiduciary Advisory Protocols</span>
           </h2>
-          <p className="text-sm sm:text-base text-[#566078] leading-relaxed font-sans">
+          <p className="text-sm sm:text-base text-brand-slate leading-relaxed font-sans">
             Review the 7 specialized legal, strategic, and corridor advisory domains that define Saudagar Properties&apos; leadership across Gurugram luxury real estate.
           </p>
         </div>
@@ -192,29 +192,29 @@ export default function TeamAdvisoryAuthority() {
                   onClick={() => setActiveTab(idx)}
                   className={`w-full text-left p-4 rounded-2xl border transition-all duration-300 flex items-start gap-3.5 cursor-pointer ${
                     isActive
-                      ? 'bg-[#17213D] text-white border-[#17213D] shadow-lg shadow-[#17213D]/10'
-                      : 'bg-white text-[#17213D] border-[#17213D]/10 hover:border-[#D09A16]/50 hover:bg-white/80'
+                      ? 'bg-brand-navy text-white border-brand-navy shadow-lg shadow-brand-navy/10'
+                      : 'bg-white text-brand-navy border-brand-navy/10 hover:border-brand-gold/50 hover:bg-white/80'
                   }`}
                 >
                   <div className={`w-9 h-9 rounded-xl flex items-center justify-center shrink-0 mt-0.5 transition-colors ${
-                    isActive ? 'bg-[#D09A16] text-[#0A0E17]' : 'bg-[#D09A16]/10 text-[#D09A16]'
+                    isActive ? 'bg-brand-gold text-brand-obsidian' : 'bg-brand-gold/10 text-brand-gold'
                   }`}>
                     <IconComp size={18} />
                   </div>
                   <div className="flex-1 min-w-0">
                     <span className={`block text-[10px] font-bold uppercase tracking-wider mb-0.5 ${
-                      isActive ? 'text-[#D09A16]' : 'text-slate-500'
+                      isActive ? 'text-brand-gold' : 'text-slate-500'
                     }`}>
                       {domain.badge}
                     </span>
                     <h3 className={`text-xs sm:text-sm font-bold leading-snug line-clamp-2 ${
-                      isActive ? 'text-white' : 'text-[#17213D]'
+                      isActive ? 'text-white' : 'text-brand-navy'
                     }`}>
                       {domain.title}
                     </h3>
                   </div>
                   <ChevronRight size={16} className={`shrink-0 mt-3 transition-transform ${
-                    isActive ? 'text-[#D09A16] translate-x-1' : 'text-slate-400'
+                    isActive ? 'text-brand-gold translate-x-1' : 'text-slate-400'
                   }`} />
                 </button>
               );
@@ -223,24 +223,24 @@ export default function TeamAdvisoryAuthority() {
 
           {/* Right Detailed Semantic Content Display */}
           <div className="lg:col-span-7">
-            <article className="bg-white rounded-3xl border border-[#17213D]/10 p-6 sm:p-8 md:p-10 shadow-[0_15px_35px_rgba(23,33,61,0.04)]">
+            <article className="bg-white rounded-3xl border border-brand-navy/10 p-6 sm:p-8 md:p-10 shadow-[0_15px_35px_rgba(23,33,61,0.04)]">
               
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D09A16]/10 text-[#D09A16] border border-[#D09A16]/25 text-[11px] font-bold uppercase tracking-widest mb-4">
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-gold/10 text-brand-gold border border-brand-gold/25 text-[11px] font-bold uppercase tracking-widest mb-4">
                 <span>Protocol 0{activeTab + 1} of 07</span>
                 <span>•</span>
                 <span>{currentDomain.badge}</span>
               </div>
 
-              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#17213D] tracking-tight leading-snug mb-3">
+              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-brand-navy tracking-tight leading-snug mb-3">
                 {currentDomain.title}
               </h3>
 
-              <div className="text-xs sm:text-sm text-[#D09A16] font-semibold tracking-wide mb-6 pb-4 border-b border-[#17213D]/10">
+              <div className="text-xs sm:text-sm text-brand-gold font-semibold tracking-wide mb-6 pb-4 border-b border-brand-navy/10">
                 {currentDomain.subtitle}
               </div>
 
               {/* In-Depth Keyword Content Paragraphs */}
-              <div className="space-y-4 text-xs sm:text-sm text-[#566078] leading-relaxed font-sans mb-8">
+              <div className="space-y-4 text-xs sm:text-sm text-brand-slate leading-relaxed font-sans mb-8">
                 {currentDomain.content.map((paragraph, pIdx) => (
                   <p key={pIdx}>
                     {paragraph}
@@ -249,15 +249,15 @@ export default function TeamAdvisoryAuthority() {
               </div>
 
               {/* Bulleted Highlights */}
-              <div className="bg-[#F7F5EF] rounded-2xl p-5 border border-[#17213D]/5 mb-8">
-                <h4 className="text-xs font-bold uppercase tracking-wider text-[#17213D] mb-3 flex items-center gap-2">
-                  <CheckCircle2 size={14} className="text-[#D09A16]" />
+              <div className="bg-brand-ivory rounded-2xl p-5 border border-brand-navy/5 mb-8">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-brand-navy mb-3 flex items-center gap-2">
+                  <CheckCircle2 size={14} className="text-brand-gold" />
                   <span>Execution Deliverables &amp; Guarantees:</span>
                 </h4>
                 <ul className="space-y-2.5">
                   {currentDomain.highlights.map((item, hIdx) => (
-                    <li key={hIdx} className="flex items-start gap-2.5 text-xs text-[#475569]">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16] shrink-0 mt-1.5" />
+                    <li key={hIdx} className="flex items-start gap-2.5 text-xs text-brand-slate">
+                      <span className="w-1.5 h-1.5 rounded-full bg-brand-gold shrink-0 mt-1.5" />
                       <span>{item}</span>
                     </li>
                   ))}
@@ -265,13 +265,13 @@ export default function TeamAdvisoryAuthority() {
               </div>
 
               {/* Action Strip */}
-              <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-[#17213D]/10">
-                <div className="text-[11px] text-[#566078]">
+              <div className="flex flex-wrap items-center justify-between gap-4 pt-4 border-t border-brand-navy/10">
+                <div className="text-[11px] text-brand-slate">
                   Speak directly with Mr. Arun Sharma or senior team:
                 </div>
                 <Link
                   href="/contact"
-                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#17213D] hover:bg-[#D09A16] hover:text-[#0A0E17] text-white text-xs font-bold uppercase tracking-wider transition-all duration-300"
+                  className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-navy hover:bg-brand-gold hover:text-brand-obsidian text-white text-xs font-bold uppercase tracking-wider transition-all duration-300"
                 >
                   <span>Request Private Briefing</span>
                   <ArrowRight size={13} />

@@ -286,13 +286,13 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
       <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-black/60 via-black/20 to-transparent pointer-events-none" />
 
       {/* Delicate bottom vignette for dock & section transition */}
-      <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#070B16]/80 via-[#070B16]/20 to-transparent pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-brand-obsidian/80 via-brand-obsidian/20 to-transparent pointer-events-none" />
 
       {/* 4. Optional Built-in Floating Discreet Video Controls */}
       {showControls && (
-        <div className="absolute bottom-6 left-6 md:left-12 z-40 pointer-events-auto flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#070B16]/85 backdrop-blur-xl border border-white/20 text-white text-[11px] shadow-2xl">
+        <div className="absolute bottom-6 left-6 md:left-12 z-40 pointer-events-auto flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-obsidian/85 backdrop-blur-xl border border-white/20 text-white text-[11px] shadow-2xl">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-          <span className="text-[#C9CED9] tracking-wide font-light hidden sm:inline">
+          <span className="text-brand-text-on-dark-muted tracking-wide font-light hidden sm:inline">
             Cinematic Architecture Tour
           </span>
           <div className="h-3 w-[1px] bg-white/20 mx-1 hidden sm:block" />
@@ -300,7 +300,7 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
             type="button"
             onClick={togglePlay}
             aria-label={isPlaying ? "Pause background video" : "Play background video"}
-            className="text-[#D09A16] hover:text-white transition-colors p-1 cursor-pointer"
+            className="text-brand-gold hover:text-white transition-colors p-1 cursor-pointer"
             title={isPlaying ? "Pause Video" : "Play Video"}
           >
             {isPlaying ? <Pause size={13} /> : <Play size={13} />}
@@ -309,7 +309,7 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
             type="button"
             onClick={toggleMute}
             aria-label={isMuted ? "Unmute audio" : "Mute audio"}
-            className="text-[#D09A16] hover:text-white transition-colors p-1 cursor-pointer"
+            className="text-brand-gold hover:text-white transition-colors p-1 cursor-pointer"
             title={isMuted ? "Unmute Audio" : "Mute Audio"}
           >
             {isMuted ? <VolumeX size={13} /> : <Volume2 size={13} />}

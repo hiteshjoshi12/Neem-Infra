@@ -101,7 +101,7 @@ export default function AdminInquiries() {
       {/* Top Banner & Actions */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-2 border-b border-white/[0.08]">
         <div>
-          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[10px] font-bold tracking-wider text-[#D09A16] uppercase mb-1.5">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-[10px] font-bold tracking-wider text-brand-gold uppercase mb-1.5">
             <Inbox size={12} />
             <span>Lead Captures</span>
           </div>
@@ -118,7 +118,7 @@ export default function AdminInquiries() {
           disabled={loading}
           className="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-white text-xs font-semibold flex items-center gap-2 transition-colors cursor-pointer self-start sm:self-auto"
         >
-          <RefreshCw size={13} className={loading ? 'animate-spin text-[#D09A16]' : ''} />
+          <RefreshCw size={13} className={loading ? 'animate-spin text-brand-gold' : ''} />
           <span>Refresh Leads</span>
         </button>
       </div>
@@ -141,7 +141,7 @@ export default function AdminInquiries() {
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search by email, name, phone, or keyword..."
-            className="w-full bg-[#0E1424] border border-white/10 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-slate-500 outline-none focus:border-[#D09A16] transition-colors"
+            className="w-full bg-[#0E1424] border border-white/10 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-slate-500 outline-none focus:border-brand-gold transition-colors"
           />
         </div>
 
@@ -151,7 +151,7 @@ export default function AdminInquiries() {
             onClick={() => setTypeFilter('all')}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
               typeFilter === 'all'
-                ? 'bg-[#D09A16] text-[#0A0E1A] font-bold shadow-sm'
+                ? 'bg-brand-gold text-[#0A0E1A] font-bold shadow-sm'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
@@ -161,7 +161,7 @@ export default function AdminInquiries() {
             onClick={() => setTypeFilter('property_inquiry')}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
               typeFilter === 'property_inquiry'
-                ? 'bg-[#D09A16] text-[#0A0E1A] font-bold shadow-sm'
+                ? 'bg-brand-gold text-[#0A0E1A] font-bold shadow-sm'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
@@ -171,7 +171,7 @@ export default function AdminInquiries() {
             onClick={() => setTypeFilter('general_contact')}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
               typeFilter === 'general_contact'
-                ? 'bg-[#D09A16] text-[#0A0E1A] font-bold shadow-sm'
+                ? 'bg-brand-gold text-[#0A0E1A] font-bold shadow-sm'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
@@ -181,7 +181,7 @@ export default function AdminInquiries() {
             onClick={() => setTypeFilter('newsletter')}
             className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
               typeFilter === 'newsletter'
-                ? 'bg-[#D09A16] text-[#0A0E1A] font-bold shadow-sm'
+                ? 'bg-brand-gold text-[#0A0E1A] font-bold shadow-sm'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
@@ -194,7 +194,7 @@ export default function AdminInquiries() {
       <div className="rounded-2xl bg-[#0E1424] border border-white/[0.08] overflow-hidden shadow-xl">
         {loading ? (
           <div className="py-20 text-center text-slate-400 text-xs flex flex-col items-center justify-center gap-3">
-            <RefreshCw size={24} className="animate-spin text-[#D09A16]" />
+            <RefreshCw size={24} className="animate-spin text-brand-gold" />
             <span>Fetching lead captures...</span>
           </div>
         ) : filteredInquiries.length === 0 ? (
@@ -230,7 +230,7 @@ export default function AdminInquiries() {
                     <tr key={inq._id} className="hover:bg-white/[0.02] transition-colors">
                       <td className="p-3.5 pl-5">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-lg bg-[#D09A16]/10 text-[#D09A16] flex items-center justify-center shrink-0 border border-[#D09A16]/20">
+                          <div className="w-8 h-8 rounded-lg bg-brand-gold/10 text-brand-gold flex items-center justify-center shrink-0 border border-brand-gold/20">
                             <Mail size={14} />
                           </div>
                           <div className="min-w-0">
@@ -255,7 +255,7 @@ export default function AdminInquiries() {
                         <span className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
                           inq.type === 'newsletter'
                             ? 'bg-blue-500/10 border-blue-500/20 text-blue-400'
-                            : 'bg-[#D09A16]/10 border-[#D09A16]/30 text-[#E6C673]'
+                            : 'bg-brand-gold/10 border-brand-gold/30 text-[#E6C673]'
                         }`}>
                           {typeLabel}
                         </span>

@@ -391,7 +391,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center space-y-3">
-          <div className="w-8 h-8 border-2 border-[#D09A16] border-t-transparent rounded-full animate-spin mx-auto" />
+          <div className="w-8 h-8 border-2 border-brand-gold border-t-transparent rounded-full animate-spin mx-auto" />
           <p className="text-slate-400 text-xs tracking-wider uppercase">Loading Luxury Article Workspace...</p>
         </div>
       </div>
@@ -408,7 +408,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
           type="button"
           onClick={() => insertFormatting('## ', '', 'Major Section Title')}
           title="H2 Major Section (Auto-adds to Table of Contents)"
-          className="px-2 py-1 rounded hover:bg-[#D09A16]/20 hover:text-[#D09A16] flex items-center gap-0.5 font-bold transition-colors cursor-pointer"
+          className="px-2 py-1 rounded hover:bg-brand-gold/20 hover:text-brand-gold flex items-center gap-0.5 font-bold transition-colors cursor-pointer"
         >
           <Heading size={13} />
           <span>H2</span>
@@ -417,7 +417,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
           type="button"
           onClick={() => insertFormatting('### ', '', 'Subsection Title')}
           title="H3 Subheading"
-          className="px-2 py-1 rounded hover:bg-[#D09A16]/20 hover:text-[#D09A16] flex items-center gap-0.5 font-medium transition-colors cursor-pointer"
+          className="px-2 py-1 rounded hover:bg-brand-gold/20 hover:text-brand-gold flex items-center gap-0.5 font-medium transition-colors cursor-pointer"
         >
           <Heading size={11} />
           <span>H3</span>
@@ -508,7 +508,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
           type="button"
           onClick={() => insertCallout('note')}
           title="Insert Market Intelligence Callout Box"
-          className="p-1.5 rounded hover:bg-[#D09A16]/20 hover:text-[#D09A16] transition-colors cursor-pointer text-amber-400"
+          className="p-1.5 rounded hover:bg-brand-gold/20 hover:text-brand-gold transition-colors cursor-pointer text-amber-400"
         >
           <Lightbulb size={13} />
         </button>
@@ -545,11 +545,11 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
         type="button"
         onClick={openInternalLinkModal}
         title="Insert Internal Link to Blogs, DLF Corridors, Properties, or Custom URL (Ctrl+K)"
-        className="px-3 py-1.5 rounded-lg bg-[#D09A16]/20 hover:bg-[#D09A16]/30 text-[#D09A16] border border-[#D09A16]/40 font-semibold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
+        className="px-3 py-1.5 rounded-lg bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold border border-brand-gold/40 font-semibold flex items-center gap-1.5 transition-all shadow-xs cursor-pointer"
       >
         <Link2 size={13} />
         <span>Insert Internal Link</span>
-        <kbd className="hidden sm:inline text-[9px] px-1 py-0.5 rounded bg-black/30 border border-[#D09A16]/30 text-[#D09A16]">
+        <kbd className="hidden sm:inline text-[9px] px-1 py-0.5 rounded bg-black/30 border border-brand-gold/30 text-brand-gold">
           ⌘K
         </kbd>
       </button>
@@ -578,7 +578,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
     <div className={`mx-auto space-y-6 pb-20 ${viewMode === 'split' ? 'max-w-[1850px] px-2 sm:px-4' : 'max-w-7xl'}`}>
       
       {/* ================= TOP ACTION BAR ================= */}
-      <div className="sticky top-0 z-30 bg-[#0E162B]/95 backdrop-blur-xl border border-white/10 p-3 sm:p-4 rounded-2xl shadow-2xl flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
+      <div className="sticky top-0 z-30 bg-brand-navy-deep/95 backdrop-blur-xl border border-white/10 p-3 sm:p-4 rounded-2xl shadow-2xl flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
         
         {/* Left: Nav & Title */}
         <div className="flex items-center gap-3">
@@ -595,7 +595,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                 {formData.status === 'published' ? 'Published Article' : 'Draft Mode'}
               </span>
               <span className="text-slate-600">•</span>
-              <span className="text-[11px] text-[#D09A16] flex items-center gap-1">
+              <span className="text-[11px] text-brand-gold flex items-center gap-1">
                 <Clock size={11} /> {liveReadingTime} min read
               </span>
               <span className="text-slate-600">•</span>
@@ -616,7 +616,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
             onClick={() => setViewMode('write')}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
               viewMode === 'write'
-                ? 'bg-[#D09A16] text-[#0A0E17] shadow-md font-bold'
+                ? 'bg-brand-gold text-brand-obsidian shadow-md font-bold'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
@@ -629,7 +629,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
             onClick={() => setViewMode('split')}
             className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer relative ${
               viewMode === 'split'
-                ? 'bg-[#D09A16] text-[#0A0E17] shadow-md font-bold'
+                ? 'bg-brand-gold text-brand-obsidian shadow-md font-bold'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
@@ -643,7 +643,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
             onClick={() => setViewMode('preview')}
             className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer ${
               viewMode === 'preview'
-                ? 'bg-[#D09A16] text-[#0A0E17] shadow-md font-bold'
+                ? 'bg-brand-gold text-brand-obsidian shadow-md font-bold'
                 : 'text-slate-400 hover:text-white'
             }`}
           >
@@ -679,7 +679,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
             type="button"
             onClick={() => handleSave('published')}
             disabled={saving}
-            className="px-4 py-2 rounded-xl bg-[#D09A16] hover:bg-[#b8850f] text-[#0A0E17] text-xs font-bold uppercase tracking-wider transition-all shadow-lg flex items-center gap-1.5 disabled:opacity-50 cursor-pointer"
+            className="px-4 py-2 rounded-xl bg-brand-gold hover:bg-[#b8850f] text-brand-obsidian text-xs font-bold uppercase tracking-wider transition-all shadow-lg flex items-center gap-1.5 disabled:opacity-50 cursor-pointer"
           >
             <Save size={14} />
             <span>{saving ? 'Publishing...' : 'Publish'}</span>
@@ -711,7 +711,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
             <button
               type="button"
               onClick={() => setViewMode('split')}
-              className="text-[#D09A16] hover:underline font-semibold flex items-center gap-1 cursor-pointer"
+              className="text-brand-gold hover:underline font-semibold flex items-center gap-1 cursor-pointer"
             >
               <Columns size={13} />
               <span>Switch to Side-by-Side Split View</span>
@@ -736,9 +736,9 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
           <div className="space-y-6">
             
             {/* Title & Slug */}
-            <div className="p-5 rounded-2xl bg-[#0E162B] border border-white/10 shadow-xl space-y-4">
+            <div className="p-5 rounded-2xl bg-brand-navy-deep border border-white/10 shadow-xl space-y-4">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-[#D09A16] mb-2">
+                <label className="block text-xs font-bold uppercase tracking-wider text-brand-gold mb-2">
                   Article Headline (H1) *
                 </label>
                 <input
@@ -747,7 +747,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                   value={formData.title}
                   onChange={handleTitleChange}
                   placeholder="e.g. DLF Phase 1 Luxury Builder Floors: 2026 Price Index & Freehold Registry Guide"
-                  className="w-full text-xl font-serif font-bold bg-white/[0.04] border border-white/15 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-[#D09A16] transition-colors"
+                  className="w-full text-xl font-serif font-bold bg-white/[0.04] border border-white/15 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-brand-gold transition-colors"
                 />
               </div>
 
@@ -775,11 +775,11 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                   <select
                     value={formData.category}
                     onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                    className="w-full text-xs bg-white/[0.06] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                    className="w-full text-xs bg-white/[0.06] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                   >
-                    <option value="" className="bg-[#0E162B] text-white">Select Category...</option>
+                    <option value="" className="bg-brand-navy-deep text-white">Select Category...</option>
                     {taxonomies.categories.map((cat) => (
-                      <option key={cat._id} value={cat._id} className="bg-[#0E162B] text-white">
+                      <option key={cat._id} value={cat._id} className="bg-brand-navy-deep text-white">
                         {cat.name}
                       </option>
                     ))}
@@ -796,17 +796,17 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                   value={formData.excerpt}
                   onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
                   placeholder="A refined summary of this market guide that appears below the headline with a gold accent..."
-                  className="w-full text-xs font-serif italic bg-white/[0.04] border border-white/15 rounded-xl p-3 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#D09A16]"
+                  className="w-full text-xs font-serif italic bg-white/[0.04] border border-white/15 rounded-xl p-3 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-brand-gold"
                 />
               </div>
             </div>
 
             {/* Content Editor Canvas */}
-            <div className="p-5 rounded-2xl bg-[#0E162B] border border-white/10 shadow-xl space-y-3">
+            <div className="p-5 rounded-2xl bg-brand-navy-deep border border-white/10 shadow-xl space-y-3">
               <div className="flex items-center justify-between pb-2 border-b border-white/10">
                 <div className="flex items-center gap-2">
                   <h3 className="font-serif font-bold text-white text-base">Article Body (Markdown)</h3>
-                  <span className="text-[10px] text-[#D09A16] px-2 py-0.5 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 font-semibold">
+                  <span className="text-[10px] text-brand-gold px-2 py-0.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 font-semibold">
                     Live Parity
                   </span>
                 </div>
@@ -828,7 +828,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                   onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                   onKeyDown={handleTextareaKeyDown}
                   placeholder={`## 1. Overview of DLF Phase 1 Corridors\n\nBegin your insightful analysis here. Internal links inserted via ⌘K will render with authentic gold accents on the right.\n\n## 2. Title Verification & Freehold Status\n\nDiscuss regulatory clearances and statutory compliance...`}
-                  className="w-full font-mono text-xs sm:text-sm leading-relaxed bg-[#0A0F1E] border border-white/15 rounded-xl p-4 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-[#D09A16] resize-y scrollbar-thin"
+                  className="w-full font-mono text-xs sm:text-sm leading-relaxed bg-[#0A0F1E] border border-white/15 rounded-xl p-4 text-slate-100 placeholder-slate-600 focus:outline-none focus:border-brand-gold resize-y scrollbar-thin"
                 />
               </div>
 
@@ -842,7 +842,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                 <button
                   type="button"
                   onClick={openInternalLinkModal}
-                  className="text-[#D09A16] hover:underline font-semibold flex items-center gap-1 cursor-pointer"
+                  className="text-brand-gold hover:underline font-semibold flex items-center gap-1 cursor-pointer"
                 >
                   <Link2 size={12} />
                   <span>Choose Link Target</span>
@@ -851,13 +851,13 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
             </div>
 
             {/* Collapsible Accordion: Direct Answer & Key Takeaways */}
-            <details className="group rounded-2xl bg-[#0E162B] border border-white/10 p-5 shadow-xl transition-all">
+            <details className="group rounded-2xl bg-brand-navy-deep border border-white/10 p-5 shadow-xl transition-all">
               <summary className="flex items-center justify-between cursor-pointer font-serif font-bold text-white text-sm select-none list-none">
                 <div className="flex items-center gap-2">
-                  <Sparkles size={16} className="text-[#D09A16]" />
+                  <Sparkles size={16} className="text-brand-gold" />
                   <span>AEO Direct Answer & Key Takeaways</span>
                 </div>
-                <span className="text-[11px] text-[#D09A16] group-open:rotate-180 transition-transform">▼</span>
+                <span className="text-[11px] text-brand-gold group-open:rotate-180 transition-transform">▼</span>
               </summary>
 
               <div className="mt-4 pt-4 border-t border-white/10 space-y-4">
@@ -870,7 +870,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                     value={formData.directAnswer}
                     onChange={(e) => setFormData({ ...formData, directAnswer: e.target.value })}
                     placeholder="Ultra-luxury builder floors in DLF Phase 1 are commanding ₹5.5 Cr to ₹14 Cr in 2026..."
-                    className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-xl p-3 text-white placeholder-slate-500 focus:outline-none focus:border-[#D09A16]"
+                    className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-xl p-3 text-white placeholder-slate-500 focus:outline-none focus:border-brand-gold"
                   />
                 </div>
 
@@ -881,7 +881,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                   <div className="space-y-2 mb-3">
                     {formData.keyTakeaways.map((point, idx) => (
                       <div key={idx} className="flex items-center gap-2 bg-white/[0.03] border border-white/10 p-2.5 rounded-xl text-xs text-slate-200">
-                        <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16] shrink-0" />
+                        <span className="w-1.5 h-1.5 rounded-full bg-brand-gold shrink-0" />
                         <span className="flex-1">{point}</span>
                         <button
                           type="button"
@@ -901,7 +901,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                       onChange={(e) => setNewTakeaway(e.target.value)}
                       onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addTakeaway(); } }}
                       placeholder="e.g. Freehold municipal registry with 100% stilt parking allotment"
-                      className="flex-1 text-xs bg-white/[0.04] border border-white/15 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-[#D09A16]"
+                      className="flex-1 text-xs bg-white/[0.04] border border-white/15 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-brand-gold"
                     />
                     <button
                       type="button"
@@ -917,13 +917,13 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
             </details>
 
             {/* Collapsible Accordion: FAQ Items */}
-            <details className="group rounded-2xl bg-[#0E162B] border border-white/10 p-5 shadow-xl transition-all">
+            <details className="group rounded-2xl bg-brand-navy-deep border border-white/10 p-5 shadow-xl transition-all">
               <summary className="flex items-center justify-between cursor-pointer font-serif font-bold text-white text-sm select-none list-none">
                 <div className="flex items-center gap-2">
-                  <HelpCircle size={16} className="text-[#D09A16]" />
+                  <HelpCircle size={16} className="text-brand-gold" />
                   <span>Frequently Asked Questions ({formData.faq.length})</span>
                 </div>
-                <span className="text-[11px] text-[#D09A16] group-open:rotate-180 transition-transform">▼</span>
+                <span className="text-[11px] text-brand-gold group-open:rotate-180 transition-transform">▼</span>
               </summary>
 
               <div className="mt-4 pt-4 border-t border-white/10 space-y-3">
@@ -941,7 +941,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                 {formData.faq.map((item, idx) => (
                   <div key={idx} className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 space-y-2">
                     <div className="flex items-center justify-between">
-                      <span className="text-[11px] font-bold text-[#D09A16]">FAQ #{idx + 1}</span>
+                      <span className="text-[11px] font-bold text-brand-gold">FAQ #{idx + 1}</span>
                       <button
                         type="button"
                         onClick={() => removeFaqItem(idx)}
@@ -955,14 +955,14 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                       value={item.question}
                       onChange={(e) => updateFaqItem(idx, 'question', e.target.value)}
                       placeholder="Question..."
-                      className="w-full text-xs font-semibold bg-white/[0.04] border border-white/15 rounded-lg px-3 py-1.5 text-white placeholder-slate-500 focus:outline-none focus:border-[#D09A16]"
+                      className="w-full text-xs font-semibold bg-white/[0.04] border border-white/15 rounded-lg px-3 py-1.5 text-white placeholder-slate-500 focus:outline-none focus:border-brand-gold"
                     />
                     <textarea
                       rows={2}
                       value={item.answer}
                       onChange={(e) => updateFaqItem(idx, 'answer', e.target.value)}
                       placeholder="Answer..."
-                      className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-lg p-2 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#D09A16]"
+                      className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-lg p-2 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-brand-gold"
                     />
                   </div>
                 ))}
@@ -970,13 +970,13 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
             </details>
 
             {/* Collapsible Accordion: Media & SEO */}
-            <details className="group rounded-2xl bg-[#0E162B] border border-white/10 p-5 shadow-xl transition-all">
+            <details className="group rounded-2xl bg-brand-navy-deep border border-white/10 p-5 shadow-xl transition-all">
               <summary className="flex items-center justify-between cursor-pointer font-serif font-bold text-white text-sm select-none list-none">
                 <div className="flex items-center gap-2">
-                  <Search size={16} className="text-[#D09A16]" />
+                  <Search size={16} className="text-brand-gold" />
                   <span>Cover Photo & Search Engine (SEO) Snippet</span>
                 </div>
-                <span className="text-[11px] text-[#D09A16] group-open:rotate-180 transition-transform">▼</span>
+                <span className="text-[11px] text-brand-gold group-open:rotate-180 transition-transform">▼</span>
               </summary>
 
               <div className="mt-4 pt-4 border-t border-white/10 space-y-4">
@@ -996,11 +996,11 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                     <select
                       value={formData.author}
                       onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-                      className="w-full text-xs bg-white/[0.06] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                      className="w-full text-xs bg-white/[0.06] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                     >
-                      <option value="" className="bg-[#0E162B] text-white">Select Author...</option>
+                      <option value="" className="bg-brand-navy-deep text-white">Select Author...</option>
                       {taxonomies.authors.map((auth) => (
-                        <option key={auth._id} value={auth._id} className="bg-[#0E162B] text-white">
+                        <option key={auth._id} value={auth._id} className="bg-brand-navy-deep text-white">
                           {auth.name}
                         </option>
                       ))}
@@ -1016,7 +1016,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                       value={formData.focusKeyword}
                       onChange={(e) => setFormData({ ...formData, focusKeyword: e.target.value })}
                       placeholder="e.g. DLF Phase 1 builder floors"
-                      className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                      className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                     />
                   </div>
                 </div>
@@ -1030,7 +1030,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                     value={formData.seoDescription}
                     onChange={(e) => setFormData({ ...formData, seoDescription: e.target.value })}
                     placeholder="Search snippet summary..."
-                    className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-xl p-2.5 text-white outline-none focus:border-[#D09A16]"
+                    className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-xl p-2.5 text-white outline-none focus:border-brand-gold"
                   />
                 </div>
               </div>
@@ -1061,9 +1061,9 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
           <div className="lg:col-span-8 space-y-6">
             
             {/* Card 1: Article Title & Slug */}
-            <div className="p-6 rounded-2xl bg-[#0E162B] border border-white/10 shadow-xl space-y-4">
+            <div className="p-6 rounded-2xl bg-brand-navy-deep border border-white/10 shadow-xl space-y-4">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-[#D09A16] mb-2">
+                <label className="block text-xs font-bold uppercase tracking-wider text-brand-gold mb-2">
                   Article Headline (H1) *
                 </label>
                 <input
@@ -1072,7 +1072,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                   value={formData.title}
                   onChange={handleTitleChange}
                   placeholder="e.g. DLF Phase 1 Luxury Builder Floors: 2026 Price Index & Freehold Registry Guide"
-                  className="w-full text-xl sm:text-2xl font-serif font-bold bg-white/[0.04] border border-white/15 rounded-xl px-4 py-3.5 text-white placeholder-slate-500 focus:outline-none focus:border-[#D09A16] transition-colors"
+                  className="w-full text-xl sm:text-2xl font-serif font-bold bg-white/[0.04] border border-white/15 rounded-xl px-4 py-3.5 text-white placeholder-slate-500 focus:outline-none focus:border-brand-gold transition-colors"
                 />
               </div>
 
@@ -1101,19 +1101,19 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                   value={formData.excerpt}
                   onChange={(e) => setFormData({ ...formData, excerpt: e.target.value })}
                   placeholder="A refined summary of this market guide that appears below the headline with a gold accent..."
-                  className="w-full text-sm font-serif italic bg-white/[0.04] border border-white/15 rounded-xl p-3.5 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#D09A16]"
+                  className="w-full text-sm font-serif italic bg-white/[0.04] border border-white/15 rounded-xl p-3.5 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-brand-gold"
                 />
               </div>
             </div>
 
             {/* Card 2: Key Takeaways & Direct Answer (Luxury Featured Box) */}
-            <div className="p-6 rounded-2xl bg-[#0E162B] border border-white/10 shadow-xl space-y-5">
+            <div className="p-6 rounded-2xl bg-brand-navy-deep border border-white/10 shadow-xl space-y-5">
               <div className="flex items-center justify-between pb-3 border-b border-white/10">
                 <div className="flex items-center gap-2">
-                  <Sparkles size={16} className="text-[#D09A16]" />
+                  <Sparkles size={16} className="text-brand-gold" />
                   <h3 className="font-serif font-bold text-white text-base">Key Takeaways & Direct Answer Box</h3>
                 </div>
-                <span className="text-[11px] font-semibold text-[#D09A16] uppercase tracking-wider">
+                <span className="text-[11px] font-semibold text-brand-gold uppercase tracking-wider">
                   Google Answer Ready
                 </span>
               </div>
@@ -1127,7 +1127,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                   value={formData.directAnswer}
                   onChange={(e) => setFormData({ ...formData, directAnswer: e.target.value })}
                   placeholder="Ultra-luxury builder floors in DLF Phase 1 are commanding ₹5.5 Cr to ₹14 Cr in 2026..."
-                  className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-xl p-3 text-white placeholder-slate-500 focus:outline-none focus:border-[#D09A16]"
+                  className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-xl p-3 text-white placeholder-slate-500 focus:outline-none focus:border-brand-gold"
                 />
               </div>
 
@@ -1138,7 +1138,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                 <div className="space-y-2 mb-3">
                   {formData.keyTakeaways.map((point, idx) => (
                     <div key={idx} className="flex items-center gap-2 bg-white/[0.03] border border-white/10 p-2.5 rounded-xl text-xs text-slate-200">
-                      <span className="w-1.5 h-1.5 rounded-full bg-[#D09A16] shrink-0" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-brand-gold shrink-0" />
                       <span className="flex-1">{point}</span>
                       <button
                         type="button"
@@ -1158,7 +1158,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                     onChange={(e) => setNewTakeaway(e.target.value)}
                     onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addTakeaway(); } }}
                     placeholder="e.g. Freehold municipal registry with 100% stilt parking allotment"
-                    className="flex-1 text-xs bg-white/[0.04] border border-white/15 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-[#D09A16]"
+                    className="flex-1 text-xs bg-white/[0.04] border border-white/15 rounded-xl px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-brand-gold"
                   />
                   <button
                     type="button"
@@ -1173,19 +1173,19 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
             </div>
 
             {/* Card 3: Main Article Content Editor with Advanced Toolbar */}
-            <div className="p-6 rounded-2xl bg-[#0E162B] border border-white/10 shadow-xl space-y-4">
+            <div className="p-6 rounded-2xl bg-brand-navy-deep border border-white/10 shadow-xl space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-white/10">
                 <div className="flex items-center gap-3">
                   <h3 className="font-serif font-bold text-white text-base">Article Content (Markdown)</h3>
                   <span className="text-[11px] text-slate-400 hidden sm:inline">
-                    Use <code className="text-[#D09A16]">## Heading</code> for auto Table of Contents
+                    Use <code className="text-brand-gold">## Heading</code> for auto Table of Contents
                   </span>
                 </div>
 
                 <button
                   type="button"
                   onClick={() => setViewMode('split')}
-                  className="px-3 py-1 rounded-lg text-xs font-semibold bg-[#D09A16]/15 hover:bg-[#D09A16]/25 text-[#D09A16] border border-[#D09A16]/30 flex items-center gap-1.5 transition-all cursor-pointer"
+                  className="px-3 py-1 rounded-lg text-xs font-semibold bg-brand-gold/15 hover:bg-brand-gold/25 text-brand-gold border border-brand-gold/30 flex items-center gap-1.5 transition-all cursor-pointer"
                 >
                   <Columns size={12} />
                   <span>Open Split Preview</span>
@@ -1204,7 +1204,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                 onChange={(e) => setFormData({ ...formData, content: e.target.value })}
                 onKeyDown={handleTextareaKeyDown}
                 placeholder={`## 1. Overview of DLF Phase 1 Corridors\n\nBegin your insightful analysis here. Paragraphs are beautifully styled automatically.\n\n## 2. Title Verification & Freehold Status\n\nDiscuss regulatory clearances and statutory compliance...`}
-                className="w-full font-mono text-sm leading-relaxed bg-white/[0.03] border border-white/15 rounded-xl p-4 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-[#D09A16] resize-y"
+                className="w-full font-mono text-sm leading-relaxed bg-white/[0.03] border border-white/15 rounded-xl p-4 text-slate-100 placeholder-slate-500 focus:outline-none focus:border-brand-gold resize-y"
               />
 
               {/* Textarea Footer Stats */}
@@ -1219,10 +1219,10 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
             </div>
 
             {/* Card 4: Frequently Asked Questions (FAQ) */}
-            <div className="p-6 rounded-2xl bg-[#0E162B] border border-white/10 shadow-xl space-y-4">
+            <div className="p-6 rounded-2xl bg-brand-navy-deep border border-white/10 shadow-xl space-y-4">
               <div className="flex items-center justify-between pb-3 border-b border-white/10">
                 <div className="flex items-center gap-2">
-                  <HelpCircle size={16} className="text-[#D09A16]" />
+                  <HelpCircle size={16} className="text-brand-gold" />
                   <h3 className="font-serif font-bold text-white text-base">Frequently Asked Questions (FAQ)</h3>
                 </div>
                 <button
@@ -1244,7 +1244,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                   {formData.faq.map((item, idx) => (
                     <div key={idx} className="p-4 rounded-xl bg-white/[0.03] border border-white/10 space-y-2.5">
                       <div className="flex items-center justify-between gap-2">
-                        <span className="text-[11px] font-bold text-[#D09A16] uppercase">FAQ #{idx + 1}</span>
+                        <span className="text-[11px] font-bold text-brand-gold uppercase">FAQ #{idx + 1}</span>
                         <button
                           type="button"
                           onClick={() => removeFaqItem(idx)}
@@ -1258,14 +1258,14 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                         value={item.question}
                         onChange={(e) => updateFaqItem(idx, 'question', e.target.value)}
                         placeholder="e.g. Can NRIs buy freehold builder floors in DLF Gurugram?"
-                        className="w-full text-xs font-semibold bg-white/[0.04] border border-white/15 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-[#D09A16]"
+                        className="w-full text-xs font-semibold bg-white/[0.04] border border-white/15 rounded-lg px-3 py-2 text-white placeholder-slate-500 focus:outline-none focus:border-brand-gold"
                       />
                       <textarea
                         rows={2}
                         value={item.answer}
                         onChange={(e) => updateFaqItem(idx, 'answer', e.target.value)}
                         placeholder="Detailed answer explaining FEMA regulations, NRE/NRO accounts, and clean title conveyance..."
-                        className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-lg p-2.5 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-[#D09A16]"
+                        className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-lg p-2.5 text-slate-200 placeholder-slate-500 focus:outline-none focus:border-brand-gold"
                       />
                     </div>
                   ))}
@@ -1279,7 +1279,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
           <div className="lg:col-span-4 space-y-6">
             
             {/* Sidebar 1: Publication Card */}
-            <div className="p-5 rounded-2xl bg-[#0E162B] border border-white/10 shadow-xl space-y-4">
+            <div className="p-5 rounded-2xl bg-brand-navy-deep border border-white/10 shadow-xl space-y-4">
               <h3 className="font-serif font-bold text-white text-sm pb-2 border-b border-white/10">
                 Publication Settings
               </h3>
@@ -1291,11 +1291,11 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                 <select
                   value={formData.status}
                   onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                  className="w-full text-xs bg-white/[0.06] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
+                  className="w-full text-xs bg-white/[0.06] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-brand-gold"
                 >
-                  <option value="draft" className="bg-[#0E162B] text-white">Draft (Unpublished)</option>
-                  <option value="published" className="bg-[#0E162B] text-white">Published (Live)</option>
-                  <option value="archived" className="bg-[#0E162B] text-white">Archived</option>
+                  <option value="draft" className="bg-brand-navy-deep text-white">Draft (Unpublished)</option>
+                  <option value="published" className="bg-brand-navy-deep text-white">Published (Live)</option>
+                  <option value="archived" className="bg-brand-navy-deep text-white">Archived</option>
                 </select>
               </div>
 
@@ -1306,11 +1306,11 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                 <select
                   value={formData.category}
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                  className="w-full text-xs bg-white/[0.06] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
+                  className="w-full text-xs bg-white/[0.06] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-brand-gold"
                 >
-                  <option value="" className="bg-[#0E162B] text-white">Select Category...</option>
+                  <option value="" className="bg-brand-navy-deep text-white">Select Category...</option>
                   {taxonomies.categories.map((cat) => (
-                    <option key={cat._id} value={cat._id} className="bg-[#0E162B] text-white">
+                    <option key={cat._id} value={cat._id} className="bg-brand-navy-deep text-white">
                       {cat.name}
                     </option>
                   ))}
@@ -1324,11 +1324,11 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                 <select
                   value={formData.author}
                   onChange={(e) => setFormData({ ...formData, author: e.target.value })}
-                  className="w-full text-xs bg-white/[0.06] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-[#D09A16]"
+                  className="w-full text-xs bg-white/[0.06] border border-white/15 rounded-xl px-3 py-2.5 text-white outline-none focus:border-brand-gold"
                 >
-                  <option value="" className="bg-[#0E162B] text-white">Select Author...</option>
+                  <option value="" className="bg-brand-navy-deep text-white">Select Author...</option>
                   {taxonomies.authors.map((auth) => (
-                    <option key={auth._id} value={auth._id} className="bg-[#0E162B] text-white">
+                    <option key={auth._id} value={auth._id} className="bg-brand-navy-deep text-white">
                       {auth.name} ({auth.jobTitle || 'Advisory Partner'})
                     </option>
                   ))}
@@ -1337,10 +1337,10 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
             </div>
 
             {/* Sidebar 2: Featured Cover Photo (ImageKit File Upload) */}
-            <div className="p-5 rounded-2xl bg-[#0E162B] border border-white/10 shadow-xl space-y-4">
+            <div className="p-5 rounded-2xl bg-brand-navy-deep border border-white/10 shadow-xl space-y-4">
               <h3 className="font-serif font-bold text-white text-sm pb-2 border-b border-white/10 flex items-center justify-between">
                 <span>Featured Cover Photo</span>
-                <span className="text-[10px] text-[#D09A16] font-bold tracking-wider uppercase">ImageKit</span>
+                <span className="text-[10px] text-brand-gold font-bold tracking-wider uppercase">ImageKit</span>
               </h3>
 
               <ImageUploadInput
@@ -1360,7 +1360,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                   value={formData.featuredImageAlt}
                   onChange={(e) => setFormData({ ...formData, featuredImageAlt: e.target.value })}
                   placeholder="e.g. DLF Phase 1 luxury builder floor architecture"
-                  className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                  className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                 />
               </div>
 
@@ -1373,16 +1373,16 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                   value={formData.featuredImageCredit}
                   onChange={(e) => setFormData({ ...formData, featuredImageCredit: e.target.value })}
                   placeholder="e.g. Saudagar Properties Archive"
-                  className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                  className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                 />
               </div>
             </div>
 
             {/* Sidebar 3: Search Engine (SEO) Snippet */}
-            <div className="p-5 rounded-2xl bg-[#0E162B] border border-white/10 shadow-xl space-y-4">
+            <div className="p-5 rounded-2xl bg-brand-navy-deep border border-white/10 shadow-xl space-y-4">
               <h3 className="font-serif font-bold text-white text-sm pb-2 border-b border-white/10 flex items-center justify-between">
                 <span>Search Engine (SEO) Snippet</span>
-                <Search size={14} className="text-[#D09A16]" />
+                <Search size={14} className="text-brand-gold" />
               </h3>
 
               <div>
@@ -1397,7 +1397,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                   value={formData.seoTitle}
                   onChange={(e) => setFormData({ ...formData, seoTitle: e.target.value })}
                   placeholder={formData.title ? `${formData.title} | Saudagar Properties` : 'Meta Title for Google'}
-                  className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                  className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                 />
               </div>
 
@@ -1413,7 +1413,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                   value={formData.seoDescription}
                   onChange={(e) => setFormData({ ...formData, seoDescription: e.target.value })}
                   placeholder="Compelling description summarizing the article for Google search results..."
-                  className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-xl p-2.5 text-white outline-none focus:border-[#D09A16]"
+                  className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-xl p-2.5 text-white outline-none focus:border-brand-gold"
                 />
               </div>
 
@@ -1426,7 +1426,7 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                   value={formData.focusKeyword}
                   onChange={(e) => setFormData({ ...formData, focusKeyword: e.target.value })}
                   placeholder="e.g. DLF Phase 1 builder floors"
-                  className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-[#D09A16]"
+                  className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
                 />
               </div>
 

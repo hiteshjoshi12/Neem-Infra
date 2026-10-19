@@ -50,15 +50,15 @@ export default function ContextualInternalLinks({
 
   return (
     <section aria-label="Related Guides & Real Estate Corridors" className="my-10">
-      <div className="bg-[#FAF8F5] border border-[#17213D]/10 rounded-2xl p-6 sm:p-8">
+      <div className="bg-brand-ivory-warm border border-brand-navy/10 rounded-2xl p-6 sm:p-8">
         <div className="flex items-center gap-2 mb-4">
-          <Compass size={18} className="text-[#D09A16]" />
-          <h3 className="font-serif font-bold text-lg sm:text-xl text-[#17213D]">
+          <Compass size={18} className="text-brand-gold" />
+          <h3 className="font-serif font-bold text-lg sm:text-xl text-brand-navy">
             Relevant Guides & Curated Corridors
           </h3>
         </div>
 
-        <p className="text-xs sm:text-sm text-[#566078] mb-6 leading-relaxed">
+        <p className="text-xs sm:text-sm text-brand-slate mb-6 leading-relaxed">
           Continue exploring related real estate advisory, prime corridors, and off-market investment portfolios:
         </p>
 
@@ -69,21 +69,21 @@ export default function ContextualInternalLinks({
               <Link
                 key={idx}
                 href={item.href}
-                className="group p-4 bg-white rounded-xl border border-[#17213D]/10 hover:border-[#D09A16]/60 hover:shadow-xs transition-all duration-200 flex flex-col justify-between"
+                className="group p-4 bg-white rounded-xl border border-brand-navy/10 hover:border-brand-gold/60 hover:shadow-xs transition-all duration-200 flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-[#D09A16] mb-1.5">
+                  <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-widest text-brand-gold mb-1.5">
                     <span>{item.category}</span>
-                    <Icon size={13} className="text-[#8892A6] group-hover:text-[#D09A16] transition-colors" />
+                    <Icon size={13} className="text-brand-muted group-hover:text-brand-gold transition-colors" />
                   </div>
-                  <h4 className="font-serif font-bold text-sm text-[#17213D] group-hover:text-[#D09A16] transition-colors leading-snug mb-1.5">
+                  <h4 className="font-serif font-bold text-sm text-brand-navy group-hover:text-brand-gold transition-colors leading-snug mb-1.5">
                     {item.title}
                   </h4>
-                  <p className="text-xs text-[#566078] line-clamp-2 leading-relaxed">
+                  <p className="text-xs text-brand-slate line-clamp-2 leading-relaxed">
                     {item.description}
                   </p>
                 </div>
-                <div className="mt-3 pt-2 border-t border-[#17213D]/5 flex items-center justify-end text-[11px] font-semibold text-[#17213D] group-hover:text-[#D09A16] transition-colors">
+                <div className="mt-3 pt-2 border-t border-brand-navy/5 flex items-center justify-end text-[11px] font-semibold text-brand-navy group-hover:text-brand-gold transition-colors">
                   <span>Explore Portfolio →</span>
                 </div>
               </Link>

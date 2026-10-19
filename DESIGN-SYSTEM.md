@@ -17,41 +17,40 @@ The official Saudagar Properties insignia embodies:
 
 ## 2. Global Color Tokens & Palette Architecture
 
-### 2.1 Color Tokens (CSS Variables & Tailwind Theme)
+### 2.1 Color Tokens (Single Source of Truth in `src/app/globals.css`)
+
+All colors are controlled centrally from `@theme` in [globals.css](file:///d:/Freelancing%20Projects/Saudagar%20Properties%20-%20Copy/src/app/globals.css). Changing any color hex here updates every component, border, badge, button, and opacity modifier automatically across the entire site:
 
 ```css
-:root {
-  /* DARK WORLD — Authority, Investment Prestige */
-  --brand-navy-deep: #0E162B;       /* Canvas for dark sections */
-  --brand-navy: #17213D;            /* Primary brand navy */
-  --brand-navy-surface: #202B4A;    /* Elevated cards and containers on dark */
-  --brand-navy-surface-hover: #273459;
-  
-  /* GOLD ACCENT WORLD — Value, Exclusivity, Polish */
-  --brand-gold: #C6A24A;            /* Primary brand gold accent */
-  --brand-gold-light: #D8BD73;      /* Interactive hovers & highlights */
-  --brand-gold-pale: #E9D9A8;       /* Subtle badges and tags */
-  --brand-gold-muted: rgba(198, 162, 74, 0.15); /* Tinted icon backgrounds */
+@theme {
+  /* 1. Primary Luxury Gold (Accents, CTAs, Badges, Highlights) */
+  --color-brand-gold: #D09A16;
+  --color-brand-gold-light: #E5AC2B;
+  --color-brand-gold-pale: #F3CA68;
 
-  /* LIGHT WORLD — Warm Architectural Editorial, Breathing Space */
-  --brand-ivory: #F7F5EF;           /* Primary light section background */
-  --brand-cream: #EFEBE1;           /* Alternating warm cream surface */
-  --brand-white: #FFFFFF;           /* Card surfaces on light sections */
+  /* 2. Deep Navy & Midnight Obsidian (The Dark World) */
+  --color-brand-navy: #17213D;
+  --color-brand-navy-deep: #0E162B;
+  --color-brand-navy-surface: #202B4A;
+  --color-brand-navy-gradient: #182345;
+  --color-brand-obsidian: #0A0E17;
+  --color-brand-dark: #0C101A;
 
-  /* TYPOGRAPHY TOKENS — High Contrast WCAG AAA */
-  --text-primary: #17213D;          /* Primary dark heading/body text on light */
-  --text-secondary: #566078;        /* Editorial supporting body text on light */
-  --text-muted: #8892A6;            /* Secondary metadata on light */
+  /* 3. Warm Ivory & Architectural Cream (The Light Canvas) */
+  --color-brand-ivory: #F7F5EF;
+  --color-brand-ivory-warm: #FAF8F5;
+  --color-brand-cream: #EFEBE1;
+  --color-brand-cream-border: #E2DDD5;
+  --color-brand-white: #FFFFFF;
 
-  --text-on-dark: #F7F5EF;          /* Primary heading/contrast text on dark */
-  --text-on-dark-muted: #C9CED9;    /* Clean body text on dark */
-  --text-on-dark-dim: #9DA6B8;      /* Captions and subtext on dark */
-
-  /* BORDERS & DIVIDERS */
-  --border-light: rgba(23, 33, 61, 0.10);      /* Crisp 1px border on light */
-  --border-dark: rgba(255, 255, 255, 0.08);    /* Subtle 1px border on dark */
-  --border-gold: rgba(198, 162, 74, 0.35);     /* Gold luxury highlight border */
-  --border-gold-subtle: rgba(198, 162, 74, 0.18);
+  /* 4. Typography & Slate Tone System */
+  --color-brand-text-dark: #121A2F;
+  --color-brand-slate: #566078;
+  --color-brand-slate-light: #8A95A7;
+  --color-brand-muted: #8892A6;
+  --color-brand-text-on-dark: #F7F5EF;
+  --color-brand-text-on-dark-muted: #C9CED9;
+  --color-brand-text-dim: #9DA6B8;
 }
 ```
 

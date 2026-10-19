@@ -123,7 +123,7 @@ export default function Footer() {
 
   return (
     <footer
-      className="relative overflow-hidden bg-[#0E162B] text-[#F7F5EF]"
+      className="relative overflow-hidden bg-brand-ivory-warm text-brand-navy border-t border-brand-navy/10"
       aria-label="Saudagar Properties footer"
     >
       {/* =====================================================
@@ -134,11 +134,11 @@ export default function Footer() {
         aria-hidden="true"
         className="pointer-events-none absolute inset-0"
       >
-        <div className="absolute inset-0 opacity-[0.025] bg-[linear-gradient(#D09A16_1px,transparent_1px),linear-gradient(90deg,#D09A16_1px,transparent_1px)] [background-size:50px_50px]" />
+        <div className="absolute inset-0 opacity-[0.02] bg-[linear-gradient(var(--color-brand-navy)_1px,transparent_1px),linear-gradient(90deg,var(--color-brand-navy)_1px,transparent_1px)] [background-size:50px_50px]" />
 
-        <div className="absolute -right-32 -top-32 h-[400px] w-[400px] rounded-full bg-[#D09A16]/[0.045] blur-[110px]" />
+        <div className="absolute -right-32 -top-32 h-[400px] w-[400px] rounded-full bg-brand-gold/[0.06] blur-[110px]" />
 
-        <div className="absolute -bottom-40 left-1/3 h-[350px] w-[350px] rounded-full bg-black/40 blur-[100px]" />
+        <div className="absolute -bottom-40 left-1/3 h-[350px] w-[350px] rounded-full bg-brand-gold/[0.04] blur-[100px]" />
       </div>
 
       <div className="relative z-10 mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
@@ -147,25 +147,25 @@ export default function Footer() {
             TOP CONTACT BAR
         ====================================================== */}
 
-        <div className="border-b border-white/10 py-7">
+        <div className="border-b border-brand-navy/10 py-7">
           <div className="grid grid-cols-1 gap-5 md:grid-cols-3 md:gap-0">
 
             {/* Office */}
-            <div className="flex items-start gap-3 md:border-r md:border-white/10 md:pr-8">
-              <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-[#D09A16]/30 bg-[#202B4A] text-[#D09A16]">
+            <div className="flex items-start gap-3 md:border-r md:border-brand-navy/10 md:pr-8">
+              <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-brand-gold/30 bg-white text-brand-gold shadow-xs">
                 <MapPin size={15} strokeWidth={1.5} />
               </div>
 
               <div className="min-w-0">
-                <p className="text-[8px] font-semibold uppercase tracking-[0.25em] text-[#D09A16]">
+                <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-brand-gold-deep">
                   {officeTitle}
                 </p>
 
-                <p className="mt-1 text-xs font-medium text-white">
+                <p className="mt-1 text-sm font-bold text-black">
                   {officeName}
                 </p>
 
-                <address className="mt-0.5 max-w-xs not-italic text-[10px] leading-4 text-[#C9CED9]/60">
+                <address className="mt-0.5 max-w-xs not-italic text-xs leading-5 text-black font-medium">
                   {officeAddress}
                 </address>
               </div>
@@ -173,16 +173,16 @@ export default function Footer() {
 
             {/* Phone */}
             <div className="flex items-start gap-3 md:px-8">
-              <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-[#D09A16]/30 bg-[#202B4A] text-[#D09A16]">
+              <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-brand-gold/30 bg-white text-brand-gold shadow-xs">
                 <Phone size={14} strokeWidth={1.5} />
               </div>
 
               <div>
-                <p className="text-[8px] font-semibold uppercase tracking-[0.25em] text-[#D09A16]">
+                <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-brand-gold-deep">
                   {phoneTitle}
                 </p>
 
-                <p className="mt-1 text-xs font-medium text-white">
+                <p className="mt-1 text-sm font-bold text-black">
                   {phoneSubtitle}
                 </p>
 
@@ -194,7 +194,7 @@ export default function Footer() {
                         item.href ||
                         `tel:${item.number.replace(/\s+/g, '')}`
                       }
-                      className="text-[10px] text-[#C9CED9]/70 transition-colors hover:text-[#D09A16]"
+                      className="text-xs font-bold text-black transition-colors hover:text-brand-gold"
                     >
                       {item.number}
                     </a>
@@ -204,23 +204,23 @@ export default function Footer() {
             </div>
 
             {/* Email */}
-            <div className="flex items-start gap-3 md:border-l md:border-white/10 md:pl-8">
-              <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-[#D09A16]/30 bg-[#202B4A] text-[#D09A16]">
+            <div className="flex items-start gap-3 md:border-l md:border-brand-navy/10 md:pl-8">
+              <div className="mt-0.5 flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-lg border border-brand-gold/30 bg-white text-brand-gold shadow-xs">
                 <Mail size={14} strokeWidth={1.5} />
               </div>
 
               <div className="min-w-0">
-                <p className="text-[8px] font-semibold uppercase tracking-[0.25em] text-[#D09A16]">
+                <p className="text-[9px] font-bold uppercase tracking-[0.25em] text-brand-gold-deep">
                   {emailTitle}
                 </p>
 
-                <p className="mt-1 text-xs font-medium text-white">
+                <p className="mt-1 text-sm font-bold text-black">
                   {emailSubtitle}
                 </p>
 
                 <a
                   href={`mailto:${email}`}
-                  className="mt-0.5 block truncate text-[10px] text-[#C9CED9]/70 transition-colors hover:text-[#D09A16]"
+                  className="mt-0.5 block truncate text-xs font-bold text-black transition-colors hover:text-brand-gold"
                 >
                   {email}
                 </a>
@@ -239,23 +239,35 @@ export default function Footer() {
           {/* BRAND */}
           <div className="lg:col-span-5 lg:pr-12">
 
-            <Link href="/"
+            <Link
+              href="/"
               aria-label="Saudagar Properties home"
-              className="inline-block"
+              className="inline-flex items-center gap-3.5 group select-none"
             >
-              <div className="rounded-xl bg-white/95 px-3.5 py-2.5 shadow-sm border border-white/20">
+              <div className="rounded-2xl bg-white px-4 py-3 shadow-md border border-brand-gold/30 transition-transform duration-300 group-hover:scale-105">
                 <Image
-                  width={160}
-                  height={45}
+                  width={220}
+                  height={80}
                   loading="lazy"
                   src={footerData.logoUrl || logoImg}
                   alt="Saudagar Properties"
-                  className="h-9 w-auto object-contain"
+                  className="h-12 sm:h-14 w-auto object-contain"
                 />
+              </div>
+              <div className="flex flex-col">
+                <span className="font-serif text-lg sm:text-xl font-bold tracking-tight text-black group-hover:text-brand-gold transition-colors leading-none">
+                  Saudagar
+                </span>
+                <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.26em] uppercase text-brand-gold-deep mt-1 leading-none">
+                  Properties
+                </span>
+                <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-black mt-1">
+                  DLF Gurugram Premier Advisory
+                </span>
               </div>
             </Link>
 
-            <p className="mt-5 max-w-md text-[11px] leading-5 text-[#C9CED9]/70">
+            <p className="mt-5 max-w-md text-xs leading-5 text-black font-medium">
               {aboutText}
             </p>
 
@@ -273,7 +285,7 @@ export default function Footer() {
                     aria-label={social.platform || 'Social Link'}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex h-7 w-7 items-center justify-center rounded-md border border-white/10 text-[#C9CED9] transition-all hover:border-[#D09A16]/60 hover:bg-[#D09A16] hover:text-[#0E162B]"
+                    className="flex h-7 w-7 items-center justify-center rounded-md border border-brand-navy/20 bg-white text-black shadow-xs transition-all hover:border-brand-gold hover:bg-brand-gold hover:text-white"
                   >
                     <IconComponent size={11} />
                   </a>
@@ -284,7 +296,7 @@ export default function Footer() {
 
           {/* EXPLORE */}
           <div className="lg:col-span-2">
-            <h2 className="mb-5 text-[9px] font-semibold uppercase tracking-[0.25em] text-[#D09A16]">
+            <h2 className="mb-5 text-[10px] font-bold uppercase tracking-[0.25em] text-brand-gold-deep">
               {menuTitle}
             </h2>
 
@@ -292,9 +304,9 @@ export default function Footer() {
               {menuLinks.map((item, idx) => (
                 <li key={idx}>
                   <Link href={item.href}
-                    className="group inline-flex items-center gap-1.5 text-[11px] text-[#C9CED9]/70 transition-colors hover:text-white"
+                    className="group inline-flex items-center gap-1.5 text-xs font-semibold text-black transition-colors hover:text-brand-gold"
                   >
-                    <span className="h-1 w-1 rounded-full bg-[#D09A16]/50 transition-transform group-hover:scale-125" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-brand-gold transition-transform group-hover:scale-125" />
                     {item.label}
                   </Link>
                 </li>
@@ -304,7 +316,7 @@ export default function Footer() {
 
           {/* LOCATIONS */}
           <div className="lg:col-span-3">
-            <h2 className="mb-5 text-[9px] font-semibold uppercase tracking-[0.25em] text-[#D09A16]">
+            <h2 className="mb-5 text-[10px] font-bold uppercase tracking-[0.25em] text-brand-gold-deep">
               {servicesTitle}
             </h2>
 
@@ -312,9 +324,9 @@ export default function Footer() {
               {serviceLinks.map((item, idx) => (
                 <li key={idx}>
                   <Link href={item.href}
-                    className="group inline-flex items-center gap-1.5 text-[11px] text-[#C9CED9]/70 transition-colors hover:text-white"
+                    className="group inline-flex items-center gap-1.5 text-xs font-semibold text-black transition-colors hover:text-brand-gold"
                   >
-                    <span className="h-1 w-1 rounded-full bg-[#D09A16]/50 transition-transform group-hover:scale-125" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-brand-gold transition-transform group-hover:scale-125" />
                     {item.label}
                   </Link>
                 </li>
@@ -324,17 +336,17 @@ export default function Footer() {
 
           {/* PRIVATE ADVISORY */}
           <div className="lg:col-span-2">
-            <h2 className="mb-5 text-[9px] font-semibold uppercase tracking-[0.25em] text-[#D09A16]">
+            <h2 className="mb-5 text-[10px] font-bold uppercase tracking-[0.25em] text-brand-gold-deep">
               {followTitle}
             </h2>
 
-            <p className="text-[11px] leading-5 text-[#C9CED9]/70">
+            <p className="text-xs leading-5 text-black font-medium">
               {followDesc}
             </p>
 
             <a
               href={`tel:${callCtaPhone.replace(/\s+/g, '')}`}
-              className="group mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-[#D09A16] px-4 py-3 text-[9px] font-bold uppercase tracking-[0.18em] text-[#0E162B] transition-all hover:bg-[#D09A16]"
+              className="group mt-5 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-brand-gold hover:bg-brand-gold-light px-4 py-3 text-[10px] font-bold uppercase tracking-[0.18em] text-brand-navy shadow-md hover:shadow-lg transition-all cursor-pointer"
             >
               <Phone size={12} />
 
@@ -352,9 +364,9 @@ export default function Footer() {
             BOTTOM BAR
         ====================================================== */}
 
-        <div className="flex flex-col gap-3 border-t border-white/10 py-5 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex flex-col gap-3 border-t border-brand-navy/15 py-5 sm:flex-row sm:items-center sm:justify-between">
 
-          <p className="text-[9px] text-[#C9CED9]/40">
+          <p className="text-[11px] font-medium text-black">
             {copyright} {new Date().getFullYear()}, {copyrightSuffix}
           </p>
 
@@ -362,13 +374,13 @@ export default function Footer() {
             {legalLinks.map((item, idx) => (
               <React.Fragment key={idx}>
                 <Link href={item.href}
-                  className="text-[9px] text-[#C9CED9]/40 transition-colors hover:text-[#D09A16]"
+                  className="text-[11px] font-medium text-black transition-colors hover:text-brand-gold"
                 >
                   {item.label}
                 </Link>
 
                 {idx < legalLinks.length - 1 && (
-                  <span className="h-0.5 w-0.5 rounded-full bg-white/20" />
+                  <span className="h-1 w-1 rounded-full bg-black/40" />
                 )}
               </React.Fragment>
             ))}

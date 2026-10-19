@@ -80,27 +80,27 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
       {/* =========================================================================
           SECTION 2: LIGHT — EDITORIAL MAGAZINE SPREAD (LEAD COVER STORY & DISPATCHES)
       ========================================================================= */}
-      <section className="pt-12 md:pt-16 pb-8 md:pb-10 bg-[#F7F5EF] text-[#17213D] border-b border-[#17213D]/10 relative overflow-hidden">
+      <section className="pt-12 md:pt-16 pb-8 md:pb-10 bg-brand-ivory text-brand-navy border-b border-brand-navy/10 relative overflow-hidden">
         {/* Subtle Luxury Watermark Grid */}
         <div 
           aria-hidden="true" 
-          className="pointer-events-none absolute inset-0 opacity-[0.03] bg-[linear-gradient(#D09A16_1px,transparent_1px),linear-gradient(90deg,#D09A16_1px,transparent_1px)] [background-size:48px_48px]" 
+          className="pointer-events-none absolute inset-0 opacity-[0.03] bg-[linear-gradient(var(--color-brand-gold)_1px,transparent_1px),linear-gradient(90deg,var(--color-brand-gold)_1px,transparent_1px)] [background-size:48px_48px]" 
         />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Section Eyebrow & Title */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 pb-6 border-b border-[#17213D]/10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 pb-6 border-b border-brand-navy/10">
             <div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[#D09A16] text-[11px] font-bold uppercase tracking-[0.2em] mb-3">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-[11px] font-bold uppercase tracking-[0.2em] mb-3">
                 <Sparkles size={13} />
                 <span>{cms.spotlight?.badge || "Editorial Spotlight • Cover Dossier"}</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#17213D] tracking-tight leading-tight">
-                {cms.spotlight?.titleMain || "Curated High-Value "} <span className="italic font-serif text-[#D09A16]">{cms.spotlight?.titleItalic || "Research Dispatches"}</span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-brand-navy tracking-tight leading-tight">
+                {cms.spotlight?.titleMain || "Curated High-Value "} <span className="italic font-serif text-brand-gold">{cms.spotlight?.titleItalic || "Research Dispatches"}</span>
               </h2>
             </div>
-            <p className="text-xs sm:text-sm text-[#566078] max-w-md font-sans leading-relaxed">
+            <p className="text-xs sm:text-sm text-brand-slate max-w-md font-sans leading-relaxed">
               {cms.spotlight?.description || "In-depth fiduciary valuation benchmarks, 30-year DLF Phase 1–5 registry insights, and sovereign NRI capital repatriation advisory."}
             </p>
           </div>
@@ -114,33 +114,33 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
                 href={`/blog/${leadStory.slug}`}
                 className="lg:col-span-8 group block cursor-pointer"
               >
-                <div className="bg-white rounded-3xl border border-[#17213D]/10 group-hover:border-[#D09A16]/60 p-6 sm:p-8 md:p-10 shadow-[0_20px_50px_rgba(23,33,61,0.06)] group-hover:shadow-[0_25px_60px_rgba(208,154,22,0.18)] transition-all duration-300 flex flex-col justify-between h-full">
+                <div className="bg-white rounded-3xl border border-brand-navy/10 group-hover:border-brand-gold/60 p-6 sm:p-8 md:p-10 shadow-[0_20px_50px_rgba(23,33,61,0.06)] group-hover:shadow-[0_25px_60px_rgba(208,154,22,0.18)] transition-all duration-300 flex flex-col justify-between h-full">
                   <div>
                     {/* Meta Header Strip Above Image (Never blocks image artwork) */}
                     <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
                       <div className="flex items-center gap-2.5">
-                        <span className="px-3.5 py-1.5 rounded-full bg-[#17213D] text-[#D09A16] border border-[#D09A16]/40 text-[10px] font-bold uppercase tracking-[0.2em] shadow-sm">
+                        <span className="px-3.5 py-1.5 rounded-full bg-brand-navy text-brand-gold border border-brand-gold/40 text-[10px] font-bold uppercase tracking-[0.2em] shadow-sm">
                           Cover Story • High Impact
                         </span>
                         {leadStory.category && (
-                          <span className="px-3.5 py-1.5 rounded-full bg-[#D09A16]/10 text-[#17213D] border border-[#D09A16]/30 text-[10px] font-bold uppercase tracking-wider">
+                          <span className="px-3.5 py-1.5 rounded-full bg-brand-gold/10 text-brand-navy border border-brand-gold/30 text-[10px] font-bold uppercase tracking-wider">
                             {leadStory.category.name}
                           </span>
                         )}
                       </div>
-                      <div className="flex items-center gap-3 text-xs text-[#566078]">
+                      <div className="flex items-center gap-3 text-xs text-brand-slate">
                         <span className="flex items-center gap-1.5 font-medium">
-                          <Clock size={13} className="text-[#D09A16]" />
+                          <Clock size={13} className="text-brand-gold" />
                           <span>{leadStory.readingTime || 7} min read</span>
                         </span>
-                        <span className="font-mono text-[11px] text-[#D09A16] font-bold tracking-wider">
+                        <span className="font-mono text-[11px] text-brand-gold font-bold tracking-wider">
                           VERIFIED DISPATCH
                         </span>
                       </div>
                     </div>
 
                     {/* Image Container: Enlarged Aspect Ratio, Ambient Backdrop, Full Uncut Image */}
-                    <div className="relative aspect-[16/10] sm:aspect-[3/2] w-full rounded-2xl overflow-hidden bg-[#0A0E17] mb-8 border border-[#17213D]/10 shadow-inner group-hover:border-[#D09A16]/40 transition-colors">
+                    <div className="relative aspect-[16/10] sm:aspect-[3/2] w-full rounded-2xl overflow-hidden bg-brand-obsidian mb-8 border border-brand-navy/10 shadow-inner group-hover:border-brand-gold/40 transition-colors">
                       {/* Ambient Blurred Backdrop */}
                       <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
                         <Image
@@ -166,22 +166,22 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
 
                     {/* Headline & Excerpt */}
                     <div className="space-y-4">
-                      <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-[#17213D] group-hover:text-[#D09A16] transition-colors leading-tight">
+                      <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-brand-navy group-hover:text-brand-gold transition-colors leading-tight">
                         {leadStory.title}
                       </h3>
 
-                      <p className="text-sm sm:text-base text-[#566078] leading-relaxed font-sans line-clamp-3">
+                      <p className="text-sm sm:text-base text-brand-slate leading-relaxed font-sans line-clamp-3">
                         {leadStory.excerpt}
                       </p>
 
                       {/* Key Strategic Takeaways Pill Strip */}
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-[#17213D]/10">
-                        <div className="flex items-start gap-2 text-xs text-[#17213D]">
-                          <CheckCircle2 size={15} className="text-[#D09A16] shrink-0 mt-0.5" />
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-4 border-t border-brand-navy/10">
+                        <div className="flex items-start gap-2 text-xs text-brand-navy">
+                          <CheckCircle2 size={15} className="text-brand-gold shrink-0 mt-0.5" />
                           <span>Freehold registry scrutiny &amp; municipal clearances</span>
                         </div>
-                        <div className="flex items-start gap-2 text-xs text-[#17213D]">
-                          <CheckCircle2 size={15} className="text-[#D09A16] shrink-0 mt-0.5" />
+                        <div className="flex items-start gap-2 text-xs text-brand-navy">
+                          <CheckCircle2 size={15} className="text-brand-gold shrink-0 mt-0.5" />
                           <span>Quarterly capital appreciation &amp; rental yields</span>
                         </div>
                       </div>
@@ -189,22 +189,22 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
                   </div>
 
                   {/* Footer Action Strip */}
-                  <div className="pt-8 mt-8 border-t border-[#17213D]/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="pt-8 mt-8 border-t border-brand-navy/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-full bg-[#17213D] text-[#D09A16] font-serif font-bold flex items-center justify-center text-sm shadow-sm">
+                      <div className="w-10 h-10 rounded-full bg-brand-navy text-brand-gold font-serif font-bold flex items-center justify-center text-sm shadow-sm">
                         {leadStory.author?.name ? leadStory.author.name.charAt(0) : 'S'}
                       </div>
                       <div>
-                        <span className="block font-serif font-bold text-sm text-[#17213D]">
+                        <span className="block font-serif font-bold text-sm text-brand-navy">
                           {leadStory.author?.name || 'Saudagar Research Desk'}
                         </span>
-                        <span className="text-[11px] text-[#8892A6]">
+                        <span className="text-[11px] text-brand-muted">
                           Executive Advisory Principals
                         </span>
                       </div>
                     </div>
 
-                    <div className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-[#17213D] group-hover:bg-[#D09A16] text-[#F7F5EF] group-hover:text-[#0A0E17] text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-sm">
+                    <div className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-xl bg-brand-navy group-hover:bg-brand-gold text-brand-ivory group-hover:text-brand-obsidian text-xs font-bold uppercase tracking-wider transition-all duration-300 shadow-sm">
                       <span>Read Full Dossier</span>
                       <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                     </div>
@@ -215,11 +215,11 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
               {/* RIGHT: Stacked Editor's Dispatches (4 Cols) */}
               <div className="lg:col-span-4 flex flex-col justify-between gap-6">
                 <div className="px-1 flex items-center justify-between">
-                  <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#D09A16] flex items-center gap-2">
+                  <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-gold flex items-center gap-2">
                     <BookOpen size={14} />
                     <span>Executive Briefs</span>
                   </span>
-                  <span className="text-[11px] font-semibold text-[#8892A6]">
+                  <span className="text-[11px] font-semibold text-brand-muted">
                     Weekly Dispatches
                   </span>
                 </div>
@@ -229,29 +229,29 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
                     <Link
                       key={post._id || post.slug}
                       href={`/blog/${post.slug}`}
-                      className="group p-5 sm:p-6 bg-white rounded-2xl border border-[#17213D]/10 hover:border-[#D09A16]/50 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between flex-1 cursor-pointer"
+                      className="group p-5 sm:p-6 bg-white rounded-2xl border border-brand-navy/10 hover:border-brand-gold/50 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between flex-1 cursor-pointer"
                     >
                       <div>
-                        <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-[#D09A16] mb-2">
+                        <div className="flex items-center justify-between text-[10px] font-bold uppercase tracking-wider text-brand-gold mb-2">
                           <span>{post.category?.name || 'Market Report'}</span>
                           <span className="text-slate-400 font-mono">0{idx + 1}</span>
                         </div>
 
-                        <h4 className="font-serif font-bold text-base text-[#17213D] group-hover:text-[#D09A16] transition-colors leading-snug line-clamp-2 mb-2">
+                        <h4 className="font-serif font-bold text-base text-brand-navy group-hover:text-brand-gold transition-colors leading-snug line-clamp-2 mb-2">
                           {post.title}
                         </h4>
 
-                        <p className="text-xs text-[#566078] line-clamp-2 leading-relaxed mb-4">
+                        <p className="text-xs text-brand-slate line-clamp-2 leading-relaxed mb-4">
                           {post.excerpt}
                         </p>
                       </div>
 
-                      <div className="pt-3 border-t border-[#17213D]/10 flex items-center justify-between text-[11px] text-[#8892A6]">
+                      <div className="pt-3 border-t border-brand-navy/10 flex items-center justify-between text-[11px] text-brand-muted">
                         <span className="flex items-center gap-1">
-                          <Clock size={11} className="text-[#D09A16]" />
+                          <Clock size={11} className="text-brand-gold" />
                           <span>{post.readingTime || 5} min read</span>
                         </span>
-                        <div className="font-bold text-[#17213D] group-hover:text-[#D09A16] flex items-center gap-1 transition-colors">
+                        <div className="font-bold text-brand-navy group-hover:text-brand-gold flex items-center gap-1 transition-colors">
                           <span>Brief</span>
                           <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
                         </div>
@@ -271,18 +271,18 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
           SECTION 2.5: INTERACTIVE GEOGRAPHIC RADAR & CORRIDOR SPOTLIGHTS
       ========================================================================= */}
       {cms.corridors && (
-        <section className="py-10 bg-white border-b border-[#17213D]/10">
+        <section className="py-10 bg-white border-b border-brand-navy/10">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
               <div>
-                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-[#D09A16] block mb-1">
+                <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-brand-gold block mb-1">
                   {cms.corridors?.badge || "Interactive Geographic Radar"}
                 </span>
-                <h3 className="text-xl sm:text-2xl font-serif font-bold text-[#17213D]">
-                  {cms.corridors?.titleMain || "Location-Based "}<span className="italic font-serif text-[#D09A16]">{cms.corridors?.titleItalic || "Market Intelligence"}</span>
+                <h3 className="text-xl sm:text-2xl font-serif font-bold text-brand-navy">
+                  {cms.corridors?.titleMain || "Location-Based "}<span className="italic font-serif text-brand-gold">{cms.corridors?.titleItalic || "Market Intelligence"}</span>
                 </h3>
               </div>
-              <p className="text-xs text-[#566078] max-w-md font-sans leading-relaxed">
+              <p className="text-xs text-brand-slate max-w-md font-sans leading-relaxed">
                 {cms.corridors?.description || "Select a prime Gurugram micro-market below to inspect real-time zoning benchmarks, capital appreciation drivers, and published advisory research."}
               </p>
             </div>
@@ -292,9 +292,9 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
                 <Link
                   key={corr.slug}
                   href={`/property/${corr.slug}`}
-                  className="p-3.5 rounded-2xl bg-[#F7F5EF] hover:bg-[#17213D] text-[#17213D] hover:text-white border border-[#17213D]/10 hover:border-[#D09A16] transition-all group flex flex-col justify-between cursor-pointer shadow-sm hover:shadow-md"
+                  className="p-3.5 rounded-2xl bg-brand-ivory hover:bg-brand-navy text-brand-navy hover:text-white border border-brand-navy/10 hover:border-brand-gold transition-all group flex flex-col justify-between cursor-pointer shadow-sm hover:shadow-md"
                 >
-                  <span className="text-[10px] uppercase font-bold tracking-wider text-[#D09A16] group-hover:text-[#D09A16]">
+                  <span className="text-[10px] uppercase font-bold tracking-wider text-brand-gold group-hover:text-brand-gold">
                     {corr.tag}
                   </span>
                   <span className="text-xs font-serif font-bold mt-1 group-hover:text-white flex items-center justify-between">
@@ -311,47 +311,47 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
       {/* =========================================================================
           SECTION 3: LIGHT — INTERACTIVE RESEARCH LIBRARY & CATEGORY CLUSTERS
       ========================================================================= */}
-      <section className="pt-8 md:pt-10 pb-16 md:pb-24 bg-[#F7F5EF] text-[#17213D] relative overflow-hidden">
+      <section className="pt-8 md:pt-10 pb-16 md:pb-24 bg-brand-ivory text-brand-navy relative overflow-hidden">
         {/* Subtle Luxury Watermark Grid */}
         <div 
           aria-hidden="true" 
-          className="pointer-events-none absolute inset-0 opacity-[0.03] bg-[linear-gradient(#D09A16_1px,transparent_1px),linear-gradient(90deg,#D09A16_1px,transparent_1px)] [background-size:48px_48px]" 
+          className="pointer-events-none absolute inset-0 opacity-[0.03] bg-[linear-gradient(var(--color-brand-gold)_1px,transparent_1px),linear-gradient(90deg,var(--color-brand-gold)_1px,transparent_1px)] [background-size:48px_48px]" 
         />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
           {/* Section Eyebrow & Title */}
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-6 md:mb-8 pb-5 border-b border-[#17213D]/10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-6 md:mb-8 pb-5 border-b border-brand-navy/10">
             <div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[#D09A16] text-[11px] font-bold uppercase tracking-[0.2em] mb-3">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-[11px] font-bold uppercase tracking-[0.2em] mb-3">
                 <FileText size={13} />
                 <span>{cms.researchLibrary?.badge || "Complete Archives • Intelligence Catalog"}</span>
               </div>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#17213D] tracking-tight leading-tight">
-                {cms.researchLibrary?.titleMain || "The Gurugram Real Estate "} <span className="italic font-serif text-[#D09A16]">{cms.researchLibrary?.titleItalic || "Research Library"}</span>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-brand-navy tracking-tight leading-tight">
+                {cms.researchLibrary?.titleMain || "The Gurugram Real Estate "} <span className="italic font-serif text-brand-gold">{cms.researchLibrary?.titleItalic || "Research Library"}</span>
               </h2>
             </div>
-            <p className="text-xs sm:text-sm text-[#566078] max-w-md font-sans leading-relaxed">
+            <p className="text-xs sm:text-sm text-brand-slate max-w-md font-sans leading-relaxed">
               {cms.researchLibrary?.description || "Explore our comprehensive archive of independent market analyses, builder floor valuation benchmarks, legal due diligence advisories, and corridor growth studies."}
             </p>
           </div>
 
           {/* Controls Bar: Category Filter Pills (No search bar) */}
           {/* Controls Bar: Category Filter Pills + View Switcher */}
-          <div className="bg-white rounded-2xl p-2.5 sm:p-3.5 border border-[#17213D]/10 shadow-[0_4px_20px_rgba(23,33,61,0.03)] mb-8 flex items-center justify-between gap-3">
+          <div className="bg-white rounded-2xl p-2.5 sm:p-3.5 border border-brand-navy/10 shadow-[0_4px_20px_rgba(23,33,61,0.03)] mb-8 flex items-center justify-between gap-3">
             <div className="flex items-center gap-2 overflow-x-auto luxury-scrollbar py-0.5 px-0.5 flex-1 min-w-0">
               <button
                 onClick={() => setSelectedCategory('all')}
                 className={`relative px-4 sm:px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                   selectedCategory === 'all'
-                    ? 'bg-[#17213D] text-white shadow-sm'
-                    : 'text-[#566078] hover:text-[#17213D] hover:bg-[#F7F5EF]'
+                    ? 'bg-brand-navy text-white shadow-sm'
+                    : 'text-brand-slate hover:text-brand-navy hover:bg-brand-ivory'
                 }`}
               >
                 {selectedCategory === 'all' && (
                   <motion.div
                     layoutId="activeFilterPill"
-                    className="absolute inset-0 bg-[#17213D] rounded-xl -z-10"
+                    className="absolute inset-0 bg-brand-navy rounded-xl -z-10"
                   />
                 )}
                 <span>All Analyses ({categoryCounts.all || 0})</span>
@@ -366,14 +366,14 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
                     onClick={() => setSelectedCategory(cat.slug)}
                     className={`relative px-4 sm:px-5 py-2.5 rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap shrink-0 ${
                       isSelected
-                        ? 'bg-[#17213D] text-white shadow-sm'
-                        : 'text-[#566078] hover:text-[#17213D] hover:bg-[#F7F5EF]'
+                        ? 'bg-brand-navy text-white shadow-sm'
+                        : 'text-brand-slate hover:text-brand-navy hover:bg-brand-ivory'
                     }`}
                   >
                     {isSelected && (
                       <motion.div
                         layoutId="activeFilterPill"
-                        className="absolute inset-0 bg-[#17213D] rounded-xl -z-10"
+                        className="absolute inset-0 bg-brand-navy rounded-xl -z-10"
                       />
                     )}
                     <span>{cat.name} ({count})</span>
@@ -383,14 +383,14 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
             </div>
 
             {/* View Switcher: Expanded Editorial vs Magazine Grid */}
-            <div className="hidden sm:flex items-center gap-1 pl-3 border-l border-[#17213D]/10 shrink-0">
+            <div className="hidden sm:flex items-center gap-1 pl-3 border-l border-brand-navy/10 shrink-0">
               <button
                 onClick={() => setViewMode('expanded')}
                 title="Expanded Editorial Cards (Full Width)"
                 className={`px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold ${
                   viewMode === 'expanded'
-                    ? 'bg-[#17213D] text-[#D09A16] shadow-sm'
-                    : 'text-[#566078] hover:text-[#17213D] hover:bg-[#F7F5EF]'
+                    ? 'bg-brand-navy text-brand-gold shadow-sm'
+                    : 'text-brand-slate hover:text-brand-navy hover:bg-brand-ivory'
                 }`}
               >
                 <LayoutList size={15} />
@@ -401,8 +401,8 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
                 title="Grid Cards"
                 className={`px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center gap-1.5 text-xs font-bold ${
                   viewMode === 'grid'
-                    ? 'bg-[#17213D] text-[#D09A16] shadow-sm'
-                    : 'text-[#566078] hover:text-[#17213D] hover:bg-[#F7F5EF]'
+                    ? 'bg-brand-navy text-brand-gold shadow-sm'
+                    : 'text-brand-slate hover:text-brand-navy hover:bg-brand-ivory'
                 }`}
               >
                 <LayoutGrid size={15} />
@@ -417,12 +417,12 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
             {/* LEFT: Articles Grid (8 cols) */}
             <div className="lg:col-span-8">
               
-              <div className="flex items-center justify-between mb-8 pb-4 border-b border-[#17213D]/10">
-                <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#D09A16] flex items-center gap-2">
+              <div className="flex items-center justify-between mb-8 pb-4 border-b border-brand-navy/10">
+                <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-gold flex items-center gap-2">
                   <BookOpen size={14} />
                   <span>Published Dossiers</span>
                 </span>
-                <span className="text-xs text-[#566078] font-medium">
+                <span className="text-xs text-brand-slate font-medium">
                   Showing {filteredPosts.length} {filteredPosts.length === 1 ? 'Article' : 'Articles'}
                 </span>
               </div>
@@ -440,11 +440,11 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
                       <Link
                         key={post._id || post.slug}
                         href={`/blog/${post.slug}`}
-                        className="group block cursor-pointer bg-white rounded-3xl border border-[#17213D]/10 hover:border-[#D09A16]/60 p-6 sm:p-7 shadow-sm hover:shadow-xl transition-all duration-300"
+                        className="group block cursor-pointer bg-white rounded-3xl border border-brand-navy/10 hover:border-brand-gold/60 p-6 sm:p-7 shadow-sm hover:shadow-xl transition-all duration-300"
                       >
                         <div className="flex flex-col md:flex-row items-stretch gap-6 md:gap-8">
                           {/* Large Sized Image Container with Ambient Backdrop */}
-                          <div className="relative w-full md:w-[46%] aspect-[4/3] sm:aspect-[16/10] md:aspect-auto md:min-h-[260px] rounded-2xl overflow-hidden bg-[#0A0E17] border border-[#17213D]/10 shrink-0 shadow-inner group-hover:border-[#D09A16]/40 transition-colors">
+                          <div className="relative w-full md:w-[46%] aspect-[4/3] sm:aspect-[16/10] md:aspect-auto md:min-h-[260px] rounded-2xl overflow-hidden bg-brand-obsidian border border-brand-navy/10 shrink-0 shadow-inner group-hover:border-brand-gold/40 transition-colors">
                             {/* Ambient Blurred Backdrop */}
                             <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
                               <Image
@@ -473,34 +473,34 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
                               {/* Meta Header */}
                               <div className="flex flex-wrap items-center gap-2 mb-3">
                                 {post.category && (
-                                  <span className="px-3 py-1 rounded-full bg-[#D09A16]/10 text-[#17213D] border border-[#D09A16]/30 text-[10px] font-bold uppercase tracking-wider">
+                                  <span className="px-3 py-1 rounded-full bg-brand-gold/10 text-brand-navy border border-brand-gold/30 text-[10px] font-bold uppercase tracking-wider">
                                     {post.category.name}
                                   </span>
                                 )}
                                 <span className="text-slate-400 text-xs">•</span>
-                                <span className="text-xs text-[#8892A6] flex items-center gap-1 font-medium">
-                                  <Clock size={12} className="text-[#D09A16]" />
+                                <span className="text-xs text-brand-muted flex items-center gap-1 font-medium">
+                                  <Clock size={12} className="text-brand-gold" />
                                   <span>{post.readingTime || 5} min read</span>
                                 </span>
                               </div>
 
                               {/* Title */}
-                              <h3 className="font-serif font-bold text-xl sm:text-2xl text-[#17213D] group-hover:text-[#D09A16] transition-colors leading-snug mb-3">
+                              <h3 className="font-serif font-bold text-xl sm:text-2xl text-brand-navy group-hover:text-brand-gold transition-colors leading-snug mb-3">
                                 {post.title}
                               </h3>
 
                               {/* Excerpt */}
-                              <p className="text-sm text-[#566078] line-clamp-3 leading-relaxed mb-6 font-sans">
+                              <p className="text-sm text-brand-slate line-clamp-3 leading-relaxed mb-6 font-sans">
                                 {post.excerpt}
                               </p>
                             </div>
 
                             {/* Card Footer */}
-                            <div className="pt-4 border-t border-[#17213D]/10 flex items-center justify-between text-xs">
-                              <span className="text-[#8892A6] font-medium">
+                            <div className="pt-4 border-t border-brand-navy/10 flex items-center justify-between text-xs">
+                              <span className="text-brand-muted font-medium">
                                 {post.author?.name || 'Saudagar Research Desk'}
                               </span>
-                              <div className="font-bold uppercase tracking-wider text-[#17213D] group-hover:text-[#D09A16] flex items-center gap-1.5 transition-colors">
+                              <div className="font-bold uppercase tracking-wider text-brand-navy group-hover:text-brand-gold flex items-center gap-1.5 transition-colors">
                                 <span>Read Full Dossier</span>
                                 <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                               </div>
@@ -522,24 +522,24 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
                       <Link
                         key={post._id || post.slug}
                         href={`/blog/${post.slug}`}
-                        className="group block cursor-pointer bg-white rounded-3xl border border-[#17213D]/10 hover:border-[#D09A16]/60 p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full"
+                        className="group block cursor-pointer bg-white rounded-3xl border border-brand-navy/10 hover:border-brand-gold/60 p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full"
                       >
                         <div>
                           {/* Top Meta Bar */}
                           <div className="flex items-center justify-between gap-2 mb-3.5">
                             {post.category ? (
-                              <span className="px-3 py-1 rounded-full bg-[#D09A16]/10 text-[#17213D] border border-[#D09A16]/30 text-[10px] font-bold uppercase tracking-wider">
+                              <span className="px-3 py-1 rounded-full bg-brand-gold/10 text-brand-navy border border-brand-gold/30 text-[10px] font-bold uppercase tracking-wider">
                                 {post.category.name}
                               </span>
                             ) : <span />}
-                            <span className="text-xs text-[#8892A6] flex items-center gap-1 font-medium">
-                              <Clock size={12} className="text-[#D09A16]" />
+                            <span className="text-xs text-brand-muted flex items-center gap-1 font-medium">
+                              <Clock size={12} className="text-brand-gold" />
                               <span>{post.readingTime || 5} min read</span>
                             </span>
                           </div>
 
                           {/* Image Container: Increased Height, Aspect-[4/3] Native Ratio */}
-                          <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-[#0A0E17] mb-5 border border-[#17213D]/10 shadow-inner group-hover:border-[#D09A16]/40 transition-colors">
+                          <div className="relative aspect-[4/3] w-full rounded-2xl overflow-hidden bg-brand-obsidian mb-5 border border-brand-navy/10 shadow-inner group-hover:border-brand-gold/40 transition-colors">
                             {/* Ambient Blurred Backdrop */}
                             <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-40">
                               <Image
@@ -563,21 +563,21 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
                           </div>
 
                           {/* Title & Excerpt */}
-                          <h3 className="font-serif font-bold text-lg sm:text-xl text-[#17213D] group-hover:text-[#D09A16] transition-colors leading-snug line-clamp-2 mb-3">
+                          <h3 className="font-serif font-bold text-lg sm:text-xl text-brand-navy group-hover:text-brand-gold transition-colors leading-snug line-clamp-2 mb-3">
                             {post.title}
                           </h3>
 
-                          <p className="text-xs text-[#566078] line-clamp-3 leading-relaxed mb-6 font-sans">
+                          <p className="text-xs text-brand-slate line-clamp-3 leading-relaxed mb-6 font-sans">
                             {post.excerpt}
                           </p>
                         </div>
 
                         {/* Card Footer */}
-                        <div className="pt-4 border-t border-[#17213D]/10 flex items-center justify-between text-xs text-[#8892A6]">
-                          <span className="font-medium text-[#8892A6]">
+                        <div className="pt-4 border-t border-brand-navy/10 flex items-center justify-between text-xs text-brand-muted">
+                          <span className="font-medium text-brand-muted">
                             {post.author?.name || 'Saudagar Desk'}
                           </span>
-                          <div className="font-bold uppercase tracking-wider text-[#17213D] group-hover:text-[#D09A16] flex items-center gap-1 transition-colors">
+                          <div className="font-bold uppercase tracking-wider text-brand-navy group-hover:text-brand-gold flex items-center gap-1 transition-colors">
                             <span>Read Dossier</span>
                             <ArrowRight size={13} className="group-hover:translate-x-0.5 transition-transform" />
                           </div>
@@ -588,17 +588,17 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
                 )
               ) : (
                 /* Empty Category State */
-                <div className="bg-white rounded-3xl p-12 text-center border border-[#17213D]/10 shadow-sm">
-                  <div className="w-14 h-14 rounded-2xl bg-[#D09A16]/10 text-[#D09A16] flex items-center justify-center mx-auto mb-4 font-bold">
+                <div className="bg-white rounded-3xl p-12 text-center border border-brand-navy/10 shadow-sm">
+                  <div className="w-14 h-14 rounded-2xl bg-brand-gold/10 text-brand-gold flex items-center justify-center mx-auto mb-4 font-bold">
                     <BookOpen size={24} />
                   </div>
-                  <h4 className="text-xl font-serif font-bold text-[#17213D] mb-2">No research dossiers found</h4>
-                  <p className="text-xs text-[#566078] max-w-md mx-auto mb-6">
+                  <h4 className="text-xl font-serif font-bold text-brand-navy mb-2">No research dossiers found</h4>
+                  <p className="text-xs text-brand-slate max-w-md mx-auto mb-6">
                     No articles currently published under this category. Explore other categories or view all analyses.
                   </p>
                   <button
                     onClick={() => setSelectedCategory('all')}
-                    className="px-6 py-2.5 rounded-xl bg-[#17213D] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#D09A16] hover:text-[#0A0E17] transition-all cursor-pointer"
+                    className="px-6 py-2.5 rounded-xl bg-brand-navy text-white text-xs font-bold uppercase tracking-wider hover:bg-brand-gold hover:text-brand-obsidian transition-all cursor-pointer"
                   >
                     View All Analyses
                   </button>
@@ -611,10 +611,10 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
             <div className="lg:col-span-4 space-y-10">
               
               {/* Widget 1: Most Read Analyses (Ranked 01-04) */}
-              <div className="bg-white rounded-3xl p-7 sm:p-8 border border-[#17213D]/10 shadow-sm">
-                <div className="flex items-center gap-2 mb-6 pb-3 border-b border-[#17213D]/10">
-                  <TrendingUp size={16} className="text-[#D09A16]" />
-                  <h3 className="text-lg font-serif font-bold text-[#17213D]">
+              <div className="bg-white rounded-3xl p-7 sm:p-8 border border-brand-navy/10 shadow-sm">
+                <div className="flex items-center gap-2 mb-6 pb-3 border-b border-brand-navy/10">
+                  <TrendingUp size={16} className="text-brand-gold" />
+                  <h3 className="text-lg font-serif font-bold text-brand-navy">
                     Most Read Intelligence
                   </h3>
                 </div>
@@ -623,9 +623,9 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
                   {popularStories.map((post, idx) => (
                     <div
                       key={post._id || post.slug}
-                      className="flex items-start gap-4 pb-5 border-b border-[#17213D]/10 last:border-b-0 last:pb-0 group"
+                      className="flex items-start gap-4 pb-5 border-b border-brand-navy/10 last:border-b-0 last:pb-0 group"
                     >
-                      <span className="font-serif font-bold text-2xl text-[#D09A16] shrink-0 w-7">
+                      <span className="font-serif font-bold text-2xl text-brand-gold shrink-0 w-7">
                         0{idx + 1}
                       </span>
                       <div className="flex-1">
@@ -634,7 +634,7 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
                             {post.category.name}
                           </span>
                         )}
-                        <h4 className="font-serif font-bold text-sm text-[#17213D] group-hover:text-[#D09A16] transition-colors leading-snug mb-1">
+                        <h4 className="font-serif font-bold text-sm text-brand-navy group-hover:text-brand-gold transition-colors leading-snug mb-1">
                           <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                         </h4>
                         <div className="flex items-center gap-3 text-[11px] text-slate-400">
@@ -642,7 +642,7 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
                           <span>•</span>
                           <Link
                             href={`/blog/${post.slug}`}
-                            className="font-bold text-[#17213D] hover:text-[#D09A16] transition-colors"
+                            className="font-bold text-brand-navy hover:text-brand-gold transition-colors"
                           >
                             Explore →
                           </Link>
@@ -654,15 +654,15 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
               </div>
 
               {/* Widget 2: Confidential Title Search & Valuation Callout */}
-              <div className="bg-gradient-to-br from-[#17213D] via-[#121A2F] to-[#0A0E17] text-white rounded-3xl p-7 sm:p-8 border border-[#D09A16]/30 shadow-xl relative overflow-hidden">
+              <div className="bg-gradient-to-br from-brand-navy via-brand-text-dark to-brand-obsidian text-white rounded-3xl p-7 sm:p-8 border border-brand-gold/30 shadow-xl relative overflow-hidden">
                 <div 
                   aria-hidden="true"
-                  className="absolute -right-10 -bottom-10 w-44 h-44 rounded-full bg-[#D09A16]/15 blur-2xl pointer-events-none"
+                  className="absolute -right-10 -bottom-10 w-44 h-44 rounded-full bg-brand-gold/15 blur-2xl pointer-events-none"
                 />
 
                 <div className="relative z-10">
-                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-[#D09A16]/40 text-[#D09A16] text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
-                    <ShieldCheck size={12} className="text-[#D09A16]" />
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-brand-gold/40 text-brand-gold text-[10px] font-bold uppercase tracking-[0.2em] mb-4">
+                    <ShieldCheck size={12} className="text-brand-gold" />
                     <span>Fiduciary Concierge</span>
                   </div>
 
@@ -679,7 +679,7 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
                         href={`https://wa.me/${(cms.newsletter?.whatsappNumber || '919718511207').replace(/[^0-9]/g, '')}`}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full py-3 px-4 rounded-xl bg-[#D09A16] hover:bg-[#E5AC2B] text-[#0A0E17] text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
+                        className="w-full py-3 px-4 rounded-xl bg-brand-gold hover:bg-brand-gold-light text-brand-obsidian text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
                       >
                         <WhatsAppIcon size={15} />
                         <span>WhatsApp Advisory Desk</span>
@@ -689,7 +689,7 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
                         href="tel:+919811221207"
                         className="w-full py-3 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors cursor-pointer"
                       >
-                        <PhoneCall size={14} className="text-[#D09A16]" />
+                        <PhoneCall size={14} className="text-brand-gold" />
                         <span>Direct Line (+91 98112 21207)</span>
                       </a>
                     </div>

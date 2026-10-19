@@ -67,7 +67,7 @@ export default function HeroEditor({ formData, updateField }) {
       {/* Hero Media: Desktop Video, Mobile Video, & Fallback/Poster */}
       <div className="pt-6 border-t border-white/10 space-y-5">
         <div>
-          <h4 className="text-sm font-serif font-bold text-[#D09A16]">
+          <h4 className="text-sm font-serif font-bold text-brand-gold">
             Hero Media &amp; Streaming Background Videos
           </h4>
           <p className="text-xs text-slate-400">
@@ -109,7 +109,7 @@ export default function HeroEditor({ formData, updateField }) {
 
       {/* Search Console & Trending Filters */}
       <div className="pt-6 border-t border-white/10 space-y-4">
-        <h4 className="text-sm font-serif font-bold text-[#D09A16]">
+        <h4 className="text-sm font-serif font-bold text-brand-gold">
           Search Console &amp; Quick-Filter Capsules
         </h4>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

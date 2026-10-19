@@ -154,7 +154,7 @@ export default function AboutVideoShowcase() {
     <section
       ref={sectionRef}
       id="video-tour"
-      className="relative py-16 md:py-24 bg-[#F7F5EF] text-[#17213D] overflow-hidden border-t border-[#17213D]/10"
+      className="relative py-16 md:py-24 bg-brand-ivory-warm text-brand-navy overflow-hidden border-t border-brand-navy/10"
     >
       {/* Ambient Lighting */}
       <div
@@ -169,17 +169,17 @@ export default function AboutVideoShowcase() {
           ref={headerRef}
           className="text-center max-w-3xl mx-auto mb-12 md:mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#D09A16]/10 border border-[#D09A16]/30 text-[#D09A16] text-xs font-bold tracking-[0.25em] uppercase mb-4">
-            <Film size={13} className="text-[#D09A16]" />
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-xs font-bold tracking-[0.25em] uppercase mb-4">
+            <Film size={13} className="text-brand-gold" />
             <span>{cms.badge || "Cinematic Film & Legacy"}</span>
           </div>
 
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-[#17213D] mb-4 leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-brand-navy mb-4 leading-tight">
             {cms.titleMain || "Inside Saudagar Properties: "} <br />
-            <span className="italic font-serif text-[#D09A16]">{cms.titleItalic || "Two Decades of Excellence"}</span>
+            <span className="italic font-serif text-brand-gold">{cms.titleItalic || "Two Decades of Excellence"}</span>
           </h2>
 
-          <p className="text-sm sm:text-base text-[#566078] font-normal leading-relaxed">
+          <p className="text-sm sm:text-base text-brand-slate font-normal leading-relaxed">
             {cms.subtitle || "Take an exclusive inside look at our bespoke advisory, hands-on founder dedication, and turnkey property acquisitions across DLF Gurugram."}
           </p>
         </div>
@@ -194,7 +194,7 @@ export default function AboutVideoShowcase() {
             ref={containerRef}
             onMouseMove={handleMouseMove}
             onMouseLeave={() => isPlaying && setShowControls(false)}
-            className="group relative rounded-3xl sm:rounded-[36px] overflow-hidden border border-[#D09A16]/30 bg-slate-950 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8),0_0_50px_rgba(208, 154, 22,0.2)] aspect-video flex items-center justify-center cursor-pointer select-none"
+            className="group relative rounded-3xl sm:rounded-[36px] overflow-hidden border border-brand-gold/30 bg-slate-950 shadow-[0_25px_60px_-15px_rgba(0,0,0,0.8),0_0_50px_rgba(208, 154, 22,0.2)] aspect-video flex items-center justify-center cursor-pointer select-none"
             onClick={togglePlay}
           >
             {/* The Video Element */}
@@ -223,14 +223,14 @@ export default function AboutVideoShowcase() {
                 {!isPlaying && (
                   <div
                     ref={playButtonGlowRef}
-                    className="absolute -inset-4 rounded-full bg-[#D09A16]/40 pointer-events-none"
+                    className="absolute -inset-4 rounded-full bg-brand-gold/40 pointer-events-none"
                   />
                 )}
-                <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-[#D09A16] text-[#0C101A] flex items-center justify-center shadow-[0_0_40px_rgba(208, 154, 22,0.6)] transform transition-transform group-hover:scale-105 active:scale-95">
+                <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-brand-gold text-brand-dark flex items-center justify-center shadow-[0_0_40px_rgba(208, 154, 22,0.6)] transform transition-transform group-hover:scale-105 active:scale-95">
                   {isPlaying ? (
-                    <Pause size={34} className="fill-[#0C101A]" />
+                    <Pause size={34} className="fill-brand-dark" />
                   ) : (
-                    <Play size={34} className="fill-[#0C101A] ml-1" />
+                    <Play size={34} className="fill-brand-dark ml-1" />
                   )}
                 </div>
               </div>
@@ -238,7 +238,7 @@ export default function AboutVideoShowcase() {
 
             {/* Top Badges Bar */}
             <div className="absolute top-4 sm:top-6 left-4 sm:left-6 right-4 sm:right-6 flex items-center justify-between pointer-events-none">
-              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/80 backdrop-blur-md border border-[#D09A16]/40 text-[#D09A16] text-[10px] font-bold tracking-widest uppercase">
+              <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-950/80 backdrop-blur-md border border-brand-gold/40 text-brand-gold text-[10px] font-bold tracking-widest uppercase">
                 <CheckCircle2 size={12} />
                 <span>Official Walkthrough</span>
               </div>
@@ -259,7 +259,7 @@ export default function AboutVideoShowcase() {
                 className="w-full h-1.5 bg-white/20 hover:h-2.5 rounded-full mb-3 cursor-pointer transition-all duration-200 relative group/bar"
               >
                 <div
-                  className="h-full bg-[#D09A16] rounded-full relative"
+                  className="h-full bg-brand-gold rounded-full relative"
                   style={{ width: `${progress}%` }}
                 >
                   <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 rounded-full bg-white opacity-0 group-hover/bar:opacity-100 transition-opacity shadow-sm" />
