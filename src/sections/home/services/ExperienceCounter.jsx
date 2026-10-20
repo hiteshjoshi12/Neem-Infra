@@ -435,7 +435,7 @@ export default function ExperienceCounter() {
               </p>
 
               {/* Authority tag line */}
-              <div className="mt-4 flex items-center gap-2 text-[9px] font-semibold uppercase tracking-[0.18em] text-brand-slate/75">
+              <div className="mt-4 flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.18em] text-brand-slate">
                 <span className="h-1.5 w-1.5 rounded-full bg-brand-gold" />
                 <span>Premier Real Estate Consultancy · DLF Gurugram</span>
               </div>
@@ -590,7 +590,7 @@ export default function ExperienceCounter() {
               BOTTOM ARCHITECTURAL GROUNDING RIBBON
           ---------------------------------------------------- */}
           <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-brand-navy/10 pt-5 sm:mt-9 sm:pt-6">
-            <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5 text-[8.5px] font-semibold uppercase tracking-[0.2em] text-brand-slate/75">
+            <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5 text-[8.5px] font-bold uppercase tracking-[0.2em] text-brand-slate">
               <span>DLF PHASE 1–5 SPECIALISTS</span>
               <span className="h-1 w-1 rounded-full bg-brand-gold" />
               <span>RERA COMPLIANT ADVISORY</span>

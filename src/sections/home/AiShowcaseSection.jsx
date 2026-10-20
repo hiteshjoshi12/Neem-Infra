@@ -603,11 +603,11 @@ export default function AiShowcaseSection() {
 
             <span
               className="
-                text-[7px]
+                text-[8px]
                 font-bold
                 uppercase
                 tracking-[0.22em]
-                text-brand-navy/40
+                text-brand-slate
               "
             >
               RERA · REPUTATION · LOCAL AUTHORITY
@@ -678,11 +678,11 @@ export default function AiShowcaseSection() {
 
           <span
             className="
-              text-[8px]
+              text-[8.5px]
               font-bold
               uppercase
               tracking-[0.22em]
-              text-brand-navy/40
+              text-brand-slate
             "
           >
             One verified query · Three independent AI engines

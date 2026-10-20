@@ -719,7 +719,7 @@ export default function DlfPropertyCallout() {
           </div>
 
           {/* Minimal Brand Stamp Hairline */}
-          <div className="mt-8 flex items-center justify-between border-t border-brand-navy/10 pt-4 text-[7px] uppercase tracking-[0.24em] text-brand-slate/60">
+          <div className="mt-8 flex items-center justify-between border-t border-brand-navy/10 pt-4 text-[7.5px] font-semibold uppercase tracking-[0.24em] text-brand-slate">
             <div className="flex items-center gap-2">
               <Check size={9} className="text-brand-gold" />
               <span>SAUDAGAR PROPERTIES PVT LTD</span>

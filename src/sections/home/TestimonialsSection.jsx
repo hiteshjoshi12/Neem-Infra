@@ -547,7 +547,7 @@ export default function TestimonialsSection() {
               <ShieldCheck size={16} />
             </div>
             <div>
-              <span className="block text-[7px] font-bold uppercase tracking-[0.22em] text-brand-slate/60">
+              <span className="block text-[8px] font-bold uppercase tracking-[0.22em] text-brand-slate">
                 CLIENT EXPERIENCE
               </span>
               <span className="mt-1 block font-serif text-base text-brand-navy font-bold">

@@ -271,7 +271,7 @@ export default function HowWeWorkProcess() {
           </div>
 
           {/* Location Annotation */}
-          <div className="mt-4 flex items-center justify-center gap-2.5 text-[8px] font-bold uppercase tracking-[0.24em] text-brand-navy/40">
+          <div className="mt-4 flex items-center justify-center gap-2.5 text-[8.5px] font-bold uppercase tracking-[0.24em] text-brand-slate">
             <span className="h-1.5 w-1.5 rounded-full bg-brand-gold" />
             <span>THE THREE-STAGE PROTOCOL</span>
             <span>·</span>
@@ -420,9 +420,9 @@ export default function HowWeWorkProcess() {
                   </div>
 
                   {/* Architectural Blueprint Footer */}
-                  <div className="mt-6 flex items-center justify-between font-mono text-[7px] uppercase tracking-[0.22em] text-brand-navy/35">
+                  <div className="mt-6 flex items-center justify-between font-mono text-[8px] font-semibold uppercase tracking-[0.22em] text-brand-slate">
                     <span>SAUDAGAR PROPERTIES</span>
-                    <span className="text-brand-gold-deep">
+                    <span className="text-brand-gold-deep font-bold">
                       STAGE {step.step} / 03
                     </span>
                   </div>

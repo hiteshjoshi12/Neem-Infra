@@ -241,7 +241,7 @@ export default function NewsletterSection({ isEmbedded = false }) {
                         newsData.placeholder ||
                         "Enter your confidential email..."
                       }
-                      className="w-full bg-transparent text-xs sm:text-sm text-brand-navy outline-none placeholder:text-brand-slate/60 font-light"
+                      className="w-full bg-transparent text-xs sm:text-sm text-brand-navy outline-none placeholder:text-brand-slate font-medium"
                     />
                   </div>
 
@@ -326,7 +326,7 @@ export default function NewsletterSection({ isEmbedded = false }) {
                   SAUDAGAR MARKET REPORT
                 </span>
               </div>
-              <span className="font-mono text-[8px] text-brand-slate/60">
+              <span className="font-mono text-[8px] font-semibold text-brand-slate">
                 Q1 · 2026 EDITION
               </span>
             </div>
@@ -368,7 +368,7 @@ export default function NewsletterSection({ isEmbedded = false }) {
             </div>
 
             {/* Document Stamp Seal */}
-            <div className="mt-5 flex items-center justify-between border-t border-brand-navy/10 pt-3.5 font-mono text-[7px] uppercase tracking-[0.24em] text-brand-slate/60">
+            <div className="mt-5 flex items-center justify-between border-t border-brand-navy/10 pt-3.5 font-mono text-[7.5px] font-semibold uppercase tracking-[0.24em] text-brand-slate">
               <span>DLF GURUGRAM DESK</span>
               <span className="text-brand-gold font-bold">CONFIDENTIAL DISPATCH</span>
             </div>
