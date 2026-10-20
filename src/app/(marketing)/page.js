@@ -18,6 +18,7 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 import { getDynamicPageSeo } from '@/lib/seo/dynamicSeo';
+import LeadInquiryModal from '@/components/home/LeadInquiryModal';
 
 export async function generateMetadata() {
   return await getDynamicPageSeo('/', {
@@ -33,6 +34,9 @@ export default function Home() {
   return (
     <div className="w-full flex flex-col min-h-screen bg-brand-ivory text-brand-navy selection:bg-brand-gold selection:text-brand-navy-deep">
       <BreadcrumbJsonLd items={breadcrumbs} />
+
+      {/* 5-Second Timed Consultation Popup */}
+      <LeadInquiryModal />
 
       {/* 1. Hero Section */}
       <Hero />

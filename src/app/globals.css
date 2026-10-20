@@ -31,17 +31,17 @@
   --color-brand-cream-border: #C8DCF0;
   --color-brand-white: #FFFFFF;
 
-  /* 4. High-Contrast Typography & Royal Slate System */
-  --color-brand-text-dark: #0F172A;
-  --color-brand-slate: #2B3A55;
-  --color-brand-slate-light: #526585;
-  --color-brand-muted: #7E90B0;
+  /* 4. High-Contrast Typography & Royal Slate System - Crisp, Authoritative & Prominent */
+  --color-brand-text-dark: #070B14;
+  --color-brand-slate: #0F172A;
+  --color-brand-slate-light: #1E293B;
+  --color-brand-muted: #334155;
   --color-brand-text-on-dark: #FFFFFF;
-  --color-brand-text-on-dark-muted: #D1DDF0;
-  --color-brand-text-dim: #8FA3C7;
+  --color-brand-text-on-dark-muted: #E2E8F0;
+  --color-brand-text-dim: #94A3B8;
 
   /* Borders & Dividers */
-  --color-border-light: rgba(22, 36, 62, 0.10);
+  --color-border-light: rgba(17, 28, 53, 0.12);
   --color-border-gold: rgba(240, 185, 43, 0.45);
 }
 
@@ -83,9 +83,10 @@ body {
   color: var(--color-brand-text-dark);
   background-color: var(--color-brand-ivory);
   letter-spacing: -0.01em;
+  font-weight: 450;
 }
 
-/* Headings Typography Enhancement - Razor-sharp and legible */
+/* Headings Typography Enhancement - Razor-sharp, authoritative and legible */
 h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.02em;
   text-wrap: balance;
@@ -104,6 +105,22 @@ h1, h2, h3, h4, h5, h6 {
 /* Paragraph reading comfort */
 p {
   line-height: 1.65;
+}
+
+/* Light sections and cards: guarantee crisp, prominent dark text */
+.section-light,
+.section-cream,
+.card-light {
+  color: var(--color-brand-text-dark);
+}
+
+/* Enhance font rendering: prevent ultra-thin washed-out text */
+.font-light {
+  font-weight: 400 !important;
+}
+
+.font-normal {
+  font-weight: 450;
 }
 
 /* ========================================================

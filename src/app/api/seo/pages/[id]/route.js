@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import mongoose from 'mongoose';
 import { connectDB } from '@/lib/mongodb';
 import Page from '@/models/Page';
 import Redirect from '@/models/Redirect';
@@ -6,14 +7,46 @@ import { requireAdmin } from '@/lib/auth/authGuard';
 import { invalidateSeoCache } from '@/lib/seo/dynamicSeo';
 import { normalizePath } from '@/lib/seo/metadataHelper';
 
+/**
+ * Flexible page finder by ObjectId OR slug/route
+ */
+async function findPageByIdOrSlug(identifier) {
+  if (!identifier) return null;
+  const decoded = decodeURIComponent(String(identifier)).trim();
+
+  // 1. Try finding by MongoDB ObjectId
+  if (mongoose.isValidObjectId(decoded)) {
+    const byId = await Page.findById(decoded);
+    if (byId) return byId;
+  }
+
+  // 2. Try finding by slug variations
+  const clean = decoded.startsWith('/') ? decoded : `/${decoded}`;
+  const slugVariations = [
+    clean,
+    decoded,
+    clean.toLowerCase(),
+    decoded.toLowerCase(),
+    `/property/${decoded.replace(/^\//, '')}`,
+    `/services/${decoded.replace(/^\//, '')}`,
+  ];
+
+  return await Page.findOne({ slug: { $in: slugVariations } });
+}
+
 export async function GET(req, { params }) {
   try {
     await connectDB();
-    const { id } = await params;
+    const resolvedParams = await params;
+    const id = resolvedParams?.id;
 
-    const page = await Page.findById(id).lean();
+    if (!id) {
+      return NextResponse.json({ success: false, message: 'Missing page ID or slug' }, { status: 400 });
+    }
+
+    const page = await findPageByIdOrSlug(id);
     if (!page) {
-      return NextResponse.json({ success: false, message: 'Page not found' }, { status: 404 });
+      return NextResponse.json({ success: false, message: `Page '${id}' not found` }, { status: 404 });
     }
 
     return NextResponse.json({
@@ -29,13 +62,16 @@ export async function PUT(req, { params }) {
   try {
     const admin = await requireAdmin(req);
     await connectDB();
-    const { id } = await params;
+    const resolvedParams = await params;
+    const id = resolvedParams?.id;
     const body = await req.json();
 
-    const existingPage = await Page.findById(id);
+    const existingPage = await findPageByIdOrSlug(id);
     if (!existingPage) {
-      return NextResponse.json({ success: false, message: 'Page not found' }, { status: 404 });
+      return NextResponse.json({ success: false, message: `Page '${id}' not found` }, { status: 404 });
     }
+
+    const realId = existingPage._id;
 
     // Handle slug change
     let newSlug = existingPage.slug;
@@ -46,7 +82,7 @@ export async function PUT(req, { params }) {
       }
 
       newSlug = normalizePath(body.slug);
-      const duplicate = await Page.findOne({ slug: newSlug, _id: { $ne: id } });
+      const duplicate = await Page.findOne({ slug: newSlug, _id: { $ne: realId } });
       if (duplicate) {
         return NextResponse.json({ success: false, message: `A page with slug '${newSlug}' already exists.` }, { status: 400 });
       }
@@ -81,7 +117,7 @@ export async function PUT(req, { params }) {
     }
 
     const updated = await Page.findByIdAndUpdate(
-      id,
+      realId,
       {
         $set: {
           ...body,
@@ -112,11 +148,12 @@ export async function DELETE(req, { params }) {
   try {
     await requireAdmin(req);
     await connectDB();
-    const { id } = await params;
+    const resolvedParams = await params;
+    const id = resolvedParams?.id;
 
-    const page = await Page.findById(id);
+    const page = await findPageByIdOrSlug(id);
     if (!page) {
-      return NextResponse.json({ success: false, message: 'Page not found' }, { status: 404 });
+      return NextResponse.json({ success: false, message: `Page '${id}' not found` }, { status: 404 });
     }
 
     if (page.pageType === 'system') {
@@ -126,7 +163,7 @@ export async function DELETE(req, { params }) {
       );
     }
 
-    await Page.findByIdAndDelete(id);
+    await Page.findByIdAndDelete(page._id);
     invalidateSeoCache();
 
     return NextResponse.json({

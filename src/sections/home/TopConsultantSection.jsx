@@ -145,7 +145,7 @@ export default function TopConsultantSection() {
             />
           </div>
 
-          <p className="text-sm md:text-base text-brand-slate font-normal max-w-md leading-relaxed border-l-2 border-brand-gold pl-4">
+          <p className="text-sm md:text-base text-brand-slate font-medium max-w-md leading-relaxed border-l-2 border-brand-gold pl-4">
             {summaryQuote}
           </p>
         </div>
@@ -170,11 +170,11 @@ export default function TopConsultantSection() {
                   <span>{cardBadge}</span>
                 </div>
 
-                <p className="text-base md:text-lg text-brand-navy font-normal leading-relaxed mb-8">
+                <p className="text-base md:text-lg text-brand-navy font-medium leading-relaxed mb-8">
                   {paragraph1}
                 </p>
 
-                <p className="text-sm md:text-base text-brand-slate font-normal leading-relaxed mb-10">
+                <p className="text-sm md:text-base text-brand-slate font-medium leading-relaxed mb-10">
                   {paragraph2}
                 </p>
               </div>

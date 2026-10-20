@@ -290,12 +290,12 @@ export default function HowWeWorkProcess() {
           </h2>
 
           {/* Editorial Description */}
-          <p className="mt-5 text-sm font-light leading-relaxed text-brand-navy/65 sm:text-base">
+          <p className="mt-5 text-sm font-medium leading-relaxed text-brand-slate sm:text-base">
             {description}
           </p>
 
           {/* Brand Philosophy Anchor */}
-          <div className="mt-6 flex items-center justify-center gap-3 text-[7px] font-semibold uppercase tracking-[0.28em] text-brand-navy/30">
+          <div className="mt-6 flex items-center justify-center gap-3 text-[7px] font-semibold uppercase tracking-[0.28em] text-brand-slate-light">
             <span>CURATED</span>
             <span className="h-1 w-1 rounded-full bg-brand-gold" />
             <span>CONSIDERED</span>
@@ -341,7 +341,7 @@ export default function HowWeWorkProcess() {
                       <span className="font-serif text-3xl font-light leading-none text-brand-gold sm:text-4xl">
                         {step.step}
                       </span>
-                      <span className="text-[8px] font-bold uppercase tracking-[0.24em] text-brand-navy/50">
+                      <span className="text-[8px] font-bold uppercase tracking-[0.24em] text-brand-slate-light">
                         {step.phaseTag}
                       </span>
                     </div>
@@ -377,7 +377,7 @@ export default function HowWeWorkProcess() {
                   </h3>
 
                   {/* Stage Description */}
-                  <p className="mt-3 text-xs font-light leading-relaxed text-brand-navy/70 sm:text-[13px]">
+                  <p className="mt-3 text-xs font-normal leading-relaxed text-brand-slate sm:text-[13px]">
                     {step.imageText}
                   </p>
 
@@ -412,7 +412,7 @@ export default function HowWeWorkProcess() {
                             ADVISORY DIRECTIVE
                           </span>
                         </div>
-                        <p className="text-[11px] font-normal leading-relaxed text-brand-navy/75">
+                        <p className="text-[11px] font-medium leading-relaxed text-brand-slate">
                           {step.chatText}
                         </p>
                       </div>

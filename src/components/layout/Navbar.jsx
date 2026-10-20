@@ -102,10 +102,10 @@ export default function Navbar() {
                 />
               </div>
               <div className="flex flex-col justify-center">
-                <span className="font-serif text-sm sm:text-base md:text-lg font-bold tracking-tight text-brand-navy group-hover:text-brand-gold transition-colors leading-none">
+                <span className="font-sans text-sm sm:text-base md:text-lg font-extrabold tracking-wider uppercase text-brand-navy group-hover:text-brand-gold transition-colors leading-tight">
                   Saudagar
                 </span>
-                <span className="text-[8px] sm:text-[9px] md:text-[10px] font-bold tracking-[0.26em] uppercase text-brand-gold mt-1 leading-none">
+                <span className="text-[8px] sm:text-[9px] md:text-[10px] font-bold tracking-[0.28em] uppercase text-brand-gold mt-0.5 leading-none">
                   Properties
                 </span>
               </div>

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
+import { useRouter, useParams } from 'next/navigation';
 import {
   Save,
   ArrowLeft,
@@ -37,14 +37,19 @@ import {
 import api from '@/services/api';
 import ImageUploadInput from '@/components/admin/ImageUploadInput';
 
-export default function SeoPageEditor({ pageId = null, isNew = false }) {
+export default function SeoPageEditor({ pageId: propPageId = null, isNew = false }) {
   const router = useRouter();
+  const routeParams = useParams();
+  const rawId = propPageId || routeParams?.id;
+  const pageId = rawId ? decodeURIComponent(rawId) : null;
 
   const [activeTab, setActiveTab] = useState('general'); // general, meta, robots, social, schema, breadcrumbs, faq, preview
   const [serpView, setSerpView] = useState('desktop'); // desktop, mobile
   const [socialView, setSocialView] = useState('facebook'); // facebook, twitter
 
   const [loading, setLoading] = useState(!isNew);
+  const [loadError, setLoadError] = useState('');
+  const [actualPageId, setActualPageId] = useState(pageId);
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState({ type: '', message: '' });
 
@@ -89,58 +94,67 @@ export default function SeoPageEditor({ pageId = null, isNew = false }) {
   const [newKeyword, setNewKeyword] = useState('');
 
   // Load existing page data if editing
-  useEffect(() => {
-    if (!isNew && pageId) {
-      async function loadPage() {
-        try {
-          setLoading(true);
-          const res = await api.getSeoPage(pageId);
-          if (res?.success && res.data) {
-            const d = res.data;
-            setFormData({
-              title: d.title || '',
-              slug: d.slug || '',
-              pageType: d.pageType || 'custom',
-              status: d.status || 'published',
-              h1: d.h1 || '',
-              h2: d.h2 || '',
-              content: d.content || '',
-              sections: Array.isArray(d.sections) ? d.sections : [],
-              metaTitle: d.metaTitle || '',
-              metaDescription: d.metaDescription || '',
-              canonicalUrl: d.canonicalUrl || '',
-              focusKeywords: Array.isArray(d.focusKeywords) ? d.focusKeywords : [],
-              robots: {
-                index: d.robots?.index !== false,
-                follow: d.robots?.follow !== false,
-                noarchive: Boolean(d.robots?.noarchive),
-                nosnippet: Boolean(d.robots?.nosnippet),
-              },
-              ogTitle: d.ogTitle || '',
-              ogDescription: d.ogDescription || '',
-              ogImage: d.ogImage || '',
-              ogImageAlt: d.ogImageAlt || '',
-              ogType: d.ogType || 'website',
-              twitterCard: d.twitterCard || 'summary_large_image',
-              breadcrumbs: Array.isArray(d.breadcrumbs) && d.breadcrumbs.length > 0 ? d.breadcrumbs : [{ name: 'Home', url: '/' }],
-              schemaType: d.schemaType || 'WebPage',
-              customSchemaJson: d.customSchemaJson || '',
-              faq: Array.isArray(d.faq) ? d.faq : [],
-              internalLinks: Array.isArray(d.internalLinks) ? d.internalLinks : [],
-              featuredImage: d.featuredImage || '',
-              featuredImageAlt: d.featuredImageAlt || '',
-              createRedirectOnSlugChange: true,
-            });
-            setInitialSlug(d.slug || '');
-          }
-        } catch (err) {
-          showToast('error', err.message || 'Failed to load page');
-        } finally {
-          setLoading(false);
-        }
-      }
-      loadPage();
+  const loadPageData = async () => {
+    if (isNew || !pageId) {
+      setLoading(false);
+      return;
     }
+    try {
+      setLoading(true);
+      setLoadError('');
+      const res = await api.getSeoPage(pageId);
+      if (res?.success && res.data) {
+        const d = res.data;
+        if (d._id) setActualPageId(d._id);
+        setFormData({
+          title: d.title || '',
+          slug: d.slug || '',
+          pageType: d.pageType || 'custom',
+          status: d.status || 'published',
+          h1: d.h1 || '',
+          h2: d.h2 || '',
+          content: d.content || '',
+          sections: Array.isArray(d.sections) ? d.sections : [],
+          metaTitle: d.metaTitle || '',
+          metaDescription: d.metaDescription || '',
+          canonicalUrl: d.canonicalUrl || '',
+          focusKeywords: Array.isArray(d.focusKeywords) ? d.focusKeywords : [],
+          robots: {
+            index: d.robots?.index !== false,
+            follow: d.robots?.follow !== false,
+            noarchive: Boolean(d.robots?.noarchive),
+            nosnippet: Boolean(d.robots?.nosnippet),
+          },
+          ogTitle: d.ogTitle || '',
+          ogDescription: d.ogDescription || '',
+          ogImage: d.ogImage || '',
+          ogImageAlt: d.ogImageAlt || '',
+          ogType: d.ogType || 'website',
+          twitterCard: d.twitterCard || 'summary_large_image',
+          breadcrumbs: Array.isArray(d.breadcrumbs) && d.breadcrumbs.length > 0 ? d.breadcrumbs : [{ name: 'Home', url: '/' }],
+          schemaType: d.schemaType || 'WebPage',
+          customSchemaJson: d.customSchemaJson || '',
+          faq: Array.isArray(d.faq) ? d.faq : [],
+          internalLinks: Array.isArray(d.internalLinks) ? d.internalLinks : [],
+          featuredImage: d.featuredImage || '',
+          featuredImageAlt: d.featuredImageAlt || '',
+          createRedirectOnSlugChange: true,
+        });
+        setInitialSlug(d.slug || '');
+      } else {
+        setLoadError(res?.message || 'Page record not found');
+      }
+    } catch (err) {
+      console.warn('[SeoPageEditor] Failed to load page:', err);
+      setLoadError(err.message || 'Failed to load page data');
+      showToast('error', err.message || 'Failed to load page');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    loadPageData();
   }, [pageId, isNew]);
 
   const showToast = (type, message) => {
@@ -266,7 +280,8 @@ export default function SeoPageEditor({ pageId = null, isNew = false }) {
           }, 1000);
         }
       } else {
-        const res = await api.updateSeoPage(pageId, formData);
+        const targetId = actualPageId || pageId;
+        const res = await api.updateSeoPage(targetId, formData);
         if (res.success) {
           showToast('success', 'Page & SEO settings updated successfully!');
           setInitialSlug(formData.slug);
@@ -408,9 +423,38 @@ export default function SeoPageEditor({ pageId = null, isNew = false }) {
         })}
       </div>
 
-      {/* ========================================================================= */}
-      {/* TAB 1: GENERAL & CONTENT                                                   */}
-      {/* ========================================================================= */}
+      {/* Tabs Content */}
+      {loading ? (
+        <div className="flex flex-col items-center justify-center min-h-[380px] p-12 text-center rounded-3xl bg-brand-navy/40 border border-white/10 space-y-4 shadow-2xl">
+          <RefreshCw className="animate-spin text-brand-gold" size={36} />
+          <div>
+            <h3 className="text-base font-serif font-bold text-white">Loading Page SEO & Metadata...</h3>
+            <p className="text-xs text-brand-text-dim mt-1 max-w-md mx-auto">
+              Fetching verified index directives, meta tags, H1/H2 headlines, and structured schemas from MongoDB.
+            </p>
+          </div>
+        </div>
+      ) : loadError ? (
+        <div className="p-10 text-center rounded-3xl bg-rose-950/40 border border-rose-500/30 space-y-4 shadow-2xl">
+          <AlertCircle className="text-rose-400 mx-auto" size={40} />
+          <div>
+            <h3 className="text-base font-serif font-bold text-white">Failed to Load Page SEO Data</h3>
+            <p className="text-xs text-rose-300 mt-1 max-w-md mx-auto">{loadError}</p>
+          </div>
+          <button
+            type="button"
+            onClick={loadPageData}
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-brand-gold text-brand-navy-deep text-xs font-bold uppercase tracking-wider hover:brightness-110 shadow-lg"
+          >
+            <RefreshCw size={14} />
+            <span>Retry Loading</span>
+          </button>
+        </div>
+      ) : (
+        <>
+          {/* ========================================================================= */}
+          {/* TAB 1: GENERAL & CONTENT                                                   */}
+          {/* ========================================================================= */}
       {activeTab === 'general' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-6">
@@ -521,6 +565,22 @@ export default function SeoPageEditor({ pageId = null, isNew = false }) {
                 placeholder="Write your editorial page copy, paragraphs, bullet points, and asset overviews here..."
                 className="w-full px-4 py-3 rounded-2xl bg-brand-navy-deep border border-white/15 text-white placeholder-gray-500 focus:outline-none focus:border-brand-gold font-mono text-sm leading-relaxed"
               />
+
+              {!formData.content && (formData.h1 || formData.metaDescription) && (
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 p-3.5 rounded-xl bg-brand-gold/10 border border-brand-gold/20 text-xs text-brand-gold">
+                  <span>Draft body copy from H1 headline & meta summary:</span>
+                  <button
+                    type="button"
+                    onClick={() => setFormData(prev => ({
+                      ...prev,
+                      content: `# ${prev.h1 || prev.title}\n\n${prev.h2 ? `## ${prev.h2}\n\n` : ''}${prev.metaDescription || ''}\n\n### Overview\nWelcome to ${prev.title || 'this page'}. Saudagar Properties delivers dedicated real estate advisory and transaction facilitation across Gurugram.`
+                    }))}
+                    className="px-3 py-1.5 rounded-lg bg-brand-gold text-brand-navy-deep font-bold hover:brightness-110 self-start sm:self-auto shrink-0 transition-all shadow"
+                  >
+                    Auto-Fill Body Content
+                  </button>
+                </div>
+              )}
             </div>
           </div>
 
@@ -1342,6 +1402,8 @@ export default function SeoPageEditor({ pageId = null, isNew = false }) {
             </div>
           </div>
         </div>
+      )}
+        </>
       )}
     </div>
   );

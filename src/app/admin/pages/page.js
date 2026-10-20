@@ -336,10 +336,18 @@ export default function AdminPagesHub() {
               <div className="flex items-center gap-2 pt-2">
                 <Link
                   href={page.editUrl}
-                  className="flex-1 py-2.5 px-4 rounded-xl bg-gradient-to-r from-brand-gold to-brand-gold hover:brightness-110 text-brand-dark font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-[0_2px_10px_rgba(208,154,22,0.2)]"
+                  className="flex-1 py-2.5 px-3 rounded-xl bg-gradient-to-r from-brand-gold to-brand-gold hover:brightness-110 text-brand-dark font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-1.5 transition-all shadow-[0_2px_10px_rgba(208,154,22,0.2)]"
                 >
                   <Edit3 size={13} />
                   <span>Edit Content</span>
+                </Link>
+                <Link
+                  href={`/admin/seo/pages/${encodeURIComponent(page.route)}`}
+                  className="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-brand-gold hover:text-white transition-colors flex items-center gap-1.5 text-xs font-semibold"
+                  title="Edit SEO & Meta Tags"
+                >
+                  <Search size={13} />
+                  <span>SEO</span>
                 </Link>
                 <Link
                   href={page.route}

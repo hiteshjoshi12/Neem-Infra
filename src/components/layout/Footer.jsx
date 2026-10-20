@@ -255,10 +255,10 @@ export default function Footer() {
                 />
               </div>
               <div className="flex flex-col">
-                <span className="font-serif text-lg sm:text-xl font-bold tracking-tight text-black group-hover:text-brand-gold transition-colors leading-none">
+                <span className="font-sans text-lg sm:text-xl font-extrabold tracking-wider uppercase text-black group-hover:text-brand-gold transition-colors leading-tight">
                   Saudagar
                 </span>
-                <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.26em] uppercase text-brand-gold-deep mt-1 leading-none">
+                <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.28em] uppercase text-brand-gold-deep mt-0.5 leading-none">
                   Properties
                 </span>
                 <span className="text-[10px] font-bold tracking-[0.2em] uppercase text-black mt-1">

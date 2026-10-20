@@ -55,10 +55,8 @@ export async function ensureDefaultSeoData() {
       });
     }
 
-    // 2. Ensure Core Pages in Page collection
-    const count = await Page.countDocuments();
-    if (count === 0) {
-      const initialPages = [
+    // 2. Ensure Core Pages in Page collection (atomic upsert per slug)
+    const initialPages = [
         {
           title: 'Homepage',
           slug: '/',
@@ -369,9 +367,15 @@ export async function ensureDefaultSeoData() {
         },
       ];
 
-      await Page.insertMany(initialPages);
-    }
-  } catch (err) {
+      const operations = initialPages.map(page => ({
+        updateOne: {
+          filter: { slug: page.slug },
+          update: { $setOnInsert: page },
+          upsert: true,
+        }
+      }));
+      await Page.bulkWrite(operations, { ordered: false });
+    } catch (err) {
     console.warn('[ensureDefaultSeoData] Error initializing SEO defaults:', err?.message);
   }
 }

@@ -1,12 +1,10 @@
-"use client";
-
 import React from 'react';
-import { useParams } from 'next/navigation';
 import SeoPageEditor from '@/components/admin/SeoPageEditor';
 
-export default function EditSeoPage() {
-  const params = useParams();
-  const id = params?.id;
+export default async function EditSeoPage({ params }) {
+  const resolvedParams = await params;
+  const rawId = resolvedParams?.id;
+  const id = rawId ? decodeURIComponent(rawId) : null;
 
   return <SeoPageEditor pageId={id} isNew={false} />;
 }
