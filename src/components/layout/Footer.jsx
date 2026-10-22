@@ -254,8 +254,8 @@ export default function Footer() {
                   className="h-12 sm:h-14 w-auto object-contain"
                 />
               </div>
-              <div className="flex flex-col">
-                <span className="font-sans text-lg sm:text-xl font-extrabold tracking-wider uppercase text-black group-hover:text-brand-gold transition-colors leading-tight">
+              <div className="flex flex-col font-serif">
+                <span className="text-lg sm:text-xl font-bold tracking-wider uppercase text-black group-hover:text-brand-gold transition-colors leading-tight">
                   Saudagar
                 </span>
                 <span className="text-[10px] sm:text-[11px] font-bold tracking-[0.28em] uppercase text-brand-gold-deep mt-0.5 leading-none">

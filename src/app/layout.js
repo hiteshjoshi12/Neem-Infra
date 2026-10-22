@@ -9,7 +9,7 @@ const lora = Lora({
   subsets: ["latin"],
   display: "swap",
   variable: "--font-serif",
-  weight: ["400", "600"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const outfit = Outfit({
