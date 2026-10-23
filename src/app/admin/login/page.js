@@ -9,8 +9,8 @@ import Image from 'next/image';
 const logoImg = 'https://ik.imagekit.io/saudagarproperties/saudagar-properties/branding/logo.png?tr=f-auto,q-80';
 
 export default function AdminLogin() {
-  const [email, setEmail] = useState('admin@saudagarproperties.com');
-  const [password, setPassword] = useState('admin123');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -103,7 +103,7 @@ export default function AdminLogin() {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@saudagarproperties.com"
+                  placeholder="name@saudagarproperties.com"
                   className="w-full bg-white/[0.05] border border-white/15 focus:border-brand-gold rounded-xl pl-11 pr-4 py-3.5 text-sm text-white placeholder-gray-500 outline-none transition-all duration-300 focus:bg-white/[0.08]"
                 />
               </div>
@@ -151,13 +151,6 @@ export default function AdminLogin() {
               )}
             </button>
           </form>
-
-          {/* Development Default Credentials Note */}
-          <div className="mt-8 pt-5 border-t border-white/10 text-center">
-            <p className="text-[11px] text-gray-400 font-light">
-              Default credentials: <span className="text-brand-gold font-mono">admin@saudagarproperties.com</span> / <span className="text-brand-gold font-mono">admin123</span>
-            </p>
-          </div>
 
         </div>
       </motion.div>

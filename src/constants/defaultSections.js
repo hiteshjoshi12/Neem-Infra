@@ -75,7 +75,8 @@ export const DEFAULT_SECTIONS = {
     legalLinks: [
       { label: "Clients", href: "/clients" },
       { label: "Term Of Service", href: "/terms" },
-      { label: "Privacy & Policy", href: "/privacy-policy" }
+      { label: "Privacy & Policy", href: "/privacy-policy" },
+      { label: "Admin Panel", href: "/admin" }
     ]
   },
   floatingWidgets: {

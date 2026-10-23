@@ -115,11 +115,19 @@ export default function Footer() {
   const copyrightSuffix =
     footerData.copyrightSuffix || 'All Right Reserved';
 
-  const legalLinks = footerData.legalLinks || [
+  const rawLegalLinks = footerData.legalLinks || [
     { label: 'Clients', href: '/clients' },
     { label: 'Term Of Service', href: '/terms' },
     { label: 'Privacy & Policy', href: '/privacy-policy' },
+    { label: 'Admin Panel', href: '/admin' },
   ];
+
+  const hasAdmin = rawLegalLinks.some(
+    (l) => l.href === '/admin' || l.href === '/admin/login' || l.href === '/admin/dashboard'
+  );
+  const legalLinks = hasAdmin
+    ? rawLegalLinks
+    : [...rawLegalLinks, { label: 'Admin Panel', href: '/admin' }];
 
   return (
     <footer
