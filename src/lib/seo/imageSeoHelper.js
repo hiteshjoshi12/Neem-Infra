@@ -1,4 +1,4 @@
-import { SITE_URL, DEFAULT_META } from './seoConfig.js';
+import { DEFAULT_META } from './seoConfig.js';
 
 /**
  * ----------------------------------------------------------------------------

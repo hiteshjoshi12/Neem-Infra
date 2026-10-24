@@ -52,6 +52,11 @@ export async function POST(req) {
     const body = await req.json();
     const testimonial = await Testimonial.create(body);
     invalidateCache('testimonials');
+    try {
+      const { revalidateTag, revalidatePath } = await import('next/cache');
+      revalidateTag('testimonials');
+      revalidatePath('/', 'layout');
+    } catch (e) {}
     
     return NextResponse.json({
       success: true,

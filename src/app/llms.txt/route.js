@@ -12,12 +12,15 @@ export async function GET() {
 
   const baseUrl = settings?.canonicalBaseUrl || 'https://saudagarproperties.com';
   const phone = profile.primaryPhone || '+91 97185 11207';
-  const altPhone = profile.secondaryPhone || '+91 98100 02447';
-  const email = profile.primaryEmail || 'info@saudagarproperties.com';
+  const altPhone = profile.secondaryPhone || '+91 98112 21207';
+  const email = profile.primaryEmail || 'Saudagar.Properties@Yahoo.In';
   const address = profile.address?.streetAddress
     ? `${profile.address.streetAddress}, ${profile.address.addressLocality}, ${profile.address.addressRegion} ${profile.address.postalCode}`
     : '38, Akashneem Marg, DLF Phase 2, Gurugram, Haryana 122002';
-  const founders = (profile.founders || [{ name: 'Raman Saudagar' }]).map((f) => f.name).join(', ');
+  const founders = (profile.founders && profile.founders.length > 0
+    ? profile.founders
+    : [{ name: 'Arun Sharma' }, { name: 'Suneeta Chawla' }]
+  ).map((f) => f.name).join(', ');
 
   const content = `# Saudagar Properties
 
@@ -31,7 +34,7 @@ export async function GET() {
 - **Primary Phone**: ${phone} / ${altPhone}
 - **Official Email**: ${email}
 - **Website**: ${baseUrl}
-- **Google Business Profile**: ${profile.googleBusinessProfileUrl || 'https://maps.google.com/?q=Saudagar+Properties+DLF+Gurugram'}
+${profile.googleBusinessProfileUrl ? `- **Google Business Profile**: ${profile.googleBusinessProfileUrl}` : ''}
 
 ## Core Micro-Market Specializations
 1. **DLF Phase 1**: Builder floors, luxury kothis, and residential plots near Arjun Marg and Golf Course Road.

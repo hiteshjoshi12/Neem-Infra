@@ -18,7 +18,7 @@ import { useCms } from '../../../context/CmsContext';
 ========================================================= */
 const DEFAULT_STATS_DATA = [
   {
-    title: '100% Client Satisfaction',
+    title: 'Client-Centric Advisory',
     desc: 'Putting client interests first with bespoke, personalized property advisory.',
   },
   {
@@ -46,7 +46,8 @@ export default function ExperienceCounter() {
   const { sections } = useCms();
   const expData = sections?.services?.experienceCounter || {};
 
-  const target = Number(expData.yearsCount) || 25;
+  const currentCalculatedYears = Math.max(1, new Date().getFullYear() - 1999);
+  const target = Number(expData.yearsCount) || currentCalculatedYears;
 
   const badge =
     expData.badge || `${target}+ Years of Unmatched Advisory`;
@@ -592,15 +593,19 @@ export default function ExperienceCounter() {
           <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-brand-navy/10 pt-5 sm:mt-9 sm:pt-6">
             <div className="flex flex-wrap items-center gap-x-3.5 gap-y-1.5 text-[8.5px] font-bold uppercase tracking-[0.2em] text-brand-slate">
               <span>DLF PHASE 1–5 SPECIALISTS</span>
-              <span className="h-1 w-1 rounded-full bg-brand-gold" />
-              <span>RERA COMPLIANT ADVISORY</span>
+              {expData.reraNumber ? (
+                <>
+                  <span className="h-1 w-1 rounded-full bg-brand-gold" />
+                  <span>RERA: {expData.reraNumber}</span>
+                </>
+              ) : null}
               <span className="h-1 w-1 rounded-full bg-brand-gold" />
               <span>CONFIDENTIAL TRANSACTIONS</span>
             </div>
 
             <div className="flex items-center gap-2 text-[8.5px] font-semibold uppercase tracking-[0.2em] text-brand-gold">
               <Award size={12} className="text-brand-gold" />
-              <span>SAUDAGAR PROPERTIES PVT LTD</span>
+              <span>SAUDAGAR PROPERTIES</span>
             </div>
           </div>
 

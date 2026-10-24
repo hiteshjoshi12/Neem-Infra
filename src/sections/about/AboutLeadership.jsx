@@ -8,34 +8,71 @@ import { Users, Award, Shield, CheckCircle2, Star, ChevronLeft, ChevronRight } f
 import Tilt3DCard from '../../components/ui/Tilt3DCard';
 import AnimatedCounter from '../../components/ui/AnimatedCounter';
 import Image from 'next/image';
-import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
+import { useCms } from '@/context/CmsContext';
 
-export default function AboutLeadership() {
-  const { sections } = useCms();
-  const cms = sections?.page_about?.leadership || DEFAULT_SECTIONS.page_about.leadership;
-  const founders = cms?.founders || DEFAULT_SECTIONS.page_about?.leadership?.founders || [];
-  const teamMembers = cms?.teamMembers || DEFAULT_SECTIONS.page_about?.leadership?.teamMembers || [];
+const defaultFounders = [
+  {
+    name: "Mr. Arun Sharma",
+    role: "Founder & Managing Director",
+    badge: "Founder • 20+ Years Authority",
+    experienceBadge: "20+ Years",
+    image: "",
+    bio: "Mr. Arun Sharma, the Founder of Saudagar properties Pvt Ltd is the force which drives us. A highly-experienced professional in Real Estate scenario with a career spanning more than two decades, his expertise includes skillful management of resources, and an astute and zealous work ethic. Inspite of years of experience behind him, he still ensures that every client is personally attended by him. His insistence on quality and consistency and his deft approach to the business has helped us scale new heights.",
+    highlights: [
+      "Over two decades of premier real estate leadership",
+      "Personal involvement in every client consultation",
+      "Astute & zealous management of resources",
+      "Pioneering advisory in DLF Phase 1–5 & Gurugram"
+    ],
+    quote: "Quality, consistency, and personal dedication are the bedrock of lasting real estate value."
+  },
+  {
+    name: "Mrs. Suneeta Chawla",
+    role: "Co-Founder",
+    badge: "Co-Founder • 10+ Years Veteran",
+    experienceBadge: "10+ Years",
+    image: "",
+    bio: "Our co-founder and an esteemed veteran in the Real Estate market, Suneeta Chawla has been in the Real Estate Business for more than a decade now. Her keen instincts in the real estate business are remarkable. Her expertise and pragmatic approach has led to many successful deals in the past. We shall now and forever value her resourcefulness and integrity. She is one of the pillars that hold this venture sturdily.",
+    highlights: [
+      "Over a decade of astute market transactions",
+      "Pragmatic approach delivering high-ROI results",
+      "Remarkable instincts in luxury real estate",
+      "A foundational pillar of resourcefulness & integrity"
+    ],
+    quote: "Resourcefulness and integrity turn property decisions into lifelong generational wealth."
+  }
+];
+
+export default function AboutLeadership({ data }) {
+  const { sections, properties } = useCms();
+  const cms = data || sections?.page_about?.leadership || {};
+  const founders = (cms?.founders && Array.isArray(cms.founders) && cms.founders.length > 0)
+    ? cms.founders
+    : defaultFounders;
+  const teamMembers = cms?.teamMembers || [];
   const [teamIndex, setTeamIndex] = useState(0);
+
+  const calculatedYears = Math.max(1, new Date().getFullYear() - 1999);
+  const activePropsCount = properties?.length || 23;
 
   const defaultImpactStats = [
     {
-      value: 100,
+      value: activePropsCount,
       suffix: "+",
-      label: "CR Saves In Property Investment",
-      desc: "Optimized value and negotiations"
+      label: "Verified Properties Cataloged",
+      desc: "Live builder floors & villas"
     },
     {
-      value: 1000,
-      formatComma: true,
-      suffix: "+",
-      label: "Happy Clients",
-      desc: "Families & corporate executives"
+      value: 7,
+      suffix: "",
+      label: "Prime DLF Micro-Markets",
+      desc: "Phase 1–5, Sushant Lok & Golf Course Rd"
     },
     {
-      value: 25,
+      value: calculatedYears,
       suffix: "+",
-      label: "Years of Trust and Experience",
-      desc: "DLF Gurugram market authority"
+      label: "Years in DLF Gurugram",
+      desc: "Established 1999 market authority"
     }
   ];
   const impactStats = (cms?.impactStats && Array.isArray(cms.impactStats) && cms.impactStats.length > 0)
@@ -216,16 +253,29 @@ export default function AboutLeadership() {
                     <div className="relative shrink-0">
                       <div className="absolute -inset-2 rounded-[26px] bg-gradient-to-tr from-brand-gold/30 via-brand-gold/20 to-brand-gold/30 opacity-70 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
-                      <div className="relative w-36 h-44 sm:w-40 sm:h-48 rounded-2xl overflow-hidden border-2 border-brand-cream-border shadow-md bg-brand-ivory">
-                        <Image
-                          src={leader.image}
-                          alt={leader.name}
-                          fill
-                          sizes="160px"
-                          loading="lazy"
-                          className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                      <div className="relative w-36 h-44 sm:w-40 sm:h-48 rounded-2xl overflow-hidden border-2 border-brand-cream-border shadow-md bg-brand-navy">
+                        {leader.image ? (
+                          <>
+                            <Image
+                              src={leader.image}
+                              alt={leader.name}
+                              fill
+                              sizes="160px"
+                              loading="lazy"
+                              className="w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent pointer-events-none" />
+                          </>
+                        ) : (
+                          <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-brand-navy via-brand-navy-deep to-slate-900 text-brand-gold p-4 text-center">
+                            <span className="font-serif font-bold text-3xl tracking-wider text-brand-gold">
+                              {leader.name ? leader.name.split(' ').map((n) => n[0]).join('').slice(0, 2) : 'SP'}
+                            </span>
+                            <span className="text-[10px] tracking-widest uppercase text-slate-300 font-sans mt-2">
+                              Principal Partner
+                            </span>
+                          </div>
+                        )}
                       </div>
 
                       {/* Floating Gold Seal Pin */}

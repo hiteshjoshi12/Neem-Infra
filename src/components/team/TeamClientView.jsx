@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { Users } from 'lucide-react';
-import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
+import { useCms } from '@/context/CmsContext';
 import TeamInteractiveShowcase from '@/components/team/TeamInteractiveShowcase';
 import TeamAdvisoryAuthority from '@/components/team/TeamAdvisoryAuthority';
 
@@ -14,27 +14,32 @@ export default function TeamClientView({
   teamMembers = [], 
   advisoryPillars = [] 
 }) {
-  const { sections } = useCms();
-  const cms = sections?.page_team || initialData || DEFAULT_SECTIONS.page_team;
-  const heroData = cms?.hero || DEFAULT_SECTIONS.page_team.hero;
-  const heroStats = heroData?.stats || DEFAULT_SECTIONS.page_team.hero.stats || [
-    { value: "25+", label: "Years of Trust", highlight: false },
-    { value: "₹100 Cr+", label: "Saved for Clients", highlight: true },
-    { value: "1,000+", label: "Families Advised", highlight: false },
-    { value: "100%", label: "Title-Cleared", highlight: true }
+  const { sections, properties } = useCms();
+  const cms = sections?.page_team || initialData || {};
+  const heroData = cms?.hero || {};
+  const currentYears = Math.max(1, new Date().getFullYear() - 1999);
+  const activePropsCount = properties?.length || 23;
+  const heroStats = heroData?.stats || [
+    { value: `${currentYears}+`, label: "Years in Gurugram", highlight: false },
+    { value: `${activePropsCount}+`, label: "Properties Listed", highlight: true },
+    { value: "7", label: "Micro-Markets", highlight: false },
+    { value: "5", label: "DLF Phases Covered", highlight: true }
   ];
   const activeFounders = (cms?.founders && cms.founders.length > 0)
     ? cms.founders
-    : (defaultFounders && defaultFounders.length > 0 ? defaultFounders : DEFAULT_SECTIONS.page_team.founders);
+    : (defaultFounders && defaultFounders.length > 0 ? defaultFounders : [
+        { name: "Arun Sharma", role: "Founder & Managing Director" },
+        { name: "Suneeta Chawla", role: "Co-Founder & Director" }
+      ]);
 
   const activeTeamMembers = (cms?.teamMembers && cms.teamMembers.length > 0)
     ? cms.teamMembers
-    : (teamMembers && teamMembers.length > 0 ? teamMembers : DEFAULT_SECTIONS.page_team.teamMembers);
+    : (teamMembers && teamMembers.length > 0 ? teamMembers : []);
 
   const activeAdvisoryPillars = (cms?.advisoryPillars && cms.advisoryPillars.length > 0)
     ? cms.advisoryPillars
-    : (advisoryPillars && advisoryPillars.length > 0 ? advisoryPillars : DEFAULT_SECTIONS.page_team.advisoryPillars);
-  const activeCta = cms?.cta || DEFAULT_SECTIONS.page_team.cta;
+    : (advisoryPillars && advisoryPillars.length > 0 ? advisoryPillars : []);
+  const activeCta = cms?.cta || { title: "Speak Directly with Leadership", buttonText: "Schedule Consultation", buttonHref: "/contact" };
 
   return (
     <>

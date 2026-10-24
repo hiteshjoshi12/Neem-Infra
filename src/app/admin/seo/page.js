@@ -66,19 +66,136 @@ export default function SeoCommandCenter() {
     loadDashboard();
   }, []);
 
-  // Compute SEO Health Score
+  // Compute Transparent Real SEO Checks (No arbitrary flat +20 score)
   const totalPages = pages.length;
   const publishedPages = pages.filter(p => p.status === 'published').length;
-  const pagesWithMeta = pages.filter(p => p.metaTitle && p.metaDescription).length;
-  const pagesWithH1 = pages.filter(p => p.h1).length;
-  const pagesIndexed = pages.filter(p => p.robots?.index !== false).length;
 
-  let seoScore = 95;
-  if (totalPages > 0) {
-    const metaRatio = pagesWithMeta / totalPages;
-    const h1Ratio = pagesWithH1 / totalPages;
-    seoScore = Math.round((metaRatio * 50) + (h1Ratio * 30) + 20);
-  }
+  // 1. Missing Meta Titles
+  const missingTitles = pages.filter(p => !p.metaTitle && !p.title);
+
+  // 2. Duplicate Titles
+  const titleCounts = {};
+  pages.forEach(p => {
+    const t = (p.metaTitle || p.title || '').trim().toLowerCase();
+    if (t) titleCounts[t] = (titleCounts[t] || 0) + 1;
+  });
+  const duplicateTitles = pages.filter(p => {
+    const t = (p.metaTitle || p.title || '').trim().toLowerCase();
+    return t && titleCounts[t] > 1;
+  });
+
+  // 3. Missing Meta Descriptions
+  const missingDescriptions = pages.filter(p => !p.metaDescription);
+
+  // 4. Duplicate Meta Descriptions
+  const descCounts = {};
+  pages.forEach(p => {
+    const d = (p.metaDescription || '').trim().toLowerCase();
+    if (d) descCounts[d] = (descCounts[d] || 0) + 1;
+  });
+  const duplicateDescriptions = pages.filter(p => {
+    const d = (p.metaDescription || '').trim().toLowerCase();
+    return d && descCounts[d] > 1;
+  });
+
+  // 5. Canonical Mismatches
+  const baseCanonical = (settings?.canonicalBaseUrl || 'https://saudagarproperties.com').replace(/\/+$/, '');
+  const canonicalMismatches = pages.filter(p => {
+    if (!p.canonicalUrl) return false;
+    if (p.canonicalUrl.startsWith('http')) {
+      return !p.canonicalUrl.startsWith(baseCanonical);
+    }
+    return false;
+  });
+
+  // 6. Noindex Pages (Configured via your admin settings, NOT Google data)
+  const noindexPages = pages.filter(p => p.robots?.index === false);
+
+  // 7. Missing Alt Text
+  const missingAltCount = imageSummary?.missing || 0;
+
+  // 8. Redirect Chains / Loops
+  const redirectTargetMap = new Map();
+  redirects.forEach(r => redirectTargetMap.set(r.fromPath?.toLowerCase(), r.toPath?.toLowerCase()));
+  const redirectChainsOrLoops = redirects.filter(r => {
+    const from = r.fromPath?.toLowerCase();
+    const to = r.toPath?.toLowerCase();
+    if (!to) return false;
+    if (from === to && r.statusCode !== 410) return true; // Direct loop
+    if (redirectTargetMap.has(to)) return true; // Chain
+    return false;
+  });
+
+  // Total Real Checks
+  const integrityChecks = [
+    {
+      id: 'missing-titles',
+      label: 'Missing Meta Titles',
+      count: missingTitles.length,
+      severity: missingTitles.length > 0 ? 'warning' : 'pass',
+      description: missingTitles.length === 0 ? 'All managed pages have explicit meta titles.' : `${missingTitles.length} pages missing a meta title.`,
+      link: '/admin/seo/pages',
+    },
+    {
+      id: 'duplicate-titles',
+      label: 'Duplicate Titles',
+      count: duplicateTitles.length,
+      severity: duplicateTitles.length > 0 ? 'warning' : 'pass',
+      description: duplicateTitles.length === 0 ? 'Zero title cannibalization detected across published pages.' : `${duplicateTitles.length} pages share identical titles.`,
+      link: '/admin/seo/pages',
+    },
+    {
+      id: 'missing-descriptions',
+      label: 'Missing Meta Descriptions',
+      count: missingDescriptions.length,
+      severity: missingDescriptions.length > 0 ? 'warning' : 'pass',
+      description: missingDescriptions.length === 0 ? 'All pages have tailored search snippets.' : `${missingDescriptions.length} pages missing meta descriptions.`,
+      link: '/admin/seo/pages',
+    },
+    {
+      id: 'duplicate-descriptions',
+      label: 'Duplicate Descriptions',
+      count: duplicateDescriptions.length,
+      severity: duplicateDescriptions.length > 0 ? 'warning' : 'pass',
+      description: duplicateDescriptions.length === 0 ? 'All meta descriptions are distinct.' : `${duplicateDescriptions.length} pages share duplicated snippets.`,
+      link: '/admin/seo/pages',
+    },
+    {
+      id: 'canonical-mismatches',
+      label: 'Canonical Mismatches',
+      count: canonicalMismatches.length,
+      severity: canonicalMismatches.length > 0 ? 'error' : 'pass',
+      description: canonicalMismatches.length === 0 ? `All canonical tags strictly derive from ${baseCanonical}.` : `${canonicalMismatches.length} canonical URLs diverge from apex domain.`,
+      link: '/admin/seo/pages',
+    },
+    {
+      id: 'noindex-directives',
+      label: 'Noindex Pages (Your Settings)',
+      count: noindexPages.length,
+      severity: 'info',
+      description: `${noindexPages.length} pages intentionally marked noindex in your admin settings (Directives set by you — not Google Search Console data).`,
+      link: '/admin/seo/pages',
+    },
+    {
+      id: 'missing-alt-text',
+      label: 'Missing Image Alt Text',
+      count: missingAltCount,
+      severity: missingAltCount > 0 ? 'warning' : 'pass',
+      description: missingAltCount === 0 ? 'All catalog images possess descriptive accessibility alt text.' : `${missingAltCount} images require descriptive alt text.`,
+      link: '/admin/seo/images',
+    },
+    {
+      id: 'redirect-chains',
+      label: 'Redirect Chains & Loops',
+      count: redirectChainsOrLoops.length,
+      severity: redirectChainsOrLoops.length > 0 ? 'error' : 'pass',
+      description: redirectChainsOrLoops.length === 0 ? 'Clean 1-hop 301/302 redirects with zero loops or chains.' : `${redirectChainsOrLoops.length} redirect rules form chains or loops.`,
+      link: '/admin/seo/redirects',
+    },
+  ];
+
+  const criticalIssuesCount = integrityChecks.filter(c => c.severity === 'error' || (c.severity === 'warning' && c.count > 0)).length;
+  const passedChecksCount = integrityChecks.filter(c => c.severity === 'pass' || (c.severity === 'info' && c.count === 0)).length;
 
   return (
     <div className="space-y-8 max-w-7xl mx-auto pb-16">
@@ -93,7 +210,7 @@ export default function SeoCommandCenter() {
             SEO Command Center
           </h1>
           <p className="text-sm text-brand-text-dim mt-1">
-            Real-time search architecture, meta controls, indexing directives, and speed vitals for Saudagar Properties.
+            Real-time search architecture, meta controls, site-configured indexing directives (your admin settings), and speed vitals for Saudagar Properties.
           </p>
         </div>
 
@@ -120,28 +237,35 @@ export default function SeoCommandCenter() {
 
       {/* Primary KPI Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        {/* Card 1: Health Score */}
+        {/* Card 1: Transparent Real SEO Integrity */}
         <div className="p-6 rounded-3xl bg-gradient-to-br from-brand-navy to-brand-navy-deep border border-white/10 shadow-xl relative overflow-hidden">
           <div className="flex items-center justify-between mb-4">
             <span className="text-xs font-bold text-brand-gold uppercase tracking-wider">
-              SEO Health Score
+              Technical Integrity
             </span>
-            <div className="p-2 rounded-xl bg-brand-gold/10 text-brand-gold">
-              <TrendingUp size={16} />
+            <div className={`p-2 rounded-xl ${criticalIssuesCount === 0 ? 'bg-emerald-500/10 text-emerald-400' : 'bg-amber-500/10 text-amber-400'}`}>
+              <ShieldCheck size={16} />
             </div>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-4xl font-serif font-bold text-white">{seoScore}%</span>
-            <span className="text-xs text-emerald-400 font-semibold flex items-center gap-1">
-              <CheckCircle2 size={12} /> Enterprise Grade
+            <span className="text-4xl font-serif font-bold text-white">
+              {passedChecksCount}/8
+            </span>
+            <span className={`text-xs font-semibold flex items-center gap-1 ${criticalIssuesCount === 0 ? 'text-emerald-400' : 'text-amber-400'}`}>
+              {criticalIssuesCount === 0 ? (
+                <>
+                  <CheckCircle2 size={12} /> 100% Verified
+                </>
+              ) : (
+                <>
+                  <AlertTriangle size={12} /> {criticalIssuesCount} Items to Review
+                </>
+              )}
             </span>
           </div>
-          <div className="mt-3 w-full bg-white/10 h-1.5 rounded-full overflow-hidden">
-            <div
-              className="bg-brand-gold h-full rounded-full transition-all duration-1000"
-              style={{ width: `${seoScore}%` }}
-            />
-          </div>
+          <p className="text-[11px] text-brand-text-dim mt-2">
+            Evaluated across 8 real diagnostic checks (zero arbitrary scoring)
+          </p>
         </div>
 
         {/* Card 2: Managed Pages */}
@@ -209,6 +333,80 @@ export default function SeoCommandCenter() {
           <p className="text-[11px] text-brand-text-dim mt-2">
             {imageSummary?.missing || 0} images missing alt text
           </p>
+        </div>
+      </div>
+
+      {/* Search Architecture & Technical Integrity Audit (Transparent List of Real Checks) */}
+      <div className="p-6 sm:p-8 rounded-3xl bg-brand-navy/40 border border-white/10 space-y-6">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <div className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-gold uppercase tracking-wider mb-1">
+              <ShieldCheck size={14} />
+              <span>Diagnostic SEO Architecture Audit</span>
+            </div>
+            <h2 className="text-xl font-serif font-bold text-white">
+              Transparent Integrity Verification ({passedChecksCount} / 8 Checks Passed)
+            </h2>
+            <p className="text-xs text-brand-text-dim mt-0.5">
+              Live automated validation across your database. Directives reflect your admin configuration, not third-party estimated scores.
+            </p>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className="px-3 py-1.5 rounded-full text-xs font-bold bg-white/5 border border-white/10 text-brand-text-dim">
+              Apex Base: <code className="text-brand-gold">{baseCanonical}</code>
+            </span>
+          </div>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          {integrityChecks.map((check) => {
+            const isError = check.severity === 'error' && check.count > 0;
+            const isWarning = check.severity === 'warning' && check.count > 0;
+            const isPass = !isError && !isWarning;
+
+            return (
+              <div
+                key={check.id}
+                className="p-4 rounded-2xl bg-black/25 border border-white/5 flex flex-col justify-between hover:border-white/15 transition-all"
+              >
+                <div>
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-xs font-bold text-white tracking-wide">
+                      {check.label}
+                    </span>
+                    {isPass ? (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-400">
+                        <CheckCircle2 size={10} /> PASS
+                      </span>
+                    ) : isError ? (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-rose-500/20 text-rose-400">
+                        <AlertCircle size={10} /> {check.count} FAIL
+                      </span>
+                    ) : (
+                      <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-400">
+                        <AlertTriangle size={10} /> {check.count} ATTENTION
+                      </span>
+                    )}
+                  </div>
+                  <p className="text-[11px] text-brand-text-dim leading-relaxed">
+                    {check.description}
+                  </p>
+                </div>
+                <div className="mt-3 pt-2.5 border-t border-white/5 flex items-center justify-between">
+                  <span className="text-[10px] font-mono text-white/40">
+                    {check.count} {check.count === 1 ? 'item' : 'items'}
+                  </span>
+                  <Link
+                    href={check.link}
+                    className="text-[11px] font-semibold text-brand-gold hover:underline flex items-center gap-1"
+                  >
+                    <span>Manage</span>
+                    <ArrowRight size={10} />
+                  </Link>
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
 

@@ -25,7 +25,6 @@ import { BREADCRUMBS } from '@/lib/seo/seoConfig';
 import { buildPageMetadata } from '@/lib/seo/metadataHelper';
 import { connectDB } from '@/lib/mongodb';
 import SectionContent from '@/models/SectionContent';
-import { DEFAULT_SECTIONS } from '@/constants/defaultSections';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -34,9 +33,9 @@ async function getBlogPageCms() {
   try {
     await connectDB();
     const doc = await SectionContent.findOne({ sectionKey: 'page_blog' }).lean();
-    return doc?.data || DEFAULT_SECTIONS.page_blog;
+    return doc?.data || {};
   } catch {
-    return DEFAULT_SECTIONS.page_blog;
+    return {};
   }
 }
 

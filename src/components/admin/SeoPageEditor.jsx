@@ -60,6 +60,7 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
     status: 'published',
     h1: '',
     h2: '',
+    directAnswer: '',
     content: '',
     sections: [],
     metaTitle: '',
@@ -118,6 +119,7 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
           status: d.status || 'published',
           h1: d.h1 || '',
           h2: d.h2 || '',
+          directAnswer: d.directAnswer || '',
           content: d.content || '',
           sections: Array.isArray(d.sections) ? d.sections : [],
           metaTitle: d.metaTitle || '',
@@ -311,6 +313,22 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
     if (descLength <= 165) return { label: 'Optimal (140–160)', color: 'text-emerald-400' };
     return { label: 'Too long (will truncate)', color: 'text-rose-400' };
   }, [descLength]);
+
+  const directAnswerWordCount = useMemo(() => {
+    const text = (formData.directAnswer || '').trim();
+    return text ? text.split(/\s+/).length : 0;
+  }, [formData.directAnswer]);
+
+  const directAnswerStatus = useMemo(() => {
+    if (directAnswerWordCount === 0) return { label: 'Optional (AEO / Featured Snippet Lead)', color: 'text-gray-400' };
+    if (directAnswerWordCount >= 40 && directAnswerWordCount <= 60) {
+      return { label: 'Optimal length for Featured Snippets (40–60 words)', color: 'text-emerald-400' };
+    }
+    if (directAnswerWordCount < 40) {
+      return { label: `Too short (${directAnswerWordCount}/40 words recommended minimum)`, color: 'text-amber-400' };
+    }
+    return { label: `Too long (${directAnswerWordCount}/60 words recommended maximum)`, color: 'text-rose-400' };
+  }, [directAnswerWordCount]);
 
   const displayTitle = formData.metaTitle || (formData.title ? `${formData.title} | Saudagar Properties` : 'Saudagar Properties — Luxury Real Estate');
   const displayDesc = formData.metaDescription || 'Explore premier luxury builder floors, kothis, and commercial office spaces across DLF Phase 1–5, Sushant Lok, and Golf Course Road Gurugram.';
@@ -545,6 +563,29 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
                     className="w-full px-4 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white placeholder-gray-500 focus:outline-none focus:border-brand-gold text-sm"
                   />
                 </div>
+              </div>
+
+              {/* Direct Answer Box (AEO & Featured Snippets 40-60 Words) */}
+              <div className="pt-2">
+                <div className="flex items-center justify-between mb-2">
+                  <label className="text-xs font-semibold text-brand-text-dim uppercase tracking-wider flex items-center gap-1.5">
+                    <Sparkles className="text-brand-gold" size={14} />
+                    <span>Direct Answer Summary (AEO / Google Featured Snippet)</span>
+                  </label>
+                  <span className={`text-xs font-bold ${directAnswerStatus.color}`}>
+                    {directAnswerWordCount} words • {directAnswerStatus.label}
+                  </span>
+                </div>
+                <textarea
+                  rows={3}
+                  value={formData.directAnswer}
+                  onChange={e => setFormData({ ...formData, directAnswer: e.target.value })}
+                  placeholder="Provide a concise 40-60 word authoritative answer defining the core topic, market value, or service for AI answer engines and Google snippets..."
+                  className="w-full px-4 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white placeholder-gray-500 focus:outline-none focus:border-brand-gold text-sm leading-relaxed"
+                />
+                <span className="text-[11px] text-brand-text-dim mt-1.5 block">
+                  Target: 40–60 words. Google and LLM search agents prioritize 40-60 word definitive paragraphs for instant citations.
+                </span>
               </div>
             </div>
 

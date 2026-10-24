@@ -17,7 +17,6 @@ import {
   Gem,
 } from 'lucide-react';
 import { useCms } from '@/context/CmsContext';
-import { DEFAULT_WHY_CHOOSE_US_DATA } from '@/constants/homeData';
 import LuxuryTextReveal from '@/components/ui/LuxuryTextReveal';
 
 const REASON_ICONS = [Compass, TrendingUp, Layers];
@@ -181,11 +180,11 @@ export default function WhyChooseUsSection() {
   const { sections } = useCms();
   const whyData = sections?.whyChooseUs || {};
 
-  const badge = whyData.badge || DEFAULT_WHY_CHOOSE_US_DATA.badge;
-  const titleMain = whyData.titleMain || DEFAULT_WHY_CHOOSE_US_DATA.titleMain;
-  const titleItalic = whyData.titleItalic || DEFAULT_WHY_CHOOSE_US_DATA.titleItalic;
-  const description = whyData.description || DEFAULT_WHY_CHOOSE_US_DATA.description;
-  const reasons = whyData.reasons || DEFAULT_WHY_CHOOSE_US_DATA.reasons;
+  const badge = whyData.badge || "Why Choose Us";
+  const titleMain = whyData.titleMain || "Decades of Unrivaled";
+  const titleItalic = whyData.titleItalic || "Gurgaon Mastery";
+  const description = whyData.description || "With deep roots in DLF Phases and premier Gurgaon micro-markets, we bring institutional rigor, discretion, and market dominance to every luxury property transaction.";
+  const reasons = whyData.reasons || [];
   const trustCard = whyData.trustCard || {
     badge: "Trusted Partner",
     title: "Property Dealers in Gurgaon You Can Trust",

@@ -20,6 +20,8 @@ export default function ImageUploadInput({
   label = "Upload Image",
   value = "",
   onChange,
+  altValue = "",
+  onAltChange,
   folder = "/saudagar-properties/general",
   description = "Browse file from your computer to upload directly to ImageKit.io CDN",
   recommendedRatio = "",
@@ -28,12 +30,25 @@ export default function ImageUploadInput({
   acceptVideo = false,
   mediaType = "image" // "image" | "video" | "all"
 }) {
+  const [altText, setAltText] = useState(altValue || '');
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState('');
   const [isDragging, setIsDragging] = useState(false);
   const [showManualInput, setShowManualInput] = useState(false);
   const [imageMeta, setImageMeta] = useState(null);
   const fileInputRef = useRef(null);
+
+  useEffect(() => {
+    if (altValue !== undefined && altValue !== altText) {
+      setAltText(altValue);
+    }
+  }, [altValue]);
+
+  const handleAltTextChange = (e) => {
+    const val = e.target.value;
+    setAltText(val);
+    if (onAltChange) onAltChange(val);
+  };
 
   // Determine whether this input accepts videos
   const allowsVideo = acceptVideo || mediaType === 'video' || mediaType === 'all';
@@ -166,6 +181,15 @@ export default function ImageUploadInput({
         targetFolder = '/saudagar-properties/videos';
       }
       formData.append('folder', targetFolder);
+
+      const resolvedAlt = altText.trim() || cardContext || (file.name ? file.name.replace(/\.[^/.]+$/, '').replace(/[_-]/g, ' ') : 'Saudagar Properties Estate Asset');
+      if (!altText.trim()) {
+        setAltText(resolvedAlt);
+        if (onAltChange) onAltChange(resolvedAlt);
+      }
+      if (!isVideo) {
+        formData.append('altText', resolvedAlt);
+      }
 
       const token = typeof window !== 'undefined' ? localStorage.getItem('saudagar_admin_token') : null;
 
@@ -441,6 +465,22 @@ export default function ImageUploadInput({
               </p>
             </div>
           )}
+        </div>
+      )}
+
+      {/* Required Alt Text Field for Accessibility & Image SEO */}
+      {!isCurrentValueVideo && (value || altText) && (
+        <div className="pt-2">
+          <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+            Alt Text (Required for Image SEO &amp; Accessibility) <span className="text-brand-gold">*</span>
+          </label>
+          <input
+            type="text"
+            value={altText}
+            onChange={handleAltTextChange}
+            placeholder="e.g. Luxury 4 BHK Independent Builder Floor in DLF Phase 2 Gurugram"
+            className="w-full px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 focus:border-brand-gold text-white text-xs outline-none transition-colors"
+          />
         </div>
       )}
 

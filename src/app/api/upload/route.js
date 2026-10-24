@@ -72,6 +72,18 @@ export async function POST(req) {
       );
     }
 
+    // 2. Enforce Required Alt Text for Images (Accessibility & Image SEO)
+    const altText = (formData.get('altText') || formData.get('alt') || '').trim();
+    if (isImage && !altText) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: 'Descriptive alt text is required for all image uploads to guarantee Image SEO and accessibility compliance.'
+        },
+        { status: 400 }
+      );
+    }
+
     // 2. Validate File Size
     const maxSize = isVideo ? MAX_VIDEO_SIZE_BYTES : MAX_IMAGE_SIZE_BYTES;
     if (file.size > maxSize) {

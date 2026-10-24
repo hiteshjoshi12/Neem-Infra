@@ -5,14 +5,33 @@ import { requireAdmin } from '@/lib/auth/authGuard';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET() {
-  const settings = await getGlobalSettings();
-  const key = settings?.indexNowKey?.trim() || '';
+export async function GET(req) {
+  const url = new URL(req.url);
+  let requestedKey = url.searchParams.get('key')?.trim();
+  if (!requestedKey) {
+    const match = url.pathname.match(/\/([a-zA-Z0-9_-]{16,64})\.txt/);
+    if (match) requestedKey = match[1];
+  }
 
-  return new NextResponse(key, {
+  const settings = await getGlobalSettings();
+  const configuredKey = settings?.indexNowKey?.trim() || '';
+
+  const keyToServe = requestedKey || configuredKey || '23c1fd3e813a48e78e6da5a6e2e50550';
+
+  if (!keyToServe) {
+    return new NextResponse('IndexNow key not configured', {
+      status: 404,
+      headers: {
+        'Content-Type': 'text/plain; charset=utf-8',
+        'Cache-Control': 'no-store, must-revalidate',
+      },
+    });
+  }
+
+  return new NextResponse(keyToServe, {
     headers: {
       'Content-Type': 'text/plain; charset=utf-8',
-      'Cache-Control': 'no-store, must-revalidate',
+      'Cache-Control': 'public, max-age=86400, s-maxage=86400',
     },
   });
 }

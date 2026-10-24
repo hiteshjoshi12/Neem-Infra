@@ -16,18 +16,17 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'ik.imagekit.io',
+        pathname: '/saudagarproperties/**',
       },
       {
         protocol: 'https',
         hostname: 'images.unsplash.com',
+        pathname: '/**',
       },
       {
         protocol: 'https',
         hostname: 'saudagarproperties.com',
-      },
-      {
-        protocol: 'https',
-        hostname: 'www.saudagarproperties.com',
+        pathname: '/**',
       },
     ],
   },
@@ -61,7 +60,7 @@ const nextConfig = {
           },
           {
             key: 'Strict-Transport-Security',
-            value: 'max-age=63072000; includeSubDomains; preload',
+            value: 'max-age=31536000',
           },
         ],
       },
@@ -87,6 +86,18 @@ const nextConfig = {
     ];
   },
   trailingSlash: false,
+  async rewrites() {
+    return {
+      beforeFiles: [
+        // IndexNow root verification key file (e.g. /23c1fd3e813a48e78e6da5a6e2e50550.txt)
+        // Maps directly to IndexNow route handler before filesystem checking, preventing collision with [slug]
+        {
+          source: '/:key([a-zA-Z0-9_-]{16,64})\\.txt',
+          destination: '/api/seo/indexnow?key=:key',
+        },
+      ],
+    };
+  },
   async redirects() {
     return [
       // Legacy WordPress category and tag archives

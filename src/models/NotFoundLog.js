@@ -44,5 +44,7 @@ const notFoundLogSchema = new mongoose.Schema(
 
 notFoundLogSchema.index({ path: 1, resolved: 1 });
 notFoundLogSchema.index({ hits: -1 });
+// 30-day TTL index to automatically purge old 404 logs and bound collection size
+notFoundLogSchema.index({ createdAt: 1 }, { expireAfterSeconds: 30 * 24 * 60 * 60 });
 
 export default mongoose.models.NotFoundLog || mongoose.model('NotFoundLog', notFoundLogSchema);

@@ -35,6 +35,16 @@ export async function PUT(req) {
     await connectDB();
     const body = await req.json();
 
+    // Script injection security: only superadmin can modify custom head or body scripts
+    if (body.customScripts !== undefined) {
+      if (admin.role !== 'superadmin') {
+        return NextResponse.json(
+          { success: false, message: 'Forbidden: Custom script injection is restricted to Super-Admin users only.' },
+          { status: 403 }
+        );
+      }
+    }
+
     const updated = await SeoSettings.findOneAndUpdate(
       { singletonKey: 'global_seo_settings' },
       {
@@ -49,9 +59,16 @@ export async function PUT(req) {
 
     invalidateSeoCache();
     invalidateCache(); // Invalidate in-memory DAL cache
+    try {
+      const { revalidateTag } = await import('next/cache');
+      revalidateTag('settings');
+      revalidateTag('dal_global_settings');
+    } catch (e) {}
     revalidatePath('/', 'layout');
     revalidatePath('/sitemap.xml');
     revalidatePath('/robots.txt');
+    revalidatePath('/llms.txt');
+    revalidatePath('/llms-full.txt');
 
     return NextResponse.json({
       success: true,

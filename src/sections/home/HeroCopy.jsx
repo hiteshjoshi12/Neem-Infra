@@ -245,10 +245,7 @@ export default function HeroCopy({ initialProperties = [], initialHeroData = nul
       <div className="w-full max-w-[840px] mx-auto px-5 sm:px-6 relative z-50 flex flex-col items-center text-center mt-auto mb-8 md:my-auto py-1 sm:py-2">
         
         {/* Eyebrow: Subtle Brand Badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: "easeOut" }}
+        <div
           className="mb-2 sm:mb-2.5 flex items-center justify-center gap-2.5 transform-gpu"
         >
           <span className="w-6 h-[1px] bg-brand-gold"></span>
@@ -257,13 +254,10 @@ export default function HeroCopy({ initialProperties = [], initialHeroData = nul
             {heroData.badge || "DLF Phase 1–4 • Sushant Lok • Golf Course Ext."}
           </span>
           <span className="w-6 h-[1px] bg-brand-gold"></span>
-        </motion.div>
+        </div>
 
-        {/* Master Headline: Reduced ~20% scale so video is clearly visible */}
-        <motion.h1
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+        {/* Master Headline: Rendered cleanly in server HTML without opacity: 0 for instant LCP */}
+        <h1
           aria-label={`${heroData.headlinePrefix || "Gurgaon's Premier"} ${heroData.headlineHighlight || "Real Estate"} ${heroData.headlineSuffix !== undefined && heroData.headlineSuffix !== null && heroData.headlineSuffix !== "" ? heroData.headlineSuffix : "Partner."}`.trim()}
           className="text-2xl sm:text-3xl md:text-[clamp(1.75rem,2.85vw,2.95rem)] font-serif text-brand-ivory leading-[1.15] tracking-tight max-w-[760px] mb-2 sm:mb-2.5 drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] transform-gpu"
         >
@@ -274,23 +268,17 @@ export default function HeroCopy({ initialProperties = [], initialHeroData = nul
               ? heroData.headlineSuffix
               : "Partner."}
           </span>
-        </motion.h1>
+        </h1>
 
-        {/* Supporting Description: Compact, refined readability */}
-        <motion.p
-          initial={{ opacity: 0, y: 14 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
+        {/* Supporting Description: Visible in server HTML without JS */}
+        <p
           className="text-slate-100 text-xs sm:text-sm font-normal max-w-[540px] mb-3.5 sm:mb-4 leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)] transform-gpu"
         >
           {heroData.description || "Discover an exclusive portfolio of luxury builder floors, high-rise penthouses, and bespoke villas across DLF Phase 1–4, Sushant Lok & Golf Course Ext."}
-        </motion.p>
+        </p>
 
         {/* ================= LUXURY PROPERTY DISCOVERY SEARCH BAR ================= */}
-        <motion.div
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
+        <div
           className="w-full max-w-[920px] relative z-50 transform-gpu"
         >
           {/* Desktop Search Bar (Horizontal Luxury Console, Slim & Refined) */}
@@ -443,7 +431,7 @@ export default function HeroCopy({ initialProperties = [], initialHeroData = nul
               );
             })}
           </div>
-        </motion.div>
+        </div>
 
       </div>
 

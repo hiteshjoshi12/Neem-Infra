@@ -43,6 +43,11 @@ const pageSchema = new mongoose.Schema(
       trim: true,
       default: '',
     },
+    directAnswer: {
+      type: String,
+      trim: true,
+      default: '',
+    },
     content: {
       type: String,
       default: '',

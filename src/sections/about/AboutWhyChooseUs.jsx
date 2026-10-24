@@ -21,8 +21,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import LuxuryTextReveal from '@/components/ui/LuxuryTextReveal';
 import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
-import { WHY_CHOOSE_US_PILLARS, TRADITIONAL_VS_SAUDAGAR } from '@/constants/aboutData';
-import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
+import { useCms } from '@/context/CmsContext';
 
 const PILLAR_ICONS = [
   Award,
@@ -34,14 +33,19 @@ const PILLAR_ICONS = [
   Scale
 ];
 
-export default function AboutWhyChooseUs() {
+export default function AboutWhyChooseUs({ data }) {
   const { sections } = useCms();
-  const cms = sections?.page_about?.whyChooseUs || DEFAULT_SECTIONS?.page_about?.whyChooseUs;
+  const cms = data || sections?.page_about?.whyChooseUs || {};
   const pillarsList = (cms?.pillars && Array.isArray(cms.pillars) && cms.pillars.length > 0) 
     ? cms.pillars 
-    : WHY_CHOOSE_US_PILLARS;
+    : [];
 
-  const leadPillar = pillarsList[0] || WHY_CHOOSE_US_PILLARS[0];
+  const leadPillar = pillarsList[0] || {
+    badge: "Principal Pillar",
+    title: "Direct Founder-Led Fiduciary Guidance",
+    description: "Every significant residential and commercial portfolio transaction is personally supervised by our executive founders.",
+    bullets: ["Zero Junior Delegations", "High-Stakes Advisory"]
+  };
   const gridPillars = pillarsList.slice(1);
 
   return (
@@ -172,7 +176,7 @@ export default function AboutWhyChooseUs() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {gridPillars.map((pillar, idx) => {
-              const IconComp = PILLAR_ICONS[idx + 1] || ShieldCheck;
+              const IconComp = PILLAR_ICONS[(idx + 1) % PILLAR_ICONS.length] || ShieldCheck;
               return (
                 <motion.div
                   key={pillar.id || idx}
@@ -285,9 +289,9 @@ export default function AboutWhyChooseUs() {
 
             {/* Dossier Comparative Rows */}
             <div className="space-y-4 sm:space-y-3">
-              {(cms?.comparisonMatrix && Array.isArray(cms.comparisonMatrix) && cms.comparisonMatrix.length > 0
+              {(cms?.comparisonMatrix && Array.isArray(cms.comparisonMatrix)
                 ? cms.comparisonMatrix
-                : TRADITIONAL_VS_SAUDAGAR
+                : []
               ).map((item, idx) => (
                 <div 
                   key={idx}
@@ -346,11 +350,11 @@ export default function AboutWhyChooseUs() {
             <div className="mt-8 p-4 rounded-2xl bg-brand-gold/10 border border-brand-gold/25 flex flex-wrap items-center justify-between gap-3 text-xs text-brand-slate">
               <div className="flex items-center gap-2">
                 <ShieldCheck size={16} className="text-brand-gold shrink-0" />
-                <span className="font-semibold text-brand-navy">Guaranteed Fiduciary Protocol:</span>
-                <span className="text-brand-slate hidden sm:inline">100% Freehold Conveyance • Verified 30-Year Tehsil Chain • Zero Hidden Broker Markups</span>
+                <span className="font-semibold text-brand-navy">Fiduciary Protocol:</span>
+                <span className="text-brand-slate hidden sm:inline">Freehold Conveyance • 30-Year Tehsil Title Chain Due Diligence • Direct Representation</span>
               </div>
               <span className="text-[10px] font-mono uppercase tracking-widest text-brand-gold bg-brand-gold/15 px-2 py-0.5 rounded border border-brand-gold/30">
-                ISO & RERA Compliant
+                Verified Due Diligence
               </span>
             </div>
 

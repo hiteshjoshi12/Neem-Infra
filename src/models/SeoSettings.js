@@ -144,7 +144,7 @@ Disallow: /api/
       ctaTitle: { type: String, default: 'Speak Directly with Senior Partners' },
       ctaButtonText: { type: String, default: 'Request Private Consultation' },
       ctaButtonLink: { type: String, default: '/contact' },
-      phoneContact: { type: String, default: '+91 98100 00000' },
+      phoneContact: { type: String, default: '+91 97185 11207' },
       quickLinks: [
         {
           title: { type: String, default: 'Return to Homepage' },
@@ -199,7 +199,7 @@ Disallow: /api/
       },
       telephone: { type: String, default: '+91 97185 11207' },
       email: { type: String, default: 'info@saudagarproperties.com' },
-      streetAddress: { type: String, default: 'DLF Phase 2, Sector 25' },
+      streetAddress: { type: String, default: '38, Akashneem Marg, DLF Phase 2' },
       addressLocality: { type: String, default: 'Gurugram' },
       addressRegion: { type: String, default: 'Haryana' },
       postalCode: { type: String, default: '122002' },
@@ -209,14 +209,14 @@ Disallow: /api/
       foundingDate: { type: String, default: '1999' },
       founders: [
         {
-          name: { type: String, default: 'Raman Saudagar' },
+          name: { type: String, default: 'Arun Sharma' },
+        },
+        {
+          name: { type: String, default: 'Suneeta Chawla' },
         },
       ],
       sameAs: [
-        { type: String, default: 'https://facebook.com/saudagarproperties' },
-        { type: String, default: 'https://instagram.com/saudagarproperties' },
-        { type: String, default: 'https://linkedin.com/company/saudagarproperties' },
-        { type: String, default: 'https://youtube.com/@saudagarproperties' },
+        { type: String, trim: true },
       ],
       reraNumber: { type: String, default: '' },
       googleBusinessProfileUrl: { type: String, default: '' },

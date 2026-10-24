@@ -18,6 +18,7 @@ import api from '@/services/api';
 
 export default function AdminIntegrationsPage() {
   const [settings, setSettings] = useState(null);
+  const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [toast, setToast] = useState('');
@@ -35,27 +36,71 @@ export default function AdminIntegrationsPage() {
     defaultOgImage: '',
   });
 
+  const [profileData, setProfileData] = useState({
+    isDlfAuthorized: true,
+    dlfAuthorizationText: 'DLF Authorized & Verified',
+    reraNumber: '',
+    primaryPhone: '+91 97185 11207',
+    secondaryPhone: '+91 98112 21207',
+    primaryEmail: 'Saudagar.Properties@Yahoo.In',
+    foundingYear: 1999,
+    address: {
+      streetAddress: '38, Akashneem Marg, DLF Phase 2',
+      addressLocality: 'Gurugram',
+      addressRegion: 'Haryana',
+      postalCode: '122002',
+      addressCountry: 'IN',
+    },
+    marketStats: [],
+  });
+
   const loadSettings = async () => {
     try {
       setLoading(true);
-      const res = await api.getSeoSettings();
-      if (res?.success && res.data) {
-        setSettings(res.data);
+      const [res, profRes] = await Promise.allSettled([
+        api.getSeoSettings(),
+        api.getBusinessProfile(),
+      ]);
+
+      if (res.status === 'fulfilled' && res.value?.success && res.value.data) {
+        setSettings(res.value.data);
         setFormData({
-          googleAnalyticsId: res.data.googleAnalyticsId || '',
-          enableGa4: res.data.enableGa4 !== false,
-          googleTagManagerId: res.data.googleTagManagerId || '',
-          enableGtm: res.data.enableGtm !== false,
-          googleSearchConsoleCode: res.data.googleSearchConsoleCode || '',
-          enableGsc: res.data.enableGsc !== false,
-          siteTitleTemplate: res.data.siteTitleTemplate || '%s | Saudagar Properties',
-          defaultMetaTitle: res.data.defaultMetaTitle || 'Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram',
-          defaultMetaDescription: res.data.defaultMetaDescription || '',
-          defaultOgImage: res.data.defaultOgImage || '',
+          googleAnalyticsId: res.value.data.googleAnalyticsId || '',
+          enableGa4: res.value.data.enableGa4 !== false,
+          googleTagManagerId: res.value.data.googleTagManagerId || '',
+          enableGtm: res.value.data.enableGtm !== false,
+          googleSearchConsoleCode: res.value.data.googleSearchConsoleCode || '',
+          enableGsc: res.value.data.enableGsc !== false,
+          siteTitleTemplate: res.value.data.siteTitleTemplate || '%s | Saudagar Properties',
+          defaultMetaTitle: res.value.data.defaultMetaTitle || 'Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram',
+          defaultMetaDescription: res.value.data.defaultMetaDescription || '',
+          defaultOgImage: res.value.data.defaultOgImage || '',
+        });
+      }
+
+      if (profRes.status === 'fulfilled' && profRes.value?.success && profRes.value.data) {
+        const bp = profRes.value.data;
+        setProfile(bp);
+        setProfileData({
+          isDlfAuthorized: bp.isDlfAuthorized !== false,
+          dlfAuthorizationText: bp.dlfAuthorizationText || 'DLF Authorized & Verified',
+          reraNumber: bp.reraNumber || '',
+          primaryPhone: bp.primaryPhone || '+91 97185 11207',
+          secondaryPhone: bp.secondaryPhone || '+91 98112 21207',
+          primaryEmail: bp.primaryEmail || 'Saudagar.Properties@Yahoo.In',
+          foundingYear: bp.foundingYear || 1999,
+          address: {
+            streetAddress: bp.address?.streetAddress || '38, Akashneem Marg, DLF Phase 2',
+            addressLocality: bp.address?.addressLocality || 'Gurugram',
+            addressRegion: bp.address?.addressRegion || 'Haryana',
+            postalCode: bp.address?.postalCode || '122002',
+            addressCountry: bp.address?.addressCountry || 'IN',
+          },
+          marketStats: Array.isArray(bp.marketStats) ? bp.marketStats : [],
         });
       }
     } catch (err) {
-      console.warn('Failed to load SEO settings:', err);
+      console.warn('Failed to load SEO settings & Business Profile:', err);
     } finally {
       setLoading(false);
     }
@@ -69,14 +114,17 @@ export default function AdminIntegrationsPage() {
     e.preventDefault();
     try {
       setSaving(true);
-      const res = await api.updateSeoSettings(formData);
-      if (res?.success) {
-        setToast('Tracking & verification tokens saved successfully! Active immediately on live site.');
+      const [res1, res2] = await Promise.all([
+        api.updateSeoSettings(formData),
+        api.updateBusinessProfile(profileData),
+      ]);
+      if (res1?.success || res2?.success) {
+        setToast('Settings and Business Profile saved successfully! Active immediately on live site.');
         await loadSettings();
         setTimeout(() => setToast(''), 3500);
       }
     } catch (err) {
-      alert(err.message || 'Failed to save integrations');
+      alert(err.message || 'Failed to save settings');
     } finally {
       setSaving(false);
     }
@@ -267,6 +315,244 @@ export default function AdminIntegrationsPage() {
                 <option value="false">Disabled</option>
               </select>
             </div>
+          </div>
+        </div>
+
+        {/* Module: Business Verification & DLF Badge Authority */}
+        <div className="p-6 rounded-3xl bg-brand-navy/40 border border-brand-gold/30 space-y-4">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="p-2 rounded-xl bg-brand-gold/15 text-brand-gold">
+                <ShieldCheck size={18} />
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-white">Business Verification & DLF Badge Authority</h3>
+                <p className="text-[11px] text-brand-text-dim">Control DLF Authorized & Verified status, RERA number, and canonical NAP data</p>
+              </div>
+            </div>
+            <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider ${profileData.isDlfAuthorized ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30' : 'bg-rose-500/20 text-rose-400 border border-rose-500/30'}`}>
+              {profileData.isDlfAuthorized ? 'DLF Badge Active' : 'DLF Badge Disabled'}
+            </span>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+                DLF Authorized & Verified Badge
+              </label>
+              <select
+                value={profileData.isDlfAuthorized ? 'true' : 'false'}
+                onChange={e => setProfileData({ ...profileData, isDlfAuthorized: e.target.value === 'true' })}
+                className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs focus:outline-none focus:border-brand-gold"
+              >
+                <option value="true">Enabled (Display DLF Authorized Badge)</option>
+                <option value="false">Disabled (Hide DLF Authorized Badge)</option>
+              </select>
+            </div>
+
+            <div>
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+                DLF Badge Label Text
+              </label>
+              <input
+                type="text"
+                value={profileData.dlfAuthorizationText}
+                onChange={e => setProfileData({ ...profileData, dlfAuthorizationText: e.target.value })}
+                placeholder="DLF Authorized & Verified"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs focus:outline-none focus:border-brand-gold"
+              >
+              </input>
+            </div>
+
+            <div>
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+                HARERA Registration Number (Optional)
+              </label>
+              <input
+                type="text"
+                value={profileData.reraNumber}
+                onChange={e => setProfileData({ ...profileData, reraNumber: e.target.value })}
+                placeholder="e.g. HARERA/GGM/XXXX/XXXX (Leave empty if unassigned)"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs font-mono focus:outline-none focus:border-brand-gold"
+              />
+              <p className="text-[10px] text-brand-text-dim mt-1">RERA badge renders publicly ONLY when this number is provided.</p>
+            </div>
+
+            <div>
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+                Primary Advisory Phone
+              </label>
+              <input
+                type="text"
+                value={profileData.primaryPhone}
+                onChange={e => setProfileData({ ...profileData, primaryPhone: e.target.value })}
+                className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs font-mono focus:outline-none focus:border-brand-gold"
+              />
+            </div>
+
+            <div>
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+                Secondary Advisory Phone
+              </label>
+              <input
+                type="text"
+                value={profileData.secondaryPhone}
+                onChange={e => setProfileData({ ...profileData, secondaryPhone: e.target.value })}
+                className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs font-mono focus:outline-none focus:border-brand-gold"
+              />
+            </div>
+
+            <div>
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+                Official Business Email
+              </label>
+              <input
+                type="email"
+                value={profileData.primaryEmail}
+                onChange={e => setProfileData({ ...profileData, primaryEmail: e.target.value })}
+                className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs font-mono focus:outline-none focus:border-brand-gold"
+              />
+            </div>
+          </div>
+
+          <div>
+            <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+              Physical Street Address (DLF Gurugram Headquarters)
+            </label>
+            <input
+              type="text"
+              value={profileData.address.streetAddress}
+              onChange={e => setProfileData({
+                ...profileData,
+                address: { ...profileData.address, streetAddress: e.target.value }
+              })}
+              className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs focus:outline-none focus:border-brand-gold"
+            />
+          </div>
+
+          {/* Sourced Market Stats (MarketStat Component) */}
+          <div className="pt-4 border-t border-white/10 space-y-3">
+            <div className="flex items-center justify-between">
+              <div>
+                <h4 className="text-xs font-bold text-white uppercase tracking-wider">
+                  Verified Sourced Market Stats (MarketStat)
+                </h4>
+                <p className="text-[10px] text-brand-text-dim">
+                  Strict requirement: Rendered publicly ONLY when all 5 fields (value, label, sourceName, sourceUrl, asOfDate) are provided.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setProfileData({
+                  ...profileData,
+                  marketStats: [
+                    ...profileData.marketStats,
+                    { value: '', label: '', sourceName: '', sourceUrl: '', asOfDate: '' }
+                  ]
+                })}
+                className="px-3 py-1.5 rounded-lg bg-brand-gold/20 text-brand-gold border border-brand-gold/30 hover:bg-brand-gold/30 text-[11px] font-bold"
+              >
+                + Add Sourced Metric
+              </button>
+            </div>
+
+            {profileData.marketStats?.length === 0 ? (
+              <p className="text-[11px] text-slate-400 italic bg-black/20 p-3 rounded-xl border border-white/5">
+                No market stats added. Seeded empty. The component renders nothing publicly until verified sourced figures are filled.
+              </p>
+            ) : (
+              <div className="space-y-3">
+                {profileData.marketStats.map((stat, sIdx) => (
+                  <div key={sIdx} className="p-3.5 rounded-xl bg-black/25 border border-white/10 space-y-2.5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-[10px] font-bold text-brand-gold uppercase">Metric #{sIdx + 1}</span>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const updated = profileData.marketStats.filter((_, i) => i !== sIdx);
+                          setProfileData({ ...profileData, marketStats: updated });
+                        }}
+                        className="text-[10px] text-rose-400 hover:text-rose-300 font-semibold"
+                      >
+                        Remove
+                      </button>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                      <div>
+                        <label className="block text-[10px] text-brand-text-dim mb-1">Metric Value (e.g. ₹18,500/sq.ft)</label>
+                        <input
+                          type="text"
+                          value={stat.value}
+                          onChange={e => {
+                            const updated = [...profileData.marketStats];
+                            updated[sIdx].value = e.target.value;
+                            setProfileData({ ...profileData, marketStats: updated });
+                          }}
+                          placeholder="e.g. ₹18,500/sq.ft or 3.8% Yield"
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-brand-navy-deep border border-white/15 text-white text-xs focus:outline-none"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-brand-text-dim mb-1">Metric Label</label>
+                        <input
+                          type="text"
+                          value={stat.label}
+                          onChange={e => {
+                            const updated = [...profileData.marketStats];
+                            updated[sIdx].label = e.target.value;
+                            setProfileData({ ...profileData, marketStats: updated });
+                          }}
+                          placeholder="e.g. Average Price / Sq Ft (DLF Phase 2)"
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-brand-navy-deep border border-white/15 text-white text-xs focus:outline-none"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-brand-text-dim mb-1">Source Name</label>
+                        <input
+                          type="text"
+                          value={stat.sourceName}
+                          onChange={e => {
+                            const updated = [...profileData.marketStats];
+                            updated[sIdx].sourceName = e.target.value;
+                            setProfileData({ ...profileData, marketStats: updated });
+                          }}
+                          placeholder="e.g. Knight Frank India / JLL"
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-brand-navy-deep border border-white/15 text-white text-xs focus:outline-none"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-[10px] text-brand-text-dim mb-1">Source URL</label>
+                        <input
+                          type="url"
+                          value={stat.sourceUrl}
+                          onChange={e => {
+                            const updated = [...profileData.marketStats];
+                            updated[sIdx].sourceUrl = e.target.value;
+                            setProfileData({ ...profileData, marketStats: updated });
+                          }}
+                          placeholder="https://..."
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-brand-navy-deep border border-white/15 text-white text-xs focus:outline-none"
+                        />
+                      </div>
+                      <div className="sm:col-span-2">
+                        <label className="block text-[10px] text-brand-text-dim mb-1">As Of Date</label>
+                        <input
+                          type="text"
+                          value={stat.asOfDate}
+                          onChange={e => {
+                            const updated = [...profileData.marketStats];
+                            updated[sIdx].asOfDate = e.target.value;
+                            setProfileData({ ...profileData, marketStats: updated });
+                          }}
+                          placeholder="e.g. Q1 2026"
+                          className="w-full px-2.5 py-1.5 rounded-lg bg-brand-navy-deep border border-white/15 text-white text-xs focus:outline-none"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 

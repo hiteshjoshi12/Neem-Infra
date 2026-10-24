@@ -1,14 +1,24 @@
-import { SITE_URL, SITE_NAME, BUSINESS_INFO } from './seoConfig.js';
+import { SITE_NAME, BUSINESS_INFO } from './seoConfig.js';
+
+const CANONICAL_FALLBACK = 'https://saudagarproperties.com';
+
+export function getBaseUrl(customSettings = null) {
+  if (typeof customSettings === 'string' && customSettings.startsWith('http')) {
+    return customSettings.replace(/\/+$/, '');
+  }
+  return (customSettings?.canonicalBaseUrl || customSettings?.organizationSchema?.url || customSettings?.url || CANONICAL_FALLBACK).replace(/\/+$/, '');
+}
 
 /**
- * Normalizes any relative or absolute URL to an absolute URL with SITE_URL.
+ * Normalizes any relative or absolute URL to an absolute URL with the configured canonical baseUrl.
  * Ensures no duplicate slashes and clean protocol.
  */
-export function buildAbsoluteUrl(path = '') {
-  if (!path) return SITE_URL;
+export function buildAbsoluteUrl(path = '', customSettings = null) {
+  const baseUrl = getBaseUrl(customSettings);
+  if (!path) return baseUrl;
   if (/^https?:\/\//i.test(path)) return path;
   const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  return `${SITE_URL}${cleanPath}`;
+  return `${baseUrl}${cleanPath}`;
 }
 
 /**
@@ -52,15 +62,16 @@ export function getVerifiedSocialProfiles() {
  * 1. WebSite Schema
  * Represents the website entity with canonical name and alternate name.
  */
-export function buildWebSiteSchema() {
+export function buildWebSiteSchema(customSettings = null) {
+  const baseUrl = getBaseUrl(customSettings);
   return cleanSchema({
     '@type': 'WebSite',
-    '@id': `${SITE_URL}/#website`,
+    '@id': `${baseUrl}/#website`,
     name: SITE_NAME,
     alternateName: BUSINESS_INFO.shortName || BUSINESS_INFO.name,
-    url: SITE_URL,
+    url: baseUrl,
     publisher: {
-      '@id': `${SITE_URL}/#organization`,
+      '@id': `${baseUrl}/#organization`,
     },
     inLanguage: 'en-IN',
   });
@@ -70,22 +81,29 @@ export function buildWebSiteSchema() {
  * 2 & 3. Organization & LocalBusiness (RealEstateAgent subtype) Schema
  * Uses real, verified Saudagar Properties data, dynamically reading from DB settings when provided.
  */
-export function buildOrganizationSchema(customSettings = null) {
+export function buildOrganizationSchema(customSettings = null, businessProfile = null) {
   const org = customSettings?.organizationSchema || customSettings || {};
-  const name = org.name || BUSINESS_INFO.name;
-  const legalName = org.legalName || BUSINESS_INFO.name;
+  const baseUrl = getBaseUrl(customSettings);
+  const profile = businessProfile || customSettings?.profile || null;
+
+  const name = profile?.name || org.name || BUSINESS_INFO.name;
+  // Item F: legalName only if it appears in original visible site content, else omit and list as owner-pending.
+  // Visible site content only displays "Saudagar Properties".
+  const legalName = undefined; 
   const alternateName = org.alternateName || BUSINESS_INFO.shortName;
-  const description = org.description || BUSINESS_INFO.description;
-  const url = org.url || SITE_URL;
-  const logoUrl = org.logo || BUSINESS_INFO.logo || '/logo.png';
-  const telephone = org.telephone || BUSINESS_INFO.phone?.[0] || '+91 97185 11207';
-  const email = org.email || BUSINESS_INFO.email;
-  const priceRange = org.priceRange || BUSINESS_INFO.priceRange;
-  const streetAddress = org.streetAddress || BUSINESS_INFO.address?.streetAddress;
-  const addressLocality = org.addressLocality || BUSINESS_INFO.address?.addressLocality;
-  const addressRegion = org.addressRegion || BUSINESS_INFO.address?.addressRegion;
-  const postalCode = org.postalCode || BUSINESS_INFO.address?.postalCode;
-  const addressCountry = org.addressCountry || BUSINESS_INFO.address?.addressCountry || 'IN';
+  const description = profile?.fullDescription || profile?.shortDescription || org.description || BUSINESS_INFO.description;
+  const url = baseUrl;
+  const logoUrl = profile?.logoUrl || org.logo || BUSINESS_INFO.logo || '/logo.png';
+  const telephone = profile?.primaryPhone || org.telephone || BUSINESS_INFO.phone?.[0] || '+91 97185 11207';
+  const email = profile?.primaryEmail || org.email || BUSINESS_INFO.email || 'Saudagar.Properties@Yahoo.In';
+
+  // Item B: Read address strictly from BusinessProfile with verified fallback
+  const profileAddr = profile?.address;
+  const streetAddress = profileAddr?.streetAddress || org.streetAddress || BUSINESS_INFO.address?.streetAddress;
+  const addressLocality = profileAddr?.addressLocality || org.addressLocality || BUSINESS_INFO.address?.addressLocality;
+  const addressRegion = profileAddr?.addressRegion || org.addressRegion || BUSINESS_INFO.address?.addressRegion;
+  const postalCode = profileAddr?.postalCode || org.postalCode || BUSINESS_INFO.address?.postalCode;
+  const addressCountry = profileAddr?.addressCountry || org.addressCountry || BUSINESS_INFO.address?.addressCountry || 'IN';
 
   const sameAsList = Array.isArray(org.sameAs) && org.sameAs.length > 0
     ? org.sameAs.filter((s) => s && typeof s === 'string' && s.trim() !== '' && s !== '#')
@@ -95,25 +113,37 @@ export function buildOrganizationSchema(customSettings = null) {
     ? org.areaServed
     : BUSINESS_INFO.areaServed;
 
-  const foundersList = Array.isArray(org.founder) && org.founder.length > 0
-    ? org.founder
-    : (Array.isArray(org.founders) && org.founders.length > 0 ? org.founders : BUSINESS_INFO.founders);
+  const foundersList = Array.isArray(profile?.founders) && profile.founders.length > 0
+    ? profile.founders
+    : (Array.isArray(org.founder) && org.founder.length > 0
+      ? org.founder
+      : (Array.isArray(org.founders) && org.founders.length > 0 ? org.founders : BUSINESS_INFO.founders));
+
+  const cleanFounders = (foundersList || []).map((f) => {
+    const rawName = typeof f === 'string' ? f : (f.name || '');
+    const cleanName = rawName.replace(/\[.*?\]/g, '').replace(/—.*$/g, '').replace(/\b(?:OWNER TO CONFIRM|PENDING OWNER CONFIRMATION)\b/gi, '').trim();
+    if (!cleanName) return null;
+    return {
+      '@type': 'Person',
+      name: cleanName,
+    };
+  }).filter(Boolean);
 
   return cleanSchema({
     '@type': ['RealEstateAgent', 'LocalBusiness', 'Organization'],
-    '@id': `${url}/#organization`,
+    '@id': `${baseUrl}/#organization`,
     name,
     legalName,
     alternateName,
     description,
-    url,
+    url: baseUrl,
     logo: {
       '@type': 'ImageObject',
-      '@id': `${url}/#logo`,
-      url: buildAbsoluteUrl(logoUrl),
+      '@id': `${baseUrl}/#logo`,
+      url: buildAbsoluteUrl(logoUrl, baseUrl),
       caption: name,
     },
-    image: buildAbsoluteUrl(logoUrl),
+    image: buildAbsoluteUrl(logoUrl, baseUrl),
     telephone,
     email,
     address: streetAddress ? {
@@ -129,12 +159,8 @@ export function buildOrganizationSchema(customSettings = null) {
       latitude: BUSINESS_INFO.geo.latitude,
       longitude: BUSINESS_INFO.geo.longitude,
     } : undefined),
-    priceRange,
-    foundingDate: org.foundingDate || (BUSINESS_INFO.foundingYear ? String(BUSINESS_INFO.foundingYear) : undefined),
-    founder: foundersList?.map((founderItem) => ({
-      '@type': 'Person',
-      name: typeof founderItem === 'string' ? founderItem : founderItem.name,
-    })),
+    foundingDate: org.foundingDate || (profile?.foundingYear ? String(profile.foundingYear) : (BUSINESS_INFO.foundingYear ? String(BUSINESS_INFO.foundingYear) : undefined)),
+    founder: cleanFounders.length > 0 ? cleanFounders : undefined,
     areaServed: areaServedList?.map((area) => ({
       '@type': 'City',
       name: typeof area === 'string' ? area : area.name,
@@ -283,7 +309,7 @@ export function buildBlogPostingSchema(post) {
       name: 'Saudagar Advisory Desk',
     },
     publisher: {
-      '@id': `${SITE_URL}/#organization`,
+      '@id': `${getBaseUrl()}/#organization`,
     },
     articleSection: categoryName || 'Real Estate Advisory',
     keywords,
@@ -305,7 +331,8 @@ export function buildBlogPostingSchema(post) {
 export function buildArticleGraph({ post, breadcrumbs = [], faqs = [] }) {
   if (!post || !post.slug) return null;
 
-  const articleUrl = buildAbsoluteUrl(`/blog/${post.slug}`);
+  const baseUrl = getBaseUrl();
+  const articleUrl = buildAbsoluteUrl(`/blog/${post.slug}`, baseUrl);
   const website = buildWebSiteSchema();
   const organization = buildOrganizationSchema();
   const author = buildAuthorSchema(post.author);
@@ -320,10 +347,10 @@ export function buildArticleGraph({ post, breadcrumbs = [], faqs = [] }) {
     name: post.title,
     description: post.excerpt || post.seoDescription,
     isPartOf: {
-      '@id': `${SITE_URL}/#website`,
+      '@id': `${baseUrl}/#website`,
     },
     about: {
-      '@id': `${SITE_URL}/#organization`,
+      '@id': `${baseUrl}/#organization`,
     },
     breadcrumb: breadcrumbList?.['@id'] ? { '@id': breadcrumbList['@id'] } : undefined,
     inLanguage: 'en-IN',
@@ -362,7 +389,7 @@ export function buildPageGraph({ path, title, description, breadcrumbs = [], faq
     name: title,
     description,
     isPartOf: {
-      '@id': `${SITE_URL}/#website`,
+      '@id': `${getBaseUrl()}/#website`,
     },
     breadcrumb: breadcrumbList?.['@id'] ? { '@id': breadcrumbList['@id'] } : undefined,
     inLanguage: 'en-IN',
@@ -444,7 +471,7 @@ export function buildLocationGraph({ location, breadcrumbs = [], faqs = [] }) {
     name: location.seoTitle || `${location.name} Real Estate & Property Advisory | Saudagar Properties`,
     description: location.seoDescription || location.description,
     isPartOf: {
-      '@id': `${SITE_URL}/#website`,
+      '@id': `${getBaseUrl()}/#website`,
     },
     about: {
       '@id': `${pageUrl}#place`,
@@ -492,7 +519,7 @@ export function buildProfilePageSchema(author, breadcrumbs = []) {
     name: `${author.name || 'Author'} — Editorial & Advisory Profile | Saudagar Properties`,
     description: author.bio,
     isPartOf: {
-      '@id': `${SITE_URL}/#website`,
+      '@id': `${getBaseUrl()}/#website`,
     },
     mainEntity: authorEntity?.['@id'] ? { '@id': authorEntity['@id'] } : authorEntity,
     breadcrumb: breadcrumbList?.['@id'] ? { '@id': breadcrumbList['@id'] } : undefined,

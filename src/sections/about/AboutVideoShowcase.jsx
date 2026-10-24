@@ -7,11 +7,11 @@ import { Play, Pause, Volume2, VolumeX, Maximize2, Film, CheckCircle2 } from 'lu
 
 
 
-import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
+import { useCms } from '@/context/CmsContext';
 
-export default function AboutVideoShowcase() {
+export default function AboutVideoShowcase({ data }) {
   const { sections } = useCms();
-  const cms = sections?.page_about?.videoShowcase || DEFAULT_SECTIONS.page_about.videoShowcase;
+  const cms = data || sections?.page_about?.videoShowcase || {};
 
   const videoRef = useRef(null);
   const containerRef = useRef(null);
@@ -28,7 +28,7 @@ export default function AboutVideoShowcase() {
   const [showControls, setShowControls] = useState(true);
   const controlsTimeoutRef = useRef(null);
 
-  const videoUrl = cms.videoUrl || "https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/saudagar-hero.mp4";
+  const videoUrl = cms?.videoUrl || "https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/saudagar-hero.mp4";
 
   const formatTime = (seconds) => {
     if (isNaN(seconds)) return '0:00';

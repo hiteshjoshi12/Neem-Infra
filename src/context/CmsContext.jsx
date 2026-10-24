@@ -2,15 +2,14 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import api from '../services/api';
-import { DEFAULT_SECTIONS } from '../constants/defaultSections';
-
-export { DEFAULT_SECTIONS };
+// Clean runtime export without importing static constants
+export const DEFAULT_SECTIONS = {};
 
 const CmsContext = createContext(null);
 const LEGACY_STORAGE_KEY = 'sp_cms_cache_v1';
 
 export const CmsProvider = ({ children, initialData = {} }) => {
-  const [sections, setSections] = useState(() => initialData?.sections || DEFAULT_SECTIONS);
+  const [sections, setSections] = useState(() => initialData?.sections || {});
   const [properties, setProperties] = useState(() => initialData?.properties || []);
   const [testimonials, setTestimonials] = useState(() => initialData?.testimonials || []);
   const [loading, setLoading] = useState(() => !initialData?.sections);

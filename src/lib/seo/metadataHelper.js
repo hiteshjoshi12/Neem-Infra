@@ -1,5 +1,7 @@
-import { SITE_URL, SITE_NAME, DEFAULT_META } from './seoConfig.js';
+import { SITE_NAME, DEFAULT_META } from './seoConfig.js';
 import { getSocialImageUrl } from './imageSeoHelper.js';
+
+const CANONICAL_FALLBACK = 'https://saudagarproperties.com';
 
 /**
  * Normalizes a URL path:
@@ -20,27 +22,44 @@ export function normalizePath(path = '/') {
 /**
  * Builds canonical URL strictly on the production domain
  */
-export function getCanonicalUrl(path = '/') {
+export function getCanonicalUrl(path = '/', baseUrl = CANONICAL_FALLBACK) {
+  const cleanBase = (baseUrl || CANONICAL_FALLBACK).replace(/\/+$/, '');
   const norm = normalizePath(path);
-  return norm === '/' ? SITE_URL : `${SITE_URL}${norm}`;
+  return norm === '/' ? cleanBase : `${cleanBase}${norm}`;
+}
+
+/**
+ * Server-side token resolution for company years of experience
+ * Resolves {{yearsExperience}} from foundingYear (default: 1999).
+ */
+export function resolveYearsToken(text, years = null) {
+  if (!text || typeof text !== 'string') return text;
+  const y = years || Math.max(1, new Date().getFullYear() - 1999);
+  return text
+    .replace(/\{\{yearsExperience\}\}\+/g, `${y}+`)
+    .replace(/\{\{yearsExperience\}\}/g, `${y}`)
+    .replace(/\b25\+\s*Years/gi, `${y}+ Years`)
+    .replace(/\b25\+\s*years/gi, `${y}+ years`)
+    .replace(/\b25\+/g, `${y}+`);
 }
 
 /**
  * Formats page title ensuring brand suffix without duplicate brand names
  */
-export function formatMetaTitle(rawTitle) {
+export function formatMetaTitle(rawTitle, years = null) {
   if (!rawTitle) return `${SITE_NAME} — Premier Real Estate Consultant DLF Gurugram`;
-  const clean = rawTitle.trim();
-  if (clean.includes(SITE_NAME)) return clean;
-  return `${clean} | ${SITE_NAME}`;
+  const resolved = resolveYearsToken(rawTitle, years).trim();
+  if (resolved.includes(SITE_NAME)) return resolved;
+  return `${resolved} | ${SITE_NAME}`;
 }
 
 /**
  * Truncates meta description to ideal search snippet length (150-160 characters)
  */
-export function formatMetaDescription(rawDescription, maxLength = 160) {
-  if (!rawDescription) return DEFAULT_META.description;
-  const clean = rawDescription.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
+export function formatMetaDescription(rawDescription, maxLength = 160, years = null) {
+  if (!rawDescription) return resolveYearsToken(DEFAULT_META.description, years);
+  const resolved = resolveYearsToken(rawDescription, years);
+  const clean = resolved.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
   if (clean.length <= maxLength) return clean;
   // Truncate at previous word boundary
   const truncated = clean.substring(0, maxLength);
@@ -66,11 +85,22 @@ export function buildPageMetadata({
   section,
   tags,
   keywords = [],
+  baseUrl = CANONICAL_FALLBACK,
   extra = {}
 }) {
-  const canonical = explicitCanonical 
-    ? (explicitCanonical.startsWith('http') ? explicitCanonical : getCanonicalUrl(explicitCanonical))
-    : getCanonicalUrl(path);
+  const cleanBase = (baseUrl || CANONICAL_FALLBACK).replace(/\/+$/, '');
+  let canonical = explicitCanonical || path;
+  if (canonical.startsWith('http')) {
+    try {
+      const u = new URL(canonical);
+      const cleanPath = u.pathname.length > 1 && u.pathname.endsWith('/') ? u.pathname.slice(0, -1) : u.pathname;
+      canonical = cleanPath === '/' ? cleanBase : `${cleanBase}${cleanPath}`;
+    } catch {
+      canonical = getCanonicalUrl(canonical, cleanBase);
+    }
+  } else {
+    canonical = getCanonicalUrl(canonical, cleanBase);
+  }
   const formattedTitle = formatMetaTitle(title);
   const formattedDescription = formatMetaDescription(description);
   const ogImageUrl = image || DEFAULT_META.ogImage;
@@ -175,7 +205,7 @@ export function buildArticleMetadata(post) {
 
   const authorName = post.author?.name || 'Saudagar Properties';
   const authorProfileUrl = post.author?.slug 
-    ? `${SITE_URL}/blog/author/${post.author.slug}` 
+    ? `${CANONICAL_FALLBACK}/blog/author/${post.author.slug}` 
     : authorName;
 
   // Dedicated social image with Discover & OG 1200x630 resolution

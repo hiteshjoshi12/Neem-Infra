@@ -58,7 +58,7 @@ export default function LuxuryTextReveal({
       className={`font-serif tracking-tight leading-tight ${className}`}
     >
       <motion.span
-        initial="hidden"
+        initial={false}
         whileInView="visible"
         viewport={{ once, amount: 0.05 }}
         variants={containerVariants}
@@ -68,6 +68,7 @@ export default function LuxuryTextReveal({
           <React.Fragment key={`w-${idx}`}>
             <span className="inline-block overflow-hidden mr-[0.26em] align-top">
               <motion.span
+                initial={false}
                 variants={wordVariants}
                 className="inline-block origin-bottom"
               >
@@ -82,6 +83,7 @@ export default function LuxuryTextReveal({
           <React.Fragment key={`h-${idx}`}>
             <span className="inline-block overflow-hidden mr-[0.28em] pr-2 -mr-1 align-top">
               <motion.span
+                initial={false}
                 variants={wordVariants}
                 className="inline-block italic text-brand-gold font-serif font-bold tracking-normal"
               >

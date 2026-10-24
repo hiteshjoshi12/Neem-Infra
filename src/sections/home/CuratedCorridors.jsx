@@ -9,7 +9,6 @@ import Link from 'next/link';
 
 import { useCms } from '../../context/CmsContext';
 import Image from 'next/image';
-import { PROPERTIES_DATA as DEFAULT_PROPERTIES } from '@/constants/propertiesData';
 
 export default function CuratedCorridors({ initialProperties = [], initialSectionData = null }) {
   const { properties, sections } = useCms();
@@ -17,7 +16,7 @@ export default function CuratedCorridors({ initialProperties = [], initialSectio
     ? properties
     : (initialProperties && initialProperties.length > 0)
       ? initialProperties
-      : DEFAULT_PROPERTIES;
+      : [];
   const propertyList = rawList.filter((p) => p.isFeatured !== false);
   const displayList = propertyList.length > 0 ? propertyList : rawList;
   const corridorData = sections?.curatedCorridors || initialSectionData || {};

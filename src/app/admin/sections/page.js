@@ -56,8 +56,6 @@ const TABS = [
   { id: 'floatingWidgets', label: 'Floating Buttons', icon: Phone }
 ];
 
-import { DEFAULT_SECTIONS } from '@/constants/defaultSections';
-
 export default function AdminSectionsCMS() {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -66,14 +64,14 @@ export default function AdminSectionsCMS() {
 
   const { sections, refetch, updateLocalSection } = useCms();
   const [currentTab, setCurrentTab] = useState(activeTab);
-  const [formData, setFormData] = useState(() => sections[activeTab] || DEFAULT_SECTIONS[activeTab] || {});
+  const [formData, setFormData] = useState(() => sections[activeTab] || {});
   const [saving, setSaving] = useState(false);
   const [statusMsg, setStatusMsg] = useState({ type: '', text: '' });
 
   // Sync state when active tab changes (official React pattern for adjusting state from props/URL)
   if (currentTab !== activeTab) {
     setCurrentTab(activeTab);
-    setFormData(sections[activeTab] || DEFAULT_SECTIONS[activeTab] || {});
+    setFormData(sections[activeTab] || {});
     setStatusMsg({ type: '', text: '' });
   }
 

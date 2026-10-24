@@ -33,21 +33,18 @@ export default function PropertyDetailClient({ property }) {
     notes: ''
   });
 
-  // Collect gallery photography
+  // Collect authentic gallery photography only (zero stock photos)
   const allImages = React.useMemo(() => {
     const list = [];
-    if (property.img) list.push(property.img);
+    if (property.img && typeof property.img === 'string' && !property.img.includes('unsplash.com')) {
+      list.push(property.img);
+    }
     if (Array.isArray(property.images)) {
       property.images.forEach(img => {
-        if (img && !list.includes(img)) list.push(img);
+        if (img && typeof img === 'string' && !list.includes(img) && !img.includes('unsplash.com')) {
+          list.push(img);
+        }
       });
-    }
-    if (list.length === 1) {
-      list.push(
-        "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80",
-        "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&w=1200&q=80"
-      );
     }
     return list;
   }, [property]);
@@ -167,10 +164,7 @@ export default function PropertyDetailClient({ property }) {
       {/* =========================================================================
           SECTION 1: EDITORIAL HEADER
       ========================================================================= */}
-      <motion.section 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6 }}
+      <section 
         className="relative overflow-hidden bg-brand-obsidian text-white pt-28 pb-12 sm:pt-32 sm:pb-16 border-b border-white/10"
       >
         {/* Architectural Backdrop Image */}
@@ -250,15 +244,12 @@ export default function PropertyDetailClient({ property }) {
             </div>
           </div>
         </div>
-      </motion.section>
+      </section>
 
       {/* =========================================================================
           SECTION 2: IMAGE SHOWCASE
       ========================================================================= */}
-      <motion.section 
-        initial={{ opacity: 0, y: 15 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.1 }}
+      <section 
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8"
       >
         <div className="bg-white rounded-3xl p-4 sm:p-5 border border-brand-cream-border shadow-sm">
@@ -375,7 +366,7 @@ export default function PropertyDetailClient({ property }) {
             </div>
           )}
         </div>
-      </motion.section>
+      </section>
 
       {/* =========================================================================
           SECTION 3: ARCHITECTURAL CONTENT GRID

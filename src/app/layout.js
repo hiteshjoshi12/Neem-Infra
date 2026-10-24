@@ -3,8 +3,8 @@ import "./globals.css";
 import Script from "next/script";
 import Providers from "../components/Providers";
 import { getGlobalSeoSettings } from "@/lib/seo/dynamicSeo";
+import { getBusinessProfile } from "@/lib/dal";
 import { buildOrganizationSchema } from "@/lib/seo/schemaBuilders";
-import { getInitialCmsPayload } from "@/lib/dal";
 
 const lora = Lora({
   subsets: ["latin"],
@@ -34,13 +34,13 @@ export const metadata = {
     template: "%s | Saudagar Properties",
   },
   description:
-    "Find your dream luxury builder floor, independent villa, penthouse, or commercial office in DLF Phase 1–5, Sushant Lok & Golf Course Road. 25+ years of trusted advisory in Gurugram.",
+    "Find your dream luxury builder floor, independent villa, penthouse, or commercial office in DLF Phase 1–5, Sushant Lok & Golf Course Road. Established 1999 trusted advisory in Gurugram.",
   alternates: {
     canonical: "/",
   },
   openGraph: {
     title: "Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram",
-    description: "25+ years of trusted real estate advisory in DLF Phase 1–5, Sushant Lok & Golf Course Road.",
+    description: "Premier real estate advisory in DLF Phase 1–5, Sushant Lok & Golf Course Road since 1999.",
     url: "https://saudagarproperties.com",
     siteName: "Saudagar Properties",
     locale: "en_IN",
@@ -49,7 +49,7 @@ export const metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram",
-    description: "25+ years of trusted real estate advisory in DLF Phase 1–5, Sushant Lok & Golf Course Road.",
+    description: "Premier real estate advisory in DLF Phase 1–5, Sushant Lok & Golf Course Road since 1999.",
   },
   robots: {
     index: true,
@@ -69,22 +69,22 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const [settings, initialCms] = await Promise.all([
+  const [settings, profile] = await Promise.all([
     getGlobalSeoSettings(),
-    getInitialCmsPayload(),
+    getBusinessProfile(),
   ]);
-
-  // Dynamic GA4 (DB configuration takes priority, fall back to process.env)
-  const gaId =
-    settings?.enableGa4 && settings?.googleAnalyticsId
-      ? settings.googleAnalyticsId.trim()
-      : process.env.NEXT_PUBLIC_GA_ID;
 
   // Dynamic Google Tag Manager
   const gtmId =
     settings?.enableGtm && settings?.googleTagManagerId
       ? settings.googleTagManagerId.trim()
       : '';
+
+  // Dynamic GA4 (Strictly prevent double-firing: standalone GA4 is only loaded if GTM is NOT active)
+  const gaId =
+    !gtmId && settings?.enableGa4 && settings?.googleAnalyticsId
+      ? settings.googleAnalyticsId.trim()
+      : (!gtmId ? (process.env.NEXT_PUBLIC_GA_ID || '') : '');
 
   // Dynamic Google Search Console verification code
   const gscCode =
@@ -105,11 +105,26 @@ export default async function RootLayout({ children }) {
   };
 
   // Structured Data (Organization / RealEstateAgent Schema from DB)
-  const organizationSchema = buildOrganizationSchema(settings?.organizationSchema || settings);
+  const organizationSchema = buildOrganizationSchema(settings?.organizationSchema || settings, profile);
 
   return (
     <html lang="en" className={`${lora.variable} ${outfit.variable} ${jakarta.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
+        {/* Preload Hero Video Posters for instantaneous LCP */}
+        <link
+          rel="preload"
+          as="image"
+          href="https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/poster-mobile.jpg?tr=f-auto,q-80"
+          media="(max-width: 768px)"
+          fetchPriority="high"
+        />
+        <link
+          rel="preload"
+          as="image"
+          href="https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/poster.jpg?tr=f-auto,q-80"
+          media="(min-width: 769px)"
+          fetchPriority="high"
+        />
         {gscCode && (
           <meta name="google-site-verification" content={gscCode} />
         )}
@@ -192,7 +207,7 @@ export default async function RootLayout({ children }) {
             dangerouslySetInnerHTML={{ __html: settings.customScripts.body }}
           />
         )}
-        <Providers initialData={initialCms}>
+        <Providers>
           {children}
         </Providers>
       </body>

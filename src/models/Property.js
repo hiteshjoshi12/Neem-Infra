@@ -41,6 +41,10 @@ const propertySchema = new mongoose.Schema(
       type: String,
       required: true
     },
+    imgAlt: {
+      type: String,
+      default: ''
+    },
     tag: {
       type: String,
       default: 'Featured'
@@ -103,6 +107,10 @@ const propertySchema = new mongoose.Schema(
       default: []
     },
     images: {
+      type: [String],
+      default: []
+    },
+    imagesAlt: {
       type: [String],
       default: []
     },

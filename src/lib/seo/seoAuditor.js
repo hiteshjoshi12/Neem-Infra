@@ -1,5 +1,4 @@
 import { getBlogPosts, getOrphanAuditReport } from '../../services/blogService.js';
-import { SITE_URL } from './seoConfig.js';
 import { validateAltText } from './imageSeoHelper.js';
 
 /**

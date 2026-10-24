@@ -6,11 +6,11 @@ import { motion } from 'framer-motion';
 import { Compass, Briefcase, Factory, ArrowUpRight, Sparkles, CheckCircle2, ChevronLeft, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
+import { useCms } from '@/context/CmsContext';
 
-export default function AboutProposition() {
+export default function AboutProposition({ data }) {
   const { sections } = useCms();
-  const cms = sections?.page_about?.proposition || DEFAULT_SECTIONS.page_about.proposition;
+  const cms = data || sections?.page_about?.proposition || {};
   const [activePillar, setActivePillar] = useState(0);
 
   const defaultPillars = [
@@ -28,7 +28,7 @@ export default function AboutProposition() {
         "Luxury Penthouses & Villas",
         "DLF Phase 1–5 & Sushant Lok"
       ],
-      bgImage: "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1400&q=80",
+      bgImage: "https://ik.imagekit.io/saudagarproperties/saudagar-properties/properties/1792833276856_dlf-phase-2-block-k_dM3fS8n3D.avif",
       ctaText: "Explore Residential",
       ctaLink: "/services/residential"
     },
@@ -46,9 +46,9 @@ export default function AboutProposition() {
         "Corporate Floor Consolidation",
         "High-Yield Rental Opportunities"
       ],
-      bgImage: "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1400&q=80",
+      bgImage: "https://ik.imagekit.io/saudagarproperties/saudagar-properties/properties/1792833327116_dlf-phase-2-j-block_F2m9oQW8k.avif",
       ctaText: "Inquire Office Spaces",
-      ctaLink: "/contact"
+      ctaLink: "/services/commercial"
     },
     {
       id: "industrial",
@@ -64,17 +64,17 @@ export default function AboutProposition() {
         "Institutional Long-term Leases",
         "Udyog Vihar & Key NCR Nodes"
       ],
-      bgImage: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=1400&q=80",
+      bgImage: "https://ik.imagekit.io/saudagarproperties/saudagar-properties/properties/1792833777598_DLF-Phase-1_n8jY8L2kM.avif",
       ctaText: "Discover Industrial Deals",
-      ctaLink: "/contact"
+      ctaLink: "/services/industrial"
     }
   ];
 
-  const pillars = (cms?.pillars && cms.pillars.length > 0)
+  const pillars = (cms?.pillars && Array.isArray(cms.pillars) && cms.pillars.length > 0)
     ? cms.pillars.map((p, idx) => ({
-        ...defaultPillars[idx],
         ...p,
-        icon: defaultPillars[idx]?.icon || Compass
+        icon: defaultPillars[idx % defaultPillars.length]?.icon || Compass,
+        keyPoints: Array.isArray(p.keyPoints) ? p.keyPoints : []
       }))
     : defaultPillars;
 

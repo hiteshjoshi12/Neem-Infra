@@ -3,13 +3,11 @@
  * ============================================
  * All site-wide SEO defaults, business entity information,
  * and per-page metadata are defined here.
- *
- * TODO: Update SITE_URL with the actual production domain before launch.
+ * Canonical host is configured via SeoSettings.canonicalBaseUrl.
  * TODO: Update social profile URLs with real accounts.
  */
 
 // ─── Site-Wide Constants ────────────────────────────────────────────────
-export const SITE_URL = 'https://saudagarproperties.com';
 export const SITE_NAME = 'Saudagar Properties';
 export const SITE_LEGAL_NAME = 'Saudagar Properties Pvt. Ltd.';
 export const DEFAULT_LOCALE = 'en_IN';
@@ -17,15 +15,15 @@ export const DEFAULT_LANGUAGE = 'en';
 
 // ─── Business Entity Information (NAP + Identity) ───────────────────────
 export const BUSINESS_INFO = {
-  name: 'Saudagar Properties Pvt. Ltd.',
+  name: 'Saudagar Properties',
   shortName: 'Saudagar Properties',
   description:
     'Premier real estate consultancy in Gurugram specializing in luxury builder floors, independent villas, commercial offices, and industrial properties across DLF Phase 1–5, Sushant Lok, Golf Course Road, and Udyog Vihar.',
   foundingYear: 1999,
   founders: ['Mr. Arun Sharma', 'Mrs. Suneeta Chawla'],
   address: {
-    streetAddress: '38, Akashneem Marg',
-    addressLocality: 'DLF Phase 2, Gurugram',
+    streetAddress: '38, Akashneem Marg, DLF Phase 2',
+    addressLocality: 'Gurugram',
     addressRegion: 'Haryana',
     postalCode: '122002',
     addressCountry: 'IN',
@@ -37,15 +35,14 @@ export const BUSINESS_INFO = {
   },
   phone: ['+91 97185 11207', '+91 98112 21207'],
   email: 'Saudagar.Properties@Yahoo.In',
-  url: SITE_URL,
+  url: 'https://saudagarproperties.com',
   logo: 'https://ik.imagekit.io/saudagarproperties/saudagar-properties/branding/logo.png?tr=f-auto,q-80',
   socialProfiles: {
-    // TODO: Replace '#' with actual profile URLs
-    facebook: '#',
-    instagram: '#',
-    pinterest: '#',
-    linkedin: '#',
-    youtube: '#',
+    facebook: '',
+    instagram: '',
+    pinterest: '',
+    linkedin: '',
+    youtube: '',
   },
   areaServed: [
     'Gurugram',
@@ -69,16 +66,15 @@ export const BUSINESS_INFO = {
     'Property Investment Advisory',
     'End-to-End Transaction Support',
   ],
-  priceRange: '₹₹₹₹',
 };
 
 // ─── Default Meta Tags ─────────────────────────────────────────────────
 export const DEFAULT_META = {
   title: 'Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram',
   description:
-    'Saudagar Properties is a trusted real estate consultancy in Gurugram with 25+ years of experience. Explore luxury builder floors, villas, commercial offices, and plots in DLF Phase 1–5, Sushant Lok, and Golf Course Road.',
+    'Saudagar Properties is a trusted real estate consultancy in Gurugram with {{yearsExperience}}+ years of experience. Explore luxury builder floors, villas, commercial offices, and plots in DLF Phase 1–5, Sushant Lok, and Golf Course Road.',
   ogType: 'website',
-  ogImage: `${SITE_URL}/og-image.jpg`, // TODO: Create and place an OG image (1200×630px)
+  ogImage: 'https://saudagarproperties.com/og-image.jpg', // Place an OG image (1200×630px)
   twitterCard: 'summary_large_image',
 };
 
@@ -87,12 +83,12 @@ export const PAGE_SEO = {
   '/': {
     title: 'Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram',
     description:
-      'Find luxury builder floors, independent villas, penthouses, and commercial offices in DLF Phase 1–5, Sushant Lok, and Golf Course Road. Saudagar Properties — 25+ years of trusted real estate advisory in Gurugram.',
+      'Find luxury builder floors, independent villas, penthouses, and commercial offices in DLF Phase 1–5, Sushant Lok, and Golf Course Road. Saudagar Properties — {{yearsExperience}}+ years of trusted real estate advisory in Gurugram.',
     canonical: '/',
     ogType: 'website',
   },
   '/about': {
-    title: 'About Us — Saudagar Properties | 25+ Years of Real Estate Excellence in Gurugram',
+    title: 'About Us — Saudagar Properties | {{yearsExperience}}+ Years of Real Estate Excellence in Gurugram',
     description:
       'Learn about Saudagar Properties — founded in 1999, we are Gurugram\'s most trusted real estate consultancy. Meet our leadership team and discover our commitment to transparent, client-first property advisory.',
     canonical: '/about',
@@ -101,7 +97,7 @@ export const PAGE_SEO = {
   '/team': {
     title: 'Leadership & Real Estate Advisory Team | Saudagar Properties Gurugram',
     description:
-      'Meet the leadership, founders, and senior luxury real estate specialists behind Saudagar Properties with 25+ years of authority in DLF Phase 1–5.',
+      'Meet the leadership, founders, and senior luxury real estate specialists behind Saudagar Properties with {{yearsExperience}}+ years of authority in DLF Phase 1–5.',
     canonical: '/team',
     ogType: 'website',
   },

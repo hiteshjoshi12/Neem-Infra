@@ -9,28 +9,34 @@ import { Sparkles, ArrowRight, ShieldCheck, Award, Building, TrendingUp, CheckCi
 import Tilt3DCard from '../../components/ui/Tilt3DCard';
 import AnimatedCounter from '../../components/ui/AnimatedCounter';
 import Image from 'next/image';
-import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
+import { useCms } from '@/context/CmsContext';
 
-export default function AboutHero() {
+export default function AboutHero({ data }) {
   const { sections, properties } = useCms();
-  const cms = sections?.page_about || DEFAULT_SECTIONS.page_about;
+  const rawData = data || sections?.page_about?.hero || sections?.page_about || {};
+  const heroContent = rawData.titleMain ? rawData : (rawData.hero || rawData);
+  const cms = { hero: heroContent };
   const activePropertyList = properties || [];
 
+  const calculatedYears = Math.max(1, new Date().getFullYear() - 1999);
+  const activePropsCount = activePropertyList.length || 23;
   const defaultStats = [
-    { icon: Award, value: 25, suffix: "+", label: "Years Experience", subtext: "DLF Phase 1–5 Pioneers" },
-    { icon: TrendingUp, value: 500, prefix: "₹", suffix: "Cr+", label: "Transaction Volume", subtext: "Delivered Seamlessly" },
-    { icon: ShieldCheck, value: 100, suffix: "%", label: "Direct & Transparent", subtext: "Zero Middlemen Fees" },
-    { icon: Building, value: 5000, suffix: "+", formatComma: true, label: "HNI Families & Corporates", subtext: "Enduring Relationships" }
+    { icon: Award, value: calculatedYears, suffix: "+", label: "Years in DLF Gurugram", subtext: "Established 1999" },
+    { icon: Building, value: activePropsCount, suffix: "+", label: "Properties Cataloged", subtext: "Active Vetted Listings" },
+    { icon: ShieldCheck, value: 5, suffix: "", label: "DLF Phases Covered", subtext: "Phases 1, 2, 3, 4 & 5" },
+    { icon: TrendingUp, value: 7, suffix: "", label: "Prime Micro-Markets", subtext: "Gurugram Corridors" }
   ];
 
-  const STAT_ICONS = [Award, TrendingUp, ShieldCheck, Building];
-  const stats = (cms.hero?.stats && Array.isArray(cms.hero.stats) && cms.hero.stats.length > 0)
-    ? cms.hero.stats.map((st, idx) => ({
-        ...defaultStats[idx],
-        ...st,
-        icon: STAT_ICONS[idx % STAT_ICONS.length]
-      }))
-    : defaultStats;
+  const STAT_ICONS = [Award, Building, ShieldCheck, TrendingUp];
+  const statsList = (cms?.stats && Array.isArray(cms.stats) && cms.stats.length > 0)
+    ? cms.stats
+    : (rawData?.hero?.stats || defaultStats);
+
+  const stats = statsList.map((st, idx) => ({
+    ...defaultStats[idx % defaultStats.length],
+    ...st,
+    icon: STAT_ICONS[idx % STAT_ICONS.length]
+  }));
 
   const heroRef = useRef(null);
   const bgImgRef = useRef(null);

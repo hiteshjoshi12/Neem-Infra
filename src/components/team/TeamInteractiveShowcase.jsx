@@ -88,15 +88,28 @@ export default function TeamInteractiveShowcase({ founders, teamMembers, advisor
                     <div className="relative shrink-0">
                       <div className="absolute -inset-2 rounded-2xl bg-gradient-to-tr from-brand-gold/30 via-brand-gold/15 to-transparent blur-md group-hover:opacity-100 transition-opacity pointer-events-none" />
                       
-                      <div className="relative w-36 h-44 sm:w-44 sm:h-52 rounded-2xl overflow-hidden border-2 border-brand-gold/40 shadow-xl bg-brand-cream-border">
-                        <Image
-                          src={leader.image}
-                          alt={leader.name}
-                          fill
-                          sizes="(max-width: 640px) 150px, 180px"
-                          className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/60 via-transparent to-transparent pointer-events-none" />
+                      <div className="relative w-36 h-44 sm:w-44 sm:h-52 rounded-2xl overflow-hidden border-2 border-brand-gold/40 shadow-xl bg-brand-navy">
+                        {leader.image ? (
+                          <>
+                            <Image
+                              src={leader.image}
+                              alt={leader.name}
+                              fill
+                              sizes="(max-width: 640px) 150px, 180px"
+                              className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/60 via-transparent to-transparent pointer-events-none" />
+                          </>
+                        ) : (
+                          <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-brand-navy via-brand-navy-deep to-slate-900 text-brand-gold p-4 text-center">
+                            <span className="font-serif font-bold text-3xl tracking-wider text-brand-gold">
+                              {leader.name ? leader.name.split(' ').map((n) => n[0]).join('').slice(0, 2) : 'SP'}
+                            </span>
+                            <span className="text-[10px] tracking-widest uppercase text-slate-300 font-sans mt-2">
+                              Principal Partner
+                            </span>
+                          </div>
+                        )}
                       </div>
 
                       {/* Floating Experience Badge */}
@@ -252,15 +265,28 @@ export default function TeamInteractiveShowcase({ founders, teamMembers, advisor
                 >
                   <div>
                     {/* Photo Container with 3D Depth */}
-                    <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-brand-cream mb-6 border border-brand-cream-border group-hover:border-brand-gold/40 transition-colors">
-                      <Image
-                        src={member.image}
-                        alt={member.name}
-                        fill
-                        sizes="(max-width: 768px) 100vw, 33vw"
-                        className="object-cover object-top group-hover:scale-105 transition-transform duration-500 filter brightness-95"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/60 via-transparent to-transparent opacity-80 pointer-events-none" />
+                    <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-brand-navy mb-6 border border-brand-cream-border group-hover:border-brand-gold/40 transition-colors">
+                      {member.image ? (
+                        <>
+                          <Image
+                            src={member.image}
+                            alt={member.name}
+                            fill
+                            sizes="(max-width: 768px) 100vw, 33vw"
+                            className="object-cover object-top group-hover:scale-105 transition-transform duration-500 filter brightness-95"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/60 via-transparent to-transparent opacity-80 pointer-events-none" />
+                        </>
+                      ) : (
+                        <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-brand-navy via-brand-navy-deep to-slate-900 text-brand-gold p-4 text-center">
+                          <span className="font-serif font-bold text-2xl tracking-wider text-brand-gold">
+                            {member.name ? member.name.split(' ').map((n) => n[0]).join('').slice(0, 2) : 'SP'}
+                          </span>
+                          <span className="text-[10px] tracking-widest uppercase text-slate-300 font-sans mt-1">
+                            Advisory Specialist
+                          </span>
+                        </div>
+                      )}
                       
                       {/* Focus Badge */}
                       <div className="absolute bottom-3 left-3 right-3 px-3 py-1.5 rounded-xl bg-white/95 backdrop-blur-md border border-brand-cream-border text-[11px] font-semibold text-brand-gold-deep flex items-center gap-1.5 truncate shadow-sm">

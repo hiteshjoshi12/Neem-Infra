@@ -1,4 +1,3 @@
-import { SITE_URL } from '@/lib/seo/seoConfig';
 import { getGlobalSeoSettings } from '@/lib/seo/dynamicSeo';
 
 export const dynamic = 'force-dynamic';
@@ -6,7 +5,7 @@ export const revalidate = 300;
 
 export default async function robots() {
   const settings = await getGlobalSeoSettings();
-  const baseUrl = settings?.canonicalBaseUrl || SITE_URL || 'https://saudagarproperties.com';
+  const baseUrl = (settings?.canonicalBaseUrl || 'https://saudagarproperties.com').replace(/\/+$/, '');
   const mode = settings?.robotsTxtMode || 'standard';
 
   // 1. Staging or Non-Production Protection: block all crawlers outside production

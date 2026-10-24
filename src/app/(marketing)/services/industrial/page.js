@@ -1,5 +1,5 @@
 import { getProperties } from '@/services/propertyService';
-import { PAGE_SEO, BREADCRUMBS, SITE_URL, SITE_NAME } from '@/lib/seo/seoConfig';
+import { PAGE_SEO, BREADCRUMBS } from '@/lib/seo/seoConfig';
 import IndustrialServiceView from '@/components/services/IndustrialServiceView';
 import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
 import { connectDB } from '@/lib/mongodb';
@@ -30,8 +30,6 @@ async function getIndustrialData() {
   }
 }
 
-import { DEFAULT_SECTIONS } from '@/constants/defaultSections';
-
 export default async function IndustrialServicesPage() {
   const [industrialListings, pageData] = await Promise.all([
     getProperties({ category: 'industrial', limit: 4 }),
@@ -46,10 +44,10 @@ export default async function IndustrialServicesPage() {
         initialData={pageData}
         industrialListings={industrialListings}
         breadcrumbs={breadcrumbs}
-        assetClasses={pageData?.assetClasses?.length ? pageData.assetClasses : DEFAULT_SECTIONS.page_industrial.assetClasses}
-        corridors={pageData?.corridors?.length ? pageData.corridors : DEFAULT_SECTIONS.page_industrial.corridors}
-        complianceSteps={pageData?.complianceSteps?.length ? pageData.complianceSteps : DEFAULT_SECTIONS.page_industrial.complianceSteps}
-        engineeringStandards={pageData?.engineeringStandards?.length ? pageData.engineeringStandards : DEFAULT_SECTIONS.page_industrial.engineeringStandards}
+        assetClasses={pageData?.assetClasses || []}
+        corridors={pageData?.corridors || []}
+        complianceSteps={pageData?.complianceSteps || []}
+        engineeringStandards={pageData?.engineeringStandards || []}
       />
     </>
   );

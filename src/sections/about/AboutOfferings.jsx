@@ -8,11 +8,11 @@ import { Home, Building2, MapPin, ArrowUpRight, Sparkles, Check } from 'lucide-r
 
 import Tilt3DCard from '../../components/ui/Tilt3DCard';
 import Image from 'next/image';
-import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
+import { useCms } from '@/context/CmsContext';
 
-export default function AboutOfferings() {
+export default function AboutOfferings({ data }) {
   const { sections } = useCms();
-  const cms = sections?.page_about?.offerings || DEFAULT_SECTIONS.page_about.offerings;
+  const cms = data || sections?.page_about?.offerings || {};
   const defaultOfferings = [
     {
       id: 'kothis-flats',
@@ -26,7 +26,7 @@ export default function AboutOfferings() {
         'Sky Penthouses on Golf Course Road',
         'Vastu-compliant architectural layouts'
       ],
-      image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80',
+      image: 'https://ik.imagekit.io/saudagarproperties/saudagar-properties/properties/1792833008161_JSpnTQfjQjNCzzkAQNnM-1024x768-1_mPxvFcTU2.webp',
       ctaText: 'Explore Residential',
       ctaLink: '/services/residential'
     },
@@ -42,7 +42,7 @@ export default function AboutOfferings() {
         'Flexible Leasing & Purchase Terms',
         'Strategic High-Footfall Commercial Hubs'
       ],
-      image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=800&q=80',
+      image: 'https://ik.imagekit.io/saudagarproperties/saudagar-properties/properties/1792833139369_DLF-Phase-2_3wN55lC2N.avif',
       ctaText: 'Inquire Office Spaces',
       ctaLink: '/services/commercial'
     },
@@ -58,17 +58,17 @@ export default function AboutOfferings() {
         'Exponential Annual Capital Appreciation',
         'Thorough Due Diligence & Clean Titles'
       ],
-      image: 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?auto=format&fit=crop&w=800&q=80',
+      image: 'https://ik.imagekit.io/saudagarproperties/saudagar-properties/properties/1792833215284_Sushant-Lok-1_OcxYq8f0p.avif',
       ctaText: 'Discover Land Deals',
       ctaLink: '/services/industrial'
     }
   ];
 
-  const offerings = (cms?.items && cms.items.length > 0)
+  const offerings = (cms?.items && Array.isArray(cms.items) && cms.items.length > 0)
     ? cms.items.map((item, idx) => ({
-        ...defaultOfferings[idx],
         ...item,
-        icon: defaultOfferings[idx]?.icon || Home
+        icon: defaultOfferings[idx % defaultOfferings.length]?.icon || Home,
+        features: Array.isArray(item.features) ? item.features : []
       }))
     : defaultOfferings;
 

@@ -12,7 +12,6 @@ import {
 } from "lucide-react";
 
 import { useCms } from "../../../context/CmsContext";
-import { DEFAULT_SECTIONS } from "@/constants/defaultSections";
 
 if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
@@ -122,6 +121,8 @@ function GsapCounter({ end, suffix = "+" }) {
    FALLBACK CMS DATA
 ========================================================= */
 
+const currentCalculatedYears = Math.max(1, new Date().getFullYear() - 1999);
+
 const DEFAULT_STATS_CARDS = [
   {
     number: 100,
@@ -136,7 +137,7 @@ const DEFAULT_STATS_CARDS = [
     subtext: "Discerning families, HNWIs & multinational corporate clients",
   },
   {
-    number: 25,
+    number: currentCalculatedYears,
     suffix: "+",
     label: "Years of Trust & Experience",
     subtext: "Unbroken market leadership across DLF Gurugram corridors",
@@ -184,11 +185,10 @@ export default function DlfPropertyCallout() {
   const callout =
     sections?.dlfCallout ||
     sections?.services?.dlfCallout ||
-    DEFAULT_SECTIONS?.dlfCallout ||
     {};
 
   const statsCards =
-    callout.statsCards || DEFAULT_SECTIONS?.dlfCallout?.statsCards || DEFAULT_STATS_CARDS;
+    callout.statsCards || DEFAULT_STATS_CARDS;
 
   const badge =
     callout.badge ||

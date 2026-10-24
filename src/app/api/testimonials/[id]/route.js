@@ -21,6 +21,11 @@ export async function PUT(req, { params }) {
     }
 
     invalidateCache('testimonials');
+    try {
+      const { revalidateTag, revalidatePath } = await import('next/cache');
+      revalidateTag('testimonials');
+      revalidatePath('/', 'layout');
+    } catch (e) {}
 
     return NextResponse.json({
       success: true,
@@ -45,6 +50,11 @@ export async function DELETE(req, { params }) {
     }
 
     invalidateCache('testimonials');
+    try {
+      const { revalidateTag, revalidatePath } = await import('next/cache');
+      revalidateTag('testimonials');
+      revalidatePath('/', 'layout');
+    } catch (e) {}
 
     return NextResponse.json({
       success: true,

@@ -49,10 +49,19 @@ export async function PUT(req) {
 
     invalidateSeoCache();
     invalidateCache(); // Clear in-memory DAL cache
+    try {
+      const { revalidateTag } = await import('next/cache');
+      revalidateTag('business_profile');
+      revalidateTag('dal_business_profile');
+    } catch (e) {}
+
     revalidatePath('/', 'layout');
     revalidatePath('/about');
     revalidatePath('/contact');
+    revalidatePath('/team');
     revalidatePath('/sitemap.xml');
+    revalidatePath('/llms.txt');
+    revalidatePath('/llms-full.txt');
 
     return NextResponse.json({
       success: true,

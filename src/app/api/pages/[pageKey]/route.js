@@ -58,6 +58,15 @@ export async function PUT(req, { params }) {
     invalidateCache('cms_sections');
     invalidateCache();
 
+    try {
+      const { revalidateTag } = await import('next/cache');
+      revalidateTag('sections');
+      revalidateTag('dal_all_sections');
+      revalidateTag('dal_single_section');
+    } catch (e) {
+      // Ignore during build or non-standard environment
+    }
+
     return NextResponse.json({
       success: true,
       message: `Page content for '${pageKey}' updated successfully`,

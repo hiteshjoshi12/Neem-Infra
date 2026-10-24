@@ -3,81 +3,22 @@ import { getProperties } from '@/services/propertyService';
 import PropertyLandingView from '@/components/property-landing/PropertyLandingView';
 import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
 import { buildPageMetadata } from '@/lib/seo/metadataHelper';
-import { SITE_URL } from '@/lib/seo/seoConfig';
 
 import { connectDB } from '@/lib/mongodb';
 import SectionContent from '@/models/SectionContent';
-import { CORRIDOR_PAGES_DATA } from '@/constants/corridorPagesData';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
 async function getCorridor(slug) {
-  const fallback = CORRIDOR_PAGES_DATA[slug] || null;
   try {
     await connectDB();
     const doc = await SectionContent.findOne({ sectionKey: `corridor_${slug}` }).lean();
-    if (doc?.data) {
-      if (!fallback) return doc.data;
-      return {
-        ...fallback,
-        ...doc.data,
-        overview: {
-          ...fallback.overview,
-          ...doc.data.overview,
-          typologies: (doc.data.overview?.typologies?.length >= 3)
-            ? doc.data.overview.typologies
-            : (fallback.overview?.typologies || []),
-        },
-        whyLiveHere: {
-          ...fallback.whyLiveHere,
-          ...doc.data.whyLiveHere,
-          pillars: (doc.data.whyLiveHere?.pillars?.length >= 8)
-            ? doc.data.whyLiveHere.pillars
-            : (fallback.whyLiveHere?.pillars || []),
-        },
-        hero: {
-          ...fallback.hero,
-          ...doc.data.hero,
-        },
-        nearestPlaces: {
-          ...fallback.nearestPlaces,
-          ...doc.data.nearestPlaces,
-        },
-        howWeHelp: {
-          ...fallback.howWeHelp,
-          ...doc.data.howWeHelp,
-        },
-        whyChooseSaudagar: {
-          ...fallback.whyChooseSaudagar,
-          ...doc.data.whyChooseSaudagar,
-        },
-        locationSection: {
-          ...fallback.locationSection,
-          ...doc.data.locationSection,
-        },
-        inventorySection: {
-          ...fallback.inventorySection,
-          ...doc.data.inventorySection,
-        },
-        inquiryForm: {
-          ...fallback.inquiryForm,
-          ...doc.data.inquiryForm,
-        },
-        faqsInfo: {
-          ...fallback.faqsInfo,
-          ...doc.data.faqsInfo,
-        },
-        mapShowcase: {
-          ...fallback.mapShowcase,
-          ...doc.data.mapShowcase,
-        }
-      };
-    }
+    if (doc?.data) return doc.data;
   } catch (err) {
     console.warn(`[Corridor] Database fetch error:`, err?.message);
   }
-  return fallback;
+  return null;
 }
 
 export async function generateMetadata(props) {

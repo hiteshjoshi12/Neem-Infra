@@ -36,7 +36,7 @@ const businessProfileSchema = new mongoose.Schema(
     },
     secondaryPhone: {
       type: String,
-      default: '+91 98100 02447',
+      default: '+91 98112 21207',
     },
     whatsappNumber: {
       type: String,
@@ -44,36 +44,36 @@ const businessProfileSchema = new mongoose.Schema(
     },
     primaryEmail: {
       type: String,
-      default: 'info@saudagarproperties.com',
+      default: 'Saudagar.Properties@Yahoo.In',
     },
     secondaryEmail: {
       type: String,
       default: '',
     },
     address: {
-      streetAddress: { type: String, default: 'DLF Phase 2, Sector 25' },
+      streetAddress: { type: String, default: '38, Akashneem Marg, DLF Phase 2' },
       addressLocality: { type: String, default: 'Gurugram' },
       addressRegion: { type: String, default: 'Haryana' },
       postalCode: { type: String, default: '122002' },
       addressCountry: { type: String, default: 'IN' },
     },
     geo: {
-      latitude: { type: Number, default: 28.4815 },
-      longitude: { type: Number, default: 77.0863 },
+      latitude: { type: Number, default: 28.4847851 },
+      longitude: { type: Number, default: 77.0842655 },
     },
     googleBusinessProfileUrl: {
       type: String,
-      default: 'https://maps.google.com/?q=Saudagar+Properties+DLF+Gurugram',
+      default: '',
     },
     googlePlaceId: {
       type: String,
       default: '',
     },
     socialLinks: {
-      facebook: { type: String, default: 'https://facebook.com/saudagarproperties' },
-      instagram: { type: String, default: 'https://instagram.com/saudagarproperties' },
-      linkedin: { type: String, default: 'https://linkedin.com/company/saudagarproperties' },
-      youtube: { type: String, default: 'https://youtube.com/@saudagarproperties' },
+      facebook: { type: String, default: '' },
+      instagram: { type: String, default: '' },
+      linkedin: { type: String, default: '' },
+      youtube: { type: String, default: '' },
       twitter: { type: String, default: '' },
     },
     operatingHours: {
@@ -86,10 +86,22 @@ const businessProfileSchema = new mongoose.Schema(
     },
     founders: [
       {
-        name: { type: String, default: 'Raman Saudagar' },
+        name: { type: String, default: 'Arun Sharma' },
         role: { type: String, default: 'Founder & Managing Director' },
       },
+      {
+        name: { type: String, default: 'Suneeta Chawla' },
+        role: { type: String, default: 'Co-Founder & Head of Investment Advisory' },
+      },
     ],
+    isDlfAuthorized: {
+      type: Boolean,
+      default: true,
+    },
+    dlfAuthorizationText: {
+      type: String,
+      default: 'DLF Authorized & Verified',
+    },
     reraNumber: {
       type: String,
       default: '',
@@ -116,6 +128,15 @@ const businessProfileSchema = new mongoose.Schema(
       { type: String, default: 'DLF Phase 5' },
       { type: String, default: 'Golf Course Road' },
       { type: String, default: 'Sushant Lok 1' },
+    ],
+    marketStats: [
+      {
+        value: { type: String, default: '' },
+        label: { type: String, default: '' },
+        sourceName: { type: String, default: '' },
+        sourceUrl: { type: String, default: '' },
+        asOfDate: { type: String, default: '' },
+      },
     ],
   },
   { timestamps: true }

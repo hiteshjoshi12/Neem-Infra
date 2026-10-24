@@ -321,6 +321,13 @@ export const api = {
     request('/seo/backups/restore', {
       method: 'POST',
       body: JSON.stringify(payload)
+    }),
+
+  getBusinessProfile: () => request('/business-profile'),
+  updateBusinessProfile: (data) =>
+    request('/business-profile', {
+      method: 'PUT',
+      body: JSON.stringify(data)
     })
 };
 

@@ -32,8 +32,7 @@ import {
   TrendingUp,
   HelpCircle
 } from 'lucide-react';
-import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
-import { CORRIDOR_PAGES_DATA } from '@/constants/corridorPagesData';
+import { useCms } from '@/context/CmsContext';
 import api from '@/services/api';
 import ImageUploadInput from '@/components/admin/ImageUploadInput';
 
@@ -296,10 +295,7 @@ export default function AdminPageCMS() {
   const [activeSectionTab, setActiveSectionTab] = useState(config.sections[0]?.id || '');
   
   const getInitialData = () => {
-    if (config.isCorridor) {
-      return sections[activePageKey] || CORRIDOR_PAGES_DATA[selectedCorridor] || {};
-    }
-    return sections[activePageKey] || DEFAULT_SECTIONS[activePageKey] || {};
+    return sections[activePageKey] || {};
   };
 
   const [currentKey, setCurrentKey] = useState(activePageKey);
@@ -310,11 +306,8 @@ export default function AdminPageCMS() {
   // Sync state during render when activePageKey changes (official React pattern)
   if (currentKey !== activePageKey) {
     setCurrentKey(activePageKey);
-    const freshDefault = config.isCorridor 
-      ? (CORRIDOR_PAGES_DATA[selectedCorridor] || {}) 
-      : (DEFAULT_SECTIONS[activePageKey] || {});
     const existing = sections[activePageKey] || {};
-    setFormData({ ...freshDefault, ...existing });
+    setFormData({ ...existing });
     setActiveSectionTab(config.sections[0]?.id || '');
     setStatusMsg({ type: '', text: '' });
   }
@@ -1404,12 +1397,66 @@ export default function AdminPageCMS() {
                 <TextAreaField label="Section Subtitle" value={formData?.offerings?.subtitle} onChange={(val) => updateField('offerings.subtitle', val)} rows={2} />
 
                 <div className="space-y-6 pt-2">
-                  <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">3 Property Category Cards</h4>
+                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                    <div>
+                      <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">
+                        Property Category Cards ({(formData?.offerings?.items || []).length})
+                      </h4>
+                      <p className="text-[11px] text-slate-400">
+                        Add, edit, or delete category cards (e.g. Kothis/Flats, Office Spaces, Plots).
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const current = formData?.offerings?.items || [];
+                        const newCard = {
+                          id: `category-${Date.now()}`,
+                          tag: 'New Asset Category',
+                          title: 'New Category Title',
+                          description: 'Description of this property category and advisory benefits.',
+                          features: ['Feature bullet 1', 'Feature bullet 2', 'Feature bullet 3', 'Feature bullet 4'],
+                          image: '',
+                          ctaText: 'Explore Category',
+                          ctaLink: '/properties'
+                        };
+                        updateField('offerings.items', [...current, newCard]);
+                      }}
+                      className="px-3.5 py-1.5 rounded-xl bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                    >
+                      <Plus size={14} />
+                      <span>Add Category Card</span>
+                    </button>
+                  </div>
+
                   {(formData?.offerings?.items || []).map((item, idx) => (
                     <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
                       <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                        <h5 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Card #{idx + 1}: {item.title}</h5>
-                        <span className="text-[10px] text-slate-400">{item.tag}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="w-5 h-5 rounded-md bg-brand-gold/10 text-brand-gold text-[10px] font-mono flex items-center justify-center font-bold">
+                            {idx + 1}
+                          </span>
+                          <h5 className="text-xs font-bold text-white uppercase tracking-wider">
+                            Card #{idx + 1}: {item.title || 'Untitled Card'}
+                          </h5>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="text-[10px] text-slate-400 font-mono">{item.tag}</span>
+                          {(formData?.offerings?.items || []).length > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const next = (formData?.offerings?.items || []).filter((_, i) => i !== idx);
+                                updateField('offerings.items', next);
+                              }}
+                              className="px-2 py-1 rounded-md text-red-400 hover:bg-red-500/10 text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer"
+                              title="Delete Card"
+                            >
+                              <Trash2 size={13} />
+                              <span>Delete</span>
+                            </button>
+                          )}
+                        </div>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <FormField label="Tag" value={item.tag} onChange={(val) => updateField(`offerings.items.${idx}.tag`, val)} />
@@ -1462,12 +1509,68 @@ export default function AdminPageCMS() {
                 <TextAreaField label="Section Subtitle" value={formData?.proposition?.subtitle} onChange={(val) => updateField('proposition.subtitle', val)} rows={2} />
 
                 <div className="space-y-6 pt-2">
-                  <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">3 Pillars (Residential, Commercial, Industrial)</h4>
+                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                    <div>
+                      <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">
+                        Value Proposition Pillars ({(formData?.proposition?.pillars || []).length})
+                      </h4>
+                      <p className="text-[11px] text-slate-400">
+                        Add, edit, or delete strategic proposition pillars (Residential, Commercial, Industrial).
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const current = formData?.proposition?.pillars || [];
+                        const newPillar = {
+                          id: `pillar-${Date.now()}`,
+                          number: String(current.length + 1).padStart(2, '0'),
+                          tag: 'New Strategic Solution',
+                          title: 'New Pillar Title',
+                          headline: 'Pillar Headline Statement',
+                          quote: 'Advisory quote or philosophy.',
+                          keyPoints: ['Focus Area 1', 'Focus Area 2', 'Focus Area 3', 'Focus Area 4'],
+                          bgImage: '',
+                          ctaText: 'Explore Solutions',
+                          ctaLink: '/services/residential'
+                        };
+                        updateField('proposition.pillars', [...current, newPillar]);
+                      }}
+                      className="px-3.5 py-1.5 rounded-xl bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                    >
+                      <Plus size={14} />
+                      <span>Add Proposition Pillar</span>
+                    </button>
+                  </div>
+
                   {(formData?.proposition?.pillars || []).map((pillar, idx) => (
                     <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
                       <div className="flex items-center justify-between border-b border-white/10 pb-2">
-                        <h5 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Pillar #{pillar.number || idx + 1}: {pillar.title}</h5>
-                        <span className="text-[10px] text-slate-400">{pillar.tag}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="w-5 h-5 rounded-md bg-brand-gold/10 text-brand-gold text-[10px] font-mono flex items-center justify-center font-bold">
+                            {pillar.number || idx + 1}
+                          </span>
+                          <h5 className="text-xs font-bold text-white uppercase tracking-wider">
+                            Pillar #{pillar.number || idx + 1}: {pillar.title || 'Untitled Pillar'}
+                          </h5>
+                        </div>
+                        <div className="flex items-center gap-3">
+                          <span className="text-[10px] text-slate-400 font-mono">{pillar.tag}</span>
+                          {(formData?.proposition?.pillars || []).length > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const next = (formData?.proposition?.pillars || []).filter((_, i) => i !== idx);
+                                updateField('proposition.pillars', next);
+                              }}
+                              className="px-2 py-1 rounded-md text-red-400 hover:bg-red-500/10 text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer"
+                              title="Delete Pillar"
+                            >
+                              <Trash2 size={13} />
+                              <span>Delete</span>
+                            </button>
+                          )}
+                        </div>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <FormField label="Number" value={pillar.number} onChange={(val) => updateField(`proposition.pillars.${idx}.number`, val)} />
@@ -1525,12 +1628,64 @@ export default function AdminPageCMS() {
 
                 {/* Visionary Founders */}
                 <div className="space-y-6 pt-2">
-                  <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Visionary Founders</h4>
+                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                    <div>
+                      <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">
+                        Visionary Founders ({(formData?.leadership?.founders || []).length})
+                      </h4>
+                      <p className="text-[11px] text-slate-400">
+                        Add, edit, or delete visionary founders and directors.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const current = formData?.leadership?.founders || [];
+                        const newFounder = {
+                          name: 'New Founder / Director',
+                          role: 'Co-Founder & Executive Director',
+                          badge: 'Founder & Director',
+                          experienceBadge: '20+ Yrs Gurugram Authority',
+                          quote: 'Our commitment is absolute fiduciary discretion and client wealth protection.',
+                          bio: 'Experienced real estate advisor with decades of transaction stewardship in Gurugram luxury corridors.',
+                          highlights: [
+                            'Senior Advisory Experience',
+                            'High-Value Corridors Authority',
+                            'Direct Client Representation',
+                            'Zero-Conflict Fiduciary Standard'
+                          ],
+                          image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80'
+                        };
+                        updateField('leadership.founders', [...current, newFounder]);
+                      }}
+                      className="px-3.5 py-1.5 rounded-xl bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                    >
+                      <Plus size={14} />
+                      <span>Add Founder</span>
+                    </button>
+                  </div>
+
                   {(formData?.leadership?.founders || []).map((f, idx) => (
                     <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
                       <div className="flex items-center justify-between border-b border-white/10 pb-2">
                         <h5 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Founder #{idx + 1}: {f.name}</h5>
-                        <span className="text-[10px] text-slate-400">{f.role}</span>
+                        <div className="flex items-center gap-3">
+                          <span className="text-[10px] text-slate-400">{f.role}</span>
+                          {(formData?.leadership?.founders || []).length > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const next = (formData?.leadership?.founders || []).filter((_, i) => i !== idx);
+                                updateField('leadership.founders', next);
+                              }}
+                              className="px-2 py-1 rounded-md text-red-400 hover:bg-red-500/10 text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer"
+                              title="Delete Founder"
+                            >
+                              <Trash2 size={13} />
+                              <span>Delete</span>
+                            </button>
+                          )}
+                        </div>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                         <FormField label="Full Name" value={f.name} onChange={(val) => updateField(`leadership.founders.${idx}.name`, val)} />
@@ -1624,17 +1779,55 @@ export default function AdminPageCMS() {
                   </div>
                 </div>
 
-                {/* 3 Impact Stats */}
+                {/* Milestone Impact Counters */}
                 <div className="space-y-4 pt-4 border-t border-white/10">
-                  <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">3 Milestone Impact Counters</h4>
+                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                    <div>
+                      <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">
+                        Milestone Impact Counters ({(formData?.leadership?.impactStats || []).length})
+                      </h4>
+                      <p className="text-[11px] text-slate-400">
+                        Add, edit, or delete milestone performance metrics.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const current = formData?.leadership?.impactStats || [];
+                        const newStat = {
+                          value: 100,
+                          suffix: '+',
+                          label: 'New Landmark Metric',
+                          desc: 'Verified performance benchmark'
+                        };
+                        updateField('leadership.impactStats', [...current, newStat]);
+                      }}
+                      className="px-3 py-1.5 rounded-lg bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                    >
+                      <Plus size={13} />
+                      <span>Add Counter</span>
+                    </button>
+                  </div>
+
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                    {(formData?.leadership?.impactStats || [
-                      { value: 100, suffix: "+", label: "CR Saves In Property Investment", desc: "Optimized value and negotiations" },
-                      { value: 1000, suffix: "+", label: "Happy Clients", desc: "Families & corporate executives" },
-                      { value: 25, suffix: "+", label: "Years of Trust and Experience", desc: "DLF Gurugram market authority" }
-                    ]).map((stat, stIdx) => (
+                    {(formData?.leadership?.impactStats || []).map((stat, stIdx) => (
                       <div key={stIdx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-brand-gold">Metric #{stIdx + 1}</span>
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-gold">Metric #{stIdx + 1}</span>
+                          {(formData?.leadership?.impactStats || []).length > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const next = (formData?.leadership?.impactStats || []).filter((_, i) => i !== stIdx);
+                                updateField('leadership.impactStats', next);
+                              }}
+                              className="p-1 rounded-md text-red-400 hover:bg-red-500/10 transition-colors cursor-pointer"
+                              title="Delete Counter"
+                            >
+                              <Trash2 size={13} />
+                            </button>
+                          )}
+                        </div>
                         <div className="grid grid-cols-2 gap-2">
                           <FormField label="Value" value={stat.value} onChange={(val) => updateField(`leadership.impactStats.${stIdx}.value`, Number(val) || val)} />
                           <FormField label="Suffix" value={stat.suffix} onChange={(val) => updateField(`leadership.impactStats.${stIdx}.suffix`, val)} />
@@ -1664,9 +1857,34 @@ export default function AdminPageCMS() {
 
                 {/* 7 Strategic Pillars */}
                 <div className="space-y-6 pt-4 border-t border-white/10">
-                  <div className="border-b border-white/10 pb-4">
-                    <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">7 Strategic Distinction Pillars</h4>
-                    <p className="text-[11px] text-slate-400">Pillar #1 is displayed as the prominent lead hero card. Pillars #2–7 are featured in a dedicated 6-card grid below.</p>
+                  <div className="flex items-center justify-between border-b border-white/10 pb-4">
+                    <div>
+                      <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">
+                        Strategic Distinction Pillars ({(formData?.whyChooseUs?.pillars || []).length})
+                      </h4>
+                      <p className="text-[11px] text-slate-400">
+                        Pillar #1 is displayed as the prominent lead hero card. Remaining pillars are featured in the dedicated grid below.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const current = formData?.whyChooseUs?.pillars || [];
+                        const newPillar = {
+                          number: String(current.length + 1).padStart(2, '0'),
+                          badge: 'Advisory Discipline',
+                          title: 'New Strategic Pillar Title',
+                          description: 'Strategic advisory discipline guaranteeing client fiduciary protection and market advantage.',
+                          bullets: ['Fiduciary Assurance', 'Asset Protection', 'Direct Negotiation Support'],
+                          image: ''
+                        };
+                        updateField('whyChooseUs.pillars', [...current, newPillar]);
+                      }}
+                      className="px-3.5 py-1.5 rounded-xl bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                    >
+                      <Plus size={14} />
+                      <span>Add Strategic Pillar</span>
+                    </button>
                   </div>
 
                   {/* 6-Card Dedicated Section Header Settings */}
@@ -1701,7 +1919,23 @@ export default function AdminPageCMS() {
                         <h5 className="text-xs font-bold text-brand-gold uppercase tracking-wider">
                           Pillar #{pillar.number || pIdx + 1} {pIdx === 0 ? '(Lead Hero Card - 21:9)' : '(Card Grid - 16:10)'}: {pillar.title}
                         </h5>
-                        <span className="text-[10px] text-slate-400">{pillar.badge}</span>
+                        <div className="flex items-center gap-3">
+                          <span className="text-[10px] text-slate-400">{pillar.badge}</span>
+                          {(formData?.whyChooseUs?.pillars || []).length > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const next = (formData?.whyChooseUs?.pillars || []).filter((_, i) => i !== pIdx);
+                                updateField('whyChooseUs.pillars', next);
+                              }}
+                              className="px-2 py-1 rounded-md text-red-400 hover:bg-red-500/10 text-xs font-semibold flex items-center gap-1 transition-colors cursor-pointer"
+                              title="Delete Pillar"
+                            >
+                              <Trash2 size={13} />
+                              <span>Delete</span>
+                            </button>
+                          )}
+                        </div>
                       </div>
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                         <FormField label="Number" value={pillar.number} onChange={(val) => updateField(`whyChooseUs.pillars.${pIdx}.number`, val)} />
@@ -1742,15 +1976,52 @@ export default function AdminPageCMS() {
 
                 {/* Fiduciary Comparison Matrix */}
                 <div className="space-y-4 pt-4 border-t border-white/10">
-                  <div>
-                    <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Transparency Benchmark Comparison Matrix</h4>
-                    <p className="text-xs text-slate-400">4 benchmark comparisons between traditional brokerage and Saudagar advisory</p>
+                  <div className="flex items-center justify-between border-b border-white/10 pb-3">
+                    <div>
+                      <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">
+                        Transparency Benchmark Comparison Matrix ({(formData?.whyChooseUs?.comparisonMatrix || []).length})
+                      </h4>
+                      <p className="text-xs text-slate-400">
+                        Benchmark comparisons between traditional brokerage and Saudagar advisory.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const current = formData?.whyChooseUs?.comparisonMatrix || [];
+                        const newBenchmark = {
+                          feature: 'New Advisory Feature',
+                          traditional: 'Volume-driven transactions with limited advisory follow-through',
+                          saudagar: 'Comprehensive partner-level representation with full fiduciary warranty'
+                        };
+                        updateField('whyChooseUs.comparisonMatrix', [...current, newBenchmark]);
+                      }}
+                      className="px-3 py-1.5 rounded-lg bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                    >
+                      <Plus size={13} />
+                      <span>Add Benchmark Row</span>
+                    </button>
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     {(formData?.whyChooseUs?.comparisonMatrix || []).map((row, rIdx) => (
                       <div key={rIdx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-brand-gold">Benchmark #{rIdx + 1}</span>
+                        <div className="flex items-center justify-between">
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-brand-gold">Benchmark #{rIdx + 1}</span>
+                          {(formData?.whyChooseUs?.comparisonMatrix || []).length > 1 && (
+                            <button
+                              type="button"
+                              onClick={() => {
+                                const next = (formData?.whyChooseUs?.comparisonMatrix || []).filter((_, i) => i !== rIdx);
+                                updateField('whyChooseUs.comparisonMatrix', next);
+                              }}
+                              className="p-1 rounded-md text-red-400 hover:bg-red-500/10 transition-colors cursor-pointer"
+                              title="Delete Benchmark"
+                            >
+                              <Trash2 size={13} />
+                            </button>
+                          )}
+                        </div>
                         <FormField label="Feature Name" value={row.feature} onChange={(val) => updateField(`whyChooseUs.comparisonMatrix.${rIdx}.feature`, val)} placeholder="e.g. Deal Representation" />
                         <FormField label="Traditional Brokerage (Red ✕)" value={row.traditional} onChange={(val) => updateField(`whyChooseUs.comparisonMatrix.${rIdx}.traditional`, val)} placeholder="Volume brokers chasing quick turnover" />
                         <FormField label="Saudagar Advisory (Green ✓)" value={row.saudagar} onChange={(val) => updateField(`whyChooseUs.comparisonMatrix.${rIdx}.saudagar`, val)} placeholder="Founders personally attend every transaction" />

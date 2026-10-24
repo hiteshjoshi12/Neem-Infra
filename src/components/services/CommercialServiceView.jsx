@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
 import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
-import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
+import { useCms } from '@/context/CmsContext';
 
 const fadeUpVariant = {
   hidden: { opacity: 0, y: 22 },
@@ -44,50 +44,42 @@ export default function CommercialServiceView({
   complianceStandards = []
 }) {
   const { sections } = useCms();
-  const cms = sections?.page_commercial || initialData || DEFAULT_SECTIONS?.page_commercial || {};
-  const heroData = cms?.hero || DEFAULT_SECTIONS?.page_commercial?.hero || {};
+  const cms = sections?.page_commercial || initialData || {};
+  const heroData = cms?.hero || {};
   const activeMetrics = (cms?.metrics && cms.metrics.length > 0)
     ? cms.metrics
-    : (DEFAULT_SECTIONS?.page_commercial?.metrics || []);
-  const heroCardData = heroData?.heroCard || DEFAULT_SECTIONS?.page_commercial?.hero?.heroCard || {};
+    : [];
+  const heroCardData = heroData?.heroCard || {};
   const rawAssetClasses = (cms?.assetClasses && cms.assetClasses.length > 0)
     ? cms.assetClasses
-    : (assetClasses && assetClasses.length > 0 ? assetClasses : DEFAULT_SECTIONS.page_commercial.assetClasses);
+    : (assetClasses && assetClasses.length > 0 ? assetClasses : []);
 
-  const activeAssetClasses = (rawAssetClasses || []).map((item, idx) => {
-    const base = DEFAULT_SECTIONS.page_commercial.assetClasses[idx] || {};
-    return {
-      ...base,
-      ...item,
-      metrics: (item?.metrics && item.metrics.length > 0) ? item.metrics : (base?.metrics || []),
-      features: (item?.features && item.features.length > 0) ? item.features : (base?.features || []),
-      pricing: item?.pricing || item?.price || base?.pricing || base?.price || '',
-    };
-  });
+  const activeAssetClasses = (rawAssetClasses || []).map((item) => ({
+    ...item,
+    metrics: (item?.metrics && item.metrics.length > 0) ? item.metrics : [],
+    features: (item?.features && item.features.length > 0) ? item.features : [],
+    pricing: item?.pricing || item?.price || '',
+  }));
 
   const rawYieldBenchmarks = (cms?.yieldBenchmarks && cms.yieldBenchmarks.length > 0)
     ? cms.yieldBenchmarks
-    : (yieldBenchmarks && yieldBenchmarks.length > 0 ? yieldBenchmarks : DEFAULT_SECTIONS.page_commercial.yieldBenchmarks);
+    : (yieldBenchmarks && yieldBenchmarks.length > 0 ? yieldBenchmarks : []);
 
-  const activeYieldBenchmarks = (rawYieldBenchmarks || []).map((m, idx) => {
-    const base = DEFAULT_SECTIONS.page_commercial.yieldBenchmarks[idx] || {};
-    return {
-      ...base,
-      ...m,
-      leaseRate: m?.leaseRate || m?.capitalValuation || base?.leaseRate || '',
-      netYield: m?.netYield || m?.yieldRange || base?.netYield || '',
-      occupancy: m?.occupancy || m?.occupancyRate || base?.occupancy || '',
-      highlights: (m?.highlights && m.highlights.length > 0) ? m.highlights : (base?.highlights || [])
-    };
-  });
+  const activeYieldBenchmarks = (rawYieldBenchmarks || []).map((m) => ({
+    ...m,
+    leaseRate: m?.leaseRate || m?.capitalValuation || '',
+    netYield: m?.netYield || m?.yieldRange || '',
+    occupancy: m?.occupancy || m?.occupancyRate || '',
+    highlights: (m?.highlights && m.highlights.length > 0) ? m.highlights : []
+  }));
 
   const activeLeaseFramework = (cms?.leaseFramework && cms.leaseFramework.length > 0)
     ? cms.leaseFramework
-    : (leaseFramework && leaseFramework.length > 0 ? leaseFramework : DEFAULT_SECTIONS.page_commercial.leaseFramework);
+    : (leaseFramework && leaseFramework.length > 0 ? leaseFramework : []);
 
   const activeComplianceStandards = (cms?.complianceStandards && cms.complianceStandards.length > 0)
     ? cms.complianceStandards
-    : (complianceStandards && complianceStandards.length > 0 ? complianceStandards : DEFAULT_SECTIONS.page_commercial.complianceStandards);
+    : (complianceStandards && complianceStandards.length > 0 ? complianceStandards : []);
   return (
     <div className="w-full min-h-screen bg-brand-ivory text-brand-navy">
       <BreadcrumbJsonLd items={breadcrumbs} />

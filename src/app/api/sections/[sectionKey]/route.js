@@ -58,6 +58,11 @@ export async function PUT(req, { params }) {
 
     invalidateCache('cms_sections');
     invalidateCache(); // Purge all cached server sections
+    try {
+      const { revalidateTag } = await import('next/cache');
+      revalidateTag('sections');
+      revalidateTag('dal_sections');
+    } catch (e) {}
     revalidatePath('/', 'layout');
 
     return NextResponse.json({

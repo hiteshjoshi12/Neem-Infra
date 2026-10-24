@@ -1,4 +1,3 @@
-import { SITE_URL } from '@/lib/seo/seoConfig';
 import { connectDB } from '@/lib/mongodb';
 import Page from '@/models/Page';
 import { getGlobalSeoSettings, ensureDefaultSeoData } from '@/lib/seo/dynamicSeo';
@@ -19,11 +18,30 @@ export default async function sitemap() {
     }
   };
 
+  /**
+   * Item D: Sitemap lastmod must come only from real admin edits; omit it otherwise (no seed dates).
+   */
+  const getRealEditDate = (doc) => {
+    if (!doc) return undefined;
+    if (doc.lastUpdatedBy === 'Idempotent Seed Migration' || doc.lastUpdatedBy === 'seed') {
+      return undefined;
+    }
+    if (doc.createdAt && doc.updatedAt) {
+      const created = new Date(doc.createdAt).getTime();
+      const updated = new Date(doc.updatedAt).getTime();
+      // Only emit lastmod if updated at least 60 seconds after creation
+      if (updated - created > 60000) {
+        return new Date(doc.updatedAt);
+      }
+    }
+    return undefined;
+  };
+
   try {
     await connectDB();
     await ensureDefaultSeoData();
     const settings = await getGlobalSeoSettings();
-    const baseUrl = settings?.canonicalBaseUrl || SITE_URL || 'https://saudagarproperties.com';
+    const baseUrl = (settings?.canonicalBaseUrl || 'https://saudagarproperties.com').replace(/\/+$/, '');
     const sitemapConfig = settings?.sitemapConfig || {
       includeProperties: true,
       includeBlogs: true,
@@ -43,10 +61,11 @@ export default async function sitemap() {
       const cleanSlug = page.slug === '/' ? '' : (page.slug.startsWith('/') ? page.slug : `/${page.slug}`);
       const priority = page.slug === '/' ? 1.0 : (page.slug === '/properties' || page.slug === '/about' || page.slug === '/blog' ? 0.9 : 0.8);
       const changeFrequency = page.slug === '/' || page.slug === '/properties' || page.slug === '/blog' ? 'daily' : 'weekly';
+      const realEdit = getRealEditDate(page);
 
       addEntry({
         url: `${baseUrl}${cleanSlug}`,
-        lastModified: page.updatedAt ? new Date(page.updatedAt) : new Date(),
+        ...(realEdit ? { lastModified: realEdit } : {}),
         changeFrequency,
         priority,
       });
@@ -59,9 +78,10 @@ export default async function sitemap() {
         for (const prop of properties || []) {
           const slugOrId = prop.slug || prop._id;
           if (slugOrId) {
+            const realEdit = getRealEditDate(prop);
             addEntry({
               url: `${baseUrl}/properties/${slugOrId}`,
-              lastModified: new Date(prop.updatedAt || new Date()),
+              ...(realEdit ? { lastModified: realEdit } : {}),
               changeFrequency: 'weekly',
               priority: 0.9,
             });
@@ -78,9 +98,10 @@ export default async function sitemap() {
         const blogPosts = await getBlogPosts({ status: 'published', limit: 1000 });
         for (const post of blogPosts || []) {
           if (post.slug && post.status === 'published') {
+            const realEdit = getRealEditDate(post);
             addEntry({
               url: `${baseUrl}/blog/${post.slug}`,
-              lastModified: new Date(post.updatedAt || post.publishedAt || new Date()),
+              ...(realEdit ? { lastModified: realEdit } : {}),
               changeFrequency: 'weekly',
               priority: 0.85,
             });
@@ -97,9 +118,10 @@ export default async function sitemap() {
         const categories = await getCategories();
         for (const cat of categories || []) {
           if (cat.slug) {
+            const realEdit = getRealEditDate(cat);
             addEntry({
               url: `${baseUrl}/blog/category/${cat.slug}`,
-              lastModified: new Date(cat.updatedAt || new Date()),
+              ...(realEdit ? { lastModified: realEdit } : {}),
               changeFrequency: 'weekly',
               priority: 0.75,
             });
@@ -116,9 +138,10 @@ export default async function sitemap() {
         const authors = await getAuthors();
         for (const author of authors || []) {
           if (author.slug) {
+            const realEdit = getRealEditDate(author);
             addEntry({
               url: `${baseUrl}/blog/author/${author.slug}`,
-              lastModified: new Date(author.updatedAt || new Date()),
+              ...(realEdit ? { lastModified: realEdit } : {}),
               changeFrequency: 'monthly',
               priority: 0.7,
             });
@@ -136,7 +159,7 @@ export default async function sitemap() {
           const fullUrl = extra.url.startsWith('http') ? extra.url : `${baseUrl}${extra.url.startsWith('/') ? extra.url : `/${extra.url}`}`;
           addEntry({
             url: fullUrl,
-            lastModified: new Date(),
+            ...(extra.lastModified ? { lastModified: new Date(extra.lastModified) } : {}),
             changeFrequency: extra.changeFrequency || 'weekly',
             priority: Number(extra.priority) || 0.8,
           });

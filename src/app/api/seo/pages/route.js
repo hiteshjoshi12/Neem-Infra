@@ -2,9 +2,8 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import Page from '@/models/Page';
 import { requireAdmin } from '@/lib/auth/authGuard';
-import { ensureDefaultSeoData, invalidateSeoCache } from '@/lib/seo/dynamicSeo';
+import { ensureDefaultSeoData, invalidateSeoCache, getGlobalSeoSettings } from '@/lib/seo/dynamicSeo';
 import { normalizePath } from '@/lib/seo/metadataHelper';
-import { SITE_URL } from '@/lib/seo/seoConfig';
 
 export async function GET(req) {
   try {
@@ -69,6 +68,9 @@ export async function POST(req) {
       return NextResponse.json({ success: false, message: `A page with URL slug '${normalizedSlug}' already exists.` }, { status: 400 });
     }
 
+    const settings = await getGlobalSeoSettings();
+    const baseUrl = (settings?.canonicalBaseUrl || 'https://saudagarproperties.com').replace(/\/+$/, '');
+
     const newPage = await Page.create({
       title: title.trim(),
       slug: normalizedSlug,
@@ -81,7 +83,7 @@ export async function POST(req) {
       sections: Array.isArray(body.sections) ? body.sections : [],
       metaTitle: metaTitle || `${title.trim()} | Saudagar Properties`,
       metaDescription: metaDescription || '',
-      canonicalUrl: canonicalUrl || `${SITE_URL}${normalizedSlug === '/' ? '' : normalizedSlug}`,
+      canonicalUrl: canonicalUrl || `${baseUrl}${normalizedSlug === '/' ? '' : normalizedSlug}`,
       focusKeywords: Array.isArray(body.focusKeywords) ? body.focusKeywords : [],
       robots: robots || { index: true, follow: true, noarchive: false, nosnippet: false },
       ogTitle: ogTitle || metaTitle || title,

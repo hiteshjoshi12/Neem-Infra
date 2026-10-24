@@ -9,7 +9,6 @@ import { Building, Building2, Factory, ArrowUpRight, ShieldCheck, Award, PhoneCa
 import { useCms } from '../../context/CmsContext';
 import Tilt3DCard from '../../components/ui/Tilt3DCard';
 import LuxuryTextReveal from '@/components/ui/LuxuryTextReveal';
-import { DEFAULT_TOP_CONSULTANT_DATA } from '@/constants/homeData';
 import Image from 'next/image';
 
 const CATEGORY_ICONS = {
@@ -22,16 +21,31 @@ export default function TopConsultantSection() {
   const { sections } = useCms();
   const data = sections?.topConsultant || {};
 
-  const badge = data.badge || DEFAULT_TOP_CONSULTANT_DATA.badge;
-  const headlineMain = data.headlineMain || DEFAULT_TOP_CONSULTANT_DATA.headlineMain;
-  const headlineItalic = data.headlineItalic || DEFAULT_TOP_CONSULTANT_DATA.headlineItalic;
-  const summaryQuote = data.summaryQuote || DEFAULT_TOP_CONSULTANT_DATA.summaryQuote;
-  const cardBadge = data.cardBadge || DEFAULT_TOP_CONSULTANT_DATA.cardBadge;
-  const paragraph1 = data.paragraph1 || DEFAULT_TOP_CONSULTANT_DATA.paragraph1;
-  const paragraph2 = data.paragraph2 || DEFAULT_TOP_CONSULTANT_DATA.paragraph2;
-  const categories = data.categories || DEFAULT_TOP_CONSULTANT_DATA.categories;
-  const videoTour = data.videoTour || DEFAULT_TOP_CONSULTANT_DATA.videoTour;
-  const ctaBanner = data.ctaBanner || DEFAULT_TOP_CONSULTANT_DATA.ctaBanner;
+  const badge = data.badge || "Bespoke Real Estate Advisory";
+  const headlineMain = data.headlineMain || "Top Real Estate Consultant";
+  const headlineItalic = data.headlineItalic || "In DLF Gurugram";
+  const summaryQuote = data.summaryQuote || "Authorized advisor and trusted partner for DLF Phase 1–4, Sushant Lok, and Cybercity’s most exclusive residential & commercial estates.";
+  const cardBadge = data.cardBadge || "DLF Authorized & Verified";
+  const paragraph1 = data.paragraph1 || "At Saudagar Properties, we are proud to be recognized as the premier real estate consultant in DLF Gurugram.";
+  const paragraph2 = data.paragraph2 || "Whether you are seeking an ultra-luxury builder floor in DLF Phase 1–4, a high-street commercial office in Udyog Vihar, or an investment-ready plot, our veteran team guides you through transparent transactions.";
+  const categories = data.categories || [
+    { title: "Residential", subtitle: "Floors & Villas", icon: "building", href: "/services/residential" },
+    { title: "Commercial", subtitle: "Offices & Retail", icon: "building2", href: "/services/commercial" },
+    { title: "Industrial", subtitle: "Plots & Assets", icon: "factory", href: "/services/industrial" }
+  ];
+  const videoTour = data.videoTour || {
+    badge: "Sushant Lok & DLF Tour",
+    title: "Exclusive DLF & Sushant Lok Walkthrough",
+    subtitle: "Experience Gurgaon's finest properties with curated virtual walkthroughs.",
+    image: "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80"
+  };
+  const ctaBanner = data.ctaBanner || {
+    title: "Ready to Invest or Buy in DLF Gurugram?",
+    description: "Get priority access to off-market inventory, bespoke site visits, and personalized ROI projections from our executive directors.",
+    phone: "+91 98112 21207",
+    buttonText: "Connect Now",
+    buttonHref: "/contact"
+  };
 
   const sectionRef = useRef(null);
   const headerRef = useRef(null);

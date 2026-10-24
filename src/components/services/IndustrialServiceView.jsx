@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
 import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
-import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
+import { useCms } from '@/context/CmsContext';
 
 const fadeUpVariant = {
   hidden: { opacity: 0, y: 22 },
@@ -44,51 +44,43 @@ export default function IndustrialServiceView({
   engineeringStandards = []
 }) {
   const { sections } = useCms();
-  const cms = sections?.page_industrial || initialData || DEFAULT_SECTIONS?.page_industrial || {};
-  const heroData = cms?.hero || DEFAULT_SECTIONS?.page_industrial?.hero || {};
+  const cms = sections?.page_industrial || initialData || {};
+  const heroData = cms?.hero || {};
   const activeMetrics = (cms?.metrics && cms.metrics.length > 0)
     ? cms.metrics
-    : (DEFAULT_SECTIONS?.page_industrial?.metrics || []);
-  const heroCardData = heroData?.heroCard || DEFAULT_SECTIONS?.page_industrial?.hero?.heroCard || {};
+    : [];
+  const heroCardData = heroData?.heroCard || {};
   const rawAssetClasses = (cms?.assetClasses && cms.assetClasses.length > 0)
     ? cms.assetClasses
-    : (assetClasses && assetClasses.length > 0 ? assetClasses : DEFAULT_SECTIONS.page_industrial.assetClasses);
+    : (assetClasses && assetClasses.length > 0 ? assetClasses : []);
 
-  const activeAssetClasses = (rawAssetClasses || []).map((item, idx) => {
-    const base = DEFAULT_SECTIONS.page_industrial.assetClasses[idx] || {};
-    return {
-      ...base,
-      ...item,
-      metrics: (item?.metrics && item.metrics.length > 0) ? item.metrics : (base?.metrics || []),
-      features: (item?.features && item.features.length > 0) ? item.features : (base?.features || []),
-      pricing: item?.pricing || item?.price || base?.pricing || base?.price || '',
-    };
-  });
+  const activeAssetClasses = (rawAssetClasses || []).map((item) => ({
+    ...item,
+    metrics: (item?.metrics && item.metrics.length > 0) ? item.metrics : [],
+    features: (item?.features && item.features.length > 0) ? item.features : [],
+    pricing: item?.pricing || item?.price || '',
+  }));
 
   const rawCorridors = (cms?.corridors && cms.corridors.length > 0)
     ? cms.corridors
-    : (corridors && corridors.length > 0 ? corridors : DEFAULT_SECTIONS.page_industrial.corridors);
+    : (corridors && corridors.length > 0 ? corridors : []);
 
-  const activeCorridors = (rawCorridors || []).map((market, idx) => {
-    const base = DEFAULT_SECTIONS.page_industrial.corridors[idx] || {};
-    return {
-      ...base,
-      ...market,
-      hub: market?.hub || market?.corridor || base?.hub || '',
-      category: market?.category || market?.zoning || base?.category || '',
-      freightAccess: market?.freightAccess || market?.connectivity || base?.freightAccess || '',
-      powerAvailability: market?.powerAvailability || base?.powerAvailability || '',
-      highlights: (market?.highlights && market.highlights.length > 0) ? market.highlights : (base?.highlights || [])
-    };
-  });
+  const activeCorridors = (rawCorridors || []).map((market) => ({
+    ...market,
+    hub: market?.hub || market?.corridor || '',
+    category: market?.category || market?.zoning || '',
+    freightAccess: market?.freightAccess || market?.connectivity || '',
+    powerAvailability: market?.powerAvailability || '',
+    highlights: (market?.highlights && market.highlights.length > 0) ? market.highlights : []
+  }));
 
   const activeComplianceSteps = (cms?.complianceSteps && cms.complianceSteps.length > 0)
     ? cms.complianceSteps
-    : (complianceSteps && complianceSteps.length > 0 ? complianceSteps : DEFAULT_SECTIONS.page_industrial.complianceSteps);
+    : (complianceSteps && complianceSteps.length > 0 ? complianceSteps : []);
 
   const activeEngineeringStandards = (cms?.engineeringStandards && cms.engineeringStandards.length > 0)
     ? cms.engineeringStandards
-    : (engineeringStandards && engineeringStandards.length > 0 ? engineeringStandards : DEFAULT_SECTIONS.page_industrial.engineeringStandards);
+    : (engineeringStandards && engineeringStandards.length > 0 ? engineeringStandards : []);
 
   return (
     <div className="w-full min-h-screen bg-brand-ivory text-brand-navy">

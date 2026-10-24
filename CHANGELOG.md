@@ -37,7 +37,7 @@ This release resolves all technical search engine crawl, render, indexation, and
 
 ### 3. Structured Data (Schema.org Overhaul)
 - **Replaced Invalid Product Schema:** Overhauled `src/components/seo/PropertyJsonLd.jsx` to implement Schema.org `@type: "RealEstateListing"` and linked `mainEntity: SingleFamilyResidence / Apartment / CommercialBuilding` with accurate bedrooms, bathrooms, floor area, quantitative pricing in INR, and seller agent node.
-- **Dynamic Organization & RealEstateAgent Schema:** Refactored `buildOrganizationSchema()` in `src/lib/seo/schemaBuilders.js` to dynamically read from database `SeoSettings.organizationSchema` and `BusinessProfile`, including NAP, founding date, founder (`Raman Saudagar`), verified social profiles, and service offer catalogs.
+- **Dynamic Organization & RealEstateAgent Schema:** Refactored `buildOrganizationSchema()` in `src/lib/seo/schemaBuilders.js` to dynamically read from database `SeoSettings.organizationSchema` and `BusinessProfile`, including NAP, founding date, founders (`Arun Sharma`, `Suneeta Chawla`), verified social profiles, and service offer catalogs.
 - **Connected Graph Schemas:** Implemented connected `@graph` schemas for standard pages, blog postings, author profiles, and micro-market places.
 - **Micro-Market Place & FAQPage Schemas:** Added `Place` and `FAQPage` schema generation directly into server-rendered corridor pages (`src/app/(marketing)/property/[slug]/page.js`).
 
@@ -57,7 +57,7 @@ This release resolves all technical search engine crawl, render, indexation, and
 - **Dynamic `/llms-full.txt` Endpoint (`src/app/llms-full.txt/route.js`):** Serves comprehensive markdown knowledge base including corridor guides, property catalogs, and authoritative DLF real-estate FAQs.
 - **IndexNow Protocol Service (`src/lib/seo/indexNowService.js`):** Enables instant submission of updated URLs to Microsoft Bing, Yandex, Naver, and Seznam.
 - **IndexNow API Endpoint (`src/app/api/seo/indexnow/route.js`):** Serves key verification and allows on-demand admin submission.
-- **DirectAnswerBox Component (`src/components/seo/DirectAnswerBox.jsx`):** Renders authoritative 404-word summary leads designed for Google featured snippets and generative engine citation.
+- **DirectAnswerBox Component (`src/components/seo/DirectAnswerBox.jsx`):** Renders authoritative 40-60 word summary leads designed for Google featured snippets and generative engine citation.
 
 ---
 

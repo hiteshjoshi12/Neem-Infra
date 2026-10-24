@@ -8,14 +8,14 @@ import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
 
 
 
-import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
+import { useCms } from '@/context/CmsContext';
 
-export default function AboutConsultationCta() {
+export default function AboutConsultationCta({ data }) {
   const { sections } = useCms();
-  const cms = sections?.page_about?.consultationCta || DEFAULT_SECTIONS.page_about.consultationCta;
+  const cms = data || sections?.page_about?.consultationCta || {};
 
-  const whatsappUrl = cms.whatsappUrl || "https://wa.me/919718511207?text=Hello%20Saudagar%20Properties%2C%20I%20would%20like%20to%20request%20a%20consultation%20for%20property%20in%20DLF%20Gurugram.";
-  const phone = cms.phone || "+91 98112 21207";
+  const whatsappUrl = cms?.whatsappUrl || "https://wa.me/919718511207?text=Hello%20Saudagar%20Properties%2C%20I%20would%20like%20to%20request%20a%20consultation%20for%20property%20in%20DLF%20Gurugram.";
+  const phone = cms?.phone || "+91 98112 21207";
   const gmapsUrl = "https://www.google.com/maps/place/Saudagar+Properties+Pvt.Ltd/@28.4847851,77.0842655,17z/data=!3m1!4b1!4m6!3m5!1s0x390d193a8eabbb6b:0x3d99d3fce74198d5!8m2!3d28.4847851!4d77.0842655!16s%2Fg%2F11f03pch1x";
 
   const containerRef = useRef(null);

@@ -86,6 +86,10 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
   const [errorMsg, setErrorMsg] = useState('');
   const [newTakeaway, setNewTakeaway] = useState('');
 
+  const directAnswerWords = useMemo(() => {
+    return (formData.directAnswer || '').trim().split(/\s+/).filter(Boolean).length;
+  }, [formData.directAnswer]);
+
   const textareaRef = useRef(null);
   const inlineImageInputRef = useRef(null);
 
@@ -862,11 +866,32 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
 
               <div className="mt-4 pt-4 border-t border-white/10 space-y-4">
                 <div>
-                  <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                    Direct Answer Summary (Executive Takeaway)
-                  </label>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-xs font-semibold text-slate-300">
+                      Direct Answer Summary (AEO / AI Search: 40–60 words)
+                    </label>
+                    <span className={`text-[11px] font-bold ${
+                      directAnswerWords >= 40 && directAnswerWords <= 60
+                        ? 'text-emerald-400'
+                        : directAnswerWords === 0
+                        ? 'text-slate-400'
+                        : directAnswerWords < 40
+                        ? 'text-amber-400'
+                        : 'text-rose-400'
+                    }`}>
+                      {directAnswerWords} words {
+                        directAnswerWords >= 40 && directAnswerWords <= 60
+                          ? '• Optimal length (40–60 words)'
+                          : directAnswerWords === 0
+                          ? '• Optional lead'
+                          : directAnswerWords < 40
+                          ? `• Too short (${directAnswerWords}/40 words min)`
+                          : `• Too long (${directAnswerWords}/60 words max)`
+                      }
+                    </span>
+                  </div>
                   <textarea
-                    rows={2}
+                    rows={3}
                     value={formData.directAnswer}
                     onChange={(e) => setFormData({ ...formData, directAnswer: e.target.value })}
                     placeholder="Ultra-luxury builder floors in DLF Phase 1 are commanding ₹5.5 Cr to ₹14 Cr in 2026..."
@@ -1119,11 +1144,32 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-                  Direct Answer Summary (Quick 2-sentence executive takeaway)
-                </label>
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="block text-xs font-semibold text-slate-300">
+                    Direct Answer Summary (AEO / AI Search: 40–60 words)
+                  </label>
+                  <span className={`text-[11px] font-bold ${
+                    directAnswerWords >= 40 && directAnswerWords <= 60
+                      ? 'text-emerald-400'
+                      : directAnswerWords === 0
+                      ? 'text-slate-400'
+                      : directAnswerWords < 40
+                      ? 'text-amber-400'
+                      : 'text-rose-400'
+                  }`}>
+                    {directAnswerWords} words {
+                      directAnswerWords >= 40 && directAnswerWords <= 60
+                        ? '• Optimal (40–60 words)'
+                        : directAnswerWords === 0
+                        ? '• Optional'
+                        : directAnswerWords < 40
+                        ? `• Short (${directAnswerWords}/40 min)`
+                        : `• Long (${directAnswerWords}/60 max)`
+                    }
+                  </span>
+                </div>
                 <textarea
-                  rows={2}
+                  rows={3}
                   value={formData.directAnswer}
                   onChange={(e) => setFormData({ ...formData, directAnswer: e.target.value })}
                   placeholder="Ultra-luxury builder floors in DLF Phase 1 are commanding ₹5.5 Cr to ₹14 Cr in 2026..."

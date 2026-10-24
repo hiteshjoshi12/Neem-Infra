@@ -8,11 +8,11 @@ import { Mail, Phone, MapPin, Send, CheckCircle2, Clock } from 'lucide-react';
 import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
 import { animate, inView, stagger } from 'framer-motion';
 import api from '@/services/api';
-import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
+import { useCms } from '@/context/CmsContext';
 
 export default function ContactClient({ initialData }) {
   const { sections } = useCms();
-  const cms = sections?.page_contact || initialData || DEFAULT_SECTIONS.page_contact;
+  const cms = sections?.page_contact || initialData || {};
   const [formData, setFormData] = useState({
     name: '',
     email: '',

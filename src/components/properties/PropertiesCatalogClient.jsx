@@ -21,7 +21,7 @@ import {
 import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
 import api from '@/services/api';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
+import { useCms } from '@/context/CmsContext';
 
 const BASE_CORRIDORS = [
   { id: 'all', label: 'All Corridors', match: '' },
@@ -78,7 +78,7 @@ function parsePriceToNumber(priceStr) {
 export default function PropertiesCatalogClient({ initialProperties = [], allProperties: initialAllProperties = [] }) {
   const searchParams = useSearchParams();
   const { sections, properties: cmsProperties } = useCms();
-  const cms = sections?.page_properties || DEFAULT_SECTIONS?.page_properties || {};
+  const cms = sections?.page_properties || {};
 
   // State initialized from URL query params or defaults
   const [properties, setProperties] = useState(initialProperties);

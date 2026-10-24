@@ -77,6 +77,12 @@ export async function PUT(req, { params }) {
     invalidateCache('taxonomies_all');
 
     try {
+      const { revalidateTag } = await import('next/cache');
+      revalidateTag('team');
+      revalidateTag('authors');
+    } catch (e) {}
+
+    try {
       revalidatePath(`/blog/author/${updatedAuthor.slug}`);
       revalidatePath('/blog');
       revalidatePath('/team');
@@ -109,6 +115,14 @@ export async function DELETE(req, { params }) {
     clearBlogCache();
     invalidateCache('authors');
     invalidateCache('taxonomies_all');
+
+    try {
+      const { revalidateTag } = await import('next/cache');
+      revalidateTag('team');
+      revalidateTag('authors');
+      revalidatePath('/team');
+      revalidatePath('/blog');
+    } catch (e) {}
 
     return NextResponse.json({
       success: true,

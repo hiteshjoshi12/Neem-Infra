@@ -22,7 +22,7 @@ import {
   Loader2
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
-import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
+import { useCms } from '@/context/CmsContext';
 
 const CORRIDOR_CHIPS = [
   { name: 'DLF Phase 1', slug: 'dlf-phase-1', tag: 'Flagship Freehold' },
@@ -37,7 +37,7 @@ const BATCH_SIZE = 6;
 
 export default function BlogCatalogInteractive({ initialData, allPosts = [], categories = [] }) {
   const { sections } = useCms();
-  const cms = sections?.page_blog || initialData || DEFAULT_SECTIONS.page_blog;
+  const cms = sections?.page_blog || initialData || {};
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [viewMode, setViewMode] = useState('expanded'); // 'expanded' | 'grid'
   const [visibleCount, setVisibleCount] = useState(BATCH_SIZE);

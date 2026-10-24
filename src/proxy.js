@@ -58,6 +58,13 @@ export async function proxy(request) {
       }
       if (data?.redirect?.toPath) {
         const dest = data.redirect.toPath;
+        // Strip protocol, host, and trailing slashes to prevent self-redirect loops
+        const cleanDest = dest.replace(/^https?:\/\/[^\/]+/, '').replace(/\/+$/, '') || '/';
+        const cleanCurrent = pathname.replace(/\/+$/, '') || '/';
+        if (cleanDest === cleanCurrent) {
+          // Abort self-redirect loop
+          return NextResponse.next();
+        }
         const statusCode = data.redirect.statusCode || 301;
         const targetUrl = dest.startsWith('http') ? dest : new URL(`${dest}${search}`, request.url);
         return NextResponse.redirect(targetUrl, statusCode);

@@ -38,10 +38,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }) {
   const { slug } = await params;
   const post = await getBlogPostBySlug(slug);
-  const metadata = buildArticleMetadata(post);
-  // Ensure self-canonical URL reference
-  metadata.alternates = { canonical: post?.canonicalUrl || `/blog/${slug}` };
-  return metadata;
+  return buildArticleMetadata(post);
 }
 
 export default async function BlogPostPage({ params }) {

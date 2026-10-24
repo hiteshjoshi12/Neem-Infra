@@ -1,0 +1,654 @@
+{
+  "matchCount": 72,
+  "mismatchCount": 0,
+  "results": [
+    {
+      "index": 1,
+      "path": "/",
+      "sitemapUrl": "https://saudagarproperties.com",
+      "emittedCanonical": "https://saudagarproperties.com",
+      "emittedOgUrl": "https://saudagarproperties.com",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 2,
+      "path": "/about",
+      "sitemapUrl": "https://saudagarproperties.com/about",
+      "emittedCanonical": "https://saudagarproperties.com/about",
+      "emittedOgUrl": "https://saudagarproperties.com/about",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 3,
+      "path": "/team",
+      "sitemapUrl": "https://saudagarproperties.com/team",
+      "emittedCanonical": "https://saudagarproperties.com/team",
+      "emittedOgUrl": "https://saudagarproperties.com/team",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 4,
+      "path": "/contact",
+      "sitemapUrl": "https://saudagarproperties.com/contact",
+      "emittedCanonical": "https://saudagarproperties.com/contact",
+      "emittedOgUrl": "https://saudagarproperties.com/contact",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 5,
+      "path": "/properties",
+      "sitemapUrl": "https://saudagarproperties.com/properties",
+      "emittedCanonical": "https://saudagarproperties.com/properties",
+      "emittedOgUrl": "https://saudagarproperties.com/properties",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 6,
+      "path": "/services/residential",
+      "sitemapUrl": "https://saudagarproperties.com/services/residential",
+      "emittedCanonical": "https://saudagarproperties.com/services/residential",
+      "emittedOgUrl": "https://saudagarproperties.com/services/residential",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 7,
+      "path": "/services/commercial",
+      "sitemapUrl": "https://saudagarproperties.com/services/commercial",
+      "emittedCanonical": "https://saudagarproperties.com/services/commercial",
+      "emittedOgUrl": "https://saudagarproperties.com/services/commercial",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 8,
+      "path": "/services/industrial",
+      "sitemapUrl": "https://saudagarproperties.com/services/industrial",
+      "emittedCanonical": "https://saudagarproperties.com/services/industrial",
+      "emittedOgUrl": "https://saudagarproperties.com/services/industrial",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 9,
+      "path": "/blog",
+      "sitemapUrl": "https://saudagarproperties.com/blog",
+      "emittedCanonical": "https://saudagarproperties.com/blog",
+      "emittedOgUrl": "https://saudagarproperties.com/blog",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 10,
+      "path": "/property/dlf-phase-1",
+      "sitemapUrl": "https://saudagarproperties.com/property/dlf-phase-1",
+      "emittedCanonical": "https://saudagarproperties.com/property/dlf-phase-1",
+      "emittedOgUrl": "https://saudagarproperties.com/property/dlf-phase-1",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 11,
+      "path": "/property/dlf-phase-2",
+      "sitemapUrl": "https://saudagarproperties.com/property/dlf-phase-2",
+      "emittedCanonical": "https://saudagarproperties.com/property/dlf-phase-2",
+      "emittedOgUrl": "https://saudagarproperties.com/property/dlf-phase-2",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 12,
+      "path": "/property/dlf-phase-3",
+      "sitemapUrl": "https://saudagarproperties.com/property/dlf-phase-3",
+      "emittedCanonical": "https://saudagarproperties.com/property/dlf-phase-3",
+      "emittedOgUrl": "https://saudagarproperties.com/property/dlf-phase-3",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 13,
+      "path": "/property/dlf-phase-4",
+      "sitemapUrl": "https://saudagarproperties.com/property/dlf-phase-4",
+      "emittedCanonical": "https://saudagarproperties.com/property/dlf-phase-4",
+      "emittedOgUrl": "https://saudagarproperties.com/property/dlf-phase-4",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 14,
+      "path": "/property/shushant-lok",
+      "sitemapUrl": "https://saudagarproperties.com/property/shushant-lok",
+      "emittedCanonical": "https://saudagarproperties.com/property/shushant-lok",
+      "emittedOgUrl": "https://saudagarproperties.com/property/shushant-lok",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 15,
+      "path": "/property/udyog-vihar",
+      "sitemapUrl": "https://saudagarproperties.com/property/udyog-vihar",
+      "emittedCanonical": "https://saudagarproperties.com/property/udyog-vihar",
+      "emittedOgUrl": "https://saudagarproperties.com/property/udyog-vihar",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 16,
+      "path": "/terms",
+      "sitemapUrl": "https://saudagarproperties.com/terms",
+      "emittedCanonical": "https://saudagarproperties.com/terms",
+      "emittedOgUrl": "https://saudagarproperties.com/terms",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 17,
+      "path": "/privacy-policy",
+      "sitemapUrl": "https://saudagarproperties.com/privacy-policy",
+      "emittedCanonical": "https://saudagarproperties.com/privacy-policy",
+      "emittedOgUrl": "https://saudagarproperties.com/privacy-policy",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 18,
+      "path": "/properties/4-bhk-independent-floor-dlf-phase1",
+      "sitemapUrl": "https://saudagarproperties.com/properties/4-bhk-independent-floor-dlf-phase1",
+      "emittedCanonical": "https://saudagarproperties.com/properties/4-bhk-independent-floor-dlf-phase1",
+      "emittedOgUrl": "https://saudagarproperties.com/properties/4-bhk-independent-floor-dlf-phase1",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 19,
+      "path": "/properties/4-bhk-independent-floor-dlf-phase-2",
+      "sitemapUrl": "https://saudagarproperties.com/properties/4-bhk-independent-floor-dlf-phase-2",
+      "emittedCanonical": "https://saudagarproperties.com/properties/4-bhk-independent-floor-dlf-phase-2",
+      "emittedOgUrl": "https://saudagarproperties.com/properties/4-bhk-independent-floor-dlf-phase-2",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 20,
+      "path": "/properties/villa-in-sushant-lok-1",
+      "sitemapUrl": "https://saudagarproperties.com/properties/villa-in-sushant-lok-1",
+      "emittedCanonical": "https://saudagarproperties.com/properties/villa-in-sushant-lok-1",
+      "emittedOgUrl": "https://saudagarproperties.com/properties/villa-in-sushant-lok-1",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 21,
+      "path": "/properties/4-bhk-independent-floor-dlf-phase-2-2",
+      "sitemapUrl": "https://saudagarproperties.com/properties/4-bhk-independent-floor-dlf-phase-2-2",
+      "emittedCanonical": "https://saudagarproperties.com/properties/4-bhk-independent-floor-dlf-phase-2-2",
+      "emittedOgUrl": "https://saudagarproperties.com/properties/4-bhk-independent-floor-dlf-phase-2-2",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 22,
+      "path": "/properties/3-bhk-independent-floor-dlf-phase-2",
+      "sitemapUrl": "https://saudagarproperties.com/properties/3-bhk-independent-floor-dlf-phase-2",
+      "emittedCanonical": "https://saudagarproperties.com/properties/3-bhk-independent-floor-dlf-phase-2",
+      "emittedOgUrl": "https://saudagarproperties.com/properties/3-bhk-independent-floor-dlf-phase-2",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 23,
+      "path": "/properties/4-bhk-independent-floor-dlf-phase-1-2",
+      "sitemapUrl": "https://saudagarproperties.com/properties/4-bhk-independent-floor-dlf-phase-1-2",
+      "emittedCanonical": "https://saudagarproperties.com/properties/4-bhk-independent-floor-dlf-phase-1-2",
+      "emittedOgUrl": "https://saudagarproperties.com/properties/4-bhk-independent-floor-dlf-phase-1-2",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 24,
+      "path": "/properties/4-bhk-independant-floor-in-sushant-lok-phase-1",
+      "sitemapUrl": "https://saudagarproperties.com/properties/4-bhk-independant-floor-in-sushant-lok-phase-1",
+      "emittedCanonical": "https://saudagarproperties.com/properties/4-bhk-independant-floor-in-sushant-lok-phase-1",
+      "emittedOgUrl": "https://saudagarproperties.com/properties/4-bhk-independant-floor-in-sushant-lok-phase-1",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 25,
+      "path": "/properties/3-bhk-independent-floor-dlf-phase-2-2",
+      "sitemapUrl": "https://saudagarproperties.com/properties/3-bhk-independent-floor-dlf-phase-2-2",
+      "emittedCanonical": "https://saudagarproperties.com/properties/3-bhk-independent-floor-dlf-phase-2-2",
+      "emittedOgUrl": "https://saudagarproperties.com/properties/3-bhk-independent-floor-dlf-phase-2-2",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 26,
+      "path": "/properties/duplex-villa-in-dlf-phase-1",
+      "sitemapUrl": "https://saudagarproperties.com/properties/duplex-villa-in-dlf-phase-1",
+      "emittedCanonical": "https://saudagarproperties.com/properties/duplex-villa-in-dlf-phase-1",
+      "emittedOgUrl": "https://saudagarproperties.com/properties/duplex-villa-in-dlf-phase-1",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 27,
+      "path": "/blog/high-rise-apartments",
+      "sitemapUrl": "https://saudagarproperties.com/blog/high-rise-apartments",
+      "emittedCanonical": "https://saudagarproperties.com/blog/high-rise-apartments",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/high-rise-apartments",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 28,
+      "path": "/blog/buy-property-in-gurgaon-this-diwali",
+      "sitemapUrl": "https://saudagarproperties.com/blog/buy-property-in-gurgaon-this-diwali",
+      "emittedCanonical": "https://saudagarproperties.com/blog/buy-property-in-gurgaon-this-diwali",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/buy-property-in-gurgaon-this-diwali",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 29,
+      "path": "/blog/best-kothi-in-dlf-phase-2",
+      "sitemapUrl": "https://saudagarproperties.com/blog/best-kothi-in-dlf-phase-2",
+      "emittedCanonical": "https://saudagarproperties.com/blog/best-kothi-in-dlf-phase-2",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/best-kothi-in-dlf-phase-2",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 30,
+      "path": "/blog/property-rent-cost-in-dlf-phase-2",
+      "sitemapUrl": "https://saudagarproperties.com/blog/property-rent-cost-in-dlf-phase-2",
+      "emittedCanonical": "https://saudagarproperties.com/blog/property-rent-cost-in-dlf-phase-2",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/property-rent-cost-in-dlf-phase-2",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 31,
+      "path": "/blog/best-property-dealer-in-dlf-phase-2",
+      "sitemapUrl": "https://saudagarproperties.com/blog/best-property-dealer-in-dlf-phase-2",
+      "emittedCanonical": "https://saudagarproperties.com/blog/best-property-dealer-in-dlf-phase-2",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/best-property-dealer-in-dlf-phase-2",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 32,
+      "path": "/blog/industrial-plot-for-sale-in-gurgaon",
+      "sitemapUrl": "https://saudagarproperties.com/blog/industrial-plot-for-sale-in-gurgaon",
+      "emittedCanonical": "https://saudagarproperties.com/blog/industrial-plot-for-sale-in-gurgaon",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/industrial-plot-for-sale-in-gurgaon",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 33,
+      "path": "/blog/independent-house-for-sale-in-gurgaon",
+      "sitemapUrl": "https://saudagarproperties.com/blog/independent-house-for-sale-in-gurgaon",
+      "emittedCanonical": "https://saudagarproperties.com/blog/independent-house-for-sale-in-gurgaon",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/independent-house-for-sale-in-gurgaon",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 34,
+      "path": "/blog/property-in-udyog-vihar-types-benefits-prices",
+      "sitemapUrl": "https://saudagarproperties.com/blog/property-in-udyog-vihar-types-benefits-prices",
+      "emittedCanonical": "https://saudagarproperties.com/blog/property-in-udyog-vihar-types-benefits-prices",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/property-in-udyog-vihar-types-benefits-prices",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 35,
+      "path": "/blog/builder-floor-in-dlf-phase-3",
+      "sitemapUrl": "https://saudagarproperties.com/blog/builder-floor-in-dlf-phase-3",
+      "emittedCanonical": "https://saudagarproperties.com/blog/builder-floor-in-dlf-phase-3",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/builder-floor-in-dlf-phase-3",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 36,
+      "path": "/blog/rera-benefits-for-home-buyers",
+      "sitemapUrl": "https://saudagarproperties.com/blog/rera-benefits-for-home-buyers",
+      "emittedCanonical": "https://saudagarproperties.com/blog/rera-benefits-for-home-buyers",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/rera-benefits-for-home-buyers",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 37,
+      "path": "/blog/property-dealers-in-dlf-phase-3",
+      "sitemapUrl": "https://saudagarproperties.com/blog/property-dealers-in-dlf-phase-3",
+      "emittedCanonical": "https://saudagarproperties.com/blog/property-dealers-in-dlf-phase-3",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/property-dealers-in-dlf-phase-3",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 38,
+      "path": "/blog/vastu-shastra-for-home",
+      "sitemapUrl": "https://saudagarproperties.com/blog/vastu-shastra-for-home",
+      "emittedCanonical": "https://saudagarproperties.com/blog/vastu-shastra-for-home",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/vastu-shastra-for-home",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 39,
+      "path": "/blog/luxury-property-in-gurgaon",
+      "sitemapUrl": "https://saudagarproperties.com/blog/luxury-property-in-gurgaon",
+      "emittedCanonical": "https://saudagarproperties.com/blog/luxury-property-in-gurgaon",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/luxury-property-in-gurgaon",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 40,
+      "path": "/blog/new-floor-in-gurgaon",
+      "sitemapUrl": "https://saudagarproperties.com/blog/new-floor-in-gurgaon",
+      "emittedCanonical": "https://saudagarproperties.com/blog/new-floor-in-gurgaon",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/new-floor-in-gurgaon",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 41,
+      "path": "/blog/property-for-sale-in-dlf-phase-4-gated-lane",
+      "sitemapUrl": "https://saudagarproperties.com/blog/property-for-sale-in-dlf-phase-4-gated-lane",
+      "emittedCanonical": "https://saudagarproperties.com/blog/property-for-sale-in-dlf-phase-4-gated-lane",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/property-for-sale-in-dlf-phase-4-gated-lane",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 42,
+      "path": "/blog/office-space-in-gurgaon",
+      "sitemapUrl": "https://saudagarproperties.com/blog/office-space-in-gurgaon",
+      "emittedCanonical": "https://saudagarproperties.com/blog/office-space-in-gurgaon",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/office-space-in-gurgaon",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 43,
+      "path": "/blog/kothi-for-sale-in-dlf-phase-3",
+      "sitemapUrl": "https://saudagarproperties.com/blog/kothi-for-sale-in-dlf-phase-3",
+      "emittedCanonical": "https://saudagarproperties.com/blog/kothi-for-sale-in-dlf-phase-3",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/kothi-for-sale-in-dlf-phase-3",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 44,
+      "path": "/blog/rental-property-in-dlf-phase-3",
+      "sitemapUrl": "https://saudagarproperties.com/blog/rental-property-in-dlf-phase-3",
+      "emittedCanonical": "https://saudagarproperties.com/blog/rental-property-in-dlf-phase-3",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/rental-property-in-dlf-phase-3",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 45,
+      "path": "/blog/brand-new-floor-in-dlf-phase-1",
+      "sitemapUrl": "https://saudagarproperties.com/blog/brand-new-floor-in-dlf-phase-1",
+      "emittedCanonical": "https://saudagarproperties.com/blog/brand-new-floor-in-dlf-phase-1",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/brand-new-floor-in-dlf-phase-1",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 46,
+      "path": "/blog/luxury-villa-in-sushant-lok-1",
+      "sitemapUrl": "https://saudagarproperties.com/blog/luxury-villa-in-sushant-lok-1",
+      "emittedCanonical": "https://saudagarproperties.com/blog/luxury-villa-in-sushant-lok-1",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/luxury-villa-in-sushant-lok-1",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 47,
+      "path": "/blog/4-bhk-independent-floor-dlf-phase-1-gurgaon",
+      "sitemapUrl": "https://saudagarproperties.com/blog/4-bhk-independent-floor-dlf-phase-1-gurgaon",
+      "emittedCanonical": "https://saudagarproperties.com/blog/4-bhk-independent-floor-dlf-phase-1-gurgaon",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/4-bhk-independent-floor-dlf-phase-1-gurgaon",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 48,
+      "path": "/blog/luxury-builder-floors-dlf-phase-1-5-guide",
+      "sitemapUrl": "https://saudagarproperties.com/blog/luxury-builder-floors-dlf-phase-1-5-guide",
+      "emittedCanonical": "https://saudagarproperties.com/blog/luxury-builder-floors-dlf-phase-1-5-guide",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/luxury-builder-floors-dlf-phase-1-5-guide",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 49,
+      "path": "/blog/things-to-check-before-buying-a-premium-builder-floor-in-dlf",
+      "sitemapUrl": "https://saudagarproperties.com/blog/things-to-check-before-buying-a-premium-builder-floor-in-dlf",
+      "emittedCanonical": "https://saudagarproperties.com/blog/things-to-check-before-buying-a-premium-builder-floor-in-dlf",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/things-to-check-before-buying-a-premium-builder-floor-in-dlf",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 50,
+      "path": "/blog/gurugram-real-estate-market-outlook-2026",
+      "sitemapUrl": "https://saudagarproperties.com/blog/gurugram-real-estate-market-outlook-2026",
+      "emittedCanonical": "https://saudagarproperties.com/blog/gurugram-real-estate-market-outlook-2026",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/gurugram-real-estate-market-outlook-2026",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 51,
+      "path": "/blog/luxury-duplex-villa-in-dlf-phase-1",
+      "sitemapUrl": "https://saudagarproperties.com/blog/luxury-duplex-villa-in-dlf-phase-1",
+      "emittedCanonical": "https://saudagarproperties.com/blog/luxury-duplex-villa-in-dlf-phase-1",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/luxury-duplex-villa-in-dlf-phase-1",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 52,
+      "path": "/blog/nri-investment-guide-fema-repatriation-luxury-real-estate",
+      "sitemapUrl": "https://saudagarproperties.com/blog/nri-investment-guide-fema-repatriation-luxury-real-estate",
+      "emittedCanonical": "https://saudagarproperties.com/blog/nri-investment-guide-fema-repatriation-luxury-real-estate",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/nri-investment-guide-fema-repatriation-luxury-real-estate",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 53,
+      "path": "/blog/best-plots-in-sushant-lok",
+      "sitemapUrl": "https://saudagarproperties.com/blog/best-plots-in-sushant-lok",
+      "emittedCanonical": "https://saudagarproperties.com/blog/best-plots-in-sushant-lok",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/best-plots-in-sushant-lok",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 54,
+      "path": "/blog/golf-course-road-vs-golf-course-extension-comparison",
+      "sitemapUrl": "https://saudagarproperties.com/blog/golf-course-road-vs-golf-course-extension-comparison",
+      "emittedCanonical": "https://saudagarproperties.com/blog/golf-course-road-vs-golf-course-extension-comparison",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/golf-course-road-vs-golf-course-extension-comparison",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 55,
+      "path": "/blog/property-dealers-in-gurugram-complete-guide",
+      "sitemapUrl": "https://saudagarproperties.com/blog/property-dealers-in-gurugram-complete-guide",
+      "emittedCanonical": "https://saudagarproperties.com/blog/property-dealers-in-gurugram-complete-guide",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/property-dealers-in-gurugram-complete-guide",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 56,
+      "path": "/blog/commercial-grade-a-office-spaces-cyber-city-yield-dynamics",
+      "sitemapUrl": "https://saudagarproperties.com/blog/commercial-grade-a-office-spaces-cyber-city-yield-dynamics",
+      "emittedCanonical": "https://saudagarproperties.com/blog/commercial-grade-a-office-spaces-cyber-city-yield-dynamics",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/commercial-grade-a-office-spaces-cyber-city-yield-dynamics",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 57,
+      "path": "/blog/dlf-phase-1-investment-guide",
+      "sitemapUrl": "https://saudagarproperties.com/blog/dlf-phase-1-investment-guide",
+      "emittedCanonical": "https://saudagarproperties.com/blog/dlf-phase-1-investment-guide",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/dlf-phase-1-investment-guide",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 58,
+      "path": "/blog/bespoke-architectural-trends-ultra-luxury-penthouses-gurugram",
+      "sitemapUrl": "https://saudagarproperties.com/blog/bespoke-architectural-trends-ultra-luxury-penthouses-gurugram",
+      "emittedCanonical": "https://saudagarproperties.com/blog/bespoke-architectural-trends-ultra-luxury-penthouses-gurugram",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/bespoke-architectural-trends-ultra-luxury-penthouses-gurugram",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 59,
+      "path": "/blog/luxury-apartments-in-gurgaon-complete-guide",
+      "sitemapUrl": "https://saudagarproperties.com/blog/luxury-apartments-in-gurgaon-complete-guide",
+      "emittedCanonical": "https://saudagarproperties.com/blog/luxury-apartments-in-gurgaon-complete-guide",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/luxury-apartments-in-gurgaon-complete-guide",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 60,
+      "path": "/blog/property-investment-in-gurgaon-a-complete-guide",
+      "sitemapUrl": "https://saudagarproperties.com/blog/property-investment-in-gurgaon-a-complete-guide",
+      "emittedCanonical": "https://saudagarproperties.com/blog/property-investment-in-gurgaon-a-complete-guide",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/property-investment-in-gurgaon-a-complete-guide",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 61,
+      "path": "/blog/builder-floors-dlf-phase-1-prices-amenities",
+      "sitemapUrl": "https://saudagarproperties.com/blog/builder-floors-dlf-phase-1-prices-amenities",
+      "emittedCanonical": "https://saudagarproperties.com/blog/builder-floors-dlf-phase-1-prices-amenities",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/builder-floors-dlf-phase-1-prices-amenities",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 62,
+      "path": "/blog/luxury-floor-in-dlf-phase-1-guide",
+      "sitemapUrl": "https://saudagarproperties.com/blog/luxury-floor-in-dlf-phase-1-guide",
+      "emittedCanonical": "https://saudagarproperties.com/blog/luxury-floor-in-dlf-phase-1-guide",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/luxury-floor-in-dlf-phase-1-guide",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 63,
+      "path": "/blog/best-areas-to-invest-in-gurgaon-2026-guide",
+      "sitemapUrl": "https://saudagarproperties.com/blog/best-areas-to-invest-in-gurgaon-2026-guide",
+      "emittedCanonical": "https://saudagarproperties.com/blog/best-areas-to-invest-in-gurgaon-2026-guide",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/best-areas-to-invest-in-gurgaon-2026-guide",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 64,
+      "path": "/blog/category/buyer-guides",
+      "sitemapUrl": "https://saudagarproperties.com/blog/category/buyer-guides",
+      "emittedCanonical": "https://saudagarproperties.com/blog/category/buyer-guides",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/category/buyer-guides",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 65,
+      "path": "/blog/category/location-insights",
+      "sitemapUrl": "https://saudagarproperties.com/blog/category/location-insights",
+      "emittedCanonical": "https://saudagarproperties.com/blog/category/location-insights",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/category/location-insights",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 66,
+      "path": "/blog/category/market-insights",
+      "sitemapUrl": "https://saudagarproperties.com/blog/category/market-insights",
+      "emittedCanonical": "https://saudagarproperties.com/blog/category/market-insights",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/category/market-insights",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 67,
+      "path": "/blog/category/property-investment",
+      "sitemapUrl": "https://saudagarproperties.com/blog/category/property-investment",
+      "emittedCanonical": "https://saudagarproperties.com/blog/category/property-investment",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/category/property-investment",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 68,
+      "path": "/blog/author/ankit-sharma",
+      "sitemapUrl": "https://saudagarproperties.com/blog/author/ankit-sharma",
+      "emittedCanonical": "https://saudagarproperties.com/blog/author/ankit-sharma",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/author/ankit-sharma",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 69,
+      "path": "/blog/author/arun-sharma",
+      "sitemapUrl": "https://saudagarproperties.com/blog/author/arun-sharma",
+      "emittedCanonical": "https://saudagarproperties.com/blog/author/arun-sharma",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/author/arun-sharma",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 70,
+      "path": "/blog/author/bhavishya-sharma",
+      "sitemapUrl": "https://saudagarproperties.com/blog/author/bhavishya-sharma",
+      "emittedCanonical": "https://saudagarproperties.com/blog/author/bhavishya-sharma",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/author/bhavishya-sharma",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 71,
+      "path": "/blog/author/shyam-upreti",
+      "sitemapUrl": "https://saudagarproperties.com/blog/author/shyam-upreti",
+      "emittedCanonical": "https://saudagarproperties.com/blog/author/shyam-upreti",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/author/shyam-upreti",
+      "status": 200,
+      "isMatch": true
+    },
+    {
+      "index": 72,
+      "path": "/blog/author/suneeta-chawla",
+      "sitemapUrl": "https://saudagarproperties.com/blog/author/suneeta-chawla",
+      "emittedCanonical": "https://saudagarproperties.com/blog/author/suneeta-chawla",
+      "emittedOgUrl": "https://saudagarproperties.com/blog/author/suneeta-chawla",
+      "status": 200,
+      "isMatch": true
+    }
+  ]
+}

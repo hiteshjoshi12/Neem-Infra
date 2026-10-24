@@ -5,7 +5,6 @@ import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
 import { PAGE_SEO, BREADCRUMBS } from '@/lib/seo/seoConfig';
 import { connectDB } from '@/lib/mongodb';
 import SectionContent from '@/models/SectionContent';
-import { DEFAULT_SECTIONS } from '@/constants/defaultSections';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -18,7 +17,7 @@ async function getPrivacyData() {
   } catch (err) {
     console.warn('[Privacy] DB fetch fallback:', err?.message);
   }
-  return DEFAULT_SECTIONS.page_privacy;
+  return {};
 }
 
 import { getDynamicPageSeo } from '@/lib/seo/dynamicSeo';
@@ -36,8 +35,12 @@ export default async function PrivacyPolicy() {
   const breadcrumbs = BREADCRUMBS['/privacy-policy'] || [];
   const privacyData = await getPrivacyData();
 
-  const hero = privacyData?.hero || DEFAULT_SECTIONS.page_privacy.hero;
-  const sections = privacyData?.sections || DEFAULT_SECTIONS.page_privacy.sections;
+  const hero = privacyData?.hero || {
+    badge: 'Confidentiality & Data Protection',
+    title: 'Privacy Policy',
+    description: 'Fiduciary discretion, client record confidentiality, and digital privacy standards.'
+  };
+  const sections = privacyData?.sections || [];
 
   return (
     <div className="w-full flex flex-col min-h-screen bg-brand-ivory-warm selection:bg-brand-gold selection:text-brand-obsidian">

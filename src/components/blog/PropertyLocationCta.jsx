@@ -49,7 +49,7 @@ export default function PropertyLocationCta({ locationName = 'DLF Phase 1–5 Gu
 
         <div className="mt-6 pt-5 border-t border-white/10 flex items-center gap-2 text-xs text-brand-text-dim">
           <ShieldCheck size={14} className="text-brand-gold" />
-          <span>100% Freehold Title Verification & RERA Compliance Assured</span>
+          <span>Freehold Title Verification & Independent Due Diligence</span>
         </div>
       </div>
     </div>

@@ -14,7 +14,6 @@ import {
   CheckCircle2
 } from "lucide-react";
 import { useCms } from "../../context/CmsContext";
-import { DEFAULT_TESTIMONIALS_DATA } from "@/constants/homeData";
 import Image from 'next/image';
 
 if (typeof window !== "undefined") {
@@ -362,7 +361,7 @@ export default function TestimonialsSection({ initialTestimonials = [], initialS
     ? testimonials
     : (initialTestimonials && initialTestimonials.length > 0)
       ? initialTestimonials
-      : DEFAULT_TESTIMONIALS_DATA;
+      : [];
   const testData = sections?.testimonials || initialSectionData || {};
 
   const [activeIndex, setActiveIndex] = useState(0);

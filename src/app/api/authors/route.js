@@ -48,6 +48,13 @@ export async function POST(req) {
 
     clearBlogCache();
     invalidateCache('authors');
+    try {
+      const { revalidateTag, revalidatePath } = await import('next/cache');
+      revalidateTag('team');
+      revalidateTag('authors');
+      revalidatePath('/team');
+      revalidatePath('/blog');
+    } catch (e) {}
 
     return NextResponse.json({
       success: true,

@@ -28,13 +28,16 @@ async function getTeamData() {
   }
 }
 
-import { DEFAULT_SECTIONS } from '@/constants/defaultSections';
-
 export default async function TeamPage() {
   const pageData = await getTeamData();
   const breadcrumbs = BREADCRUMBS['/team'] || [
     { name: 'Home', url: '/' },
     { name: 'Our Team', url: '/team' }
+  ];
+
+  const defaultFounders = [
+    { name: 'Arun Sharma', role: 'Founder & Managing Director' },
+    { name: 'Suneeta Chawla', role: 'Co-Founder & Director' }
   ];
 
   return (
@@ -43,9 +46,9 @@ export default async function TeamPage() {
       <OrganizationJsonLd />
       <TeamClientView
         initialData={pageData}
-        defaultFounders={pageData?.founders?.length ? pageData.founders : DEFAULT_SECTIONS.page_team.founders}
-        teamMembers={pageData?.teamMembers?.length ? pageData.teamMembers : DEFAULT_SECTIONS.page_team.teamMembers}
-        advisoryPillars={pageData?.advisoryPillars?.length ? pageData.advisoryPillars : DEFAULT_SECTIONS.page_team.advisoryPillars}
+        defaultFounders={pageData?.founders?.length ? pageData.founders : defaultFounders}
+        teamMembers={pageData?.teamMembers?.length ? pageData.teamMembers : []}
+        advisoryPillars={pageData?.advisoryPillars?.length ? pageData.advisoryPillars : []}
       />
     </div>
   );

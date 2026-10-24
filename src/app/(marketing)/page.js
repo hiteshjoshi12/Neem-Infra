@@ -6,19 +6,15 @@ import TopConsultantSection from '@/sections/home/TopConsultantSection';
 import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
 import { PAGE_SEO, BREADCRUMBS } from '@/lib/seo/seoConfig';
 
-const CuratedCorridors = nextDynamic(() => import('@/sections/home/CuratedCorridors'), { ssr: true });
-const OurServicesSection = nextDynamic(() => import('@/sections/home/OurServicesSection'), { ssr: true });
-const WhyChooseUsSection = nextDynamic(() => import('@/sections/home/WhyChooseUsSection'), { ssr: true });
-const AiShowcaseSection = nextDynamic(() => import('@/sections/home/AiShowcaseSection'), { ssr: true });
-const TestimonialsSection = nextDynamic(() => import('@/sections/home/TestimonialsSection'), { ssr: true });
-const LocationMap = nextDynamic(() => import('@/sections/home/LocationMap'), { ssr: true });
-const NewsletterSection = nextDynamic(() => import('@/sections/home/NewsletterSection'), { ssr: true });
+const CuratedCorridors = nextDynamic(() => import('@/sections/home/CuratedCorridors'));
+const OurServicesSection = nextDynamic(() => import('@/sections/home/OurServicesSection'));
+const WhyChooseUsSection = nextDynamic(() => import('@/sections/home/WhyChooseUsSection'));
+import HomeBelowTheFold from '@/components/home/HomeBelowTheFold';
 
 export const revalidate = 60;
 
 import { getDynamicPageSeo } from '@/lib/seo/dynamicSeo';
 import { getProperties } from '@/services/propertyService';
-import LeadInquiryModal from '@/components/home/LeadInquiryModal';
 
 export async function generateMetadata() {
   return await getDynamicPageSeo('/', {
@@ -41,9 +37,6 @@ export default async function Home() {
     <div className="w-full flex flex-col min-h-screen bg-brand-ivory text-brand-navy selection:bg-brand-gold selection:text-brand-navy-deep">
       <BreadcrumbJsonLd items={breadcrumbs} />
 
-      {/* 5-Second Timed Consultation Popup */}
-      <LeadInquiryModal />
-
       {/* 1. Hero Section */}
       <Hero initialProperties={featuredProperties} />
 
@@ -59,17 +52,8 @@ export default async function Home() {
       {/* 5. Why Choose Our Company Section */}
       <WhyChooseUsSection />
 
-      {/* 5.5 AI / AEO Showcase Section */}
-      {/* <AiShowcaseSection /> */}
-
-      {/* 6. Testimonials Section */}
-      <TestimonialsSection />
-
-      {/* 7. Location Map & Market Intelligence Section */}
-      <LocationMap />
-
-      {/* 8. Newsletter Subscription Banner */}
-      <NewsletterSection />
+      {/* 6. Below-the-fold Client Dynamic Sections (Modal, Testimonials, Map, Newsletter) */}
+      <HomeBelowTheFold />
     </div>
   );
 }

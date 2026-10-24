@@ -24,6 +24,7 @@ export default function AdminImageAltHub() {
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
   const [typeFilter, setTypeFilter] = useState('all'); // all, missing, issues, valid
+  const [entityFilter, setEntityFilter] = useState('all'); // all, SectionContent, Property, BlogPost, etc.
   const [editingId, setEditingId] = useState(null);
   const [editingValue, setEditingValue] = useState('');
   const [savingId, setSavingId] = useState(null);
@@ -32,7 +33,7 @@ export default function AdminImageAltHub() {
   const fetchImages = async () => {
     try {
       setLoading(true);
-      const res = await api.getImageAltList({ type: typeFilter });
+      const res = await api.getImageAltList({ type: typeFilter, entity: entityFilter });
       if (res?.success) {
         setImages(res.data || []);
         setSummary(res.summary || null);
@@ -46,7 +47,7 @@ export default function AdminImageAltHub() {
 
   useEffect(() => {
     fetchImages();
-  }, [typeFilter]);
+  }, [typeFilter, entityFilter]);
 
   const startInlineEdit = (item) => {
     setEditingId(item.id);
@@ -155,11 +156,25 @@ export default function AdminImageAltHub() {
         </div>
 
         <select
+          value={entityFilter}
+          onChange={e => setEntityFilter(e.target.value)}
+          className="px-4 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs focus:outline-none focus:border-brand-gold"
+        >
+          <option value="all">All Content Types ({summary?.total || 0})</option>
+          <option value="SectionContent">Page Sections & Corridors ({summary?.byType?.SectionContent || 0})</option>
+          <option value="Property">Property Listings & Galleries ({summary?.byType?.Property || 0})</option>
+          <option value="BlogPost">Blog Posts ({summary?.byType?.BlogPost || 0})</option>
+          <option value="Testimonial">Testimonials ({summary?.byType?.Testimonial || 0})</option>
+          <option value="Author">Author Profiles ({summary?.byType?.Author || 0})</option>
+          <option value="Page">Custom SEO Pages ({summary?.byType?.Page || 0})</option>
+        </select>
+
+        <select
           value={typeFilter}
           onChange={e => setTypeFilter(e.target.value)}
           className="px-4 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs focus:outline-none focus:border-brand-gold"
         >
-          <option value="all">All Images ({summary?.total || 0})</option>
+          <option value="all">All Statuses ({summary?.total || 0})</option>
           <option value="missing">Missing Alt Only ({summary?.missing || 0})</option>
           <option value="issues">Issues & Warnings ({summary?.warnings || 0})</option>
           <option value="valid">Valid Alt Only ({summary?.valid || 0})</option>
@@ -216,16 +231,46 @@ export default function AdminImageAltHub() {
                       {/* Parent Entity */}
                       <td className="py-4 px-4 max-w-xs">
                         <div className="flex items-center gap-2">
-                          <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-white/5 border border-white/10 text-brand-gold uppercase">
-                            {img.parentType}
+                          <span className={`px-2 py-0.5 rounded text-[10px] font-bold border uppercase ${
+                            img.parentType === 'SectionContent'
+                              ? 'bg-sky-500/10 border-sky-500/30 text-sky-300'
+                              : img.parentType === 'Property'
+                              ? 'bg-amber-500/10 border-amber-500/30 text-amber-300'
+                              : img.parentType === 'BlogPost'
+                              ? 'bg-violet-500/10 border-violet-500/30 text-violet-300'
+                              : img.parentType === 'Testimonial'
+                              ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-300'
+                              : img.parentType === 'Author'
+                              ? 'bg-rose-500/10 border-rose-500/30 text-rose-300'
+                              : 'bg-white/5 border-white/10 text-brand-gold'
+                          }`}>
+                            {img.parentType === 'SectionContent'
+                              ? 'Page / Section'
+                              : img.parentType === 'Property'
+                              ? 'Property'
+                              : img.parentType === 'BlogPost'
+                              ? 'Blog Post'
+                              : img.parentType}
                           </span>
                         </div>
                         <div className="text-white font-medium truncate mt-1" title={img.parentTitle}>
                           {img.parentTitle}
                         </div>
-                        <div className="text-[10px] text-brand-text-dim font-mono truncate mt-0.5">
-                          {img.parentSlug}
-                        </div>
+                        {img.parentSlug ? (
+                          <a
+                            href={img.parentSlug}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="text-[10px] text-brand-text-dim hover:text-brand-gold font-mono truncate mt-0.5 inline-flex items-center gap-1 transition-colors"
+                          >
+                            <span>{img.parentSlug}</span>
+                            <ExternalLink size={9} />
+                          </a>
+                        ) : (
+                          <div className="text-[10px] text-brand-text-dim font-mono truncate mt-0.5">
+                            /
+                          </div>
+                        )}
                       </td>
 
                       {/* Current Alt Text / Inline Editor */}

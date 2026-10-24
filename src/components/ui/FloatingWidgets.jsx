@@ -8,7 +8,6 @@ import { MapPin, X } from 'lucide-react';
 import ScrollToTopWidget from './widgets/ScrollToTopWidget';
 import MapsWidget from './widgets/MapsWidget';
 import WhatsAppWidget from './widgets/WhatsAppWidget';
-import { botKnowledgeBase } from './widgets/ChatbotWidget';
 
 const ChatbotWidget = dynamic(() => import('./widgets/ChatbotWidget'), { ssr: false });
 

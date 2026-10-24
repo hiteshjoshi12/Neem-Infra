@@ -85,7 +85,10 @@ export async function POST(req) {
     clearBlogCache();
     invalidateCache('blog');
     try {
+      const { revalidateTag } = await import('next/cache');
+      revalidateTag('blog');
       revalidatePath('/blog');
+      revalidatePath('/sitemap.xml');
     } catch {
       // ignore outside request lifecycle
     }

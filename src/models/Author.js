@@ -33,6 +33,10 @@ const authorSchema = new mongoose.Schema(
     image: {
       type: String
     },
+    imageAlt: {
+      type: String,
+      default: ''
+    },
     jobTitle: {
       type: String,
       trim: true

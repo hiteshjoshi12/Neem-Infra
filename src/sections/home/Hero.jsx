@@ -153,6 +153,33 @@ export default function Hero() {
     router.push(qs ? `/properties?${qs}` : '/properties');
   };
 
+  const handleTagClick = (tag) => {
+    let locVal = '';
+    let catVal = '';
+    let budVal = '';
+
+    if (tag.includes('DLF Phase 1')) {
+      locVal = 'dlf-phase-1';
+      catVal = 'residential';
+    } else if (tag.includes('Sushant Lok')) {
+      locVal = 'sushant-lok-1';
+      catVal = 'villa';
+    } else if (tag.includes('Golf Course')) {
+      locVal = 'golf-course-ext';
+    } else if (tag.includes('Under 5 Cr')) {
+      budVal = 'under-5';
+    }
+
+    const params = new URLSearchParams();
+    if (tag) params.set('search', tag);
+    if (locVal) params.set('location', locVal);
+    if (catVal) params.set('category', catVal);
+    if (budVal) params.set('price', budVal);
+
+    const qs = params.toString();
+    router.push(qs ? `/properties?${qs}` : '/properties');
+  };
+
   return (
     <section
       className="relative z-30 w-full min-h-[90vh] lg:min-h-screen flex flex-col justify-center pt-28 pb-20 lg:pb-32 overflow-visible bg-brand-obsidian"
@@ -309,6 +336,7 @@ export default function Hero() {
                     <button
                       key={tag}
                       type="button"
+                      onClick={() => handleTagClick(tag)}
                       aria-label={`Search trending category: ${tag}`}
                       className="px-4 py-1.5 rounded-full border border-white/20 text-white text-xs font-medium hover:border-brand-gold hover:text-brand-navy hover:bg-white transition-all duration-300 bg-white/15 backdrop-blur-md shadow-sm cursor-pointer"
                     >

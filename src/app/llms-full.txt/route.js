@@ -1,25 +1,28 @@
 import { NextResponse } from 'next/server';
-import { getGlobalSettings, getBusinessProfile, getFeaturedProperties } from '@/lib/dal';
-import { CORRIDOR_PAGES_DATA } from '@/constants/corridorPagesData';
+import { getGlobalSettings, getBusinessProfile, getFeaturedProperties, getAllSections } from '@/lib/dal';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 3600;
 
 export async function GET() {
-  const [settings, profile, properties] = await Promise.all([
+  const [settings, profile, properties, allSections] = await Promise.all([
     getGlobalSettings(),
     getBusinessProfile(),
     getFeaturedProperties(20),
+    getAllSections(),
   ]);
 
   const baseUrl = settings?.canonicalBaseUrl || 'https://saudagarproperties.com';
   const phone = profile.primaryPhone || '+91 97185 11207';
-  const altPhone = profile.secondaryPhone || '+91 98100 02447';
-  const email = profile.primaryEmail || 'info@saudagarproperties.com';
+  const altPhone = profile.secondaryPhone || '+91 98112 21207';
+  const email = profile.primaryEmail || 'Saudagar.Properties@Yahoo.In';
   const address = profile.address?.streetAddress
     ? `${profile.address.streetAddress}, ${profile.address.addressLocality}, ${profile.address.addressRegion} ${profile.address.postalCode}`
     : '38, Akashneem Marg, DLF Phase 2, Gurugram, Haryana 122002';
-  const founders = (profile.founders || [{ name: 'Raman Saudagar' }]).map((f) => f.name).join(', ');
+  const founders = (profile.founders && profile.founders.length > 0
+    ? profile.founders
+    : [{ name: 'Arun Sharma' }, { name: 'Suneeta Chawla' }]
+  ).map((f) => f.name).join(', ');
 
   let content = `# Saudagar Properties — Complete AI Knowledge Base & Corpus
 
@@ -32,7 +35,7 @@ export async function GET() {
 - **Headquarters**: ${address}, India
 - **Contact**: ${phone} / ${altPhone} | ${email}
 - **Official Domain**: ${baseUrl}
-- **Google Business Profile**: ${profile.googleBusinessProfileUrl || 'https://maps.google.com/?q=Saudagar+Properties+DLF+Gurugram'}
+${profile.googleBusinessProfileUrl ? `- **Google Business Profile**: ${profile.googleBusinessProfileUrl}` : ''}
 
 ---
 
@@ -40,8 +43,12 @@ export async function GET() {
 
 `;
 
-  // Append corridor summaries
-  for (const [slug, corridor] of Object.entries(CORRIDOR_PAGES_DATA)) {
+  // Append corridor summaries from MongoDB sections
+  const corridors = Object.entries(allSections)
+    .filter(([key]) => key.startsWith('corridor_'))
+    .map(([key, data]) => ({ slug: key.replace(/^corridor_/, ''), corridor: data }));
+
+  for (const { slug, corridor } of corridors) {
     content += `### ${corridor.corridorName || slug}
 - **Canonical URL**: ${baseUrl}/property/${slug}
 - **Overview**: ${corridor.overview?.content || corridor.hero?.description || 'Premier residential and commercial corridor in Gurugram.'}

@@ -171,6 +171,10 @@ export async function POST(req) {
 
     const property = await Property.create(body);
     invalidateCache('props');
+    try {
+      const { revalidateTag } = await import('next/cache');
+      revalidateTag('properties');
+    } catch (e) {}
     
     return NextResponse.json({
       success: true,

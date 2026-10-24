@@ -1,9 +1,9 @@
 import React from 'react';
 import JsonLd from './JsonLd';
-import { SITE_URL, BUSINESS_INFO } from '@/lib/seo/seoConfig';
+import { BUSINESS_INFO } from '@/lib/seo/seoConfig';
 import { cleanSchema } from '@/lib/seo/schemaBuilders';
 
-export default function PropertyJsonLd({ property, baseUrl = SITE_URL }) {
+export default function PropertyJsonLd({ property, baseUrl = 'https://saudagarproperties.com' }) {
   if (!property) return null;
 
   let numericPrice = '';
@@ -22,10 +22,14 @@ export default function PropertyJsonLd({ property, baseUrl = SITE_URL }) {
     }
   }
 
-  const propertyUrl = `${baseUrl}/properties/${property.slug || property._id || property.id}`;
-  const images = Array.isArray(property.images) && property.images.length > 0
+  const propertyUrl = `${baseUrl.replace(/\/+$/, '')}/properties/${property.slug || property._id || property.id}`;
+  // Filter out stock or broken image URLs so only authentic assets appear in structured data
+  const rawImages = Array.isArray(property.images) && property.images.length > 0
     ? property.images
     : (property.img ? [property.img] : []);
+  const images = rawImages.filter(
+    (img) => typeof img === 'string' && img.trim() && !img.includes('unsplash.com') && !img.includes('/wp-content/uploads/')
+  );
 
   // Determine architectural entity type
   const isCommercial = property.category === 'commercial';
@@ -36,6 +40,32 @@ export default function PropertyJsonLd({ property, baseUrl = SITE_URL }) {
       ? 'Warehouse'
       : (property.title?.toLowerCase().includes('villa') || property.category === 'villa' ? 'SingleFamilyResidence' : 'Apartment');
 
+  // Determine numeric bedrooms, bathrooms, and floor size
+  let numericBedrooms = undefined;
+  if (property.bhk) {
+    const match = String(property.bhk).match(/([0-9]+)/);
+    if (match) {
+      numericBedrooms = parseInt(match[1], 10);
+    }
+  }
+
+  let numericBathrooms = undefined;
+  if (property.bathrooms) {
+    const match = String(property.bathrooms).match(/([0-9]+)/);
+    if (match) {
+      numericBathrooms = parseInt(match[1], 10);
+    }
+  }
+
+  let numericFloorSize = undefined;
+  const rawArea = property.builtUpArea || property.plotArea;
+  if (rawArea) {
+    const match = String(rawArea).match(/([0-9]+(?:,[0-9]+)?(?:\.[0-9]+)?)/);
+    if (match) {
+      numericFloorSize = parseFloat(match[1].replace(/,/g, ''));
+    }
+  }
+
   const schema = cleanSchema({
     "@context": "https://schema.org",
     "@type": "RealEstateListing",
@@ -44,8 +74,9 @@ export default function PropertyJsonLd({ property, baseUrl = SITE_URL }) {
     "description": property.desc || property.title,
     "url": propertyUrl,
     "image": images.length > 0 ? images : undefined,
-    "datePosted": property.createdAt ? new Date(property.createdAt).toISOString() : undefined,
-    "dateModified": property.updatedAt ? new Date(property.updatedAt).toISOString() : undefined,
+    // Item D: Remove datePosted/dateModified unless real original date exists in legacy data
+    "datePosted": property.legacyOriginalDate ? new Date(property.legacyOriginalDate).toISOString() : undefined,
+    "dateModified": property.legacyModifiedDate ? new Date(property.legacyModifiedDate).toISOString() : undefined,
     "category": property.category || "residential",
     "offers": {
       "@type": "Offer",
@@ -80,12 +111,12 @@ export default function PropertyJsonLd({ property, baseUrl = SITE_URL }) {
         "postalCode": "122002",
         "addressCountry": "IN"
       },
-      "numberOfRooms": property.bhk ? String(property.bhk) : undefined,
-      "numberOfBathroomsTotal": property.bathrooms ? Number(property.bathrooms) : undefined,
-      "floorSize": property.builtUpArea || property.plotArea ? {
+      "numberOfBedrooms": numericBedrooms,
+      "numberOfBathroomsTotal": numericBathrooms,
+      "floorSize": numericFloorSize ? {
         "@type": "QuantitativeValue",
-        "value": property.builtUpArea || property.plotArea,
-        "unitText": property.plotArea?.includes('Yard') ? 'Square Yards' : 'Square Feet'
+        "value": numericFloorSize,
+        "unitCode": "FTK"
       } : undefined,
       "amenityFeature": (property.features || []).map((feat) => ({
         "@type": "LocationFeatureSpecification",

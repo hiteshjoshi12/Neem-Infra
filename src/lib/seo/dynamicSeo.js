@@ -1,8 +1,8 @@
 import { connectDB } from '@/lib/mongodb';
 import SeoSettings from '@/models/SeoSettings';
 import Page from '@/models/Page';
-import { SITE_URL, SITE_NAME, PAGE_SEO, BREADCRUMBS, DEFAULT_META } from './seoConfig';
-import { normalizePath, formatMetaDescription } from './metadataHelper';
+import { SITE_NAME, PAGE_SEO, BREADCRUMBS, DEFAULT_META } from './seoConfig';
+import { normalizePath, formatMetaDescription, resolveYearsToken } from './metadataHelper';
 
 // Short-lived in-memory caches to guarantee fast sub-millisecond responses on hot requests
 let cachedSettings = null;
@@ -56,6 +56,7 @@ export async function ensureDefaultSeoData() {
     }
 
     // 2. Ensure Core Pages in Page collection (atomic upsert per slug)
+    const defaultBaseUrl = (settings?.canonicalBaseUrl || 'https://saudagarproperties.com').replace(/\/+$/, '');
     const initialPages = [
         {
           title: 'Homepage',
@@ -66,7 +67,7 @@ export async function ensureDefaultSeoData() {
           h2: '25+ Years of Dedicated Authority in Luxury Builder Floors, Independent Villas & Corporate Assets',
           metaTitle: PAGE_SEO['/']?.title || 'Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram',
           metaDescription: PAGE_SEO['/']?.description || '',
-          canonicalUrl: `${SITE_URL}/`,
+          canonicalUrl: defaultBaseUrl,
           focusKeywords: ['Real Estate Consultant Gurugram', 'DLF Phase 1-5 Builder Floors'],
           robots: { index: true, follow: true, noarchive: false, nosnippet: false },
           ogTitle: PAGE_SEO['/']?.title,
@@ -83,7 +84,7 @@ export async function ensureDefaultSeoData() {
           h2: 'Founded in 1999 — Fiduciary Real Estate Advisory Built on Generational Trust & Uncompromising Ethics',
           metaTitle: PAGE_SEO['/about']?.title || 'About Us — Saudagar Properties',
           metaDescription: PAGE_SEO['/about']?.description || '',
-          canonicalUrl: `${SITE_URL}/about`,
+          canonicalUrl: `${defaultBaseUrl}/about`,
           focusKeywords: ['About Saudagar Properties', 'DLF Real Estate Leadership'],
           robots: { index: true, follow: true, noarchive: false, nosnippet: false },
           ogTitle: PAGE_SEO['/about']?.title,
@@ -100,7 +101,7 @@ export async function ensureDefaultSeoData() {
           h2: 'Decades of Micro-Market Mastery Guiding Ultra-High-Net-Worth Individuals & Corporate Entities',
           metaTitle: PAGE_SEO['/team']?.title || 'Leadership & Real Estate Advisory Team | Saudagar Properties',
           metaDescription: PAGE_SEO['/team']?.description || '',
-          canonicalUrl: `${SITE_URL}/team`,
+          canonicalUrl: `${defaultBaseUrl}/team`,
           focusKeywords: ['Saudagar Properties Founders', 'Arun Sharma', 'Suneeta Chawla'],
           robots: { index: true, follow: true, noarchive: false, nosnippet: false },
           ogTitle: PAGE_SEO['/team']?.title,
@@ -117,7 +118,7 @@ export async function ensureDefaultSeoData() {
           h2: 'Direct Access to Senior Partners for Acquisitions, Divestments & Corporate Real Estate Structuring',
           metaTitle: PAGE_SEO['/contact']?.title || 'Contact Us — Saudagar Properties',
           metaDescription: PAGE_SEO['/contact']?.description || '',
-          canonicalUrl: `${SITE_URL}/contact`,
+          canonicalUrl: `${defaultBaseUrl}/contact`,
           focusKeywords: ['Contact Saudagar Properties', 'DLF Phase 2 Real Estate Office'],
           robots: { index: true, follow: true, noarchive: false, nosnippet: false },
           ogTitle: PAGE_SEO['/contact']?.title,
@@ -135,7 +136,7 @@ export async function ensureDefaultSeoData() {
           metaTitle: 'Luxury Properties & Builder Floors DLF Gurugram | Saudagar Properties',
           metaDescription:
             'Explore verified ready-to-move luxury builder floors, kothis, and commercial spaces across DLF Phase 1–5, Sushant Lok, and Golf Course Road.',
-          canonicalUrl: `${SITE_URL}/properties`,
+          canonicalUrl: `${defaultBaseUrl}/properties`,
           focusKeywords: ['Luxury Builder Floors', 'DLF Phase 1-5 Properties'],
           robots: { index: true, follow: true, noarchive: false, nosnippet: false },
           ogTitle: 'Luxury Properties & Builder Floors DLF Gurugram',
@@ -152,7 +153,7 @@ export async function ensureDefaultSeoData() {
           h2: 'Strategic Micro-Market Intelligence, 7-Point Due Diligence & Bespoke Acquisition Advisory',
           metaTitle: PAGE_SEO['/services/residential']?.title || 'Luxury Residential Properties in DLF Gurugram',
           metaDescription: PAGE_SEO['/services/residential']?.description || '',
-          canonicalUrl: `${SITE_URL}/services/residential`,
+          canonicalUrl: `${defaultBaseUrl}/services/residential`,
           focusKeywords: ['Luxury Builder Floors DLF', 'Residential Real Estate Gurugram'],
           robots: { index: true, follow: true, noarchive: false, nosnippet: false },
           ogTitle: PAGE_SEO['/services/residential']?.title,
@@ -173,7 +174,7 @@ export async function ensureDefaultSeoData() {
           h2: 'Grade-A Commercial Space Leasing, High-Yield Investment Portfolios & Institutional Due Diligence',
           metaTitle: PAGE_SEO['/services/commercial']?.title || 'Commercial Real Estate in DLF Gurugram',
           metaDescription: PAGE_SEO['/services/commercial']?.description || '',
-          canonicalUrl: `${SITE_URL}/services/commercial`,
+          canonicalUrl: `${defaultBaseUrl}/services/commercial`,
           focusKeywords: ['Commercial Real Estate Gurugram', 'Cyber City Office Space', 'Golf Course Road Offices'],
           robots: { index: true, follow: true, noarchive: false, nosnippet: false },
           ogTitle: PAGE_SEO['/services/commercial']?.title,
@@ -194,7 +195,7 @@ export async function ensureDefaultSeoData() {
           h2: 'Compliance Roadmaps, Build-To-Suit Engineering Standards & Regulatory Clearance Assistance',
           metaTitle: PAGE_SEO['/services/industrial']?.title || 'Industrial Real Estate in Gurugram & Udyog Vihar',
           metaDescription: PAGE_SEO['/services/industrial']?.description || '',
-          canonicalUrl: `${SITE_URL}/services/industrial`,
+          canonicalUrl: `${defaultBaseUrl}/services/industrial`,
           focusKeywords: ['Industrial Land Gurgaon', 'Udyog Vihar Warehouse', 'HSIIDC Industrial Plots'],
           robots: { index: true, follow: true, noarchive: false, nosnippet: false },
           ogTitle: PAGE_SEO['/services/industrial']?.title,
@@ -215,7 +216,7 @@ export async function ensureDefaultSeoData() {
           h2: 'Quarterly Price Benchmarks, Infrastructure Deep-Dives & Regulatory Guidance for HNWIs and NRIs',
           metaTitle: PAGE_SEO['/blog']?.title || 'The Gurugram Real Estate Journal | Saudagar Properties',
           metaDescription: PAGE_SEO['/blog']?.description || '',
-          canonicalUrl: `${SITE_URL}/blog`,
+          canonicalUrl: `${defaultBaseUrl}/blog`,
           focusKeywords: ['Gurugram Real Estate News', 'DLF Phase 1-5 Market Trends'],
           robots: { index: true, follow: true, noarchive: false, nosnippet: false },
           ogTitle: PAGE_SEO['/blog']?.title,
@@ -232,7 +233,7 @@ export async function ensureDefaultSeoData() {
           h2: 'Prime Heritage Enclave Adjacent to Golf Course Road & MG Road Metro',
           metaTitle: 'Best Property in DLF Phase 1 | Saudagar Properties Gurugram',
           metaDescription: 'Explore luxury builder floors, kothis, and residential plots in DLF Phase 1 Gurugram with Saudagar Properties.',
-          canonicalUrl: `${SITE_URL}/property/dlf-phase-1`,
+          canonicalUrl: `${defaultBaseUrl}/property/dlf-phase-1`,
           focusKeywords: ['Best Property in DLF Phase 1', 'DLF Phase 1 Gurgaon Builder Floors'],
           robots: { index: true, follow: true, noarchive: false, nosnippet: false },
           breadcrumbs: [
@@ -251,7 +252,7 @@ export async function ensureDefaultSeoData() {
           h2: 'Strategic Connectivity to Cyber City, NH-8 & Delhi Border',
           metaTitle: 'Best Property in DLF Phase 2 | Saudagar Properties Gurugram',
           metaDescription: 'Explore luxury builder floors, kothis, and residential plots in DLF Phase 2 Gurugram with Saudagar Properties.',
-          canonicalUrl: `${SITE_URL}/property/dlf-phase-2`,
+          canonicalUrl: `${defaultBaseUrl}/property/dlf-phase-2`,
           focusKeywords: ['Best Property in DLF Phase 2', 'DLF Phase 2 Gurugram Floors'],
           robots: { index: true, follow: true, noarchive: false, nosnippet: false },
           breadcrumbs: [
@@ -270,7 +271,7 @@ export async function ensureDefaultSeoData() {
           h2: 'Immediate Proximity to Cyber Hub, Ambience Mall & Moulsari Avenue',
           metaTitle: 'Best Property in DLF Phase 3 | Saudagar Properties Gurugram',
           metaDescription: 'Explore verified residential builder floors and plots in DLF Phase 3 Gurugram.',
-          canonicalUrl: `${SITE_URL}/property/dlf-phase-3`,
+          canonicalUrl: `${defaultBaseUrl}/property/dlf-phase-3`,
           focusKeywords: ['Best Property in DLF Phase 3', 'Cyber Hub Proximity Floors'],
           robots: { index: true, follow: true, noarchive: false, nosnippet: false },
           breadcrumbs: [
@@ -289,7 +290,7 @@ export async function ensureDefaultSeoData() {
           h2: 'Central Gurugram Location Near Galleria Market & Sector 28 Metro',
           metaTitle: 'Best Property in DLF Phase 4 | Saudagar Properties Gurugram',
           metaDescription: 'Explore luxury builder floors and park-facing residences in DLF Phase 4 Gurugram.',
-          canonicalUrl: `${SITE_URL}/property/dlf-phase-4`,
+          canonicalUrl: `${defaultBaseUrl}/property/dlf-phase-4`,
           focusKeywords: ['Best Property in DLF Phase 4', 'Galleria Market Luxury Floors'],
           robots: { index: true, follow: true, noarchive: false, nosnippet: false },
           breadcrumbs: [
@@ -308,7 +309,7 @@ export async function ensureDefaultSeoData() {
           h2: 'Tranquil Residential Enclave with Mature Tree-Lined Avenues & Top Healthcare',
           metaTitle: 'Best Property in Sushant Lok | Saudagar Properties Gurugram',
           metaDescription: 'Explore luxury builder floors, kothis, and residential plots in Sushant Lok Gurugram.',
-          canonicalUrl: `${SITE_URL}/property/shushant-lok`,
+          canonicalUrl: `${defaultBaseUrl}/property/shushant-lok`,
           focusKeywords: ['Best Property in Sushant Lok', 'Sushant Lok 1 Gurgaon Floors'],
           robots: { index: true, follow: true, noarchive: false, nosnippet: false },
           breadcrumbs: [
@@ -327,7 +328,7 @@ export async function ensureDefaultSeoData() {
           h2: 'NCR’s Flagship Commercial & Industrial District Bordering Delhi on NH-8',
           metaTitle: 'Best Property in Udyog Vihar | Saudagar Properties Gurugram',
           metaDescription: 'Explore industrial plots, commercial offices, and warehousing in Udyog Vihar Gurugram.',
-          canonicalUrl: `${SITE_URL}/property/udyog-vihar`,
+          canonicalUrl: `${defaultBaseUrl}/property/udyog-vihar`,
           focusKeywords: ['Best Property in Udyog Vihar', 'Udyog Vihar Industrial Plots'],
           robots: { index: true, follow: true, noarchive: false, nosnippet: false },
           breadcrumbs: [
@@ -346,7 +347,7 @@ export async function ensureDefaultSeoData() {
           h2: 'Official Legal Protocols, Due Diligence Disclaimers & Professional Disclosures',
           metaTitle: PAGE_SEO['/terms']?.title || 'Terms of Service — Saudagar Properties',
           metaDescription: PAGE_SEO['/terms']?.description || '',
-          canonicalUrl: `${SITE_URL}/terms`,
+          canonicalUrl: `${defaultBaseUrl}/terms`,
           robots: { index: true, follow: true, noarchive: false, nosnippet: false },
           breadcrumbs: BREADCRUMBS['/terms'] || [{ name: 'Home', url: '/' }, { name: 'Terms of Service', url: '/terms' }],
           schemaType: 'WebPage',
@@ -360,7 +361,7 @@ export async function ensureDefaultSeoData() {
           h2: 'Commitment to Client Privacy, Secure Handling of Property Documentation & Statutory Compliance',
           metaTitle: PAGE_SEO['/privacy-policy']?.title || 'Privacy Policy — Saudagar Properties',
           metaDescription: PAGE_SEO['/privacy-policy']?.description || '',
-          canonicalUrl: `${SITE_URL}/privacy-policy`,
+          canonicalUrl: `${defaultBaseUrl}/privacy-policy`,
           robots: { index: true, follow: true, noarchive: false, nosnippet: false },
           breadcrumbs: BREADCRUMBS['/privacy-policy'] || [{ name: 'Home', url: '/' }, { name: 'Privacy Policy', url: '/privacy-policy' }],
           schemaType: 'WebPage',
@@ -463,18 +464,29 @@ export async function getDynamicPageSeo(path = '/', fallbackData = {}) {
 
   // Resolve Title
   let rawTitle = pageDoc?.metaTitle || fallbackData.title || PAGE_SEO[norm]?.title || defaultMetaTitle;
+  rawTitle = resolveYearsToken(rawTitle);
   if (!rawTitle.includes(SITE_NAME) && !rawTitle.includes('Saudagar')) {
     rawTitle = `${rawTitle} | ${SITE_NAME}`;
   }
 
   // Resolve Description
   const rawDesc = pageDoc?.metaDescription || fallbackData.description || PAGE_SEO[norm]?.description || defaultMetaDesc;
-  const description = formatMetaDescription(rawDesc);
+  const description = resolveYearsToken(formatMetaDescription(rawDesc));
 
-  // Resolve Canonical URL
+  // Resolve Canonical URL strictly from settings.canonicalBaseUrl
+  const baseUrl = (settings?.canonicalBaseUrl || 'https://saudagarproperties.com').replace(/\/+$/, '');
   let canonical = pageDoc?.canonicalUrl || fallbackData.canonical || PAGE_SEO[norm]?.canonical || norm;
-  if (!canonical.startsWith('http')) {
-    canonical = canonical === '/' ? SITE_URL : `${SITE_URL}${canonical.startsWith('/') ? canonical : `/${canonical}`}`;
+  if (canonical.startsWith('http')) {
+    try {
+      const u = new URL(canonical);
+      const cleanPath = u.pathname.length > 1 && u.pathname.endsWith('/') ? u.pathname.slice(0, -1) : u.pathname;
+      canonical = cleanPath === '/' ? baseUrl : `${baseUrl}${cleanPath}`;
+    } catch {
+      canonical = `${baseUrl}${canonical.startsWith('/') ? canonical : `/${canonical}`}`;
+    }
+  } else {
+    const cleanNorm = norm.length > 1 && norm.endsWith('/') ? norm.slice(0, -1) : norm;
+    canonical = cleanNorm === '/' ? baseUrl : `${baseUrl}${cleanNorm}`;
   }
 
   // Resolve Robots Directives
@@ -504,8 +516,8 @@ export async function getDynamicPageSeo(path = '/', fallbackData = {}) {
   const ogImageAlt = pageDoc?.ogImageAlt || pageDoc?.metaTitle || rawTitle;
 
   // Open Graph & Twitter Objects
-  const ogTitle = pageDoc?.ogTitle || rawTitle;
-  const ogDescription = pageDoc?.ogDescription || description;
+  const ogTitle = resolveYearsToken(pageDoc?.ogTitle || rawTitle);
+  const ogDescription = resolveYearsToken(pageDoc?.ogDescription || description);
   const ogType = pageDoc?.ogType || fallbackData.ogType || 'website';
   const twitterCard = pageDoc?.twitterCard || 'summary_large_image';
 

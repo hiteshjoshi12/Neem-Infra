@@ -22,7 +22,7 @@ import {
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
 import BreadcrumbJsonLd from '@/components/seo/BreadcrumbJsonLd';
-import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
+import { useCms } from '@/context/CmsContext';
 
 const fadeUpVariant = {
   hidden: { opacity: 0, y: 22 },
@@ -43,47 +43,39 @@ export default function ResidentialServiceView({
   specificationStandards = []
 }) {
   const { sections } = useCms();
-  const cms = sections?.page_residential || initialData || DEFAULT_SECTIONS?.page_residential || {};
-  const heroData = cms?.hero || DEFAULT_SECTIONS?.page_residential?.hero || {};
+  const cms = sections?.page_residential || initialData || {};
+  const heroData = cms?.hero || {};
   const activeMetrics = (cms?.metrics && cms.metrics.length > 0)
     ? cms.metrics
-    : (DEFAULT_SECTIONS?.page_residential?.metrics || []);
-  const heroCardData = heroData?.heroCard || DEFAULT_SECTIONS?.page_residential?.hero?.heroCard || {};
+    : [];
+  const heroCardData = heroData?.heroCard || {};
   const rawTypologies = (cms?.assetClasses && cms.assetClasses.length > 0)
     ? cms.assetClasses
-    : (typologies && typologies.length > 0 ? typologies : DEFAULT_SECTIONS.page_residential.assetClasses);
+    : (typologies && typologies.length > 0 ? typologies : []);
 
-  const activeTypologies = (rawTypologies || []).map((item, idx) => {
-    const base = DEFAULT_SECTIONS.page_residential.assetClasses[idx] || {};
-    return {
-      ...base,
-      ...item,
-      metrics: (item?.metrics && item.metrics.length > 0) ? item.metrics : (base?.metrics || []),
-      features: (item?.features && item.features.length > 0) ? item.features : (base?.features || []),
-      price: item?.price || item?.pricing || base?.price || base?.pricing || '',
-    };
-  });
+  const activeTypologies = (rawTypologies || []).map((item) => ({
+    ...item,
+    metrics: (item?.metrics && item.metrics.length > 0) ? item.metrics : [],
+    features: (item?.features && item.features.length > 0) ? item.features : [],
+    price: item?.price || item?.pricing || '',
+  }));
 
   const rawMicroMarkets = (cms?.microMarkets && cms.microMarkets.length > 0)
     ? cms.microMarkets
-    : (microMarkets && microMarkets.length > 0 ? microMarkets : DEFAULT_SECTIONS.page_residential.microMarkets);
+    : (microMarkets && microMarkets.length > 0 ? microMarkets : []);
 
-  const activeMicroMarkets = (rawMicroMarkets || []).map((market, idx) => {
-    const base = DEFAULT_SECTIONS.page_residential.microMarkets[idx] || {};
-    return {
-      ...base,
-      ...market,
-      highlights: (market?.highlights && market.highlights.length > 0) ? market.highlights : (base?.highlights || [])
-    };
-  });
+  const activeMicroMarkets = (rawMicroMarkets || []).map((market) => ({
+    ...market,
+    highlights: (market?.highlights && market.highlights.length > 0) ? market.highlights : []
+  }));
 
   const activeDueDiligenceSteps = (cms?.dueDiligenceSteps && cms.dueDiligenceSteps.length > 0)
     ? cms.dueDiligenceSteps
-    : (dueDiligenceSteps && dueDiligenceSteps.length > 0 ? dueDiligenceSteps : DEFAULT_SECTIONS.page_residential.dueDiligenceSteps);
+    : (dueDiligenceSteps && dueDiligenceSteps.length > 0 ? dueDiligenceSteps : []);
 
   const activeSpecificationStandards = (cms?.specificationStandards && cms.specificationStandards.length > 0)
     ? cms.specificationStandards
-    : (specificationStandards && specificationStandards.length > 0 ? specificationStandards : DEFAULT_SECTIONS.page_residential.specificationStandards);
+    : (specificationStandards && specificationStandards.length > 0 ? specificationStandards : []);
   return (
     <div className="w-full min-h-screen bg-brand-ivory text-brand-navy">
       <BreadcrumbJsonLd items={breadcrumbs} />
