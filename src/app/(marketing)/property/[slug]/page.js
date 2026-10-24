@@ -140,9 +140,62 @@ export default async function PropertyCorridorPage(props) {
     { name: corridor.corridorName, url: `/property/${slug}` }
   ];
 
+  // Extract FAQs and build FAQPage Schema
+  const faqs = corridor.faqsInfo?.faqs || corridor.faq || [];
+  const validFaqs = Array.isArray(faqs)
+    ? faqs
+        .filter((f) => f && (f.question || f.q) && (f.answer || f.a))
+        .map((f) => ({
+          question: (f.question || f.q).trim(),
+          answer: (f.answer || f.a).trim(),
+        }))
+    : [];
+
+  const faqSchema = validFaqs.length > 0 ? {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: validFaqs.map((f) => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: f.answer,
+      },
+    })),
+  } : null;
+
+  // Place Schema for micro-market geographic indexing
+  const placeSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Place',
+    '@id': `https://saudagarproperties.com/property/${slug}#place`,
+    name: corridor.corridorName,
+    description: corridor.hero?.subtitle || corridor.hero?.description,
+    address: {
+      '@type': 'PostalAddress',
+      addressLocality: corridor.corridorName,
+      addressRegion: 'Haryana',
+      addressCountry: 'IN',
+    },
+    containedInPlace: {
+      '@type': 'City',
+      name: 'Gurugram',
+    },
+  };
+
   return (
     <>
       <BreadcrumbJsonLd items={breadcrumbs} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(placeSchema) }}
+      />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        />
+      )}
       <PropertyLandingView corridor={corridor} properties={properties} />
     </>
   );

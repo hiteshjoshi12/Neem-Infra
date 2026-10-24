@@ -26,13 +26,15 @@ export default function HeroCopy({ initialProperties = [], initialHeroData = nul
   const heroData = sections?.hero || initialHeroData || {};
 
   // Resolve backend featured properties with SSR support
-  const rawProperties = (properties && properties.length > 0)
-    ? properties
-    : (initialProperties && initialProperties.length > 0)
-      ? initialProperties
-      : [];
-  const featuredProperties = rawProperties.filter((p) => p.isFeatured !== false);
-  const cardList = featuredProperties.length > 0 ? featuredProperties : rawProperties;
+  const cardList = useMemo(() => {
+    const raw = (properties && properties.length > 0)
+      ? properties
+      : (initialProperties && initialProperties.length > 0)
+        ? initialProperties
+        : [];
+    const featured = raw.filter((p) => p.isFeatured !== false);
+    return featured.length > 0 ? featured : raw;
+  }, [properties, initialProperties]);
 
   // Search filter states
   const [location, setLocation] = useState("");

@@ -35,6 +35,10 @@ export default function LeadInquiryModal() {
     return () => clearTimeout(timer);
   }, []);
 
+  const handleClose = React.useCallback(() => {
+    setIsOpen(false);
+  }, []);
+
   // Handle escape key
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -44,11 +48,7 @@ export default function LeadInquiryModal() {
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [isOpen]);
-
-  const handleClose = () => {
-    setIsOpen(false);
-  };
+  }, [isOpen, handleClose]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;

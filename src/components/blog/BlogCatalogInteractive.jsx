@@ -56,11 +56,13 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
     );
   }, [allPosts, selectedCategory]);
 
-  // Reset pagination when category changes
-  useEffect(() => {
+  // Reset pagination when category changes during render per React 19 best practices
+  const [prevCategory, setPrevCategory] = useState(selectedCategory);
+  if (selectedCategory !== prevCategory) {
+    setPrevCategory(selectedCategory);
     setVisibleCount(BATCH_SIZE);
     setIsLoadingMore(false);
-  }, [selectedCategory]);
+  }
 
   // Paginated visible posts for infinite scroll
   const displayedPosts = useMemo(() => {

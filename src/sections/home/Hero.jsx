@@ -15,9 +15,11 @@ export default function Hero() {
   const heroData = sections?.hero || {};
 
   // Resolve backend featured properties
-  const rawProperties = properties || [];
-  const featuredProperties = rawProperties.filter((p) => p.isFeatured !== false);
-  const cardList = featuredProperties.length > 0 ? featuredProperties : rawProperties;
+  const cardList = useMemo(() => {
+    const list = Array.isArray(properties) ? properties : [];
+    const filtered = list.filter((p) => p.isFeatured !== false);
+    return filtered.length > 0 ? filtered : list;
+  }, [properties]);
 
   const [location, setLocation] = useState("");
   const [propertyType, setPropertyType] = useState("");

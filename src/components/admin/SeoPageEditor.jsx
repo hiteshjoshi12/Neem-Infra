@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import Link from 'next/link';
 import { useRouter, useParams } from 'next/navigation';
 import {
@@ -93,6 +93,11 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
   const [initialSlug, setInitialSlug] = useState('');
   const [newKeyword, setNewKeyword] = useState('');
 
+  const showToast = useCallback((type, message) => {
+    setToast({ type, message });
+    setTimeout(() => setToast({ type: '', message: '' }), 4000);
+  }, []);
+
   // Load existing page data if editing
   const loadPageData = async () => {
     if (isNew || !pageId) {
@@ -156,11 +161,6 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
   useEffect(() => {
     loadPageData();
   }, [pageId, isNew]);
-
-  const showToast = (type, message) => {
-    setToast({ type, message });
-    setTimeout(() => setToast({ type: '', message: '' }), 4000);
-  };
 
   const handleSlugify = () => {
     if (!formData.title) return;

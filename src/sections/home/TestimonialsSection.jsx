@@ -222,6 +222,7 @@ function FeaturedSplitTestimonial({
    COMPACT TESTIMONIAL CARD (FUTURE-PROOF)
 ========================================================= */
 
+function CompactTestimonial({ item, index, onSelect, active }) {
   const rawAvatar = item.avatar || item.image;
   const displayAvatar = (rawAvatar && !rawAvatar.includes('/wp-content/'))
     ? rawAvatar

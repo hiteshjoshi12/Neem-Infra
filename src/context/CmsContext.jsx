@@ -78,7 +78,6 @@ export const CmsProvider = ({ children, initialData = {} }) => {
   useEffect(() => {
     // Do not fetch on admin pages
     if (typeof window !== 'undefined' && window.location.pathname.startsWith('/admin')) {
-      setLoading(false);
       return;
     }
 

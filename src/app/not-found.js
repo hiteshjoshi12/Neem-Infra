@@ -1,7 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
 import { Home, BookOpen, Building2, Phone, Compass, ArrowRight } from 'lucide-react';
+import { headers } from 'next/headers';
 import { getGlobalSeoSettings } from '@/lib/seo/dynamicSeo';
+import { connectDB } from '@/lib/mongodb';
+import NotFoundLog from '@/models/NotFoundLog';
 
 export const metadata = {
   title: 'Page Not Found | Saudagar Properties',
@@ -23,6 +26,28 @@ const ICON_MAP = {
 
 export default async function NotFound() {
   const settings = await getGlobalSeoSettings();
+
+  // Non-blocking 404 telemetry logging for technical SEO remediation
+  try {
+    const headersList = await headers();
+    const referer = headersList.get('referer') || '';
+    const userAgent = headersList.get('user-agent') || '';
+    const rawPath = headersList.get('x-pathname') || headersList.get('x-url') || '';
+    if (rawPath) {
+      await connectDB();
+      await NotFoundLog.findOneAndUpdate(
+        { path: rawPath.toLowerCase() },
+        {
+          $inc: { hits: 1 },
+          $set: { referrer: referer, userAgent, lastHitAt: new Date() },
+          $setOnInsert: { resolved: false },
+        },
+        { upsert: true }
+      ).catch(() => {});
+    }
+  } catch (e) {
+    // Ignore logging failure to never break 404 render
+  }
   const c404 = settings?.custom404 || {};
 
   const badgeText = c404.badgeText || 'Error 404 • Destination Not Found';
