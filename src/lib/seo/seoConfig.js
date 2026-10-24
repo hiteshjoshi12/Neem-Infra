@@ -36,7 +36,7 @@ export const BUSINESS_INFO = {
   phone: ['+91 97185 11207', '+91 98112 21207'],
   email: 'Saudagar.Properties@Yahoo.In',
   url: 'https://saudagarproperties.com',
-  logo: 'https://ik.imagekit.io/saudagarproperties/saudagar-properties/branding/logo.png?tr=f-auto,q-80',
+  logo: 'https://ik.imagekit.io/saudagarproperties/saudagar-properties/branding/logo.png?updatedAt=1792302925853',
   socialProfiles: {
     facebook: '',
     instagram: '',
@@ -190,82 +190,4 @@ export const BREADCRUMBS = {
   ],
 };
 
-// ─── Dynamic CMS Getters (Admin Panel Driven) ───────────────────────────
-/**
- * Asynchronously returns live site name from CMS database, falling back to SITE_NAME.
- */
-export async function getLiveSiteName() {
-  try {
-    const { getLiveBusinessProfile, getGlobalSeoSettings } = await import('./dynamicSeo');
-    const [profile, settings] = await Promise.all([
-      getLiveBusinessProfile(),
-      getGlobalSeoSettings(),
-    ]);
-    return profile?.name || settings?.organizationSchema?.name || SITE_NAME;
-  } catch {
-    return SITE_NAME;
-  }
-}
-
-/**
- * Asynchronously returns live business profile from CMS database, falling back to BUSINESS_INFO.
- */
-export async function getLiveBusinessInfo() {
-  try {
-    const { getLiveBusinessProfile, getGlobalSeoSettings } = await import('./dynamicSeo');
-    const [profile, settings] = await Promise.all([
-      getLiveBusinessProfile(),
-      getGlobalSeoSettings(),
-    ]);
-    if (!profile && !settings) return BUSINESS_INFO;
-
-    const org = settings?.organizationSchema || {};
-    const baseUrl = (settings?.canonicalBaseUrl || BUSINESS_INFO.url).replace(/\/+$/, '');
-
-    return {
-      name: profile?.name || org.name || BUSINESS_INFO.name,
-      shortName: profile?.tagline || org.alternateName || BUSINESS_INFO.shortName,
-      description: profile?.fullDescription || profile?.shortDescription || org.description || BUSINESS_INFO.description,
-      foundingYear: profile?.foundingYear || BUSINESS_INFO.foundingYear,
-      founders: (profile?.founders || org.founders || BUSINESS_INFO.founders || []).map(f => typeof f === 'string' ? f : (f.name || '')).filter(Boolean),
-      address: {
-        streetAddress: profile?.address?.streetAddress || org.streetAddress || BUSINESS_INFO.address?.streetAddress,
-        addressLocality: profile?.address?.addressLocality || org.addressLocality || BUSINESS_INFO.address?.addressLocality,
-        addressRegion: profile?.address?.addressRegion || org.addressRegion || BUSINESS_INFO.address?.addressRegion,
-        postalCode: profile?.address?.postalCode || org.postalCode || BUSINESS_INFO.address?.postalCode,
-        addressCountry: profile?.address?.addressCountry || org.addressCountry || BUSINESS_INFO.address?.addressCountry || 'IN',
-        full: profile?.address?.full || BUSINESS_INFO.address?.full,
-      },
-      geo: org.geo || profile?.geo || BUSINESS_INFO.geo,
-      phone: [
-        profile?.primaryPhone || org.telephone || BUSINESS_INFO.phone?.[0],
-        profile?.secondaryPhone || BUSINESS_INFO.phone?.[1],
-      ].filter(Boolean),
-      email: profile?.primaryEmail || org.email || BUSINESS_INFO.email,
-      url: baseUrl,
-      logo: profile?.logoUrl || org.logo || BUSINESS_INFO.logo,
-      socialProfiles: profile?.socialLinks || BUSINESS_INFO.socialProfiles,
-      areaServed: org.areaServed?.length ? org.areaServed : BUSINESS_INFO.areaServed,
-      services: BUSINESS_INFO.services,
-    };
-  } catch {
-    return BUSINESS_INFO;
-  }
-}
-
-/**
- * Returns dynamic page metadata config for a given path
- */
-export async function getLivePageSeo(path = '/') {
-  const { getDynamicPageSeo } = await import('./dynamicSeo');
-  return await getDynamicPageSeo(path, PAGE_SEO[path] || {});
-}
-
-/**
- * Returns dynamic breadcrumbs for a given path
- */
-export async function getLiveBreadcrumbs(path = '/') {
-  const { getDynamicBreadcrumbs } = await import('./dynamicSeo');
-  return await getDynamicBreadcrumbs(path);
-}
 
