@@ -39,7 +39,7 @@ async function getBlogPageCms() {
   }
 }
 
-import { getDynamicPageSeo } from '@/lib/seo/dynamicSeo';
+import { getDynamicPageSeo, getDynamicBreadcrumbs } from '@/lib/seo/dynamicSeo';
 
 export async function generateMetadata() {
   return await getDynamicPageSeo('/blog', {
@@ -57,16 +57,12 @@ export async function generateMetadata() {
   });
 }
 export default async function BlogIndexPage() {
-  const [allPosts, categories, blogCms] = await Promise.all([
+  const [allPosts, categories, blogCms, breadcrumbs] = await Promise.all([
     getBlogPosts({ limit: 100 }),
     getCategories(),
     getBlogPageCms(),
+    getDynamicBreadcrumbs('/blog'),
   ]);
-
-  const breadcrumbs = BREADCRUMBS['/blog'] || [
-    { name: 'Home', url: '/' },
-    { name: 'Blog', url: '/blog' },
-  ];
 
   return (
     <PublicLayout asMain={false}>

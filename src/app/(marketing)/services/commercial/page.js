@@ -8,7 +8,7 @@ import SectionContent from '@/models/SectionContent';
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
-import { getDynamicPageSeo } from '@/lib/seo/dynamicSeo';
+import { getDynamicPageSeo, getDynamicBreadcrumbs } from '@/lib/seo/dynamicSeo';
 
 export async function generateMetadata() {
   const fallbackSeo = PAGE_SEO['/services/commercial'];
@@ -31,11 +31,11 @@ async function getCommercialData() {
 }
 
 export default async function CommercialServicesPage() {
-  const [commercialListings, pageData] = await Promise.all([
+  const [commercialListings, pageData, breadcrumbs] = await Promise.all([
     getProperties({ category: 'commercial', limit: 4 }),
     getCommercialData(),
+    getDynamicBreadcrumbs('/services/commercial'),
   ]);
-  const breadcrumbs = BREADCRUMBS['/services/commercial'];
 
   return (
     <>

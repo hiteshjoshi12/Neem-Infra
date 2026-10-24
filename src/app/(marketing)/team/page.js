@@ -29,11 +29,10 @@ async function getTeamData() {
 }
 
 export default async function TeamPage() {
-  const pageData = await getTeamData();
-  const breadcrumbs = BREADCRUMBS['/team'] || [
-    { name: 'Home', url: '/' },
-    { name: 'Our Team', url: '/team' }
-  ];
+  const [pageData, breadcrumbs] = await Promise.all([
+    getTeamData(),
+    getDynamicBreadcrumbs('/team'),
+  ]);
 
   const defaultFounders = [
     { name: 'Arun Sharma', role: 'Founder & Managing Director' },

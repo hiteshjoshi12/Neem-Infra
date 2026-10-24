@@ -4,7 +4,7 @@ import Script from "next/script";
 import Providers from "../components/Providers";
 import { getGlobalSeoSettings } from "@/lib/seo/dynamicSeo";
 import { getBusinessProfile } from "@/lib/dal";
-import { buildOrganizationSchema } from "@/lib/seo/schemaBuilders";
+import { buildOrganizationSchema, buildWebSiteSchema } from "@/lib/seo/schemaBuilders";
 
 const lora = Lora({
   subsets: ["latin"],
@@ -27,46 +27,97 @@ const jakarta = Plus_Jakarta_Sans({
   weight: ["400", "500", "700"],
 });
 
-export const metadata = {
-  metadataBase: new URL("https://saudagarproperties.com"),
-  title: {
-    default: "Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram",
-    template: "%s | Saudagar Properties",
-  },
-  description:
-    "Find your dream luxury builder floor, independent villa, penthouse, or commercial office in DLF Phase 1–5, Sushant Lok & Golf Course Road. Established 1999 trusted advisory in Gurugram.",
-  alternates: {
-    canonical: "/",
-  },
-  openGraph: {
-    title: "Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram",
-    description: "Premier real estate advisory in DLF Phase 1–5, Sushant Lok & Golf Course Road since 1999.",
-    url: "https://saudagarproperties.com",
-    siteName: "Saudagar Properties",
-    locale: "en_IN",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram",
-    description: "Premier real estate advisory in DLF Phase 1–5, Sushant Lok & Golf Course Road since 1999.",
-  },
-  robots: {
-    index: true,
-    follow: true,
-  },
-  icons: {
-    icon: [
-      { url: '/favicon.ico' },
-      { url: '/icon.png', sizes: '32x32', type: 'image/png' },
-      { url: '/SP%20favicon.png', type: 'image/png' },
-    ],
-    shortcut: '/favicon.ico',
-    apple: [
-      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
-    ],
-  },
-};
+export async function generateMetadata() {
+  const [settings, profile] = await Promise.all([
+    getGlobalSeoSettings(),
+    getBusinessProfile().catch(() => null),
+  ]);
+
+  const baseUrl = (settings?.canonicalBaseUrl || 'https://saudagarproperties.com').replace(/\/+$/, '');
+  const brandName = profile?.name || settings?.organizationSchema?.name || 'Saudagar Properties';
+  const siteTitle = settings?.defaultMetaTitle || `${brandName} — Premier Real Estate Consultant in DLF Gurugram`;
+  const siteTitleTemplate = settings?.siteTitleTemplate || '%s | ' + brandName;
+  const siteDescription =
+    settings?.defaultMetaDescription ||
+    'Find your dream luxury builder floor, independent villa, penthouse, or commercial office in DLF Phase 1–5, Sushant Lok & Golf Course Road. Established 1999 trusted advisory in Gurugram.';
+  const defaultOgImage =
+    settings?.defaultOgImage ||
+    'https://ik.imagekit.io/saudagarproperties/saudagar-properties/branding/logo.png?updatedAt=1792302925853';
+  const keywords = settings?.defaultKeywords?.length
+    ? settings.defaultKeywords
+    : [
+      'Saudagar Properties',
+      'Real Estate Consultant Gurugram',
+      'DLF Phase 1-5 Builder Floors',
+      'Luxury Villas Gurgaon',
+      'Commercial Office Lease Cyber City',
+    ];
+
+  let metadataBase;
+  try {
+    metadataBase = new URL(baseUrl);
+  } catch {
+    metadataBase = new URL('https://saudagarproperties.com');
+  }
+
+  return {
+    metadataBase,
+    title: {
+      default: siteTitle,
+      template: siteTitleTemplate,
+    },
+    description: siteDescription,
+    alternates: {
+      canonical: '/',
+    },
+    keywords,
+    openGraph: {
+      title: siteTitle,
+      description: siteDescription,
+      url: baseUrl,
+      siteName: brandName,
+      locale: 'en_IN',
+      type: 'website',
+      images: [
+        {
+          url: defaultOgImage,
+          width: 1200,
+          height: 630,
+          alt: siteTitle,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: siteTitle,
+      description: siteDescription,
+      images: [defaultOgImage],
+    },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
+    },
+    icons: {
+      icon: [
+        { url: '/favicon.ico?v=2', sizes: '48x48' },
+        { url: '/favicon.png?v=2', sizes: '96x96', type: 'image/png' },
+        { url: '/icon-192.png?v=2', sizes: '192x192', type: 'image/png' },
+        { url: '/icon-512.png?v=2', sizes: '512x512', type: 'image/png' },
+      ],
+      shortcut: '/favicon.ico?v=2',
+      apple: [
+        { url: '/apple-touch-icon.png?v=2', sizes: '180x180', type: 'image/png' },
+      ],
+    },
+  };
+}
 
 export default async function RootLayout({ children }) {
   const [settings, profile] = await Promise.all([
@@ -102,10 +153,25 @@ export default async function RootLayout({ children }) {
   const speed = settings?.speedOptimizations || {
     enablePreconnect: true,
     enableDnsPrefetch: true,
+    preconnectDomains: [
+      'https://images.unsplash.com',
+      'https://ik.imagekit.io',
+      'https://fonts.googleapis.com',
+      'https://fonts.gstatic.com',
+    ],
   };
 
-  // Structured Data (Organization / RealEstateAgent Schema from DB)
-  const organizationSchema = buildOrganizationSchema(settings?.organizationSchema || settings, profile);
+  const preconnectDomains = speed.preconnectDomains?.length
+    ? speed.preconnectDomains
+    : ['https://images.unsplash.com', 'https://ik.imagekit.io', 'https://fonts.googleapis.com', 'https://fonts.gstatic.com'];
+
+  // Structured Data (Organization + WebSite Schema graph from DB)
+  const websiteSchema = buildWebSiteSchema(settings, profile);
+  const organizationSchema = buildOrganizationSchema(settings, profile);
+  const rootSchemaGraph = {
+    '@context': 'https://schema.org',
+    '@graph': [websiteSchema, organizationSchema].filter(Boolean),
+  };
 
   return (
     <html lang="en" className={`${lora.variable} ${outfit.variable} ${jakarta.variable} h-full antialiased`} suppressHydrationWarning>
@@ -131,23 +197,20 @@ export default async function RootLayout({ children }) {
         {bingCode && (
           <meta name="msvalidate.01" content={bingCode} />
         )}
-        {speed.enablePreconnect !== false && (
-          <>
-            <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
-            <link rel="preconnect" href="https://ik.imagekit.io" crossOrigin="anonymous" />
-          </>
-        )}
-        {speed.enableDnsPrefetch !== false && (
-          <>
-            <link rel="dns-prefetch" href="https://ik.imagekit.io" />
-            <link rel="dns-prefetch" href="https://images.unsplash.com" />
-            <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-          </>
-        )}
-        {/* Global Organization / LocalBusiness Schema */}
+        {speed.enablePreconnect !== false &&
+          preconnectDomains.map((domain) => (
+            <link key={`preconnect-${domain}`} rel="preconnect" href={domain} crossOrigin="anonymous" />
+          ))
+        }
+        {speed.enableDnsPrefetch !== false &&
+          preconnectDomains.map((domain) => (
+            <link key={`dns-${domain}`} rel="dns-prefetch" href={domain} />
+          ))
+        }
+        {/* Global Organization / LocalBusiness / WebSite Schema */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(rootSchemaGraph) }}
         />
         {/* Dynamic Google Tag Manager in <head> */}
         {gtmId && (

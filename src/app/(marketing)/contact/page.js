@@ -29,11 +29,10 @@ async function getContactData() {
 }
 
 export default async function Contact() {
-  const pageData = await getContactData();
-  const breadcrumbs = BREADCRUMBS['/contact'] || [
-    { name: 'Home', url: '/' },
-    { name: 'Contact Us', url: '/contact' }
-  ];
+  const [pageData, breadcrumbs] = await Promise.all([
+    getContactData(),
+    getDynamicBreadcrumbs('/contact'),
+  ]);
 
   return (
     <div className="w-full flex flex-col min-h-screen bg-brand-ivory-warm">

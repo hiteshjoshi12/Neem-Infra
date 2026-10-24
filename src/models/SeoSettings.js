@@ -32,7 +32,7 @@ const seoSettingsSchema = new mongoose.Schema(
     },
     defaultOgImage: {
       type: String,
-      default: 'https://ik.imagekit.io/saudagarproperties/saudagar-properties/branding/og-default.jpg',
+      default: 'https://ik.imagekit.io/saudagarproperties/saudagar-properties/branding/logo.png?updatedAt=1792302925853',
     },
     defaultKeywords: [
       {

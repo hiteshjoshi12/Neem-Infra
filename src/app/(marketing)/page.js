@@ -13,7 +13,7 @@ import HomeBelowTheFold from '@/components/home/HomeBelowTheFold';
 
 export const revalidate = 60;
 
-import { getDynamicPageSeo } from '@/lib/seo/dynamicSeo';
+import { getDynamicPageSeo, getDynamicBreadcrumbs } from '@/lib/seo/dynamicSeo';
 import { getProperties } from '@/services/propertyService';
 
 export async function generateMetadata() {
@@ -25,7 +25,7 @@ export async function generateMetadata() {
 }
 
 export default async function Home() {
-  const breadcrumbs = BREADCRUMBS['/'];
+  const breadcrumbs = await getDynamicBreadcrumbs('/');
   let featuredProperties = [];
   try {
     featuredProperties = await getProperties({ isFeatured: true });

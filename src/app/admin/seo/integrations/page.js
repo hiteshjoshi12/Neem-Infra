@@ -12,7 +12,12 @@ import {
   Globe,
   ShieldCheck,
   Sparkles,
-  Info
+  Info,
+  Building2,
+  MapPin,
+  Image as ImageIcon,
+  Key,
+  Layers
 } from 'lucide-react';
 import api from '@/services/api';
 
@@ -24,16 +29,36 @@ export default function AdminIntegrationsPage() {
   const [toast, setToast] = useState('');
 
   const [formData, setFormData] = useState({
+    canonicalBaseUrl: 'https://saudagarproperties.com',
     googleAnalyticsId: '',
     enableGa4: true,
     googleTagManagerId: '',
     enableGtm: true,
     googleSearchConsoleCode: '',
     enableGsc: true,
+    bingVerificationCode: '',
+    enableBingVerification: true,
     siteTitleTemplate: '%s | Saudagar Properties',
     defaultMetaTitle: 'Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram',
     defaultMetaDescription: '',
     defaultOgImage: '',
+    defaultKeywords: '',
+    organizationSchema: {
+      name: 'Saudagar Properties',
+      legalName: 'Saudagar Properties Pvt. Ltd.',
+      url: 'https://saudagarproperties.com',
+      logo: '',
+      telephone: '+91 97185 11207',
+      email: 'Saudagar.Properties@Yahoo.In',
+      streetAddress: '38, Akashneem Marg, DLF Phase 2',
+      addressLocality: 'Gurugram',
+      addressRegion: 'Haryana',
+      postalCode: '122002',
+      addressCountry: 'IN',
+      foundingDate: '1999',
+      googleBusinessProfileUrl: '',
+      reraNumber: '',
+    },
   });
 
   const [profileData, setProfileData] = useState({
@@ -63,18 +88,39 @@ export default function AdminIntegrationsPage() {
       ]);
 
       if (res.status === 'fulfilled' && res.value?.success && res.value.data) {
-        setSettings(res.value.data);
+        const d = res.value.data;
+        setSettings(d);
         setFormData({
-          googleAnalyticsId: res.value.data.googleAnalyticsId || '',
-          enableGa4: res.value.data.enableGa4 !== false,
-          googleTagManagerId: res.value.data.googleTagManagerId || '',
-          enableGtm: res.value.data.enableGtm !== false,
-          googleSearchConsoleCode: res.value.data.googleSearchConsoleCode || '',
-          enableGsc: res.value.data.enableGsc !== false,
-          siteTitleTemplate: res.value.data.siteTitleTemplate || '%s | Saudagar Properties',
-          defaultMetaTitle: res.value.data.defaultMetaTitle || 'Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram',
-          defaultMetaDescription: res.value.data.defaultMetaDescription || '',
-          defaultOgImage: res.value.data.defaultOgImage || '',
+          canonicalBaseUrl: d.canonicalBaseUrl || 'https://saudagarproperties.com',
+          googleAnalyticsId: d.googleAnalyticsId || '',
+          enableGa4: d.enableGa4 !== false,
+          googleTagManagerId: d.googleTagManagerId || '',
+          enableGtm: d.enableGtm !== false,
+          googleSearchConsoleCode: d.googleSearchConsoleCode || '',
+          enableGsc: d.enableGsc !== false,
+          bingVerificationCode: d.bingVerificationCode || '',
+          enableBingVerification: d.enableBingVerification !== false,
+          siteTitleTemplate: d.siteTitleTemplate || '%s | Saudagar Properties',
+          defaultMetaTitle: d.defaultMetaTitle || 'Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram',
+          defaultMetaDescription: d.defaultMetaDescription || '',
+          defaultOgImage: d.defaultOgImage || '',
+          defaultKeywords: Array.isArray(d.defaultKeywords) ? d.defaultKeywords.join(', ') : (d.defaultKeywords || ''),
+          organizationSchema: {
+            name: d.organizationSchema?.name || 'Saudagar Properties',
+            legalName: d.organizationSchema?.legalName || 'Saudagar Properties Pvt. Ltd.',
+            url: d.organizationSchema?.url || 'https://saudagarproperties.com',
+            logo: d.organizationSchema?.logo || '',
+            telephone: d.organizationSchema?.telephone || '+91 97185 11207',
+            email: d.organizationSchema?.email || 'Saudagar.Properties@Yahoo.In',
+            streetAddress: d.organizationSchema?.streetAddress || '38, Akashneem Marg, DLF Phase 2',
+            addressLocality: d.organizationSchema?.addressLocality || 'Gurugram',
+            addressRegion: d.organizationSchema?.addressRegion || 'Haryana',
+            postalCode: d.organizationSchema?.postalCode || '122002',
+            addressCountry: d.organizationSchema?.addressCountry || 'IN',
+            foundingDate: d.organizationSchema?.foundingDate || '1999',
+            googleBusinessProfileUrl: d.organizationSchema?.googleBusinessProfileUrl || '',
+            reraNumber: d.organizationSchema?.reraNumber || '',
+          },
         });
       }
 
@@ -114,8 +160,14 @@ export default function AdminIntegrationsPage() {
     e.preventDefault();
     try {
       setSaving(true);
+      const payload = {
+        ...formData,
+        defaultKeywords: typeof formData.defaultKeywords === 'string'
+          ? formData.defaultKeywords.split(',').map(k => k.trim()).filter(Boolean)
+          : formData.defaultKeywords,
+      };
       const [res1, res2] = await Promise.all([
-        api.updateSeoSettings(formData),
+        api.updateSeoSettings(payload),
         api.updateBusinessProfile(profileData),
       ]);
       if (res1?.success || res2?.success) {
@@ -556,23 +608,93 @@ export default function AdminIntegrationsPage() {
           </div>
         </div>
 
-        {/* Global Fallback Defaults */}
+        {/* Module: Bing Webmaster Verification */}
         <div className="p-6 rounded-3xl bg-brand-navy/40 border border-white/10 space-y-4">
-          <h3 className="text-sm font-bold text-white uppercase tracking-wider">
-            Global Title Template & Fallbacks
-          </h3>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2.5">
+              <div className="p-2 rounded-xl bg-teal-500/10 text-teal-400">
+                <ShieldCheck size={18} />
+              </div>
+              <div>
+                <h3 className="text-sm font-bold text-white">Bing Webmaster Tools Verification</h3>
+                <p className="text-[11px] text-brand-text-dim">Bing & Yahoo search indexation & domain verification token</p>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${
+                formData.bingVerificationCode ? 'bg-emerald-500/20 text-emerald-400' : 'bg-gray-700 text-gray-300'
+              }`}>
+                {formData.bingVerificationCode ? 'CONFIGURED' : 'OPTIONAL'}
+              </span>
+            </div>
+          </div>
 
           <div>
             <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
-              Browser Title Template
+              Bing Verification Code (msvalidate.01)
             </label>
             <input
               type="text"
-              value={formData.siteTitleTemplate}
-              onChange={e => setFormData({ ...formData, siteTitleTemplate: e.target.value })}
-              placeholder="%s | Saudagar Properties"
-              className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs font-mono focus:outline-none focus:border-brand-gold"
+              value={formData.bingVerificationCode}
+              onChange={e => setFormData({ ...formData, bingVerificationCode: e.target.value })}
+              placeholder="e.g. 1234567890ABCDEF1234567890ABCDEF"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white font-mono text-xs focus:outline-none focus:border-brand-gold"
             />
+            <p className="text-[11px] text-brand-text-dim mt-1.5">
+              Injected into the live website <code>&lt;head&gt;</code> automatically as <code>&lt;meta name=&quot;msvalidate.01&quot; content=&quot;...&quot; /&gt;</code>.
+            </p>
+          </div>
+        </div>
+
+        {/* Global Canonical & Fallback Defaults */}
+        <div className="p-6 rounded-3xl bg-brand-navy/40 border border-white/10 space-y-4">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-xl bg-brand-gold/10 text-brand-gold">
+              <Globe size={18} />
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+                Global Metadata Defaults & Canonical Domain
+              </h3>
+              <p className="text-[11px] text-brand-text-dim">
+                Site-wide default meta tags, apex domain, default social sharing graphics, and keywords.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+                Canonical Base URL (Apex Domain)
+              </label>
+              <input
+                type="text"
+                value={formData.canonicalBaseUrl}
+                onChange={e => setFormData({ ...formData, canonicalBaseUrl: e.target.value })}
+                placeholder="https://saudagarproperties.com"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs font-mono focus:outline-none focus:border-brand-gold"
+              />
+              <p className="text-[10px] text-brand-text-dim mt-1">
+                Root domain used for self-referential canonical tags across all pages and sitemaps.
+              </p>
+            </div>
+
+            <div>
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+                Browser Title Template
+              </label>
+              <input
+                type="text"
+                value={formData.siteTitleTemplate}
+                onChange={e => setFormData({ ...formData, siteTitleTemplate: e.target.value })}
+                placeholder="%s | Saudagar Properties"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs font-mono focus:outline-none focus:border-brand-gold"
+              />
+              <p className="text-[10px] text-brand-text-dim mt-1">
+                <code>%s</code> is replaced by each page&#39;s title (e.g. &ldquo;About Us | Saudagar Properties&rdquo;).
+              </p>
+            </div>
           </div>
 
           <div>
@@ -583,8 +705,263 @@ export default function AdminIntegrationsPage() {
               type="text"
               value={formData.defaultMetaTitle}
               onChange={e => setFormData({ ...formData, defaultMetaTitle: e.target.value })}
-              className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs focus:outline-none"
+              className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs focus:outline-none focus:border-brand-gold"
             />
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between mb-1.5">
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider">
+                Default Fallback Meta Description
+              </label>
+              <span className={`text-[10px] font-mono ${formData.defaultMetaDescription?.length > 160 ? 'text-amber-400' : 'text-brand-text-dim'}`}>
+                {formData.defaultMetaDescription?.length || 0}/160 chars
+              </span>
+            </div>
+            <textarea
+              rows={3}
+              value={formData.defaultMetaDescription}
+              onChange={e => setFormData({ ...formData, defaultMetaDescription: e.target.value })}
+              placeholder="Find luxury builder floors, independent villas, penthouses, and commercial offices..."
+              className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs focus:outline-none focus:border-brand-gold leading-relaxed"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+                Default Social Sharing Image (OG / Twitter Image)
+              </label>
+              <input
+                type="text"
+                value={formData.defaultOgImage}
+                onChange={e => setFormData({ ...formData, defaultOgImage: e.target.value })}
+                placeholder="https://ik.imagekit.io/.../branding/og-default.jpg"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs font-mono focus:outline-none focus:border-brand-gold"
+              />
+              <p className="text-[10px] text-brand-text-dim mt-1">Recommended size: 1200 &times; 630px.</p>
+            </div>
+
+            <div>
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+                Default Site Keywords (Comma-separated)
+              </label>
+              <input
+                type="text"
+                value={formData.defaultKeywords}
+                onChange={e => setFormData({ ...formData, defaultKeywords: e.target.value })}
+                placeholder="Real Estate Consultant Gurugram, DLF Phase 1-5 Builder Floors"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs focus:outline-none focus:border-brand-gold"
+              />
+              <p className="text-[10px] text-brand-text-dim mt-1">Used as fallback when a page has no specific focus keywords.</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Knowledge Graph & Organization Schema */}
+        <div className="p-6 rounded-3xl bg-brand-navy/40 border border-white/10 space-y-4">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-xl bg-emerald-500/10 text-emerald-400">
+              <Building2 size={18} />
+            </div>
+            <div>
+              <h3 className="text-sm font-bold text-white uppercase tracking-wider">
+                Knowledge Graph & Organization Schema
+              </h3>
+              <p className="text-[11px] text-brand-text-dim">
+                RealEstateAgent & LocalBusiness Schema.org structured data emitted on root layout for Google Rich Results.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div>
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+                Organization Brand Name
+              </label>
+              <input
+                type="text"
+                value={formData.organizationSchema?.name || ''}
+                onChange={e => setFormData({
+                  ...formData,
+                  organizationSchema: { ...formData.organizationSchema, name: e.target.value }
+                })}
+                placeholder="Saudagar Properties"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs focus:outline-none focus:border-brand-gold"
+              />
+            </div>
+
+            <div>
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+                Legal Entity Name
+              </label>
+              <input
+                type="text"
+                value={formData.organizationSchema?.legalName || ''}
+                onChange={e => setFormData({
+                  ...formData,
+                  organizationSchema: { ...formData.organizationSchema, legalName: e.target.value }
+                })}
+                placeholder="Saudagar Properties Pvt. Ltd."
+                className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs focus:outline-none focus:border-brand-gold"
+              />
+            </div>
+
+            <div>
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+                Official Website URL
+              </label>
+              <input
+                type="text"
+                value={formData.organizationSchema?.url || ''}
+                onChange={e => setFormData({
+                  ...formData,
+                  organizationSchema: { ...formData.organizationSchema, url: e.target.value }
+                })}
+                placeholder="https://saudagarproperties.com"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs font-mono focus:outline-none focus:border-brand-gold"
+              />
+            </div>
+
+            <div>
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+                Organization Logo URL
+              </label>
+              <input
+                type="text"
+                value={formData.organizationSchema?.logo || ''}
+                onChange={e => setFormData({
+                  ...formData,
+                  organizationSchema: { ...formData.organizationSchema, logo: e.target.value }
+                })}
+                placeholder="https://ik.imagekit.io/.../branding/logo.png"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs font-mono focus:outline-none focus:border-brand-gold"
+              />
+            </div>
+
+            <div>
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+                Schema Telephone Contact
+              </label>
+              <input
+                type="text"
+                value={formData.organizationSchema?.telephone || ''}
+                onChange={e => setFormData({
+                  ...formData,
+                  organizationSchema: { ...formData.organizationSchema, telephone: e.target.value }
+                })}
+                placeholder="+91 97185 11207"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs font-mono focus:outline-none focus:border-brand-gold"
+              />
+            </div>
+
+            <div>
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+                Schema Email Contact
+              </label>
+              <input
+                type="email"
+                value={formData.organizationSchema?.email || ''}
+                onChange={e => setFormData({
+                  ...formData,
+                  organizationSchema: { ...formData.organizationSchema, email: e.target.value }
+                })}
+                placeholder="Saudagar.Properties@Yahoo.In"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs font-mono focus:outline-none focus:border-brand-gold"
+              />
+            </div>
+
+            <div className="sm:col-span-2">
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+                Street Address
+              </label>
+              <input
+                type="text"
+                value={formData.organizationSchema?.streetAddress || ''}
+                onChange={e => setFormData({
+                  ...formData,
+                  organizationSchema: { ...formData.organizationSchema, streetAddress: e.target.value }
+                })}
+                placeholder="38, Akashneem Marg, DLF Phase 2"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs focus:outline-none focus:border-brand-gold"
+              />
+            </div>
+
+            <div>
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+                City / Locality
+              </label>
+              <input
+                type="text"
+                value={formData.organizationSchema?.addressLocality || ''}
+                onChange={e => setFormData({
+                  ...formData,
+                  organizationSchema: { ...formData.organizationSchema, addressLocality: e.target.value }
+                })}
+                placeholder="Gurugram"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs focus:outline-none focus:border-brand-gold"
+              />
+            </div>
+
+            <div>
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+                State / Region & Postal Code
+              </label>
+              <div className="grid grid-cols-2 gap-2">
+                <input
+                  type="text"
+                  value={formData.organizationSchema?.addressRegion || ''}
+                  onChange={e => setFormData({
+                    ...formData,
+                    organizationSchema: { ...formData.organizationSchema, addressRegion: e.target.value }
+                  })}
+                  placeholder="Haryana"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs focus:outline-none focus:border-brand-gold"
+                />
+                <input
+                  type="text"
+                  value={formData.organizationSchema?.postalCode || ''}
+                  onChange={e => setFormData({
+                    ...formData,
+                    organizationSchema: { ...formData.organizationSchema, postalCode: e.target.value }
+                  })}
+                  placeholder="122002"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs font-mono focus:outline-none focus:border-brand-gold"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+                Founding Year
+              </label>
+              <input
+                type="text"
+                value={formData.organizationSchema?.foundingDate || ''}
+                onChange={e => setFormData({
+                  ...formData,
+                  organizationSchema: { ...formData.organizationSchema, foundingDate: e.target.value }
+                })}
+                placeholder="1999"
+                className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs font-mono focus:outline-none focus:border-brand-gold"
+              />
+            </div>
+
+            <div>
+              <label className="block font-semibold text-brand-text-dim uppercase tracking-wider mb-1.5">
+                Google Business Profile URL (Optional)
+              </label>
+              <input
+                type="url"
+                value={formData.organizationSchema?.googleBusinessProfileUrl || ''}
+                onChange={e => setFormData({
+                  ...formData,
+                  organizationSchema: { ...formData.organizationSchema, googleBusinessProfileUrl: e.target.value }
+                })}
+                placeholder="https://maps.google.com/..."
+                className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white text-xs font-mono focus:outline-none focus:border-brand-gold"
+              />
+            </div>
           </div>
         </div>
       </form>

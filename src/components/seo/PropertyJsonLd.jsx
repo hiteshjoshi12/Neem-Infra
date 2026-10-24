@@ -2,9 +2,26 @@ import React from 'react';
 import JsonLd from './JsonLd';
 import { BUSINESS_INFO } from '@/lib/seo/seoConfig';
 import { cleanSchema } from '@/lib/seo/schemaBuilders';
+import { getGlobalSeoSettings } from '@/lib/seo/dynamicSeo';
+import { getBusinessProfile } from '@/lib/dal';
 
-export default function PropertyJsonLd({ property, baseUrl = 'https://saudagarproperties.com' }) {
+export default async function PropertyJsonLd({ property, baseUrl: propBaseUrl = null, sellerInfo = null }) {
   if (!property) return null;
+
+  let liveSettings = null;
+  let liveProfile = null;
+  if (!propBaseUrl || !sellerInfo) {
+    try {
+      [liveSettings, liveProfile] = await Promise.all([
+        getGlobalSeoSettings(),
+        getBusinessProfile().catch(() => null),
+      ]);
+    } catch {}
+  }
+
+  const baseUrl = (propBaseUrl || liveSettings?.canonicalBaseUrl || 'https://saudagarproperties.com').replace(/\/+$/, '');
+  const sellerName = sellerInfo?.name || liveProfile?.name || liveSettings?.organizationSchema?.name || BUSINESS_INFO.name;
+  const sellerPhone = sellerInfo?.phone || liveProfile?.primaryPhone || liveSettings?.organizationSchema?.telephone || BUSINESS_INFO.phone?.[0] || '+91 97185 11207';
 
   let numericPrice = '';
   if (property.price) {
@@ -93,8 +110,8 @@ export default function PropertyJsonLd({ property, baseUrl = 'https://saudagarpr
       "seller": {
         "@type": "RealEstateAgent",
         "@id": `${baseUrl}/#organization`,
-        "name": BUSINESS_INFO.name,
-        "telephone": BUSINESS_INFO.phone?.[0] || '+91 97185 11207',
+        "name": sellerName,
+        "telephone": sellerPhone,
         "url": baseUrl,
       }
     },

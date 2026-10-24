@@ -20,7 +20,7 @@ async function getTermsData() {
   return {};
 }
 
-import { getDynamicPageSeo } from '@/lib/seo/dynamicSeo';
+import { getDynamicPageSeo, getDynamicBreadcrumbs } from '@/lib/seo/dynamicSeo';
 
 export async function generateMetadata() {
   const fallback = PAGE_SEO['/terms'];
@@ -32,8 +32,10 @@ export async function generateMetadata() {
 }
 
 export default async function Terms() {
-  const breadcrumbs = BREADCRUMBS['/terms'] || [];
-  const termsData = await getTermsData();
+  const [termsData, breadcrumbs] = await Promise.all([
+    getTermsData(),
+    getDynamicBreadcrumbs('/terms'),
+  ]);
 
   const hero = termsData?.hero || {
     badge: 'Legal Dossier & Advisory Terms',

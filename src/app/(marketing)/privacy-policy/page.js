@@ -20,7 +20,7 @@ async function getPrivacyData() {
   return {};
 }
 
-import { getDynamicPageSeo } from '@/lib/seo/dynamicSeo';
+import { getDynamicPageSeo, getDynamicBreadcrumbs } from '@/lib/seo/dynamicSeo';
 
 export async function generateMetadata() {
   const fallback = PAGE_SEO['/privacy-policy'];
@@ -32,8 +32,10 @@ export async function generateMetadata() {
 }
 
 export default async function PrivacyPolicy() {
-  const breadcrumbs = BREADCRUMBS['/privacy-policy'] || [];
-  const privacyData = await getPrivacyData();
+  const [privacyData, breadcrumbs] = await Promise.all([
+    getPrivacyData(),
+    getDynamicBreadcrumbs('/privacy-policy'),
+  ]);
 
   const hero = privacyData?.hero || {
     badge: 'Confidentiality & Data Protection',

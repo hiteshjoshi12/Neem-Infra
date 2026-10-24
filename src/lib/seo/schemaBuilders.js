@@ -62,13 +62,17 @@ export function getVerifiedSocialProfiles() {
  * 1. WebSite Schema
  * Represents the website entity with canonical name and alternate name.
  */
-export function buildWebSiteSchema(customSettings = null) {
+export function buildWebSiteSchema(customSettings = null, businessProfile = null) {
   const baseUrl = getBaseUrl(customSettings);
+  const profile = businessProfile || customSettings?.profile || null;
+  const org = customSettings?.organizationSchema || customSettings || {};
+  const name = profile?.name || org.name || customSettings?.name || SITE_NAME;
+  const alternateName = profile?.tagline || org.alternateName || BUSINESS_INFO.shortName || name;
   return cleanSchema({
     '@type': 'WebSite',
     '@id': `${baseUrl}/#website`,
-    name: SITE_NAME,
-    alternateName: BUSINESS_INFO.shortName || BUSINESS_INFO.name,
+    name,
+    alternateName,
     url: baseUrl,
     publisher: {
       '@id': `${baseUrl}/#organization`,

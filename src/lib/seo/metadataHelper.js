@@ -30,7 +30,7 @@ export function getCanonicalUrl(path = '/', baseUrl = CANONICAL_FALLBACK) {
 
 /**
  * Server-side token resolution for company years of experience
- * Resolves {{yearsExperience}} from foundingYear (default: 1999).
+ * Resolves 25 from foundingYear (default: 1999).
  */
 export function resolveYearsToken(text, years = null) {
   if (!text || typeof text !== 'string') return text;
@@ -46,18 +46,18 @@ export function resolveYearsToken(text, years = null) {
 /**
  * Formats page title ensuring brand suffix without duplicate brand names
  */
-export function formatMetaTitle(rawTitle, years = null) {
-  if (!rawTitle) return `${SITE_NAME} — Premier Real Estate Consultant DLF Gurugram`;
+export function formatMetaTitle(rawTitle, years = null, siteName = SITE_NAME) {
+  if (!rawTitle) return `${siteName} — Premier Real Estate Consultant DLF Gurugram`;
   const resolved = resolveYearsToken(rawTitle, years).trim();
-  if (resolved.includes(SITE_NAME)) return resolved;
-  return `${resolved} | ${SITE_NAME}`;
+  if (resolved.includes(siteName) || (siteName !== 'Saudagar Properties' && resolved.includes('Saudagar Properties'))) return resolved;
+  return `${resolved} | ${siteName}`;
 }
 
 /**
  * Truncates meta description to ideal search snippet length (150-160 characters)
  */
-export function formatMetaDescription(rawDescription, maxLength = 160, years = null) {
-  if (!rawDescription) return resolveYearsToken(DEFAULT_META.description, years);
+export function formatMetaDescription(rawDescription, maxLength = 160, years = null, defaultDesc = DEFAULT_META.description) {
+  if (!rawDescription) return resolveYearsToken(defaultDesc, years);
   const resolved = resolveYearsToken(rawDescription, years);
   const clean = resolved.replace(/<[^>]*>/g, '').replace(/\s+/g, ' ').trim();
   if (clean.length <= maxLength) return clean;
@@ -86,6 +86,7 @@ export function buildPageMetadata({
   tags,
   keywords = [],
   baseUrl = CANONICAL_FALLBACK,
+  siteName = SITE_NAME,
   extra = {}
 }) {
   const cleanBase = (baseUrl || CANONICAL_FALLBACK).replace(/\/+$/, '');
@@ -101,35 +102,35 @@ export function buildPageMetadata({
   } else {
     canonical = getCanonicalUrl(canonical, cleanBase);
   }
-  const formattedTitle = formatMetaTitle(title);
+  const formattedTitle = formatMetaTitle(title, null, siteName);
   const formattedDescription = formatMetaDescription(description);
   const ogImageUrl = image || DEFAULT_META.ogImage;
   const ogImageAlt = imageAlt || formattedTitle;
 
   const robots = noindex
     ? {
+      index: false,
+      follow: false,
+      nocache: true,
+      googleBot: {
         index: false,
         follow: false,
-        nocache: true,
-        googleBot: {
-          index: false,
-          follow: false,
-        },
-      }
+      },
+    }
     : {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+      googleBot: {
         index: true,
         follow: true,
         'max-video-preview': -1,
         'max-image-preview': 'large',
         'max-snippet': -1,
-        googleBot: {
-          index: true,
-          follow: true,
-          'max-video-preview': -1,
-          'max-image-preview': 'large',
-          'max-snippet': -1,
-        },
-      };
+      },
+    };
 
   return {
     title: {
@@ -145,7 +146,7 @@ export function buildPageMetadata({
       title: formattedTitle,
       description: formattedDescription,
       url: canonical,
-      siteName: SITE_NAME,
+      siteName: siteName,
       locale: 'en_IN',
       type: ogType,
       images: [
@@ -190,22 +191,22 @@ export function buildArticleMetadata(post) {
 
   const isPublished = post.status === 'published';
   const path = `/blog/${post.slug}`;
-  
+
   // Editorial override takes precedence, fallback to clean title
   const title = post.seoTitle || post.title;
-  
+
   // Editorial description override takes precedence, fallback to excerpt, fallback to intro
   const description = post.seoDescription || post.excerpt;
 
   // Genuine dates: only set modifiedTime if updatedAt is strictly distinct from publishedAt
   const publishedDate = post.publishedAt ? new Date(post.publishedAt).toISOString() : undefined;
-  const isModified = post.updatedAt && post.publishedAt && 
+  const isModified = post.updatedAt && post.publishedAt &&
     Math.abs(new Date(post.updatedAt).getTime() - new Date(post.publishedAt).getTime()) > 60000;
   const modifiedDate = isModified ? new Date(post.updatedAt).toISOString() : publishedDate;
 
   const authorName = post.author?.name || 'Saudagar Properties';
-  const authorProfileUrl = post.author?.slug 
-    ? `${CANONICAL_FALLBACK}/blog/author/${post.author.slug}` 
+  const authorProfileUrl = post.author?.slug
+    ? `${CANONICAL_FALLBACK}/blog/author/${post.author.slug}`
     : authorName;
 
   // Dedicated social image with Discover & OG 1200x630 resolution

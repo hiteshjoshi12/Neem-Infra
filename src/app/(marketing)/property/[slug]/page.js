@@ -21,35 +21,30 @@ async function getCorridor(slug) {
   return null;
 }
 
+import { getDynamicPageSeo, getDynamicBreadcrumbs } from '@/lib/seo/dynamicSeo';
+
 export async function generateMetadata(props) {
   const params = await props.params;
   const rawSlug = params?.slug;
   const slug = rawSlug === 'sushant-lok' ? 'shushant-lok' : rawSlug;
   const corridor = await getCorridor(slug);
 
-  if (!corridor) {
-    return {
-      title: 'Luxury Property in DLF Gurugram | Saudagar Properties',
-      description: 'Explore premier builder floors, villas, and residential plots across DLF Phase 1–5 Gurugram with Saudagar Properties.'
-    };
-  }
-
-  const title = `Best Property in ${corridor.corridorName} | Saudagar Properties Gurugram`;
-  const description = corridor.hero?.subtitle
+  const corridorName = corridor?.corridorName || slug.replace(/-/g, ' ');
+  const defaultTitle = `Best Property in ${corridorName} | Saudagar Properties Gurugram`;
+  const defaultDesc = corridor?.hero?.subtitle
     ? corridor.hero.subtitle.substring(0, 155) + '...'
-    : `Explore luxury builder floors, kothis, and residential plots in ${corridor.corridorName} Gurugram with Saudagar Properties.`;
+    : `Explore luxury builder floors, kothis, and residential plots in ${corridorName} Gurugram with Saudagar Properties.`;
 
-  return buildPageMetadata({
-    title,
-    description,
-    path: `/property/${slug}`,
+  return await getDynamicPageSeo(`/property/${slug}`, {
+    title: defaultTitle,
+    description: defaultDesc,
     canonical: `/property/${slug}`,
     keywords: [
-      `Best Property in ${corridor.corridorName}`,
-      `${corridor.corridorName} Gurugram`,
-      `Luxury Builder Floors ${corridor.corridorName}`,
+      `Best Property in ${corridorName}`,
+      `${corridorName} Gurugram`,
+      `Luxury Builder Floors ${corridorName}`,
       `DLF Phase 1 plots`,
-      `Saudagar Properties ${corridor.corridorName}`,
+      `Saudagar Properties ${corridorName}`,
       'Property Dealers DLF Gurugram'
     ]
   });
@@ -70,12 +65,15 @@ export default async function PropertyCorridorPage(props) {
   if (slug === 'shushant-lok') locationFilter = 'Sushant Lok';
   if (slug === 'udyog-vihar') locationFilter = 'Udyog Vihar';
 
-  const properties = await getProperties({
-    location: locationFilter,
-    limit: 6
-  });
+  const [properties, dynamicBreadcrumbs] = await Promise.all([
+    getProperties({
+      location: locationFilter,
+      limit: 6
+    }),
+    getDynamicBreadcrumbs(`/property/${slug}`),
+  ]);
 
-  const breadcrumbs = [
+  const breadcrumbs = dynamicBreadcrumbs?.length > 1 ? dynamicBreadcrumbs : [
     { name: 'Home', url: '/' },
     { name: 'Properties', url: '/properties' },
     { name: corridor.corridorName, url: `/property/${slug}` }

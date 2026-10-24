@@ -69,6 +69,7 @@ export default function SeoCommandCenter() {
   // Compute Transparent Real SEO Checks (No arbitrary flat +20 score)
   const totalPages = pages.length;
   const publishedPages = pages.filter(p => p.status === 'published').length;
+  const pagesWithMeta = pages.filter(p => Boolean(p.metaDescription && p.metaDescription.trim())).length;
 
   // 1. Missing Meta Titles
   const missingTitles = pages.filter(p => !p.metaTitle && !p.title);
