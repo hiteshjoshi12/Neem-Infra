@@ -12,12 +12,12 @@ const redirectSchema = new mongoose.Schema(
     },
     toPath: {
       type: String,
-      required: true,
       trim: true,
+      default: '',
     },
     statusCode: {
       type: Number,
-      enum: [301, 302],
+      enum: [301, 302, 410],
       default: 301,
       required: true,
     },

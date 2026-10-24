@@ -2,9 +2,9 @@
 
 import { CmsProvider } from '../context/CmsContext';
 
-export default function Providers({ children }) {
+export default function Providers({ children, initialData }) {
   return (
-    <CmsProvider>
+    <CmsProvider initialData={initialData}>
       {children}
     </CmsProvider>
   );

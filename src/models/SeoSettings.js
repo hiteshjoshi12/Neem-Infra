@@ -9,6 +9,13 @@ const seoSettingsSchema = new mongoose.Schema(
       index: true,
     },
 
+    // Canonical Base URL
+    canonicalBaseUrl: {
+      type: String,
+      default: 'https://saudagarproperties.com',
+      trim: true,
+    },
+
     // Global Meta Defaults
     siteTitleTemplate: {
       type: String,
@@ -61,6 +68,36 @@ const seoSettingsSchema = new mongoose.Schema(
     enableGsc: {
       type: Boolean,
       default: true,
+    },
+    bingVerificationCode: {
+      type: String,
+      trim: true,
+      default: '',
+    },
+    enableBingVerification: {
+      type: Boolean,
+      default: true,
+    },
+    indexNowKey: {
+      type: String,
+      trim: true,
+      default: '',
+    },
+    indexNowKeyLocation: {
+      type: String,
+      trim: true,
+      default: '',
+    },
+    customScripts: {
+      head: { type: String, default: '' },
+      body: { type: String, default: '' },
+      isEnabled: { type: Boolean, default: true },
+    },
+    aiBotRules: {
+      gptBot: { type: Boolean, default: true },
+      claudeBot: { type: Boolean, default: true },
+      perplexityBot: { type: Boolean, default: true },
+      ccBot: { type: Boolean, default: false },
     },
 
     // Robots.txt Configuration
@@ -154,14 +191,14 @@ Disallow: /api/
     // Organization & LocalBusiness Knowledge Graph Schema
     organizationSchema: {
       name: { type: String, default: 'Saudagar Properties' },
-      legalName: { type: String, default: 'Saudagar Properties Pvt. Ltd.' },
-      url: { type: String, default: 'https://www.saudagarproperties.com' },
+      legalName: { type: String, default: 'Saudagar Properties' },
+      url: { type: String, default: 'https://saudagarproperties.com' },
       logo: {
         type: String,
         default: 'https://ik.imagekit.io/saudagarproperties/saudagar-properties/branding/logo.png',
       },
-      telephone: { type: String, default: '+91-98100-30230' },
-      email: { type: String, default: 'contact@saudagarproperties.com' },
+      telephone: { type: String, default: '+91 97185 11207' },
+      email: { type: String, default: 'info@saudagarproperties.com' },
       streetAddress: { type: String, default: 'DLF Phase 2, Sector 25' },
       addressLocality: { type: String, default: 'Gurugram' },
       addressRegion: { type: String, default: 'Haryana' },
@@ -169,6 +206,20 @@ Disallow: /api/
       addressCountry: { type: String, default: 'IN' },
       priceRange: { type: String, default: '₹₹₹₹₹' },
       areaServed: [{ type: String, default: 'DLF Phase 1-5, Gurugram' }],
+      foundingDate: { type: String, default: '1999' },
+      founders: [
+        {
+          name: { type: String, default: 'Raman Saudagar' },
+        },
+      ],
+      sameAs: [
+        { type: String, default: 'https://facebook.com/saudagarproperties' },
+        { type: String, default: 'https://instagram.com/saudagarproperties' },
+        { type: String, default: 'https://linkedin.com/company/saudagarproperties' },
+        { type: String, default: 'https://youtube.com/@saudagarproperties' },
+      ],
+      reraNumber: { type: String, default: '' },
+      googleBusinessProfileUrl: { type: String, default: '' },
     },
 
     // Automatic Backup Frequency

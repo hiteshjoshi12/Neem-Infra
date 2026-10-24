@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { connectDB } from '@/lib/mongodb';
 import SectionContent from '@/models/SectionContent';
 import { requireAdmin } from '@/lib/auth/authGuard';
@@ -57,6 +58,7 @@ export async function PUT(req, { params }) {
 
     invalidateCache('cms_sections');
     invalidateCache(); // Purge all cached server sections
+    revalidatePath('/', 'layout');
 
     return NextResponse.json({
       success: true,

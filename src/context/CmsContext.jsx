@@ -9,11 +9,11 @@ export { DEFAULT_SECTIONS };
 const CmsContext = createContext(null);
 const LEGACY_STORAGE_KEY = 'sp_cms_cache_v1';
 
-export const CmsProvider = ({ children }) => {
-  const [sections, setSections] = useState(DEFAULT_SECTIONS);
-  const [properties, setProperties] = useState([]);
-  const [testimonials, setTestimonials] = useState([]);
-  const [loading, setLoading] = useState(true);
+export const CmsProvider = ({ children, initialData = {} }) => {
+  const [sections, setSections] = useState(() => initialData?.sections || DEFAULT_SECTIONS);
+  const [properties, setProperties] = useState(() => initialData?.properties || []);
+  const [testimonials, setTestimonials] = useState(() => initialData?.testimonials || []);
+  const [loading, setLoading] = useState(() => !initialData?.sections);
 
   const lastFetchRef = useRef(0);
   const isFetchingRef = useRef(false);

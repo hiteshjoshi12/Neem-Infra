@@ -8,6 +8,8 @@
     "start": "next start",
     "lint": "eslint",
     "seed": "node --env-file=.env.local scripts/seed-all.mjs",
+    "seed:cms": "node --env-file=.env.local src/scripts/seedCmsFromHardcoded.mjs",
+    "seed:cms:test": "node --env-file=.env.local src/scripts/seedCmsFromHardcoded.mjs --test",
     "typecheck": "node -e \"console.log('✓ Typecheck passed (Next.js compiler verified cleanly)')\"",
     "seo:check": "node scripts/audit-seo.mjs"
   },

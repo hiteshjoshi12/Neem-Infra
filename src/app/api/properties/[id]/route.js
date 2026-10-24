@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { connectDB } from '@/lib/mongodb';
 import Property from '@/models/Property';
 import { requireAdmin } from '@/lib/auth/authGuard';
@@ -53,6 +54,10 @@ export async function PUT(req, { params }) {
     }
 
     invalidateCache('props');
+    invalidateCache();
+    revalidatePath('/', 'layout');
+    revalidatePath('/properties');
+    revalidatePath('/sitemap.xml');
 
     return NextResponse.json({
       success: true,
@@ -77,6 +82,10 @@ export async function DELETE(req, { params }) {
     }
 
     invalidateCache('props');
+    invalidateCache();
+    revalidatePath('/', 'layout');
+    revalidatePath('/properties');
+    revalidatePath('/sitemap.xml');
 
     return NextResponse.json({
       success: true,

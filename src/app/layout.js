@@ -4,6 +4,7 @@ import Script from "next/script";
 import Providers from "../components/Providers";
 import { getGlobalSeoSettings } from "@/lib/seo/dynamicSeo";
 import { buildOrganizationSchema } from "@/lib/seo/schemaBuilders";
+import { getInitialCmsPayload } from "@/lib/dal";
 
 const lora = Lora({
   subsets: ["latin"],
@@ -68,7 +69,10 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const settings = await getGlobalSeoSettings();
+  const [settings, initialCms] = await Promise.all([
+    getGlobalSeoSettings(),
+    getInitialCmsPayload(),
+  ]);
 
   // Dynamic GA4 (DB configuration takes priority, fall back to process.env)
   const gaId =
@@ -188,7 +192,7 @@ export default async function RootLayout({ children }) {
             dangerouslySetInnerHTML={{ __html: settings.customScripts.body }}
           />
         )}
-        <Providers>
+        <Providers initialData={initialCms}>
           {children}
         </Providers>
       </body>

@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import mongoose from 'mongoose';
 import { connectDB } from '@/lib/mongodb';
 import Page from '@/models/Page';
@@ -130,6 +131,9 @@ export async function PUT(req, { params }) {
     );
 
     invalidateSeoCache();
+    revalidatePath('/', 'layout');
+    if (updated?.slug) revalidatePath(updated.slug);
+    revalidatePath('/sitemap.xml');
 
     return NextResponse.json({
       success: true,
@@ -165,6 +169,9 @@ export async function DELETE(req, { params }) {
 
     await Page.findByIdAndDelete(page._id);
     invalidateSeoCache();
+    revalidatePath('/', 'layout');
+    if (page.slug) revalidatePath(page.slug);
+    revalidatePath('/sitemap.xml');
 
     return NextResponse.json({
       success: true,

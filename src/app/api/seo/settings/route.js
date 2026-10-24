@@ -1,8 +1,10 @@
 import { NextResponse } from 'next/server';
+import { revalidatePath } from 'next/cache';
 import { connectDB } from '@/lib/mongodb';
 import SeoSettings from '@/models/SeoSettings';
 import { requireAdmin } from '@/lib/auth/authGuard';
 import { ensureDefaultSeoData, invalidateSeoCache } from '@/lib/seo/dynamicSeo';
+import { invalidateCache } from '@/lib/cache/apiCache';
 
 export async function GET(req) {
   try {
@@ -46,6 +48,10 @@ export async function PUT(req) {
     );
 
     invalidateSeoCache();
+    invalidateCache(); // Invalidate in-memory DAL cache
+    revalidatePath('/', 'layout');
+    revalidatePath('/sitemap.xml');
+    revalidatePath('/robots.txt');
 
     return NextResponse.json({
       success: true,
