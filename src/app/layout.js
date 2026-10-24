@@ -107,8 +107,6 @@ export default async function RootLayout({ children }) {
           <>
             <link rel="preconnect" href="https://images.unsplash.com" crossOrigin="anonymous" />
             <link rel="preconnect" href="https://ik.imagekit.io" crossOrigin="anonymous" />
-            <link rel="preconnect" href="https://fonts.googleapis.com" crossOrigin="anonymous" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
           </>
         )}
         {speed.enableDnsPrefetch !== false && (

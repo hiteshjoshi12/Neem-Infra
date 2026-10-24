@@ -27,7 +27,7 @@ if (typeof window !== "undefined") {
 
 function Rating({ rating = 5 }) {
   return (
-    <div className="flex items-center gap-1" aria-label={`${rating} out of 5 stars`}>
+    <div role="img" className="flex items-center gap-1" aria-label={`${rating} out of 5 stars`}>
       {Array.from({ length: rating }).map((_, index) => (
         <Star
           key={index}

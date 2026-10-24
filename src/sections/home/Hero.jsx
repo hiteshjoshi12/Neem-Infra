@@ -47,7 +47,21 @@ export default function Hero() {
         ? `/properties/${currentProperty._id || currentProperty.id}`
         : (currentProperty?.link || '/properties'));
 
-  const currentSpotlightImage = currentProperty?.img || (currentProperty?.images && currentProperty.images[0]) || heroData.spotlight?.image;
+  const rawSpotlightImage = currentProperty?.img || (currentProperty?.images && currentProperty.images[0]) || heroData.spotlight?.image;
+
+  const currentSpotlightImage = useMemo(() => {
+    if (!rawSpotlightImage) return "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80";
+    if (typeof rawSpotlightImage === "string") {
+      if (rawSpotlightImage.includes("ik.imagekit.io")) {
+        const separator = rawSpotlightImage.includes("?") ? "&" : "?";
+        return `${rawSpotlightImage}${separator}tr=w-800,h-500,c-maintain_ratio,f-auto`;
+      }
+      if (rawSpotlightImage.includes("images.unsplash.com")) {
+        return rawSpotlightImage.replace(/w=\d+/, "w=800").replace(/q=\d+/, "q=80");
+      }
+    }
+    return rawSpotlightImage;
+  }, [rawSpotlightImage]);
 
   // Dynamically compute location options for the search console
   const dynamicLocationOptions = useMemo(() => {

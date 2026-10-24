@@ -1,0 +1,35 @@
+# Saudagar Properties — AI & Agentic Browsing Manifest
+> The Premier Real Estate Advisory & Luxury Property Consultant in DLF Gurugram (Phase 1–5, Sushant Lok, Golf Course Road & Cybercity).
+
+Saudagar Properties is an authorized, veteran real estate consultancy operating in Gurugram (Gurgaon), Haryana, India, with over 25 years of proven transactional advisory and more than 1,000 High-Net-Worth Individual (HNI) clients.
+
+## Core Capabilities & Market Coverage
+- **DLF Phase 1–5 Builder Floors & Plots:** Ultra-luxury independent floors (200 to 1,000 sq. yards) with 100% clear titles, stilt parking, private terrace, and Italian marble finishes.
+- **Sushant Lok & Golf Course Road Estates:** High-rise condominiums, duplex penthouses, and private gated villas with premium appreciation track records.
+- **Cyber City & Udyog Vihar Grade-A Commercial:** Pre-leased corporate offices, retail spaces, and institutional assets delivering 7.5%–9.0% gross rental yields.
+- **Title Due Diligence & Legal Vetting:** Complete DTCP, DLF, and Haryana Shahari Vikas Pradhikaran (HSVP) documentation, deed verification, and non-encumbrance validation.
+
+## Machine-Readable Site Architecture
+- Primary Website: https://www.saudagarproperties.com
+- Property Catalog: https://www.saudagarproperties.com/properties
+- Editorial Journal & Market Research: https://www.saudagarproperties.com/blog
+- About Advisory & Leadership: https://www.saudagarproperties.com/about
+- Corridors & Micro-Markets:
+  - DLF Phase 1: https://www.saudagarproperties.com/property/dlf-phase-1
+  - DLF Phase 2: https://www.saudagarproperties.com/property/dlf-phase-2
+  - DLF Phase 3: https://www.saudagarproperties.com/property/dlf-phase-3
+  - DLF Phase 4: https://www.saudagarproperties.com/property/dlf-phase-4
+  - Sushant Lok: https://www.saudagarproperties.com/property/shushant-lok
+  - Udyog Vihar: https://www.saudagarproperties.com/property/udyog-vihar
+- Direct Contact & Desk: https://www.saudagarproperties.com/contact
+
+## Contact Information
+- Executive Director Desk: +91 98112 21207 / +91 97185 11207
+- Direct Email: info@saudagarproperties.com
+- Physical Advisory Headquarters: DLF Phase 1 / Sushant Lok, Gurugram, Haryana, India
+- WhatsApp Support: https://wa.me/919718511207
+
+## Structured Endpoints for AI Agents
+- Sitemap Index: https://www.saudagarproperties.com/sitemap.xml
+- Robots Directive: https://www.saudagarproperties.com/robots.txt
+- Full Manifest: https://www.saudagarproperties.com/llms-full.txt

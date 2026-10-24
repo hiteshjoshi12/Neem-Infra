@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, forwardRef, useImperativeHandle } from "react";
+import { useState, useEffect, useRef, forwardRef, useImperativeHandle, useMemo } from "react";
 import Image from "next/image";
 import { Play, Pause, Volume2, VolumeX } from "lucide-react";
 
@@ -75,7 +75,13 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
     ? videoMobileUrl
     : (videoUrl || DEFAULT_DESKTOP_VIDEO);
 
-  const posterSrc = customPoster || (isMobile ? DEFAULT_MOBILE_POSTER : DEFAULT_DESKTOP_POSTER);
+  const posterSrc = useMemo(() => {
+    let src = customPoster || (isMobile ? DEFAULT_MOBILE_POSTER : DEFAULT_DESKTOP_POSTER);
+    if (typeof src === "string" && src.includes("images.unsplash.com")) {
+      src = src.replace(/w=\d+/, "w=1600").replace(/q=\d+/, "q=80");
+    }
+    return src;
+  }, [customPoster, isMobile]);
 
   // Helper to ensure autoplay runs cleanly across all browser security policies
   const attemptPlayback = (videoEl) => {
@@ -226,8 +232,8 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
         alt="Saudagar Luxury Properties Architecture"
         fill
         priority
-        quality={90}
-        sizes="100vw"
+        quality={80}
+        sizes="(max-width: 768px) 100vw, (max-width: 1536px) 1440px, 100vw"
         className={`w-full h-full object-cover transition-opacity duration-700 ${
           isVideoLoaded && !prefersReducedMotion ? "opacity-0" : "opacity-100"
         }`}
@@ -244,8 +250,9 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
           muted={isMuted}
           playsInline
           webkit-playsinline="true"
-          preload="auto"
-          poster={posterSrc}
+          preload="metadata"
+          aria-hidden="true"
+          tabIndex={-1}
           onLoadedMetadata={handleMediaReady}
           onCanPlay={handleMediaReady}
           onLoadedData={handleMediaReady}

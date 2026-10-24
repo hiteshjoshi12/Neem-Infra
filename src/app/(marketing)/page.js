@@ -14,8 +14,7 @@ const TestimonialsSection = nextDynamic(() => import('@/sections/home/Testimonia
 const LocationMap = nextDynamic(() => import('@/sections/home/LocationMap'), { ssr: true });
 const NewsletterSection = nextDynamic(() => import('@/sections/home/NewsletterSection'), { ssr: true });
 
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 60;
 
 import { getDynamicPageSeo } from '@/lib/seo/dynamicSeo';
 import LeadInquiryModal from '@/components/home/LeadInquiryModal';

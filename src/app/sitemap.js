@@ -74,7 +74,7 @@ export default async function sitemap() {
     // 3. Dynamic Published Blog Posts (strictly status = published)
     if (sitemapConfig.includeBlogs !== false) {
       try {
-        const blogPosts = await getBlogPosts({ status: 'published', limit: 200 });
+        const blogPosts = await getBlogPosts({ status: 'published', limit: 1000 });
         for (const post of blogPosts || []) {
           if (post.slug && post.status === 'published') {
             addEntry({

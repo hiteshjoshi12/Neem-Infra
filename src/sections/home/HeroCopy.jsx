@@ -70,7 +70,21 @@ export default function HeroCopy() {
         ? `/properties/${currentProperty._id || currentProperty.id}`
         : (currentProperty?.link || '/properties'));
 
-  const currentSpotlightImage = currentProperty?.img || (currentProperty?.images && currentProperty.images[0]) || heroData.spotlight?.image;
+  const rawSpotlightImage = currentProperty?.img || (currentProperty?.images && currentProperty.images[0]) || heroData.spotlight?.image;
+
+  const currentSpotlightImage = useMemo(() => {
+    if (!rawSpotlightImage) return "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=120&h=120&q=75";
+    if (typeof rawSpotlightImage === "string") {
+      if (rawSpotlightImage.includes("ik.imagekit.io")) {
+        const separator = rawSpotlightImage.includes("?") ? "&" : "?";
+        return `${rawSpotlightImage}${separator}tr=w-96,h-96,c-maintain_ratio,f-auto`;
+      }
+      if (rawSpotlightImage.includes("images.unsplash.com")) {
+        return rawSpotlightImage.replace(/w=\d+/, "w=120").replace(/q=\d+/, "q=75");
+      }
+    }
+    return rawSpotlightImage;
+  }, [rawSpotlightImage]);
 
   // Dynamically compute location options for the search console
   const dynamicLocationOptions = useMemo(() => {
@@ -226,7 +240,7 @@ export default function HeroCopy() {
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="mb-2 sm:mb-2.5 flex items-center justify-center gap-2.5"
+          className="mb-2 sm:mb-2.5 flex items-center justify-center gap-2.5 transform-gpu"
         >
           <span className="w-6 h-[1px] bg-brand-gold"></span>
           <span className="text-[10px] sm:text-[11px] tracking-[0.28em] text-brand-gold uppercase font-semibold flex items-center gap-1.5 drop-shadow-sm">
@@ -241,7 +255,7 @@ export default function HeroCopy() {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-          className="text-2xl sm:text-3xl md:text-[clamp(1.75rem,2.85vw,2.95rem)] font-serif text-brand-ivory leading-[1.15] tracking-tight max-w-[760px] mb-2 sm:mb-2.5 drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)]"
+          className="text-2xl sm:text-3xl md:text-[clamp(1.75rem,2.85vw,2.95rem)] font-serif text-brand-ivory leading-[1.15] tracking-tight max-w-[760px] mb-2 sm:mb-2.5 drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] transform-gpu"
         >
           <span className="block">{heroData.headlinePrefix || "Gurgaon's Premier"}</span>
           <span className="block">
@@ -257,7 +271,7 @@ export default function HeroCopy() {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
-          className="text-slate-100 text-xs sm:text-sm font-normal max-w-[540px] mb-3.5 sm:mb-4 leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)]"
+          className="text-slate-100 text-xs sm:text-sm font-normal max-w-[540px] mb-3.5 sm:mb-4 leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)] transform-gpu"
         >
           {heroData.description || "Discover an exclusive portfolio of luxury builder floors, high-rise penthouses, and bespoke villas across DLF Phase 1–4, Sushant Lok & Golf Course Ext."}
         </motion.p>
@@ -267,7 +281,7 @@ export default function HeroCopy() {
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-          className="w-full max-w-[920px] relative z-50"
+          className="w-full max-w-[920px] relative z-50 transform-gpu"
         >
           {/* Desktop Search Bar (Horizontal Luxury Console, Slim & Refined) */}
           <form
