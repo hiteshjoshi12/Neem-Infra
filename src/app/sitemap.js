@@ -23,6 +23,7 @@ export default async function sitemap() {
     await connectDB();
     await ensureDefaultSeoData();
     const settings = await getGlobalSeoSettings();
+    const baseUrl = settings?.canonicalBaseUrl || SITE_URL || 'https://saudagarproperties.com';
     const sitemapConfig = settings?.sitemapConfig || {
       includeProperties: true,
       includeBlogs: true,
@@ -44,7 +45,7 @@ export default async function sitemap() {
       const changeFrequency = page.slug === '/' || page.slug === '/properties' || page.slug === '/blog' ? 'daily' : 'weekly';
 
       addEntry({
-        url: `${SITE_URL}${cleanSlug}`,
+        url: `${baseUrl}${cleanSlug}`,
         lastModified: page.updatedAt ? new Date(page.updatedAt) : new Date(),
         changeFrequency,
         priority,
@@ -59,7 +60,7 @@ export default async function sitemap() {
           const slugOrId = prop.slug || prop._id;
           if (slugOrId) {
             addEntry({
-              url: `${SITE_URL}/properties/${slugOrId}`,
+              url: `${baseUrl}/properties/${slugOrId}`,
               lastModified: new Date(prop.updatedAt || new Date()),
               changeFrequency: 'weekly',
               priority: 0.9,
@@ -78,7 +79,7 @@ export default async function sitemap() {
         for (const post of blogPosts || []) {
           if (post.slug && post.status === 'published') {
             addEntry({
-              url: `${SITE_URL}/blog/${post.slug}`,
+              url: `${baseUrl}/blog/${post.slug}`,
               lastModified: new Date(post.updatedAt || post.publishedAt || new Date()),
               changeFrequency: 'weekly',
               priority: 0.85,
@@ -97,8 +98,8 @@ export default async function sitemap() {
         for (const cat of categories || []) {
           if (cat.slug) {
             addEntry({
-              url: `${SITE_URL}/blog/category/${cat.slug}`,
-              lastModified: new Date(),
+              url: `${baseUrl}/blog/category/${cat.slug}`,
+              lastModified: new Date(cat.updatedAt || new Date()),
               changeFrequency: 'weekly',
               priority: 0.75,
             });
@@ -116,8 +117,8 @@ export default async function sitemap() {
         for (const author of authors || []) {
           if (author.slug) {
             addEntry({
-              url: `${SITE_URL}/blog/author/${author.slug}`,
-              lastModified: new Date(),
+              url: `${baseUrl}/blog/author/${author.slug}`,
+              lastModified: new Date(author.updatedAt || new Date()),
               changeFrequency: 'monthly',
               priority: 0.7,
             });
@@ -132,7 +133,7 @@ export default async function sitemap() {
     if (Array.isArray(sitemapConfig.extraUrls)) {
       for (const extra of sitemapConfig.extraUrls) {
         if (extra?.url) {
-          const fullUrl = extra.url.startsWith('http') ? extra.url : `${SITE_URL}${extra.url.startsWith('/') ? extra.url : `/${extra.url}`}`;
+          const fullUrl = extra.url.startsWith('http') ? extra.url : `${baseUrl}${extra.url.startsWith('/') ? extra.url : `/${extra.url}`}`;
           addEntry({
             url: fullUrl,
             lastModified: new Date(),

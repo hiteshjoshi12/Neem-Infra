@@ -6,19 +6,24 @@ export const revalidate = 300;
 
 export default async function robots() {
   const settings = await getGlobalSeoSettings();
+  const baseUrl = settings?.canonicalBaseUrl || SITE_URL || 'https://saudagarproperties.com';
   const mode = settings?.robotsTxtMode || 'standard';
 
-  if (mode === 'disallow_all') {
+  // 1. Staging or Non-Production Protection: block all crawlers outside production
+  if (
+    (process.env.VERCEL_ENV && process.env.VERCEL_ENV !== 'production') ||
+    mode === 'disallow_all'
+  ) {
     return {
       rules: {
         userAgent: '*',
         disallow: '/',
       },
-      sitemap: `${SITE_URL}/sitemap.xml`,
+      sitemap: `${baseUrl}/sitemap.xml`,
     };
   }
 
-  // Parse custom rules if provided
+  // 2. Parse custom rules if configured in admin
   if (mode === 'custom' && settings?.robotsTxtCustomRules) {
     const raw = settings.robotsTxtCustomRules;
     const lines = raw.split('\n').map((l) => l.trim()).filter((l) => l && !l.startsWith('#'));
@@ -41,17 +46,43 @@ export default async function robots() {
         allow: allow.length ? allow : '/',
         disallow: disallow.length ? disallow : ['/admin/', '/api/'],
       },
-      sitemap: `${SITE_URL}/sitemap.xml`,
+      sitemap: `${baseUrl}/sitemap.xml`,
     };
   }
 
-  // Standard production rules
+  // 3. Modern Production Rules: Explicitly permit search & AI answer bots while protecting private paths
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: ['/admin/', '/api/'],
-    },
-    sitemap: `${SITE_URL}/sitemap.xml`,
+    rules: [
+      {
+        userAgent: '*',
+        allow: '/',
+        disallow: ['/admin/', '/api/'],
+      },
+      {
+        // OpenAI Search & ChatGPT retrieval for AEO
+        userAgent: ['GPTBot', 'OAI-SearchBot', 'ChatGPT-User'],
+        allow: '/',
+        disallow: ['/admin/', '/api/'],
+      },
+      {
+        // Anthropic Claude
+        userAgent: ['ClaudeBot', 'Claude-SearchBot'],
+        allow: '/',
+        disallow: ['/admin/', '/api/'],
+      },
+      {
+        // Perplexity AI
+        userAgent: ['PerplexityBot'],
+        allow: '/',
+        disallow: ['/admin/', '/api/'],
+      },
+      {
+        // Applebot & Bingbot
+        userAgent: ['Applebot', 'Applebot-Extended', 'bingbot'],
+        allow: '/',
+        disallow: ['/admin/', '/api/'],
+      },
+    ],
+    sitemap: `${baseUrl}/sitemap.xml`,
   };
 }

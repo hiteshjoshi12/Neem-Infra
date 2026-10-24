@@ -15,6 +15,10 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
+        hostname: 'ik.imagekit.io',
+      },
+      {
+        protocol: 'https',
         hostname: 'images.unsplash.com',
       },
       {
@@ -25,18 +29,6 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'www.saudagarproperties.com',
       },
-      {
-        protocol: 'https',
-        hostname: 'ik.imagekit.io',
-      },
-      {
-        protocol: 'https',
-        hostname: '**',
-      },
-      {
-        protocol: 'http',
-        hostname: '**',
-      }
     ],
   },
   experimental: {
@@ -73,11 +65,51 @@ const nextConfig = {
           },
         ],
       },
+      // Strictly prevent search engines from indexing or archiving any admin panel or API route
+      {
+        source: '/admin/:path*',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow, noarchive',
+          },
+        ],
+      },
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow, noarchive',
+          },
+        ],
+      },
     ];
   },
   trailingSlash: false,
   async redirects() {
     return [
+      // Legacy WordPress category and tag archives
+      {
+        source: '/category/:slug*',
+        destination: '/blog/category/:slug*',
+        permanent: true,
+      },
+      {
+        source: '/tag/:slug*',
+        destination: '/blog',
+        permanent: true,
+      },
+      {
+        source: '/feed',
+        destination: '/blog',
+        permanent: true,
+      },
+      {
+        source: '/feed/:slug*',
+        destination: '/blog',
+        permanent: true,
+      },
       // Blog aliases
       {
         source: '/blogs',
@@ -144,6 +176,36 @@ const nextConfig = {
       {
         source: '/property/sushant-lok',
         destination: '/property/shushant-lok',
+        permanent: true,
+      },
+      {
+        source: '/property-in-dlf-phase-1',
+        destination: '/property/dlf-phase-1',
+        permanent: true,
+      },
+      {
+        source: '/property-in-dlf-phase-2',
+        destination: '/property/dlf-phase-2',
+        permanent: true,
+      },
+      {
+        source: '/property-in-dlf-phase-3',
+        destination: '/property/dlf-phase-3',
+        permanent: true,
+      },
+      {
+        source: '/property-in-dlf-phase-4',
+        destination: '/property/dlf-phase-4',
+        permanent: true,
+      },
+      {
+        source: '/property-in-sushant-lok',
+        destination: '/property/shushant-lok',
+        permanent: true,
+      },
+      {
+        source: '/4-bhk-independent-floor-dlf-phase1',
+        destination: '/properties',
         permanent: true,
       },
       // Legacy property catalog routes redirected to active counterparts

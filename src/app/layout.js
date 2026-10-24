@@ -27,7 +27,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata = {
-  metadataBase: new URL("https://www.saudagarproperties.com"),
+  metadataBase: new URL("https://saudagarproperties.com"),
   title: {
     default: "Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram",
     template: "%s | Saudagar Properties",
@@ -40,7 +40,7 @@ export const metadata = {
   openGraph: {
     title: "Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram",
     description: "25+ years of trusted real estate advisory in DLF Phase 1–5, Sushant Lok & Golf Course Road.",
-    url: "https://www.saudagarproperties.com",
+    url: "https://saudagarproperties.com",
     siteName: "Saudagar Properties",
     locale: "en_IN",
     type: "website",

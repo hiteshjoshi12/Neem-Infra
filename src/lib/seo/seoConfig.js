@@ -9,7 +9,7 @@
  */
 
 // ─── Site-Wide Constants ────────────────────────────────────────────────
-export const SITE_URL = 'https://www.saudagarproperties.com'; // TODO: Set actual production domain
+export const SITE_URL = 'https://saudagarproperties.com';
 export const SITE_NAME = 'Saudagar Properties';
 export const SITE_LEGAL_NAME = 'Saudagar Properties Pvt. Ltd.';
 export const DEFAULT_LOCALE = 'en_IN';
