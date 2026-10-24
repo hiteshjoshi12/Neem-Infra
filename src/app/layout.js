@@ -88,20 +88,29 @@ export default async function RootLayout({ children }) {
       ? settings.googleSearchConsoleCode.replace(/^google-site-verification=/, '').trim()
       : '';
 
+  // Dynamic Bing Webmaster verification code
+  const bingCode =
+    settings?.enableBingVerification !== false && settings?.bingVerificationCode
+      ? settings.bingVerificationCode.trim()
+      : '';
+
   // Dynamic Speed & Performance Optimizations
   const speed = settings?.speedOptimizations || {
     enablePreconnect: true,
     enableDnsPrefetch: true,
   };
 
-  // Structured Data (Organization / RealEstateAgent Schema)
-  const organizationSchema = buildOrganizationSchema();
+  // Structured Data (Organization / RealEstateAgent Schema from DB)
+  const organizationSchema = buildOrganizationSchema(settings?.organizationSchema || settings);
 
   return (
     <html lang="en" className={`${lora.variable} ${outfit.variable} ${jakarta.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
         {gscCode && (
           <meta name="google-site-verification" content={gscCode} />
+        )}
+        {bingCode && (
+          <meta name="msvalidate.01" content={bingCode} />
         )}
         {speed.enablePreconnect !== false && (
           <>
@@ -132,6 +141,13 @@ export default async function RootLayout({ children }) {
               })(window,document,'script','dataLayer','${gtmId}');
             `}
           </Script>
+        )}
+        {/* Custom Head Scripts configured via Admin */}
+        {settings?.customScripts?.isEnabled && settings?.customScripts?.head && (
+          <div
+            id="admin-custom-head-scripts"
+            dangerouslySetInnerHTML={{ __html: settings.customScripts.head }}
+          />
         )}
       </head>
       <body className="min-h-full flex flex-col font-sans bg-brand-ivory text-brand-text-dark" suppressHydrationWarning>
@@ -164,6 +180,13 @@ export default async function RootLayout({ children }) {
               `}
             </Script>
           </>
+        )}
+        {/* Custom Body Scripts configured via Admin */}
+        {settings?.customScripts?.isEnabled && settings?.customScripts?.body && (
+          <div
+            id="admin-custom-body-scripts"
+            dangerouslySetInnerHTML={{ __html: settings.customScripts.body }}
+          />
         )}
         <Providers>
           {children}

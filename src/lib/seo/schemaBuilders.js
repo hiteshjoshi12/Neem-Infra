@@ -68,52 +68,78 @@ export function buildWebSiteSchema() {
 
 /**
  * 2 & 3. Organization & LocalBusiness (RealEstateAgent subtype) Schema
- * Uses real, verified Saudagar Properties data already in the project.
+ * Uses real, verified Saudagar Properties data, dynamically reading from DB settings when provided.
  */
-export function buildOrganizationSchema() {
-  const verifiedSameAs = getVerifiedSocialProfiles();
+export function buildOrganizationSchema(customSettings = null) {
+  const org = customSettings?.organizationSchema || customSettings || {};
+  const name = org.name || BUSINESS_INFO.name;
+  const legalName = org.legalName || BUSINESS_INFO.name;
+  const alternateName = org.alternateName || BUSINESS_INFO.shortName;
+  const description = org.description || BUSINESS_INFO.description;
+  const url = org.url || SITE_URL;
+  const logoUrl = org.logo || BUSINESS_INFO.logo || '/logo.png';
+  const telephone = org.telephone || BUSINESS_INFO.phone?.[0] || '+91 97185 11207';
+  const email = org.email || BUSINESS_INFO.email;
+  const priceRange = org.priceRange || BUSINESS_INFO.priceRange;
+  const streetAddress = org.streetAddress || BUSINESS_INFO.address?.streetAddress;
+  const addressLocality = org.addressLocality || BUSINESS_INFO.address?.addressLocality;
+  const addressRegion = org.addressRegion || BUSINESS_INFO.address?.addressRegion;
+  const postalCode = org.postalCode || BUSINESS_INFO.address?.postalCode;
+  const addressCountry = org.addressCountry || BUSINESS_INFO.address?.addressCountry || 'IN';
+
+  const sameAsList = Array.isArray(org.sameAs) && org.sameAs.length > 0
+    ? org.sameAs.filter((s) => s && typeof s === 'string' && s.trim() !== '' && s !== '#')
+    : getVerifiedSocialProfiles();
+
+  const areaServedList = Array.isArray(org.areaServed) && org.areaServed.length > 0
+    ? org.areaServed
+    : BUSINESS_INFO.areaServed;
+
+  const foundersList = Array.isArray(org.founder) && org.founder.length > 0
+    ? org.founder
+    : (Array.isArray(org.founders) && org.founders.length > 0 ? org.founders : BUSINESS_INFO.founders);
 
   return cleanSchema({
     '@type': ['RealEstateAgent', 'LocalBusiness', 'Organization'],
-    '@id': `${SITE_URL}/#organization`,
-    name: BUSINESS_INFO.name,
-    legalName: BUSINESS_INFO.name,
-    alternateName: BUSINESS_INFO.shortName,
-    description: BUSINESS_INFO.description,
-    url: SITE_URL,
+    '@id': `${url}/#organization`,
+    name,
+    legalName,
+    alternateName,
+    description,
+    url,
     logo: {
       '@type': 'ImageObject',
-      '@id': `${SITE_URL}/#logo`,
-      url: buildAbsoluteUrl(BUSINESS_INFO.logo || '/logo.png'),
-      caption: BUSINESS_INFO.name,
+      '@id': `${url}/#logo`,
+      url: buildAbsoluteUrl(logoUrl),
+      caption: name,
     },
-    image: buildAbsoluteUrl(BUSINESS_INFO.logo || '/logo.png'),
-    telephone: BUSINESS_INFO.phone?.[0] || '+91 97185 11207',
-    email: BUSINESS_INFO.email,
-    address: BUSINESS_INFO.address ? {
+    image: buildAbsoluteUrl(logoUrl),
+    telephone,
+    email,
+    address: streetAddress ? {
       '@type': 'PostalAddress',
-      streetAddress: BUSINESS_INFO.address.streetAddress,
-      addressLocality: BUSINESS_INFO.address.addressLocality,
-      addressRegion: BUSINESS_INFO.address.addressRegion,
-      postalCode: BUSINESS_INFO.address.postalCode,
-      addressCountry: BUSINESS_INFO.address.addressCountry || 'IN',
+      streetAddress,
+      addressLocality,
+      addressRegion,
+      postalCode,
+      addressCountry,
     } : undefined,
-    geo: BUSINESS_INFO.geo ? {
+    geo: org.geo || (BUSINESS_INFO.geo ? {
       '@type': 'GeoCoordinates',
       latitude: BUSINESS_INFO.geo.latitude,
       longitude: BUSINESS_INFO.geo.longitude,
-    } : undefined,
-    priceRange: BUSINESS_INFO.priceRange,
-    foundingDate: BUSINESS_INFO.foundingYear ? String(BUSINESS_INFO.foundingYear) : undefined,
-    founder: BUSINESS_INFO.founders?.map((name) => ({
+    } : undefined),
+    priceRange,
+    foundingDate: org.foundingDate || (BUSINESS_INFO.foundingYear ? String(BUSINESS_INFO.foundingYear) : undefined),
+    founder: foundersList?.map((founderItem) => ({
       '@type': 'Person',
-      name,
+      name: typeof founderItem === 'string' ? founderItem : founderItem.name,
     })),
-    areaServed: BUSINESS_INFO.areaServed?.map((area) => ({
+    areaServed: areaServedList?.map((area) => ({
       '@type': 'City',
-      name: area,
+      name: typeof area === 'string' ? area : area.name,
     })),
-    sameAs: verifiedSameAs.length > 0 ? verifiedSameAs : undefined,
+    sameAs: sameAsList.length > 0 ? sameAsList : undefined,
     hasOfferCatalog: BUSINESS_INFO.services ? {
       '@type': 'OfferCatalog',
       name: 'Real Estate Advisory & Brokerage Services',
