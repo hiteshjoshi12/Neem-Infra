@@ -15,11 +15,11 @@ export default function Hero() {
   const heroData = sections?.hero || {};
 
   // Resolve backend featured properties
+  const rawProperties = useMemo(() => (Array.isArray(properties) ? properties : []), [properties]);
   const cardList = useMemo(() => {
-    const list = Array.isArray(properties) ? properties : [];
-    const filtered = list.filter((p) => p.isFeatured !== false);
-    return filtered.length > 0 ? filtered : list;
-  }, [properties]);
+    const filtered = rawProperties.filter((p) => p.isFeatured !== false);
+    return filtered.length > 0 ? filtered : rawProperties;
+  }, [rawProperties]);
 
   const [location, setLocation] = useState("");
   const [propertyType, setPropertyType] = useState("");
