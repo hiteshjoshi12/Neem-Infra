@@ -637,7 +637,6 @@ export default function LocationMap() {
                       text-brand-navy
                       sm:text-2xl
                     "
-                    itemProp="name"
                   >
                     {officeName}
                   </h3>
@@ -684,14 +683,9 @@ export default function LocationMap() {
                   leading-5
                   text-brand-slate
                 "
-                itemProp="address"
-                itemScope
-                itemType="https://schema.org/PostalAddress"
               >
 
-                <span
-                  itemProp="streetAddress"
-                >
+                <span>
                   {address}
                 </span>
 

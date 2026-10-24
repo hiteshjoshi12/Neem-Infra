@@ -17,6 +17,7 @@ const NewsletterSection = nextDynamic(() => import('@/sections/home/NewsletterSe
 export const revalidate = 60;
 
 import { getDynamicPageSeo } from '@/lib/seo/dynamicSeo';
+import { getProperties } from '@/services/propertyService';
 import LeadInquiryModal from '@/components/home/LeadInquiryModal';
 
 export async function generateMetadata() {
@@ -27,8 +28,14 @@ export async function generateMetadata() {
   });
 }
 
-export default function Home() {
+export default async function Home() {
   const breadcrumbs = BREADCRUMBS['/'];
+  let featuredProperties = [];
+  try {
+    featuredProperties = await getProperties({ isFeatured: true });
+  } catch (err) {
+    console.warn('[Home SSR] Error loading featured properties:', err?.message);
+  }
 
   return (
     <div className="w-full flex flex-col min-h-screen bg-brand-ivory text-brand-navy selection:bg-brand-gold selection:text-brand-navy-deep">
@@ -38,13 +45,13 @@ export default function Home() {
       <LeadInquiryModal />
 
       {/* 1. Hero Section */}
-      <Hero />
+      <Hero initialProperties={featuredProperties} />
 
       {/* 2. Top Real Estate Consultant in DLF Gurugram & Video Tour Section */}
       <TopConsultantSection />
 
       {/* 3. Curated Corridors 3D Section (Featured Properties) */}
-      <CuratedCorridors />
+      <CuratedCorridors initialProperties={featuredProperties} />
 
       {/* 4. Our Services Section */}
       <OurServicesSection />

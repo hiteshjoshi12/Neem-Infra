@@ -9,11 +9,18 @@ import Link from 'next/link';
 
 import { useCms } from '../../context/CmsContext';
 import Image from 'next/image';
+import { PROPERTIES_DATA as DEFAULT_PROPERTIES } from '@/constants/propertiesData';
 
-export default function CuratedCorridors() {
+export default function CuratedCorridors({ initialProperties = [], initialSectionData = null }) {
   const { properties, sections } = useCms();
-  const propertyList = properties || [];
-  const corridorData = sections?.curatedCorridors || {};
+  const rawList = (properties && properties.length > 0)
+    ? properties
+    : (initialProperties && initialProperties.length > 0)
+      ? initialProperties
+      : DEFAULT_PROPERTIES;
+  const propertyList = rawList.filter((p) => p.isFeatured !== false);
+  const displayList = propertyList.length > 0 ? propertyList : rawList;
+  const corridorData = sections?.curatedCorridors || initialSectionData || {};
 
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
@@ -25,23 +32,23 @@ export default function CuratedCorridors() {
 
   // Auto-slide effect every 5 seconds (5000ms)
   useEffect(() => {
-    if (isPaused || propertyList.length === 0) return;
+    if (isPaused || displayList.length === 0) return;
 
     const timer = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % propertyList.length);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % displayList.length);
     }, 5000);
 
     return () => clearInterval(timer);
-  }, [isPaused, propertyList.length]);
+  }, [isPaused, displayList.length]);
 
   const handleNext = () => {
-    if (propertyList.length === 0) return;
-    setCurrentIndex((prev) => (prev + 1) % propertyList.length);
+    if (displayList.length === 0) return;
+    setCurrentIndex((prev) => (prev + 1) % displayList.length);
   };
 
   const handlePrev = () => {
-    if (propertyList.length === 0) return;
-    setCurrentIndex((prev) => (prev - 1 + propertyList.length) % propertyList.length);
+    if (displayList.length === 0) return;
+    setCurrentIndex((prev) => (prev - 1 + displayList.length) % displayList.length);
   };
 
   useEffect(() => {
@@ -144,7 +151,7 @@ export default function CuratedCorridors() {
         <div className="flex items-center justify-between sm:justify-start gap-4 sm:gap-6 lg:pb-2">
           {/* Progress dots */}
           <div className="flex items-center gap-1.5 sm:gap-2">
-            {propertyList.map((_, idx) => (
+            {displayList.map((_, idx) => (
               <button
                 key={idx}
                 onClick={() => setCurrentIndex(idx)}
@@ -180,10 +187,10 @@ export default function CuratedCorridors() {
         className="relative w-full h-[470px] sm:h-[530px] md:h-[580px] flex items-center justify-center perspective-[1200px]"
       >
         <AnimatePresence mode="popLayout">
-          {propertyList.map((item, index) => {
+          {displayList.map((item, index) => {
             let offset = index - currentIndex;
-            if (offset < -2) offset += propertyList.length;
-            if (offset > 2) offset -= propertyList.length;
+            if (offset < -2) offset += displayList.length;
+            if (offset > 2) offset -= displayList.length;
 
             const isCenter = offset === 0;
             const isVisible = Math.abs(offset) <= 2;
@@ -279,7 +286,7 @@ export default function CuratedCorridors() {
 
       {/* Master Directory CTA */}
       <div ref={ctaRef} className="container mx-auto px-5 md:px-12 mt-6 sm:mt-8 flex justify-center">
-        <Link href={corridorData.ctaLink || "/ready-to-move"}
+        <Link href={corridorData.ctaLink || "/properties"}
           className="group relative px-6 py-3.5 sm:px-8 sm:py-4 bg-brand-navy hover:bg-brand-navy-deep text-white border border-brand-gold/40 hover:border-brand-gold overflow-hidden rounded-full flex items-center gap-3 sm:gap-4 shadow-md hover:shadow-xl transition-all duration-300"
         >
           <span className="relative z-10 text-[11px] sm:text-xs font-semibold tracking-widest uppercase text-brand-ivory">

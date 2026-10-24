@@ -35,8 +35,7 @@ function GsapCounter({ end, suffix = "+" }) {
     const el = numRef.current;
     if (!el) return;
 
-    // Start counter visually at 0
-    el.textContent = "0";
+    // Do not zero out immediately on mount, to preserve SSR content for crawlers
 
     const reduceMotion =
       typeof window !== "undefined" &&
@@ -55,6 +54,7 @@ function GsapCounter({ end, suffix = "+" }) {
     const runAnimation = () => {
       if (hasRun || !el) return;
       hasRun = true;
+      el.textContent = "0";
 
       const duration = 2200;
       const startTime = performance.now();
@@ -108,9 +108,11 @@ function GsapCounter({ end, suffix = "+" }) {
     }
   }, [targetEnd]);
 
+  const formattedEnd = targetEnd >= 1000 ? targetEnd.toLocaleString("en-IN") : String(targetEnd);
+
   return (
     <span className="tabular-nums">
-      <span ref={numRef}>0</span>
+      <span ref={numRef}>{formattedEnd}</span>
       <span className="ml-0.5 font-light text-brand-gold">{suffix}</span>
     </span>
   );

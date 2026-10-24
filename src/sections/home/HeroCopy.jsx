@@ -20,13 +20,17 @@ import { motion, AnimatePresence } from 'framer-motion';
  * - Search Bar: Sophisticated property discovery console (74-78px height, two-tier field labels, subtle hairlines, micro-interaction on Explore button)
  * - Mobile: Clean stacked search card with compact footprint
  */
-export default function HeroCopy() {
+export default function HeroCopy({ initialProperties = [], initialHeroData = null }) {
   const router = useRouter();
   const { sections, properties } = useCms();
-  const heroData = sections?.hero || {};
+  const heroData = sections?.hero || initialHeroData || {};
 
-  // Resolve backend featured properties
-  const rawProperties = properties || [];
+  // Resolve backend featured properties with SSR support
+  const rawProperties = (properties && properties.length > 0)
+    ? properties
+    : (initialProperties && initialProperties.length > 0)
+      ? initialProperties
+      : [];
   const featuredProperties = rawProperties.filter((p) => p.isFeatured !== false);
   const cardList = featuredProperties.length > 0 ? featuredProperties : rawProperties;
 
@@ -255,6 +259,7 @@ export default function HeroCopy() {
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
+          aria-label={`${heroData.headlinePrefix || "Gurgaon's Premier"} ${heroData.headlineHighlight || "Real Estate"} ${heroData.headlineSuffix !== undefined && heroData.headlineSuffix !== null && heroData.headlineSuffix !== "" ? heroData.headlineSuffix : "Partner."}`.trim()}
           className="text-2xl sm:text-3xl md:text-[clamp(1.75rem,2.85vw,2.95rem)] font-serif text-brand-ivory leading-[1.15] tracking-tight max-w-[760px] mb-2 sm:mb-2.5 drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] transform-gpu"
         >
           <span className="block">{heroData.headlinePrefix || "Gurgaon's Premier"}</span>

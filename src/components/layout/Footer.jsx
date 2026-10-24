@@ -116,18 +116,15 @@ export default function Footer() {
     footerData.copyrightSuffix || 'All Right Reserved';
 
   const rawLegalLinks = footerData.legalLinks || [
-    { label: 'Clients', href: '/clients' },
-    { label: 'Term Of Service', href: '/terms' },
-    { label: 'Privacy & Policy', href: '/privacy-policy' },
-    { label: 'Admin Panel', href: '/admin' },
+    { label: 'Clients', href: '/about' },
+    { label: 'Terms of Service', href: '/terms' },
+    { label: 'Privacy Policy', href: '/privacy-policy' },
   ];
 
-  const hasAdmin = rawLegalLinks.some(
-    (l) => l.href === '/admin' || l.href === '/admin/login' || l.href === '/admin/dashboard'
+  // Strictly filter out any admin links from public rendering to prevent crawler indexing
+  const legalLinks = rawLegalLinks.filter(
+    (l) => !l.href?.startsWith('/admin')
   );
-  const legalLinks = hasAdmin
-    ? rawLegalLinks
-    : [...rawLegalLinks, { label: 'Admin Panel', href: '/admin' }];
 
   return (
     <footer

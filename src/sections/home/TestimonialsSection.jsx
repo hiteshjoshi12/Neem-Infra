@@ -59,8 +59,6 @@ function FeaturedSplitTestimonial({
 
   return (
     <article
-      itemScope
-      itemType="https://schema.org/Review"
       className="group relative overflow-hidden rounded-[28px] sm:rounded-[36px] border border-brand-navy/10 bg-white shadow-[0_20px_60px_rgba(23,33,61,0.08)] transition-all duration-500"
     >
       {/* Ambient background glows */}
@@ -77,7 +75,6 @@ function FeaturedSplitTestimonial({
             fill
             sizes="(max-width: 1024px) 100vw, 42vw"
             loading="lazy"
-            itemProp="image"
             className="w-full h-full object-cover object-top filter brightness-[0.95] contrast-[1.05] group-hover:scale-105 transition-transform duration-700 ease-out"
           />
 
@@ -168,7 +165,6 @@ function FeaturedSplitTestimonial({
           {/* Testimonial Quote */}
           <div className="my-6 sm:my-8">
             <blockquote
-              itemProp="reviewBody"
               className="font-serif text-lg sm:text-xl lg:text-[22px] text-brand-navy leading-[1.65] font-normal italic tracking-[-0.015em]"
             >
               “{item.quote}”
@@ -179,12 +175,9 @@ function FeaturedSplitTestimonial({
           <div className="pt-5 border-t border-brand-navy/10 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <cite
-                itemProp="author"
-                itemScope
-                itemType="https://schema.org/Person"
                 className="not-italic"
               >
-                <span itemProp="name" className="text-lg font-serif font-bold text-brand-navy block">
+                <span className="text-lg font-serif font-bold text-brand-navy block">
                   {item.name}
                 </span>
               </cite>
@@ -221,10 +214,6 @@ function FeaturedSplitTestimonial({
         </div>
 
       </div>
-
-      {/* Hidden semantic rating */}
-      <meta itemProp="ratingValue" content={String(item.rating || 5)} />
-      <meta itemProp="bestRating" content="5" />
     </article>
   );
 }
@@ -233,13 +222,13 @@ function FeaturedSplitTestimonial({
    COMPACT TESTIMONIAL CARD (FUTURE-PROOF)
 ========================================================= */
 
-function CompactTestimonial({ item, index, onSelect, active }) {
-  const displayAvatar = item.avatar || item.image || "https://saudagarproperties.com/wp-content/uploads/2021/01/c1.jpg";
+  const rawAvatar = item.avatar || item.image;
+  const displayAvatar = (rawAvatar && !rawAvatar.includes('/wp-content/'))
+    ? rawAvatar
+    : "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=120&h=120&q=80";
 
   return (
     <article
-      itemScope
-      itemType="https://schema.org/Review"
       onClick={() => onSelect(index)}
       className={`
         group
@@ -291,7 +280,6 @@ function CompactTestimonial({ item, index, onSelect, active }) {
 
         {/* Quote Preview */}
         <blockquote
-          itemProp="reviewBody"
           className="line-clamp-3 text-xs sm:text-[13px] leading-relaxed text-brand-slate font-normal mb-5"
         >
           “{item.quote}”
@@ -313,8 +301,8 @@ function CompactTestimonial({ item, index, onSelect, active }) {
           </div>
 
           <div className="min-w-0">
-            <cite itemProp="author" className="not-italic">
-              <span itemProp="name" className="block truncate font-serif text-sm font-bold text-brand-navy">
+            <cite className="not-italic">
+              <span className="block truncate font-serif text-sm font-bold text-brand-navy">
                 {item.name}
               </span>
             </cite>
@@ -359,8 +347,6 @@ function CompactTestimonial({ item, index, onSelect, active }) {
           <ArrowUpRight size={14} />
         </button>
       </div>
-
-      <meta itemProp="locationCreated" content={item.location || ""} />
     </article>
   );
 }
@@ -369,10 +355,14 @@ function CompactTestimonial({ item, index, onSelect, active }) {
    MAIN COMPONENT
 ========================================================= */
 
-export default function TestimonialsSection() {
+export default function TestimonialsSection({ initialTestimonials = [], initialSectionData = null }) {
   const { testimonials = [], sections = {} } = useCms() || {};
-  const list = (testimonials && testimonials.length > 0) ? testimonials : DEFAULT_TESTIMONIALS_DATA;
-  const testData = sections?.testimonials || {};
+  const list = (testimonials && testimonials.length > 0)
+    ? testimonials
+    : (initialTestimonials && initialTestimonials.length > 0)
+      ? initialTestimonials
+      : DEFAULT_TESTIMONIALS_DATA;
+  const testData = sections?.testimonials || initialSectionData || {};
 
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);

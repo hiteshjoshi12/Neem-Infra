@@ -16,12 +16,12 @@ export default function AnimatedCounter({
   formatComma = false,
   className = ''
 }) {
-  const [displayValue, setDisplayValue] = useState(0);
-  const elementRef = useRef(null);
-  const hasAnimated = useRef(false);
-
   // Parse numeric target
   const targetNumber = typeof value === 'number' ? value : parseFloat(String(value).replace(/[^0-9.-]/g, '')) || 0;
+  // Initialize with true target number so SSR HTML renders the real metric for bots/crawlers
+  const [displayValue, setDisplayValue] = useState(targetNumber);
+  const elementRef = useRef(null);
+  const hasAnimated = useRef(false);
 
   useEffect(() => {
     const el = elementRef.current;

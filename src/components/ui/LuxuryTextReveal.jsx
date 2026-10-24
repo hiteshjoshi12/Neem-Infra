@@ -50,8 +50,13 @@ export default function LuxuryTextReveal({
 
   const highlightWords = highlightText ? highlightText.trim().split(/\s+/) : [];
 
+  const fullAccessibleText = `${text} ${highlightText}`.trim();
+
   return (
-    <Component className={`font-serif tracking-tight leading-tight ${className}`}>
+    <Component
+      aria-label={fullAccessibleText}
+      className={`font-serif tracking-tight leading-tight ${className}`}
+    >
       <motion.span
         initial="hidden"
         whileInView="visible"
@@ -60,25 +65,31 @@ export default function LuxuryTextReveal({
         className="inline-block"
       >
         {words.map((word, idx) => (
-          <span key={`w-${idx}`} className="inline-block overflow-hidden mr-[0.26em] align-top">
-            <motion.span
-              variants={wordVariants}
-              className="inline-block origin-bottom"
-            >
-              {word}
-            </motion.span>
-          </span>
+          <React.Fragment key={`w-${idx}`}>
+            <span className="inline-block overflow-hidden mr-[0.26em] align-top">
+              <motion.span
+                variants={wordVariants}
+                className="inline-block origin-bottom"
+              >
+                {word}
+              </motion.span>
+            </span>
+            {" "}
+          </React.Fragment>
         ))}
 
         {highlightWords.map((word, idx) => (
-          <span key={`h-${idx}`} className="inline-block overflow-hidden mr-[0.28em] pr-2 -mr-1 align-top">
-            <motion.span
-              variants={wordVariants}
-              className="inline-block italic text-brand-gold font-serif font-bold tracking-normal"
-            >
-              {word}
-            </motion.span>
-          </span>
+          <React.Fragment key={`h-${idx}`}>
+            <span className="inline-block overflow-hidden mr-[0.28em] pr-2 -mr-1 align-top">
+              <motion.span
+                variants={wordVariants}
+                className="inline-block italic text-brand-gold font-serif font-bold tracking-normal"
+              >
+                {word}
+              </motion.span>
+            </span>
+            {" "}
+          </React.Fragment>
         ))}
       </motion.span>
     </Component>
