@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  serverExternalPackages: ['mongoose', 'bcryptjs', 'nodemailer', 'imagekit'],
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
@@ -27,6 +28,14 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'ik.imagekit.io',
+      },
+      {
+        protocol: 'https',
+        hostname: '**',
+      },
+      {
+        protocol: 'http',
+        hostname: '**',
       }
     ],
   },
@@ -163,4 +172,3 @@ const nextConfig = {
 };
 
 export default nextConfig;
-

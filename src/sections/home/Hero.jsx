@@ -1,18 +1,14 @@
 "use client";
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Search, MapPin, Building2, Wallet, ArrowUpRight } from 'lucide-react';
 import Image from 'next/image';
 import CustomSelect from '../../components/ui/CustomSelect';
 import CinematicHeroBackground from '../../components/ui/CinematicHeroBackground';
 import { useCms } from '../../context/CmsContext';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const unsplashLoader = ({ src, width, quality }) => {
-  const baseUrl = src.split('?')[0];
-  return `${baseUrl}?auto=format&fit=crop&w=${width}&q=${quality || 75}`;
-};
 
 export default function Hero() {
   const { sections, properties } = useCms();
@@ -44,6 +40,39 @@ export default function Hero() {
   }, [cardList, isHovered]);
 
   const currentProperty = cardList[currentCardIndex] || cardList[0] || {};
+
+  const propertyDetailUrl = currentProperty?.slug
+    ? `/properties/${currentProperty.slug}`
+    : (currentProperty?._id || currentProperty?.id
+        ? `/properties/${currentProperty._id || currentProperty.id}`
+        : (currentProperty?.link || '/properties'));
+
+  const currentSpotlightImage = currentProperty?.img || (currentProperty?.images && currentProperty.images[0]) || heroData.spotlight?.image;
+
+  // Dynamically compute location options for the search console
+  const dynamicLocationOptions = useMemo(() => {
+    if (heroData.locationOptions && Array.isArray(heroData.locationOptions) && heroData.locationOptions.length > 0) {
+      return heroData.locationOptions;
+    }
+    const base = [
+      { value: "dlf-phase-1", label: "DLF Phase 1" },
+      { value: "dlf-phase-2", label: "DLF Phase 2" },
+      { value: "dlf-phase-3", label: "DLF Phase 3" },
+      { value: "dlf-phase-4", label: "DLF Phase 4" },
+      { value: "dlf-phase-5", label: "DLF Phase 5" },
+      { value: "golf-course-ext", label: "Golf Course Ext" },
+      { value: "sushant-lok-1", label: "Sushant Lok 1" }
+    ];
+    (rawProperties || []).forEach(p => {
+      if (!p.location) return;
+      const rawLoc = p.location.split(',')[0].trim();
+      const val = rawLoc.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      if (!base.some(b => b.value === val || b.label.toLowerCase() === rawLoc.toLowerCase())) {
+        base.push({ value: val, label: rawLoc });
+      }
+    });
+    return base;
+  }, [heroData.locationOptions, rawProperties]);
 
   const spotlightCardRef = useRef(null);
 
@@ -82,10 +111,12 @@ export default function Hero() {
       let locVal = location;
       if (location === 'dlf-1' || location === 'dlf-phase-1') locVal = 'dlf-phase-1';
       else if (location === 'dlf-2' || location === 'dlf-phase-2') locVal = 'dlf-phase-2';
+      else if (location === 'dlf-3' || location === 'dlf-phase-3') locVal = 'dlf-phase-3';
       else if (location === 'dlf-4' || location === 'dlf-phase-4') locVal = 'dlf-phase-4';
-      else if (location === 'dlf-5') locVal = 'dlf-phase-1';
+      else if (location === 'dlf-5' || location === 'dlf-phase-5') locVal = 'dlf-phase-5';
       else if (location === 'golf-course' || location === 'golf-course-ext') locVal = 'golf-course-ext';
       else if (location === 'sushant-lok' || location === 'sushant-lok-1') locVal = 'sushant-lok-1';
+      else locVal = location;
       params.set('location', locVal);
     }
 
@@ -203,13 +234,7 @@ export default function Hero() {
                     label="Location"
                     value={location}
                     onChange={setLocation}
-                    options={heroData.locationOptions || [
-                      { value: "golf-course", label: "Golf Course Ext" },
-                      { value: "dlf-1", label: "DLF Phase 1" },
-                      { value: "dlf-5", label: "DLF Phase 5" },
-                      { value: "sushant-lok", label: "Sushant Lok 1" },
-                      { value: "dwarka-expy", label: "Dwarka Expressway" }
-                    ]}
+                    options={dynamicLocationOptions}
                   />
 
                   <CustomSelect
@@ -322,25 +347,26 @@ export default function Hero() {
                 </div>
 
                 {/* Property Image Showcase */}
-                <div className="relative h-44 rounded-2xl overflow-hidden mb-4 border border-brand-cream-border bg-brand-cream">
+                <Link href={propertyDetailUrl} className="block relative h-44 rounded-2xl overflow-hidden mb-4 border border-brand-cream-border bg-brand-cream group/img">
                   <Image
-                    loader={unsplashLoader}
-                    src={currentProperty.img || (currentProperty.images && currentProperty.images[0]) || heroData.spotlight?.image || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c"}
+                    src={currentSpotlightImage}
                     alt={currentProperty.title || "Featured Gurgaon Property"}
                     width={800}
                     height={500}
                     sizes="(max-width: 1024px) 100vw, 400px"
-                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    className="w-full h-full object-cover group-hover/img:scale-105 transition-transform duration-700"
                   />
                   <div className="absolute top-3 left-3 px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-brand-navy text-[10px] font-bold border border-brand-cream-border shadow-xs">
                     {currentProperty.tag || "Exclusive Listing"}
                   </div>
-                </div>
+                </Link>
 
                 {/* Title & Specifications */}
-                <h2 className="text-lg font-serif font-bold text-brand-navy mb-1 truncate" title={currentProperty.title}>
-                  {currentProperty.title || "Ultra-Luxury Independent Floor"}
-                </h2>
+                <Link href={propertyDetailUrl} className="block group/title">
+                  <h2 className="text-lg font-serif font-bold text-brand-navy mb-1 truncate group-hover/title:text-brand-gold transition-colors" title={currentProperty.title}>
+                    {currentProperty.title || "Ultra-Luxury Independent Floor"}
+                  </h2>
+                </Link>
                 <p className="text-xs text-brand-slate font-light mb-4 line-clamp-1">
                   {currentProperty.specs || currentProperty.desc || "4 BHK • DLF Phase Gurgaon"}
                 </p>
@@ -355,13 +381,14 @@ export default function Hero() {
                       {currentProperty.price || "₹4.50 Cr."}
                     </span>
                   </div>
-                  <a
-                    href={currentProperty.link || `tel:${heroData.spotlight?.phone || '+919811221207'}`}
-                    aria-label={`Enquire about ${currentProperty.title || 'Featured Property'}`}
-                    className="px-4 py-2 rounded-full bg-gradient-to-r from-brand-gold to-brand-gold-light text-white text-[11px] font-bold uppercase tracking-wider hover:brightness-105 transition-all shadow-sm cursor-pointer"
+                  <Link
+                    href={propertyDetailUrl}
+                    aria-label={`View details for ${currentProperty.title || 'Featured Property'}`}
+                    className="px-4 py-2 rounded-full bg-gradient-to-r from-brand-gold to-brand-gold-light hover:brightness-105 text-white text-[11px] font-bold uppercase tracking-wider transition-all shadow-sm flex items-center gap-1.5"
                   >
-                    {heroData.spotlight?.ctaText || "Enquire"}
-                  </a>
+                    <span>{heroData.spotlight?.ctaText || "View Property"}</span>
+                    <ArrowUpRight size={13} />
+                  </Link>
                 </div>
 
                 {/* 3-Second Cycle Progress Bar Indicator */}

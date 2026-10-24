@@ -23,11 +23,13 @@ import api from '@/services/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useCms, DEFAULT_SECTIONS } from '@/context/CmsContext';
 
-const CORRIDOR_CLASSIFICATIONS = [
+const BASE_CORRIDORS = [
   { id: 'all', label: 'All Corridors', match: '' },
   { id: 'dlf-phase-1', label: 'DLF Phase 1', match: 'DLF Phase 1' },
   { id: 'dlf-phase-2', label: 'DLF Phase 2', match: 'DLF Phase 2' },
+  { id: 'dlf-phase-3', label: 'DLF Phase 3', match: 'DLF Phase 3' },
   { id: 'dlf-phase-4', label: 'DLF Phase 4', match: 'DLF Phase 4' },
+  { id: 'dlf-phase-5', label: 'DLF Phase 5', match: 'DLF Phase 5' },
   { id: 'golf-course-ext', label: 'Golf Course Road', match: 'Golf Course' },
   { id: 'sushant-lok-1', label: 'Sushant Lok 1', match: 'Sushant Lok' },
 ];
@@ -73,9 +75,9 @@ function parsePriceToNumber(priceStr) {
   return isNaN(rawNum) ? 0 : rawNum;
 }
 
-export default function PropertiesCatalogClient({ initialProperties = [] }) {
+export default function PropertiesCatalogClient({ initialProperties = [], allProperties: initialAllProperties = [] }) {
   const searchParams = useSearchParams();
-  const { sections } = useCms();
+  const { sections, properties: cmsProperties } = useCms();
   const cms = sections?.page_properties || DEFAULT_SECTIONS?.page_properties || {};
 
   // State initialized from URL query params or defaults
@@ -86,6 +88,46 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
   const [activePrice, setActivePrice] = useState(searchParams?.get('price') || 'all');
   const [activeBhk, setActiveBhk] = useState(searchParams?.get('bhk') || 'all');
   const [activeSort, setActiveSort] = useState(searchParams?.get('sort') || 'curated');
+
+  // Comprehensive pool of properties to discover locations and counts
+  const allAvailableProperties = useMemo(() => {
+    if (Array.isArray(cmsProperties) && cmsProperties.length > 0) {
+      return cmsProperties;
+    }
+    if (Array.isArray(initialAllProperties) && initialAllProperties.length > 0) {
+      return initialAllProperties;
+    }
+    if (Array.isArray(initialProperties) && initialProperties.length > 0) {
+      return initialProperties;
+    }
+    return properties || [];
+  }, [cmsProperties, initialAllProperties, initialProperties, properties]);
+
+  // Dynamically compute corridors: standard prime DLF corridors + any custom locations in properties
+  const dynamicCorridors = useMemo(() => {
+    const list = [...BASE_CORRIDORS];
+    const knownMatches = list.map(c => c.match.toLowerCase()).filter(Boolean);
+
+    allAvailableProperties.forEach(p => {
+      if (!p.location) return;
+      const rawLoc = p.location.split(',')[0].trim();
+      if (!rawLoc) return;
+
+      const alreadyMatched = knownMatches.some(m => rawLoc.toLowerCase().includes(m) || m.includes(rawLoc.toLowerCase()));
+      if (!alreadyMatched) {
+        const slug = rawLoc.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+        if (!list.some(c => c.id === slug)) {
+          list.push({
+            id: slug,
+            label: rawLoc,
+            match: rawLoc,
+          });
+        }
+      }
+    });
+
+    return list;
+  }, [allAvailableProperties]);
 
   // Synchronize state and trigger query when searchParams changes
   const searchParamsString = searchParams?.toString() || '';
@@ -101,11 +143,15 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
     const bhkVal = paramsOverride.bhk ?? activeBhk;
     const sortVal = paramsOverride.sort ?? activeSort;
 
-    const activeCorridorItem = CORRIDOR_CLASSIFICATIONS.find(c => c.id === corrVal);
+    const activeCorridorItem = dynamicCorridors.find(c => c.id === corrVal);
     const activePriceItem = PRICE_RANGES.find(p => p.id === priceVal);
 
     if (catVal && catVal !== 'all') queryObj.category = catVal;
-    if (activeCorridorItem?.match) queryObj.location = activeCorridorItem.match;
+    if (activeCorridorItem?.match) {
+      queryObj.location = activeCorridorItem.match;
+    } else if (corrVal && corrVal !== 'all') {
+      queryObj.location = corrVal.replace(/-/g, ' ');
+    }
     if (bhkVal && bhkVal !== 'all') queryObj.bhk = bhkVal;
     if (activePriceItem?.min) queryObj.minPrice = activePriceItem.min;
     if (activePriceItem?.max) queryObj.maxPrice = activePriceItem.max;
@@ -120,7 +166,7 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
       }
     } catch (err) {
       console.warn('Filtering with in-memory dataset:', err?.message);
-      let fallback = [...initialProperties];
+      let fallback = [...allAvailableProperties];
 
       if (queryObj.location) {
         fallback = fallback.filter(p => p.location?.toLowerCase().includes(queryObj.location.toLowerCase()));
@@ -253,17 +299,17 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
     activeBhk !== 'all' ||
     activeSort !== 'curated';
 
-  // Corridor counts calculated from current initial dataset
+  // Corridor counts calculated from current available dataset
   const corridorCounts = useMemo(() => {
-    const map = { all: initialProperties.length };
-    CORRIDOR_CLASSIFICATIONS.forEach(c => {
+    const map = { all: allAvailableProperties.length };
+    dynamicCorridors.forEach(c => {
       if (c.id === 'all') return;
-      map[c.id] = initialProperties.filter(p => 
+      map[c.id] = allAvailableProperties.filter(p => 
         p.location && p.location.toLowerCase().includes(c.match.toLowerCase())
       ).length;
     });
     return map;
-  }, [initialProperties]);
+  }, [allAvailableProperties, dynamicCorridors]);
 
   return (
     <div className="w-full min-h-screen bg-brand-ivory text-brand-navy pb-20 selection:bg-brand-gold selection:text-brand-navy-deep">
@@ -354,7 +400,7 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
 
             {/* Corridor Tabs */}
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 lg:pb-0 luxury-scrollbar w-full lg:w-auto">
-              {CORRIDOR_CLASSIFICATIONS.map(corridor => {
+              {dynamicCorridors.map(corridor => {
                 const count = corridorCounts[corridor.id] || 0;
                 const isSelected = activeCorridor === corridor.id;
                 const displayLabel = corridor.id === 'all' 
@@ -495,7 +541,7 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
 
               {activeCorridor !== 'all' && (
                 <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-brand-obsidian text-white text-[11px] font-medium">
-                  <span>{CORRIDOR_CLASSIFICATIONS.find(c => c.id === activeCorridor)?.label}</span>
+                  <span>{dynamicCorridors.find(c => c.id === activeCorridor)?.label || activeCorridor}</span>
                   <button onClick={() => handleCorridorSelect('all')} className="hover:text-brand-gold cursor-pointer">
                     <X size={11} />
                   </button>
@@ -551,7 +597,7 @@ export default function PropertiesCatalogClient({ initialProperties = [] }) {
         <div className="flex items-center justify-between pb-4 mb-6 border-b border-brand-navy/10">
           <div>
             <h2 className="text-xl sm:text-2xl font-serif font-bold text-brand-navy">
-              {CORRIDOR_CLASSIFICATIONS.find(c => c.id === activeCorridor)?.label || 'All Properties'}
+              {dynamicCorridors.find(c => c.id === activeCorridor)?.label || 'All Properties'}
             </h2>
             <span className="text-xs text-brand-slate font-medium">
               Showing {properties.length} verified listings
@@ -687,7 +733,7 @@ function PropertyListingCard({ property, index = 0 }) {
 
   const detailUrl = property.slug 
     ? `/properties/${property.slug}` 
-    : (property.link || `/properties/${property._id || property.id}`);
+    : (property._id || property.id ? `/properties/${property._id || property.id}` : (property.link || '/properties'));
 
   const whatsappInquiryUrl = `https://wa.me/919718511207?text=${encodeURIComponent(
     `Hello Saudagar Properties, I am inquiring about "${property.title}" (${property.location}, Ask: ${property.price}). Please share the floor plan and schedule a site inspection.`
@@ -706,7 +752,7 @@ function PropertyListingCard({ property, index = 0 }) {
         {/* Card Image */}
         <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-slate-100 mb-4 border border-brand-navy/5">
           <Image
-            src={property.img || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80"}
+            src={property.img}
             alt={property.title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 380px"

@@ -21,7 +21,8 @@ import {
   ArrowRight,
   CheckCircle2,
   SlidersHorizontal,
-  Eye
+  Eye,
+  Award
 } from 'lucide-react';
 
 const WEBSITE_PAGES = [
@@ -132,6 +133,18 @@ const WEBSITE_PAGES = [
     sectionsCount: 6,
     description: 'Market research masthead, DLF market pulse metrics, editorial cover dossier, corridor spotlights, research library archive, and VIP newsletter subscription.',
     sections: ['Research Masthead', 'Market Pulse Indicators', 'Editorial Cover Dossier', 'Corridor Spotlights', 'Research Library Archive', 'Advisory Newsletter']
+  },
+  {
+    id: 'authors',
+    title: 'Editorial Authors (Arun Sharma & Team)',
+    category: 'core',
+    route: '/blog/author/arun-sharma',
+    editUrl: '/admin/pages/authors?author=arun-sharma',
+    icon: Award,
+    badge: 'Editorial Profiles',
+    sectionsCount: 3,
+    description: 'Manage author credentials, biography, high-resolution portrait, job title, specialized real estate expertise, and social channels for Arun Sharma and editorial desk contributors.',
+    sections: ['Profile Details', 'Specialties & Expertise', 'Social Links & Preview']
   },
   {
     id: 'corridors',

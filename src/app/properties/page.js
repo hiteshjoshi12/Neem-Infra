@@ -49,21 +49,42 @@ export default async function PropertiesPage(props) {
     const found = [
       { id: 'dlf-phase-1', match: 'DLF Phase 1' },
       { id: 'dlf-phase-2', match: 'DLF Phase 2' },
+      { id: 'dlf-phase-3', match: 'DLF Phase 3' },
       { id: 'dlf-phase-4', match: 'DLF Phase 4' },
+      { id: 'dlf-phase-5', match: 'DLF Phase 5' },
       { id: 'golf-course-ext', match: 'Golf Course' },
       { id: 'sushant-lok-1', match: 'Sushant Lok' },
     ].find(c => c.id === searchParams.location);
-    corridorMatch = found?.match || searchParams.location;
+    corridorMatch = found?.match || searchParams.location.replace(/-/g, ' ');
   }
 
-  const properties = await getProperties({
-    all: false,
-    search: searchParams?.search,
-    category: searchParams?.category && searchParams.category !== 'all' ? searchParams.category : undefined,
-    location: corridorMatch,
-    bhk: searchParams?.bhk && searchParams.bhk !== 'all' ? searchParams.bhk : undefined,
-    sort: searchParams?.sort && searchParams.sort !== 'curated' ? searchParams.sort : undefined,
-  });
+  const hasFilters = Boolean(
+    (searchParams?.location && searchParams.location !== 'all') ||
+    (searchParams?.category && searchParams.category !== 'all') ||
+    (searchParams?.bhk && searchParams.bhk !== 'all') ||
+    searchParams?.search ||
+    (searchParams?.sort && searchParams.sort !== 'curated')
+  );
+
+  let allProperties = [];
+  let properties = [];
+
+  if (!hasFilters) {
+    properties = await getProperties({ all: false });
+    allProperties = properties;
+  } else {
+    [allProperties, properties] = await Promise.all([
+      getProperties({ all: false }),
+      getProperties({
+        all: false,
+        search: searchParams?.search,
+        category: searchParams?.category && searchParams.category !== 'all' ? searchParams.category : undefined,
+        location: corridorMatch,
+        bhk: searchParams?.bhk && searchParams.bhk !== 'all' ? searchParams.bhk : undefined,
+        sort: searchParams?.sort && searchParams.sort !== 'curated' ? searchParams.sort : undefined,
+      })
+    ]);
+  }
 
   return (
     <PublicLayout>
@@ -74,7 +95,7 @@ export default async function PropertiesPage(props) {
         ]}
       />
       <Suspense fallback={<PropertiesCatalogSkeleton />}>
-        <PropertiesCatalogClient initialProperties={properties} />
+        <PropertiesCatalogClient initialProperties={properties} allProperties={allProperties} />
       </Suspense>
     </PublicLayout>
   );

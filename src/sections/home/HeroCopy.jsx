@@ -1,18 +1,14 @@
 "use client";
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useMemo } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { Search, MapPin, Building2, Wallet, Volume2, VolumeX, Play, Pause, ArrowUpRight, ChevronDown, Sparkles } from 'lucide-react';
 import Image from 'next/image';
 import CustomSelect from '../../components/ui/CustomSelect';
 import CinematicHeroBackground from '../../components/ui/CinematicHeroBackground';
 import { useCms } from '../../context/CmsContext';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const unsplashLoader = ({ src, width, quality }) => {
-  const baseUrl = src.split('?')[0];
-  return `${baseUrl}?auto=format&fit=crop&w=${width}&q=${quality || 75}`;
-};
 
 /**
  * Editorial Luxury Real Estate Hero (HeroCopy)
@@ -67,6 +63,40 @@ export default function HeroCopy() {
 
   const currentProperty = cardList[currentCardIndex] || cardList[0] || {};
 
+  // Destination URL for clicking on the spotlight property
+  const propertyDetailUrl = currentProperty?.slug
+    ? `/properties/${currentProperty.slug}`
+    : (currentProperty?._id || currentProperty?.id
+        ? `/properties/${currentProperty._id || currentProperty.id}`
+        : (currentProperty?.link || '/properties'));
+
+  const currentSpotlightImage = currentProperty?.img || (currentProperty?.images && currentProperty.images[0]) || heroData.spotlight?.image;
+
+  // Dynamically compute location options for the search console
+  const dynamicLocationOptions = useMemo(() => {
+    if (heroData.locationOptions && Array.isArray(heroData.locationOptions) && heroData.locationOptions.length > 0) {
+      return heroData.locationOptions;
+    }
+    const base = [
+      { value: "dlf-phase-1", label: "DLF Phase 1" },
+      { value: "dlf-phase-2", label: "DLF Phase 2" },
+      { value: "dlf-phase-3", label: "DLF Phase 3" },
+      { value: "dlf-phase-4", label: "DLF Phase 4" },
+      { value: "dlf-phase-5", label: "DLF Phase 5" },
+      { value: "golf-course-ext", label: "Golf Course Ext" },
+      { value: "sushant-lok-1", label: "Sushant Lok 1" }
+    ];
+    (rawProperties || []).forEach(p => {
+      if (!p.location) return;
+      const rawLoc = p.location.split(',')[0].trim();
+      const val = rawLoc.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+      if (!base.some(b => b.value === val || b.label.toLowerCase() === rawLoc.toLowerCase())) {
+        base.push({ value: val, label: rawLoc });
+      }
+    });
+    return base;
+  }, [heroData.locationOptions, rawProperties]);
+
   // Helper to build URL with query params
   const buildPropertiesSearchUrl = (searchParamsObj = {}) => {
     const params = new URLSearchParams();
@@ -81,10 +111,12 @@ export default function HeroCopy() {
       let locVal = loc;
       if (loc === 'dlf-1' || loc === 'dlf-phase-1') locVal = 'dlf-phase-1';
       else if (loc === 'dlf-2' || loc === 'dlf-phase-2') locVal = 'dlf-phase-2';
+      else if (loc === 'dlf-3' || loc === 'dlf-phase-3') locVal = 'dlf-phase-3';
       else if (loc === 'dlf-4' || loc === 'dlf-phase-4') locVal = 'dlf-phase-4';
-      else if (loc === 'dlf-5') locVal = 'dlf-phase-1';
+      else if (loc === 'dlf-5' || loc === 'dlf-phase-5') locVal = 'dlf-phase-5';
       else if (loc === 'golf-course' || loc === 'golf-course-ext') locVal = 'golf-course-ext';
       else if (loc === 'sushant-lok' || loc === 'sushant-lok-1') locVal = 'sushant-lok-1';
+      else locVal = loc;
       params.set('location', locVal);
     }
 
@@ -279,13 +311,7 @@ export default function HeroCopy() {
                 label="Location"
                 value={location}
                 onChange={setLocation}
-                options={heroData.locationOptions || [
-                  { value: "dlf-phase-1", label: "DLF Phase 1" },
-                  { value: "dlf-phase-2", label: "DLF Phase 2" },
-                  { value: "dlf-phase-4", label: "DLF Phase 4" },
-                  { value: "golf-course-ext", label: "Golf Course Ext" },
-                  { value: "sushant-lok-1", label: "Sushant Lok 1" }
-                ]}
+                options={dynamicLocationOptions}
               />
             </div>
 
@@ -438,17 +464,21 @@ export default function HeroCopy() {
             onMouseLeave={() => setIsHovered(false)}
             className="hidden md:block absolute bottom-8 right-8 z-50"
           >
-            <motion.div
-              initial={{ opacity: 0, y: 10, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              transition={{ duration: 0.5, ease: "easeOut", delay: 0.4 }}
-              className="group relative flex items-center gap-3 px-3.5 py-2 rounded-full bg-brand-obsidian/85 backdrop-blur-2xl border border-white/20 hover:border-brand-gold/60 transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.6)] cursor-pointer overflow-hidden"
+            <Link
+              href={propertyDetailUrl}
+              className="block no-underline focus:outline-none focus:ring-2 focus:ring-brand-gold/60 rounded-full"
+              aria-label={`View ${currentProperty.title || 'Featured Property'}`}
             >
+              <motion.div
+                initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                transition={{ duration: 0.5, ease: "easeOut", delay: 0.4 }}
+                className="group relative flex items-center gap-3 px-3.5 py-2 rounded-full bg-brand-obsidian/85 backdrop-blur-2xl border border-white/20 hover:border-brand-gold/60 transition-all duration-300 shadow-[0_15px_40px_rgba(0,0,0,0.6)] cursor-pointer overflow-hidden"
+              >
                 {/* Mini Thumbnail */}
-                <div className="relative w-9 h-9 rounded-full overflow-hidden flex-shrink-0 border border-white/20">
+                <div className="relative w-9 h-9 rounded-full overflow-hidden flex-shrink-0 border border-white/20 bg-brand-navy">
                   <Image
-                    loader={unsplashLoader}
-                    src={currentProperty.img || (currentProperty.images && currentProperty.images[0]) || heroData.spotlight?.image || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c"}
+                    src={currentSpotlightImage}
                     alt={currentProperty.title || "Featured Property"}
                     fill
                     sizes="36px"
@@ -472,18 +502,17 @@ export default function HeroCopy() {
                   </div>
                 </div>
 
-                {/* Direct Enquiry Action Arrow */}
-                <a
-                  href={currentProperty.link || `tel:${heroData.spotlight?.phone || '+919811221207'}`}
-                  aria-label={`Enquire about ${currentProperty.title || 'Featured Property'}`}
-                  className="w-7 h-7 rounded-full bg-brand-gold hover:bg-brand-gold text-brand-navy-deep flex items-center justify-center flex-shrink-0 shadow transition-colors ml-1"
-                  title="Enquire"
+                {/* Direct Action Arrow Indicator */}
+                <span
+                  aria-hidden="true"
+                  className="w-7 h-7 rounded-full bg-brand-gold group-hover:bg-brand-gold-light group-hover:scale-105 text-brand-navy-deep flex items-center justify-center flex-shrink-0 shadow transition-all ml-1"
+                  title="View Property"
                 >
-                  <ArrowUpRight size={14} />
-                </a>
+                  <ArrowUpRight size={14} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </span>
 
                 {/* 3-Second Cycle Progress Line */}
-                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-white/10">
+                <div className="absolute bottom-0 left-0 right-0 h-[2px] bg-white/10 pointer-events-none">
                   <motion.div
                     key={`progress-${currentCardIndex}`}
                     initial={{ width: "0%" }}
@@ -492,7 +521,8 @@ export default function HeroCopy() {
                     className="h-full bg-brand-gold"
                   />
                 </div>
-            </motion.div>
+              </motion.div>
+            </Link>
           </div>
         )}
 

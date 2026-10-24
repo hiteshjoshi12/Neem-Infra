@@ -201,6 +201,24 @@ export const api = {
       body: JSON.stringify(tagData)
     }),
 
+  // Authors (Editorial Desk)
+  getAuthors: () => request('/authors'),
+  getAuthor: (id) => request(`/authors/${id}`),
+  createAuthor: (authorData) =>
+    request('/authors', {
+      method: 'POST',
+      body: JSON.stringify(authorData)
+    }),
+  updateAuthor: (id, authorData) =>
+    request(`/authors/${id}`, {
+      method: 'PUT',
+      body: JSON.stringify(authorData)
+    }),
+  deleteAuthor: (id) =>
+    request(`/authors/${id}`, {
+      method: 'DELETE'
+    }),
+
   // Locations (Market Intelligence Corridors)
   getLocations: () => request('/locations'),
   getLocation: (id) => request(`/locations/${id}`),

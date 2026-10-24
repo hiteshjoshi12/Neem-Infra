@@ -14,7 +14,8 @@ import {
   Calendar, 
   User, 
   Sparkles,
-  RefreshCw
+  RefreshCw,
+  Award
 } from 'lucide-react';
 import api from '@/services/api';
 
@@ -113,6 +114,14 @@ export default function AdminBlogDashboard() {
           >
             <RefreshCw size={15} className={loading ? 'animate-spin' : ''} />
           </button>
+
+          <Link
+            href="/admin/pages/authors"
+            className="px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-brand-gold hover:text-white text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer"
+          >
+            <Award size={14} />
+            <span>Manage Authors</span>
+          </Link>
 
           <Link
             href="/admin/blog/new"

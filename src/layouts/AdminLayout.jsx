@@ -30,7 +30,8 @@ import {
   Activity,
   Zap,
   Database,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Award
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import Image from 'next/image';
@@ -136,6 +137,7 @@ export default function AdminLayout({ children }) {
       group: 'Editorial & Media',
       items: [
         { label: 'Blog Articles', to: '/admin/blog', icon: FileText },
+        { label: 'Editorial Authors', to: '/admin/pages/authors', icon: Award, pill: 'Arun Sharma' },
         { label: 'Testimonials', to: '/admin/testimonials', icon: Quote },
       ]
     }
@@ -208,6 +210,9 @@ export default function AdminLayout({ children }) {
     }
     if (pathname === '/admin/pages/blog') {
       return { title: 'Blog Page CMS', desc: 'Edit research archive masthead, market pulse, and newsletter banner' };
+    }
+    if (pathname.startsWith('/admin/pages/authors') || pathname.startsWith('/admin/authors')) {
+      return { title: 'Editorial Author Profile CMS', desc: 'Edit credentials, bio, image, and specialties for Arun Sharma & contributors' };
     }
     if (pathname === '/admin/pages/about') {
       return { title: 'About Us Page CMS', desc: 'Edit company mission, video tour, leadership, and consultation banner' };
