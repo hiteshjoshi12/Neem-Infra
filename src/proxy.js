@@ -33,6 +33,8 @@ export async function proxy(request) {
     pathname.startsWith('/_next') ||
     pathname.includes('.') ||
     pathname === '/favicon.ico' ||
+    pathname.startsWith('/icon') ||
+    pathname.startsWith('/apple-icon') ||
     pathname === '/robots.txt' ||
     pathname === '/sitemap.xml' ||
     pathname === '/llms.txt'
@@ -79,7 +81,7 @@ export async function proxy(request) {
 
 export const config = {
   matcher: [
-    // Apply proxy to all paths except static files, _next, and favicon
-    '/((?!_next/static|_next/image|favicon.ico).*)',
+    // Apply proxy to all paths except static files, _next, favicon, and app icons
+    '/((?!_next/static|_next/image|favicon.ico|icon|apple-icon).*)',
   ],
 };
