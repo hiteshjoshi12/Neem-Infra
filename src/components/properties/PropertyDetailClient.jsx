@@ -172,7 +172,7 @@ export default function PropertyDetailClient({ property }) {
           <div className="absolute inset-0 z-0 opacity-60 pointer-events-none select-none">
             <Image
               src={property.image || property.images[0]}
-              alt={property.title}
+              alt={property.imgAlt || (property.imagesAlt && property.imagesAlt[0]) || property.title}
               fill
               priority
               sizes="100vw"
@@ -271,7 +271,7 @@ export default function PropertyDetailClient({ property }) {
                 <div className="w-full h-full relative overflow-hidden bg-slate-100">
                   <Image
                     src={allImages[activeImageIdx] || property.img}
-                    alt={property.title}
+                    alt={(property.imagesAlt && property.imagesAlt[activeImageIdx]) || (activeImageIdx === 0 ? property.imgAlt : null) || `${property.title} - View ${activeImageIdx + 1}`}
                     fill
                     sizes="(max-width: 1200px) 100vw, 1200px"
                     className="w-full h-full object-cover object-center"
@@ -355,7 +355,7 @@ export default function PropertyDetailClient({ property }) {
                   <div className="relative w-full h-full bg-slate-100 overflow-hidden">
                     <Image
                       src={imgUrl}
-                      alt={`View ${idx + 1}`}
+                      alt={(property.imagesAlt && property.imagesAlt[idx]) || `${property.title} — Photo ${idx + 1}`}
                       fill
                       sizes="112px"
                       className="object-cover object-center"

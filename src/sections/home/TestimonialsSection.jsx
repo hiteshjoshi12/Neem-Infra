@@ -70,7 +70,7 @@ function FeaturedSplitTestimonial({
         <div className="lg:col-span-5 relative min-h-[320px] sm:min-h-[380px] lg:min-h-full overflow-hidden bg-brand-navy-deep">
           <Image
             src={displayImage}
-            alt={`${item.name} — Saudagar Properties client`}
+            alt={item.avatarAlt || item.imageAlt || `${item.name} — Saudagar Properties client`}
             fill
             sizes="(max-width: 1024px) 100vw, 42vw"
             loading="lazy"
@@ -292,7 +292,7 @@ function CompactTestimonial({ item, index, onSelect, active }) {
           <div className="w-10 h-10 shrink-0 rounded-xl overflow-hidden relative border border-brand-gold/40 shadow-xs">
             <Image
               src={displayAvatar}
-              alt={`${item.name} — client`}
+              alt={item.avatarAlt || item.imageAlt || `${item.name} — client`}
               fill
               sizes="40px"
               loading="lazy"

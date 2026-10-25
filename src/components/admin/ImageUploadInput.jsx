@@ -468,22 +468,6 @@ export default function ImageUploadInput({
         </div>
       )}
 
-      {/* Required Alt Text Field for Accessibility & Image SEO */}
-      {!isCurrentValueVideo && (value || altText) && (
-        <div className="pt-2">
-          <label className="block text-[11px] font-semibold text-slate-300 mb-1">
-            Alt Text (Required for Image SEO &amp; Accessibility) <span className="text-brand-gold">*</span>
-          </label>
-          <input
-            type="text"
-            value={altText}
-            onChange={handleAltTextChange}
-            placeholder="e.g. Luxury 4 BHK Independent Builder Floor in DLF Phase 2 Gurugram"
-            className="w-full px-3.5 py-2 rounded-xl bg-white/[0.04] border border-white/10 focus:border-brand-gold text-white text-xs outline-none transition-colors"
-          />
-        </div>
-      )}
-
       {/* Manual Input Fallback */}
       {showManualInput && (
         <div className="pt-1">

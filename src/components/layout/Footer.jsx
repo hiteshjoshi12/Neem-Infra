@@ -255,7 +255,7 @@ export default function Footer() {
                   height={80}
                   loading="lazy"
                   src={footerData.logoUrl || logoImg}
-                  alt="Saudagar Properties"
+                  alt={footerData?.logoAlt || "Saudagar Properties"}
                   className="h-12 sm:h-14 w-auto object-contain"
                 />
               </div>

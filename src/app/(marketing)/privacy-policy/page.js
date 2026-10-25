@@ -52,8 +52,8 @@ export default async function PrivacyPolicy() {
       <section className="relative overflow-hidden pt-28 sm:pt-32 pb-14 lg:pb-16 bg-brand-obsidian text-white border-b border-white/10">
         <div className="absolute inset-0 z-0 opacity-80 pointer-events-none select-none">
           <Image
-            src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=2400&q=80"
-            alt="Privacy Policy Architectural Backdrop"
+            src={hero.bgImage || "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=2400&q=80"}
+            alt={hero.bgImageAlt || hero.imageAlt || "Privacy Policy Architectural Backdrop"}
             fill
             priority
             sizes="100vw"

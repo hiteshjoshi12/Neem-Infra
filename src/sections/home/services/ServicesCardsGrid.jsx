@@ -128,7 +128,7 @@ export default function ServicesCardsGrid() {
             <div className="relative h-52 sm:h-56 w-full overflow-hidden bg-slate-100">
               <Image
                 src={service.bgImage}
-                alt={service.title}
+                alt={service.bgImageAlt || service.imageAlt || service.title}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 380px"
                 loading="lazy"

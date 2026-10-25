@@ -185,7 +185,7 @@ export default function Hero() {
       className="relative z-30 w-full min-h-[90vh] lg:min-h-screen flex flex-col justify-center pt-28 pb-20 lg:pb-32 overflow-visible bg-brand-obsidian"
     >
       {/* Production Cinematic Remotion Hero Video Background Layer with Built-in Luxury Controls */}
-      <CinematicHeroBackground showControls={true} />
+      <CinematicHeroBackground showControls={true} posterAlt={heroData.videoPosterAlt || heroData.bgImageAlt || "Saudagar Luxury Properties Architecture"} />
 
       <div className="container mx-auto px-6 md:px-12 relative z-20 h-full flex flex-col justify-center">
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
@@ -394,7 +394,7 @@ export default function Hero() {
                 <Link href={propertyDetailUrl} className="block relative h-44 rounded-2xl overflow-hidden mb-4 border border-brand-cream-border bg-brand-cream group/img">
                   <Image
                     src={currentSpotlightImage}
-                    alt={currentProperty.title || "Featured Gurgaon Property"}
+                    alt={currentProperty.imgAlt || (currentProperty.imagesAlt && currentProperty.imagesAlt[0]) || currentProperty.title || "Featured Gurgaon Property"}
                     width={800}
                     height={500}
                     sizes="(max-width: 1024px) 100vw, 400px"

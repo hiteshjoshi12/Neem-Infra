@@ -1399,19 +1399,6 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
 
               <div>
                 <label className="block text-[11px] font-semibold text-slate-300 mb-1">
-                  Image Alt Text (Accessibility & SEO)
-                </label>
-                <input
-                  type="text"
-                  value={formData.featuredImageAlt}
-                  onChange={(e) => setFormData({ ...formData, featuredImageAlt: e.target.value })}
-                  placeholder="e.g. DLF Phase 1 luxury builder floor architecture"
-                  className="w-full text-xs bg-white/[0.04] border border-white/15 rounded-xl px-3 py-2 text-white outline-none focus:border-brand-gold"
-                />
-              </div>
-
-              <div>
-                <label className="block text-[11px] font-semibold text-slate-300 mb-1">
                   Caption / Credit (Optional)
                 </label>
                 <input

@@ -258,7 +258,7 @@ export default function AboutLeadership({ data }) {
                           <>
                             <Image
                               src={leader.image}
-                              alt={leader.name}
+                              alt={leader.imageAlt || `${leader.name} — ${leader.role || 'Leadership'}`}
                               fill
                               sizes="160px"
                               loading="lazy"
@@ -412,7 +412,7 @@ export default function AboutLeadership({ data }) {
                       <div className="relative w-36 h-36 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-white shadow-md bg-brand-ivory mx-auto">
                         <Image
                           src={member.image}
-                          alt={member.name}
+                          alt={member.imageAlt || `${member.name} — ${member.role || 'Consultant'}`}
                           width={160}
                           height={160}
                           loading="lazy"

@@ -52,8 +52,8 @@ export default async function Terms() {
       <section className="relative overflow-hidden pt-28 sm:pt-32 pb-14 lg:pb-16 bg-brand-obsidian text-white border-b border-white/10">
         <div className="absolute inset-0 z-0 opacity-80 pointer-events-none select-none">
           <Image
-            src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=80"
-            alt="Terms of Service Architectural Backdrop"
+            src={hero.bgImage || "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=80"}
+            alt={hero.bgImageAlt || hero.imageAlt || "Terms of Service Architectural Backdrop"}
             fill
             priority
             sizes="100vw"

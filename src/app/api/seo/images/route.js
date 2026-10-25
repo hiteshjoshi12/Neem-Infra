@@ -164,7 +164,8 @@ export async function GET(req) {
     // 3. Properties (Main Image + Gallery Images)
     properties.forEach((prop) => {
       if (prop.img && isImageUrl(prop.img)) {
-        const alt = prop.imgAlt || prop.title || '';
+        const alt = prop.imgAlt || '';
+        const suggestedAlt = `${prop.title} — Main Exterior Architecture`;
         const validation = validateAltText(alt);
         imageRecords.push({
           id: `prop_${prop._id}_main`,
@@ -175,6 +176,7 @@ export async function GET(req) {
           field: 'imgAlt',
           imageUrl: prop.img,
           altText: alt,
+          suggestedAlt,
           isValid: validation.isValid,
           issues: validation.issues,
         });
@@ -183,7 +185,8 @@ export async function GET(req) {
       if (Array.isArray(prop.images)) {
         prop.images.forEach((galImg, gIdx) => {
           if (isImageUrl(galImg)) {
-            const alt = (prop.imagesAlt && prop.imagesAlt[gIdx]) || `${prop.title} - Interior / Exterior View ${gIdx + 1}`;
+            const alt = (prop.imagesAlt && prop.imagesAlt[gIdx]) || '';
+            const suggestedAlt = `${prop.title} — Photo #${gIdx + 1}`;
             const validation = validateAltText(alt);
             imageRecords.push({
               id: `prop_${prop._id}_gallery_${gIdx}`,
@@ -194,6 +197,7 @@ export async function GET(req) {
               field: `imagesAlt.${gIdx}`,
               imageUrl: galImg,
               altText: alt,
+              suggestedAlt,
               isValid: validation.isValid,
               issues: validation.issues,
             });
@@ -220,7 +224,9 @@ export async function GET(req) {
             const currentPath = path ? `${path}.${idx}` : `${idx}`;
             if (typeof item === 'string' && isImageUrl(item)) {
               const altFieldKey = `${currentPath}Alt`;
-              const alt = `${pageMeta.title} • Item #${idx + 1}`;
+              const rawAlt = obj[`${idx}Alt`] || '';
+              const suggestedAlt = `${pageMeta.title} • Item #${idx + 1}`;
+              const alt = rawAlt;
               const validation = validateAltText(alt);
               imageRecords.push({
                 id: `sec_${sKey}_${currentPath.replace(/\./g, '_')}`,
@@ -231,6 +237,7 @@ export async function GET(req) {
                 field: `data.${altFieldKey}`,
                 imageUrl: item,
                 altText: alt,
+                suggestedAlt,
                 isValid: validation.isValid,
                 issues: validation.issues,
               });
@@ -248,7 +255,8 @@ export async function GET(req) {
             const altFieldKey = getAltField(key);
             const rawAlt = obj[altFieldKey] || obj.alt || obj.altText || '';
             const contextTitle = parentContext || getContextLabel(obj, key);
-            const alt = rawAlt || `${pageMeta.title} • ${contextTitle}`;
+            const suggestedAlt = `${pageMeta.title} • ${contextTitle}`;
+            const alt = rawAlt;
             const validation = validateAltText(alt);
 
             imageRecords.push({
@@ -260,6 +268,7 @@ export async function GET(req) {
               field: `data.${path ? `${path}.${altFieldKey}` : altFieldKey}`,
               imageUrl: val,
               altText: alt,
+              suggestedAlt,
               isValid: validation.isValid,
               issues: validation.issues,
             });
@@ -277,7 +286,8 @@ export async function GET(req) {
     authors.forEach((a) => {
       const imgUrl = a.image || a.avatar;
       if (imgUrl && isImageUrl(imgUrl)) {
-        const alt = a.imageAlt || `${a.name} — Real Estate Consultant Profile`;
+        const alt = a.imageAlt || '';
+        const suggestedAlt = `${a.name} — Real Estate Consultant Profile`;
         const validation = validateAltText(alt);
         imageRecords.push({
           id: `author_${a._id}`,
@@ -288,6 +298,7 @@ export async function GET(req) {
           field: 'imageAlt',
           imageUrl: imgUrl,
           altText: alt,
+          suggestedAlt,
           isValid: validation.isValid,
           issues: validation.issues,
         });
@@ -297,7 +308,8 @@ export async function GET(req) {
     // 6. Testimonials
     testimonials.forEach((t) => {
       if (t.avatar && isImageUrl(t.avatar)) {
-        const alt = t.avatarAlt || `${t.name} — Verified Client Testimonial`;
+        const alt = t.avatarAlt || t.imageAlt || '';
+        const suggestedAlt = `${t.name} — Verified Client Testimonial`;
         const validation = validateAltText(alt);
         imageRecords.push({
           id: `testim_${t._id}`,
@@ -308,6 +320,7 @@ export async function GET(req) {
           field: 'avatarAlt',
           imageUrl: t.avatar,
           altText: alt,
+          suggestedAlt,
           isValid: validation.isValid,
           issues: validation.issues,
         });
@@ -388,10 +401,11 @@ export async function PUT(req) {
       invalidateCache('cms_sections');
       invalidateCache();
       try {
-        const { revalidateTag } = await import('next/cache');
+        const { revalidateTag, revalidatePath } = await import('next/cache');
         revalidateTag('sections');
         revalidateTag('dal_all_sections');
         revalidateTag('dal_single_section');
+        revalidatePath('/', 'layout');
       } catch (e) {}
     } else if (parentType === 'Property') {
       if (field === 'imgAlt') {
@@ -403,29 +417,33 @@ export async function PUT(req) {
         await Property.findByIdAndUpdate(parentId, { $set: { [field]: cleanAlt } });
       }
       try {
-        const { revalidateTag } = await import('next/cache');
+        const { revalidateTag, revalidatePath } = await import('next/cache');
         revalidateTag('properties');
         revalidateTag('dal_featured_properties');
+        revalidatePath('/', 'layout');
       } catch (e) {}
     } else if (parentType === 'BlogPost') {
       await BlogPost.findByIdAndUpdate(parentId, { $set: { [field]: cleanAlt } });
       try {
-        const { revalidateTag } = await import('next/cache');
+        const { revalidateTag, revalidatePath } = await import('next/cache');
         revalidateTag('blog');
+        revalidatePath('/', 'layout');
       } catch (e) {}
     } else if (parentType === 'Author') {
       await Author.findByIdAndUpdate(parentId, { $set: { [field]: cleanAlt } });
       try {
-        const { revalidateTag } = await import('next/cache');
+        const { revalidateTag, revalidatePath } = await import('next/cache');
         revalidateTag('authors');
         revalidateTag('team');
+        revalidatePath('/', 'layout');
       } catch (e) {}
     } else if (parentType === 'Testimonial') {
       await Testimonial.findByIdAndUpdate(parentId, { $set: { [field]: cleanAlt } });
       try {
-        const { revalidateTag } = await import('next/cache');
+        const { revalidateTag, revalidatePath } = await import('next/cache');
         revalidateTag('testimonials');
         revalidateTag('dal_testimonials');
+        revalidatePath('/', 'layout');
       } catch (e) {}
     } else if (parentType === 'Page') {
       if (field.startsWith('sections.') && typeof sectionIndex === 'number') {
@@ -438,6 +456,10 @@ export async function PUT(req) {
         await Page.findByIdAndUpdate(parentId, { $set: { [field]: cleanAlt } });
       }
       invalidateSeoCache();
+      try {
+        const { revalidatePath } = await import('next/cache');
+        revalidatePath('/', 'layout');
+      } catch (e) {}
     }
 
     return NextResponse.json({
@@ -447,6 +469,97 @@ export async function PUT(req) {
   } catch (error) {
     return NextResponse.json(
       { success: false, message: error.message || 'Failed to update alt text' },
+      { status: error.status || 500 }
+    );
+  }
+}
+
+export async function DELETE(req) {
+  try {
+    await requireAdmin(req);
+    await connectDB();
+    const body = await req.json();
+
+    const { parentType, parentId, field, sectionIndex } = body;
+
+    if (!parentType || !parentId || !field) {
+      return NextResponse.json({ success: false, message: 'Missing target parameters' }, { status: 400 });
+    }
+
+    if (parentType === 'SectionContent') {
+      const dbField = field.startsWith('data.') ? field : `data.${field}`;
+      await SectionContent.updateOne({ sectionKey: parentId }, { $set: { [dbField]: '' } });
+      invalidateCache('cms_sections');
+      invalidateCache();
+      try {
+        const { revalidateTag, revalidatePath } = await import('next/cache');
+        revalidateTag('sections');
+        revalidateTag('dal_all_sections');
+        revalidateTag('dal_single_section');
+        revalidatePath('/', 'layout');
+      } catch (e) {}
+    } else if (parentType === 'Property') {
+      if (field === 'imgAlt') {
+        await Property.findByIdAndUpdate(parentId, { $set: { imgAlt: '' } });
+      } else if (field.startsWith('imagesAlt.')) {
+        const idx = parseInt(field.split('.')[1], 10);
+        await Property.updateOne({ _id: parentId }, { $set: { [`imagesAlt.${idx}`]: '' } });
+      } else {
+        await Property.findByIdAndUpdate(parentId, { $set: { [field]: '' } });
+      }
+      try {
+        const { revalidateTag, revalidatePath } = await import('next/cache');
+        revalidateTag('properties');
+        revalidateTag('dal_featured_properties');
+        revalidatePath('/', 'layout');
+      } catch (e) {}
+    } else if (parentType === 'BlogPost') {
+      await BlogPost.findByIdAndUpdate(parentId, { $set: { [field]: '' } });
+      try {
+        const { revalidateTag, revalidatePath } = await import('next/cache');
+        revalidateTag('blog');
+        revalidatePath('/', 'layout');
+      } catch (e) {}
+    } else if (parentType === 'Author') {
+      await Author.findByIdAndUpdate(parentId, { $set: { [field]: '' } });
+      try {
+        const { revalidateTag, revalidatePath } = await import('next/cache');
+        revalidateTag('authors');
+        revalidateTag('team');
+        revalidatePath('/', 'layout');
+      } catch (e) {}
+    } else if (parentType === 'Testimonial') {
+      await Testimonial.findByIdAndUpdate(parentId, { $set: { [field]: '' } });
+      try {
+        const { revalidateTag, revalidatePath } = await import('next/cache');
+        revalidateTag('testimonials');
+        revalidateTag('dal_testimonials');
+        revalidatePath('/', 'layout');
+      } catch (e) {}
+    } else if (parentType === 'Page') {
+      if (field.startsWith('sections.') && typeof sectionIndex === 'number') {
+        const page = await Page.findById(parentId);
+        if (page && page.sections && page.sections[sectionIndex]) {
+          page.sections[sectionIndex].imageAlt = '';
+          await page.save();
+        }
+      } else {
+        await Page.findByIdAndUpdate(parentId, { $set: { [field]: '' } });
+      }
+      invalidateSeoCache();
+      try {
+        const { revalidatePath } = await import('next/cache');
+        revalidatePath('/', 'layout');
+      } catch (e) {}
+    }
+
+    return NextResponse.json({
+      success: true,
+      message: 'Alt text removed successfully',
+    });
+  } catch (error) {
+    return NextResponse.json(
+      { success: false, message: error.message || 'Failed to delete alt text' },
       { status: error.status || 500 }
     );
   }

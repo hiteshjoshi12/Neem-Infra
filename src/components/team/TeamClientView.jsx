@@ -50,7 +50,7 @@ export default function TeamClientView({
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-80">
           <Image
             src={heroData?.bgImage || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80"}
-            alt="DLF Luxury Estate Architecture"
+            alt={heroData?.bgImageAlt || heroData?.imageAlt || "DLF Luxury Estate Architecture"}
             fill
             sizes="100vw"
             priority

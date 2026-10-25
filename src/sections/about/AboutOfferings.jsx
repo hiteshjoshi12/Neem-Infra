@@ -175,7 +175,7 @@ export default function AboutOfferings({ data }) {
                     <div className="relative h-56 overflow-hidden bg-brand-ivory-warm">
                       <Image
                         src={item.image}
-                        alt={item.title}
+                        alt={item.imageAlt || item.title}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 380px"
                         loading="lazy"

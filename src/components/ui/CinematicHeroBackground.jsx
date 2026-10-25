@@ -22,6 +22,7 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
     onPause,
     onMuteChange,
     showControls = false,
+    posterAlt = "Saudagar Luxury Properties Architecture",
   },
   forwardedRef
 ) {
@@ -229,7 +230,7 @@ const CinematicHeroBackground = forwardRef(function CinematicHeroBackground(
       {/* 1. LCP Instant Poster Image Fallback (Exact First Frame of Video) */}
       <Image
         src={posterSrc}
-        alt="Saudagar Luxury Properties Architecture"
+        alt={posterAlt || "Saudagar Luxury Properties Architecture"}
         fill
         priority
         quality={80}

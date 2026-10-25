@@ -88,7 +88,7 @@ export default function AboutWhyChooseUs({ data }) {
             <div className="relative aspect-[21/9] sm:aspect-[28/9] w-full rounded-2xl overflow-hidden mb-8 border border-brand-navy/10 bg-slate-100">
               <Image
                 src={leadPillar.image}
-                alt={leadPillar.title}
+                alt={leadPillar.imageAlt || leadPillar.bgImageAlt || leadPillar.title}
                 fill
                 sizes="(max-width: 1200px) 100vw, 1100px"
                 className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
@@ -193,7 +193,7 @@ export default function AboutWhyChooseUs({ data }) {
                       <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden mb-5 bg-slate-100 border border-brand-navy/10">
                         <Image
                           src={pillar.image}
-                          alt={pillar.title}
+                          alt={pillar.imageAlt || pillar.bgImageAlt || pillar.title}
                           fill
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 380px"
                           className="object-cover object-center transition-transform duration-700 group-hover:scale-105"

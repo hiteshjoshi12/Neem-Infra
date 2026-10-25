@@ -95,7 +95,7 @@ export default function Navbar() {
                   height={70}
                   priority
                   src={logoImg}
-                  alt="Saudagar Properties"
+                  alt={navData?.logoAlt || "Saudagar Properties"}
                   className={`w-auto object-contain transition-all duration-500 ${
                     isScrolled ? 'h-9 md:h-11' : 'h-11 md:h-13'
                   }`}

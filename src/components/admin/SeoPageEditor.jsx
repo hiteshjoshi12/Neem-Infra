@@ -674,19 +674,6 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
                     onChange={url => setFormData({ ...formData, featuredImage: url })}
                     folder="pages"
                   />
-
-                  <div>
-                    <label className="block text-xs font-semibold text-brand-text-dim uppercase tracking-wider mb-2">
-                      Image Alt Text (SEO & Accessibility)
-                    </label>
-                    <input
-                      type="text"
-                      value={formData.featuredImageAlt}
-                      onChange={e => setFormData({ ...formData, featuredImageAlt: e.target.value })}
-                      placeholder="e.g. Panoramic aerial view of luxury builder floors in DLF Phase 1"
-                      className="w-full px-4 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white placeholder-gray-500 focus:outline-none focus:border-brand-gold text-sm"
-                    />
-                  </div>
                 </div>
               </div>
             </div>
@@ -1388,18 +1375,6 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
                           onChange={url => handleUpdateSection(idx, 'image', url)}
                           folder="pages"
                         />
-                        <div>
-                          <label className="block text-[11px] font-semibold text-brand-text-dim uppercase mb-1">
-                            Image Alt Text
-                          </label>
-                          <input
-                            type="text"
-                            value={sec.imageAlt}
-                            onChange={e => handleUpdateSection(idx, 'imageAlt', e.target.value)}
-                            placeholder="Descriptive image alt text"
-                            className="w-full px-3 py-2 rounded-xl bg-black/30 border border-white/10 text-white text-xs focus:outline-none"
-                          />
-                        </div>
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">

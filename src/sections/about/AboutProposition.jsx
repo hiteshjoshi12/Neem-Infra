@@ -212,7 +212,7 @@ export default function AboutProposition({ data }) {
                 <div className="absolute inset-0">
                   <Image
                     src={p.bgImage}
-                    alt={p.title}
+                    alt={p.bgImageAlt || p.imageAlt || p.title}
                     width={1400}
                     height={900}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 450px"
@@ -308,7 +308,7 @@ export default function AboutProposition({ data }) {
                 <div className="relative h-48 rounded-2xl overflow-hidden mb-6">
                   <Image
                     src={current.bgImage}
-                    alt={current.title}
+                    alt={current.bgImageAlt || current.imageAlt || current.title}
                     width={800}
                     height={500}
                     sizes="(max-width: 768px) 100vw, 450px"

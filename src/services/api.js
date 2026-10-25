@@ -294,6 +294,11 @@ export const api = {
       method: 'PUT',
       body: JSON.stringify(data)
     }),
+  deleteImageAlt: (data) =>
+    request('/seo/images', {
+      method: 'DELETE',
+      body: JSON.stringify(data)
+    }),
 
   getCategoriesList: () => request('/seo/categories'),
   createCategory: (data) =>

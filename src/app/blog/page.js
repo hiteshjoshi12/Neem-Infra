@@ -77,7 +77,7 @@ export default async function BlogIndexPage() {
           <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-80">
             <Image
               src={blogCms.masthead?.bgImage || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80"}
-              alt="Gurugram Real Estate Editorial"
+              alt={blogCms.masthead?.bgImageAlt || blogCms.masthead?.imageAlt || "Gurugram Real Estate Editorial"}
               fill
               sizes="100vw"
               priority

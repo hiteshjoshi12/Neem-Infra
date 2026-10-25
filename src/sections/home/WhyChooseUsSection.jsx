@@ -48,7 +48,7 @@ function TrustCard({ trustCard }) {
       <div className="absolute inset-0">
         <Image
           src={trustCard.bgImage || "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80"}
-          alt="Modern Gurgaon Architecture"
+          alt={trustCard.bgImageAlt || trustCard.imageAlt || "Modern Gurgaon Architecture"}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
           loading="lazy"

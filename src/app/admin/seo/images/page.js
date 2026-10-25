@@ -14,7 +14,9 @@ import {
   Check,
   Edit2,
   Layers,
-  Sparkles
+  Sparkles,
+  Trash2,
+  Plus
 } from 'lucide-react';
 import api from '@/services/api';
 
@@ -51,7 +53,7 @@ export default function AdminImageAltHub() {
 
   const startInlineEdit = (item) => {
     setEditingId(item.id);
-    setEditingValue(item.altText || '');
+    setEditingValue(item.altText || item.suggestedAlt || '');
   };
 
   const handleSaveInline = async (item) => {
@@ -71,6 +73,27 @@ export default function AdminImageAltHub() {
       setTimeout(() => setToast(''), 3000);
     } catch (err) {
       alert(err.message || 'Failed to update alt text');
+    } finally {
+      setSavingId(null);
+    }
+  };
+
+  const handleDeleteAlt = async (item) => {
+    if (!window.confirm(`Clear/delete alt text for this image?`)) return;
+    try {
+      setSavingId(item.id);
+      await api.deleteImageAlt({
+        parentType: item.parentType,
+        parentId: item.parentId,
+        field: item.field,
+        sectionIndex: item.sectionIndex,
+      });
+
+      setToast('Alt text cleared successfully');
+      await fetchImages();
+      setTimeout(() => setToast(''), 3000);
+    } catch (err) {
+      alert(err.message || 'Failed to clear alt text');
     } finally {
       setSavingId(null);
     }
@@ -276,41 +299,71 @@ export default function AdminImageAltHub() {
                       {/* Current Alt Text / Inline Editor */}
                       <td className="py-4 px-4 max-w-md">
                         {isEditing ? (
+                          <div className="space-y-1.5">
+                            <div className="flex items-center gap-2">
+                              <input
+                                type="text"
+                                value={editingValue}
+                                onChange={e => setEditingValue(e.target.value)}
+                                onKeyDown={e => e.key === 'Enter' && handleSaveInline(img)}
+                                placeholder={img.suggestedAlt || "Enter descriptive alt text..."}
+                                className="w-full px-3 py-1.5 rounded-lg bg-black/40 border border-brand-gold text-white text-xs focus:outline-none"
+                                autoFocus
+                              />
+                              <button
+                                type="button"
+                                onClick={() => handleSaveInline(img)}
+                                disabled={isSaving}
+                                className="p-2 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 disabled:opacity-50 transition-colors shrink-0"
+                                title="Save Alt Text (Enter)"
+                              >
+                                <Check size={14} />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setEditingId(null)}
+                                className="p-2 rounded-lg bg-white/10 text-gray-300 hover:text-white transition-colors shrink-0"
+                                title="Cancel"
+                              >
+                                ×
+                              </button>
+                            </div>
+                            {img.suggestedAlt && editingValue !== img.suggestedAlt && (
+                              <button
+                                type="button"
+                                onClick={() => setEditingValue(img.suggestedAlt)}
+                                className="text-[10px] text-brand-gold hover:underline flex items-center gap-1 font-medium"
+                              >
+                                <Sparkles size={10} />
+                                <span>Use suggestion: &ldquo;{img.suggestedAlt}&rdquo;</span>
+                              </button>
+                            )}
+                          </div>
+                        ) : !img.altText ? (
                           <div className="flex items-center gap-2">
-                            <input
-                              type="text"
-                              value={editingValue}
-                              onChange={e => setEditingValue(e.target.value)}
-                              onKeyDown={e => e.key === 'Enter' && handleSaveInline(img)}
-                              className="w-full px-3 py-1.5 rounded-lg bg-black/40 border border-brand-gold text-white text-xs focus:outline-none"
-                              autoFocus
-                            />
                             <button
                               type="button"
-                              onClick={() => handleSaveInline(img)}
-                              disabled={isSaving}
-                              className="p-2 rounded-lg bg-emerald-500 text-white hover:bg-emerald-600 disabled:opacity-50"
-                              title="Save"
+                              onClick={() => startInlineEdit(img)}
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 hover:bg-rose-500/20 text-xs font-semibold transition-all group"
+                              title="Create and save alt text"
                             >
-                              <Check size={14} />
+                              <Plus size={12} className="text-rose-400 group-hover:scale-110 transition-transform" />
+                              <span>Create Alt Text</span>
                             </button>
-                            <button
-                              type="button"
-                              onClick={() => setEditingId(null)}
-                              className="p-2 rounded-lg bg-white/10 text-gray-300 hover:text-white"
-                              title="Cancel"
-                            >
-                              ×
-                            </button>
+                            {img.suggestedAlt && (
+                              <span className="text-[10px] text-slate-400 italic truncate max-w-[200px]" title={img.suggestedAlt}>
+                                Suggestion: {img.suggestedAlt}
+                              </span>
+                            )}
                           </div>
                         ) : (
                           <div
                             onClick={() => startInlineEdit(img)}
                             className="cursor-pointer group flex items-center justify-between gap-2 p-2 rounded-xl bg-black/20 border border-transparent hover:border-white/20 transition-all"
-                            title="Click to inline edit"
+                            title="Click to edit alt text"
                           >
-                            <span className={img.altText ? 'text-white' : 'text-rose-400 italic'}>
-                              {img.altText || 'Missing Alt Text — Click to Add'}
+                            <span className="text-white">
+                              {img.altText}
                             </span>
                             <Edit2 size={12} className="text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity shrink-0" />
                           </div>
@@ -332,17 +385,40 @@ export default function AdminImageAltHub() {
                         </span>
                       </td>
 
-                      {/* Actions */}
+                      {/* Actions (CRUD: Edit, Delete, View) */}
                       <td className="py-4 px-5 text-right">
-                        <a
-                          href={img.imageUrl}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="p-2 rounded-xl bg-white/5 text-brand-text-dim hover:text-white hover:bg-white/10 inline-block transition-colors"
-                          title="Open original image"
-                        >
-                          <ExternalLink size={14} />
-                        </a>
+                        <div className="flex items-center justify-end gap-1.5">
+                          <button
+                            type="button"
+                            onClick={() => startInlineEdit(img)}
+                            className="p-2 rounded-xl bg-white/5 text-brand-text-dim hover:text-white hover:bg-white/10 transition-colors"
+                            title="Edit Alt Text"
+                          >
+                            <Edit2 size={13} />
+                          </button>
+
+                          {img.altText && (
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteAlt(img)}
+                              disabled={isSaving}
+                              className="p-2 rounded-xl bg-rose-500/10 text-rose-300 hover:text-white hover:bg-rose-500/30 transition-colors disabled:opacity-50"
+                              title="Clear / Delete Alt Text"
+                            >
+                              <Trash2 size={13} />
+                            </button>
+                          )}
+
+                          <a
+                            href={img.imageUrl}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="p-2 rounded-xl bg-white/5 text-brand-text-dim hover:text-white hover:bg-white/10 inline-block transition-colors"
+                            title="Open original image"
+                          >
+                            <ExternalLink size={13} />
+                          </a>
+                        </div>
                       </td>
                     </tr>
                   );

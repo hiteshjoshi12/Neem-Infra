@@ -2,9 +2,12 @@ import React from 'react';
 import Link from 'next/link';
 import { Home, BookOpen, Building2, Phone, Compass, ArrowRight } from 'lucide-react';
 import { headers } from 'next/headers';
+import { redirect, permanentRedirect } from 'next/navigation';
 import { getGlobalSeoSettings } from '@/lib/seo/dynamicSeo';
 import { connectDB } from '@/lib/mongodb';
 import NotFoundLog from '@/models/NotFoundLog';
+import Redirect from '@/models/Redirect';
+import { normalizePath } from '@/lib/seo/metadataHelper';
 
 export const metadata = {
   title: 'Page Not Found | Saudagar Properties',
@@ -25,18 +28,39 @@ const ICON_MAP = {
 };
 
 export default async function NotFound() {
-  const settings = await getGlobalSeoSettings();
-
-  // Non-blocking 404 telemetry logging for technical SEO remediation
+  // 1. Direct Server-Side Redirect Check:
+  // If proxy loopback was blocked or bypassed by firewall/cPanel, resolve redirect directly via MongoDB
   try {
     const headersList = await headers();
-    const referer = headersList.get('referer') || '';
-    const userAgent = headersList.get('user-agent') || '';
     const rawPath = headersList.get('x-pathname') || headersList.get('x-url') || '';
+
     if (rawPath) {
+      const norm = normalizePath(rawPath);
       await connectDB();
+      const redirectDoc = await Redirect.findOne({ fromPath: norm, isActive: true }).lean();
+
+      if (redirectDoc && redirectDoc.toPath) {
+        const normTo = normalizePath(redirectDoc.toPath);
+        if (normTo !== norm) {
+          // Increment hits counter asynchronously
+          Redirect.updateOne(
+            { _id: redirectDoc._id },
+            { $inc: { hits: 1 }, $set: { lastHitAt: new Date() } }
+          ).exec().catch(() => {});
+
+          if (redirectDoc.statusCode === 302) {
+            redirect(redirectDoc.toPath);
+          } else {
+            permanentRedirect(redirectDoc.toPath);
+          }
+        }
+      }
+
+      // If no redirect exists, log 404 telemetry
+      const referer = headersList.get('referer') || '';
+      const userAgent = headersList.get('user-agent') || '';
       await NotFoundLog.findOneAndUpdate(
-        { path: rawPath.toLowerCase() },
+        { path: norm },
         {
           $inc: { hits: 1 },
           $set: { referrer: referer, userAgent, lastHitAt: new Date() },
@@ -46,8 +70,14 @@ export default async function NotFound() {
       ).catch(() => {});
     }
   } catch (e) {
+    // Next.js redirect() throws a NEXT_REDIRECT digest error; MUST rethrow to execute redirect!
+    if (e?.digest?.startsWith('NEXT_REDIRECT')) {
+      throw e;
+    }
     // Ignore logging failure to never break 404 render
   }
+
+  const settings = await getGlobalSeoSettings();
   const c404 = settings?.custom404 || {};
 
   const badgeText = c404.badgeText || 'Error 404 • Destination Not Found';

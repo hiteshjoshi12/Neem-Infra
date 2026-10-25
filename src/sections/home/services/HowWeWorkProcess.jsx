@@ -355,7 +355,7 @@ export default function HowWeWorkProcess() {
                   <div className="relative my-6 h-48 w-full overflow-hidden rounded-xl border border-brand-navy/10 transition-colors duration-500 group-hover:border-brand-gold/40 sm:h-52">
                     <Image
                       src={step.image}
-                      alt={step.title}
+                      alt={step.imageAlt || step.title}
                       fill
                       sizes="(max-width: 1024px) 100vw, 33vw"
                       className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"

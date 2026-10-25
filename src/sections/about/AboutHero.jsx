@@ -114,7 +114,7 @@ export default function AboutHero({ data }) {
         <Image
           ref={bgImgRef}
           src={cms.hero?.bgImage || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80"}
-          alt="DLF Luxury Villa Architecture"
+          alt={cms.hero?.bgImageAlt || cms.hero?.imageAlt || "Saudagar Properties Executive Headquarters & Luxury Estates DLF Gurugram"}
           width={2400}
           height={1350}
           priority
@@ -244,7 +244,7 @@ export default function AboutHero({ data }) {
                         >
                           <Image
                             src={activeProperty.img || (activeProperty.images && activeProperty.images[0]) || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c"}
-                            alt={activeProperty.title || "Featured Property"}
+                            alt={activeProperty.imgAlt || (activeProperty.imagesAlt && activeProperty.imagesAlt[0]) || activeProperty.title || "Featured Property"}
                             fill
                             sizes="(max-width: 768px) 100vw, 450px"
                             className="w-full h-full object-cover"

@@ -122,7 +122,7 @@ export default function ContactClient({ initialData }) {
         <div className="absolute inset-0 z-0 opacity-80 pointer-events-none">
           <Image
             src={cms.hero?.bgImage || "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2400&q=80"}
-            alt="Saudagar Properties Headquarters Gurugram"
+            alt={cms.hero?.bgImageAlt || cms.hero?.imageAlt || "Saudagar Properties Headquarters Gurugram"}
             fill
             sizes="100vw"
             priority

@@ -226,6 +226,11 @@ export default function DlfPropertyCallout() {
     callout.image ||
     "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=85";
 
+  const propertyImageAlt =
+    callout.imageAlt ||
+    callout.bgImageAlt ||
+    "DLF Gurugram Luxury Architectural Residence";
+
   const coordinateLabel =
     callout.coordinateLabel ||
     "DLF PHASE V · PRIVATE DESK";
@@ -489,7 +494,7 @@ export default function DlfPropertyCallout() {
               >
                 <Image
                   src={propertyImage}
-                  alt="DLF Gurugram Luxury Architectural Residence"
+                  alt={propertyImageAlt}
                   fill
                   sizes="(max-width: 1024px) 100vw, 45vw"
                   className="object-cover object-center"

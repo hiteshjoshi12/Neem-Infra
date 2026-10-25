@@ -42,12 +42,21 @@ export async function proxy(request) {
     return NextResponse.next();
   }
 
+  // Set headers for downstream Server Components (e.g. not-found.js, logging)
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set('x-pathname', pathname);
+  requestHeaders.set('x-url', request.url);
+
   // 5. Fast redirect check via internal lookup
   try {
-    const lookupUrl = new URL(`/api/seo/redirects/lookup?path=${encodeURIComponent(pathname)}`, request.url);
+    const proto = request.headers.get('x-forwarded-proto') || (request.url.startsWith('https') ? 'https' : 'http');
+    const host = request.headers.get('x-forwarded-host') || request.headers.get('host') || '';
+    const baseOrigin = host ? `${proto}://${host}` : request.nextUrl.origin;
+    const lookupUrl = new URL(`/api/seo/redirects/lookup?path=${encodeURIComponent(pathname)}`, baseOrigin);
+
     const res = await fetch(lookupUrl, {
       headers: { 'x-proxy-lookup': '1' },
-      next: { revalidate: 10 },
+      signal: AbortSignal.timeout(2500),
     });
 
     if (res.ok) {
@@ -65,7 +74,9 @@ export async function proxy(request) {
         const cleanCurrent = pathname.replace(/\/+$/, '') || '/';
         if (cleanDest === cleanCurrent) {
           // Abort self-redirect loop
-          return NextResponse.next();
+          return NextResponse.next({
+            request: { headers: requestHeaders },
+          });
         }
         const statusCode = data.redirect.statusCode || 301;
         const targetUrl = dest.startsWith('http') ? dest : new URL(`${dest}${search}`, request.url);
@@ -73,10 +84,16 @@ export async function proxy(request) {
       }
     }
   } catch (err) {
-    // Gracefully proceed if internal lookup is unavailable
+    // If internal loopback fetch fails (e.g. host firewall blocking self-call),
+    // downstream not-found.js Server Component will catch and execute redirect via MongoDB directly
+    console.warn('[Proxy Redirect Lookup Fallback]:', err?.message || err);
   }
 
-  return NextResponse.next();
+  return NextResponse.next({
+    request: {
+      headers: requestHeaders,
+    },
+  });
 }
 
 export const config = {

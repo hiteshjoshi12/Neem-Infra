@@ -85,7 +85,7 @@ export default function ResidentialServiceView({
         <div className="absolute inset-0 z-0 opacity-80 pointer-events-none">
           <Image
             src={heroData?.bgImage || "https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=80"}
-            alt="Luxury Residential Real Estate Architecture in DLF Gurugram"
+            alt={heroData?.bgImageAlt || heroData?.imageAlt || "Luxury Residential Real Estate Architecture in DLF Gurugram"}
             fill
             priority
             fetchPriority="high"
@@ -585,7 +585,7 @@ export default function ResidentialServiceView({
               <div className="relative h-48 w-full overflow-hidden bg-slate-100">
                 <Image
                   src={prop.img || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=600&q=80"}
-                  alt={prop.title}
+                  alt={prop.imgAlt || prop.title}
                   fill
                   sizes="(max-width: 768px) 100vw, 300px"
                   className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"

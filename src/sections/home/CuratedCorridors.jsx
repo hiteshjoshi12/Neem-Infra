@@ -223,7 +223,7 @@ export default function CuratedCorridors({ initialProperties = [], initialSectio
                 {/* Background Property Image */}
                 <Image
                   src={item.img}
-                  alt={item.title}
+                  alt={item.imgAlt || item.imageAlt || item.title}
                   width={1200}
                   height={800}
                   sizes="(max-width: 768px) 92vw, (max-width: 1200px) 60vw, 620px"

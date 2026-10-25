@@ -323,7 +323,7 @@ export default function PropertiesCatalogClient({ initialProperties = [], allPro
         <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none opacity-80">
           <Image
             src={cms.masthead?.bgImage || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2400&q=80"}
-            alt="DLF Real Estate Architecture"
+            alt={cms.masthead?.bgImageAlt || cms.masthead?.imageAlt || "DLF Real Estate Architecture"}
             fill
             sizes="100vw"
             className="object-cover object-center brightness-[0.85] contrast-[1.05]"
@@ -753,7 +753,7 @@ function PropertyListingCard({ property, index = 0 }) {
         <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-slate-100 mb-4 border border-brand-navy/5">
           <Image
             src={property.img}
-            alt={property.title}
+            alt={property.imgAlt || (property.imagesAlt && property.imagesAlt[0]) || property.title}
             fill
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 380px"
             className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"

@@ -240,7 +240,7 @@ export default function TopConsultantSection() {
                 {/* Background Luxury Architectural Image */}
                 <Image
                   src={videoTour.image || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80"}
-                  alt={videoTour.title || "Luxury Sushant Lok Estate"}
+                  alt={videoTour.imageAlt || videoTour.title || "Luxury Sushant Lok Estate"}
                   width={1600}
                   height={900}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"

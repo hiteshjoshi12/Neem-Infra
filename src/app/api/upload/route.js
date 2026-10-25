@@ -72,17 +72,10 @@ export async function POST(req) {
       );
     }
 
-    // 2. Enforce Required Alt Text for Images (Accessibility & Image SEO)
-    const altText = (formData.get('altText') || formData.get('alt') || '').trim();
-    if (isImage && !altText) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: 'Descriptive alt text is required for all image uploads to guarantee Image SEO and accessibility compliance.'
-        },
-        { status: 400 }
-      );
-    }
+    // 2. Resolve Alt Text (Optional on upload, centrally managed in Image Alt Text Hub)
+    const rawAlt = (formData.get('altText') || formData.get('alt') || '').trim();
+    const fallbackAlt = file.name ? file.name.replace(/\.[^/.]+$/, '').replace(/[_-]/g, ' ') : 'Saudagar Properties Asset';
+    const altText = rawAlt || fallbackAlt;
 
     // 2. Validate File Size
     const maxSize = isVideo ? MAX_VIDEO_SIZE_BYTES : MAX_IMAGE_SIZE_BYTES;

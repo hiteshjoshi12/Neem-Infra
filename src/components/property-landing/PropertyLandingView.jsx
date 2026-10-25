@@ -765,7 +765,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                   <div className="relative aspect-[16/10] w-full overflow-hidden bg-slate-100">
                     <Image
                       src={place.image || 'https://images.unsplash.com/photo-1577495508048-b635879837f1?auto=format&fit=crop&w=800&q=80'}
-                      alt={place.name}
+                      alt={place.imageAlt || place.name}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
                       className="object-cover object-center group-hover:scale-105 transition-transform duration-500 ease-out"
@@ -884,7 +884,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                 <div className="relative aspect-[4/3] sm:aspect-[1/1] w-full">
                   <Image
                     src={howWeHelp.image || 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1000&q=85'}
-                    alt="Saudagar Properties Turnkey Acquisition Advisory"
+                    alt={howWeHelp.imageAlt || howWeHelp.title || "Saudagar Properties Turnkey Acquisition Advisory"}
                     fill
                     sizes="(max-width: 1024px) 100vw, 40vw"
                     className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
@@ -930,7 +930,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                 <div className="relative aspect-[4/3] sm:aspect-[1/1] w-full">
                   <Image
                     src={whyChooseSaudagar.image || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=85'}
-                    alt={whyChooseSaudagar.title || 'Why Choose Saudagar Properties'}
+                    alt={whyChooseSaudagar.imageAlt || whyChooseSaudagar.title || 'Why Choose Saudagar Properties'}
                     fill
                     sizes="(max-width: 1024px) 100vw, 40vw"
                     className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
@@ -1431,7 +1431,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                 >
                   <Image
                     src={mapShowcase.staticMapImage || 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1200&q=80'}
-                    alt={`${corridor.corridorName} Master Plan Map`}
+                    alt={mapShowcase.staticMapImageAlt || `${corridor.corridorName} Master Plan Map`}
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover object-center group-hover/img:scale-105 transition-transform duration-500 ease-out"
@@ -1495,7 +1495,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                 <div className="relative w-full h-[72vh] bg-brand-ivory overflow-auto flex items-center justify-center p-4">
                   <img
                     src={mapShowcase.staticMapImage || 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1600&q=85'}
-                    alt={`${corridor.corridorName} Master Plan`}
+                    alt={mapShowcase.staticMapImageAlt || `${corridor.corridorName} Master Plan`}
                     className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
                   />
                 </div>

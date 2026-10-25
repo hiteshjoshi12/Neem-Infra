@@ -93,7 +93,7 @@ export default function TeamInteractiveShowcase({ founders, teamMembers, advisor
                           <>
                             <Image
                               src={leader.image}
-                              alt={leader.name}
+                              alt={leader.imageAlt || `${leader.name} — ${leader.role || 'Leadership'}`}
                               fill
                               sizes="(max-width: 640px) 150px, 180px"
                               className="object-cover object-top transition-transform duration-700 group-hover:scale-105"
@@ -270,7 +270,7 @@ export default function TeamInteractiveShowcase({ founders, teamMembers, advisor
                         <>
                           <Image
                             src={member.image}
-                            alt={member.name}
+                            alt={member.imageAlt || `${member.name} — ${member.role || 'Consultant'}`}
                             fill
                             sizes="(max-width: 768px) 100vw, 33vw"
                             className="object-cover object-top group-hover:scale-105 transition-transform duration-500 filter brightness-95"
