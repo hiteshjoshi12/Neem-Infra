@@ -113,12 +113,18 @@ export default function TeamClientView({
         teamMembers={activeTeamMembers}
         advisoryPillars={activeAdvisoryPillars}
         cta={activeCta}
+        leadershipSection={cms?.leadershipSection}
+        specialistsSection={cms?.specialistsSection}
+        pillarsSection={cms?.pillarsSection}
       />
 
       {/* =========================================================================
           7 STRATEGIC ADVISORY PROTOCOLS & SEO KEYWORD KNOWLEDGE BASE
       ========================================================================= */}
-      <TeamAdvisoryAuthority />
+      <TeamAdvisoryAuthority
+        advisoryDomains={cms?.advisoryDomains}
+        domainsSection={cms?.domainsSection}
+      />
     </>
   );
 }

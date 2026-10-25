@@ -17,10 +17,22 @@ import {
 } from 'lucide-react';
 import Link from 'next/link';
 
-export default function TeamAdvisoryAuthority() {
+const PROTOCOL_ICONS = {
+  UserCheck,
+  Award,
+  Building2,
+  Compass,
+  TrendingUp,
+  Globe2,
+  Scale,
+  ShieldCheck,
+  Sparkles
+};
+
+export default function TeamAdvisoryAuthority({ advisoryDomains, domainsSection }) {
   const [activeTab, setActiveTab] = useState(0);
 
-  const teamAdvisoryDomains = [
+  const defaultAdvisoryDomains = [
     {
       id: "founder-oversight",
       badge: "Principal Leadership",
@@ -149,7 +161,18 @@ export default function TeamAdvisoryAuthority() {
     }
   ];
 
-  const currentDomain = teamAdvisoryDomains[activeTab];
+  const domains = (Array.isArray(advisoryDomains) && advisoryDomains.length > 0)
+    ? advisoryDomains
+    : defaultAdvisoryDomains;
+
+  const safeActiveTab = Math.min(activeTab, Math.max(0, domains.length - 1));
+  const currentDomain = domains[safeActiveTab] || domains[0] || {};
+  const contentParagraphs = Array.isArray(currentDomain.content)
+    ? currentDomain.content
+    : (typeof currentDomain.content === 'string' ? currentDomain.content.split('\n').filter(Boolean) : []);
+  const highlightsList = Array.isArray(currentDomain.highlights)
+    ? currentDomain.highlights
+    : (typeof currentDomain.highlights === 'string' ? currentDomain.highlights.split('\n').filter(Boolean) : []);
 
   return (
     <section className="py-20 md:py-28 bg-brand-ivory text-brand-navy border-t border-brand-navy/10 relative overflow-hidden">
@@ -165,30 +188,31 @@ export default function TeamAdvisoryAuthority() {
         <div className="max-w-3xl mb-12 sm:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-xs font-bold uppercase tracking-[0.2em] mb-4">
             <Sparkles size={13} />
-            <span>Advisory Frameworks • SEO Keyword Authority</span>
+            <span>{domainsSection?.badge || "Advisory Frameworks • SEO Keyword Authority"}</span>
           </div>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-brand-navy tracking-tight leading-tight mb-4">
-            Our Core Competencies &amp; <span className="italic font-serif text-brand-gold">Fiduciary Advisory Protocols</span>
+            {domainsSection?.titleMain || "Our Core Competencies & "}{' '}
+            <span className="italic font-serif text-brand-gold">{domainsSection?.titleItalic || "Fiduciary Advisory Protocols"}</span>
           </h2>
           <p className="text-sm sm:text-base text-brand-slate leading-relaxed font-sans">
-            Review the 7 specialized legal, strategic, and corridor advisory domains that define Saudagar Properties&apos; leadership across Gurugram luxury real estate.
+            {domainsSection?.subtitle || "Review the 7 specialized legal, strategic, and corridor advisory domains that define Saudagar Properties' leadership across Gurugram luxury real estate."}
           </p>
         </div>
 
         {/* Interactive Domain Navigator */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
-          {/* Left Navigation: 7 Structured Pillars */}
+          {/* Left Navigation: Structured Pillars */}
           <div className="lg:col-span-5 space-y-2.5">
             <div className="text-xs font-bold uppercase tracking-widest text-slate-500 mb-3 px-2">
-              Advisory Protocol Areas (1–7)
+              Advisory Protocol Areas (1–{domains.length})
             </div>
-            {teamAdvisoryDomains.map((domain, idx) => {
-              const IconComp = domain.icon;
-              const isActive = activeTab === idx;
+            {domains.map((domain, idx) => {
+              const IconComp = (typeof domain.icon === 'string' ? PROTOCOL_ICONS[domain.icon] : domain.icon) || UserCheck;
+              const isActive = safeActiveTab === idx;
               return (
                 <button
-                  key={domain.id}
+                  key={domain.id || idx}
                   onClick={() => setActiveTab(idx)}
                   className={`w-full text-left p-4 rounded-2xl border transition-all duration-300 flex items-start gap-3.5 cursor-pointer ${
                     isActive
@@ -226,7 +250,7 @@ export default function TeamAdvisoryAuthority() {
             <article className="bg-white rounded-3xl border border-brand-navy/10 p-6 sm:p-8 md:p-10 shadow-[0_15px_35px_rgba(23,33,61,0.04)]">
               
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-gold/10 text-brand-gold border border-brand-gold/25 text-[11px] font-bold uppercase tracking-widest mb-4">
-                <span>Protocol 0{activeTab + 1} of 07</span>
+                <span>Protocol 0{safeActiveTab + 1} of 0{domains.length}</span>
                 <span>•</span>
                 <span>{currentDomain.badge}</span>
               </div>
@@ -241,7 +265,7 @@ export default function TeamAdvisoryAuthority() {
 
               {/* In-Depth Keyword Content Paragraphs */}
               <div className="space-y-4 text-xs sm:text-sm text-brand-slate leading-relaxed font-sans mb-8">
-                {currentDomain.content.map((paragraph, pIdx) => (
+                {contentParagraphs.map((paragraph, pIdx) => (
                   <p key={pIdx}>
                     {paragraph}
                   </p>
@@ -255,7 +279,7 @@ export default function TeamAdvisoryAuthority() {
                   <span>Execution Deliverables &amp; Guarantees:</span>
                 </h4>
                 <ul className="space-y-2.5">
-                  {currentDomain.highlights.map((item, hIdx) => (
+                  {highlightsList.map((item, hIdx) => (
                     <li key={hIdx} className="flex items-start gap-2.5 text-xs text-brand-slate">
                       <span className="w-1.5 h-1.5 rounded-full bg-brand-gold shrink-0 mt-1.5" />
                       <span>{item}</span>

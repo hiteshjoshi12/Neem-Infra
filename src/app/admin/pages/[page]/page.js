@@ -111,13 +111,14 @@ const PAGE_CONFIGS = {
     pageKey: 'page_team',
     liveUrl: '/team',
     title: 'Our Team Page CMS',
-    desc: 'Manage founder credentials for Arun Sharma & Suneeta Chawla, senior principals, 4 fiduciary pillars, and private session CTA.',
+    desc: 'Manage founder credentials for Arun Sharma & Suneeta Chawla, senior principals, 4 fiduciary pillars, 7 advisory protocols, and private session CTA.',
     icon: Users,
     sections: [
       { id: 'hero', label: 'Hero & Masthead' },
       { id: 'founders', label: 'Founders & Directors' },
       { id: 'teamMembers', label: 'Senior Principals' },
       { id: 'advisoryPillars', label: '4 Fiduciary Pillars' },
+      { id: 'advisoryDomains', label: '7 Advisory Protocols' },
       { id: 'cta', label: 'Private Session CTA' }
     ]
   },
@@ -272,6 +273,34 @@ function ListField({ label, description, items = [], onChange, placeholder = 'On
         placeholder={placeholder}
         className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 focus:border-brand-gold text-white text-xs outline-none transition-colors leading-relaxed font-mono"
       />
+    </div>
+  );
+}
+
+function SelectField({ label, description, value, onChange, options = [] }) {
+  return (
+    <div className="space-y-1.5">
+      <label className="block text-xs font-semibold text-slate-200">
+        {label}
+      </label>
+      {description && (
+        <p className="text-[11px] text-slate-400">{description}</p>
+      )}
+      <select
+        value={value || ''}
+        onChange={(e) => onChange(e.target.value)}
+        className="w-full px-3.5 py-2.5 rounded-xl bg-[#141B2D] border border-white/10 focus:border-brand-gold text-white text-xs outline-none transition-colors"
+      >
+        {options.map((opt) => {
+          const val = typeof opt === 'string' ? opt : opt.value;
+          const lbl = typeof opt === 'string' ? opt : opt.label;
+          return (
+            <option key={val} value={val} className="bg-[#141B2D] text-white">
+              {lbl}
+            </option>
+          );
+        })}
+      </select>
     </div>
   );
 }
@@ -1090,25 +1119,28 @@ export default function AdminPageCMS() {
                   <FormField label="Title Highlight" value={formData?.hero?.titleItalic} onChange={(val) => updateField('hero.titleItalic', val)} />
                 </div>
                 <TextAreaField label="Subtitle" value={formData?.hero?.subtitle} onChange={(val) => updateField('hero.subtitle', val)} />
-                <ImageUploadInput
-                  label="Hero Background Image"
-                  value={formData?.hero?.bgImage}
-                  onChange={(val) => updateField('hero.bgImage', val)}
-                  folder="/saudagar-properties/team"
-                />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <ImageUploadInput
+                    label="Hero Background Image"
+                    value={formData?.hero?.bgImage}
+                    onChange={(val) => updateField('hero.bgImage', val)}
+                    folder="/saudagar-properties/team"
+                  />
+                  <FormField label="Hero Image Alt Text" value={formData?.hero?.bgImageAlt} onChange={(val) => updateField('hero.bgImageAlt', val)} placeholder="DLF Luxury Estate Architecture" />
+                </div>
 
                 <div className="pt-4 border-t border-white/10 space-y-4">
                   <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">4 Key Trust Metrics (Hero Strip)</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                     {(formData?.hero?.stats || [
-                      { value: "25+", label: "Years of Trust", highlight: false },
-                      { value: "₹100 Cr+", label: "Saved for Clients", highlight: true },
-                      { value: "1,000+", label: "Families Advised", highlight: false },
-                      { value: "100%", label: "Title-Cleared", highlight: true }
+                      { value: "25+", label: "Years in Gurugram", highlight: false },
+                      { value: "23+", label: "Properties Listed", highlight: true },
+                      { value: "7", label: "Micro-Markets", highlight: false },
+                      { value: "5", label: "DLF Phases Covered", highlight: true }
                     ]).map((stat, sIdx) => (
                       <div key={sIdx} className="p-3 rounded-xl bg-white/[0.02] border border-white/10 space-y-2">
                         <FormField label={`Metric #${sIdx + 1} Value`} value={stat.value} onChange={(val) => updateField(`hero.stats.${sIdx}.value`, val)} placeholder="e.g. 25+" />
-                        <FormField label="Label" value={stat.label} onChange={(val) => updateField(`hero.stats.${sIdx}.label`, val)} placeholder="e.g. Years of Trust" />
+                        <FormField label="Label" value={stat.label} onChange={(val) => updateField(`hero.stats.${sIdx}.label`, val)} placeholder="e.g. Years in Gurugram" />
                       </div>
                     ))}
                   </div>
@@ -1118,14 +1150,72 @@ export default function AdminPageCMS() {
 
             {activeSectionTab === 'founders' && (
               <div className="space-y-6">
-                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">Founders &amp; Leadership Principals</h3>
+                <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                  <div>
+                    <h3 className="text-sm font-semibold text-white">Founders &amp; Leadership Principals</h3>
+                    <p className="text-[11px] text-slate-400">Manage principal directors, executive credentials, and personal guarantees.</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const current = formData?.founders || [];
+                      const newFounder = {
+                        name: 'Executive Partner',
+                        role: 'Partner & Principal Advisor',
+                        badge: 'Partner • 15+ Years Authority',
+                        experience: '15+ Yrs',
+                        experienceBadge: '15+ Yrs',
+                        phone: '+91 98112 21207',
+                        whatsappUrl: 'https://wa.me/919718511207',
+                        image: '',
+                        imageAlt: 'Executive Partner Portrait',
+                        bio: 'Principal advisor specializing in prime DLF Gurugram estate transactions.',
+                        quote: 'Fiduciary integrity and direct representation form our foundational standard.',
+                        highlights: ['15+ Years of advisory experience', 'Direct personal client representation']
+                      };
+                      updateField('founders', [...current, newFounder]);
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Plus size={13} />
+                    <span>Add Founder</span>
+                  </button>
+                </div>
+
+                {/* Section Header Controls */}
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
+                  <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Founders Section Header</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <FormField label="Section Badge" value={formData?.leadershipSection?.badge} onChange={(val) => updateField('leadershipSection.badge', val)} placeholder="Executive Leadership & Track Record" />
+                    <FormField label="Title Main" value={formData?.leadershipSection?.titleMain} onChange={(val) => updateField('leadershipSection.titleMain', val)} placeholder="Principal Advisory " />
+                    <FormField label="Title Highlight (Italic)" value={formData?.leadershipSection?.titleItalic} onChange={(val) => updateField('leadershipSection.titleItalic', val)} placeholder="Executive Leadership" />
+                  </div>
+                  <TextAreaField label="Section Subtitle" value={formData?.leadershipSection?.subtitle} onChange={(val) => updateField('leadershipSection.subtitle', val)} rows={2} />
+                </div>
+
                 {(formData?.founders || []).map((f, idx) => (
-                  <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                    <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Leadership #{idx + 1}: {f.name}</h4>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4 relative">
+                    <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                      <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Leadership #{idx + 1}: {f.name}</h4>
+                      {(formData?.founders || []).length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const next = (formData?.founders || []).filter((_, i) => i !== idx);
+                            updateField('founders', next);
+                          }}
+                          className="p-1 rounded-md text-red-400 hover:bg-red-500/10 transition-colors"
+                          title="Delete Founder"
+                        >
+                          <Trash2 size={13} />
+                        </button>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                       <FormField label="Full Name" value={f.name} onChange={(val) => updateField(`founders.${idx}.name`, val)} />
                       <FormField label="Role / Title" value={f.role} onChange={(val) => updateField(`founders.${idx}.role`, val)} />
-                      <FormField label="Experience Badge" value={f.badge} onChange={(val) => updateField(`founders.${idx}.badge`, val)} />
+                      <FormField label="Badge (Top Label)" value={f.badge} onChange={(val) => updateField(`founders.${idx}.badge`, val)} />
+                      <FormField label="Experience Badge" value={f.experience || f.experienceBadge} onChange={(val) => { updateField(`founders.${idx}.experience`, val); updateField(`founders.${idx}.experienceBadge`, val); }} placeholder="e.g. 25+ Yrs" />
                       <FormField label="Direct Hotline Phone" value={f.phone} onChange={(val) => updateField(`founders.${idx}.phone`, val)} />
                       <FormField label="WhatsApp Link" value={f.whatsappUrl} onChange={(val) => updateField(`founders.${idx}.whatsappUrl`, val)} placeholder="https://wa.me/919718511207" />
                     </div>
@@ -1137,12 +1227,15 @@ export default function AdminPageCMS() {
                       onChange={(val) => updateField(`founders.${idx}.highlights`, val)}
                       placeholder="Over two decades of premier real estate leadership&#10;Personal involvement in every client consultation"
                     />
-                    <ImageUploadInput
-                      label={`${f.name} Portrait Photo`}
-                      value={f.image}
-                      onChange={(val) => updateField(`founders.${idx}.image`, val)}
-                      folder="/saudagar-properties/team"
-                    />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <ImageUploadInput
+                        label={`${f.name || 'Founder'} Portrait Photo`}
+                        value={f.image}
+                        onChange={(val) => updateField(`founders.${idx}.image`, val)}
+                        folder="/saudagar-properties/team"
+                      />
+                      <FormField label="Portrait Image Alt Text" value={f.imageAlt} onChange={(val) => updateField(`founders.${idx}.imageAlt`, val)} placeholder={`${f.name} — ${f.role}`} />
+                    </div>
                   </div>
                 ))}
               </div>
@@ -1163,8 +1256,10 @@ export default function AdminPageCMS() {
                         name: 'New Senior Advisor',
                         designation: 'Luxury Corridor Specialist',
                         focus: 'DLF Phase 1–5 & Golf Course Rd',
+                        phone: '+91 98112 21207',
                         bio: 'Specializing in high-value builder floors, plot acquisitions, and private off-market mandates across prime DLF micro-markets.',
-                        image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80'
+                        image: '',
+                        imageAlt: 'Senior Advisor Portrait'
                       };
                       updateField('teamMembers', [...current, newAdvisor]);
                     }}
@@ -1174,6 +1269,18 @@ export default function AdminPageCMS() {
                     <span>Add Senior Advisor</span>
                   </button>
                 </div>
+
+                {/* Section Header Controls */}
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
+                  <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Specialists Section Header</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <FormField label="Section Badge" value={formData?.specialistsSection?.badge} onChange={(val) => updateField('specialistsSection.badge', val)} placeholder="Specialized Transaction Desks" />
+                    <FormField label="Title Main" value={formData?.specialistsSection?.titleMain} onChange={(val) => updateField('specialistsSection.titleMain', val)} placeholder="Senior Advisors & " />
+                    <FormField label="Title Highlight (Italic)" value={formData?.specialistsSection?.titleItalic} onChange={(val) => updateField('specialistsSection.titleItalic', val)} placeholder="Corridor Specialists" />
+                  </div>
+                  <TextAreaField label="Section Subtitle" value={formData?.specialistsSection?.subtitle} onChange={(val) => updateField('specialistsSection.subtitle', val)} rows={2} />
+                </div>
+
                 {(formData?.teamMembers || []).map((member, idx) => (
                   <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4 relative group">
                     <div className="flex items-center justify-between border-b border-white/10 pb-2">
@@ -1192,18 +1299,22 @@ export default function AdminPageCMS() {
                         </button>
                       )}
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                       <FormField label="Full Name" value={member.name} onChange={(val) => updateField(`teamMembers.${idx}.name`, val)} />
                       <FormField label="Role / Designation" value={member.designation} onChange={(val) => updateField(`teamMembers.${idx}.designation`, val)} />
                       <FormField label="Focus Corridor" value={member.focus} onChange={(val) => updateField(`teamMembers.${idx}.focus`, val)} />
+                      <FormField label="Direct Hotline Phone" value={member.phone} onChange={(val) => updateField(`teamMembers.${idx}.phone`, val)} placeholder="+91 98112 21207" />
                     </div>
                     <TextAreaField label="Advisor Profile / Bio" value={member.bio} onChange={(val) => updateField(`teamMembers.${idx}.bio`, val)} rows={2} />
-                    <ImageUploadInput
-                      label={`${member.name} Portrait Photo`}
-                      value={member.image}
-                      onChange={(val) => updateField(`teamMembers.${idx}.image`, val)}
-                      folder="/saudagar-properties/team"
-                    />
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                      <ImageUploadInput
+                        label={`${member.name || 'Advisor'} Portrait Photo`}
+                        value={member.image}
+                        onChange={(val) => updateField(`teamMembers.${idx}.image`, val)}
+                        folder="/saudagar-properties/team"
+                      />
+                      <FormField label="Advisor Photo Alt Text" value={member.imageAlt} onChange={(val) => updateField(`teamMembers.${idx}.imageAlt`, val)} placeholder={`${member.name} — ${member.designation}`} />
+                    </div>
                   </div>
                 ))}
               </div>
@@ -1211,12 +1322,187 @@ export default function AdminPageCMS() {
 
             {activeSectionTab === 'advisoryPillars' && (
               <div className="space-y-6">
-                <h3 className="text-sm font-semibold text-white border-b border-white/10 pb-2">4 Core Fiduciary Advisory Pillars</h3>
+                <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                  <div>
+                    <h3 className="text-sm font-semibold text-white">4 Core Fiduciary Advisory Pillars</h3>
+                    <p className="text-[11px] text-slate-400">Manage the trust anchors that distinguish Saudagar Properties advisory.</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const current = formData?.advisoryPillars || [];
+                      const newPillar = {
+                        icon: 'ShieldCheck',
+                        title: 'New Fiduciary Pillar',
+                        desc: 'Commitment description explaining why clients trust our advisory team.'
+                      };
+                      updateField('advisoryPillars', [...current, newPillar]);
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Plus size={13} />
+                    <span>Add Pillar</span>
+                  </button>
+                </div>
+
+                {/* Section Header Controls */}
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
+                  <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Pillars Section Header</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <FormField label="Section Badge" value={formData?.pillarsSection?.badge} onChange={(val) => updateField('pillarsSection.badge', val)} placeholder="Our Working Principles" />
+                    <FormField label="Title Main" value={formData?.pillarsSection?.titleMain} onChange={(val) => updateField('pillarsSection.titleMain', val)} placeholder="Why Discerning Families " />
+                    <FormField label="Title Highlight (Italic)" value={formData?.pillarsSection?.titleItalic} onChange={(val) => updateField('pillarsSection.titleItalic', val)} placeholder="Trust Our Team" />
+                  </div>
+                </div>
+
                 {(formData?.advisoryPillars || []).map((pillar, idx) => (
-                  <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
-                    <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Fiduciary Pillar #{idx + 1}: {pillar.title}</h4>
-                    <FormField label="Pillar Title" value={pillar.title} onChange={(val) => updateField(`advisoryPillars.${idx}.title`, val)} />
+                  <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4 relative">
+                    <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                      <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Fiduciary Pillar #{idx + 1}: {pillar.title}</h4>
+                      {(formData?.advisoryPillars || []).length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const next = (formData?.advisoryPillars || []).filter((_, i) => i !== idx);
+                            updateField('advisoryPillars', next);
+                          }}
+                          className="p-1 rounded-md text-red-400 hover:bg-red-500/10 transition-colors"
+                          title="Delete Pillar"
+                        >
+                          <Trash2 size={13} />
+                        </button>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <SelectField
+                        label="Icon"
+                        value={pillar.icon}
+                        onChange={(val) => updateField(`advisoryPillars.${idx}.icon`, val)}
+                        options={[
+                          { value: 'ShieldCheck', label: 'ShieldCheck (Security / Title)' },
+                          { value: 'Users', label: 'Users (Direct Attention / Leadership)' },
+                          { value: 'FileCheck', label: 'FileCheck (Registry / Clearance)' },
+                          { value: 'Compass', label: 'Compass (Off-Market / Direction)' },
+                          { value: 'Award', label: 'Award (Excellence)' },
+                          { value: 'Building2', label: 'Building2 (Architecture)' },
+                          { value: 'TrendingUp', label: 'TrendingUp (Financial / Yield)' },
+                          { value: 'Scale', label: 'Scale (Fiduciary / Law)' }
+                        ]}
+                      />
+                      <div className="sm:col-span-2">
+                        <FormField label="Pillar Title" value={pillar.title} onChange={(val) => updateField(`advisoryPillars.${idx}.title`, val)} />
+                      </div>
+                    </div>
                     <TextAreaField label="Fiduciary Commitment Description" value={pillar.desc} onChange={(val) => updateField(`advisoryPillars.${idx}.desc`, val)} rows={2} />
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {activeSectionTab === 'advisoryDomains' && (
+              <div className="space-y-6">
+                <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                  <div>
+                    <h3 className="text-sm font-semibold text-white">7 Strategic Advisory Protocols (Authority Knowledge Base)</h3>
+                    <p className="text-[11px] text-slate-400">In-depth technical advisory frameworks, DTCP/HSVP compliance standards, and corridor protocols.</p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const current = formData?.advisoryDomains || [];
+                      const newDomain = {
+                        id: `protocol-${current.length + 1}`,
+                        badge: 'Advisory Protocol',
+                        title: 'New Strategic Advisory Protocol',
+                        subtitle: 'Authoritative description of mandate execution standard',
+                        icon: 'Award',
+                        content: [
+                          'Detailed technical paragraph explaining the protocol in depth with regulatory and market specifics.'
+                        ],
+                        highlights: [
+                          'Execution deliverable or client guarantee bullet point'
+                        ]
+                      };
+                      updateField('advisoryDomains', [...current, newDomain]);
+                    }}
+                    className="px-3 py-1.5 rounded-lg bg-brand-gold/20 hover:bg-brand-gold/30 text-brand-gold font-bold text-xs flex items-center gap-1.5 transition-colors cursor-pointer"
+                  >
+                    <Plus size={13} />
+                    <span>Add Protocol</span>
+                  </button>
+                </div>
+
+                {/* Section Header Controls */}
+                <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-3">
+                  <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">Protocols Section Header</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <FormField label="Section Badge" value={formData?.domainsSection?.badge} onChange={(val) => updateField('domainsSection.badge', val)} placeholder="Advisory Frameworks • SEO Keyword Authority" />
+                    <FormField label="Title Main" value={formData?.domainsSection?.titleMain} onChange={(val) => updateField('domainsSection.titleMain', val)} placeholder="Our Core Competencies & " />
+                    <FormField label="Title Highlight (Italic)" value={formData?.domainsSection?.titleItalic} onChange={(val) => updateField('domainsSection.titleItalic', val)} placeholder="Fiduciary Advisory Protocols" />
+                  </div>
+                  <TextAreaField label="Section Subtitle" value={formData?.domainsSection?.subtitle} onChange={(val) => updateField('domainsSection.subtitle', val)} rows={2} />
+                </div>
+
+                {(formData?.advisoryDomains || []).map((domain, idx) => (
+                  <div key={idx} className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4 relative">
+                    <div className="flex items-center justify-between border-b border-white/10 pb-2">
+                      <div className="flex items-center gap-2">
+                        <span className="w-5 h-5 rounded-full bg-brand-gold/20 text-brand-gold text-[10px] font-bold flex items-center justify-center">
+                          {idx + 1}
+                        </span>
+                        <h4 className="text-xs font-bold text-white uppercase tracking-wider">{domain.badge || `Protocol #${idx + 1}`}</h4>
+                      </div>
+                      {(formData?.advisoryDomains || []).length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const next = (formData?.advisoryDomains || []).filter((_, i) => i !== idx);
+                            updateField('advisoryDomains', next);
+                          }}
+                          className="p-1 rounded-md text-red-400 hover:bg-red-500/10 transition-colors"
+                          title="Delete Protocol"
+                        >
+                          <Trash2 size={13} />
+                        </button>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                      <FormField label="Protocol Badge (Tab Tag)" value={domain.badge} onChange={(val) => updateField(`advisoryDomains.${idx}.badge`, val)} />
+                      <FormField label="Internal ID / Slug" value={domain.id} onChange={(val) => updateField(`advisoryDomains.${idx}.id`, val)} />
+                      <SelectField
+                        label="Protocol Icon"
+                        value={domain.icon}
+                        onChange={(val) => updateField(`advisoryDomains.${idx}.icon`, val)}
+                        options={[
+                          { value: 'UserCheck', label: 'UserCheck (Principal Leadership)' },
+                          { value: 'Award', label: 'Award (Registry Intelligence)' },
+                          { value: 'Building2', label: 'Building2 (Builder Floors / DTCP)' },
+                          { value: 'Compass', label: 'Compass (Super-Luxury Condos)' },
+                          { value: 'TrendingUp', label: 'TrendingUp (Commercial / Yield)' },
+                          { value: 'Globe2', label: 'Globe2 (NRI / FEMA Cross-Border)' },
+                          { value: 'Scale', label: 'Scale (Fiduciary Title Clearance)' },
+                          { value: 'ShieldCheck', label: 'ShieldCheck (Clean Deeds)' }
+                        ]}
+                      />
+                    </div>
+                    <FormField label="Headline Title" value={domain.title} onChange={(val) => updateField(`advisoryDomains.${idx}.title`, val)} />
+                    <FormField label="Sub-Headline / Context" value={domain.subtitle} onChange={(val) => updateField(`advisoryDomains.${idx}.subtitle`, val)} />
+                    
+                    <ListField
+                      label="Detailed In-Depth Paragraphs"
+                      description="Each separate line represents an authoritative paragraph"
+                      items={domain.content}
+                      onChange={(val) => updateField(`advisoryDomains.${idx}.content`, val)}
+                      rows={4}
+                    />
+                    
+                    <ListField
+                      label="Deliverables & Guarantees (Bullets)"
+                      description="Each separate line represents a bullet point"
+                      items={domain.highlights}
+                      onChange={(val) => updateField(`advisoryDomains.${idx}.highlights`, val)}
+                      rows={3}
+                    />
                   </div>
                 ))}
               </div>
@@ -1232,7 +1518,11 @@ export default function AdminPageCMS() {
                   <FormField label="Title Highlight" value={formData?.cta?.titleItalic} onChange={(val) => updateField('cta.titleItalic', val)} />
                 </div>
                 <TextAreaField label="Subtitle" value={formData?.cta?.subtitle} onChange={(val) => updateField('cta.subtitle', val)} />
-                <FormField label="WhatsApp URL" value={formData?.cta?.whatsappUrl} onChange={(val) => updateField('cta.whatsappUrl', val)} />
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <FormField label="WhatsApp URL" value={formData?.cta?.whatsappUrl} onChange={(val) => updateField('cta.whatsappUrl', val)} />
+                  <FormField label="Button Text" value={formData?.cta?.buttonText} onChange={(val) => updateField('cta.buttonText', val)} placeholder="Schedule Private Consultation" />
+                  <FormField label="Button Link" value={formData?.cta?.buttonHref} onChange={(val) => updateField('cta.buttonHref', val)} placeholder="/contact" />
+                </div>
               </div>
             )}
           </>

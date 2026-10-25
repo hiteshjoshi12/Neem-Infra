@@ -20,7 +20,8 @@ import {
   Briefcase,
   ChevronLeft,
   ChevronRight,
-  Star
+  Star,
+  Scale
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
 
@@ -29,9 +30,21 @@ const PILLAR_ICONS = {
   Users,
   FileCheck,
   Compass,
+  Award,
+  Building2,
+  TrendingUp,
+  Scale
 };
 
-export default function TeamInteractiveShowcase({ founders, teamMembers, advisoryPillars, cta }) {
+export default function TeamInteractiveShowcase({ 
+  founders, 
+  teamMembers, 
+  advisoryPillars, 
+  cta,
+  leadershipSection,
+  specialistsSection,
+  pillarsSection
+}) {
   const [advisorIndex, setAdvisorIndex] = useState(0);
   const safeTeam = Array.isArray(teamMembers) ? teamMembers : [];
   const maxAdvisorIndex = Math.max(0, safeTeam.length - 3);
@@ -60,13 +73,14 @@ export default function TeamInteractiveShowcase({ founders, teamMembers, advisor
           >
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-[11px] font-bold uppercase tracking-[0.2em] mb-4">
               <Award size={13} />
-              <span>Executive Leadership &amp; Track Record</span>
+              <span>{leadershipSection?.badge || "Executive Leadership & Track Record"}</span>
             </div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-brand-navy tracking-tight leading-tight">
-              Principal Advisory <span className="italic font-serif text-brand-gold">Executive Leadership</span>
+              {leadershipSection?.titleMain || "Principal Advisory "}{' '}
+              <span className="italic font-serif text-brand-gold">{leadershipSection?.titleItalic || "Executive Leadership"}</span>
             </h2>
             <p className="text-sm sm:text-base text-brand-slate font-sans mt-3 leading-relaxed">
-              Direct founder-led mandate representation. Both principal directors personally oversee registry vetting, valuation benchmarks, and confidential negotiations across DLF Gurugram.
+              {leadershipSection?.subtitle || "Direct founder-led mandate representation. Both principal directors personally oversee registry vetting, valuation benchmarks, and confidential negotiations across DLF Gurugram."}
             </p>
           </motion.div>
 
@@ -207,13 +221,14 @@ export default function TeamInteractiveShowcase({ founders, teamMembers, advisor
             <div className="text-center sm:text-left max-w-2xl">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/80 border border-brand-gold/40 text-brand-gold-deep text-xs font-bold uppercase tracking-[0.2em] mb-4 shadow-sm">
                 <Briefcase size={13} className="text-brand-gold-deep" />
-                <span>Specialized Transaction Desks</span>
+                <span>{specialistsSection?.badge || "Specialized Transaction Desks"}</span>
               </div>
               <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-brand-navy tracking-tight leading-tight">
-                Senior Advisors &amp; <span className="italic font-serif text-brand-gold-deep">Corridor Specialists</span>
+                {specialistsSection?.titleMain || "Senior Advisors & "}{' '}
+                <span className="italic font-serif text-brand-gold-deep">{specialistsSection?.titleItalic || "Corridor Specialists"}</span>
               </h2>
               <p className="text-sm sm:text-base text-brand-slate font-sans mt-3">
-                Direct mandate representation across DLF Phase 1–5 kothis, Golf Course Road sky penthouses, and Cybercity Grade-A commercial leasing.
+                {specialistsSection?.subtitle || "Direct mandate representation across DLF Phase 1–5 kothis, Golf Course Road sky penthouses, and Cybercity Grade-A commercial leasing."}
               </p>
             </div>
 
@@ -309,7 +324,7 @@ export default function TeamInteractiveShowcase({ founders, teamMembers, advisor
                   {/* Direct Action Strip */}
                   <div className="pt-6 mt-6 border-t border-brand-cream-border flex items-center justify-between">
                     <a
-                      href="tel:+919811221207"
+                      href={`tel:${(member?.phone || '+919811221207').replace(/[^0-9+]/g, '')}`}
                       className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-gold-deep hover:text-brand-navy transition-colors"
                     >
                       <Phone size={12} />
@@ -352,10 +367,11 @@ export default function TeamInteractiveShowcase({ founders, teamMembers, advisor
           
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-xs font-bold uppercase tracking-[0.2em] text-brand-gold block mb-2">
-              Our Working Principles
+              {pillarsSection?.badge || "Our Working Principles"}
             </span>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-brand-navy">
-              Why Discerning Families <span className="italic font-serif text-brand-gold">Trust Our Team</span>
+              {pillarsSection?.titleMain || "Why Discerning Families "}{' '}
+              <span className="italic font-serif text-brand-gold">{pillarsSection?.titleItalic || "Trust Our Team"}</span>
             </h2>
           </div>
 
@@ -409,10 +425,10 @@ export default function TeamInteractiveShowcase({ founders, teamMembers, advisor
 
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
-              href="/contact"
+              href={cta?.buttonHref || "/contact"}
               className="px-8 py-3.5 rounded-xl bg-gradient-to-r from-brand-gold to-brand-gold-light hover:brightness-105 text-white font-bold text-xs uppercase tracking-widest shadow-[0_10px_25px_rgba(197,154,39,0.3)] transition-all flex items-center gap-2 cursor-pointer"
             >
-              <span>Schedule Private Consultation</span>
+              <span>{cta?.buttonText || "Schedule Private Consultation"}</span>
               <ArrowRight size={14} />
             </Link>
 
