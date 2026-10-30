@@ -96,6 +96,16 @@ export default function PropertyDetailClient({ property }) {
       "Fortis & Max Super Speciality Hospital — 10 Mins"
     ];
   }, [property.nearbyLandmarks]);
+  const corridorHref = React.useMemo(() => {
+    const l = (property.location || '').toLowerCase();
+    if (l.includes('phase 1') || l.includes('phase1')) return '/property/dlf-phase-1';
+    if (l.includes('phase 2')) return '/property/dlf-phase-2';
+    if (l.includes('phase 3')) return '/property/dlf-phase-3';
+    if (l.includes('phase 4')) return '/property/dlf-phase-4';
+    if (l.includes('sushant lok') || l.includes('shushant')) return '/property/shushant-lok';
+    if (l.includes('udyog vihar')) return '/property/udyog-vihar';
+    return null;
+  }, [property.location]);
 
   const whatsappInquiryUrl = `https://wa.me/919718511207?text=${encodeURIComponent(
     `Hello Saudagar Properties, I am interested in private inspection of "${property.title}" (${property.location}, Valuation: ${property.price}). Please share the structural floor plan and available viewing slots.`
@@ -192,7 +202,15 @@ export default function PropertyDetailClient({ property }) {
               <span className="text-slate-600">/</span>
               <Link href="/properties" className="hover:text-brand-gold transition-colors">Properties</Link>
               <span className="text-slate-600">/</span>
-              <span className="text-brand-gold truncate max-w-[200px] sm:max-w-xs">{property.location}</span>
+              {corridorHref ? (
+                <>
+                  <Link href={corridorHref} className="hover:text-brand-gold transition-colors">{property.location}</Link>
+                  <span className="text-slate-600">/</span>
+                  <span className="text-brand-gold truncate max-w-[200px] sm:max-w-xs">{property.title}</span>
+                </>
+              ) : (
+                <span className="text-brand-gold truncate max-w-[200px] sm:max-w-xs">{property.location}</span>
+              )}
             </div>
 
             <div className="flex items-center gap-3">
@@ -522,6 +540,19 @@ export default function PropertyDetailClient({ property }) {
                 <p>• Direct Partner Accompaniment</p>
                 <p>• Confidential Buyer Privacy Guaranteed</p>
               </div>
+
+              {corridorHref && (
+                <div className="pt-4 mt-4 border-t border-brand-cream-border">
+                  <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-brand-gold-deep mb-2">Micro-Market Hub</p>
+                  <Link
+                    href={corridorHref}
+                    className="group flex items-center justify-between p-3 rounded-xl bg-brand-ivory hover:bg-brand-gold/10 border border-brand-cream-border hover:border-brand-gold/30 transition-all text-xs font-semibold text-brand-navy"
+                  >
+                    <span>Explore all {property.location} listings</span>
+                    <ChevronRight size={14} className="text-brand-gold group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
+              )}
             </motion.div>
           </div>
 

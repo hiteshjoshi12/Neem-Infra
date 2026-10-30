@@ -487,31 +487,37 @@ export async function getDynamicPageSeo(path = '/', fallbackData = {}) {
   const defaultMetaDesc = settings?.defaultMetaDescription || DEFAULT_META.description;
   const defaultOgImg = settings?.defaultOgImage || DEFAULT_META.ogImage;
 
-  const isHome = norm === '/' || norm === '';
+  const isPlaceholderTitle = (t) => {
+    if (!t || typeof t !== 'string' || !t.trim()) return true;
+    const clean = t.trim();
+    return clean === 'Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram' ||
+           clean === PAGE_SEO['/']?.title;
+  };
 
-  // Resolve Title: 1. DB Page metaTitle, 2. Global SEO default if Home, 3. Fallback, 4. defaultMetaTitle
-  let rawTitle = pageDoc?.metaTitle;
-  if (!rawTitle) {
-    if (isHome) {
-      rawTitle = settings?.defaultMetaTitle || fallbackData.title || defaultMetaTitle;
-    } else {
-      rawTitle = fallbackData.title || PAGE_SEO[norm]?.title || defaultMetaTitle;
-    }
-  }
+  const isPlaceholderDesc = (d) => {
+    if (!d || typeof d !== 'string' || !d.trim()) return true;
+    const clean = d.trim();
+    return clean.startsWith('Find luxury builder floors, independent villas, penthouses') ||
+           clean === PAGE_SEO['/']?.description;
+  };
+
+  // Rule: page-level override > global default > hardcoded fallback
+  const hasPageTitleOverride = pageDoc?.metaTitle && !isPlaceholderTitle(pageDoc.metaTitle);
+  let rawTitle = hasPageTitleOverride
+    ? pageDoc.metaTitle
+    : (settings?.defaultMetaTitle || fallbackData.title || PAGE_SEO[norm]?.title || defaultMetaTitle);
+
   rawTitle = resolveYearsToken(rawTitle);
   if (!rawTitle.includes(brandName) && !rawTitle.includes('Saudagar')) {
     rawTitle = `${rawTitle} | ${brandName}`;
   }
 
-  // Resolve Description: 1. DB Page metaDescription, 2. Global SEO default if Home, 3. Fallback, 4. defaultMetaDesc
-  let rawDesc = pageDoc?.metaDescription;
-  if (!rawDesc) {
-    if (isHome) {
-      rawDesc = settings?.defaultMetaDescription || fallbackData.description || defaultMetaDesc;
-    } else {
-      rawDesc = fallbackData.description || PAGE_SEO[norm]?.description || defaultMetaDesc;
-    }
-  }
+  // Resolve Description: 1. DB Page metaDescription (if custom), 2. Global SEO defaultMetaDescription, 3. Fallback, 4. defaultMetaDesc
+  const hasPageDescOverride = pageDoc?.metaDescription && !isPlaceholderDesc(pageDoc.metaDescription);
+  let rawDesc = hasPageDescOverride
+    ? pageDoc.metaDescription
+    : (settings?.defaultMetaDescription || fallbackData.description || PAGE_SEO[norm]?.description || defaultMetaDesc);
+
   const description = resolveYearsToken(formatMetaDescription(rawDesc, 160, null, defaultMetaDesc));
 
   // Resolve Canonical URL strictly from settings.canonicalBaseUrl
@@ -557,8 +563,10 @@ export async function getDynamicPageSeo(path = '/', fallbackData = {}) {
   const ogImageAlt = pageDoc?.ogImageAlt || pageDoc?.metaTitle || rawTitle;
 
   // Open Graph & Twitter Objects
-  const ogTitle = resolveYearsToken(pageDoc?.ogTitle || rawTitle);
-  const ogDescription = resolveYearsToken(pageDoc?.ogDescription || description);
+  const hasPageOgTitle = pageDoc?.ogTitle && !isPlaceholderTitle(pageDoc.ogTitle);
+  const ogTitle = resolveYearsToken(hasPageOgTitle ? pageDoc.ogTitle : rawTitle);
+  const hasPageOgDesc = pageDoc?.ogDescription && !isPlaceholderDesc(pageDoc.ogDescription);
+  const ogDescription = resolveYearsToken(hasPageOgDesc ? pageDoc.ogDescription : description);
   const ogType = pageDoc?.ogType || fallbackData.ogType || 'website';
   const twitterCard = pageDoc?.twitterCard || 'summary_large_image';
 

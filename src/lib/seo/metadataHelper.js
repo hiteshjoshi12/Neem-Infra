@@ -79,6 +79,7 @@ export function buildPageMetadata({
   image,
   imageAlt,
   noindex = false,
+  follow = true,
   publishedTime,
   modifiedTime,
   authors,
@@ -110,11 +111,11 @@ export function buildPageMetadata({
   const robots = noindex
     ? {
       index: false,
-      follow: false,
+      follow: follow !== false,
       nocache: true,
       googleBot: {
         index: false,
-        follow: false,
+        follow: follow !== false,
       },
     }
     : {

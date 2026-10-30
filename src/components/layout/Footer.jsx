@@ -77,19 +77,31 @@ export default function Footer() {
     : 'Portfolio & Services';
 
   const defaultServiceLinks = [
-    { label: 'Residential Portfolio', href: '/services/residential' },
-    { label: 'Commercial Spaces', href: '/services/commercial' },
-    { label: 'Industrial & Logistics', href: '/services/industrial' },
-    { label: 'Prime Properties', href: '/properties' },
-    { label: 'Market Insights & Blog', href: '/blog' },
-    { label: 'Contact Corporate Desk', href: '/contact' },
+    { label: 'DLF Phase 1 Floors & Plots', href: '/property/dlf-phase-1' },
+    { label: 'DLF Phase 2 Luxury Kothis', href: '/property/dlf-phase-2' },
+    { label: 'DLF Phase 3 Builder Floors', href: '/property/dlf-phase-3' },
+    { label: 'DLF Phase 4 Prime Residences', href: '/property/dlf-phase-4' },
+    { label: 'Sushant Lok 1 Portfolio', href: '/property/shushant-lok' },
+    { label: 'Udyog Vihar Industrial Plots', href: '/property/udyog-vihar' },
+    { label: 'Residential Advisory', href: '/services/residential' },
+    { label: 'Commercial Real Estate', href: '/services/commercial' },
+    { label: 'Industrial & Warehousing', href: '/services/industrial' },
+    { label: 'Vetted Property Catalog', href: '/properties' },
   ];
 
   const rawServiceLinks = Array.isArray(footerData.servicesLinks) && footerData.servicesLinks.length > 0
     ? footerData.servicesLinks.filter(l => !l.href?.includes('/blog/location'))
     : [];
 
-  const serviceLinks = rawServiceLinks.length > 0 ? rawServiceLinks : defaultServiceLinks;
+  // Guarantee that all 6 prime corridors and key services are ALWAYS present in footer navigation
+  const seenHrefs = new Set();
+  const serviceLinks = [];
+  for (const item of [...defaultServiceLinks, ...rawServiceLinks]) {
+    if (item?.href && !seenHrefs.has(item.href)) {
+      seenHrefs.add(item.href);
+      serviceLinks.push(item);
+    }
+  }
 
   const followTitle = footerData.followTitle || 'Private Advisory';
 

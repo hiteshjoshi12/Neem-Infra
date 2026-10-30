@@ -13,9 +13,11 @@ import DlfPropertyCallout from './services/DlfPropertyCallout';
 import { useCms } from '../../context/CmsContext';
 
 
-export default function OurServicesSection() {
+export default function OurServicesSection({ initialData = null }) {
   const { sections } = useCms();
-  const data = sections?.services || {};
+  const data = (sections?.services && Object.keys(sections.services).length > 0)
+    ? sections.services
+    : (initialData || {});
 
   const badge = data.badge || 'Bespoke Property Solutions';
   const titleMain = data.titleMain || 'Our';

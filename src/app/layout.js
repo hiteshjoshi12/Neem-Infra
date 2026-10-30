@@ -3,7 +3,7 @@ import "./globals.css";
 import Script from "next/script";
 import Providers from "../components/Providers";
 import { getGlobalSeoSettings } from "@/lib/seo/dynamicSeo";
-import { getBusinessProfile } from "@/lib/dal";
+import { getBusinessProfile, getInitialCmsPayload } from "@/lib/dal";
 import { buildOrganizationSchema, buildWebSiteSchema } from "@/lib/seo/schemaBuilders";
 
 const lora = Lora({
@@ -67,9 +67,6 @@ export async function generateMetadata() {
       template: siteTitleTemplate,
     },
     description: siteDescription,
-    alternates: {
-      canonical: '/',
-    },
     keywords,
     openGraph: {
       title: siteTitle,
@@ -121,9 +118,10 @@ export async function generateMetadata() {
 }
 
 export default async function RootLayout({ children }) {
-  const [settings, profile] = await Promise.all([
+  const [settings, profile, cmsPayload] = await Promise.all([
     getGlobalSeoSettings(),
     getBusinessProfile(),
+    getInitialCmsPayload(),
   ]);
 
   // Dynamic Google Tag Manager
@@ -277,7 +275,7 @@ export default async function RootLayout({ children }) {
             dangerouslySetInnerHTML={{ __html: settings.customScripts.body }}
           />
         )}
-        <Providers>
+        <Providers initialData={cmsPayload}>
           {children}
         </Providers>
       </body>

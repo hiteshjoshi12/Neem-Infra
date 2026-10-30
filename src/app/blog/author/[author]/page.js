@@ -35,8 +35,19 @@ export async function generateStaticParams() {
 
 export async function generateMetadata({ params }) {
   const { author } = await params;
-  const authorDoc = await getAuthorBySlug(author);
+  const [authorDoc, posts] = await Promise.all([
+    getAuthorBySlug(author),
+    getBlogPosts({ author }),
+  ]);
   const authorName = authorDoc?.name || author.replace(/-/g, ' ');
+
+  // Per Google Search Console quality remediation:
+  // Index ONLY if the author profile has a verified photo, substantive bio (>=50 chars), and published articles.
+  // Founder photos are pending from owner input, so default to noindex,follow.
+  const hasPhoto = Boolean(authorDoc?.image && authorDoc.image.trim().length > 0);
+  const hasBio = Boolean(authorDoc?.bio && authorDoc.bio.trim().length >= 50);
+  const hasArticles = Array.isArray(posts) && posts.length > 0;
+  const shouldIndex = hasPhoto && hasBio && hasArticles;
 
   return buildPageMetadata({
     title: `${authorName} — Editorial & Advisory`,
@@ -45,6 +56,7 @@ export async function generateMetadata({ params }) {
     canonical: `/blog/author/${author}`,
     image: authorDoc?.image,
     imageAlt: authorName,
+    noindex: !shouldIndex,
     keywords: [authorName, 'Saudagar Properties Author', 'DLF Real Estate Consultant'],
   });
 }
@@ -64,7 +76,12 @@ export default async function BlogAuthorPage({ params }) {
     { name: authorName, url: `/blog/author/${author}` },
   ];
 
-  const profileSchema = authorDoc ? buildProfilePageSchema(authorDoc, breadcrumbs) : null;
+  const hasPhoto = Boolean(authorDoc?.image && authorDoc.image.trim().length > 0);
+  const hasBio = Boolean(authorDoc?.bio && authorDoc.bio.trim().length >= 50);
+  const hasArticles = Array.isArray(posts) && posts.length > 0;
+  const shouldEmitPersonSchema = hasPhoto && hasBio && hasArticles;
+
+  const profileSchema = (authorDoc && shouldEmitPersonSchema) ? buildProfilePageSchema(authorDoc, breadcrumbs) : null;
 
   return (
     <PublicLayout asMain={false}>

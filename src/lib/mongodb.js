@@ -21,7 +21,7 @@ export async function connectDB() {
       bufferCommands: false,
       maxPoolSize: 10,
       minPoolSize: 1,
-      serverSelectionTimeoutMS: 5000,
+      serverSelectionTimeoutMS: 15000,
       socketTimeoutMS: 45000,
       heartbeatFrequencyMS: 10000,
       autoIndex: false,

@@ -94,9 +94,7 @@ export default async function PropertiesPage(props) {
           { name: 'Properties', url: '/properties' }
         ]}
       />
-      <Suspense fallback={<PropertiesCatalogSkeleton />}>
-        <PropertiesCatalogClient initialProperties={properties} allProperties={allProperties} />
-      </Suspense>
+      <PropertiesCatalogClient initialProperties={properties} allProperties={allProperties} />
     </PublicLayout>
   );
 }

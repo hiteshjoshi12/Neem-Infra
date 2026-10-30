@@ -8,6 +8,65 @@ export default function ContextualInternalLinks({
 }) {
   const recommendations = [];
 
+  const slugLower = (currentSlug || '').toLowerCase();
+  if (slugLower.includes('phase-1') || slugLower.includes('phase1')) {
+    recommendations.push({
+      title: 'DLF Phase 1 Prime Real Estate & Corridor Hub',
+      href: '/property/dlf-phase-1',
+      category: 'Prime Corridor Hub',
+      description: 'Explore verified luxury builder floors, kothis, and plot transactions across Sector 26 & 26A.',
+      icon: Building2,
+    });
+  } else if (slugLower.includes('phase-2')) {
+    recommendations.push({
+      title: 'DLF Phase 2 Luxury Residences & Corridor Hub',
+      href: '/property/dlf-phase-2',
+      category: 'Prime Corridor Hub',
+      description: 'Explore signature residential kothis and modern builder floors in Sector 25 & 25A.',
+      icon: Building2,
+    });
+  } else if (slugLower.includes('phase-3')) {
+    recommendations.push({
+      title: 'DLF Phase 3 Residential & Corridor Hub',
+      href: '/property/dlf-phase-3',
+      category: 'Prime Corridor Hub',
+      description: 'Browse independent floors and high-yield residential plots in Sector 24.',
+      icon: Building2,
+    });
+  } else if (slugLower.includes('phase-4')) {
+    recommendations.push({
+      title: 'DLF Phase 4 Prime Residences & Corridor Hub',
+      href: '/property/dlf-phase-4',
+      category: 'Prime Corridor Hub',
+      description: 'Explore premium residences near Galleria Market and Sector 28.',
+      icon: Building2,
+    });
+  } else if (slugLower.includes('sushant-lok')) {
+    recommendations.push({
+      title: 'Sushant Lok 1 Portfolio & Corridor Hub',
+      href: '/property/shushant-lok',
+      category: 'Prime Corridor Hub',
+      description: 'Discover luxury duplex villas and freehold builder floors in Sectors 43 & 27.',
+      icon: Building2,
+    });
+  } else if (slugLower.includes('udyog-vihar')) {
+    recommendations.push({
+      title: 'Udyog Vihar Industrial & Commercial Hub',
+      href: '/property/udyog-vihar',
+      category: 'Industrial Hub',
+      description: 'Grade-A industrial plots and commercial assets in Phases 1–5.',
+      icon: Compass,
+    });
+  } else {
+    recommendations.push({
+      title: 'DLF Phase 1 Prime Real Estate & Corridor Hub',
+      href: '/property/dlf-phase-1',
+      category: 'Prime Corridor Hub',
+      description: 'Explore verified luxury builder floors, kothis, and plot transactions across DLF Phase 1–5.',
+      icon: Building2,
+    });
+  }
+
   // Always include primary residential recommendation
   recommendations.push({
     title: 'Independent Luxury Builder Floors in DLF Phase 1–5',

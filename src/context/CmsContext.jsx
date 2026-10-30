@@ -17,6 +17,19 @@ export const CmsProvider = ({ children, initialData = {} }) => {
   const lastFetchRef = useRef(0);
   const isFetchingRef = useRef(false);
 
+  // Sync state if initialData is provided/updated
+  useEffect(() => {
+    if (initialData?.sections && Object.keys(initialData.sections).length > 0) {
+      setSections(initialData.sections);
+    }
+    if (initialData?.properties && initialData.properties.length > 0) {
+      setProperties(initialData.properties);
+    }
+    if (initialData?.testimonials && initialData.testimonials.length > 0) {
+      setTestimonials(initialData.testimonials);
+    }
+  }, [initialData]);
+
   // Clear any legacy sessionStorage cache on mount to ensure no stale data persists
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -38,9 +51,9 @@ export const CmsProvider = ({ children, initialData = {} }) => {
     }
 
     const now = Date.now();
-    // Prevent duplicate in-flight requests or rapid re-fetching within 45 seconds (unless forced)
+    // Prevent duplicate in-flight requests or rapid re-fetching within 10 seconds (unless forced)
     if (isFetchingRef.current) return;
-    if (!force && now - lastFetchRef.current < 45000) return;
+    if (!force && now - lastFetchRef.current < 10000) return;
 
     isFetchingRef.current = true;
     try {
@@ -106,7 +119,7 @@ export const CmsProvider = ({ children, initialData = {} }) => {
         properties,
         testimonials,
         loading,
-        refetch: () => fetchCmsData(),
+        refetch: () => fetchCmsData(true),
         updateLocalSection
       }}
     >

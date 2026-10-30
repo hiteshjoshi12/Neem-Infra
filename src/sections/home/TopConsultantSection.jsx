@@ -17,9 +17,11 @@ const CATEGORY_ICONS = {
   factory: Factory
 };
 
-export default function TopConsultantSection() {
+export default function TopConsultantSection({ initialData = null }) {
   const { sections } = useCms();
-  const data = sections?.topConsultant || {};
+  const data = (sections?.topConsultant && Object.keys(sections.topConsultant).length > 0)
+    ? sections.topConsultant
+    : (initialData || {});
 
   const badge = data.badge || "Bespoke Real Estate Advisory";
   const headlineMain = data.headlineMain || "Top Real Estate Consultant";

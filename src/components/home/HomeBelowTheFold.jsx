@@ -1,17 +1,20 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import TestimonialsSection from '@/sections/home/TestimonialsSection';
+import LocationMap from '@/sections/home/LocationMap';
+import NewsletterSection from '@/sections/home/NewsletterSection';
 
-const TestimonialsSection = dynamic(() => import('@/sections/home/TestimonialsSection'), { ssr: false });
-const LocationMap = dynamic(() => import('@/sections/home/LocationMap'), { ssr: false });
-const NewsletterSection = dynamic(() => import('@/sections/home/NewsletterSection'), { ssr: false });
 const LeadInquiryModal = dynamic(() => import('@/components/home/LeadInquiryModal'), { ssr: false });
 
-export default function HomeBelowTheFold() {
+export default function HomeBelowTheFold({ initialTestimonials = [], initialSections = {} }) {
   return (
     <>
       <LeadInquiryModal />
-      <TestimonialsSection />
+      <TestimonialsSection
+        initialTestimonials={initialTestimonials}
+        initialSectionData={initialSections?.testimonials}
+      />
       <LocationMap />
       <NewsletterSection />
     </>

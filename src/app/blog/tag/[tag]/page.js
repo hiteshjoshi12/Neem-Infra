@@ -19,16 +19,24 @@ export async function generateStaticParams() {
   }));
 }
 
+import { getGlobalSeoSettings } from '@/lib/seo/dynamicSeo';
+
 export async function generateMetadata({ params }) {
   const { tag } = await params;
-  const tagDoc = await getTagBySlug(tag);
+  const [tagDoc, settings] = await Promise.all([
+    getTagBySlug(tag),
+    getGlobalSeoSettings().catch(() => null),
+  ]);
   const tagName = tagDoc?.name || tag.replace(/-/g, ' ');
+  const tagRule = settings?.tagArchiveRobots || 'noindex,follow';
+  const shouldNoindex = tagRule.includes('noindex');
 
   return buildPageMetadata({
     title: `#${tagName} Articles & Guides`,
     description: `Expert real estate insights, corridor reports, and buyer guides tagged under #${tagName} at Saudagar Properties.`,
     path: `/blog/tag/${tag}`,
     canonical: `/blog/tag/${tag}`,
+    noindex: shouldNoindex,
     keywords: [tagName, 'DLF Gurugram', 'Saudagar Properties Blog', `#${tagName}`],
   });
 }

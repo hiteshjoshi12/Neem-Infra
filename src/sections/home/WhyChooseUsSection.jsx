@@ -176,9 +176,11 @@ function ReasonCard({ item, index }) {
   );
 }
 
-export default function WhyChooseUsSection() {
+export default function WhyChooseUsSection({ initialData = null }) {
   const { sections } = useCms();
-  const whyData = sections?.whyChooseUs || {};
+  const whyData = (sections?.whyChooseUs && Object.keys(sections.whyChooseUs).length > 0)
+    ? sections.whyChooseUs
+    : (initialData || {});
 
   const badge = whyData.badge || "Why Choose Us";
   const titleMain = whyData.titleMain || "Decades of Unrivaled";
