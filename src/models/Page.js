@@ -94,6 +94,10 @@ const pageSchema = new mongoose.Schema(
       noarchive: { type: Boolean, default: false },
       nosnippet: { type: Boolean, default: false },
     },
+    excludeFromSitemap: {
+      type: Boolean,
+      default: false,
+    },
 
     // Social Sharing (Open Graph & Twitter Cards)
     ogTitle: { type: String, trim: true, default: '' },

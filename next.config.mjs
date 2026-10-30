@@ -83,12 +83,26 @@ const nextConfig = {
           },
         ],
       },
+      {
+        source: '/search/:path*',
+        headers: [
+          {
+            key: 'X-Robots-Tag',
+            value: 'noindex, nofollow, noarchive',
+          },
+        ],
+      },
     ];
   },
-  trailingSlash: false,
+  skipTrailingSlashRedirect: true,
   async rewrites() {
     return {
       beforeFiles: [
+        // Split sitemaps support (e.g. /blog-sitemap-2.xml -> /api/sitemaps/blog-sitemap-2.xml)
+        {
+          source: '/:sitemap([a-z0-9_-]+-sitemap-\\d+\\.xml)',
+          destination: '/api/sitemaps/:sitemap',
+        },
         // IndexNow root verification key file (e.g. /23c1fd3e813a48e78e6da5a6e2e50550.txt)
         // Maps directly to IndexNow route handler before filesystem checking, preventing collision with [slug]
         {
@@ -100,25 +114,10 @@ const nextConfig = {
   },
   async redirects() {
     return [
-      // Legacy WordPress category and tag archives
+      // Legacy WordPress category archives
       {
         source: '/category/:slug*',
         destination: '/blog/category/:slug*',
-        permanent: true,
-      },
-      {
-        source: '/tag/:slug*',
-        destination: '/blog',
-        permanent: true,
-      },
-      {
-        source: '/feed',
-        destination: '/blog',
-        permanent: true,
-      },
-      {
-        source: '/feed/:slug*',
-        destination: '/blog',
         permanent: true,
       },
       // Blog aliases
@@ -149,7 +148,17 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/about-us',
+        destination: '/about',
+        permanent: true,
+      },
+      {
         source: '/clients',
+        destination: '/about',
+        permanent: true,
+      },
+      {
+        source: '/careers',
         destination: '/about',
         permanent: true,
       },
@@ -215,11 +224,79 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: '/property-in-udyog-vihar',
+        destination: '/property/udyog-vihar',
+        permanent: true,
+      },
+      // Direct Property legacy & discovered root URLs redirected to canonical /properties/[slug]
+      {
         source: '/4-bhk-independent-floor-dlf-phase1',
-        destination: '/properties',
+        destination: '/properties/4-bhk-independent-floor-dlf-phase1',
+        permanent: true,
+      },
+      {
+        source: '/3-bhk-independent-floor-dlf-phase-2',
+        destination: '/properties/3-bhk-independent-floor-dlf-phase-2',
+        permanent: true,
+      },
+      {
+        source: '/duplex-villa-in-dlf-phase-1',
+        destination: '/properties/duplex-villa-in-dlf-phase-1',
+        permanent: true,
+      },
+      {
+        source: '/villa-in-sushant-lok-1',
+        destination: '/properties/villa-in-sushant-lok-1',
+        permanent: true,
+      },
+      {
+        source: '/4-bhk-independent-floor-dlf-phase-1-gurgaon-2',
+        destination: '/properties/4-bhk-independent-floor-dlf-phase-1-2',
+        permanent: true,
+      },
+      // Direct Blog legacy root URLs redirected to canonical /blog/[slug]
+      {
+        source: '/kothi-for-sale-in-dlf-phase-3',
+        destination: '/blog/kothi-for-sale-in-dlf-phase-3',
+        permanent: true,
+      },
+      {
+        source: '/luxury-duplex-villa-in-dlf-phase-1',
+        destination: '/blog/luxury-duplex-villa-in-dlf-phase-1',
+        permanent: true,
+      },
+      {
+        source: '/builder-floors-dlf-phase-1-prices-amenities',
+        destination: '/blog/builder-floors-dlf-phase-1-prices-amenities',
+        permanent: true,
+      },
+      {
+        source: '/property-dealers-in-gurugram-complete-guide',
+        destination: '/blog/property-dealers-in-gurugram-complete-guide',
+        permanent: true,
+      },
+      // Category & Pagination redirects
+      {
+        source: '/property-investment/page/:page*',
+        destination: '/blog/category/property-investment',
+        permanent: true,
+      },
+      {
+        source: '/property-investment',
+        destination: '/blog/category/property-investment',
+        permanent: true,
+      },
+      {
+        source: '/uncategorized/:slug*',
+        destination: '/blog',
         permanent: true,
       },
       // Legacy property catalog routes redirected to active counterparts
+      {
+        source: '/gurugram-properties',
+        destination: '/properties',
+        permanent: true,
+      },
       {
         source: '/ready-to-move',
         destination: '/properties',

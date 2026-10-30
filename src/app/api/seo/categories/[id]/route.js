@@ -3,7 +3,7 @@ import { connectDB } from '@/lib/mongodb';
 import Category from '@/models/Category';
 import BlogPost from '@/models/BlogPost';
 import { requireAdmin } from '@/lib/auth/authGuard';
-import { invalidateCache } from '@/lib/cache/apiCache';
+import { revalidateCategory } from '@/lib/cache/revalidateHelper';
 
 export async function PUT(req, { params }) {
   try {
@@ -17,10 +17,11 @@ export async function PUT(req, { params }) {
       return NextResponse.json({ success: false, message: 'Category not found' }, { status: 404 });
     }
 
-    const { name, slug, description } = body;
+    const { name, slug, description, excludeFromSitemap } = body;
     const updateData = {};
     if (name) updateData.name = name.trim();
     if (description !== undefined) updateData.description = description.trim();
+    if (excludeFromSitemap !== undefined) updateData.excludeFromSitemap = Boolean(excludeFromSitemap);
     if (slug) {
       const cleanSlug = slug
         .toLowerCase()
@@ -35,7 +36,7 @@ export async function PUT(req, { params }) {
     }
 
     const updated = await Category.findByIdAndUpdate(id, { $set: updateData }, { returnDocument: 'after' });
-    invalidateCache('taxonomies_all');
+    await revalidateCategory(updated);
 
     return NextResponse.json({
       success: true,
@@ -74,7 +75,7 @@ export async function DELETE(req, { params }) {
     }
 
     await Category.findByIdAndDelete(id);
-    invalidateCache('taxonomies_all');
+    await revalidateCategory(category);
 
     return NextResponse.json({
       success: true,

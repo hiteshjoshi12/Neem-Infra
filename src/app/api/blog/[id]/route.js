@@ -1,12 +1,11 @@
 import { NextResponse } from 'next/server';
-import { revalidatePath, revalidateTag } from 'next/cache';
 import { connectDB } from '@/lib/mongodb';
 import BlogPost from '@/models/BlogPost';
 import Redirect from '@/models/Redirect';
 import AuditLog from '@/models/AuditLog';
 import { requireAdmin } from '@/lib/auth/authGuard';
 import { clearBlogCache } from '@/services/blogService';
-import { invalidateCache } from '@/lib/cache/apiCache';
+import { revalidateBlogPost } from '@/lib/cache/revalidateHelper';
 
 export async function GET(req, { params }) {
   try {
@@ -117,19 +116,7 @@ export async function PUT(req, { params }) {
     }
 
     clearBlogCache();
-    invalidateCache('blog');
-    try {
-      revalidateTag('blog');
-      revalidateTag('redirects');
-    } catch (e) {}
-
-    try {
-      revalidatePath('/blog');
-      if (post.slug) revalidatePath(`/blog/${post.slug}`);
-      revalidatePath('/sitemap.xml');
-    } catch {
-      // ignore
-    }
+    await revalidateBlogPost(post);
 
     return NextResponse.json({
       success: true,
@@ -170,17 +157,7 @@ export async function DELETE(req, { params }) {
     }
 
     clearBlogCache();
-    invalidateCache('blog');
-    try {
-      revalidateTag('blog');
-    } catch (e) {}
-
-    try {
-      revalidatePath('/blog');
-      revalidatePath('/sitemap.xml');
-    } catch {
-      // ignore
-    }
+    await revalidateBlogPost(post);
 
     return NextResponse.json({
       success: true,

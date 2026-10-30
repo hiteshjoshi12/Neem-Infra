@@ -60,6 +60,7 @@ const blogPostSchema = new mongoose.Schema(
     seoTitle: { type: String, trim: true },
     seoDescription: { type: String, trim: true },
     canonicalUrl: { type: String, trim: true },
+    excludeFromSitemap: { type: Boolean, default: false, index: true },
     focusKeyword: { type: String, trim: true },
     secondaryKeywords: [{ type: String, trim: true }],
     

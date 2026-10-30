@@ -3,9 +3,8 @@ import mongoose from 'mongoose';
 import { connectDB } from '@/lib/mongodb';
 import Author from '@/models/Author';
 import { requireAdmin } from '@/lib/auth/authGuard';
-import { revalidatePath } from 'next/cache';
 import { clearBlogCache } from '@/services/blogService';
-import { invalidateCache } from '@/lib/cache/apiCache';
+import { revalidateAuthor } from '@/lib/cache/revalidateHelper';
 
 function getFilter(id) {
   if (mongoose.Types.ObjectId.isValid(id)) {
@@ -73,22 +72,7 @@ export async function PUT(req, { params }) {
     }
 
     clearBlogCache();
-    invalidateCache('authors');
-    invalidateCache('taxonomies_all');
-
-    try {
-      const { revalidateTag } = await import('next/cache');
-      revalidateTag('team');
-      revalidateTag('authors');
-    } catch (e) {}
-
-    try {
-      revalidatePath(`/blog/author/${updatedAuthor.slug}`);
-      revalidatePath('/blog');
-      revalidatePath('/team');
-    } catch {
-      // outside request context
-    }
+    await revalidateAuthor(updatedAuthor);
 
     return NextResponse.json({
       success: true,
@@ -113,16 +97,7 @@ export async function DELETE(req, { params }) {
     }
 
     clearBlogCache();
-    invalidateCache('authors');
-    invalidateCache('taxonomies_all');
-
-    try {
-      const { revalidateTag } = await import('next/cache');
-      revalidateTag('team');
-      revalidateTag('authors');
-      revalidatePath('/team');
-      revalidatePath('/blog');
-    } catch (e) {}
+    await revalidateAuthor(deleted);
 
     return NextResponse.json({
       success: true,

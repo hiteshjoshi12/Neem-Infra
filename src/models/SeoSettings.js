@@ -115,12 +115,28 @@ Disallow: /api/
 `,
     },
 
+    // Taxonomies Robots & Indexing Policy
+    tagArchiveRobots: {
+      type: String,
+      enum: ['noindex,follow', 'index,follow', 'noindex,nofollow'],
+      default: 'noindex,follow',
+    },
+    authorArchiveRobots: {
+      type: String,
+      enum: ['noindex,follow', 'index,follow', 'noindex,nofollow'],
+      default: 'noindex,follow',
+    },
+
     // XML Sitemap Configuration
     sitemapConfig: {
+      includePages: { type: Boolean, default: true },
+      includeServices: { type: Boolean, default: true },
       includeProperties: { type: Boolean, default: true },
+      includeCorridors: { type: Boolean, default: true },
       includeBlogs: { type: Boolean, default: true },
       includeCategories: { type: Boolean, default: true },
-      includeAuthors: { type: Boolean, default: true },
+      includeTags: { type: Boolean, default: false },
+      includeAuthors: { type: Boolean, default: false },
       includeCustomPages: { type: Boolean, default: true },
       extraUrls: [
         {

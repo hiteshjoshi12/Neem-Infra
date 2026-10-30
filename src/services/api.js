@@ -244,6 +244,12 @@ export const api = {
       method: 'PUT',
       body: JSON.stringify(data)
     }),
+  getSitemapsSummary: () => request('/seo/sitemaps'),
+  updateSitemapsConfig: (data) =>
+    request('/seo/sitemaps', {
+      method: 'PUT',
+      body: JSON.stringify(data),
+    }),
 
   getSeoPages: (params = {}) => {
     const query = new URLSearchParams(params).toString();

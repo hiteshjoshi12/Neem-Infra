@@ -111,6 +111,7 @@ export default function AdminLayout({ children }) {
         { label: 'Blog Categories', to: '/admin/seo/categories', icon: Layers },
         { label: '301/302 Redirects', to: '/admin/seo/redirects', icon: CornerUpRight },
         { label: 'Image Alt Text Hub', to: '/admin/seo/images', icon: ImageIcon },
+        { label: 'XML Sitemaps Index', to: '/admin/seo/sitemaps', icon: Network, pill: 'Index' },
         { label: 'Robots.txt & Sitemap', to: '/admin/seo/robots-sitemap', icon: Globe },
         { label: 'Analytics & Search Console', to: '/admin/seo/integrations', icon: Activity },
         { label: 'Speed & Core Web Vitals', to: '/admin/seo/speed', icon: Zap },
@@ -162,6 +163,9 @@ export default function AdminLayout({ children }) {
     }
     if (pathname === '/admin/seo/images') {
       return { title: 'Image Alt Text Hub', desc: 'Audit and update descriptive alt text across all media' };
+    }
+    if (pathname === '/admin/seo/sitemaps') {
+      return { title: 'XML Sitemap Index & Child Sitemaps', desc: 'Manage master index and isolated child sitemaps with live URL counts and real lastmod dates' };
     }
     if (pathname === '/admin/seo/robots-sitemap') {
       return { title: 'Robots.txt & XML Sitemap', desc: 'Crawler directives, user-agents, and auto-generated sitemap' };

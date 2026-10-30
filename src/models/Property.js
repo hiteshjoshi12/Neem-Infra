@@ -127,6 +127,11 @@ const propertySchema = new mongoose.Schema(
       type: Boolean,
       default: true,
       index: true
+    },
+    excludeFromSitemap: {
+      type: Boolean,
+      default: false,
+      index: true
     }
   },
   { timestamps: true }

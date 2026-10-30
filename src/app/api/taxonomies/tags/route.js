@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import Tag from '@/models/Tag';
 import { requireAdmin } from '@/lib/auth/authGuard';
+import { triggerRevalidation } from '@/lib/cache/revalidateHelper';
 
 export async function POST(req) {
   try {
@@ -10,6 +11,8 @@ export async function POST(req) {
     
     const body = await req.json();
     const tag = await Tag.create(body);
+
+    await triggerRevalidation({ tags: ['taxonomies', 'taxonomies_all'] });
     
     return NextResponse.json({
       success: true,

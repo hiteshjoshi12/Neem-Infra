@@ -3,7 +3,7 @@ import { connectDB } from '@/lib/mongodb';
 import Category from '@/models/Category';
 import BlogPost from '@/models/BlogPost';
 import { requireAdmin } from '@/lib/auth/authGuard';
-import { invalidateCache } from '@/lib/cache/apiCache';
+import { revalidateCategory } from '@/lib/cache/revalidateHelper';
 
 export async function GET() {
   try {
@@ -56,9 +56,10 @@ export async function POST(req) {
       name: name.trim(),
       slug: cleanSlug,
       description: description?.trim() || '',
+      excludeFromSitemap: Boolean(body.excludeFromSitemap),
     });
 
-    invalidateCache('taxonomies_all');
+    await revalidateCategory(category);
 
     return NextResponse.json({
       success: true,

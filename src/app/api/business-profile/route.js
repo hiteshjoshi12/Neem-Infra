@@ -1,10 +1,8 @@
 import { NextResponse } from 'next/server';
-import { revalidatePath } from 'next/cache';
 import { connectDB } from '@/lib/mongodb';
 import BusinessProfile from '@/models/BusinessProfile';
 import { requireAdmin } from '@/lib/auth/authGuard';
-import { invalidateSeoCache } from '@/lib/seo/dynamicSeo';
-import { invalidateCache } from '@/lib/cache/apiCache';
+import { revalidateBusinessProfile } from '@/lib/cache/revalidateHelper';
 
 export async function GET(req) {
   try {
@@ -36,6 +34,9 @@ export async function PUT(req) {
     await connectDB();
     const body = await req.json();
 
+    delete body._id;
+    delete body.id;
+
     const updated = await BusinessProfile.findOneAndUpdate(
       { singletonKey: 'primary_business_profile' },
       {
@@ -47,21 +48,7 @@ export async function PUT(req) {
       { returnDocument: 'after', upsert: true, runValidators: true }
     );
 
-    invalidateSeoCache();
-    invalidateCache(); // Clear in-memory DAL cache
-    try {
-      const { revalidateTag } = await import('next/cache');
-      revalidateTag('business_profile');
-      revalidateTag('dal_business_profile');
-    } catch (e) {}
-
-    revalidatePath('/', 'layout');
-    revalidatePath('/about');
-    revalidatePath('/contact');
-    revalidatePath('/team');
-    revalidatePath('/sitemap.xml');
-    revalidatePath('/llms.txt');
-    revalidatePath('/llms-full.txt');
+    await revalidateBusinessProfile();
 
     return NextResponse.json({
       success: true,

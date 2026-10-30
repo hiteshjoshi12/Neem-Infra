@@ -28,6 +28,7 @@ export default function AdminBlogCategoriesPage() {
     name: '',
     slug: '',
     description: '',
+    excludeFromSitemap: false,
   });
   const [submitting, setSubmitting] = useState(false);
 
@@ -51,7 +52,7 @@ export default function AdminBlogCategoriesPage() {
 
   const openCreateModal = () => {
     setEditingCategory(null);
-    setFormData({ name: '', slug: '', description: '' });
+    setFormData({ name: '', slug: '', description: '', excludeFromSitemap: false });
     setIsModalOpen(true);
   };
 
@@ -61,6 +62,7 @@ export default function AdminBlogCategoriesPage() {
       name: cat.name,
       slug: cat.slug || '',
       description: cat.description || '',
+      excludeFromSitemap: Boolean(cat.excludeFromSitemap),
     });
     setIsModalOpen(true);
   };
@@ -264,6 +266,18 @@ export default function AdminBlogCategoriesPage() {
                   placeholder="In-depth price analyses, market cycles, and yield forecasts for Gurugram luxury real estate..."
                   className="w-full px-3.5 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white focus:outline-none focus:border-brand-gold leading-relaxed"
                 />
+              </div>
+
+              <div>
+                <label className="flex items-center gap-2 cursor-pointer text-slate-300">
+                  <input
+                    type="checkbox"
+                    checked={formData.excludeFromSitemap}
+                    onChange={e => setFormData({ ...formData, excludeFromSitemap: e.target.checked })}
+                    className="w-4 h-4 accent-amber-500"
+                  />
+                  <span className="text-xs text-amber-300">Exclude from XML Sitemap</span>
+                </label>
               </div>
 
               <div className="flex items-center justify-end gap-3 pt-3 border-t border-white/10">

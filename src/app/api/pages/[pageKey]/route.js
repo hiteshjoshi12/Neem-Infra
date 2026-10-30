@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import SectionContent from '@/models/SectionContent';
 import { requireAdmin } from '@/lib/auth/authGuard';
-import { invalidateCache } from '@/lib/cache/apiCache';
+import { revalidateSectionContent } from '@/lib/cache/revalidateHelper';
 
 export async function GET(req, { params }) {
   try {
@@ -55,17 +55,7 @@ export async function PUT(req, { params }) {
       { returnDocument: 'after', upsert: true, runValidators: true }
     );
 
-    invalidateCache('cms_sections');
-    invalidateCache();
-
-    try {
-      const { revalidateTag } = await import('next/cache');
-      revalidateTag('sections');
-      revalidateTag('dal_all_sections');
-      revalidateTag('dal_single_section');
-    } catch (e) {
-      // Ignore during build or non-standard environment
-    }
+    await revalidateSectionContent(pageKey);
 
     return NextResponse.json({
       success: true,

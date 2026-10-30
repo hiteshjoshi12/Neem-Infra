@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { connectDB } from '@/lib/mongodb';
 import Testimonial from '@/models/Testimonial';
 import { requireAdmin } from '@/lib/auth/authGuard';
-import { invalidateCache } from '@/lib/cache/apiCache';
+import { revalidateTestimonials } from '@/lib/cache/revalidateHelper';
 
 export async function PUT(req, { params }) {
   try {
@@ -20,12 +20,7 @@ export async function PUT(req, { params }) {
       return NextResponse.json({ success: false, message: 'Testimonial not found' }, { status: 404 });
     }
 
-    invalidateCache('testimonials');
-    try {
-      const { revalidateTag, revalidatePath } = await import('next/cache');
-      revalidateTag('testimonials');
-      revalidatePath('/', 'layout');
-    } catch (e) {}
+    await revalidateTestimonials();
 
     return NextResponse.json({
       success: true,
@@ -49,12 +44,7 @@ export async function DELETE(req, { params }) {
       return NextResponse.json({ success: false, message: 'Testimonial not found' }, { status: 404 });
     }
 
-    invalidateCache('testimonials');
-    try {
-      const { revalidateTag, revalidatePath } = await import('next/cache');
-      revalidateTag('testimonials');
-      revalidatePath('/', 'layout');
-    } catch (e) {}
+    await revalidateTestimonials();
 
     return NextResponse.json({
       success: true,

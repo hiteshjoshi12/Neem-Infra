@@ -3,6 +3,7 @@ import { connectDB } from '@/lib/mongodb';
 import Property from '@/models/Property';
 import { requireAdmin } from '@/lib/auth/authGuard';
 import { getCached, setCached, invalidateCache } from '@/lib/cache/apiCache';
+import { revalidateProperty } from '@/lib/cache/revalidateHelper';
 
 /**
  * Helper to parse Indian currency strings like '₹5.75 Cr' or '₹85 Lakh' into numbers (in INR).
@@ -170,11 +171,7 @@ export async function POST(req) {
     if (body.images !== undefined) body.images = normalizeArrayField(body.images);
 
     const property = await Property.create(body);
-    invalidateCache('props');
-    try {
-      const { revalidateTag } = await import('next/cache');
-      revalidateTag('properties');
-    } catch (e) {}
+    await revalidateProperty(property);
     
     return NextResponse.json({
       success: true,

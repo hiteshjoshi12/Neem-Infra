@@ -11,7 +11,8 @@
     "seed:cms": "node --env-file=.env.local src/scripts/seedCmsFromHardcoded.mjs",
     "seed:cms:test": "node --env-file=.env.local src/scripts/seedCmsFromHardcoded.mjs --test",
     "typecheck": "node -e \"console.log('✓ Typecheck passed (Next.js compiler verified cleanly)')\"",
-    "seo:check": "node scripts/audit-seo.mjs"
+    "seo:check": "node scripts/audit-seo.mjs",
+    "test:sitemaps": "node --env-file=.env.local scripts/test-sitemaps-comprehensive.mjs"
   },
   "imports": {
     "@/*": "./src/*"

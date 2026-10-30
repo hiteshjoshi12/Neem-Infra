@@ -4,6 +4,7 @@ import Redirect from '@/models/Redirect';
 import { requireAdmin } from '@/lib/auth/authGuard';
 import { normalizePath } from '@/lib/seo/metadataHelper';
 import { invalidateRedirectLookupCache } from '@/app/api/seo/redirects/lookup/route';
+import { revalidateRedirects } from '@/lib/cache/revalidateHelper';
 
 /**
  * Validates against circular loops (A -> B -> A) and multi-hop redirect chains (A -> B -> C)
@@ -129,10 +130,7 @@ export async function POST(req) {
     });
 
     invalidateRedirectLookupCache();
-    try {
-      const { revalidateTag } = await import('next/cache');
-      revalidateTag('redirects');
-    } catch {}
+    await revalidateRedirects();
 
     return NextResponse.json(
       {

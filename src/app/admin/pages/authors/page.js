@@ -60,6 +60,7 @@ export default function AdminAuthorCMS() {
     bio: '',
     image: '',
     email: '',
+    excludeFromSitemap: false,
     expertise: [],
     socialProfiles: {
       linkedin: '',
@@ -122,6 +123,7 @@ export default function AdminAuthorCMS() {
       bio: '',
       image: '',
       email: '',
+      excludeFromSitemap: false,
       expertise: ['DLF Corridors', 'Luxury Builder Floors'],
       socialProfiles: { linkedin: '', twitter: '', facebook: '', instagram: '' }
     });
@@ -401,6 +403,18 @@ export default function AdminAuthorCMS() {
                   placeholder="e.g. arun@saudagarproperties.com"
                   className="w-full px-3.5 py-2.5 rounded-xl bg-white/[0.04] border border-white/10 focus:border-brand-gold text-white text-xs outline-none transition-colors"
                 />
+              </div>
+
+              <div className="sm:col-span-2 pt-2">
+                <label className="flex items-center gap-2 cursor-pointer text-slate-300">
+                  <input
+                    type="checkbox"
+                    checked={formData.excludeFromSitemap}
+                    onChange={(e) => setFormData(prev => ({ ...prev, excludeFromSitemap: e.target.checked }))}
+                    className="w-4 h-4 accent-amber-500"
+                  />
+                  <span className="text-xs text-amber-300">Exclude from XML Sitemap</span>
+                </label>
               </div>
             </div>
           </div>

@@ -29,6 +29,10 @@ const categorySchema = new mongoose.Schema(
     description: {
       type: String,
       trim: true
+    },
+    excludeFromSitemap: {
+      type: Boolean,
+      default: false
     }
   },
   { timestamps: true }

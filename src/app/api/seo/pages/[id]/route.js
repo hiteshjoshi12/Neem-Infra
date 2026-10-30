@@ -1,12 +1,11 @@
 import { NextResponse } from 'next/server';
-import { revalidatePath } from 'next/cache';
 import mongoose from 'mongoose';
 import { connectDB } from '@/lib/mongodb';
 import Page from '@/models/Page';
 import Redirect from '@/models/Redirect';
 import { requireAdmin } from '@/lib/auth/authGuard';
-import { invalidateSeoCache } from '@/lib/seo/dynamicSeo';
 import { normalizePath } from '@/lib/seo/metadataHelper';
+import { revalidatePageSeo } from '@/lib/cache/revalidateHelper';
 
 /**
  * Flexible page finder by ObjectId OR slug/route
@@ -111,6 +110,16 @@ export async function PUT(req, { params }) {
       }
     }
 
+    delete body._id;
+    delete body.id;
+
+    if (Array.isArray(body.breadcrumbs)) {
+      body.breadcrumbs = body.breadcrumbs.map((b) => ({
+        name: b.name || '',
+        url: b.url || '',
+      }));
+    }
+
     // If status transitioned to published and publishedAt not set
     let publishedAt = existingPage.publishedAt;
     if (body.status === 'published' && (!existingPage.publishedAt || existingPage.status !== 'published')) {
@@ -130,10 +139,7 @@ export async function PUT(req, { params }) {
       { returnDocument: 'after', runValidators: true }
     );
 
-    invalidateSeoCache();
-    revalidatePath('/', 'layout');
-    if (updated?.slug) revalidatePath(updated.slug);
-    revalidatePath('/sitemap.xml');
+    await revalidatePageSeo(updated?.slug);
 
     return NextResponse.json({
       success: true,
@@ -168,10 +174,7 @@ export async function DELETE(req, { params }) {
     }
 
     await Page.findByIdAndDelete(page._id);
-    invalidateSeoCache();
-    revalidatePath('/', 'layout');
-    if (page.slug) revalidatePath(page.slug);
-    revalidatePath('/sitemap.xml');
+    await revalidatePageSeo(page?.slug);
 
     return NextResponse.json({
       success: true,

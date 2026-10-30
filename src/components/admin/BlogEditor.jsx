@@ -61,7 +61,8 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
     seoTitle: initialData?.seoTitle || '',
     seoDescription: initialData?.seoDescription || '',
     focusKeyword: initialData?.focusKeyword || '',
-    readingTime: initialData?.readingTime || 5
+    readingTime: initialData?.readingTime || 5,
+    excludeFromSitemap: Boolean(initialData?.excludeFromSitemap)
   });
 
   const [taxonomies, setTaxonomies] = useState({
@@ -1343,6 +1344,16 @@ export default function BlogEditor({ initialData = null, isEdit = false }) {
                   <option value="published" className="bg-brand-navy-deep text-white">Published (Live)</option>
                   <option value="archived" className="bg-brand-navy-deep text-white">Archived</option>
                 </select>
+
+                <label className="flex items-center gap-2 cursor-pointer mt-2 text-slate-300">
+                  <input
+                    type="checkbox"
+                    checked={formData.excludeFromSitemap}
+                    onChange={(e) => setFormData({ ...formData, excludeFromSitemap: e.target.checked })}
+                    className="w-3.5 h-3.5 accent-amber-500 cursor-pointer"
+                  />
+                  <span className="text-[11px] text-amber-300">Exclude from XML Sitemap</span>
+                </label>
               </div>
 
               <div>

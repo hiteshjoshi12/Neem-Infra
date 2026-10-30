@@ -1,11 +1,10 @@
 import { NextResponse } from 'next/server';
-import { revalidatePath, revalidateTag } from 'next/cache';
 import { connectDB } from '@/lib/mongodb';
 import Property from '@/models/Property';
 import Redirect from '@/models/Redirect';
 import AuditLog from '@/models/AuditLog';
 import { requireAdmin } from '@/lib/auth/authGuard';
-import { invalidateCache } from '@/lib/cache/apiCache';
+import { revalidateProperty } from '@/lib/cache/revalidateHelper';
 
 function normalizeArrayField(val) {
   if (!val) return [];
@@ -83,9 +82,13 @@ export async function PUT(req, { params }) {
       }
     }
 
+    delete body._id;
+    delete body.id;
+
     if (body.features !== undefined) body.features = normalizeArrayField(body.features);
     if (body.nearbyLandmarks !== undefined) body.nearbyLandmarks = normalizeArrayField(body.nearbyLandmarks);
     if (body.images !== undefined) body.images = normalizeArrayField(body.images);
+    if (body.imagesAlt !== undefined) body.imagesAlt = normalizeArrayField(body.imagesAlt);
 
     const property = await Property.findByIdAndUpdate(id, body, {
       new: true,
@@ -107,16 +110,7 @@ export async function PUT(req, { params }) {
       console.warn('[Audit] Failed to log property update:', auditErr.message);
     }
 
-    invalidateCache('props');
-    invalidateCache();
-    try {
-      revalidateTag('properties');
-      revalidateTag('redirects');
-    } catch (e) {}
-
-    revalidatePath('/', 'layout');
-    revalidatePath('/properties');
-    revalidatePath('/sitemap.xml');
+    await revalidateProperty(property);
 
     return NextResponse.json({
       success: true,
@@ -155,15 +149,7 @@ export async function DELETE(req, { params }) {
       console.warn('[Audit] Failed to log property deletion:', auditErr.message);
     }
 
-    invalidateCache('props');
-    invalidateCache();
-    try {
-      revalidateTag('properties');
-    } catch (e) {}
-
-    revalidatePath('/', 'layout');
-    revalidatePath('/properties');
-    revalidatePath('/sitemap.xml');
+    await revalidateProperty(property);
 
     return NextResponse.json({
       success: true,

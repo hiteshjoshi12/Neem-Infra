@@ -290,13 +290,21 @@ export default function AdminRobotsSitemapPage() {
               </div>
 
               <div className="flex items-center gap-2">
+                <Link
+                  href="/admin/seo/sitemaps"
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-brand-gold text-brand-navy-deep font-bold text-xs hover:brightness-110"
+                >
+                  <Network size={12} />
+                  <span>Sitemaps Index Hub</span>
+                </Link>
+
                 <a
-                  href="/sitemap.xml"
+                  href="/sitemap_index.xml"
                   target="_blank"
                   rel="noreferrer"
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white/5 border border-white/10 text-xs text-white hover:bg-white/10"
                 >
-                  <span>Open /sitemap.xml</span>
+                  <span>Open Index</span>
                   <ExternalLink size={12} className="text-brand-gold" />
                 </a>
 

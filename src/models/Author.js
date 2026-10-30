@@ -61,6 +61,10 @@ const authorSchema = new mongoose.Schema(
     publishedPostCount: {
       type: Number,
       default: 0
+    },
+    excludeFromSitemap: {
+      type: Boolean,
+      default: false
     }
   },
   { timestamps: true }

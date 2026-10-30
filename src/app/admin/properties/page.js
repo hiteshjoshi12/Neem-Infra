@@ -53,7 +53,8 @@ export default function AdminProperties() {
     images: '',
     order: 0,
     isActive: true,
-    isFeatured: true
+    isFeatured: true,
+    excludeFromSitemap: false,
   };
 
   const [formData, setFormData] = useState(initialForm);
@@ -124,7 +125,8 @@ export default function AdminProperties() {
       images: Array.isArray(prop.images) ? prop.images.join('\n') : (prop.images || ''),
       order: prop.order || 0,
       isActive: prop.isActive !== undefined ? prop.isActive : true,
-      isFeatured: prop.isFeatured !== undefined ? prop.isFeatured : true
+      isFeatured: prop.isFeatured !== undefined ? prop.isFeatured : true,
+      excludeFromSitemap: Boolean(prop.excludeFromSitemap),
     });
     setIsModalOpen(true);
   };
@@ -640,7 +642,7 @@ export default function AdminProperties() {
                 </div>
 
                 {/* PART 6: PUBLISHING STATUS */}
-                <div className="flex items-center gap-6 pt-2">
+                <div className="flex flex-wrap items-center gap-6 pt-2">
                   <label className="flex items-center gap-2 cursor-pointer text-slate-300">
                     <input
                       type="checkbox"
@@ -659,6 +661,16 @@ export default function AdminProperties() {
                       className="w-4 h-4 accent-brand-gold"
                     />
                     <span>Highlight in Featured Portfolio</span>
+                  </label>
+
+                  <label className="flex items-center gap-2 cursor-pointer text-slate-300">
+                    <input
+                      type="checkbox"
+                      checked={formData.excludeFromSitemap}
+                      onChange={(e) => setFormData({ ...formData, excludeFromSitemap: e.target.checked })}
+                      className="w-4 h-4 accent-amber-500"
+                    />
+                    <span className="text-amber-300">Exclude from XML Sitemap</span>
                   </label>
                 </div>
 

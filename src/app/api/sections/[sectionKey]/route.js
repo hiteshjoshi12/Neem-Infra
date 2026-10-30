@@ -1,9 +1,8 @@
 import { NextResponse } from 'next/server';
-import { revalidatePath } from 'next/cache';
 import { connectDB } from '@/lib/mongodb';
 import SectionContent from '@/models/SectionContent';
 import { requireAdmin } from '@/lib/auth/authGuard';
-import { invalidateCache } from '@/lib/cache/apiCache';
+import { revalidateSectionContent } from '@/lib/cache/revalidateHelper';
 
 export async function GET(req, { params }) {
   try {
@@ -56,14 +55,7 @@ export async function PUT(req, { params }) {
       { returnDocument: 'after', upsert: true, runValidators: true }
     );
 
-    invalidateCache('cms_sections');
-    invalidateCache(); // Purge all cached server sections
-    try {
-      const { revalidateTag } = await import('next/cache');
-      revalidateTag('sections');
-      revalidateTag('dal_sections');
-    } catch (e) {}
-    revalidatePath('/', 'layout');
+    await revalidateSectionContent(sectionKey);
 
     return NextResponse.json({
       success: true,

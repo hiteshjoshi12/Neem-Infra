@@ -73,6 +73,7 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
       noarchive: false,
       nosnippet: false,
     },
+    excludeFromSitemap: false,
     ogTitle: '',
     ogDescription: '',
     ogImage: '',
@@ -132,6 +133,7 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
             noarchive: Boolean(d.robots?.noarchive),
             nosnippet: Boolean(d.robots?.nosnippet),
           },
+          excludeFromSitemap: Boolean(d.excludeFromSitemap),
           ogTitle: d.ogTitle || '',
           ogDescription: d.ogDescription || '',
           ogImage: d.ogImage || '',
@@ -889,6 +891,31 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
                         robots: { ...formData.robots, index: !formData.robots.index }
                       })}
                       className={`w-14 h-8 flex items-center rounded-full p-1 transition-colors ${formData.robots.index ? 'bg-emerald-500 justify-end' : 'bg-rose-500/80 justify-start'
+                        }`}
+                    >
+                      <div className="bg-white w-6 h-6 rounded-full shadow-md" />
+                    </button>
+                  </div>
+
+                  {/* Exclude from Sitemap */}
+                  <div className="py-4 flex items-center justify-between gap-4 border-t border-white/5">
+                    <div>
+                      <div className="font-semibold text-white text-sm">XML Sitemap Inclusion</div>
+                      <div className="text-xs text-brand-text-dim">
+                        {formData.excludeFromSitemap
+                          ? 'Excluded from all XML sitemaps'
+                          : formData.robots.index === false
+                            ? 'Automatically excluded because page is marked noindex'
+                            : 'Included in page-sitemap.xml or corridor/service sitemap'}
+                      </div>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setFormData({
+                        ...formData,
+                        excludeFromSitemap: !formData.excludeFromSitemap
+                      })}
+                      className={`w-14 h-8 flex items-center rounded-full p-1 transition-colors ${!formData.excludeFromSitemap ? 'bg-emerald-500 justify-end' : 'bg-amber-500/80 justify-start'
                         }`}
                     >
                       <div className="bg-white w-6 h-6 rounded-full shadow-md" />

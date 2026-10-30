@@ -8,8 +8,14 @@ import Author from '@/models/Author';
 import Testimonial from '@/models/Testimonial';
 import { requireAdmin } from '@/lib/auth/authGuard';
 import { validateAltText } from '@/lib/seo/imageSeoHelper';
-import { invalidateSeoCache } from '@/lib/seo/dynamicSeo';
-import { invalidateCache } from '@/lib/cache/apiCache';
+import {
+  revalidateSectionContent,
+  revalidateProperty,
+  revalidateBlogPost,
+  revalidateAuthor,
+  revalidateTestimonials,
+  revalidatePageSeo,
+} from '@/lib/cache/revalidateHelper';
 
 const SECTION_PAGE_MAP = {
   page_about: { title: 'About Us', url: '/about' },
@@ -397,16 +403,7 @@ export async function PUT(req) {
       // Support dot notation update for nested JSON in SectionContent.data
       const dbField = field.startsWith('data.') ? field : `data.${field}`;
       await SectionContent.updateOne({ sectionKey: parentId }, { $set: { [dbField]: cleanAlt } });
-
-      invalidateCache('cms_sections');
-      invalidateCache();
-      try {
-        const { revalidateTag, revalidatePath } = await import('next/cache');
-        revalidateTag('sections');
-        revalidateTag('dal_all_sections');
-        revalidateTag('dal_single_section');
-        revalidatePath('/', 'layout');
-      } catch (e) {}
+      await revalidateSectionContent(parentId);
     } else if (parentType === 'Property') {
       if (field === 'imgAlt') {
         await Property.findByIdAndUpdate(parentId, { $set: { imgAlt: cleanAlt } });
@@ -416,50 +413,31 @@ export async function PUT(req) {
       } else {
         await Property.findByIdAndUpdate(parentId, { $set: { [field]: cleanAlt } });
       }
-      try {
-        const { revalidateTag, revalidatePath } = await import('next/cache');
-        revalidateTag('properties');
-        revalidateTag('dal_featured_properties');
-        revalidatePath('/', 'layout');
-      } catch (e) {}
+      const prop = await Property.findById(parentId).lean();
+      await revalidateProperty(prop);
     } else if (parentType === 'BlogPost') {
-      await BlogPost.findByIdAndUpdate(parentId, { $set: { [field]: cleanAlt } });
-      try {
-        const { revalidateTag, revalidatePath } = await import('next/cache');
-        revalidateTag('blog');
-        revalidatePath('/', 'layout');
-      } catch (e) {}
+      const post = await BlogPost.findByIdAndUpdate(parentId, { $set: { [field]: cleanAlt } }, { new: true }).lean();
+      await revalidateBlogPost(post);
     } else if (parentType === 'Author') {
-      await Author.findByIdAndUpdate(parentId, { $set: { [field]: cleanAlt } });
-      try {
-        const { revalidateTag, revalidatePath } = await import('next/cache');
-        revalidateTag('authors');
-        revalidateTag('team');
-        revalidatePath('/', 'layout');
-      } catch (e) {}
+      const author = await Author.findByIdAndUpdate(parentId, { $set: { [field]: cleanAlt } }, { new: true }).lean();
+      await revalidateAuthor(author);
     } else if (parentType === 'Testimonial') {
       await Testimonial.findByIdAndUpdate(parentId, { $set: { [field]: cleanAlt } });
-      try {
-        const { revalidateTag, revalidatePath } = await import('next/cache');
-        revalidateTag('testimonials');
-        revalidateTag('dal_testimonials');
-        revalidatePath('/', 'layout');
-      } catch (e) {}
+      await revalidateTestimonials();
     } else if (parentType === 'Page') {
+      let pageSlug = '/';
       if (field.startsWith('sections.') && typeof sectionIndex === 'number') {
         const page = await Page.findById(parentId);
         if (page && page.sections && page.sections[sectionIndex]) {
           page.sections[sectionIndex].imageAlt = cleanAlt;
           await page.save();
+          pageSlug = page.slug;
         }
       } else {
-        await Page.findByIdAndUpdate(parentId, { $set: { [field]: cleanAlt } });
+        const updated = await Page.findByIdAndUpdate(parentId, { $set: { [field]: cleanAlt } }, { new: true }).lean();
+        pageSlug = updated?.slug || '/';
       }
-      invalidateSeoCache();
-      try {
-        const { revalidatePath } = await import('next/cache');
-        revalidatePath('/', 'layout');
-      } catch (e) {}
+      await revalidatePageSeo(pageSlug);
     }
 
     return NextResponse.json({
@@ -489,68 +467,39 @@ export async function DELETE(req) {
     if (parentType === 'SectionContent') {
       const dbField = field.startsWith('data.') ? field : `data.${field}`;
       await SectionContent.updateOne({ sectionKey: parentId }, { $set: { [dbField]: '' } });
-      invalidateCache('cms_sections');
-      invalidateCache();
-      try {
-        const { revalidateTag, revalidatePath } = await import('next/cache');
-        revalidateTag('sections');
-        revalidateTag('dal_all_sections');
-        revalidateTag('dal_single_section');
-        revalidatePath('/', 'layout');
-      } catch (e) {}
+      await revalidateSectionContent(parentId);
     } else if (parentType === 'Property') {
+      let prop;
       if (field === 'imgAlt') {
-        await Property.findByIdAndUpdate(parentId, { $set: { imgAlt: '' } });
+        prop = await Property.findByIdAndUpdate(parentId, { $set: { imgAlt: '' } }, { new: true });
       } else if (field.startsWith('imagesAlt.')) {
         const idx = parseInt(field.split('.')[1], 10);
-        await Property.updateOne({ _id: parentId }, { $set: { [`imagesAlt.${idx}`]: '' } });
+        prop = await Property.findByIdAndUpdate(parentId, { $set: { [`imagesAlt.${idx}`]: '' } }, { new: true });
       } else {
-        await Property.findByIdAndUpdate(parentId, { $set: { [field]: '' } });
+        prop = await Property.findByIdAndUpdate(parentId, { $set: { [field]: '' } }, { new: true });
       }
-      try {
-        const { revalidateTag, revalidatePath } = await import('next/cache');
-        revalidateTag('properties');
-        revalidateTag('dal_featured_properties');
-        revalidatePath('/', 'layout');
-      } catch (e) {}
+      await revalidateProperty(prop);
     } else if (parentType === 'BlogPost') {
-      await BlogPost.findByIdAndUpdate(parentId, { $set: { [field]: '' } });
-      try {
-        const { revalidateTag, revalidatePath } = await import('next/cache');
-        revalidateTag('blog');
-        revalidatePath('/', 'layout');
-      } catch (e) {}
+      const post = await BlogPost.findByIdAndUpdate(parentId, { $set: { [field]: '' } }, { new: true });
+      await revalidateBlogPost(post);
     } else if (parentType === 'Author') {
-      await Author.findByIdAndUpdate(parentId, { $set: { [field]: '' } });
-      try {
-        const { revalidateTag, revalidatePath } = await import('next/cache');
-        revalidateTag('authors');
-        revalidateTag('team');
-        revalidatePath('/', 'layout');
-      } catch (e) {}
+      const author = await Author.findByIdAndUpdate(parentId, { $set: { [field]: '' } }, { new: true });
+      await revalidateAuthor(author);
     } else if (parentType === 'Testimonial') {
       await Testimonial.findByIdAndUpdate(parentId, { $set: { [field]: '' } });
-      try {
-        const { revalidateTag, revalidatePath } = await import('next/cache');
-        revalidateTag('testimonials');
-        revalidateTag('dal_testimonials');
-        revalidatePath('/', 'layout');
-      } catch (e) {}
+      await revalidateTestimonials();
     } else if (parentType === 'Page') {
+      let page;
       if (field.startsWith('sections.') && typeof sectionIndex === 'number') {
-        const page = await Page.findById(parentId);
+        page = await Page.findById(parentId);
         if (page && page.sections && page.sections[sectionIndex]) {
           page.sections[sectionIndex].imageAlt = '';
           await page.save();
         }
       } else {
-        await Page.findByIdAndUpdate(parentId, { $set: { [field]: '' } });
+        page = await Page.findByIdAndUpdate(parentId, { $set: { [field]: '' } }, { new: true });
       }
-      invalidateSeoCache();
-      try {
-        const { revalidatePath } = await import('next/cache');
-        revalidatePath('/', 'layout');
-      } catch (e) {}
+      await revalidatePageSeo(page?.slug);
     }
 
     return NextResponse.json({

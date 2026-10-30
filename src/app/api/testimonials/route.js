@@ -3,6 +3,7 @@ import { connectDB } from '@/lib/mongodb';
 import Testimonial from '@/models/Testimonial';
 import { requireAdmin } from '@/lib/auth/authGuard';
 import { getCached, setCached, invalidateCache } from '@/lib/cache/apiCache';
+import { revalidateTestimonials } from '@/lib/cache/revalidateHelper';
 
 const CACHE_TTL = 60_000; // 60 seconds — testimonials change very infrequently
 
@@ -51,12 +52,7 @@ export async function POST(req) {
     await connectDB();
     const body = await req.json();
     const testimonial = await Testimonial.create(body);
-    invalidateCache('testimonials');
-    try {
-      const { revalidateTag, revalidatePath } = await import('next/cache');
-      revalidateTag('testimonials');
-      revalidatePath('/', 'layout');
-    } catch (e) {}
+    await revalidateTestimonials();
     
     return NextResponse.json({
       success: true,

@@ -6,6 +6,7 @@ import SeoSettings from '@/models/SeoSettings';
 import Redirect from '@/models/Redirect';
 import { requireAdmin } from '@/lib/auth/authGuard';
 import { invalidateSeoCache } from '@/lib/seo/dynamicSeo';
+import { revalidateSeoSettings, revalidatePageSeo, revalidateRedirects } from '@/lib/cache/revalidateHelper';
 
 export async function POST(req) {
   try {
@@ -67,6 +68,11 @@ export async function POST(req) {
     }
 
     invalidateSeoCache();
+    await Promise.all([
+      revalidateSeoSettings(),
+      revalidatePageSeo('/'),
+      revalidateRedirects(),
+    ]);
 
     return NextResponse.json({
       success: true,

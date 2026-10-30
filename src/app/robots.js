@@ -18,7 +18,7 @@ export default async function robots() {
         userAgent: '*',
         disallow: '/',
       },
-      sitemap: `${baseUrl}/sitemap.xml`,
+      sitemap: `${baseUrl}/sitemap_index.xml`,
     };
   }
 
@@ -45,7 +45,7 @@ export default async function robots() {
         allow: allow.length ? allow : '/',
         disallow: disallow.length ? disallow : ['/admin/', '/api/'],
       },
-      sitemap: `${baseUrl}/sitemap.xml`,
+      sitemap: `${baseUrl}/sitemap_index.xml`,
     };
   }
 
@@ -82,6 +82,6 @@ export default async function robots() {
         disallow: ['/admin/', '/api/'],
       },
     ],
-    sitemap: `${baseUrl}/sitemap.xml`,
+    sitemap: `${baseUrl}/sitemap_index.xml`,
   };
 }

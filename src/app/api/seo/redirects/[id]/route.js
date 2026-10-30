@@ -5,6 +5,7 @@ import { requireAdmin } from '@/lib/auth/authGuard';
 import { normalizePath } from '@/lib/seo/metadataHelper';
 import { invalidateRedirectLookupCache } from '@/app/api/seo/redirects/lookup/route';
 import { detectLoopOrChain } from '@/app/api/seo/redirects/route';
+import { revalidateRedirects } from '@/lib/cache/revalidateHelper';
 
 export async function PUT(req, { params }) {
   try {
@@ -63,10 +64,7 @@ export async function PUT(req, { params }) {
     );
 
     invalidateRedirectLookupCache();
-    try {
-      const { revalidateTag } = await import('next/cache');
-      revalidateTag('redirects');
-    } catch {}
+    await revalidateRedirects();
 
     return NextResponse.json({
       success: true,
@@ -96,10 +94,7 @@ export async function DELETE(req, { params }) {
     }
 
     invalidateRedirectLookupCache();
-    try {
-      const { revalidateTag } = await import('next/cache');
-      revalidateTag('redirects');
-    } catch {}
+    await revalidateRedirects();
 
     return NextResponse.json({
       success: true,

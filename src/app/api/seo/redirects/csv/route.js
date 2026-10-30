@@ -4,6 +4,7 @@ import Redirect from '@/models/Redirect';
 import { requireAdmin } from '@/lib/auth/authGuard';
 import { normalizePath } from '@/lib/seo/metadataHelper';
 import { invalidateRedirectLookupCache } from '@/app/api/seo/redirects/lookup/route';
+import { revalidateRedirects } from '@/lib/cache/revalidateHelper';
 
 /**
  * CSV Import & Export API for Technical SEO Redirects
@@ -138,10 +139,7 @@ export async function POST(req) {
     }
 
     invalidateRedirectLookupCache();
-    try {
-      const { revalidateTag } = await import('next/cache');
-      revalidateTag('redirects');
-    } catch {}
+    await revalidateRedirects();
 
     return NextResponse.json({
       success: true,

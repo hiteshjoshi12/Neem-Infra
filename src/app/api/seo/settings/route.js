@@ -1,10 +1,9 @@
 import { NextResponse } from 'next/server';
-import { revalidatePath } from 'next/cache';
 import { connectDB } from '@/lib/mongodb';
 import SeoSettings from '@/models/SeoSettings';
 import { requireAdmin } from '@/lib/auth/authGuard';
-import { ensureDefaultSeoData, invalidateSeoCache } from '@/lib/seo/dynamicSeo';
-import { invalidateCache } from '@/lib/cache/apiCache';
+import { ensureDefaultSeoData } from '@/lib/seo/dynamicSeo';
+import { revalidateSeoSettings } from '@/lib/cache/revalidateHelper';
 
 export async function GET(req) {
   try {
@@ -35,6 +34,9 @@ export async function PUT(req) {
     await connectDB();
     const body = await req.json();
 
+    delete body._id;
+    delete body.id;
+
     // Script injection security: only superadmin can modify custom head or body scripts
     if (body.customScripts !== undefined) {
       if (admin.role !== 'superadmin') {
@@ -57,18 +59,7 @@ export async function PUT(req) {
       { returnDocument: 'after', upsert: true, runValidators: true }
     );
 
-    invalidateSeoCache();
-    invalidateCache(); // Invalidate in-memory DAL cache
-    try {
-      const { revalidateTag } = await import('next/cache');
-      revalidateTag('settings');
-      revalidateTag('dal_global_settings');
-    } catch (e) {}
-    revalidatePath('/', 'layout');
-    revalidatePath('/sitemap.xml');
-    revalidatePath('/robots.txt');
-    revalidatePath('/llms.txt');
-    revalidatePath('/llms-full.txt');
+    await revalidateSeoSettings();
 
     return NextResponse.json({
       success: true,

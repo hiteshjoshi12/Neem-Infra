@@ -3,8 +3,8 @@ import { connectDB } from '@/lib/mongodb';
 import BlogPost from '@/models/BlogPost';
 import { requireAdmin } from '@/lib/auth/authGuard';
 import { getCached, setCached, invalidateCache } from '@/lib/cache/apiCache';
-import { revalidatePath } from 'next/cache';
 import { clearBlogCache } from '@/services/blogService';
+import { revalidateBlogPost } from '@/lib/cache/revalidateHelper';
 
 const CACHE_TTL = 30_000; // 30 seconds
 
@@ -81,17 +81,8 @@ export async function POST(req) {
 
     const post = await BlogPost.create(body);
     
-    // Invalidate caches
     clearBlogCache();
-    invalidateCache('blog');
-    try {
-      const { revalidateTag } = await import('next/cache');
-      revalidateTag('blog');
-      revalidatePath('/blog');
-      revalidatePath('/sitemap.xml');
-    } catch {
-      // ignore outside request lifecycle
-    }
+    await revalidateBlogPost(post);
 
     return NextResponse.json({
       success: true,

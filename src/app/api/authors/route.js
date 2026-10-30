@@ -3,7 +3,7 @@ import { connectDB } from '@/lib/mongodb';
 import Author from '@/models/Author';
 import { requireAdmin } from '@/lib/auth/authGuard';
 import { clearBlogCache } from '@/services/blogService';
-import { invalidateCache } from '@/lib/cache/apiCache';
+import { revalidateAuthor } from '@/lib/cache/revalidateHelper';
 
 export async function GET(req) {
   try {
@@ -47,14 +47,7 @@ export async function POST(req) {
     const author = await Author.create(body);
 
     clearBlogCache();
-    invalidateCache('authors');
-    try {
-      const { revalidateTag, revalidatePath } = await import('next/cache');
-      revalidateTag('team');
-      revalidateTag('authors');
-      revalidatePath('/team');
-      revalidatePath('/blog');
-    } catch (e) {}
+    await revalidateAuthor(author);
 
     return NextResponse.json({
       success: true,

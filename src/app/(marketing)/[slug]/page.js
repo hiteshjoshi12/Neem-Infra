@@ -24,6 +24,9 @@ export const revalidate = 0;
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
+  if (!slug || slug.endsWith('.xml') || slug.includes('sitemap')) {
+    return { title: 'Not Found', robots: { index: false, follow: false } };
+  }
   const path = `/${slug}`;
   const page = await getDynamicPageRecord(path);
 
@@ -46,6 +49,9 @@ export async function generateMetadata({ params }) {
 
 export default async function CustomDynamicPage({ params }) {
   const { slug } = await params;
+  if (!slug || slug.endsWith('.xml') || slug.includes('sitemap')) {
+    notFound();
+  }
   const path = `/${slug}`;
   const page = await getDynamicPageRecord(path);
 

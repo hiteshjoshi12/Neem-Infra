@@ -4,6 +4,7 @@ import Page from '@/models/Page';
 import { requireAdmin } from '@/lib/auth/authGuard';
 import { ensureDefaultSeoData, invalidateSeoCache, getGlobalSeoSettings } from '@/lib/seo/dynamicSeo';
 import { normalizePath } from '@/lib/seo/metadataHelper';
+import { revalidatePageSeo } from '@/lib/cache/revalidateHelper';
 
 export async function GET(req) {
   try {
@@ -102,10 +103,11 @@ export async function POST(req) {
       internalLinks: Array.isArray(body.internalLinks) ? body.internalLinks : [],
       featuredImage: body.featuredImage || '',
       featuredImageAlt: body.featuredImageAlt || '',
+      excludeFromSitemap: Boolean(body.excludeFromSitemap),
       lastUpdatedBy: admin.name || admin.email || 'Admin',
     });
 
-    invalidateSeoCache();
+    await revalidatePageSeo(normalizedSlug);
 
     return NextResponse.json({
       success: true,
