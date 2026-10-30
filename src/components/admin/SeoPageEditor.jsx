@@ -41,7 +41,20 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
   const router = useRouter();
   const routeParams = useParams();
   const rawId = propPageId || routeParams?.id;
-  const pageId = rawId ? decodeURIComponent(rawId) : null;
+  let pageId = null;
+  if (Array.isArray(rawId)) {
+    if (rawId.length === 1 && /^[0-9a-fA-F]{24}$/.test(rawId[0])) {
+      pageId = rawId[0];
+    } else {
+      const joined = rawId
+        .map((seg) => decodeURIComponent(seg).replace(/^\/+|\/+$/g, ''))
+        .filter(Boolean)
+        .join('/');
+      pageId = joined ? '/' + joined : '/';
+    }
+  } else if (typeof rawId === 'string' && rawId.trim()) {
+    pageId = decodeURIComponent(rawId);
+  }
 
   const [activeTab, setActiveTab] = useState('general'); // general, meta, robots, social, schema, breadcrumbs, faq, preview
   const [serpView, setSerpView] = useState('desktop'); // desktop, mobile
@@ -111,7 +124,15 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
       setLoadError('');
       const res = await api.getSeoPage(pageId);
       if (res?.success && res.data) {
-        const d = res.data;
+        let d = res.data;
+        if (Array.isArray(d)) {
+          const match = d.find(p => p.slug === pageId || p.slug === '/' + String(pageId).replace(/^\//, '') || p._id === pageId);
+          if (!match) {
+            setLoadError(`Page "${pageId}" not found in database.`);
+            return;
+          }
+          d = match;
+        }
         if (d._id) setActualPageId(d._id);
         setFormData({
           title: d.title || '',
@@ -268,6 +289,10 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
   // Form Submit
   const handleSave = async (e) => {
     if (e) e.preventDefault();
+    if (loadError) {
+      showToast('error', 'Cannot save: Page data failed to load. Please reload or retry.');
+      return;
+    }
     if (!formData.title.trim() || !formData.slug.trim()) {
       showToast('error', 'Page Title and Slug are required');
       return;

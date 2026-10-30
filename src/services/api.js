@@ -255,17 +255,34 @@ export const api = {
     const query = new URLSearchParams(params).toString();
     return request(`/seo/pages${query ? `?${query}` : ''}`);
   },
-  getSeoPage: (id) => request(`/seo/pages/${id}`),
+  getSeoPage: (id) => {
+    if (!id && id !== '/') {
+      return Promise.reject(new Error('Missing page ID or slug'));
+    }
+    const cleanId = String(id).trim();
+    if (/^[0-9a-fA-F]{24}$/.test(cleanId)) {
+      return request(`/seo/pages/${cleanId}`);
+    }
+    return request(`/seo/pages/by-slug?slug=${encodeURIComponent(cleanId)}`);
+  },
   createSeoPage: (pageData) =>
     request('/seo/pages', {
       method: 'POST',
       body: JSON.stringify(pageData)
     }),
-  updateSeoPage: (id, pageData) =>
-    request(`/seo/pages/${id}`, {
+  updateSeoPage: (id, pageData) => {
+    const cleanId = id ? String(id).trim() : '';
+    if (/^[0-9a-fA-F]{24}$/.test(cleanId)) {
+      return request(`/seo/pages/${cleanId}`, {
+        method: 'PUT',
+        body: JSON.stringify(pageData)
+      });
+    }
+    return request(`/seo/pages/by-slug?slug=${encodeURIComponent(cleanId || pageData.slug)}`, {
       method: 'PUT',
       body: JSON.stringify(pageData)
-    }),
+    });
+  },
   deleteSeoPage: (id) =>
     request(`/seo/pages/${id}`, {
       method: 'DELETE'

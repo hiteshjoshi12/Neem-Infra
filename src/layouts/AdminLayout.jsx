@@ -31,7 +31,8 @@ import {
   Zap,
   Database,
   Image as ImageIcon,
-  Award
+  Award,
+  Network
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import Image from 'next/image';
@@ -256,19 +257,19 @@ export default function AdminLayout({ children }) {
           } bg-brand-navy-deep border-r border-white/[0.08] shrink-0 select-none transition-all duration-300 ease-in-out`}
       >
         {/* Brand Header */}
-        <div className={`p-4 border-b border-white/[0.08] flex items-center ${isSidebarCollapsed ? 'justify-center flex-col gap-2' : 'justify-between'}`}>
-          <Link href="/admin/dashboard" className="flex items-center gap-3 group">
-            <div className="p-2 rounded-xl bg-white border border-brand-gold/50 shadow-md group-hover:scale-105 transition-transform shrink-0">
-              <Image
-                sizes="32px"
-                width={800}
-                height={600}
-                src={logoImg}
-                alt="Saudagar Properties"
-                className="h-6 w-auto object-contain"
-              />
-            </div>
-            {!isSidebarCollapsed && (
+        <div className={`p-4 border-b border-white/[0.08] flex items-center ${isSidebarCollapsed ? 'justify-center' : 'justify-between'}`}>
+          {!isSidebarCollapsed && (
+            <Link href="/admin/dashboard" className="flex items-center gap-3 group min-w-0">
+              <div className="p-2 rounded-xl bg-white border border-brand-gold/50 shadow-md group-hover:scale-105 transition-transform shrink-0">
+                <Image
+                  sizes="32px"
+                  width={800}
+                  height={600}
+                  src={logoImg}
+                  alt="Saudagar Properties"
+                  className="h-6 w-auto object-contain"
+                />
+              </div>
               <div className="min-w-0">
                 <div className="flex items-center gap-1.5">
                   <span className="text-sm font-serif font-bold text-white tracking-wide truncate">Saudagar</span>
@@ -278,14 +279,17 @@ export default function AdminLayout({ children }) {
                 </div>
                 <span className="text-[11px] text-slate-400 font-medium block truncate">Control Console</span>
               </div>
-            )}
-          </Link>
+            </Link>
+          )}
 
-          {/* Toggle Sidebar Button */}
+          {/* Single Toggle Sidebar Button */}
           <button
             onClick={toggleSidebar}
-            className={`p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-white/10 transition-colors cursor-pointer ${isSidebarCollapsed ? 'mt-1 text-brand-gold' : ''
-              }`}
+            className={`p-2 rounded-xl transition-colors cursor-pointer ${
+              isSidebarCollapsed
+                ? 'bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-brand-gold hover:text-white'
+                : 'text-slate-400 hover:text-white hover:bg-white/10'
+            }`}
             title={isSidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
             aria-label="Toggle Sidebar"
           >
@@ -523,27 +527,6 @@ export default function AdminLayout({ children }) {
         {/* Top Header / Breadcrumb Bar */}
         <header className="hidden md:flex items-center justify-between px-6 lg:px-8 py-3.5 border-b border-white/[0.08] bg-brand-navy-deep/70 backdrop-blur-md sticky top-0 z-20">
           <div className="flex items-center gap-3">
-            <button
-              onClick={toggleSidebar}
-              className="p-2 rounded-xl bg-white/[0.04] hover:bg-white/[0.08] border border-white/10 text-slate-300 hover:text-white transition-colors flex items-center gap-1.5 cursor-pointer"
-              title={isSidebarCollapsed ? "Expand sidebar (full menu)" : "Collapse sidebar (more workspace for editing)"}
-              aria-label="Toggle Sidebar"
-            >
-              {isSidebarCollapsed ? (
-                <>
-                  <PanelLeftOpen size={16} className="text-brand-gold" />
-                  <span className="text-[11px] font-medium text-slate-300">Expand</span>
-                </>
-              ) : (
-                <>
-                  <PanelLeftClose size={16} className="text-slate-400" />
-                  <span className="hidden xl:inline text-[11px] font-medium text-slate-400">Collapse</span>
-                </>
-              )}
-            </button>
-
-            <div className="h-6 w-px bg-white/10 mx-1" />
-
             <div>
               <div className="flex items-center gap-2 text-[11px] text-slate-400">
                 <span>Saudagar Admin</span>

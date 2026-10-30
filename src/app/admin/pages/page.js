@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import api from '@/services/api';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
@@ -187,6 +188,32 @@ const WEBSITE_PAGES = [
 export default function AdminPagesHub() {
   const [searchQuery, setSearchQuery] = useState('');
   const [activeCategory, setActiveCategory] = useState('all');
+  const [seoPagesMap, setSeoPagesMap] = useState({});
+
+  useEffect(() => {
+    let ignore = false;
+    async function loadSeoPages() {
+      try {
+        const res = await api.getSeoPages();
+        if (!ignore && res?.success && Array.isArray(res.data)) {
+          const map = {};
+          res.data.forEach(p => {
+            if (p.slug) {
+              map[p.slug] = p._id;
+              map[p.slug.toLowerCase()] = p._id;
+              const norm = '/' + p.slug.replace(/^\/+|\/+$/g, '');
+              map[norm] = p._id;
+            }
+          });
+          setSeoPagesMap(map);
+        }
+      } catch (err) {
+        // ignore
+      }
+    }
+    loadSeoPages();
+    return () => { ignore = true; };
+  }, []);
 
   const categories = [
     { id: 'all', label: 'All Pages', count: WEBSITE_PAGES.length },
@@ -354,14 +381,31 @@ export default function AdminPagesHub() {
                   <Edit3 size={13} />
                   <span>Edit Content</span>
                 </Link>
-                <Link
-                  href={`/admin/seo/pages/${encodeURIComponent(page.route)}`}
-                  className="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-brand-gold hover:text-white transition-colors flex items-center gap-1.5 text-xs font-semibold"
-                  title="Edit SEO & Meta Tags"
-                >
-                  <Search size={13} />
-                  <span>SEO</span>
-                </Link>
+                {(() => {
+                  let seoHref = "/admin/seo/pages";
+                  if (page.id === "corridors") {
+                    seoHref = "/admin/seo/pages?type=corridor";
+                  } else {
+                    const matchedId = seoPagesMap[page.route] || seoPagesMap[page.route.toLowerCase()];
+                    if (matchedId) {
+                      seoHref = `/admin/seo/pages/${matchedId}`;
+                    } else {
+                      const cleanRoute = page.route.startsWith('/') ? page.route : `/${page.route}`;
+                      seoHref = `/admin/seo/pages${cleanRoute === '/' ? '' : cleanRoute}`;
+                    }
+                  }
+
+                  return (
+                    <Link
+                      href={seoHref}
+                      className="py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-brand-gold hover:text-white transition-colors flex items-center gap-1.5 text-xs font-semibold"
+                      title="Edit SEO & Meta Tags"
+                    >
+                      <Search size={13} />
+                      <span>SEO</span>
+                    </Link>
+                  );
+                })()}
                 <Link
                   href={page.route}
                   target="_blank"

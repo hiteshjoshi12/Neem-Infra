@@ -213,7 +213,7 @@ export default function AdminSeoPagesList() {
                     <tr key={page._id} className="hover:bg-white/[0.02] transition-colors group">
                       <td className="py-4 px-5">
                         <Link
-                          href={`/admin/seo/pages/${page._id || encodeURIComponent(page.slug)}`}
+                          href={`/admin/seo/pages/${page._id || page.slug}`}
                           className="font-bold text-white text-sm group-hover:text-brand-gold transition-colors hover:underline block"
                           title="Click to edit SEO"
                         >
