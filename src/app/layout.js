@@ -60,7 +60,7 @@ export async function generateMetadata() {
     metadataBase = new URL('https://saudagarproperties.com');
   }
 
-  return {
+  const metadata = {
     metadataBase,
     title: {
       default: siteTitle,
@@ -101,18 +101,23 @@ export async function generateMetadata() {
         'max-snippet': -1,
       },
     },
-    icons: {
-      icon: [
-        { url: '/icon-192.png', sizes: '192x192', type: 'image/png' },
-        { url: '/icon-512.png', sizes: '512x512', type: 'image/png' },
-        { url: '/favicon.ico', sizes: 'any' },
-      ],
-      shortcut: '/favicon.ico',
-      apple: [
-        { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-      ],
-    },
   };
+
+  const customFavicon =
+    profile?.faviconUrl &&
+    typeof profile.faviconUrl === 'string' &&
+    profile.faviconUrl.trim() &&
+    profile.faviconUrl.trim() !== '/favicon.ico'
+      ? profile.faviconUrl.trim()
+      : null;
+
+  if (customFavicon) {
+    metadata.icons = {
+      icon: [{ url: customFavicon }],
+    };
+  }
+
+  return metadata;
 }
 
 export default async function RootLayout({ children }) {
@@ -173,12 +178,6 @@ export default async function RootLayout({ children }) {
   return (
     <html lang="en" className={`${lora.variable} ${outfit.variable} ${jakarta.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
-        {/* Core Favicons for browser top bar / tab bar */}
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png" />
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-        <link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png" />
         {/* Preload Hero Video Posters for instantaneous LCP */}
         <link
           rel="preload"
