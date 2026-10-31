@@ -28,9 +28,13 @@ export default function AboutHero({ data }) {
   ];
 
   const STAT_ICONS = [Award, Building, ShieldCheck, TrendingUp];
-  const statsList = (cms?.stats && Array.isArray(cms.stats) && cms.stats.length > 0)
-    ? cms.stats
-    : (rawData?.hero?.stats || defaultStats);
+  const statsList = (rawData?.stats && Array.isArray(rawData.stats) && rawData.stats.length > 0)
+    ? rawData.stats
+    : ((heroContent?.stats && Array.isArray(heroContent.stats) && heroContent.stats.length > 0)
+      ? heroContent.stats
+      : ((rawData?.hero?.stats && Array.isArray(rawData.hero.stats) && rawData.hero.stats.length > 0)
+        ? rawData.hero.stats
+        : defaultStats));
 
   const stats = statsList.map((st, idx) => ({
     ...defaultStats[idx % defaultStats.length],
@@ -161,20 +165,26 @@ export default function AboutHero({ data }) {
             {/* Gold Badge */}
             <div className="about-hero-anim inline-flex items-center gap-2.5 px-4 py-2 rounded-full bg-white/10 border border-brand-gold/40 text-brand-gold text-xs font-bold tracking-[0.25em] uppercase shadow-sm backdrop-blur-md">
               <Sparkles size={14} className="text-brand-gold" />
-              <span>{cms.hero?.badge || "About Saudagar Properties • 25+ Years Legacy"}</span>
+              <span>{cms.hero?.badge}</span>
             </div>
 
             {/* High-Impact Serif Headline */}
             <h1 className="about-hero-anim text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-serif text-white leading-[1.1] tracking-tight">
-              {cms.hero?.titleMain || "25+ Years of Leadership in "} <br />
-              <span className="italic font-light text-brand-gold">
-                {cms.hero?.titleItalic || "DLF Gurugram"}
-              </span>
+              {cms.hero?.heading ? (
+                <span>{cms.hero.heading}</span>
+              ) : (
+                <>
+                  {cms.hero?.titleMain} <br />
+                  <span className="italic font-light text-brand-gold">
+                    {cms.hero?.titleItalic}
+                  </span>
+                </>
+              )}
             </h1>
 
             {/* Authenticated Copy */}
             <p className="about-hero-anim text-sm sm:text-base md:text-lg text-slate-200 font-light leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              {cms.hero?.description || "At Saudagar Properties, we aim to assist our customers by providing them optimal property solutions across commercial, industrial, and residential sectors in DLF Gurugram."}
+              {cms.hero?.description}
             </p>
 
             {/* Action CTA Buttons */}
@@ -186,14 +196,14 @@ export default function AboutHero({ data }) {
                 <div className="w-6 h-6 rounded-full bg-brand-navy text-brand-gold flex items-center justify-center group-hover:scale-110 transition-transform">
                   <Play size={10} className="fill-brand-gold ml-0.5" />
                 </div>
-                <span>{cms.hero?.watchFilmText || "Watch Corporate Film"}</span>
+                <span>{cms.hero?.watchFilmText}</span>
               </a>
 
               <a
                 href="#proposition"
                 className="px-8 py-4 rounded-2xl bg-white/10 hover:bg-white text-white hover:text-brand-obsidian border border-white/20 hover:border-white font-bold text-xs uppercase tracking-[0.18em] transition-all duration-300 shadow-md hover:shadow-xl hover:-translate-y-0.5 cursor-pointer flex items-center gap-2.5 backdrop-blur-md"
               >
-                <span>{cms.hero?.propositionBtnText || "Our Proposition"}</span>
+                <span>{cms.hero?.propositionBtnText}</span>
                 <ArrowRight size={14} className="text-brand-gold group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
@@ -201,7 +211,7 @@ export default function AboutHero({ data }) {
             {/* Direct Verification Micro-badge */}
             <div className="about-hero-anim flex items-center justify-center lg:justify-start gap-2 pt-2 text-xs text-slate-300">
               <CheckCircle2 size={15} className="text-brand-gold" />
-              <span>{cms.hero?.addressBadge || "Headquartered at 38, Akashneem Marg, DLF Phase 2, Gurugram"}</span>
+              <span>{cms.hero?.addressBadge}</span>
             </div>
 
           </div>

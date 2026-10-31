@@ -19,13 +19,10 @@ export default function OurServicesSection({ initialData = null }) {
     ? sections.services
     : (initialData || {});
 
-  const badge = data.badge || 'Bespoke Property Solutions';
-  const titleMain = data.titleMain || 'Our';
-  const titleItalic = data.titleItalic || 'Services';
-
-  const description =
-    data.description ||
-    'As the top real estate consultant in DLF Gurugram, let’s explore where our expertise lies and how it translates into real value for you.';
+  const badge = data.badge;
+  const titleMain = data.titleMain;
+  const titleItalic = data.titleItalic;
+  const description = data.description;
 
   const sectionRef = useRef(null);
   const headerRef = useRef(null);

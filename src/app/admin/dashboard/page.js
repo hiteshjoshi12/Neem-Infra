@@ -130,7 +130,7 @@ export default function AdminDashboard() {
   const pageGroups = {
     core: [
       { name: 'Landing Page (Homepage)', route: '/', editUrl: '/admin/sections', count: '12 Sections', icon: Home },
-      { name: 'About Us Page', route: '/about', editUrl: '/admin/pages/about', count: '7 Sections', icon: Users },
+      { name: 'About Us Page', route: '/about', editUrl: '/admin/pages/about', count: '8 Sections', icon: Users },
       { name: 'Properties Catalog', route: '/properties', editUrl: '/admin/pages/properties', count: '4 Sections', icon: Building },
       { name: 'Our Team Page', route: '/team', editUrl: '/admin/pages/team', count: '5 Sections', icon: Users },
       { name: 'Contact Us Page', route: '/contact', editUrl: '/admin/pages/contact', count: '3 Sections', icon: Phone },

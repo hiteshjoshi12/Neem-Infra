@@ -171,16 +171,16 @@ export default function AboutVideoShowcase({ data }) {
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-xs font-bold tracking-[0.25em] uppercase mb-4">
             <Film size={13} className="text-brand-gold" />
-            <span>{cms.badge || "Cinematic Film & Legacy"}</span>
+            <span>{cms.badge}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-brand-navy mb-4 leading-tight">
-            {cms.titleMain || "Inside Saudagar Properties: "} <br />
-            <span className="italic font-serif text-brand-gold">{cms.titleItalic || "Two Decades of Excellence"}</span>
+            {cms.titleMain} <br />
+            <span className="italic font-serif text-brand-gold">{cms.titleItalic}</span>
           </h2>
 
           <p className="text-sm sm:text-base text-brand-slate font-normal leading-relaxed">
-            {cms.subtitle || "Take an exclusive inside look at our bespoke advisory, hands-on founder dedication, and turnkey property acquisitions across DLF Gurugram."}
+            {cms.subtitle}
           </p>
         </div>
 

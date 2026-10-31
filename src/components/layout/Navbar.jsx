@@ -54,13 +54,13 @@ export default function Navbar() {
     }, 150);
   };
 
-  const displayPhone = navData.phone || "+91 98112 21207";
-  const rawPhone = navData.phoneRaw || displayPhone.replace(/\s+/g, '');
-  const ctaText = navData.ctaText || "Contact Us";
-  const ctaHref = navData.ctaHref || "/contact";
-  const corridorsBadge = (navData.corridorsBadge && navData.corridorsBadge !== "Prime Corridors") ? navData.corridorsBadge : "Portfolio & Services";
-  const mobileNavHeader = navData.mobileNavHeader || "Saudagar Properties";
-  const mobileConsultationTitle = navData.mobileConsultationTitle || "Private Consultation";
+  const displayPhone = navData.phone;
+  const rawPhone = navData.phoneRaw || (displayPhone ? displayPhone.replace(/\s+/g, '') : '');
+  const ctaText = navData.ctaText;
+  const ctaHref = navData.ctaHref;
+  const corridorsBadge = navData.corridorsBadge;
+  const mobileNavHeader = navData.mobileNavHeader;
+  const mobileConsultationTitle = navData.mobileConsultationTitle;
 
   const sanitizeNavHref = (href) => {
     if (!href) return '#';

@@ -175,7 +175,7 @@ export default function NewsletterSection({ isEmbedded = false }) {
               <span className="relative inline-flex h-2 w-2 rounded-full bg-brand-gold" />
             </span>
             <span className="text-[9px] font-bold uppercase tracking-[0.26em] text-brand-navy">
-              {newsData.badge || "PRIVATE CLIENT INTELLIGENCE"}
+              {newsData.badge}
             </span>
           </div>
 
@@ -184,17 +184,16 @@ export default function NewsletterSection({ isEmbedded = false }) {
             id="newsletter-heading"
             className="mt-4 font-serif text-3xl font-normal leading-[1.08] tracking-tight text-brand-navy sm:text-4xl lg:text-[44px]"
           >
-            {newsData.titleMain || "Stay ahead with"}{" "}
+            {newsData.titleMain}{" "}
             <span className="font-light italic text-brand-gold">
-              {newsData.titleItalic || "Saudagar Properties"}
+              {newsData.titleItalic}
             </span>
             {newsData.titleSuffix ? ` ${newsData.titleSuffix}` : ""}
           </h2>
 
           {/* Curated Description */}
           <p className="mt-3.5 max-w-xl text-xs font-light leading-relaxed text-brand-slate sm:text-sm">
-            {newsData.description ||
-              "Direct micro-market alerts, off-market builder floors in DLF Phase 1–5, and sovereign yield analytics delivered straight to your confidential inbox."}
+            {newsData.description}
           </p>
 
           {/* VIP Benefit Pills */}
@@ -237,10 +236,7 @@ export default function NewsletterSection({ isEmbedded = false }) {
                       autoComplete="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
-                      placeholder={
-                        newsData.placeholder ||
-                        "Enter your confidential email..."
-                      }
+                      placeholder={newsData.placeholder}
                       className="w-full bg-transparent text-xs sm:text-sm text-brand-navy outline-none placeholder:text-brand-slate font-medium"
                     />
                   </div>
@@ -262,7 +258,7 @@ export default function NewsletterSection({ isEmbedded = false }) {
                     ) : (
                       <>
                         <span className="relative z-10">
-                          {newsData.buttonText || "Request Access"}
+                          {newsData.buttonText}
                         </span>
                         <ArrowUpRight
                           size={14}
@@ -278,9 +274,7 @@ export default function NewsletterSection({ isEmbedded = false }) {
                 <div className="mt-3 flex items-center gap-2 px-1 text-[9px] sm:text-[10px] font-light text-brand-slate">
                   <ShieldCheck size={13} className="text-brand-gold shrink-0" />
                   <span>
-                    {newsData.disclaimer ||
-                      newsData.guaranteeText ||
-                      "Zero spam. Complete confidentiality. Unsubscribe at any time."}
+                    {newsData.disclaimer || newsData.guaranteeText}
                   </span>
                 </div>
               </form>
@@ -293,11 +287,10 @@ export default function NewsletterSection({ isEmbedded = false }) {
                   </div>
                   <div>
                     <h4 className="text-sm font-semibold text-brand-navy">
-                      {newsData.successTitle || "Subscription Confirmed"}
+                      {newsData.successTitle}
                     </h4>
                     <p className="mt-0.5 text-xs text-brand-slate font-light">
-                      {newsData.successMessage ||
-                        "You have been added to our private advisory list. Exclusive market briefings are on their way."}
+                      {newsData.successMessage}
                     </p>
                   </div>
                 </div>
@@ -307,7 +300,7 @@ export default function NewsletterSection({ isEmbedded = false }) {
                   onClick={() => setIsSubmitted(false)}
                   className="text-[9px] font-bold uppercase tracking-[0.2em] text-brand-gold hover:text-brand-gold-dark underline underline-offset-4 cursor-pointer self-end sm:self-center"
                 >
-                  {newsData.subscribeAnotherText || "Subscribe Another"}
+                  {newsData.subscribeAnotherText}
                 </button>
               </div>
             )}

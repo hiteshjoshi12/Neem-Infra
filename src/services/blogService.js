@@ -124,7 +124,14 @@ export async function getBlogPostBySlug(slug) {
 
   try {
     await connectDB();
-    const post = await BlogPost.findOne({ slug, status: 'published' })
+    const now = new Date();
+    const post = await BlogPost.findOne({
+      slug,
+      $or: [
+        { status: 'published' },
+        { status: 'scheduled', publishedAt: { $lte: now } }
+      ]
+    })
       .populate('author', 'name slug avatar bio')
       .populate('category', 'name slug')
       .populate('tags', 'name slug')

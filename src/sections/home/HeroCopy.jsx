@@ -251,22 +251,20 @@ export default function HeroCopy({ initialProperties = [], initialHeroData = nul
           <span className="w-6 h-[1px] bg-brand-gold"></span>
           <span className="text-[10px] sm:text-[11px] tracking-[0.28em] text-brand-gold uppercase font-semibold flex items-center gap-1.5 drop-shadow-sm">
             <Sparkles className="w-3 h-3" />
-            {heroData.badge || "DLF Phase 1–4 • Sushant Lok • Golf Course Ext."}
+            {heroData.badge}
           </span>
           <span className="w-6 h-[1px] bg-brand-gold"></span>
         </div>
 
         {/* Master Headline: Rendered cleanly in server HTML without opacity: 0 for instant LCP */}
         <h1
-          aria-label={`${heroData.headlinePrefix || "Gurgaon's Premier"} ${heroData.headlineHighlight || "Real Estate"} ${heroData.headlineSuffix !== undefined && heroData.headlineSuffix !== null && heroData.headlineSuffix !== "" ? heroData.headlineSuffix : "Partner."}`.trim()}
+          aria-label={`${heroData.headlinePrefix ? heroData.headlinePrefix + ' ' : ''}${heroData.headlineHighlight || ''} ${heroData.headlineSuffix || ''}`.trim()}
           className="text-2xl sm:text-3xl md:text-[clamp(1.75rem,2.85vw,2.95rem)] font-serif text-brand-ivory leading-[1.15] tracking-tight max-w-[760px] mb-2 sm:mb-2.5 drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] transform-gpu"
         >
-          <span className="block">{heroData.headlinePrefix || "Gurgaon's Premier"}</span>
+          <span className="block">{heroData.headlinePrefix}</span>
           <span className="block">
-            <span className="italic font-normal text-brand-gold">{heroData.headlineHighlight || "Real Estate"}</span>{" "}
-            {heroData.headlineSuffix !== undefined && heroData.headlineSuffix !== null && heroData.headlineSuffix !== ""
-              ? heroData.headlineSuffix
-              : "Partner."}
+            <span className="italic font-normal text-brand-gold">{heroData.headlineHighlight}</span>{" "}
+            {heroData.headlineSuffix}
           </span>
         </h1>
 
@@ -274,7 +272,7 @@ export default function HeroCopy({ initialProperties = [], initialHeroData = nul
         <p
           className="text-slate-100 text-xs sm:text-sm font-normal max-w-[540px] mb-3.5 sm:mb-4 leading-relaxed drop-shadow-[0_2px_12px_rgba(0,0,0,0.8)] transform-gpu"
         >
-          {heroData.description || "Discover an exclusive portfolio of luxury builder floors, high-rise penthouses, and bespoke villas across DLF Phase 1–4, Sushant Lok & Golf Course Ext."}
+          {heroData.description}
         </p>
 
         {/* ================= LUXURY PROPERTY DISCOVERY SEARCH BAR ================= */}
@@ -300,7 +298,7 @@ export default function HeroCopy({ initialProperties = [], initialHeroData = nul
                   aria-label="Search properties"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder={heroData.searchPlaceholder || "Search DLF builder floors, villas..."}
+                  placeholder={heroData.searchPlaceholder}
                   className="w-full bg-transparent border-none outline-none text-brand-navy placeholder-brand-text-dim font-medium text-xs truncate"
                 />
               </div>
@@ -365,7 +363,7 @@ export default function HeroCopy({ initialProperties = [], initialHeroData = nul
               aria-label="Search and explore properties"
               className="group/btn ml-2 bg-brand-gold hover:bg-brand-gold text-brand-navy-deep px-6 py-2.5 rounded-xl text-[11px] uppercase tracking-widest font-bold transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg cursor-pointer flex-shrink-0"
             >
-              <span>{heroData.searchButtonText || "Explore"}</span>
+              <span>{heroData.searchButtonText}</span>
               <ArrowUpRight size={14} className="group-hover/btn:translate-x-1 transition-transform duration-200" />
             </button>
           </form>
@@ -398,7 +396,7 @@ export default function HeroCopy({ initialProperties = [], initialHeroData = nul
               type="submit"
               className="bg-brand-gold hover:bg-brand-gold text-brand-navy-deep px-4 py-2.5 rounded-full text-[10px] uppercase tracking-widest font-bold flex items-center justify-center shadow-md ml-1"
             >
-              {heroData.searchButtonText || "Explore"}
+              {heroData.searchButtonText}
             </button>
           </form>
 
@@ -406,12 +404,9 @@ export default function HeroCopy({ initialProperties = [], initialHeroData = nul
           <div className="mt-2.5 sm:mt-3 hidden md:flex flex-wrap items-center justify-center gap-1.5">
             <span className="text-[9px] uppercase tracking-widest text-brand-gold font-semibold mr-1 flex items-center gap-1">
               <Sparkles className="w-2.5 h-2.5" />
-              {heroData.trendingLabel || "Trending:"}
+              {heroData.trendingLabel}
             </span>
-            {(Array.isArray(heroData.trendingTags) && heroData.trendingTags.length > 0
-              ? heroData.trendingTags
-              : ['DLF Phase 1 Floors', 'Sushant Lok Villas', 'Golf Course Ext.', 'Under 5 Cr']
-            ).map((tag) => {
+            {(Array.isArray(heroData.trendingTags) ? heroData.trendingTags : []).map((tag) => {
               const isSelected = searchQuery === tag;
               return (
                 <button

@@ -20,15 +20,23 @@ export default function LeadInquiryModal() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    // Only suppress if user has already submitted an inquiry in current browser session
+    // Only show popup ONCE per user visit/session: suppress if already shown, dismissed, or submitted
     try {
-      const isSubmitted = sessionStorage.getItem('sp_lead_popup_submitted');
-      if (isSubmitted === 'true') return;
+      const isShown = sessionStorage.getItem('sp_lead_popup_shown') === 'true' || localStorage.getItem('sp_lead_popup_shown') === 'true';
+      const isDismissed = sessionStorage.getItem('sp_lead_popup_dismissed') === 'true';
+      const isSubmitted = sessionStorage.getItem('sp_lead_popup_submitted') === 'true';
+      if (isShown || isDismissed || isSubmitted) return;
     } catch {
-      // Ignore if sessionStorage is not accessible
+      // Ignore if web storage is not accessible
     }
 
     const timer = setTimeout(() => {
+      try {
+        sessionStorage.setItem('sp_lead_popup_shown', 'true');
+        localStorage.setItem('sp_lead_popup_shown', 'true');
+      } catch {
+        // Ignore
+      }
       setIsOpen(true);
     }, 5000);
 
@@ -36,6 +44,13 @@ export default function LeadInquiryModal() {
   }, []);
 
   const handleClose = React.useCallback(() => {
+    try {
+      sessionStorage.setItem('sp_lead_popup_shown', 'true');
+      sessionStorage.setItem('sp_lead_popup_dismissed', 'true');
+      localStorage.setItem('sp_lead_popup_shown', 'true');
+    } catch {
+      // Ignore
+    }
     setIsOpen(false);
   }, []);
 
@@ -99,7 +114,9 @@ export default function LeadInquiryModal() {
 
       setSubmitted(true);
       try {
-        sessionStorage.setItem('sp_lead_popup_dismissed', 'true');
+        sessionStorage.setItem('sp_lead_popup_submitted', 'true');
+        sessionStorage.setItem('sp_lead_popup_shown', 'true');
+        localStorage.setItem('sp_lead_popup_shown', 'true');
       } catch {
         // Ignore
       }

@@ -70,11 +70,11 @@ function TrustCard({ trustCard }) {
         <div>
           <div className="inline-flex items-center gap-2 rounded-full border border-brand-gold/40 bg-brand-gold/20 px-3.5 py-1.5 text-[9px] font-bold uppercase tracking-[0.2em] text-brand-gold backdrop-blur-sm">
             <Sparkles size={11} className="text-brand-gold" />
-            <span>{trustCard.badge || "Trusted Partner"}</span>
+            <span>{trustCard.badge}</span>
           </div>
 
           <h3 className="mt-6 font-serif text-2xl font-bold leading-tight tracking-tight text-white sm:text-3xl">
-            {trustCard.title || "Property Dealers in Gurgaon You Can Trust"}
+            {trustCard.title}
           </h3>
 
           <div className="my-6 flex items-center gap-3">
@@ -84,11 +84,11 @@ function TrustCard({ trustCard }) {
           </div>
 
           <p className="text-xs leading-relaxed text-slate-200 font-medium sm:text-sm">
-            {trustCard.p1 || "We help customers buy, sell, and rent residential, commercial, and industrial properties across prime areas of Gurgaon including DLF, Sushant Lok, and Udyog Vihar."}
+            {trustCard.p1}
           </p>
 
           <p className="mt-4 text-xs leading-relaxed text-slate-300 sm:text-sm">
-            {trustCard.p2 || "We're your one-stop platform for smart property solutions combining local expertise with verified off-market opportunities."}
+            {trustCard.p2}
           </p>
         </div>
 
@@ -106,7 +106,7 @@ function TrustCard({ trustCard }) {
               href={trustCard.cta || "/about"}
               className="group/link inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand-gold to-brand-gold-light px-5 py-3 text-[10px] font-bold uppercase tracking-[0.16em] text-brand-obsidian transition-all hover:brightness-105 shadow-sm hover:shadow-md cursor-pointer shrink-0"
             >
-              <span>{trustCard.ctaText || "Learn More About Us"}</span>
+              <span>{trustCard.ctaText}</span>
               <ArrowRight size={13} className="transition-transform group-hover/link:translate-x-1" />
             </Link>
           </div>
@@ -182,10 +182,10 @@ export default function WhyChooseUsSection({ initialData = null }) {
     ? sections.whyChooseUs
     : (initialData || {});
 
-  const badge = whyData.badge || "Why Choose Us";
-  const titleMain = whyData.titleMain || "Decades of Unrivaled";
-  const titleItalic = whyData.titleItalic || "Gurgaon Mastery";
-  const description = whyData.description || "With deep roots in DLF Phases and premier Gurgaon micro-markets, we bring institutional rigor, discretion, and market dominance to every luxury property transaction.";
+  const badge = whyData.badge;
+  const titleMain = whyData.titleMain;
+  const titleItalic = whyData.titleItalic;
+  const description = whyData.description;
   const reasons = whyData.reasons || [];
   const trustCard = whyData.trustCard || {
     badge: "Trusted Partner",

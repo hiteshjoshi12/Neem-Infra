@@ -262,8 +262,12 @@ export async function getCorridorSitemapUrls(baseUrl, redirectSet) {
  * 5. Collect Blog Posts (/blog/[slug])
  */
 export async function getBlogSitemapUrls(baseUrl, redirectSet) {
+  const now = new Date();
   const posts = await BlogPost.find({
-    status: 'published',
+    $or: [
+      { status: 'published' },
+      { status: 'scheduled', publishedAt: { $lte: now } }
+    ],
     excludeFromSitemap: { $ne: true },
   }).lean();
 

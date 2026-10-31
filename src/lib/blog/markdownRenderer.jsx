@@ -1,6 +1,5 @@
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import ArticleImage from '@/components/blog/ArticleImage';
 
 export function slugifyHeading(text) {
@@ -53,37 +52,54 @@ export function extractTableOfContents(markdown = '') {
 }
 
 /**
- * Parses inline formatting: **bold**, *italic*, [link](url)
+ * Parses inline formatting:
+ * - [link text](url "optional title")
+ * - `code`
+ * - <u>underline</u>
+ * - ~~strikethrough~~
+ * - **bold**
+ * - *italic* / _italic_
  */
-function parseInline(text) {
+export function parseInline(text) {
   if (!text) return null;
-  // Match links [text](url)
-  const linkRegex = /\[([^\]]+)\]\(([^)]+)\)/g;
+  // Match links: [text](url) or [text](url "title")
+  const linkRegex = /\[([^\]]+)\]\(([^)\s]+)(?:\s+["']([^"']*)["'])?\)/g;
   const parts = [];
   let lastIndex = 0;
   let match;
 
   while ((match = linkRegex.exec(text)) !== null) {
     if (match.index > lastIndex) {
-      parts.push(parseBoldItalic(text.substring(lastIndex, match.index)));
+      parts.push(parseInlineFormatting(text.substring(lastIndex, match.index), `pre-${match.index}`));
     }
     const linkText = match[1];
     const rawUrl = match[2]?.trim() || '';
+    const linkTitle = match[3] || '';
     const isDangerous = /^(javascript:|data:|vbscript:)/i.test(rawUrl);
 
     if (isDangerous) {
       parts.push(<span key={`unsafe-${match.index}`}>{linkText}</span>);
     } else {
       const isExternal = rawUrl.startsWith('http') && !rawUrl.includes('saudagarproperties.com');
+      const isNofollow = linkTitle.toLowerCase().includes('nofollow') || /rel=["']nofollow["']/i.test(linkTitle);
+      
+      let rel = undefined;
+      if (isExternal) {
+        rel = isNofollow ? 'nofollow noopener noreferrer' : 'noopener noreferrer';
+      } else if (isNofollow) {
+        rel = 'nofollow';
+      }
+
       parts.push(
         <Link
           key={`link-${match.index}`}
           href={rawUrl}
           target={isExternal ? '_blank' : undefined}
-          rel={isExternal ? 'noopener noreferrer' : undefined}
+          rel={rel}
+          title={linkTitle || undefined}
           className="text-brand-gold hover:text-brand-gold-deep underline underline-offset-4 font-medium transition-colors"
         >
-          {linkText}
+          {parseInlineFormatting(linkText, `lt-${match.index}`)}
         </Link>
       );
     }
@@ -91,29 +107,109 @@ function parseInline(text) {
   }
 
   if (lastIndex < text.length) {
-    parts.push(parseBoldItalic(text.substring(lastIndex)));
+    parts.push(parseInlineFormatting(text.substring(lastIndex), `post-${lastIndex}`));
   }
 
   return parts.length > 0 ? parts : text;
 }
 
-function parseBoldItalic(text) {
+/**
+ * Sub-parser for inline code, underline, strikethrough, bold, and italic
+ */
+function parseInlineFormatting(text, keyPrefix = 'fmt') {
   if (!text) return null;
+
+  // 1. Inline code: `code`
+  if (text.includes('`')) {
+    const codeParts = text.split(/`([^`]+)`/g);
+    if (codeParts.length > 1) {
+      return codeParts.map((chunk, i) => {
+        if (i % 2 === 1) {
+          return (
+            <code
+              key={`${keyPrefix}-code-${i}`}
+              className="px-1.5 py-0.5 rounded-md bg-brand-navy/5 text-brand-navy font-mono text-[0.88em] border border-brand-navy/10"
+            >
+              {chunk}
+            </code>
+          );
+        }
+        return parseUnderlineStrikethrough(chunk, `${keyPrefix}-csub-${i}`);
+      });
+    }
+  }
+
+  return parseUnderlineStrikethrough(text, keyPrefix);
+}
+
+function parseUnderlineStrikethrough(text, keyPrefix = 'us') {
+  if (!text) return null;
+
+  // 2. Underline: <u>text</u>
+  if (text.includes('<u>') && text.includes('</u>')) {
+    const uParts = text.split(/<u>([\s\S]*?)<\/u>/gi);
+    if (uParts.length > 1) {
+      return uParts.map((chunk, i) => {
+        if (i % 2 === 1) {
+          return (
+            <span key={`${keyPrefix}-u-${i}`} className="underline underline-offset-4 decoration-brand-gold/70">
+              {parseStrikethrough(chunk, `${keyPrefix}-usub-${i}`)}
+            </span>
+          );
+        }
+        return parseStrikethrough(chunk, `${keyPrefix}-usub-${i}`);
+      });
+    }
+  }
+
+  return parseStrikethrough(text, keyPrefix);
+}
+
+function parseStrikethrough(text, keyPrefix = 'del') {
+  if (!text) return null;
+
+  // 3. Strikethrough: ~~text~~
+  if (text.includes('~~')) {
+    const delParts = text.split(/~~(.*?)~~/g);
+    if (delParts.length > 1) {
+      return delParts.map((chunk, i) => {
+        if (i % 2 === 1) {
+          return (
+            <del key={`${keyPrefix}-del-${i}`} className="line-through text-brand-muted">
+              {parseBoldItalic(chunk, `${keyPrefix}-dsub-${i}`)}
+            </del>
+          );
+        }
+        return parseBoldItalic(chunk, `${keyPrefix}-dsub-${i}`);
+      });
+    }
+  }
+
+  return parseBoldItalic(text, keyPrefix);
+}
+
+function parseBoldItalic(text, keyPrefix = 'bi') {
+  if (!text) return null;
+
   // Split on **bold**
   const boldParts = text.split(/\*\*(.*?)\*\*/g);
   if (boldParts.length === 1) {
     // Check *italic*
     const italicParts = text.split(/\*(.*?)\*/g);
     if (italicParts.length === 1) return text;
-    return italicParts.map((chunk, i) => (i % 2 === 1 ? <em key={i} className="italic">{chunk}</em> : chunk));
+    return italicParts.map((chunk, i) => (
+      i % 2 === 1 ? <em key={`${keyPrefix}-it-${i}`} className="italic">{chunk}</em> : chunk
+    ));
   }
 
   return boldParts.map((chunk, i) => {
     if (i % 2 === 1) {
-      return <strong key={i} className="font-semibold text-brand-navy">{chunk}</strong>;
+      return <strong key={`${keyPrefix}-b-${i}`} className="font-semibold text-brand-navy">{chunk}</strong>;
     }
     const subItalics = chunk.split(/\*(.*?)\*/g);
-    return subItalics.map((sub, j) => (j % 2 === 1 ? <em key={`${i}-${j}`} className="italic">{sub}</em> : sub));
+    return subItalics.map((sub, j) => (
+      j % 2 === 1 ? <em key={`${keyPrefix}-b-it-${i}-${j}`} className="italic">{sub}</em> : sub
+    ));
   });
 }
 
@@ -152,7 +248,16 @@ export function MarkdownRenderer({ content = '' }) {
         elements.push(
           <ul key={`ul-${elements.length}`} className="space-y-3 mb-6 ml-6 list-disc text-brand-slate text-base md:text-lg leading-relaxed marker:text-brand-gold">
             {currentList.items.map((item, i) => (
-              <li key={i}>{parseInline(item)}</li>
+              <li key={i}>
+                {parseInline(item.text)}
+                {item.children && item.children.length > 0 && (
+                  <ul className="space-y-2 mt-2 ml-6 list-circle marker:text-brand-gold/70">
+                    {item.children.map((child, j) => (
+                      <li key={j}>{parseInline(child)}</li>
+                    ))}
+                  </ul>
+                )}
+              </li>
             ))}
           </ul>
         );
@@ -160,7 +265,16 @@ export function MarkdownRenderer({ content = '' }) {
         elements.push(
           <ol key={`ol-${elements.length}`} className="space-y-3 mb-6 ml-6 list-decimal text-brand-slate text-base md:text-lg leading-relaxed marker:font-bold marker:text-brand-gold">
             {currentList.items.map((item, i) => (
-              <li key={i}>{parseInline(item)}</li>
+              <li key={i}>
+                {parseInline(item.text)}
+                {item.children && item.children.length > 0 && (
+                  <ol className="space-y-2 mt-2 ml-6 list-decimal marker:font-normal marker:text-brand-gold/70">
+                    {item.children.map((child, j) => (
+                      <li key={j}>{parseInline(child)}</li>
+                    ))}
+                  </ol>
+                )}
+              </li>
             ))}
           </ol>
         );
@@ -172,19 +286,30 @@ export function MarkdownRenderer({ content = '' }) {
   const flushBlockquote = () => {
     if (currentBlockquote.length > 0) {
       const text = currentBlockquote.join(' ').trim();
-      const isAdvisory = text.toLowerCase().includes('tip:') || text.toLowerCase().includes('advisory:') || text.toLowerCase().includes('warning:');
+      const lower = text.toLowerCase();
+      const isTip = lower.includes('tip:') || lower.includes('💡') || lower.includes('[!tip]') || lower.includes('\\[!tip\\]');
+      const isWarning = lower.includes('warning:') || lower.includes('advisory:') || lower.includes('⚠️') || lower.includes('[!warning]') || lower.includes('\\[!warning\\]');
+      const isNote = lower.includes('[!note]') || lower.includes('\\[!note\\]') || lower.includes('note:');
+      const isAdvisory = isTip || isWarning || isNote;
+      
+      // Clean callout alert headers if present (tolerating escaped brackets)
+      const cleanText = text
+        .replace(/^\\?\[!(?:NOTE|TIP|WARNING|IMPORTANT|CAUTION)\\?\]\s*/i, '');
+
       elements.push(
         <blockquote 
           key={`quote-${elements.length}`} 
           className={`border-l-4 p-6 my-8 rounded-r-2xl shadow-xs ${
-            isAdvisory 
-              ? 'border-brand-gold bg-brand-ivory-warm' 
-              : 'border-brand-navy bg-brand-ivory'
+            isWarning
+              ? 'border-amber-500 bg-amber-500/5'
+              : isAdvisory 
+                ? 'border-brand-gold bg-brand-ivory-warm' 
+                : 'border-brand-navy bg-brand-ivory'
           }`}
         >
-          <p className="font-serif italic text-base md:text-lg text-brand-navy leading-relaxed mb-0">
-            {parseInline(text)}
-          </p>
+          <div className="font-serif italic text-base md:text-lg text-brand-navy leading-relaxed mb-0">
+            {parseInline(cleanText)}
+          </div>
         </blockquote>
       );
       currentBlockquote = [];
@@ -266,7 +391,7 @@ export function MarkdownRenderer({ content = '' }) {
         <h2
           key={`h2-${elements.length}`}
           id={id}
-          className="scroll-mt-28 text-2xl md:text-3xl font-serif font-bold text-brand-navy mt-12 mb-5 tracking-tight group"
+          className="scroll-mt-28 text-2xl md:text-3xl font-serif font-bold text-brand-navy mt-12 mb-5 tracking-tight group clear-both"
         >
           {parseInline(rawTitle)}
         </h2>
@@ -297,7 +422,7 @@ export function MarkdownRenderer({ content = '' }) {
           <h3
             key={`h3-${elements.length}`}
             id={id}
-            className="scroll-mt-28 flex items-center gap-3 text-xl md:text-2xl font-serif font-bold text-brand-navy mt-8 mb-4 tracking-tight"
+            className="scroll-mt-28 flex items-center gap-3 text-xl md:text-2xl font-serif font-bold text-brand-navy mt-8 mb-4 tracking-tight clear-both"
           >
             <span className="inline-flex items-center justify-center h-7 w-7 rounded-lg bg-brand-navy text-brand-gold text-xs font-bold shrink-0">
               {stepNum}
@@ -310,12 +435,61 @@ export function MarkdownRenderer({ content = '' }) {
           <h3
             key={`h3-${elements.length}`}
             id={id}
-            className="scroll-mt-28 text-xl md:text-2xl font-serif font-semibold text-brand-navy mt-8 mb-4 tracking-tight"
+            className="scroll-mt-28 text-xl md:text-2xl font-serif font-semibold text-brand-navy mt-8 mb-4 tracking-tight clear-both"
           >
             {parseInline(rawTitle)}
           </h3>
         );
       }
+      continue;
+    }
+
+    // Heading 4
+    if (line.startsWith('#### ')) {
+      flushParagraph();
+      flushList();
+      flushBlockquote();
+      flushTable();
+      const rawTitle = line.replace(/^####\s+/, '').replace(/\*\*/g, '');
+      let id = slugifyHeading(rawTitle) || 'heading-4';
+      if (idCounts[id]) {
+        idCounts[id] += 1;
+        id = `${id}-${idCounts[id]}`;
+      } else {
+        idCounts[id] = 1;
+      }
+      elements.push(
+        <h4
+          key={`h4-${elements.length}`}
+          id={id}
+          className="scroll-mt-28 text-lg md:text-xl font-serif font-semibold text-brand-navy mt-6 mb-3 tracking-tight"
+        >
+          {parseInline(rawTitle)}
+        </h4>
+      );
+      continue;
+    }
+
+    // YouTube Embed (standalone line)
+    const ytMatch = line.match(/^(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube-nocookie\.com\/embed\/)([a-zA-Z0-9_-]{11})(?:[?&].*)?$/);
+    if (ytMatch) {
+      flushParagraph();
+      flushList();
+      flushBlockquote();
+      flushTable();
+      const videoId = ytMatch[1];
+      elements.push(
+        <div key={`yt-${elements.length}`} className="my-8 overflow-hidden rounded-2xl md:rounded-3xl border border-brand-navy/10 shadow-md aspect-video w-full bg-black">
+          <iframe
+            src={`https://www.youtube-nocookie.com/embed/${videoId}`}
+            title="Video Player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+            className="w-full h-full border-0"
+            loading="lazy"
+          />
+        </div>
+      );
       continue;
     }
 
@@ -328,7 +502,15 @@ export function MarkdownRenderer({ content = '' }) {
       continue;
     }
 
-    // Unordered List
+    // Unordered List (with nested item support)
+    const isIndentedUl = /^(\s{2,}|\t)[-*]\s+(.*)/.exec(rawLine);
+    if (isIndentedUl && currentList && currentList.type === 'ul' && currentList.items.length > 0) {
+      const lastItem = currentList.items[currentList.items.length - 1];
+      if (!lastItem.children) lastItem.children = [];
+      lastItem.children.push(isIndentedUl[2]);
+      continue;
+    }
+
     if (line.startsWith('- ') || line.startsWith('* ')) {
       flushParagraph();
       flushBlockquote();
@@ -337,11 +519,19 @@ export function MarkdownRenderer({ content = '' }) {
         flushList();
         currentList = { type: 'ul', items: [] };
       }
-      currentList.items.push(line.substring(2));
+      currentList.items.push({ text: line.substring(2), children: [] });
       continue;
     }
 
-    // Ordered List
+    // Ordered List (with nested item support)
+    const isIndentedOl = /^(\s{2,}|\t)\d+\.\s+(.*)/.exec(rawLine);
+    if (isIndentedOl && currentList && currentList.type === 'ol' && currentList.items.length > 0) {
+      const lastItem = currentList.items[currentList.items.length - 1];
+      if (!lastItem.children) lastItem.children = [];
+      lastItem.children.push(isIndentedOl[2]);
+      continue;
+    }
+
     const numMatch = line.match(/^(\d+)\.\s+(.*)/);
     if (numMatch) {
       flushParagraph();
@@ -351,7 +541,7 @@ export function MarkdownRenderer({ content = '' }) {
         flushList();
         currentList = { type: 'ol', items: [] };
       }
-      currentList.items.push(numMatch[2]);
+      currentList.items.push({ text: numMatch[2], children: [] });
       continue;
     }
 
@@ -363,7 +553,6 @@ export function MarkdownRenderer({ content = '' }) {
       const cells = line.split('|').slice(1, -1).map(c => c.trim());
       // Check if divider row like | :--- | :--- |
       if (cells.every(c => /^:?-+:?$/.test(c))) {
-        // Divider row, skip
         continue;
       }
       if (!currentTable) {
@@ -374,20 +563,45 @@ export function MarkdownRenderer({ content = '' }) {
       continue;
     }
 
-    // Image: ![alt](url) or ![alt | caption: ... | credit: ... | source: ...](url)
-    const imgMatch = line.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+    // Robust Image Matcher:
+    // Matches ![alt](url) or ![alt](url "title") or ![alt | tokens](url ...)
+    const imgMatch = line.match(/^!\[([^\]]*)\]\(\s*([^\s)"']+)(?:\s+["']([^"']*)["'])?\s*\)$/);
     if (imgMatch) {
       flushParagraph();
       flushList();
       flushBlockquote();
       flushTable();
       const rawAltSection = imgMatch[1] || '';
-      const src = imgMatch[2];
+      let src = imgMatch[2];
+      let inlineTitle = imgMatch[3] || '';
+
+      // Clean src if it contains URL-encoded or raw quotes like %20%22Caption%22 or %20"Caption"
+      const spaceTitleMatch = src.match(/^([^\s"']+)\s+["']([^"']*)["']$/);
+      if (spaceTitleMatch) {
+        src = spaceTitleMatch[1];
+        if (!inlineTitle) inlineTitle = spaceTitleMatch[2];
+      }
+
+      const encodedTitleMatch = src.match(/^(.*?)(?:%20|\s+)(?:%22|")?(.*?)(?:%22|")?$/i);
+      if (encodedTitleMatch && encodedTitleMatch[2]) {
+        src = encodedTitleMatch[1];
+        if (!inlineTitle) {
+          try {
+            inlineTitle = decodeURIComponent(encodedTitleMatch[2]);
+          } catch {
+            inlineTitle = encodedTitleMatch[2];
+          }
+        }
+      }
+
+      src = src.replace(/%22/g, '').replace(/["']/g, '').trim();
 
       let alt = rawAltSection;
-      let caption = '';
+      let caption = inlineTitle;
       let credit = '';
       let source = '';
+      let align = 'center';
+      let size = 'normal';
 
       if (rawAltSection.includes('|')) {
         const tokens = rawAltSection.split('|').map(t => t.trim());
@@ -399,10 +613,12 @@ export function MarkdownRenderer({ content = '' }) {
           if (cleanKey === 'caption') caption = val;
           else if (cleanKey === 'credit') credit = val;
           else if (cleanKey === 'source') source = val;
+          else if (cleanKey === 'align') align = val.toLowerCase();
+          else if (cleanKey === 'size') size = val.toLowerCase();
         });
       } else {
         alt = rawAltSection || 'Saudagar luxury real estate Gurugram';
-        caption = alt;
+        if (!caption) caption = alt;
       }
 
       elements.push(
@@ -413,10 +629,73 @@ export function MarkdownRenderer({ content = '' }) {
           caption={caption}
           credit={credit}
           source={source}
+          align={align}
+          size={size}
           sizes="(max-width: 768px) 100vw, 850px"
         />
       );
       continue;
+    }
+
+    // If a line contains an embedded image inside paragraph text, separate it into clean blocks
+    if (line.includes('![') && line.includes('](')) {
+      const inlineImgRegex = /!\[([^\]]*)\]\(\s*([^\s)"']+)(?:\s+["']([^"']*)["'])?\s*\)/g;
+      let pLastIndex = 0;
+      let pMatch;
+      let hasEmbedded = false;
+
+      while ((pMatch = inlineImgRegex.exec(line)) !== null) {
+        hasEmbedded = true;
+        const textBefore = line.substring(pLastIndex, pMatch.index).trim();
+        if (textBefore) {
+          currentParagraph.push(textBefore);
+          flushParagraph();
+        }
+
+        const rawAltSection = pMatch[1] || '';
+        let src = pMatch[2];
+        let inlineTitle = pMatch[3] || '';
+
+        const spaceTitleMatch = src.match(/^([^\s"']+)\s+["']([^"']*)["']$/);
+        if (spaceTitleMatch) {
+          src = spaceTitleMatch[1];
+          if (!inlineTitle) inlineTitle = spaceTitleMatch[2];
+        }
+
+        const encodedTitleMatch = src.match(/^(.*?)(?:%20|\s+)(?:%22|")?(.*?)(?:%22|")?$/i);
+        if (encodedTitleMatch && encodedTitleMatch[2]) {
+          src = encodedTitleMatch[1];
+          if (!inlineTitle) {
+            try {
+              inlineTitle = decodeURIComponent(encodedTitleMatch[2]);
+            } catch {
+              inlineTitle = encodedTitleMatch[2];
+            }
+          }
+        }
+
+        src = src.replace(/%22/g, '').replace(/["']/g, '').trim();
+
+        elements.push(
+          <ArticleImage
+            key={`img-inline-${elements.length}`}
+            src={src}
+            alt={rawAltSection || 'Saudagar luxury real estate'}
+            caption={inlineTitle || rawAltSection}
+            sizes="(max-width: 768px) 100vw, 850px"
+          />
+        );
+
+        pLastIndex = pMatch.index + pMatch[0].length;
+      }
+
+      if (hasEmbedded) {
+        const textAfter = line.substring(pLastIndex).trim();
+        if (textAfter) {
+          currentParagraph.push(textAfter);
+        }
+        continue;
+      }
     }
 
     // Regular paragraph line

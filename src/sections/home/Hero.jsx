@@ -201,7 +201,7 @@ export default function Hero() {
             >
               <span className="w-8 h-[1px] bg-brand-gold"></span>
               <span className="text-xs md:text-sm tracking-[0.25em] text-brand-gold uppercase font-semibold">
-                {heroData.badge || "Luxury Builder Floors & Estates"}
+                {heroData.badge}
               </span>
             </motion.div>
 
@@ -225,7 +225,7 @@ export default function Hero() {
               transition={{ duration: 0.6, delay: 0.2, ease: "easeOut" }}
               className="text-slate-100 text-sm sm:text-base md:text-[17px] font-normal max-w-[650px] mb-6 sm:mb-7 leading-[1.62] drop-shadow-sm"
             >
-              {heroData.description || "Discover an exclusive portfolio of luxury builder floors, high-rise penthouses, and bespoke villas across DLF Phase 1–4, Sushant Lok & Golf Course Ext."}
+              {heroData.description}
             </motion.p>
 
             {/* High-Visibility White Search Bar Console */}
@@ -253,7 +253,7 @@ export default function Hero() {
                       aria-label="Search properties"
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
-                      placeholder={heroData.searchPlaceholder || "Search DLF builder floors, villas..."}
+                      placeholder={heroData.searchPlaceholder}
                       className="w-full bg-transparent border-none outline-none text-brand-navy placeholder-brand-text-dim font-medium text-xs sm:text-[13px] truncate"
                     />
                   </div>
@@ -313,7 +313,7 @@ export default function Hero() {
                   aria-label="Search and explore properties"
                   className="group/btn w-full lg:w-auto mt-2 lg:mt-0 lg:ml-2 bg-brand-gold hover:bg-brand-gold text-brand-navy-deep px-7 py-3.5 rounded-xl text-xs uppercase tracking-widest font-bold transition-all duration-300 flex items-center justify-center gap-2 shadow-md hover:shadow-lg cursor-pointer flex-shrink-0"
                 >
-                  <span>{heroData.searchButtonText || "Explore"}</span>
+                  <span>{heroData.searchButtonText}</span>
                   <ArrowUpRight size={15} className="group-hover/btn:translate-x-1 transition-transform duration-200" />
                 </button>
               </form>
@@ -326,7 +326,7 @@ export default function Hero() {
                 className="mt-8 flex flex-col sm:flex-row items-start sm:items-center gap-4 relative z-10"
               >
                 <span className="text-brand-gold text-xs font-semibold tracking-widest uppercase">
-                  {heroData.trendingLabel || "Trending"}
+                  {heroData.trendingLabel}
                 </span>
                 <div className="flex flex-wrap gap-2">
                   {(heroData.trendingTags && heroData.trendingTags.length > 0

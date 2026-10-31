@@ -141,15 +141,15 @@ export default function AboutOfferings({ data }) {
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-brand-gold/40 text-brand-gold text-xs font-bold tracking-[0.25em] uppercase mb-4 shadow-xs">
             <Sparkles size={13} className="text-brand-gold" />
-            <span>{cms.badge || "Prime Real Estate Portfolio"}</span>
+            <span>{cms.badge}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-serif font-bold text-brand-navy leading-tight mb-4">
-            {cms.titleMain || "Our Core Property "} <span className="italic font-serif text-brand-gold">{cms.titleItalic || "Categories"}</span>
+            {cms.titleMain} <span className="italic font-serif text-brand-gold">{cms.titleItalic}</span>
           </h2>
 
           <p className="text-sm sm:text-base text-brand-slate font-normal leading-relaxed">
-            {cms.subtitle || "Whether you seek an illustrious residential address, high-end commercial headquarters, or strategic investment land, we curate the finest options in DLF Gurugram."}
+            {cms.subtitle}
           </p>
         </div>
 

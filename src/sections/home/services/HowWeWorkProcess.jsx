@@ -109,21 +109,10 @@ export default function HowWeWorkProcess() {
   const howData =
     sections?.services?.howWeWork || {};
 
-  const badge =
-    howData.badge ||
-    "Private Property Advisory";
-
-  const titleMain =
-    howData.titleMain ||
-    "How Do We";
-
-  const titleItalic =
-    howData.titleItalic ||
-    "Work?";
-
-  const description =
-    howData.description ||
-    "Experience our seamless, three-stage property advisory tailored for discerning buyers, investors, and corporate leaders across DLF Gurugram.";
+  const badge = howData.badge;
+  const titleMain = howData.titleMain;
+  const titleItalic = howData.titleItalic;
+  const description = howData.description;
 
   const steps = useMemo(() => {
     const rawSteps = howData.steps;

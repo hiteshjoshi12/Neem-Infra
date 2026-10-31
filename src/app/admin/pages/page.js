@@ -47,9 +47,9 @@ const WEBSITE_PAGES = [
     editUrl: '/admin/pages/about',
     icon: Users,
     badge: 'Company Profile',
-    sectionsCount: 7,
-    description: 'Company 25+ year leadership narrative, cinematic video tour, core property categories, value proposition pillars, visionary founders, and private advisory CTA.',
-    sections: ['Hero & Mission', 'Cinematic Video Tour', 'Property Offerings', '3 Pillars of Proposition', 'Founders & Leadership', 'Why Choose Us', 'Executive Consultation CTA']
+    sectionsCount: 8,
+    description: 'Company 25+ year leadership narrative, cinematic video tour, core property categories, value proposition pillars, visionary founders, why choose us distinction, headquarters & location map, and executive consultation CTA.',
+    sections: ['Hero & Mission', 'Cinematic Video Tour', 'Property Offerings', '3 Pillars of Proposition', 'Founders & Leadership', 'Why Choose Us', 'Headquarters & Location Map', 'Executive Consultation CTA']
   },
   {
     id: 'properties',

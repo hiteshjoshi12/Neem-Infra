@@ -130,7 +130,7 @@ function FeaturedSplitTestimonial({
                   Client Perspective
                 </span>
                 <span className="text-xs font-semibold text-brand-slate">
-                  {item.tag || "Gurgaon Real Estate Advisory"}
+                  {item.tag}
                 </span>
               </div>
             </div>
@@ -513,22 +513,21 @@ export default function TestimonialsSection({ initialTestimonials = [], initialS
           <div className="max-w-2xl">
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-brand-gold/30 bg-brand-gold/10 px-3.5 py-1.5 text-[8px] font-bold uppercase tracking-[0.23em] text-brand-gold shadow-sm">
               <Sparkles size={11} className="text-brand-gold" />
-              <span>{testData.badge || "Client Perspectives"}</span>
+              <span>{testData.badge}</span>
             </div>
 
             <h2
               id="client-testimonials-heading"
               className="font-serif text-4xl font-normal leading-[1.05] tracking-[-0.04em] text-brand-navy sm:text-5xl lg:text-6xl"
             >
-              {testData.titleMain || "Words of"}{" "}
+              {testData.titleMain}{" "}
               <span className="italic font-light text-brand-gold">
-                {testData.titleItalic || "Distinction"}
+                {testData.titleItalic}
               </span>
             </h2>
 
             <p className="mt-4 max-w-xl text-xs leading-6 text-brand-slate sm:text-sm">
-              {testData.description ||
-                "Hear directly from discerning investors, corporate leaders, and homeowners who have partnered with Saudagar Properties across DLF Gurugram and prime corridors."}
+              {testData.description}
             </p>
           </div>
 

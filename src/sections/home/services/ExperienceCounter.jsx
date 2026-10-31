@@ -49,22 +49,12 @@ export default function ExperienceCounter() {
   const currentCalculatedYears = Math.max(1, new Date().getFullYear() - 1999);
   const target = Number(expData.yearsCount) || currentCalculatedYears;
 
-  const badge =
-    expData.badge || `${target}+ Years of Unmatched Advisory`;
-
-  const headline =
-    expData.headline ||
-    'Years of Experience as a Top Real Estate Consultant in DLF Gurugram';
-
-  const description =
-    expData.description ||
-    'Our stellar team, trusted property dealers in Gurgaon and experts in commercial real estate in Gurugram, ensures you have a hassle-free experience finding the right property. We are committed to serving our clients with dedication, putting their needs above all else. Providing personalized solutions for all your property-related queries, we know that a satisfied customer is our greatest asset.';
-
-  const statsList = expData.statsList || DEFAULT_STATS_DATA;
-  const counterLabel = expData.counterLabel || 'Years of Authority';
-  const counterSublabel =
-    expData.counterSublabel ||
-    "Serving India's Most Discerning Families & Corporates in Gurugram";
+  const badge = expData.badge;
+  const headline = expData.headline;
+  const description = expData.description;
+  const statsList = (expData.statsList && Array.isArray(expData.statsList) && expData.statsList.length > 0) ? expData.statsList : DEFAULT_STATS_DATA;
+  const counterLabel = expData.counterLabel;
+  const counterSublabel = expData.counterSublabel;
 
   const [count, setCount] = useState(1);
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });

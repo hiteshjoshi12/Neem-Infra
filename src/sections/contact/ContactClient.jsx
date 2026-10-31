@@ -149,10 +149,10 @@ export default function ContactClient({ initialData }) {
           </div>
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif font-bold text-white mb-4">
-            {cms.hero?.titleMain || "Connect With Our Senior "} <span className="italic font-serif text-brand-gold">{cms.hero?.titleItalic || "Partners"}</span>
+            {cms.hero?.titleMain} <span className="italic font-serif text-brand-gold">{cms.hero?.titleItalic}</span>
           </h1>
           <p className="text-slate-300 max-w-2xl mx-auto text-sm md:text-base font-normal leading-relaxed">
-            {cms.hero?.subtitle || "Get in touch with Saudagar Properties for premium real estate advisory in Gurugram. We are here to assist you with buying, selling, or leasing luxury properties."}
+            {cms.hero?.subtitle}
           </p>
         </div>
       </div>
@@ -166,10 +166,10 @@ export default function ContactClient({ initialData }) {
         <div ref={leftColRef} className="lg:col-span-5 space-y-8">
           <div>
             <h2 className="text-sm font-bold tracking-[0.2em] text-brand-gold uppercase mb-2">
-              {cms.contactInfo?.officeBadge || "Corporate Headquarters"}
+              {cms.contactInfo?.officeBadge}
             </h2>
             <h3 className="text-3xl font-serif text-brand-navy mb-6">
-              {cms.contactInfo?.officeName || "Saudagar Properties Pvt. Ltd"}
+              {cms.contactInfo?.officeName}
             </h3>
             <p className="text-brand-slate leading-relaxed mb-8">
               Whether you are looking to invest in DLF Phase 1-5, require commercial space, or need expert property valuation, our founders are personally available to guide you.
@@ -186,7 +186,7 @@ export default function ContactClient({ initialData }) {
                   {cms.contactInfo?.officeBadge || "Headquarters"}
                 </h4>
                 <p className="text-sm text-brand-slate leading-relaxed">
-                  {cms.contactInfo?.address || "38, Akashneem Marg, DLF Phase 2, Gurugram, Haryana 122002"}
+                  {cms.contactInfo?.address}
                 </p>
               </div>
             </div>
@@ -197,14 +197,14 @@ export default function ContactClient({ initialData }) {
               </div>
               <div>
                 <h4 className="text-base font-bold text-brand-navy mb-1">
-                  {cms.contactInfo?.phoneBadge || "Phone"}
+                  {cms.contactInfo?.phoneBadge}
                 </h4>
                 <div className="flex flex-col gap-1">
                   <a href={`tel:${cms.contactInfo?.phone1 || '+919718511207'}`} className="text-sm text-brand-slate hover:text-brand-gold transition-colors">
-                    {cms.contactInfo?.phone1 || "+91 97185 11207"}
+                    {cms.contactInfo?.phone1}
                   </a>
                   <a href={`tel:${cms.contactInfo?.phone2 || '+919811221207'}`} className="text-sm text-brand-slate hover:text-brand-gold transition-colors">
-                    {cms.contactInfo?.phone2 || "+91 98112 21207"}
+                    {cms.contactInfo?.phone2}
                   </a>
                 </div>
               </div>
@@ -216,10 +216,10 @@ export default function ContactClient({ initialData }) {
               </div>
               <div>
                 <h4 className="text-base font-bold text-brand-navy mb-1">
-                  {cms.contactInfo?.emailBadge || "Email"}
+                  {cms.contactInfo?.emailBadge}
                 </h4>
                 <a href={`mailto:${cms.contactInfo?.email || 'Saudagar.Properties@Yahoo.In'}`} className="text-sm text-brand-slate hover:text-brand-gold transition-colors">
-                  {cms.contactInfo?.email || "Saudagar.Properties@Yahoo.In"}
+                  {cms.contactInfo?.email}
                 </a>
               </div>
             </div>
@@ -231,7 +231,7 @@ export default function ContactClient({ initialData }) {
                 </div>
                 <div>
                   <h4 className="text-base font-bold text-brand-navy mb-1">
-                    {cms.contactInfo?.hoursBadge || "Office Timings"}
+                    {cms.contactInfo?.hoursBadge}
                   </h4>
                   <p className="text-sm text-brand-slate leading-relaxed">
                     {cms.contactInfo?.hours}
@@ -245,8 +245,8 @@ export default function ContactClient({ initialData }) {
         {/* Right Column: Contact Form */}
         <div ref={formBoxRef} className="lg:col-span-7">
           <div className="bg-white p-8 md:p-10 rounded-3xl shadow-[0_15px_40px_-15px_rgba(0,0,0,0.05)] border border-brand-cream-border">
-            <h3 className="text-2xl font-serif text-brand-navy mb-2">{cms.form?.title || "Send an Inquiry"}</h3>
-            <p className="text-xs text-brand-slate-light mb-6">{cms.form?.subtitle || "Fill out the form below and an executive advisor will contact you within 2 hours."}</p>
+            <h3 className="text-2xl font-serif text-brand-navy mb-2">{cms.form?.title}</h3>
+            <p className="text-xs text-brand-slate-light mb-6">{cms.form?.subtitle}</p>
             
             {submitted ? (
               <div className="flex flex-col items-center justify-center text-center py-10 space-y-6">

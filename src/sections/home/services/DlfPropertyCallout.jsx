@@ -190,29 +190,12 @@ export default function DlfPropertyCallout() {
   const statsCards =
     callout.statsCards || DEFAULT_STATS_CARDS;
 
-  const badge =
-    callout.badge ||
-    "DLF GURGAON DEDICATED DESK";
-
-  const locationTag =
-    callout.locationTag ||
-    "DLF GURUGRAM";
-
-  const expertiseTag =
-    callout.expertiseTag ||
-    "LOCAL PROPERTY EXPERTISE";
-
-  const titleMain =
-    callout.titleMain ||
-    "DLF Gurugram,";
-
-  const titleItalic =
-    callout.titleItalic ||
-    "considered differently.";
-
-  const description =
-    callout.description ||
-    "Our expert advisory team delivers discrete, end-to-end access to premier residential estates, prime commercial headquarters, and high-yielding industrial assets across DLF Gurugram.";
+  const badge = callout.badge;
+  const locationTag = callout.locationTag;
+  const expertiseTag = callout.expertiseTag;
+  const titleMain = callout.titleMain;
+  const titleItalic = callout.titleItalic;
+  const description = callout.description;
 
   const phone =
     callout.phone ||
@@ -231,44 +214,15 @@ export default function DlfPropertyCallout() {
     callout.bgImageAlt ||
     "DLF Gurugram Luxury Architectural Residence";
 
-  const coordinateLabel =
-    callout.coordinateLabel ||
-    "DLF PHASE V · PRIVATE DESK";
-
-  const coordinateValue =
-    callout.coordinateValue ||
-    "28°27'N 77°05'E";
-
-  const ctaBadge =
-    callout.ctaBadge ||
-    "PRIVATE PROPERTY DESK · ACTIVE INQUIRIES";
-
-  const headline =
-    callout.ctaHeadline ||
-    callout.headline ||
-    "Are you looking for a property in DLF Gurgaon? Simply connect with us!";
-
-  const ctaDescription =
-    callout.ctaDescription ||
-    "Direct access to off-market inventory, verified titles, and bespoke consultation across DLF Phase 1–5, Golf Course Road & Cybercity.";
-
-  const ctaTags =
-    (callout.ctaTags && Array.isArray(callout.ctaTags) && callout.ctaTags.length > 0)
-      ? callout.ctaTags
-      : ["Residential Villas", "Luxury Floors", "Commercial HQs", "Industrial Assets"];
-
-  const ctaText =
-    callout.ctaText ||
-    "Explore Deals";
-
-  const ctaLink =
-    callout.ctaLink ||
-    callout.cta ||
-    "/contact";
-
-  const trustStatement =
-    callout.trustStatement ||
-    "Confidential Advisory · Verified Titles";
+  const coordinateLabel = callout.coordinateLabel;
+  const coordinateValue = callout.coordinateValue;
+  const ctaBadge = callout.ctaBadge;
+  const headline = callout.ctaHeadline || callout.headline;
+  const ctaDescription = callout.ctaDescription;
+  const ctaTags = (callout.ctaTags && Array.isArray(callout.ctaTags) && callout.ctaTags.length > 0) ? callout.ctaTags : [];
+  const ctaText = callout.ctaText;
+  const ctaLink = callout.ctaLink || callout.cta;
+  const trustStatement = callout.trustStatement;
 
   const containerRef = useRef(null);
   const imageContainerRef = useRef(null);

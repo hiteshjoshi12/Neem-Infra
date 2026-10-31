@@ -15,7 +15,7 @@ if (typeof window !== "undefined") {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-export default function LocationMap() {
+export default function LocationMap({ data = null }) {
   const { sections } = useCms();
 
   /*
@@ -26,31 +26,14 @@ export default function LocationMap() {
    * =========================================================
    */
 
-  const locData = sections?.location || {};
+  const locData = (data && Object.keys(data).length > 0) ? data : (sections?.location || {});
 
-  const badge =
-    locData.badge ||
-    "Visit Our Office";
-
-  const titleMain =
-    locData.titleMain ||
-    "Where to";
-
-  const titleItalic =
-    locData.titleItalic ||
-    "Find Us";
-
-  const description =
-    locData.description ||
-    "Drop by our headquarters for a private, one-on-one consultation regarding Gurgaon's premier luxury properties.";
-
-  const officeName =
-    locData.officeName ||
-    "Saudagar Properties Pvt. Ltd";
-
-  const address =
-    locData.address ||
-    "38, Akashneem Marg, DLF Phase 2, Gurugram, Haryana 122002";
+  const badge = locData.badge;
+  const titleMain = locData.titleMain;
+  const titleItalic = locData.titleItalic;
+  const description = locData.description;
+  const officeName = locData.officeName;
+  const address = locData.address;
 
   const gmapsUrl =
     locData.gmapsUrl ||
@@ -60,17 +43,9 @@ export default function LocationMap() {
     locData.embedUrl ||
     "https://maps.google.com/maps?q=Saudagar+Properties+Pvt.Ltd,+Akashneem+Marg,+DLF+Phase+2,+Gurugram&t=&z=16&ie=UTF8&iwloc=&output=embed";
 
-  const openMapsText =
-    locData.openMapsText ||
-    "Open in Google Maps";
-
-  const officeBadge =
-    locData.officeBadge ||
-    "Headquarters";
-
-  const directionsText =
-    locData.directionsText ||
-    "Get Directions";
+  const openMapsText = locData.openMapsText;
+  const officeBadge = locData.officeBadge;
+  const directionsText = locData.directionsText;
 
 
   /*

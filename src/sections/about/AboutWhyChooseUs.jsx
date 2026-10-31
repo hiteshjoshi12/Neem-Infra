@@ -62,17 +62,17 @@ export default function AboutWhyChooseUs({ data }) {
         <div className="max-w-3xl mb-14 md:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-xs font-bold uppercase tracking-[0.2em] mb-4">
             <Sparkles size={13} />
-            <span>{cms?.badge || "Why Choose Saudagar Properties • Fiduciary Distinction"}</span>
+            <span>{cms?.badge}</span>
           </div>
 
           <LuxuryTextReveal
-            text={cms?.titleMain || "The Saudagar Distinction: 7 Strategic Pillars of Trust & "}
-            highlightText={cms?.titleItalic || "Market Leadership"}
+            text={cms?.titleMain}
+            highlightText={cms?.titleItalic}
             className="text-3xl sm:text-4xl md:text-5xl text-brand-navy mb-4"
           />
 
           <p className="text-sm sm:text-base text-brand-slate leading-relaxed font-sans max-w-2xl">
-            {cms?.subtitle || "For more than 25 years, high-net-worth families, family offices, and NRI investors have chosen Saudagar Properties for direct founder-led transactions, uncompromising legal title due diligence, and privileged off-market inventory across DLF Gurugram."}
+            {cms?.subtitle}
           </p>
         </div>
 
@@ -162,15 +162,15 @@ export default function AboutWhyChooseUs({ data }) {
           <div className="max-w-3xl mb-12">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-xs font-bold uppercase tracking-[0.2em] mb-3">
               <ShieldCheck size={13} />
-              <span>{cms?.gridBadge || "Core Strategic Advisory Pillars • Generational Authority"}</span>
+              <span>{cms?.gridBadge}</span>
             </div>
 
             <h3 className="text-2xl sm:text-3xl md:text-4xl font-serif font-bold text-brand-navy mb-3">
-              {cms?.gridTitle || "Strategic Pillars of Client Excellence & Asset Protection"}
+              {cms?.gridTitle}
             </h3>
 
             <p className="text-sm sm:text-base text-brand-slate leading-relaxed font-sans max-w-2xl">
-              {cms?.gridSubtitle || "Beyond founder-level representation, Saudagar Properties adheres to six rigorous advisory disciplines that eliminate transaction vulnerabilities, preserve sovereign family capital, and secure premier freehold estates across Gurugram."}
+              {cms?.gridSubtitle}
             </p>
           </div>
 

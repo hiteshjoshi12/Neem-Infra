@@ -31,37 +31,21 @@ export default function Footer() {
   const { sections } = useCms();
   const footerData = sections?.footer || {};
 
-  const officeTitle = footerData.officeTitle || 'Corporate Office';
-  const officeName = footerData.officeName || 'Saudagar Properties';
-  const officeAddress =
-    footerData.officeAddress ||
-    '38, Akashneem Marg, DLF Phase 2, Gurugram, Haryana 122002';
+  const officeTitle = footerData.officeTitle;
+  const officeName = footerData.officeName;
+  const officeAddress = footerData.officeAddress;
 
-  const phoneTitle = footerData.phoneTitle || 'Direct Line';
-  const phoneSubtitle = footerData.phoneSubtitle || 'Phone';
-  const phones = footerData.phones || [
-    {
-      number: '+91 97185 11207',
-      label: '(IND)',
-      href: 'tel:+919718511207',
-    },
-    {
-      number: '+91 98112 21207',
-      label: '(IND)',
-      href: 'tel:+919811221207',
-    },
-  ];
+  const phoneTitle = footerData.phoneTitle;
+  const phoneSubtitle = footerData.phoneSubtitle;
+  const phones = (footerData.phones && Array.isArray(footerData.phones) && footerData.phones.length > 0) ? footerData.phones : [];
 
-  const emailTitle = footerData.emailTitle || 'Confidential Desk';
-  const emailSubtitle = footerData.emailSubtitle || 'Email';
-  const email =
-    footerData.email || 'Saudagar.Properties@Yahoo.In';
+  const emailTitle = footerData.emailTitle;
+  const emailSubtitle = footerData.emailSubtitle;
+  const email = footerData.email;
 
-  const aboutText =
-    footerData.aboutText ||
-    "Saudagar Properties helps clients— both families and corporates to find their dream home or commercial space that lives up to their needs and promises a high Return on Investment. Keeping customer satisfaction on top priority, we're highly trusted by our clients which has helped us to be the leaders and the best property dealers in Gurgaon.";
+  const aboutText = footerData.aboutText;
 
-  const menuTitle = footerData.menuTitle || 'Explore';
+  const menuTitle = footerData.menuTitle;
 
   const menuLinks = footerData.menuLinks || [
     { label: 'Home', href: '/' },
@@ -103,15 +87,12 @@ export default function Footer() {
     }
   }
 
-  const followTitle = footerData.followTitle || 'Private Advisory';
+  const followTitle = footerData.followTitle;
 
-  const followDesc =
-    footerData.followDesc ||
-    'Connect with our senior partners for off-market builder floors and confidential acquisitions.';
+  const followDesc = footerData.followDesc;
 
-  const callCtaText = footerData.callCtaText || 'Speak With Us';
-  const callCtaPhone =
-    footerData.callCtaPhone || '+919718511207';
+  const callCtaText = footerData.callCtaText;
+  const callCtaPhone = footerData.callCtaPhone;
 
   const rawSocials = footerData.socialLinks || [
     { platform: 'Facebook', href: '#' },
@@ -121,11 +102,8 @@ export default function Footer() {
     { platform: 'YouTube', href: '#' },
   ];
 
-  const copyright =
-    footerData.copyright || 'Copyright © Saudagar Properties';
-
-  const copyrightSuffix =
-    footerData.copyrightSuffix || 'All Right Reserved';
+  const copyright = footerData.copyright;
+  const copyrightSuffix = footerData.copyrightSuffix;
 
   const rawLegalLinks = footerData.legalLinks || [
     { label: 'Clients', href: '/about' },

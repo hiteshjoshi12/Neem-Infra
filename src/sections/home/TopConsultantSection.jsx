@@ -23,13 +23,13 @@ export default function TopConsultantSection({ initialData = null }) {
     ? sections.topConsultant
     : (initialData || {});
 
-  const badge = data.badge || "Bespoke Real Estate Advisory";
-  const headlineMain = data.headlineMain || "Top Real Estate Consultant";
-  const headlineItalic = data.headlineItalic || "In DLF Gurugram";
-  const summaryQuote = data.summaryQuote || "Authorized advisor and trusted partner for DLF Phase 1–4, Sushant Lok, and Cybercity’s most exclusive residential & commercial estates.";
-  const cardBadge = data.cardBadge || "DLF Authorized & Verified";
-  const paragraph1 = data.paragraph1 || "At Saudagar Properties, we are proud to be recognized as the premier real estate consultant in DLF Gurugram.";
-  const paragraph2 = data.paragraph2 || "Whether you are seeking an ultra-luxury builder floor in DLF Phase 1–4, a high-street commercial office in Udyog Vihar, or an investment-ready plot, our veteran team guides you through transparent transactions.";
+  const badge = data.badge;
+  const headlineMain = data.headlineMain;
+  const headlineItalic = data.headlineItalic;
+  const summaryQuote = data.summaryQuote;
+  const cardBadge = data.cardBadge;
+  const paragraph1 = data.paragraph1;
+  const paragraph2 = data.paragraph2;
   const categories = data.categories || [
     { title: "Residential", subtitle: "Floors & Villas", icon: "building", href: "/services/residential" },
     { title: "Commercial", subtitle: "Offices & Retail", icon: "building2", href: "/services/commercial" },
@@ -242,7 +242,7 @@ export default function TopConsultantSection({ initialData = null }) {
                 {/* Background Luxury Architectural Image */}
                 <Image
                   src={videoTour.image || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80"}
-                  alt={videoTour.imageAlt || videoTour.title || "Luxury Sushant Lok Estate"}
+                  alt={videoTour.imageAlt || videoTour.title}
                   width={1600}
                   height={900}
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 600px"
@@ -261,7 +261,7 @@ export default function TopConsultantSection({ initialData = null }) {
                 >
                   <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-navy-deep/85 backdrop-blur-md border border-brand-gold/40 text-brand-gold text-[10px] font-bold font-mono tracking-widest uppercase shadow-md">
                     <Sparkles size={11} className="text-brand-gold" />
-                    <span>{videoTour.badge || "Signature Collection"}</span>
+                    <span>{videoTour.badge}</span>
                   </div>
                 </div>
 
@@ -276,11 +276,11 @@ export default function TopConsultantSection({ initialData = null }) {
                   </div>
 
                   <h3 className="text-xl sm:text-2xl font-serif font-bold text-white mb-1.5 leading-snug drop-shadow-md">
-                    {videoTour.title || "Exclusive DLF & Sushant Lok Walkthrough"}
+                    {videoTour.title}
                   </h3>
 
                   <p className="text-xs sm:text-sm text-brand-text-on-dark-muted font-light leading-relaxed">
-                    {videoTour.subtitle || "Experience Gurgaon's finest properties with curated virtual walkthroughs."}
+                    {videoTour.subtitle}
                   </p>
                 </div>
               </div>
@@ -326,7 +326,7 @@ export default function TopConsultantSection({ initialData = null }) {
             <Link href={ctaBanner.buttonHref || "/contact"}
               className="w-full sm:w-auto px-7 py-3.5 rounded-full bg-brand-gold hover:bg-brand-gold text-brand-navy-deep text-xs uppercase tracking-widest font-bold flex items-center justify-center gap-2 transition-all duration-300 shadow-[0_4px_15px_rgba(208, 154, 22,0.3)] hover:shadow-[0_6px_20px_rgba(208, 154, 22,0.4)]"
             >
-              <span>{ctaBanner.buttonText || "Connect Now"}</span>
+              <span>{ctaBanner.buttonText}</span>
               <ArrowUpRight size={15} />
             </Link>
           </div>

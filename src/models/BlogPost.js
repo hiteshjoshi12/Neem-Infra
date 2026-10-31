@@ -111,7 +111,14 @@ const blogPostSchema = new mongoose.Schema(
         answer: { type: String }
       }
     ],
-    schemaData: { type: mongoose.Schema.Types.Mixed }
+    schemaData: { type: mongoose.Schema.Types.Mixed },
+    draftRevision: {
+      title: { type: String, trim: true },
+      slug: { type: String, trim: true },
+      excerpt: { type: String, trim: true },
+      content: { type: String },
+      savedAt: { type: Date }
+    }
   },
   { timestamps: true }
 );

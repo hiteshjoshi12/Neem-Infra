@@ -50,7 +50,7 @@ export default async function About() {
       <AboutWhyChooseUs data={aboutData?.whyChooseUs} />
 
       {/* 7. Headquarters & Location Map */}
-      <LocationMap />
+      <LocationMap data={aboutData?.location} />
 
       {/* 8. Request a Free Consultation Action Banner */}
       <AboutConsultationCta data={aboutData?.consultationCta} />

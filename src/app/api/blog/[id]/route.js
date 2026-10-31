@@ -54,6 +54,44 @@ export async function PUT(req, { params }) {
       return NextResponse.json({ success: false, message: 'Post not found' }, { status: 404 });
     }
 
+    const isAutosave = Boolean(body._isAutosave);
+    delete body._isAutosave;
+
+    // Handle background autosave requests safely without overwriting live published articles
+    if (isAutosave) {
+      if (existingPost.status === 'published') {
+        const draftRevision = {
+          title: body.title !== undefined ? body.title : existingPost.title,
+          slug: body.slug !== undefined ? body.slug : existingPost.slug,
+          excerpt: body.excerpt !== undefined ? body.excerpt : existingPost.excerpt,
+          content: body.content !== undefined ? body.content : existingPost.content,
+          savedAt: new Date()
+        };
+        await BlogPost.updateOne({ _id: id }, { $set: { draftRevision } }, { timestamps: false });
+        return NextResponse.json({
+          success: true,
+          message: 'Draft revision auto-saved safely without altering live publication',
+          isDraftRevision: true,
+          savedAt: draftRevision.savedAt
+        });
+      } else {
+        const post = await BlogPost.findByIdAndUpdate(id, body, {
+          new: true,
+          runValidators: false,
+          timestamps: false
+        });
+        clearBlogCache();
+        return NextResponse.json({
+          success: true,
+          message: 'Draft post auto-saved successfully',
+          data: post
+        });
+      }
+    }
+
+    // Explicit publish or update clears pending draft revision
+    body.draftRevision = null;
+
     const previousState = existingPost.toObject();
 
     // Ensure slug is never empty and check for slug change

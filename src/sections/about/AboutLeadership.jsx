@@ -217,15 +217,15 @@ export default function AboutLeadership({ data }) {
         >
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-brand-gold/40 text-brand-gold text-xs font-bold tracking-[0.25em] uppercase mb-4 shadow-xs">
             <Users size={14} className="text-brand-gold" />
-            <span>{cms.badge || "Team of Experts"}</span>
+            <span>{cms.badge}</span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-brand-navy leading-tight mb-4">
-            {cms.titleMain || "Visionary "} <span className="italic font-serif text-brand-gold">{cms.titleItalic || "Founders & Leadership"}</span>
+            {cms.titleMain} <span className="italic font-serif text-brand-gold">{cms.titleItalic}</span>
           </h2>
 
           <p className="text-sm sm:text-base text-brand-slate font-normal leading-relaxed">
-            {cms.subtitle || "Meet the driving force behind Saudagar Properties, delivering two decades of real estate authority, personal attention, and unwavering integrity."}
+            {cms.subtitle}
           </p>
         </div>
 

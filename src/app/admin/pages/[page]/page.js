@@ -126,16 +126,17 @@ const PAGE_CONFIGS = {
     pageKey: 'page_about',
     liveUrl: '/about',
     title: 'About Us Page CMS',
-    desc: 'Customize company leadership narrative, legacy video tour, property categories, value proposition, why choose us distinction, and private advisory CTA.',
+    desc: 'Customize company leadership narrative, legacy video tour, property categories, value proposition, why choose us distinction, headquarters & location map, and private advisory CTA.',
     icon: Users,
     sections: [
-      { id: 'hero', label: 'Hero & Metric Strip' },
-      { id: 'videoShowcase', label: 'Video Showcase' },
-      { id: 'offerings', label: 'Property Categories' },
-      { id: 'proposition', label: 'Value Proposition' },
-      { id: 'leadership', label: 'Founders & Team' },
-      { id: 'whyChooseUs', label: '7 Pillars & Comparison' },
-      { id: 'consultationCta', label: 'Consultation Banner' }
+      { id: 'hero', label: 'Hero & Mission' },
+      { id: 'videoShowcase', label: 'Cinematic Video Tour' },
+      { id: 'offerings', label: 'Property Offerings' },
+      { id: 'proposition', label: '3 Pillars of Proposition' },
+      { id: 'leadership', label: 'Founders & Leadership' },
+      { id: 'whyChooseUs', label: 'Why Choose Us' },
+      { id: 'location', label: 'Headquarters & Location Map' },
+      { id: 'consultationCta', label: 'Executive Consultation CTA' }
     ]
   },
   contact: {
@@ -2322,14 +2323,40 @@ export default function AdminPageCMS() {
               </div>
             )}
 
-            {/* 7. CONSULTATION BANNER */}
+            {/* 7. HEADQUARTERS & LOCATION MAP */}
+            {activeSectionTab === 'location' && (
+              <div className="space-y-4">
+                <div>
+                  <h3 className="text-sm font-semibold text-white">Headquarters &amp; Location Map</h3>
+                  <p className="text-xs text-slate-400">Configure headquarters office details, direct phone numbers, email, and interactive Google Map embed on the About Us page</p>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <FormField label="Badge" value={formData?.location?.badge} onChange={(val) => updateField('location.badge', val)} placeholder="Visit Our Office" />
+                  <FormField label="Title Main" value={formData?.location?.titleMain} onChange={(val) => updateField('location.titleMain', val)} placeholder="Where to " />
+                  <FormField label="Title Highlight" value={formData?.location?.titleItalic} onChange={(val) => updateField('location.titleItalic', val)} placeholder="Find Us" />
+                </div>
+                <TextAreaField label="Description" value={formData?.location?.description} onChange={(val) => updateField('location.description', val)} rows={2} />
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <FormField label="Office Name" value={formData?.location?.officeName} onChange={(val) => updateField('location.officeName', val)} placeholder="Saudagar Properties Pvt. Ltd" />
+                  <FormField label="Address" value={formData?.location?.address} onChange={(val) => updateField('location.address', val)} placeholder="38, Akashneem Marg, DLF Phase 2, Sector 25, Gurugram, Haryana 122002" />
+                  <FormField label="Telephone 1" value={formData?.location?.phones?.[0]} onChange={(val) => updateField('location.phones.0', val)} placeholder="+91 97185 11207" />
+                  <FormField label="Telephone 2" value={formData?.location?.phones?.[1]} onChange={(val) => updateField('location.phones.1', val)} placeholder="+91 98112 21207" />
+                  <FormField label="Email" value={formData?.location?.email} onChange={(val) => updateField('location.email', val)} placeholder="saudagar.properties@yahoo.in" />
+                  <FormField label="Google Maps Link" value={formData?.location?.gmapsUrl} onChange={(val) => updateField('location.gmapsUrl', val)} placeholder="https://maps.google.com/..." />
+                </div>
+                <FormField label="Google Maps Embed URL (iframe src)" value={formData?.location?.embedUrl} onChange={(val) => updateField('location.embedUrl', val)} placeholder="https://www.google.com/maps/embed?pb=..." />
+              </div>
+            )}
+
+            {/* 8. EXECUTIVE CONSULTATION CTA BANNER */}
             {activeSectionTab === 'consultationCta' && (
               <div className="space-y-6">
                 <div>
                   <h3 className="text-sm font-semibold text-white">Consultation CTA Banner</h3>
                   <p className="text-xs text-slate-400">Manage the bottom executive consultation invitation chassis</p>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                  <FormField label="Badge" value={formData?.consultationCta?.badge} onChange={(val) => updateField('consultationCta.badge', val)} placeholder="Executive Consultation" />
                   <FormField label="Title Main" value={formData?.consultationCta?.titleMain} onChange={(val) => updateField('consultationCta.titleMain', val)} placeholder="Request a Private " />
                   <FormField label="Title Highlight" value={formData?.consultationCta?.titleItalic} onChange={(val) => updateField('consultationCta.titleItalic', val)} placeholder="Executive Consultation" />
                   <FormField label="Direct Telephone Line" value={formData?.consultationCta?.phone} onChange={(val) => updateField('consultationCta.phone', val)} placeholder="+91 98112 21207" />
