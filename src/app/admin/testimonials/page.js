@@ -4,6 +4,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Pencil, Trash2, Quote, Star, CheckCircle2, X, RefreshCw } from 'lucide-react';
 import api from '@/services/api';
+import { toast } from '@/components/ui/Toast';
 import { useCms } from '@/context/CmsContext';
 import Image from 'next/image';
 
@@ -108,7 +109,7 @@ export default function AdminTestimonials() {
       await refetch();
       setTimeout(() => setToast(''), 4000);
     } catch (err) {
-      alert(err.message || 'Operation failed');
+      toast.error(err.message || 'Operation failed');
     } finally {
       setSubmitting(false);
     }
@@ -119,12 +120,13 @@ export default function AdminTestimonials() {
 
     try {
       await api.deleteTestimonial(id);
+      toast.delete('Testimonial removed successfully');
       setToast('Testimonial removed');
       await fetchTestimonials();
       await refetch();
       setTimeout(() => setToast(''), 4000);
     } catch (err) {
-      alert(err.message || 'Failed to delete');
+      toast.error(err.message || 'Failed to delete testimonial');
     }
   };
 

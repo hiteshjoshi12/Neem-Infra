@@ -15,20 +15,25 @@ import {
   User, 
   Sparkles,
   RefreshCw,
-  Award
+  Award,
+  AlertTriangle,
+  X
 } from 'lucide-react';
 import api from '@/services/api';
+import { toast } from '@/components/ui/Toast';
 
 export default function AdminBlogDashboard() {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [toast, setToast] = useState('');
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState('all'); // all, published, draft
+  const [deleteConfirm, setDeleteConfirm] = useState(null); // { id, title }
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  const fetchBlogs = useCallback(async () => {
+  const fetchBlogs = useCallback(async (options = {}) => {
     try {
-      const res = await api.getBlogs();
+      const params = options.fresh ? { fresh: '1', _t: Date.now() } : {};
+      const res = await api.getBlogs(params);
       if (res.success) {
         setBlogs(res.data || []);
       }
@@ -41,7 +46,7 @@ export default function AdminBlogDashboard() {
 
   useEffect(() => {
     let isMounted = true;
-    api.getBlogs()
+    api.getBlogs({ fresh: '1', _t: Date.now() })
       .then((res) => {
         if (isMounted && res.success) {
           setBlogs(res.data || []);
@@ -59,15 +64,29 @@ export default function AdminBlogDashboard() {
     };
   }, []);
 
-  const handleDelete = async (id, title) => {
-    if (!window.confirm(`Are you sure you want to delete "${title}"?`)) return;
+  const confirmDelete = async () => {
+    if (!deleteConfirm) return;
+    const { id, title } = deleteConfirm;
+    setIsDeleting(true);
+
+    // Optimistically remove from state so the article disappears instantly
+    const previousBlogs = [...blogs];
+    setBlogs((prev) => prev.filter((b) => b._id !== id));
+
     try {
-      await api.deleteBlog(id);
-      setToast('Article deleted successfully');
-      await fetchBlogs();
-      setTimeout(() => setToast(''), 4000);
+      const res = await api.deleteBlog(id);
+      if (res && res.success === false) {
+        throw new Error(res.message || 'Failed to delete article');
+      }
+      toast.delete(`Article "${title}" deleted successfully.`);
+      setDeleteConfirm(null);
+      await fetchBlogs({ fresh: true });
     } catch (err) {
-      alert(err.message || 'Failed to delete article');
+      // Revert optimistic removal on failure
+      setBlogs(previousBlogs);
+      toast.error(err.message || 'Failed to delete article');
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -107,7 +126,7 @@ export default function AdminBlogDashboard() {
         <div className="flex items-center gap-2.5">
           <button
             type="button"
-            onClick={fetchBlogs}
+            onClick={() => fetchBlogs({ fresh: true })}
             disabled={loading}
             className="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-400 hover:text-white transition-colors cursor-pointer"
             title="Refresh articles"
@@ -132,13 +151,6 @@ export default function AdminBlogDashboard() {
           </Link>
         </div>
       </div>
-
-      {toast && (
-        <div className="p-4 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-300 text-xs flex items-center gap-2.5 shadow-lg">
-          <CheckCircle2 size={16} className="text-emerald-400 shrink-0" />
-          <span>{toast}</span>
-        </div>
-      )}
 
       {/* Metrics Row */}
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -311,7 +323,7 @@ export default function AdminBlogDashboard() {
 
                         <button
                           type="button"
-                          onClick={() => handleDelete(blog._id, blog.title)}
+                          onClick={() => setDeleteConfirm({ id: blog._id, title: blog.title })}
                           className="p-1.5 rounded-lg bg-white/5 hover:bg-red-500/20 text-slate-400 hover:text-red-300 transition-colors cursor-pointer"
                           title="Delete article"
                         >
@@ -326,6 +338,56 @@ export default function AdminBlogDashboard() {
           </div>
         )}
       </div>
+
+      {/* Delete Confirmation Modal */}
+      {deleteConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="w-full max-w-md bg-brand-navy-deep border border-rose-500/30 rounded-2xl p-6 shadow-2xl space-y-4">
+            <div className="flex items-start gap-3.5">
+              <div className="w-10 h-10 rounded-xl bg-rose-500/15 text-rose-400 flex items-center justify-center shrink-0">
+                <AlertTriangle size={20} />
+              </div>
+              <div>
+                <h3 className="text-base font-serif font-bold text-white">
+                  Delete Article?
+                </h3>
+                <p className="text-xs text-slate-300 mt-1 leading-relaxed">
+                  Are you sure you want to delete <span className="text-white font-semibold">"{deleteConfirm.title}"</span>? This will permanently remove the article and update the sitemap.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center justify-end gap-3 pt-3 border-t border-white/10">
+              <button
+                type="button"
+                onClick={() => setDeleteConfirm(null)}
+                disabled={isDeleting}
+                className="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 text-slate-300 hover:text-white text-xs font-semibold transition-colors cursor-pointer"
+              >
+                Cancel
+              </button>
+              <button
+                type="button"
+                onClick={confirmDelete}
+                disabled={isDeleting}
+                className="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-white text-xs font-bold transition-colors flex items-center gap-1.5 shadow-lg shadow-rose-900/40 cursor-pointer disabled:opacity-50"
+              >
+                {isDeleting ? (
+                  <>
+                    <RefreshCw size={13} className="animate-spin" />
+                    <span>Deleting...</span>
+                  </>
+                ) : (
+                  <>
+                    <Trash2 size={13} />
+                    <span>Delete Article</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

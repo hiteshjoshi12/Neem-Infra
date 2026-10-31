@@ -1,12 +1,14 @@
 "use client";
 
 import { CmsProvider } from '../context/CmsContext';
+import { ToastProvider } from './ui/Toast';
 
 export default function Providers({ children, initialData }) {
   return (
-    <CmsProvider initialData={initialData}>
-      {children}
-    </CmsProvider>
+    <ToastProvider>
+      <CmsProvider initialData={initialData}>
+        {children}
+      </CmsProvider>
+    </ToastProvider>
   );
 }
-

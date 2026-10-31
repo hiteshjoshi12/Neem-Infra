@@ -19,6 +19,7 @@ import {
   ExternalLink
 } from 'lucide-react';
 import api from '@/services/api';
+import { toast } from '@/components/ui/Toast';
 
 export default function AdminCustom404Page() {
   const [loading, setLoading] = useState(true);
@@ -102,7 +103,7 @@ export default function AdminCustom404Page() {
       await loadSettings();
       setTimeout(() => setToast(''), 3000);
     } catch (err) {
-      alert(err.message || 'Failed to save 404 settings');
+      toast.error(err.message || 'Failed to save 404 settings');
     } finally {
       setSaving(false);
     }

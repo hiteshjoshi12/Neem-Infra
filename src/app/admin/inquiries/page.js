@@ -6,6 +6,7 @@ import {
   RefreshCw, Search, Filter, AlertCircle, ExternalLink 
 } from 'lucide-react';
 import api from '@/services/api';
+import { toast } from '@/components/ui/Toast';
 
 export default function AdminInquiries() {
   const [inquiries, setInquiries] = useState([]);
@@ -53,12 +54,11 @@ export default function AdminInquiries() {
     try {
       setDeletingId(id);
       await api.deleteInquiry(id);
-      setToast('Inquiry record deleted successfully');
+      toast.delete('Inquiry record deleted successfully');
       // Optimistic update
       setInquiries(prev => prev.filter(item => item._id !== id));
-      setTimeout(() => setToast(''), 3500);
     } catch (err) {
-      alert(err.message || 'Failed to delete inquiry');
+      toast.error(err.message || 'Failed to delete inquiry');
     } finally {
       setDeletingId(null);
     }

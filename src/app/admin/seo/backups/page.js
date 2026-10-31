@@ -17,6 +17,7 @@ import {
   HardDrive
 } from 'lucide-react';
 import api from '@/services/api';
+import { toast } from '@/components/ui/Toast';
 
 export default function AdminBackupsPage() {
   const [backups, setBackups] = useState([]);
@@ -72,7 +73,7 @@ export default function AdminBackupsPage() {
         setTimeout(() => setToast(''), 4000);
       }
     } catch (err) {
-      alert(err.message || 'Failed to create backup');
+      toast.error(err.message || 'Failed to create backup');
     } finally {
       setCreating(false);
     }
@@ -91,7 +92,7 @@ export default function AdminBackupsPage() {
         setTimeout(() => setToast(''), 4000);
       }
     } catch (err) {
-      alert(err.message || 'Failed to restore backup');
+      toast.error(err.message || 'Failed to restore backup');
     } finally {
       setRestoring(false);
     }
@@ -117,7 +118,7 @@ export default function AdminBackupsPage() {
           setTimeout(() => setToast(''), 4000);
         }
       } catch (err) {
-        alert('Invalid JSON file format: ' + err.message);
+        toast.error('Invalid JSON file format: ' + err.message);
       } finally {
         setRestoring(false);
         e.target.value = '';

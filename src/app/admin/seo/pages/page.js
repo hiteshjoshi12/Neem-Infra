@@ -20,6 +20,7 @@ import {
   Compass
 } from 'lucide-react';
 import api from '@/services/api';
+import { toast } from '@/components/ui/Toast';
 
 export default function AdminSeoPagesList() {
   const [pages, setPages] = useState([]);
@@ -55,13 +56,13 @@ export default function AdminSeoPagesList() {
       await fetchPages();
       setTimeout(() => setToast(''), 3000);
     } catch (err) {
-      alert(err.message || 'Failed to update page status');
+      toast.error(err.message || 'Failed to update page status');
     }
   };
 
   const handleDelete = async (page) => {
     if (page.pageType === 'system') {
-      alert('System core pages cannot be deleted. You can unpublish or modify them instead.');
+      toast.warning('System core pages cannot be deleted. You can unpublish or modify them instead.');
       return;
     }
     if (!window.confirm(`Are you sure you want to delete the page "${page.title}" (${page.slug})?`)) {
@@ -70,11 +71,12 @@ export default function AdminSeoPagesList() {
 
     try {
       await api.deleteSeoPage(page._id);
+      toast.delete(`Page "${page.title}" deleted successfully`);
       setToast(`Page "${page.title}" deleted successfully`);
       await fetchPages();
       setTimeout(() => setToast(''), 3000);
     } catch (err) {
-      alert(err.message || 'Failed to delete page');
+      toast.error(err.message || 'Failed to delete page');
     }
   };
 

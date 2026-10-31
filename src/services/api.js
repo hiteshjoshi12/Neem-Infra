@@ -30,6 +30,7 @@ async function executeRequest(endpoint, options = {}) {
 
   try {
     const res = await fetch(`${API_BASE_URL}${endpoint}`, {
+      cache: options.cache || (token ? 'no-store' : 'default'),
       ...options,
       headers
     });

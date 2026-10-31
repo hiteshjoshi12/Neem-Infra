@@ -15,6 +15,7 @@ import {
   ArrowRight
 } from 'lucide-react';
 import api from '@/services/api';
+import { toast } from '@/components/ui/Toast';
 
 export default function AdminBlogCategoriesPage() {
   const [categories, setCategories] = useState([]);
@@ -70,7 +71,7 @@ export default function AdminBlogCategoriesPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!formData.name.trim()) {
-      alert('Category name is required');
+      toast.warning('Category name is required');
       return;
     }
 
@@ -87,7 +88,7 @@ export default function AdminBlogCategoriesPage() {
       await fetchCategories();
       setTimeout(() => setToast(''), 3000);
     } catch (err) {
-      alert(err.message || 'Failed to save category');
+      toast.error(err.message || 'Failed to save category');
     } finally {
       setSubmitting(false);
     }
@@ -97,11 +98,12 @@ export default function AdminBlogCategoriesPage() {
     if (!window.confirm(`Are you sure you want to delete category "${cat.name}"?`)) return;
     try {
       await api.deleteCategory(cat._id);
+      toast.delete('Category deleted successfully');
       setToast('Category deleted successfully');
       await fetchCategories();
       setTimeout(() => setToast(''), 3000);
     } catch (err) {
-      alert(err.message || 'Failed to delete category');
+      toast.error(err.message || 'Failed to delete category');
     }
   };
 

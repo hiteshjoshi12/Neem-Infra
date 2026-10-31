@@ -16,6 +16,7 @@ import {
   Check
 } from 'lucide-react';
 import api from '@/services/api';
+import { toast } from '@/components/ui/Toast';
 
 export default function AdminSpeedPage() {
   const [loading, setLoading] = useState(true);
@@ -66,7 +67,7 @@ export default function AdminSpeedPage() {
       await loadSettings();
       setTimeout(() => setToast(''), 3000);
     } catch (err) {
-      alert(err.message || 'Failed to save speed settings');
+      toast.error(err.message || 'Failed to save speed settings');
     } finally {
       setSaving(false);
     }

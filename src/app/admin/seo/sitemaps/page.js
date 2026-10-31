@@ -22,6 +22,7 @@ import {
   Layers as LayersIcon
 } from 'lucide-react';
 import api from '@/services/api';
+import { toast } from '@/components/ui/Toast';
 
 const CHILD_CONFIG_KEYS = {
   page: 'includePages',
@@ -113,7 +114,7 @@ export default function AdminSitemapsPage() {
         setTimeout(() => setToast(''), 4000);
       }
     } catch (err) {
-      alert(err.message || 'Failed to save sitemap configuration');
+      toast.error(err.message || 'Failed to save sitemap configuration');
     } finally {
       setSaving(false);
     }

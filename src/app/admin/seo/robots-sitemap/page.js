@@ -17,6 +17,7 @@ import {
   Info
 } from 'lucide-react';
 import api from '@/services/api';
+import { toast } from '@/components/ui/Toast';
 
 export default function AdminRobotsSitemapPage() {
   const [activeTab, setActiveTab] = useState('robots'); // robots, sitemap
@@ -86,7 +87,7 @@ export default function AdminRobotsSitemapPage() {
         setTimeout(() => setToast(''), 3500);
       }
     } catch (err) {
-      alert(err.message || 'Failed to save settings');
+      toast.error(err.message || 'Failed to save settings');
     } finally {
       setSaving(false);
     }

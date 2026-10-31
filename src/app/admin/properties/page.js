@@ -14,6 +14,7 @@ import {
   RefreshCw
 } from 'lucide-react';
 import api from '@/services/api';
+import { toast } from '@/components/ui/Toast';
 import { useCms } from '@/context/CmsContext';
 import Image from 'next/image';
 import ImageUploadInput from '@/components/admin/ImageUploadInput';
@@ -166,7 +167,7 @@ export default function AdminProperties() {
       await refetch();
       setTimeout(() => setToast(''), 4000);
     } catch (err) {
-      alert(err.message || 'Operation failed');
+      toast.error(err.message || 'Operation failed');
     } finally {
       setSubmitting(false);
     }
@@ -177,12 +178,13 @@ export default function AdminProperties() {
 
     try {
       await api.deleteProperty(id);
+      toast.delete('Property deleted successfully');
       setToast('Property deleted successfully');
       await fetchProperties();
       await refetch();
       setTimeout(() => setToast(''), 4000);
     } catch (err) {
-      alert(err.message || 'Failed to delete');
+      toast.error(err.message || 'Failed to delete property');
     }
   };
 

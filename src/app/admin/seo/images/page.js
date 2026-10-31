@@ -19,6 +19,7 @@ import {
   Plus
 } from 'lucide-react';
 import api from '@/services/api';
+import { toast } from '@/components/ui/Toast';
 
 export default function AdminImageAltHub() {
   const [images, setImages] = useState([]);
@@ -72,7 +73,7 @@ export default function AdminImageAltHub() {
       await fetchImages();
       setTimeout(() => setToast(''), 3000);
     } catch (err) {
-      alert(err.message || 'Failed to update alt text');
+      toast.error(err.message || 'Failed to update alt text');
     } finally {
       setSavingId(null);
     }
@@ -89,11 +90,12 @@ export default function AdminImageAltHub() {
         sectionIndex: item.sectionIndex,
       });
 
+      toast.delete('Alt text cleared successfully');
       setToast('Alt text cleared successfully');
       await fetchImages();
       setTimeout(() => setToast(''), 3000);
     } catch (err) {
-      alert(err.message || 'Failed to clear alt text');
+      toast.error(err.message || 'Failed to clear alt text');
     } finally {
       setSavingId(null);
     }

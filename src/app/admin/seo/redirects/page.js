@@ -18,6 +18,7 @@ import {
   Check
 } from 'lucide-react';
 import api from '@/services/api';
+import { toast } from '@/components/ui/Toast';
 
 export default function AdminRedirectsPage() {
   const [redirects, setRedirects] = useState([]);
@@ -88,7 +89,7 @@ export default function AdminRedirectsPage() {
   const handleSubmitModal = async (e) => {
     e.preventDefault();
     if (!formData.fromPath.trim() || !formData.toPath.trim()) {
-      alert('Source Path and Target URL are required');
+      toast.warning('Source Path and Target URL are required');
       return;
     }
 
@@ -105,7 +106,7 @@ export default function AdminRedirectsPage() {
       await fetchRedirects();
       setTimeout(() => setToast(''), 3000);
     } catch (err) {
-      alert(err.message || 'Failed to save redirect');
+      toast.error(err.message || 'Failed to save redirect');
     } finally {
       setSubmitting(false);
     }
@@ -115,11 +116,12 @@ export default function AdminRedirectsPage() {
     if (!window.confirm(`Are you sure you want to delete redirect for "${fromPath}"?`)) return;
     try {
       await api.deleteRedirect(id);
+      toast.delete('Redirect deleted successfully');
       setToast('Redirect deleted successfully');
       await fetchRedirects();
       setTimeout(() => setToast(''), 3000);
     } catch (err) {
-      alert(err.message || 'Failed to delete redirect');
+      toast.error(err.message || 'Failed to delete redirect');
     }
   };
 

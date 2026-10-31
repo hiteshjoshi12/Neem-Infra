@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState, useRef, useCallback } from 'react';
+import { toast } from '@/components/ui/Toast';
 import { useEditor, EditorContent } from '@tiptap/react';
 import StarterKit from '@tiptap/starter-kit';
 import Underline from '@tiptap/extension-underline';
@@ -285,11 +286,11 @@ export default function RichTextEditor({
           }
         }
       } else {
-        alert(data.message || 'Image upload failed');
+        toast.error(data.message || 'Image upload failed');
       }
     } catch (err) {
       console.error('Direct upload error:', err);
-      alert('Upload failed: ' + err.message);
+      toast.error('Upload failed: ' + err.message);
     } finally {
       setIsUploadingDrop(false);
     }
@@ -472,7 +473,7 @@ export default function RichTextEditor({
       // In Markdown, insert standalone YouTube URL on its own line
       editor.chain().focus().insertContent(`\n\nhttps://www.youtube.com/watch?v=${videoId}\n\n`).run();
     } else {
-      alert('Invalid YouTube URL');
+      toast.warning('Invalid YouTube URL');
     }
     setSlashMenuOpen(false);
   };

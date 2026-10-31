@@ -1,9 +1,11 @@
 import { NextResponse } from 'next/server';
+import mongoose from 'mongoose';
 import { connectDB } from '@/lib/mongodb';
 import BlogPost from '@/models/BlogPost';
 import Redirect from '@/models/Redirect';
 import AuditLog from '@/models/AuditLog';
 import { requireAdmin } from '@/lib/auth/authGuard';
+import { getCached, setCached, invalidateCache } from '@/lib/cache/apiCache';
 import { clearBlogCache } from '@/services/blogService';
 import { revalidateBlogPost } from '@/lib/cache/revalidateHelper';
 
@@ -11,7 +13,8 @@ export async function GET(req, { params }) {
   try {
     await connectDB();
     const { id } = await params;
-    const post = await BlogPost.findById(id)
+    const filter = mongoose.Types.ObjectId.isValid(id) ? { _id: id } : { slug: id };
+    const post = await BlogPost.findOne(filter)
       .populate('author', 'name slug avatar bio')
       .populate('category', 'name slug')
       .populate('tags', 'name slug')
@@ -49,11 +52,13 @@ export async function PUT(req, { params }) {
     const { id } = await params;
     const body = await req.json();
 
-    const existingPost = await BlogPost.findById(id);
+    const filter = mongoose.Types.ObjectId.isValid(id) ? { _id: id } : { slug: id };
+    const existingPost = await BlogPost.findOne(filter);
     if (!existingPost) {
       return NextResponse.json({ success: false, message: 'Post not found' }, { status: 404 });
     }
 
+    const postId = existingPost._id;
     const isAutosave = Boolean(body._isAutosave);
     delete body._isAutosave;
 
@@ -67,7 +72,7 @@ export async function PUT(req, { params }) {
           content: body.content !== undefined ? body.content : existingPost.content,
           savedAt: new Date()
         };
-        await BlogPost.updateOne({ _id: id }, { $set: { draftRevision } }, { timestamps: false });
+        await BlogPost.updateOne({ _id: postId }, { $set: { draftRevision } }, { timestamps: false });
         return NextResponse.json({
           success: true,
           message: 'Draft revision auto-saved safely without altering live publication',
@@ -75,11 +80,12 @@ export async function PUT(req, { params }) {
           savedAt: draftRevision.savedAt
         });
       } else {
-        const post = await BlogPost.findByIdAndUpdate(id, body, {
+        const post = await BlogPost.findByIdAndUpdate(postId, body, {
           new: true,
           runValidators: false,
           timestamps: false
         });
+        invalidateCache('blog');
         clearBlogCache();
         return NextResponse.json({
           success: true,
@@ -133,7 +139,7 @@ export async function PUT(req, { params }) {
         .replace(/^-+|-+$/g, '');
     }
 
-    const post = await BlogPost.findByIdAndUpdate(id, body, {
+    const post = await BlogPost.findByIdAndUpdate(postId, body, {
       new: true,
       runValidators: true,
     });
@@ -142,7 +148,7 @@ export async function PUT(req, { params }) {
     try {
       await AuditLog.create({
         entityType: 'BlogPost',
-        entityId: String(id),
+        entityId: String(postId),
         action: 'update',
         description: `Updated blog post: ${post.title}`,
         previousState,
@@ -153,6 +159,8 @@ export async function PUT(req, { params }) {
       console.warn('[Audit] Failed to log blog update:', auditErr.message);
     }
 
+    invalidateCache('blog');
+    invalidateCache();
     clearBlogCache();
     await revalidateBlogPost(post);
 
@@ -173,20 +181,38 @@ export async function DELETE(req, { params }) {
     await connectDB();
 
     const { id } = await params;
-    const post = await BlogPost.findByIdAndDelete(id);
-
-    if (!post) {
-      return NextResponse.json({ success: false, message: 'Post not found' }, { status: 404 });
+    if (!id) {
+      return NextResponse.json({ success: false, message: 'Article ID is required' }, { status: 400 });
     }
 
-    // Record audit log
+    const filter = mongoose.Types.ObjectId.isValid(id) ? { _id: id } : { slug: id };
+    const post = await BlogPost.findOneAndDelete(filter);
+
+    if (!post) {
+      return NextResponse.json({ success: false, message: 'Article not found or already deleted' }, { status: 404 });
+    }
+
+    // Clean up references to this deleted article across other blog posts
+    try {
+      await BlogPost.updateMany(
+        { $or: [{ relatedPosts: post._id }, { childArticles: post._id }, { parentPillar: post._id }] },
+        { 
+          $pull: { relatedPosts: post._id, childArticles: post._id },
+          $unset: { parentPillar: 1, parentPillarSlug: 1 }
+        }
+      );
+    } catch (cleanupErr) {
+      console.warn('[Cleanup] Error unlinking deleted blog post references:', cleanupErr?.message);
+    }
+
+    // Record audit log safely
     try {
       await AuditLog.create({
         entityType: 'BlogPost',
-        entityId: String(id),
+        entityId: String(post._id || id),
         action: 'delete',
         description: `Deleted blog post: ${post.title}`,
-        previousState: post.toObject(),
+        previousState: typeof post.toObject === 'function' ? post.toObject() : post,
         newState: null,
         modifiedBy: admin.name || admin.email || 'Admin',
       });
@@ -194,14 +220,23 @@ export async function DELETE(req, { params }) {
       console.warn('[Audit] Failed to log blog deletion:', auditErr.message);
     }
 
-    clearBlogCache();
-    await revalidateBlogPost(post);
+    // Comprehensive cache invalidation
+    try {
+      invalidateCache('blog');
+      invalidateCache();
+      clearBlogCache();
+      await revalidateBlogPost(post);
+    } catch (cacheErr) {
+      console.warn('[Cache] Revalidation warning on blog deletion:', cacheErr?.message);
+    }
 
     return NextResponse.json({
       success: true,
-      message: 'Blog post deleted successfully',
+      message: 'Article deleted successfully',
+      data: { id: post._id, slug: post.slug }
     });
   } catch (error) {
-    return NextResponse.json({ success: false, message: error.message }, { status: 400 });
+    const status = error.status || 500;
+    return NextResponse.json({ success: false, message: error.message }, { status });
   }
 }

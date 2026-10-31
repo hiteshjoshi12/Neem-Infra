@@ -12,10 +12,12 @@ export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
     const status = searchParams.get('status');
-    const forceFresh = searchParams.get('fresh') === '1';
+    const forceFresh = searchParams.get('fresh') === '1' || searchParams.has('_t');
+    const authHeader = req.headers.get('authorization');
+    const isDashboard = forceFresh || (authHeader && authHeader.startsWith('Bearer '));
     
     const cacheKey = `blog:${status || 'all'}`;
-    if (!forceFresh) {
+    if (!isDashboard) {
       const cached = getCached(cacheKey, CACHE_TTL);
       if (cached) {
         return NextResponse.json(cached, {
@@ -49,12 +51,14 @@ export async function GET(req) {
       data: posts
     };
 
-    setCached(cacheKey, responsePayload);
+    if (!isDashboard) {
+      setCached(cacheKey, responsePayload);
+    }
 
     return NextResponse.json(responsePayload, {
       headers: {
-        'Cache-Control': 'private, max-age=15',
-        'X-Cache': 'MISS',
+        'Cache-Control': isDashboard ? 'no-store, no-cache, must-revalidate, proxy-revalidate' : 'private, max-age=15',
+        'X-Cache': isDashboard ? 'BYPASS' : 'MISS',
       }
     });
   } catch (error) {
@@ -81,6 +85,8 @@ export async function POST(req) {
 
     const post = await BlogPost.create(body);
     
+    invalidateCache('blog');
+    invalidateCache();
     clearBlogCache();
     await revalidateBlogPost(post);
 

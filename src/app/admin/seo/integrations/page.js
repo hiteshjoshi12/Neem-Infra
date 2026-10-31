@@ -20,6 +20,7 @@ import {
   Layers
 } from 'lucide-react';
 import api from '@/services/api';
+import { toast } from '@/components/ui/Toast';
 
 export default function AdminIntegrationsPage() {
   const [settings, setSettings] = useState(null);
@@ -176,7 +177,7 @@ export default function AdminIntegrationsPage() {
         setTimeout(() => setToast(''), 3500);
       }
     } catch (err) {
-      alert(err.message || 'Failed to save settings');
+      toast.error(err.message || 'Failed to save settings');
     } finally {
       setSaving(false);
     }
