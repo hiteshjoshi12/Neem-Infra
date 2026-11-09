@@ -93,7 +93,7 @@ export default async function BlogPostPage({ params }) {
           {/* =========================================================
               ARTICLE HEADER
           ========================================================== */}
-          <header className="max-w-4xl mx-auto mb-12 sm:mb-16">
+          <header className="max-w-6xl mx-auto mb-12 sm:mb-16">
             {/* Semantic Accessible Breadcrumb */}
             <Breadcrumbs items={breadcrumbItems} />
 

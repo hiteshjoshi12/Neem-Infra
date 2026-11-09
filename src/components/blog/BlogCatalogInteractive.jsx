@@ -151,7 +151,7 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
           
           {/* Section Eyebrow & Title */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12 pb-6 border-b border-brand-navy/10">
-            <div>
+            <div className="flex-1">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-[11px] font-bold uppercase tracking-[0.2em] mb-3">
                 <Sparkles size={13} />
                 <span>{cms.spotlight?.badge || "Editorial Spotlight • Cover Dossier"}</span>
@@ -382,7 +382,7 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
           
           {/* Section Eyebrow & Title */}
           <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-6 md:mb-8 pb-5 border-b border-brand-navy/10">
-            <div>
+            <div className="flex-1">
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-[11px] font-bold uppercase tracking-[0.2em] mb-3">
                 <FileText size={13} />
                 <span>{cms.researchLibrary?.badge || "Complete Archives • Intelligence Catalog"}</span>

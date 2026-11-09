@@ -104,12 +104,12 @@ export default async function BlogIndexPage() {
               </span>
             </div>
 
-            <div className="max-w-4xl">
-              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-serif font-bold text-white tracking-tight leading-[1.1] mb-6">
+            <div className="w-full">
+              <h1 className="text-4xl sm:text-5xl lg:text-5xl xl:text-6xl font-serif font-bold text-white tracking-tight leading-[1.1] mb-6">
                 {blogCms.masthead?.titleMain || "The Gurugram Real Estate "} <span className="italic font-serif text-brand-gold">{blogCms.masthead?.titleItalic || "Journal"}</span>
               </h1>
 
-              <p className="text-base sm:text-lg md:text-xl text-slate-300 font-sans leading-relaxed max-w-3xl">
+              <p className="text-base sm:text-lg md:text-xl text-slate-300 font-sans leading-relaxed max-w-4xl">
                 {blogCms.masthead?.description || "Authoritative market research, independent builder floor valuation benchmarks, and strategic investment advisory for high-net-worth families."}
               </p>
             </div>
