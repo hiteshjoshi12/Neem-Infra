@@ -90,8 +90,18 @@ body {
 /* Headings Typography Enhancement - Razor-sharp, authoritative and legible */
 h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.02em;
-  text-wrap: balance;
+  text-wrap: normal;
   text-rendering: optimizeLegibility;
+}
+
+.prose-container h1,
+.prose-container h2,
+.prose-container h3,
+.prose-container h4,
+.prose-container h5,
+.prose-container h6 {
+  text-wrap: normal !important;
+  max-width: 100% !important;
 }
 
 .font-serif {

@@ -391,7 +391,7 @@ export function MarkdownRenderer({ content = '' }) {
         <h2
           key={`h2-${elements.length}`}
           id={id}
-          className="scroll-mt-28 text-2xl md:text-3xl font-serif font-bold text-brand-navy mt-12 mb-5 tracking-tight group clear-both"
+          className="scroll-mt-28 text-2xl lg:text-[1.75rem] xl:text-3xl font-serif font-bold text-brand-navy mt-12 mb-5 tracking-tight group clear-both w-full [text-wrap:normal]"
         >
           {parseInline(rawTitle)}
         </h2>
@@ -422,7 +422,7 @@ export function MarkdownRenderer({ content = '' }) {
           <h3
             key={`h3-${elements.length}`}
             id={id}
-            className="scroll-mt-28 flex items-center gap-3 text-xl md:text-2xl font-serif font-bold text-brand-navy mt-8 mb-4 tracking-tight clear-both"
+            className="scroll-mt-28 flex items-center gap-3 text-xl lg:text-2xl font-serif font-bold text-brand-navy mt-8 mb-4 tracking-tight clear-both w-full [text-wrap:normal]"
           >
             <span className="inline-flex items-center justify-center h-7 w-7 rounded-lg bg-brand-navy text-brand-gold text-xs font-bold shrink-0">
               {stepNum}
@@ -435,7 +435,7 @@ export function MarkdownRenderer({ content = '' }) {
           <h3
             key={`h3-${elements.length}`}
             id={id}
-            className="scroll-mt-28 text-xl md:text-2xl font-serif font-semibold text-brand-navy mt-8 mb-4 tracking-tight clear-both"
+            className="scroll-mt-28 text-xl lg:text-2xl font-serif font-semibold text-brand-navy mt-8 mb-4 tracking-tight clear-both w-full [text-wrap:normal]"
           >
             {parseInline(rawTitle)}
           </h3>
@@ -462,7 +462,7 @@ export function MarkdownRenderer({ content = '' }) {
         <h4
           key={`h4-${elements.length}`}
           id={id}
-          className="scroll-mt-28 text-lg md:text-xl font-serif font-semibold text-brand-navy mt-6 mb-3 tracking-tight"
+          className="scroll-mt-28 text-lg lg:text-xl font-serif font-semibold text-brand-navy mt-6 mb-3 tracking-tight w-full [text-wrap:normal]"
         >
           {parseInline(rawTitle)}
         </h4>

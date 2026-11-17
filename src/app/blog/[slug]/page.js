@@ -93,7 +93,7 @@ export default async function BlogPostPage({ params }) {
           {/* =========================================================
               ARTICLE HEADER
           ========================================================== */}
-          <header className="max-w-6xl mx-auto mb-12 sm:mb-16">
+          <header className="max-w-7xl mx-auto mb-12 sm:mb-16">
             {/* Semantic Accessible Breadcrumb */}
             <Breadcrumbs items={breadcrumbItems} />
 
@@ -111,7 +111,7 @@ export default async function BlogPostPage({ params }) {
             )}
 
             {/* H1 Title */}
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl/tight font-serif font-bold text-brand-navy tracking-tight mb-6">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl/tight font-serif font-bold text-brand-navy tracking-tight mb-6 [text-wrap:normal]">
               {post.title}
             </h1>
 
@@ -211,9 +211,9 @@ export default async function BlogPostPage({ params }) {
           {/* =========================================================
               MAIN ARTICLE BODY & SIDEBAR
           ========================================================== */}
-          <div className="lg:grid lg:grid-cols-12 gap-12 max-w-6xl mx-auto items-start">
+          <div className="lg:grid lg:grid-cols-12 gap-8 lg:gap-12 max-w-7xl mx-auto items-start">
             {/* Sticky Sidebar on Desktop */}
-            <aside className="hidden lg:block lg:col-span-4 sticky top-28 space-y-6">
+            <aside className="hidden lg:block lg:col-span-4 xl:col-span-3 sticky top-28 space-y-6">
               {tableOfContents.length > 0 && (
                 <TableOfContents items={tableOfContents} variant="desktop" />
               )}
@@ -240,7 +240,7 @@ export default async function BlogPostPage({ params }) {
             </aside>
 
             {/* Main Editorial Content Column */}
-            <div className="lg:col-span-8">
+            <div className="lg:col-span-8 xl:col-span-9 w-full">
               {/* Mobile Collapsible TOC */}
               {tableOfContents.length > 0 && (
                 <div className="lg:hidden">
