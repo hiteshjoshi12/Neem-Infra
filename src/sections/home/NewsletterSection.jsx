@@ -199,9 +199,9 @@ export default function NewsletterSection({ isEmbedded = false }) {
           {/* VIP Benefit Pills */}
           <div className="mt-5 flex flex-wrap items-center gap-2">
             {[
-              { label: "Off-Market Inventory", icon: Lock },
-              { label: "Quarterly Price Index", icon: TrendingUp },
-              { label: "Confidential Dispatch", icon: ShieldCheck },
+              { label: newsData.pill1 || "Off-Market Inventory", icon: Lock },
+              { label: newsData.pill2 || "Quarterly Price Index", icon: TrendingUp },
+              { label: newsData.pill3 || "Confidential Dispatch", icon: ShieldCheck },
             ].map((pill, idx) => {
               const Icon = pill.icon;
               return (
@@ -316,11 +316,11 @@ export default function NewsletterSection({ isEmbedded = false }) {
               <div className="flex items-center gap-2">
                 <FileText size={14} className="text-brand-gold" />
                 <span className="font-mono text-[8px] font-bold uppercase tracking-[0.22em] text-brand-navy">
-                  SAUDAGAR MARKET REPORT
+                  {newsData.reportTitle || "SAUDAGAR MARKET REPORT"}
                 </span>
               </div>
               <span className="font-mono text-[8px] font-semibold text-brand-slate">
-                Q1 · 2026 EDITION
+                {newsData.reportEdition || "Q1 · 2026 EDITION"}
               </span>
             </div>
 
@@ -328,8 +328,10 @@ export default function NewsletterSection({ isEmbedded = false }) {
             <div className="mt-5 space-y-4">
               <div className="rounded-xl border border-brand-gold/20 bg-white p-3.5 shadow-sm">
                 <div className="flex items-center justify-between text-[8px] font-semibold uppercase tracking-[0.18em] text-brand-slate">
-                  <span>DLF Micro-Markets Covered</span>
-                  <span className="font-mono font-bold text-brand-gold">5 DLF Phases · 7 Corridors</span>
+                  <span>{newsData.reportCoverageLabel || "DLF Micro-Markets Covered"}</span>
+                  <span className="font-mono font-bold text-brand-gold">
+                    {newsData.reportCoverageValue || "5 DLF Phases · 7 Corridors"}
+                  </span>
                 </div>
                 <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-brand-navy/10">
                   <div className="h-full w-full rounded-full bg-gradient-to-r from-brand-gold to-brand-gold-light" />
@@ -339,31 +341,33 @@ export default function NewsletterSection({ isEmbedded = false }) {
               <div className="grid grid-cols-2 gap-3">
                 <div className="rounded-xl border border-brand-gold/20 bg-white p-3 shadow-sm">
                   <span className="block text-[7px] font-bold uppercase tracking-[0.2em] text-brand-slate">
-                    Properties Listed
+                    {newsData.stat1Label || newsData.propertiesListedLabel || "Properties Listed"}
                   </span>
                   <span className="mt-1 block font-serif text-lg font-bold text-brand-navy">
-                    {properties?.length || 23} Active
+                    {newsData.stat1Value || newsData.propertiesListedValue || (properties?.length ? `${properties.length} Active` : "9 Active")}
                   </span>
                 </div>
                 <div className="rounded-xl border border-brand-gold/20 bg-white p-3 shadow-sm">
                   <span className="block text-[7px] font-bold uppercase tracking-[0.2em] text-brand-slate">
-                    Years in DLF Gurugram
+                    {newsData.stat2Label || newsData.yearsExperienceLabel || "Years in DLF Gurugram"}
                   </span>
                   <span className="mt-1 block font-serif text-lg font-bold text-brand-gold">
-                    {Math.max(1, new Date().getFullYear() - 1999)}+ Years
+                    {newsData.stat2Value || newsData.yearsExperienceValue || `${Math.max(1, new Date().getFullYear() - 1999)}+ Years`}
                   </span>
                 </div>
               </div>
 
               <p className="text-[10px] leading-relaxed text-brand-slate italic font-serif">
-                “Independent advisory on verified builder floors, luxury villas, and commercial assets across DLF Phase 1–5.”
+                {newsData.reportQuote || "“Independent advisory on verified builder floors, luxury villas, and commercial assets across DLF Phase 1–5.”"}
               </p>
             </div>
 
             {/* Document Stamp Seal */}
             <div className="mt-5 flex items-center justify-between border-t border-brand-navy/10 pt-3.5 font-mono text-[7.5px] font-semibold uppercase tracking-[0.24em] text-brand-slate">
-              <span>DLF GURUGRAM DESK</span>
-              <span className="text-brand-gold font-bold">CONFIDENTIAL DISPATCH</span>
+              <span>{newsData.reportFooterLeft || "DLF GURUGRAM DESK"}</span>
+              <span className="text-brand-gold font-bold">
+                {newsData.reportFooterRight || "CONFIDENTIAL DISPATCH"}
+              </span>
             </div>
           </div>
         </div>

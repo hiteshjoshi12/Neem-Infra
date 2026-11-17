@@ -317,13 +317,13 @@ export default function AdminPageCMS() {
     return querySlug || 'dlf-phase-1';
   });
 
-  const activePageKey = config.isCorridor 
-    ? `corridor_${selectedCorridor}` 
+  const activePageKey = config.isCorridor
+    ? `corridor_${selectedCorridor}`
     : config.pageKey;
 
   const { sections, refetch, updateLocalSection } = useCms();
   const [activeSectionTab, setActiveSectionTab] = useState(config.sections[0]?.id || '');
-  
+
   const getInitialData = () => {
     return sections[activePageKey] || {};
   };
@@ -378,8 +378,8 @@ export default function AdminPageCMS() {
     setStatusMsg({ type: '', text: '' });
 
     try {
-      const pageTitle = config.isCorridor 
-        ? `Corridor: ${selectedCorridor.toUpperCase()}` 
+      const pageTitle = config.isCorridor
+        ? `Corridor: ${selectedCorridor.toUpperCase()}`
         : config.title;
 
       const res = await api.updatePage(activePageKey, formData, pageTitle);
@@ -414,8 +414,8 @@ export default function AdminPageCMS() {
   };
 
   const PageIcon = config.icon;
-  const currentLiveUrl = config.isCorridor 
-    ? `/property/${selectedCorridor}` 
+  const currentLiveUrl = config.isCorridor
+    ? `/property/${selectedCorridor}`
     : config.liveUrl;
 
   return (
@@ -436,8 +436,8 @@ export default function AdminPageCMS() {
             </div>
           </div>
           <h1 className="text-xl sm:text-2xl font-serif font-bold text-white tracking-wide">
-            {config.isCorridor 
-              ? `${CORRIDOR_LIST.find(c => c.slug === selectedCorridor)?.name || 'Corridor'} CMS` 
+            {config.isCorridor
+              ? `${CORRIDOR_LIST.find(c => c.slug === selectedCorridor)?.name || 'Corridor'} CMS`
               : config.title}
           </h1>
           <p className="text-xs text-slate-400 mt-1 max-w-xl">
@@ -482,11 +482,10 @@ export default function AdminPageCMS() {
               <button
                 key={corridor.slug}
                 onClick={() => setSelectedCorridor(corridor.slug)}
-                className={`py-2 px-3 rounded-xl text-xs font-semibold text-center transition-all cursor-pointer ${
-                  selectedCorridor === corridor.slug
+                className={`py-2 px-3 rounded-xl text-xs font-semibold text-center transition-all cursor-pointer ${selectedCorridor === corridor.slug
                     ? 'bg-brand-gold text-brand-dark font-bold shadow-md shadow-brand-gold/20'
                     : 'bg-white/5 hover:bg-white/10 text-slate-300 border border-white/5'
-                }`}
+                  }`}
               >
                 {corridor.name}
               </button>
@@ -501,11 +500,10 @@ export default function AdminPageCMS() {
           <button
             key={sec.id}
             onClick={() => setActiveSectionTab(sec.id)}
-            className={`px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
-              activeSectionTab === sec.id
+            className={`px-4 py-2.5 rounded-xl text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${activeSectionTab === sec.id
                 ? 'bg-brand-gold text-brand-dark shadow-md'
                 : 'bg-white/5 hover:bg-white/10 text-slate-300'
-            }`}
+              }`}
           >
             <span>{sec.label}</span>
           </button>
@@ -517,11 +515,10 @@ export default function AdminPageCMS() {
         <motion.div
           initial={{ opacity: 0, y: -6 }}
           animate={{ opacity: 1, y: 0 }}
-          className={`p-4 rounded-2xl text-xs flex items-center justify-between gap-3 ${
-            statusMsg.type === 'success'
+          className={`p-4 rounded-2xl text-xs flex items-center justify-between gap-3 ${statusMsg.type === 'success'
               ? 'bg-emerald-500/15 border border-emerald-500/30 text-emerald-300'
               : 'bg-red-500/15 border border-red-500/30 text-red-300'
-          }`}
+            }`}
         >
           <div className="flex items-center gap-2.5">
             {statusMsg.type === 'success' ? <CheckCircle2 size={16} /> : <AlertCircle size={16} />}
@@ -634,7 +631,7 @@ export default function AdminPageCMS() {
                     <FormField label="Feature #1 Description" value={formData?.hero?.heroCard?.feature1Desc} onChange={(val) => updateField('hero.heroCard.feature1Desc', val)} placeholder="e.g. Every builder floor..." />
                     <FormField label="Feature #2 Title" value={formData?.hero?.heroCard?.feature2Title} onChange={(val) => updateField('hero.heroCard.feature2Title', val)} placeholder="e.g. Off-Market Builder Floors" />
                     <FormField label="Feature #2 Description" value={formData?.hero?.heroCard?.feature2Desc} onChange={(val) => updateField('hero.heroCard.feature2Desc', val)} placeholder="e.g. Direct access..." />
-                    <FormField label="Feature #3 Title" value={formData?.hero?.heroCard?.feature3Title} onChange={(val) => updateField('hero.heroCard.feature3Title', val)} placeholder="e.g. 25+ Years DLF Leadership" />
+                    <FormField label="Feature #3 Title" value={formData?.hero?.heroCard?.feature3Title} onChange={(val) => updateField('hero.heroCard.feature3Title', val)} placeholder="e.g. 27+ Years DLF Leadership" />
                     <FormField label="Feature #3 Description" value={formData?.hero?.heroCard?.feature3Desc} onChange={(val) => updateField('hero.heroCard.feature3Desc', val)} placeholder="e.g. Trusted advisors..." />
                     <FormField label="Card Stat Label" value={formData?.hero?.heroCard?.statLabel} onChange={(val) => updateField('hero.heroCard.statLabel', val)} placeholder="e.g. Average Turnaround" />
                     <FormField label="Card Stat Value" value={formData?.hero?.heroCard?.statValue} onChange={(val) => updateField('hero.heroCard.statValue', val)} placeholder="e.g. Seamless 14-Day Closure" />
@@ -649,7 +646,7 @@ export default function AdminPageCMS() {
                 {(formData?.metrics || []).map((m, idx) => (
                   <div key={idx} className="p-4 rounded-xl bg-white/[0.02] border border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <FormField label={`Metric #${idx + 1} Label`} value={m.label} onChange={(val) => updateField(`metrics.${idx}.label`, val)} />
-                    <FormField label="Metric Value (e.g. 100%, 25+)" value={m.value} onChange={(val) => updateField(`metrics.${idx}.value`, val)} />
+                    <FormField label="Metric Value (e.g. 100%, 27+)" value={m.value} onChange={(val) => updateField(`metrics.${idx}.value`, val)} />
                     <FormField label="Description Subtext" value={m.desc} onChange={(val) => updateField(`metrics.${idx}.desc`, val)} />
                   </div>
                 ))}
@@ -668,7 +665,7 @@ export default function AdminPageCMS() {
                       <FormField label="Specifications Summary" value={item.specs} onChange={(val) => updateField(`assetClasses.${idx}.specs`, val)} />
                       <FormField label="Price Bracket" value={item.price || item.pricing} onChange={(val) => { updateField(`assetClasses.${idx}.price`, val); updateField(`assetClasses.${idx}.pricing`, val); }} />
                     </div>
-                    
+
                     <div className="pt-2">
                       <span className="text-[11px] font-bold text-brand-gold uppercase tracking-wider block mb-2">Technical &amp; Typology Metrics</span>
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
@@ -1134,13 +1131,13 @@ export default function AdminPageCMS() {
                   <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">4 Key Trust Metrics (Hero Strip)</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                     {(formData?.hero?.stats || [
-                      { value: "25+", label: "Years in Gurugram", highlight: false },
+                      { value: "27+", label: "Years in Gurugram", highlight: false },
                       { value: "23+", label: "Properties Listed", highlight: true },
                       { value: "7", label: "Micro-Markets", highlight: false },
                       { value: "5", label: "DLF Phases Covered", highlight: true }
                     ]).map((stat, sIdx) => (
                       <div key={sIdx} className="p-3 rounded-xl bg-white/[0.02] border border-white/10 space-y-2">
-                        <FormField label={`Metric #${sIdx + 1} Value`} value={stat.value} onChange={(val) => updateField(`hero.stats.${sIdx}.value`, val)} placeholder="e.g. 25+" />
+                        <FormField label={`Metric #${sIdx + 1} Value`} value={stat.value} onChange={(val) => updateField(`hero.stats.${sIdx}.value`, val)} placeholder="e.g. 27+" />
                         <FormField label="Label" value={stat.label} onChange={(val) => updateField(`hero.stats.${sIdx}.label`, val)} placeholder="e.g. Years in Gurugram" />
                       </div>
                     ))}
@@ -1216,7 +1213,7 @@ export default function AdminPageCMS() {
                       <FormField label="Full Name" value={f.name} onChange={(val) => updateField(`founders.${idx}.name`, val)} />
                       <FormField label="Role / Title" value={f.role} onChange={(val) => updateField(`founders.${idx}.role`, val)} />
                       <FormField label="Badge (Top Label)" value={f.badge} onChange={(val) => updateField(`founders.${idx}.badge`, val)} />
-                      <FormField label="Experience Badge" value={f.experience || f.experienceBadge} onChange={(val) => { updateField(`founders.${idx}.experience`, val); updateField(`founders.${idx}.experienceBadge`, val); }} placeholder="e.g. 25+ Yrs" />
+                      <FormField label="Experience Badge" value={f.experience || f.experienceBadge} onChange={(val) => { updateField(`founders.${idx}.experience`, val); updateField(`founders.${idx}.experienceBadge`, val); }} placeholder="e.g. 27+ Yrs" />
                       <FormField label="Direct Hotline Phone" value={f.phone} onChange={(val) => updateField(`founders.${idx}.phone`, val)} />
                       <FormField label="WhatsApp Link" value={f.whatsappUrl} onChange={(val) => updateField(`founders.${idx}.whatsappUrl`, val)} placeholder="https://wa.me/919718511207" />
                     </div>
@@ -1488,7 +1485,7 @@ export default function AdminPageCMS() {
                     </div>
                     <FormField label="Headline Title" value={domain.title} onChange={(val) => updateField(`advisoryDomains.${idx}.title`, val)} />
                     <FormField label="Sub-Headline / Context" value={domain.subtitle} onChange={(val) => updateField(`advisoryDomains.${idx}.subtitle`, val)} />
-                    
+
                     <ListField
                       label="Detailed In-Depth Paragraphs"
                       description="Each separate line represents an authoritative paragraph"
@@ -1496,7 +1493,7 @@ export default function AdminPageCMS() {
                       onChange={(val) => updateField(`advisoryDomains.${idx}.content`, val)}
                       rows={4}
                     />
-                    
+
                     <ListField
                       label="Deliverables & Guarantees (Bullets)"
                       description="Each separate line represents a bullet point"
@@ -1599,8 +1596,8 @@ export default function AdminPageCMS() {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                  <FormField label="Badge" value={formData?.hero?.badge} onChange={(val) => updateField('hero.badge', val)} placeholder="About Saudagar Properties • 25+ Years Legacy" />
-                  <FormField label="Title Prefix" value={formData?.hero?.titleMain} onChange={(val) => updateField('hero.titleMain', val)} placeholder="25+ Years of Leadership in " />
+                  <FormField label="Badge" value={formData?.hero?.badge} onChange={(val) => updateField('hero.badge', val)} placeholder="About Saudagar Properties • 27+ Years Legacy" />
+                  <FormField label="Title Prefix" value={formData?.hero?.titleMain} onChange={(val) => updateField('hero.titleMain', val)} placeholder="27+ Years of Leadership in " />
                   <FormField label="Title Highlight (Gold Italic)" value={formData?.hero?.titleItalic} onChange={(val) => updateField('hero.titleItalic', val)} placeholder="DLF Gurugram" />
                 </div>
 
@@ -2574,7 +2571,7 @@ export default function AdminPageCMS() {
                     label="Trust Credentials Strip (Under Action Buttons)"
                     description="Three institutional trust badges displayed below the Call and WhatsApp buttons."
                     items={formData?.hero?.trustBadges || [
-                      '25+ Years Authority',
+                      '27+ Years Authority',
                       '100% Freehold Title Vetted',
                       'Direct Seller Mandates'
                     ]}
@@ -2709,7 +2706,7 @@ export default function AdminPageCMS() {
                   <FormField label="Tag" value={formData?.overview?.tag} onChange={(val) => updateField('overview.tag', val)} />
                   <FormField label="Overview Title" value={formData?.overview?.title} onChange={(val) => updateField('overview.title', val)} />
                 </div>
-                
+
                 {/* Locality Profile Architectural Image */}
                 <ImageUploadInput
                   label="Locality Profile Architectural Showcase Image"
@@ -2854,7 +2851,7 @@ export default function AdminPageCMS() {
                       Replaces CTA Box
                     </span>
                   </div>
-                  
+
                   <ImageUploadInput
                     label="Urban Balance Architectural Showcase Image"
                     value={formData?.locationSection?.image}
@@ -2906,7 +2903,16 @@ export default function AdminPageCMS() {
                   <FormField label="Section Title" value={formData?.whyLiveHere?.title} onChange={(val) => updateField('whyLiveHere.title', val)} />
                 </div>
                 <TextAreaField label="Introductory Paragraph" value={formData?.whyLiveHere?.intro} onChange={(val) => updateField('whyLiveHere.intro', val)} rows={2} />
-                
+
+                <ImageUploadInput
+                  label="Section Showcase Image"
+                  value={formData?.whyLiveHere?.image}
+                  onChange={(url) => updateField('whyLiveHere.image', url)}
+                  folder="/saudagar-properties/corridors"
+                  recommendedRatio="4:3"
+                  description="High-resolution architecture or lifestyle photograph displayed beside the section title and narrative"
+                />
+
                 <div className="space-y-3 pt-3">
                   <h4 className="text-xs font-bold text-slate-300 uppercase tracking-wider">Strategic Reasons &amp; Pillars</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -3067,12 +3073,12 @@ export default function AdminPageCMS() {
               <div className="space-y-6">
                 <div className="border-b border-white/10 pb-2">
                   <h3 className="text-sm font-semibold text-white">Why Choose Saudagar Properties</h3>
-                  <p className="text-[11px] text-slate-400">Customize the 25+ years corridor authority section, image, founders signature desk, and institutional metric cards.</p>
+                  <p className="text-[11px] text-slate-400">Customize the 27+ years corridor authority section, image, founders signature desk, and institutional metric cards.</p>
                 </div>
 
                 <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4">
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <FormField label="Badge" value={formData?.whyChooseSaudagar?.badge} onChange={(val) => updateField('whyChooseSaudagar.badge', val)} placeholder="25+ Years Experience" />
+                    <FormField label="Badge" value={formData?.whyChooseSaudagar?.badge} onChange={(val) => updateField('whyChooseSaudagar.badge', val)} placeholder="27+ Years Experience" />
                     <FormField label="Section Title" value={formData?.whyChooseSaudagar?.title} onChange={(val) => updateField('whyChooseSaudagar.title', val)} />
                     <FormField label="Founder Name" value={formData?.whyChooseSaudagar?.founderName} onChange={(val) => updateField('whyChooseSaudagar.founderName', val)} placeholder="Arun Sharma & Suneeta Chawla" />
                     <FormField label="Founder Designation" value={formData?.whyChooseSaudagar?.founderTitle} onChange={(val) => updateField('whyChooseSaudagar.founderTitle', val)} placeholder="Founders, Saudagar Properties Pvt Ltd" />
@@ -3080,7 +3086,7 @@ export default function AdminPageCMS() {
 
                   <ImageUploadInput
                     label="Corridor Authority Feature Image"
-                    description="Showcases premier corridor architecture with 25+ years badge overlay."
+                    description="Showcases premier corridor architecture with 27+ years badge overlay."
                     value={formData?.whyChooseSaudagar?.image}
                     onChange={(url) => updateField('whyChooseSaudagar.image', url)}
                   />
@@ -3097,7 +3103,7 @@ export default function AdminPageCMS() {
                     <h4 className="text-xs font-bold text-brand-gold uppercase tracking-wider">3 Institutional Stat Pillars</h4>
                     <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                       <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 space-y-2">
-                        <FormField label="Pillar 1 Value" value={formData?.whyChooseSaudagar?.stats?.[0]?.value || '25+ Yrs'} onChange={(val) => updateField('whyChooseSaudagar.stats.0.value', val)} />
+                        <FormField label="Pillar 1 Value" value={formData?.whyChooseSaudagar?.stats?.[0]?.value || '27+ Yrs'} onChange={(val) => updateField('whyChooseSaudagar.stats.0.value', val)} />
                         <FormField label="Pillar 1 Label" value={formData?.whyChooseSaudagar?.stats?.[0]?.label || 'Micro-Market Authority'} onChange={(val) => updateField('whyChooseSaudagar.stats.0.label', val)} />
                       </div>
                       <div className="p-3.5 rounded-xl bg-white/[0.03] border border-white/10 space-y-2">
@@ -3144,7 +3150,7 @@ export default function AdminPageCMS() {
                     onChange={(val) => updateField('inventorySection.linkText', val)}
                     placeholder="View Full Catalog"
                   />
-                  
+
                   <div className="p-4 rounded-xl bg-emerald-950/20 border border-emerald-500/30 flex items-start gap-3">
                     <CheckCircle2 size={18} className="text-emerald-400 shrink-0 mt-0.5" />
                     <div className="text-xs text-emerald-200">

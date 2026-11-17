@@ -26,12 +26,14 @@ export default function TopConsultantEditor({ formData, updateField }) {
           onChange={(e) => updateField('cardBadge', e.target.value)}
         />
         <FormInput
-          label="Headline Main"
+          label="Headline Main (Black Text)"
+          placeholder="Top Real Estate Consultant"
           value={formData.headlineMain}
           onChange={(e) => updateField('headlineMain', e.target.value)}
         />
         <FormInput
-          label="Headline Italic Gold"
+          label="Headline Italic (Gold Text)"
+          placeholder="DLF Gurgaon"
           value={formData.headlineItalic}
           onChange={(e) => updateField('headlineItalic', e.target.value)}
         />

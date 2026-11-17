@@ -34,7 +34,7 @@ const fetchGlobalSettings = unstable_cache(
       canonicalBaseUrl: DEFAULT_BASE_URL,
       defaultMetaTitle: 'Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram',
       defaultMetaDescription:
-        'Find luxury builder floors, independent villas, penthouses, and commercial offices in DLF Phase 1–5, Sushant Lok, and Golf Course Road. 25+ years of trusted advisory in Gurugram.',
+        'Find luxury builder floors, independent villas, penthouses, and commercial offices in DLF Phase 1–5, Sushant Lok, and Golf Course Road. 27+ years of trusted advisory in Gurugram.',
       organizationSchema: {
         name: BUSINESS_INFO.name,
         url: DEFAULT_BASE_URL,

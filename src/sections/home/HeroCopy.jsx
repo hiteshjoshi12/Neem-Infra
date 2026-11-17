@@ -25,6 +25,23 @@ export default function HeroCopy({ initialProperties = [], initialHeroData = nul
   const { sections, properties } = useCms();
   const heroData = sections?.hero || initialHeroData || {};
 
+  // Resolve hero headline parts with smart detection for "Top Real Estate Consultant DLF Gurgaon" / "DLF Gurugram"
+  const rawPrefix = (heroData.headlinePrefix || '').trim();
+  const rawHighlight = (heroData.headlineHighlight || '').trim();
+  const rawSuffix = (heroData.headlineSuffix || '').trim();
+
+  const fullHeadline = [rawPrefix, rawHighlight, rawSuffix]
+    .filter(Boolean)
+    .join(' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  // Find if "DLF", "in DLF", "Gurgaon", or "Gurugram" is in the headline
+  const dlfMatch = fullHeadline.match(/^(.*?)(?:\s+(?:in\s+)?(DLF(?:\s+(?:Gurgaon|Gurugram))?.*))$/i);
+  const isDlfHeadline = Boolean(dlfMatch);
+  const headlineBlack = isDlfHeadline ? dlfMatch[1].trim() : null;
+  const headlineGold = isDlfHeadline ? dlfMatch[2].trim() : null;
+
   // Resolve backend featured properties with SSR support
   const rawProperties = useMemo(() => {
     return (properties && properties.length > 0)
@@ -258,14 +275,27 @@ export default function HeroCopy({ initialProperties = [], initialHeroData = nul
 
         {/* Master Headline: Rendered cleanly in server HTML without opacity: 0 for instant LCP */}
         <h1
-          aria-label={`${heroData.headlinePrefix ? heroData.headlinePrefix + ' ' : ''}${heroData.headlineHighlight || ''} ${heroData.headlineSuffix || ''}`.trim()}
-          className="text-2xl sm:text-3xl md:text-[clamp(1.75rem,2.85vw,2.95rem)] font-serif text-brand-ivory leading-[1.15] tracking-tight max-w-[760px] mb-2 sm:mb-2.5 drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] transform-gpu"
+          aria-label={fullHeadline || `${heroData.headlinePrefix ? heroData.headlinePrefix + ' ' : ''}${heroData.headlineHighlight || ''} ${heroData.headlineSuffix || ''}`.trim()}
+          className="text-2xl sm:text-3xl md:text-[clamp(1.75rem,2.85vw,2.95rem)] font-serif leading-[1.15] tracking-tight max-w-[760px] mb-2 sm:mb-2.5 drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)] transform-gpu"
         >
-          <span className="block">{heroData.headlinePrefix}</span>
-          <span className="block">
-            <span className="italic font-normal text-brand-gold">{heroData.headlineHighlight}</span>{" "}
-            {heroData.headlineSuffix}
-          </span>
+          {isDlfHeadline ? (
+            <span className="block">
+              <span className="text-black font-semibold drop-shadow-[0_2px_12px_rgba(255,255,255,0.7)]" style={{ color: '#000000' }}>
+                {headlineBlack}
+              </span>{" "}
+              <span className="italic font-normal text-brand-gold" style={{ color: '#c59b27' }}>
+                {headlineGold}
+              </span>
+            </span>
+          ) : (
+            <>
+              {rawPrefix && <span className="block text-brand-ivory">{rawPrefix}</span>}
+              <span className="block">
+                <span className="italic font-normal text-brand-gold">{rawHighlight}</span>{" "}
+                <span className="text-brand-ivory">{rawSuffix}</span>
+              </span>
+            </>
+          )}
         </h1>
 
         {/* Supporting Description: Visible in server HTML without JS */}

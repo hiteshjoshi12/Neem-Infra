@@ -5,6 +5,25 @@ import FormTextarea from '../common/FormTextarea';
 import SectionHeader from '../common/SectionHeader';
 import ImageUploadInput from '../ImageUploadInput';
 
+const DEFAULT_STATS_DATA = [
+  {
+    title: 'Client-Centric Advisory',
+    desc: 'Putting client interests first with bespoke, personalized property advisory.',
+  },
+  {
+    title: 'DLF Micro-Market Leaders',
+    desc: 'Unmatched expertise across DLF Phase 1–5, Sushant Lok, and Cybercity.',
+  },
+  {
+    title: 'Verified Legal Titles',
+    desc: 'Comprehensive due diligence ensuring safe and secure transactions.',
+  },
+  {
+    title: 'Discreet & Ethical Advisory',
+    desc: "Trusted by India's top corporate executives and high-net-worth families.",
+  },
+];
+
 const DEFAULT_PROCESS_STEPS = [
   {
     step: "01",
@@ -55,7 +74,7 @@ export default function ServicesEditor({ formData, updateField, onNavigateTab })
     const currentSteps = (howWeWork.steps && howWeWork.steps.length > 0)
       ? JSON.parse(JSON.stringify(howWeWork.steps))
       : JSON.parse(JSON.stringify(DEFAULT_PROCESS_STEPS));
-    
+
     currentSteps[index] = { ...currentSteps[index], [field]: value };
     updateField('howWeWork.steps', currentSteps);
   };
@@ -85,12 +104,43 @@ export default function ServicesEditor({ formData, updateField, onNavigateTab })
     updateField('howWeWork.steps', updated);
   };
 
+  const statsList = (experienceCounter.statsList && Array.isArray(experienceCounter.statsList) && experienceCounter.statsList.length > 0)
+    ? experienceCounter.statsList
+    : DEFAULT_STATS_DATA;
+
+  const handleStatCardChange = (index, field, value) => {
+    const currentStats = (experienceCounter.statsList && Array.isArray(experienceCounter.statsList) && experienceCounter.statsList.length > 0)
+      ? JSON.parse(JSON.stringify(experienceCounter.statsList))
+      : JSON.parse(JSON.stringify(DEFAULT_STATS_DATA));
+    currentStats[index] = { ...currentStats[index], [field]: value };
+    updateField('experienceCounter.statsList', currentStats);
+  };
+
+  const handleAddStatCard = () => {
+    const currentStats = (experienceCounter.statsList && Array.isArray(experienceCounter.statsList) && experienceCounter.statsList.length > 0)
+      ? JSON.parse(JSON.stringify(experienceCounter.statsList))
+      : JSON.parse(JSON.stringify(DEFAULT_STATS_DATA));
+    currentStats.push({
+      title: 'New Value Proposition',
+      desc: 'Description of key client benefit or micro-market authority...',
+    });
+    updateField('experienceCounter.statsList', currentStats);
+  };
+
+  const handleRemoveStatCard = (index) => {
+    const currentStats = (experienceCounter.statsList && Array.isArray(experienceCounter.statsList) && experienceCounter.statsList.length > 0)
+      ? JSON.parse(JSON.stringify(experienceCounter.statsList))
+      : JSON.parse(JSON.stringify(DEFAULT_STATS_DATA));
+    const updated = currentStats.filter((_, i) => i !== index);
+    updateField('experienceCounter.statsList', updated);
+  };
+
   return (
     <div className="space-y-8">
       <SectionHeader
         icon={Layers}
         title="Our Services Section"
-        subtitle="Manage the service cards, 25+ years experience counter, 3-step process methodology, and DLF callout banner"
+        subtitle="Manage the service cards, 27+ years experience counter, 3-step process methodology, and DLF callout banner"
       />
 
       {/* Main Section Header */}
@@ -178,31 +228,55 @@ export default function ServicesEditor({ formData, updateField, onNavigateTab })
       </div>
 
       {/* Sub-section 2: Experience Counter Spotlight */}
-      <div className="pt-6 border-t border-white/10 space-y-4">
+      <div className="pt-6 border-t border-white/10 space-y-5">
         <h4 className="text-sm font-serif font-bold text-brand-gold">
-          2. 25+ Years Experience Counter Spotlight
+          2. 27+ Years Experience Counter & Authority Cards
         </h4>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <FormInput
             type="number"
             label="Years Count (Number)"
-            value={experienceCounter.yearsCount ?? 25}
+            value={experienceCounter.yearsCount ?? 27}
             onChange={(e) => updateField('experienceCounter.yearsCount', Number(e.target.value))}
           />
           <FormInput
-            label="Counter Label"
-            placeholder="Years of Authority"
+            label="Counter Primary Label"
+            placeholder="Years of Fiduciary Trust"
             value={experienceCounter.counterLabel}
             onChange={(e) => updateField('experienceCounter.counterLabel', e.target.value)}
           />
           <FormInput
+            label="Counter Sub-label"
+            placeholder="Advising Gurugram's Top Investors & Families"
+            value={experienceCounter.counterSublabel}
+            onChange={(e) => updateField('experienceCounter.counterSublabel', e.target.value)}
+          />
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <FormInput
+            label="Section Eyebrow"
+            placeholder="THE SAUDAGAR ADVANTAGE"
+            value={experienceCounter.eyebrow}
+            onChange={(e) => updateField('experienceCounter.eyebrow', e.target.value)}
+          />
+          <FormInput
             label="Badge"
+            placeholder="Decades of Market Leadership"
             value={experienceCounter.badge}
             onChange={(e) => updateField('experienceCounter.badge', e.target.value)}
           />
+          <FormInput
+            label="Bottom Tagline"
+            placeholder="Premier Real Estate Consultancy · DLF Gurugram"
+            value={experienceCounter.tagline}
+            onChange={(e) => updateField('experienceCounter.tagline', e.target.value)}
+          />
         </div>
+
         <FormInput
           label="Headline"
+          placeholder="Unrivalled Track Record in DLF Prime Micro-Markets"
           value={experienceCounter.headline}
           onChange={(e) => updateField('experienceCounter.headline', e.target.value)}
         />
@@ -212,6 +286,67 @@ export default function ServicesEditor({ formData, updateField, onNavigateTab })
           value={experienceCounter.description}
           onChange={(e) => updateField('experienceCounter.description', e.target.value)}
         />
+
+        {/* 4 Proof Cards Editor */}
+        <div className="pt-4 border-t border-white/5 space-y-4">
+          <div className="flex items-center justify-between">
+            <div>
+              <h5 className="text-xs font-serif font-bold uppercase tracking-wider text-brand-gold">
+                Authority & Proof Cards ({statsList.length} Cards)
+              </h5>
+              <p className="text-[11px] text-slate-400">
+                Manage the titles and descriptions of the 4 horizontal value proposition cards
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={handleAddStatCard}
+              className="px-3 py-1.5 rounded-lg bg-white/10 hover:bg-white/20 text-xs text-white font-semibold flex items-center gap-1.5 cursor-pointer"
+            >
+              <Plus size={13} />
+              <span>Add Proof Card</span>
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {statsList.map((card, idx) => (
+              <div
+                key={idx}
+                className="p-4 rounded-2xl bg-white/[0.03] border border-white/5 space-y-3 relative group"
+              >
+                <div className="flex items-center justify-between border-b border-white/5 pb-2">
+                  <span className="text-[11px] font-bold text-white uppercase tracking-wider">
+                    Card #{idx + 1}
+                  </span>
+                  {statsList.length > 1 && (
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveStatCard(idx)}
+                      className="p-1 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 cursor-pointer"
+                      title="Remove Card"
+                    >
+                      <Trash2 size={13} />
+                    </button>
+                  )}
+                </div>
+
+                <FormInput
+                  label="Card Title"
+                  placeholder="e.g. Client-Centric Advisory"
+                  value={card.title}
+                  onChange={(e) => handleStatCardChange(idx, 'title', e.target.value)}
+                />
+                <FormTextarea
+                  label="Card Description"
+                  rows={2}
+                  placeholder="Putting client interests first with bespoke advisory..."
+                  value={card.desc}
+                  onChange={(e) => handleStatCardChange(idx, 'desc', e.target.value)}
+                />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Sub-section 3: How Do We Work Process */}

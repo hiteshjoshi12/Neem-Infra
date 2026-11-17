@@ -45,7 +45,7 @@ export default function Footer() {
 
   const aboutText = footerData.aboutText;
 
-  const menuTitle = footerData.menuTitle;
+  const menuTitle = footerData.menuTitle || 'Menu';
 
   const menuLinks = footerData.menuLinks || [
     { label: 'Home', href: '/' },
@@ -56,21 +56,33 @@ export default function Footer() {
     { label: 'Contact Us', href: '/contact' },
   ];
 
-  const servicesTitle = (footerData.servicesTitle && footerData.servicesTitle !== 'Locations')
-    ? footerData.servicesTitle
-    : 'Portfolio & Services';
+  const rawServicesTitle = footerData.servicesTitle;
+  const isCombinedTitle = !rawServicesTitle || rawServicesTitle === 'Portfolio & Services' || rawServicesTitle === 'Locations';
 
-  const defaultServiceLinks = [
+  const portfolioTitle = footerData.portfolioTitle || (isCombinedTitle ? 'Portfolio' : rawServicesTitle);
+  const advisoryTitle = footerData.advisoryTitle || footerData.servicesHeading || 'Services & Advisory';
+
+  const defaultPortfolioLinks = [
     { label: 'DLF Phase 1 Floors & Plots', href: '/property/dlf-phase-1' },
     { label: 'DLF Phase 2 Luxury Kothis', href: '/property/dlf-phase-2' },
     { label: 'DLF Phase 3 Builder Floors', href: '/property/dlf-phase-3' },
     { label: 'DLF Phase 4 Prime Residences', href: '/property/dlf-phase-4' },
     { label: 'Sushant Lok 1 Portfolio', href: '/property/shushant-lok' },
     { label: 'Udyog Vihar Industrial Plots', href: '/property/udyog-vihar' },
+  ];
+
+  const defaultAdvisoryLinks = [
     { label: 'Residential Advisory', href: '/services/residential' },
     { label: 'Commercial Real Estate', href: '/services/commercial' },
     { label: 'Industrial & Warehousing', href: '/services/industrial' },
     { label: 'Vetted Property Catalog', href: '/properties' },
+    { label: 'Market Research & Blog', href: '/blog' },
+    { label: 'Corporate Desk', href: '/contact' },
+  ];
+
+  const defaultServiceLinks = [
+    ...defaultPortfolioLinks,
+    ...defaultAdvisoryLinks,
   ];
 
   const rawServiceLinks = Array.isArray(footerData.servicesLinks) && footerData.servicesLinks.length > 0
@@ -79,13 +91,36 @@ export default function Footer() {
 
   // Guarantee that all 6 prime corridors and key services are ALWAYS present in footer navigation
   const seenHrefs = new Set();
-  const serviceLinks = [];
+  const allServiceLinks = [];
   for (const item of [...defaultServiceLinks, ...rawServiceLinks]) {
     if (item?.href && !seenHrefs.has(item.href)) {
       seenHrefs.add(item.href);
-      serviceLinks.push(item);
+      allServiceLinks.push(item);
     }
   }
+
+  // Partition links at "Residential Advisory" into Portfolio and Advisory columns
+  const splitIndex = allServiceLinks.findIndex(
+    (item) =>
+      item.label?.toLowerCase().includes('residential advisory') ||
+      item.href?.includes('/services/residential')
+  );
+
+  const isCorridorOrProperty = (item) =>
+    item.href?.startsWith('/property') ||
+    item.label?.toLowerCase().includes('dlf') ||
+    item.label?.toLowerCase().includes('sushant') ||
+    item.label?.toLowerCase().includes('plots') ||
+    item.label?.toLowerCase().includes('kothis') ||
+    item.label?.toLowerCase().includes('floors');
+
+  const portfolioLinks = splitIndex !== -1
+    ? allServiceLinks.slice(0, splitIndex)
+    : allServiceLinks.filter(isCorridorOrProperty);
+
+  const advisoryLinks = splitIndex !== -1
+    ? allServiceLinks.slice(splitIndex)
+    : allServiceLinks.filter((item) => !isCorridorOrProperty(item));
 
   const followTitle = footerData.followTitle;
 
@@ -136,7 +171,7 @@ export default function Footer() {
         <div className="absolute -bottom-40 left-1/3 h-[350px] w-[350px] rounded-full bg-brand-gold/[0.04] blur-[100px]" />
       </div>
 
-      <div className="relative z-10 mx-auto max-w-6xl px-5 sm:px-8 lg:px-10">
+      <div className="relative z-10 mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
 
         {/* =====================================================
             TOP CONTACT BAR
@@ -229,10 +264,10 @@ export default function Footer() {
             MAIN FOOTER
         ====================================================== */}
 
-        <div className="grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 lg:grid-cols-12 lg:gap-8">
+        <div className="grid grid-cols-1 gap-10 py-12 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-12 lg:gap-8">
 
           {/* BRAND */}
-          <div className="lg:col-span-5 lg:pr-12">
+          <div className="sm:col-span-2 md:col-span-3 lg:col-span-4 lg:pr-8">
 
             <Link
               href="/"
@@ -289,8 +324,8 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* EXPLORE */}
-          <div className="lg:col-span-2">
+          {/* EXPLORE / MENU */}
+          <div className="sm:col-span-1 md:col-span-1 lg:col-span-2">
             <h2 className="mb-5 text-[10px] font-bold uppercase tracking-[0.25em] text-brand-gold-deep">
               {menuTitle}
             </h2>
@@ -309,14 +344,34 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* LOCATIONS */}
-          <div className="lg:col-span-3">
+          {/* PORTFOLIO (PRIME CORRIDORS) */}
+          <div className="sm:col-span-1 md:col-span-1 lg:col-span-2">
             <h2 className="mb-5 text-[10px] font-bold uppercase tracking-[0.25em] text-brand-gold-deep">
-              {servicesTitle}
+              {portfolioTitle}
             </h2>
 
-            <ul className="grid grid-cols-1 gap-2.5 sm:grid-cols-2 lg:grid-cols-1">
-              {serviceLinks.map((item, idx) => (
+            <ul className="space-y-2.5">
+              {portfolioLinks.map((item, idx) => (
+                <li key={idx}>
+                  <Link href={item.href}
+                    className="group inline-flex items-center gap-1.5 text-xs font-semibold text-black transition-colors hover:text-brand-gold"
+                  >
+                    <span className="h-1.5 w-1.5 rounded-full bg-brand-gold transition-transform group-hover:scale-125" />
+                    {item.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* SERVICES & ADVISORY */}
+          <div className="sm:col-span-1 md:col-span-1 lg:col-span-2">
+            <h2 className="mb-5 text-[10px] font-bold uppercase tracking-[0.25em] text-brand-gold-deep">
+              {advisoryTitle}
+            </h2>
+
+            <ul className="space-y-2.5">
+              {advisoryLinks.map((item, idx) => (
                 <li key={idx}>
                   <Link href={item.href}
                     className="group inline-flex items-center gap-1.5 text-xs font-semibold text-black transition-colors hover:text-brand-gold"
@@ -330,7 +385,7 @@ export default function Footer() {
           </div>
 
           {/* PRIVATE ADVISORY */}
-          <div className="lg:col-span-2">
+          <div className="sm:col-span-1 md:col-span-1 lg:col-span-2">
             <h2 className="mb-5 text-[10px] font-bold uppercase tracking-[0.25em] text-brand-gold-deep">
               {followTitle}
             </h2>

@@ -23,7 +23,7 @@ const businessProfileSchema = new mongoose.Schema(
     shortDescription: {
       type: String,
       default:
-        '25+ years of dedicated authority in luxury builder floors, independent villas & corporate assets in DLF Gurugram.',
+        '27+ years of dedicated authority in luxury builder floors, independent villas & corporate assets in DLF Gurugram.',
     },
     fullDescription: {
       type: String,

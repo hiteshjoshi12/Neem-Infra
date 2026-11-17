@@ -48,7 +48,7 @@ const WEBSITE_PAGES = [
     icon: Users,
     badge: 'Company Profile',
     sectionsCount: 8,
-    description: 'Company 25+ year leadership narrative, cinematic video tour, core property categories, value proposition pillars, visionary founders, why choose us distinction, headquarters & location map, and executive consultation CTA.',
+    description: 'Company 27+ year leadership narrative, cinematic video tour, core property categories, value proposition pillars, visionary founders, why choose us distinction, headquarters & location map, and executive consultation CTA.',
     sections: ['Hero & Mission', 'Cinematic Video Tour', 'Property Offerings', '3 Pillars of Proposition', 'Founders & Leadership', 'Why Choose Us', 'Headquarters & Location Map', 'Executive Consultation CTA']
   },
   {
@@ -225,7 +225,7 @@ export default function AdminPagesHub() {
 
   const filteredPages = WEBSITE_PAGES.filter(page => {
     const matchesCategory = activeCategory === 'all' || page.category === activeCategory;
-    const matchesSearch = 
+    const matchesSearch =
       page.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       page.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
       page.route.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -275,16 +275,14 @@ export default function AdminPagesHub() {
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id)}
-              className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer ${
-                activeCategory === cat.id
+              className={`px-3.5 py-2 rounded-xl text-xs font-semibold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer ${activeCategory === cat.id
                   ? 'bg-brand-gold text-brand-dark shadow-md shadow-brand-gold/20'
                   : 'bg-white/5 hover:bg-white/10 text-slate-300'
-              }`}
+                }`}
             >
               <span>{cat.label}</span>
-              <span className={`px-1.5 py-0.2 rounded-full text-[10px] ${
-                activeCategory === cat.id ? 'bg-brand-dark/20 text-brand-dark' : 'bg-white/10 text-slate-400'
-              }`}>
+              <span className={`px-1.5 py-0.2 rounded-full text-[10px] ${activeCategory === cat.id ? 'bg-brand-dark/20 text-brand-dark' : 'bg-white/10 text-slate-400'
+                }`}>
                 {cat.count}
               </span>
             </button>

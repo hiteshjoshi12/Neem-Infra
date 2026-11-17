@@ -32,7 +32,8 @@ import {
   Table,
   Check,
   RefreshCw,
-  Info
+  Info,
+  Copy
 } from 'lucide-react';
 import api from '@/services/api';
 import ImageUploadInput from '@/components/admin/ImageUploadInput';
@@ -107,6 +108,8 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
 
   const [initialSlug, setInitialSlug] = useState('');
   const [newKeyword, setNewKeyword] = useState('');
+  const [schemaBoxes, setSchemaBoxes] = useState({});
+  const [copiedSchemaType, setCopiedSchemaType] = useState(null);
 
   const showToast = useCallback((type, message) => {
     setToast({ type, message });
@@ -184,7 +187,9 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
   };
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     loadPageData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pageId, isNew]);
 
   const handleSlugify = () => {
@@ -362,6 +367,147 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
   const displayUrl = `https://www.saudagarproperties.com${formData.slug === '/' ? '' : formData.slug}`;
   const displayOgImage = formData.ogImage || formData.featuredImage || 'https://ik.imagekit.io/saudagarproperties/saudagar-properties/branding/logo.png?updatedAt=1792302925853';
 
+  const getSchemaTemplate = useCallback((type) => {
+    const baseUrl = 'https://saudagarproperties.com';
+    const pageUrl = formData.canonicalUrl || `${baseUrl}${formData.slug === '/' ? '' : formData.slug}`;
+    const pageName = formData.metaTitle || displayTitle;
+    const pageDesc = formData.metaDescription || displayDesc;
+
+    switch (type) {
+      case 'WebPage':
+        return JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebPage",
+          "@id": `${pageUrl}/#webpage`,
+          "url": pageUrl,
+          "name": pageName,
+          "description": pageDesc,
+          "inLanguage": "en-IN",
+          "isPartOf": {
+            "@type": "WebSite",
+            "@id": `${baseUrl}/#website`,
+            "name": "Saudagar Properties",
+            "url": baseUrl
+          }
+        }, null, 2);
+
+      case 'RealEstateAgent':
+        return JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": ["RealEstateAgent", "LocalBusiness"],
+          "@id": `${baseUrl}/#organization`,
+          "name": "Saudagar Properties",
+          "alternateName": "Saudagar Properties DLF Gurugram",
+          "url": baseUrl,
+          "telephone": "+919718511207",
+          "priceRange": "₹₹₹₹",
+          "image": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/branding/logo.png",
+          "address": {
+            "@type": "PostalAddress",
+            "streetAddress": "38, Akashneem Marg, DLF Phase 2",
+            "addressLocality": "Gurugram",
+            "addressRegion": "Haryana",
+            "postalCode": "122002",
+            "addressCountry": "IN"
+          },
+          "areaServed": [
+            "DLF Phase 1", "DLF Phase 2", "DLF Phase 3", "DLF Phase 4", "DLF Phase 5", "Sushant Lok 1", "Golf Course Road"
+          ]
+        }, null, 2);
+
+      case 'AboutPage':
+        return JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "AboutPage",
+          "@id": `${pageUrl}/#aboutpage`,
+          "url": pageUrl,
+          "name": pageName,
+          "description": pageDesc,
+          "mainEntity": {
+            "@type": "Organization",
+            "name": "Saudagar Properties",
+            "foundingDate": "1999",
+            "founder": [
+              { "@type": "Person", "name": "Arun Sharma" },
+              { "@type": "Person", "name": "Suneeta Chawla" }
+            ]
+          }
+        }, null, 2);
+
+      case 'ContactPage':
+        return JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "ContactPage",
+          "@id": `${pageUrl}/#contactpage`,
+          "url": pageUrl,
+          "name": pageName,
+          "description": pageDesc,
+          "mainEntity": {
+            "@type": "RealEstateAgent",
+            "name": "Saudagar Properties",
+            "telephone": "+919718511207",
+            "email": "saudagar.properties@yahoo.in"
+          }
+        }, null, 2);
+
+      case 'Article':
+        return JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Article",
+          "headline": pageName,
+          "description": pageDesc,
+          "mainEntityOfPage": pageUrl,
+          "author": {
+            "@type": "Person",
+            "name": "Arun Sharma"
+          },
+          "publisher": {
+            "@type": "Organization",
+            "name": "Saudagar Properties",
+            "logo": {
+              "@type": "ImageObject",
+              "url": "https://ik.imagekit.io/saudagarproperties/saudagar-properties/branding/logo.png"
+            }
+          }
+        }, null, 2);
+
+      case 'FAQPage':
+        return JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "FAQPage",
+          "mainEntity": (formData.faq && formData.faq.length > 0)
+            ? formData.faq.map(f => ({
+                "@type": "Question",
+                "name": f.question,
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": f.answer
+                }
+              }))
+            : [
+                {
+                  "@type": "Question",
+                  "name": "Why choose Saudagar Properties for DLF Gurugram investments?",
+                  "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Over 27+ years of fiduciary advisory, 100% verified freehold titles, and direct developer mandates."
+                  }
+                }
+              ]
+        }, null, 2);
+
+      case 'Custom':
+      default:
+        return formData.customSchemaJson || JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "RealEstateListing",
+          "name": pageName,
+          "description": pageDesc,
+          "url": pageUrl
+        }, null, 2);
+    }
+  }, [formData.canonicalUrl, formData.slug, formData.metaTitle, formData.metaDescription, formData.faq, formData.customSchemaJson, displayTitle, displayDesc]);
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-[500px]">
@@ -376,8 +522,8 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
       {toast.message && (
         <div
           className={`fixed top-6 right-6 z-50 flex items-center gap-3 px-5 py-3 rounded-2xl shadow-2xl border text-sm font-medium transition-all animate-in fade-in slide-in-from-top-4 ${toast.type === 'error'
-              ? 'bg-rose-950/90 text-rose-200 border-rose-500/30'
-              : 'bg-emerald-950/90 text-emerald-200 border-emerald-500/30'
+            ? 'bg-rose-950/90 text-rose-200 border-rose-500/30'
+            : 'bg-emerald-950/90 text-emerald-200 border-emerald-500/30'
             }`}
         >
           {toast.type === 'error' ? <AlertCircle size={18} /> : <CheckCircle2 size={18} />}
@@ -454,8 +600,8 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
               type="button"
               onClick={() => setActiveTab(tab.id)}
               className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-xl whitespace-nowrap transition-all ${isActive
-                  ? 'bg-brand-gold text-brand-navy-deep font-bold shadow-md'
-                  : 'text-brand-text-dim hover:text-white hover:bg-white/5'
+                ? 'bg-brand-gold text-brand-navy-deep font-bold shadow-md'
+                : 'text-brand-text-dim hover:text-white hover:bg-white/5'
                 }`}
             >
               <IconComponent size={14} />
@@ -750,7 +896,7 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
                       rows={4}
                       value={formData.metaDescription}
                       onChange={e => setFormData({ ...formData, metaDescription: e.target.value })}
-                      placeholder="Find luxury builder floors, independent villas, penthouses, and commercial offices in DLF Phase 1–5, Sushant Lok & Golf Course Road. 25+ years of trusted advisory in Gurugram."
+                      placeholder="Find luxury builder floors, independent villas, penthouses, and commercial offices in DLF Phase 1–5, Sushant Lok & Golf Course Road. 27+ years of trusted advisory in Gurugram."
                       className="w-full px-4 py-3 rounded-xl bg-brand-navy-deep border border-white/15 text-white placeholder-gray-500 focus:outline-none focus:border-brand-gold text-sm leading-relaxed"
                     />
                   </div>
@@ -1145,24 +1291,47 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
           {/* ========================================================================= */}
           {/* TAB 5: SCHEMA MARKUP (JSON-LD)                                             */}
           {/* ========================================================================= */}
+          {/* ========================================================================= */}
+          {/* TAB 5: SCHEMA MARKUP (JSON-LD) - INDIVIDUAL BOXES FOR ALL SCHEMAS          */}
+          {/* ========================================================================= */}
           {activeTab === 'schema' && (
             <div className="max-w-4xl space-y-6">
-              <div className="p-6 rounded-3xl bg-brand-navy/40 border border-white/10 space-y-5">
-                <div className="flex items-center justify-between">
-                  <h2 className="text-lg font-serif font-bold text-white flex items-center gap-2">
-                    <Code className="text-brand-gold" size={18} />
-                    <span>Structured Data Schema (JSON-LD)</span>
-                  </h2>
-                  <span className="text-xs text-brand-text-dim">Google Rich Results & Answer Ready</span>
+              {/* Header Card */}
+              <div className="p-6 rounded-3xl bg-brand-navy/40 border border-white/10 space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                  <div>
+                    <h2 className="text-lg font-serif font-bold text-white flex items-center gap-2">
+                      <Code className="text-brand-gold" size={18} />
+                      <span>Structured Data Schema (JSON-LD)</span>
+                    </h2>
+                    <p className="text-xs text-brand-text-dim mt-0.5">
+                      Individual Schema boxes for Google Rich Results, Answer Ready, and Local Authority
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs font-semibold text-brand-text-dim uppercase tracking-wider">
+                      Active Primary:
+                    </span>
+                    <span className="px-3 py-1 rounded-full bg-brand-gold/20 text-brand-gold border border-brand-gold/40 text-xs font-bold">
+                      {formData.schemaType}
+                    </span>
+                  </div>
                 </div>
 
                 <div>
                   <label className="block text-xs font-semibold text-brand-text-dim uppercase tracking-wider mb-2">
-                    Primary Schema Entity Type
+                    Quick Select Primary Schema Entity Type
                   </label>
                   <select
                     value={formData.schemaType}
-                    onChange={e => setFormData({ ...formData, schemaType: e.target.value })}
+                    onChange={e => {
+                      const nextType = e.target.value;
+                      setFormData({
+                        ...formData,
+                        schemaType: nextType,
+                        customSchemaJson: schemaBoxes[nextType] || getSchemaTemplate(nextType)
+                      });
+                    }}
                     className="w-full px-4 py-2.5 rounded-xl bg-brand-navy-deep border border-white/15 text-white focus:outline-none focus:border-brand-gold text-sm"
                   >
                     <option value="WebPage">WebPage (General Page Schema)</option>
@@ -1174,22 +1343,182 @@ export default function SeoPageEditor({ pageId: propPageId = null, isNew = false
                     <option value="Custom">Custom Raw JSON-LD Schema</option>
                   </select>
                 </div>
+              </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-brand-text-dim uppercase tracking-wider mb-2">
-                    Custom JSON-LD Injection (Optional Raw Schema)
-                  </label>
-                  <textarea
-                    rows={8}
-                    value={formData.customSchemaJson}
-                    onChange={e => setFormData({ ...formData, customSchemaJson: e.target.value })}
-                    placeholder={`{\n  "@context": "https://schema.org",\n  "@type": "RealEstateListing",\n  "name": "Luxury DLF Villa"\n}`}
-                    className="w-full px-4 py-3 rounded-2xl bg-brand-navy-deep border border-white/15 text-emerald-400 font-mono text-xs focus:outline-none focus:border-brand-gold leading-relaxed"
-                  />
-                  <span className="text-[11px] text-brand-text-dim mt-1.5 block">
-                    Any valid JSON-LD provided here will be validated and automatically injected into the live page &lt;head&gt;.
-                  </span>
-                </div>
+              {/* INDIVIDUAL SCHEMA BOXES FOR ALL 7 SCHEMAS */}
+              <div className="space-y-5">
+                {[
+                  {
+                    type: 'RealEstateAgent',
+                    title: 'RealEstateAgent / LocalBusiness Schema',
+                    badge: 'Local Pack & Knowledge Panel',
+                    desc: 'Declares official Saudagar Properties address, DLF sector service radius, fiduciary credentials, and direct consultation phone numbers to Google Maps and Local Search.',
+                    icon: '🏢'
+                  },
+                  {
+                    type: 'WebPage',
+                    title: 'WebPage Schema (General Page Schema)',
+                    badge: 'Core SERP Indexing',
+                    desc: 'Fundamental schema defining canonical page identity, publication context, site hierarchy, and inLanguage declaration for Google bots.',
+                    icon: '🌐'
+                  },
+                  {
+                    type: 'AboutPage',
+                    title: 'AboutPage Schema (Narrative & Leadership)',
+                    badge: 'E-E-A-T Fiduciary Authority',
+                    desc: 'Highlights founding year (1999), founder principals Arun Sharma & Suneeta Chawla, and generational integrity for Google quality raters.',
+                    icon: '📖'
+                  },
+                  {
+                    type: 'ContactPage',
+                    title: 'ContactPage Schema (Channels, Location & Desks)',
+                    badge: 'Direct Client Inquiries',
+                    desc: 'Maps official physical headquarters at Akashneem Marg DLF Phase 2, email desks, and VIP telephone lines.',
+                    icon: '📍'
+                  },
+                  {
+                    type: 'Article',
+                    title: 'Article / Editorial Schema (Journal)',
+                    badge: 'Editorial Discover & News Snippets',
+                    desc: 'Formats property intelligence, market research reports, and investment editorial articles for Google Discover feeds.',
+                    icon: '📰'
+                  },
+                  {
+                    type: 'FAQPage',
+                    title: 'FAQPage Schema (Generates from FAQ Tab)',
+                    badge: 'SERP Accordion Rich Answers',
+                    desc: 'Incorporate collapsible Question & Answer snippets directly underneath Google organic search results for heightened visual CTR.',
+                    icon: '❓'
+                  },
+                  {
+                    type: 'Custom',
+                    title: 'Custom Raw JSON-LD Schema',
+                    badge: 'Advanced Raw Markup',
+                    desc: 'Direct arbitrary injection for specialized Schema.org types (e.g. RealEstateListing, SingleFamilyResidence, Place, OfferCatalog).',
+                    icon: '⚡'
+                  }
+                ].map((schemaItem) => {
+                  const isPrimary = formData.schemaType === schemaItem.type;
+                  const currentContent = schemaBoxes[schemaItem.type] !== undefined
+                    ? schemaBoxes[schemaItem.type]
+                    : (isPrimary && formData.customSchemaJson ? formData.customSchemaJson : getSchemaTemplate(schemaItem.type));
+
+                  const handleBoxChange = (val) => {
+                    setSchemaBoxes(prev => ({ ...prev, [schemaItem.type]: val }));
+                    if (isPrimary) {
+                      setFormData(prev => ({ ...prev, customSchemaJson: val }));
+                    }
+                  };
+
+                  const handleSetPrimary = () => {
+                    setFormData(prev => ({
+                      ...prev,
+                      schemaType: schemaItem.type,
+                      customSchemaJson: currentContent
+                    }));
+                    showToast('success', `Activated "${schemaItem.title}" as primary schema.`);
+                  };
+
+                  const handleCopy = () => {
+                    navigator.clipboard.writeText(currentContent);
+                    setCopiedSchemaType(schemaItem.type);
+                    setTimeout(() => setCopiedSchemaType(null), 2500);
+                  };
+
+                  const handleReset = () => {
+                    const template = getSchemaTemplate(schemaItem.type);
+                    setSchemaBoxes(prev => ({ ...prev, [schemaItem.type]: template }));
+                    if (isPrimary) {
+                      setFormData(prev => ({ ...prev, customSchemaJson: template }));
+                    }
+                    showToast('info', `Reset "${schemaItem.title}" to default template.`);
+                  };
+
+                  return (
+                    <div
+                      key={schemaItem.type}
+                      className={`p-6 rounded-3xl border transition-all duration-300 space-y-4 ${
+                        isPrimary
+                          ? 'bg-brand-navy/60 border-brand-gold shadow-[0_0_30px_rgba(197,155,39,0.15)] ring-1 ring-brand-gold/30'
+                          : 'bg-brand-navy/30 border-white/10 hover:border-white/20'
+                      }`}
+                    >
+                      {/* Box Top Bar */}
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-white/10 pb-3">
+                        <div className="flex items-center gap-2.5">
+                          <span className="text-xl select-none">{schemaItem.icon}</span>
+                          <div>
+                            <div className="flex items-center gap-2">
+                              <h3 className="text-sm font-bold text-white font-serif">
+                                {schemaItem.title}
+                              </h3>
+                              <span className="px-2 py-0.5 rounded-full bg-white/10 text-[10px] font-semibold text-brand-gold uppercase tracking-wider">
+                                {schemaItem.badge}
+                              </span>
+                            </div>
+                            <p className="text-[11px] text-brand-text-dim mt-0.5 max-w-xl">
+                              {schemaItem.desc}
+                            </p>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-2 shrink-0">
+                          {isPrimary ? (
+                            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[11px] font-bold">
+                              <CheckCircle2 size={12} />
+                              <span>Active Primary</span>
+                            </span>
+                          ) : (
+                            <button
+                              type="button"
+                              onClick={handleSetPrimary}
+                              className="px-3 py-1 rounded-full bg-white/10 hover:bg-brand-gold hover:text-brand-navy text-slate-300 hover:font-bold border border-white/15 text-[11px] font-semibold transition-all cursor-pointer"
+                            >
+                              Set As Primary
+                            </button>
+                          )}
+
+                          <button
+                            type="button"
+                            onClick={handleCopy}
+                            className="p-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-slate-300 hover:text-white transition-colors cursor-pointer"
+                            title="Copy JSON-LD"
+                          >
+                            {copiedSchemaType === schemaItem.type ? (
+                              <Check size={14} className="text-emerald-400" />
+                            ) : (
+                              <Copy size={14} />
+                            )}
+                          </button>
+
+                          <button
+                            type="button"
+                            onClick={handleReset}
+                            className="p-1.5 rounded-lg bg-white/5 hover:bg-white/15 text-slate-300 hover:text-brand-gold transition-colors cursor-pointer"
+                            title="Reset to default Schema template"
+                          >
+                            <RefreshCw size={14} />
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Individual Box Code Textarea */}
+                      <div>
+                        <div className="flex items-center justify-between text-[11px] font-mono text-slate-400 mb-1.5">
+                          <span>JSON-LD Schema Payload:</span>
+                          <span className="text-[10px] text-brand-text-dim">application/ld+json</span>
+                        </div>
+                        <textarea
+                          rows={6}
+                          value={currentContent}
+                          onChange={e => handleBoxChange(e.target.value)}
+                          className="w-full px-4 py-3 rounded-2xl bg-brand-navy-deep border border-white/15 text-emerald-400 font-mono text-xs focus:outline-none focus:border-brand-gold leading-relaxed"
+                          spellCheck="false"
+                        />
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           )}

@@ -16,7 +16,8 @@ export default function LuxuryTextReveal({
   className = "",
   as: Component = "h2",
   delay = 0.1,
-  once = true
+  once = true,
+  style = {}
 }) {
   const words = text ? text.trim().split(/\s+/) : [];
 
@@ -55,6 +56,7 @@ export default function LuxuryTextReveal({
   return (
     <Component
       aria-label={fullAccessibleText}
+      style={style}
       className={`font-serif tracking-tight leading-tight ${className}`}
     >
       <motion.span
@@ -70,7 +72,8 @@ export default function LuxuryTextReveal({
               <motion.span
                 initial={false}
                 variants={wordVariants}
-                className="inline-block origin-bottom"
+                className="inline-block origin-bottom text-black"
+                style={{ color: '#000000' }}
               >
                 {word}
               </motion.span>
@@ -86,6 +89,7 @@ export default function LuxuryTextReveal({
                 initial={false}
                 variants={wordVariants}
                 className="inline-block italic text-brand-gold font-serif font-bold tracking-normal"
+                style={{ color: '#c59b27' }}
               >
                 {word}
               </motion.span>

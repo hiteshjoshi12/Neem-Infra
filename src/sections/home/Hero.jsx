@@ -14,6 +14,23 @@ export default function Hero() {
   const { sections, properties } = useCms();
   const heroData = sections?.hero || {};
 
+  // Resolve hero headline parts with smart detection for "Top Real Estate Consultant DLF Gurgaon" / "DLF Gurugram"
+  const rawPrefix = (heroData.headlinePrefix || '').trim();
+  const rawHighlight = (heroData.headlineHighlight || '').trim();
+  const rawSuffix = (heroData.headlineSuffix || '').trim();
+
+  const fullHeadline = [rawPrefix, rawHighlight, rawSuffix]
+    .filter(Boolean)
+    .join(' ')
+    .replace(/\s+/g, ' ')
+    .trim();
+
+  // Find if "DLF", "in DLF", "Gurgaon", or "Gurugram" is in the headline
+  const dlfMatch = fullHeadline.match(/^(.*?)(?:\s+(?:in\s+)?(DLF(?:\s+(?:Gurgaon|Gurugram))?.*))$/i);
+  const isDlfHeadline = Boolean(dlfMatch);
+  const headlineBlack = isDlfHeadline ? dlfMatch[1].trim() : null;
+  const headlineGold = isDlfHeadline ? dlfMatch[2].trim() : null;
+
   // Resolve backend featured properties
   const rawProperties = useMemo(() => (Array.isArray(properties) ? properties : []), [properties]);
   const cardList = useMemo(() => {
@@ -210,12 +227,27 @@ export default function Hero() {
               initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-              className="text-[clamp(2.15rem,4.2vw,4.25rem)] font-serif text-brand-ivory leading-[1.15] tracking-tight max-w-[920px] mb-3.5 sm:mb-4 drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)]"
+              aria-label={fullHeadline || "Gurgaon's Premier Real Estate Partner."}
+              className="text-[clamp(2.15rem,4.2vw,4.25rem)] font-serif leading-[1.15] tracking-tight max-w-[920px] mb-3.5 sm:mb-4 drop-shadow-[0_4px_24px_rgba(0,0,0,0.85)]"
             >
-              <span className="block">Gurgaon&apos;s Premier</span>
-              <span className="block">
-                <span className="italic font-normal text-brand-gold">Real Estate</span> Partner.
-              </span>
+              {isDlfHeadline ? (
+                <span className="block">
+                  <span className="text-black font-semibold drop-shadow-[0_2px_12px_rgba(255,255,255,0.7)]" style={{ color: '#000000' }}>
+                    {headlineBlack}
+                  </span>{" "}
+                  <span className="italic font-normal text-brand-gold" style={{ color: '#c59b27' }}>
+                    {headlineGold}
+                  </span>
+                </span>
+              ) : (
+                <>
+                  <span className="block text-brand-ivory">{rawPrefix || "Gurgaon's Premier"}</span>
+                  <span className="block">
+                    <span className="italic font-normal text-brand-gold">{rawHighlight || "Real Estate"}</span>{" "}
+                    <span className="text-brand-ivory">{rawSuffix || "Partner."}</span>
+                  </span>
+                </>
+              )}
             </motion.h1>
 
             {/* Subtext: High readability text */}

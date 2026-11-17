@@ -2,15 +2,15 @@
 
 import React from 'react';
 import { motion } from 'framer-motion';
-import { 
-  Award, 
-  ShieldCheck, 
-  Building2, 
-  Compass, 
-  TrendingUp, 
-  Globe2, 
-  Scale, 
-  CheckCircle2, 
+import {
+  Award,
+  ShieldCheck,
+  Building2,
+  Compass,
+  TrendingUp,
+  Globe2,
+  Scale,
+  CheckCircle2,
   ArrowRight,
   Sparkles,
   PhoneCall,
@@ -36,8 +36,8 @@ const PILLAR_ICONS = [
 export default function AboutWhyChooseUs({ data }) {
   const { sections } = useCms();
   const cms = data || sections?.page_about?.whyChooseUs || {};
-  const pillarsList = (cms?.pillars && Array.isArray(cms.pillars) && cms.pillars.length > 0) 
-    ? cms.pillars 
+  const pillarsList = (cms?.pillars && Array.isArray(cms.pillars) && cms.pillars.length > 0)
+    ? cms.pillars
     : [];
 
   const leadPillar = pillarsList[0] || {
@@ -51,13 +51,13 @@ export default function AboutWhyChooseUs({ data }) {
   return (
     <section className="py-20 md:py-28 bg-brand-ivory-warm text-brand-navy border-t border-brand-cream-border relative overflow-hidden">
       {/* Subtle Luxury Watermark Grid */}
-      <div 
-        aria-hidden="true" 
-        className="pointer-events-none absolute inset-0 opacity-[0.03] bg-[linear-gradient(var(--color-brand-gold)_1px,transparent_1px),linear-gradient(90deg,var(--color-brand-gold)_1px,transparent_1px)] [background-size:48px_48px]" 
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.03] bg-[linear-gradient(var(--color-brand-gold)_1px,transparent_1px),linear-gradient(90deg,var(--color-brand-gold)_1px,transparent_1px)] [background-size:48px_48px]"
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        
+
         {/* Section Header with Hooky Word Reveal */}
         <div className="max-w-3xl mb-14 md:mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold text-xs font-bold uppercase tracking-[0.2em] mb-4">
@@ -77,7 +77,7 @@ export default function AboutWhyChooseUs({ data }) {
         </div>
 
         {/* 1. LEAD HERO HIGHLIGHT CARD (Pillar 1) */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -103,7 +103,7 @@ export default function AboutWhyChooseUs({ data }) {
           )}
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            
+
             <div className="lg:col-span-8 space-y-4">
               {!leadPillar.image && (
                 <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-brand-gold/10 text-brand-gold text-[11px] font-bold uppercase tracking-widest">
@@ -137,7 +137,7 @@ export default function AboutWhyChooseUs({ data }) {
               </span>
               <div className="space-y-4">
                 <div>
-                  <div className="text-3xl font-serif font-bold text-white">25+ Years</div>
+                  <div className="text-3xl font-serif font-bold text-white">27+ Years</div>
                   <div className="text-xs text-slate-300">DLF Phase 1–5 Pioneer Authority</div>
                 </div>
                 <div>
@@ -145,8 +145,8 @@ export default function AboutWhyChooseUs({ data }) {
                   <div className="text-xs text-slate-300">Founders Personally Attend Every Deal</div>
                 </div>
               </div>
-              <Link 
-                href="/contact" 
+              <Link
+                href="/contact"
                 className="inline-flex items-center justify-between text-xs font-bold uppercase tracking-wider text-white hover:text-brand-gold transition-colors pt-2 border-t border-white/10"
               >
                 <span>Schedule Consultation</span>
@@ -199,7 +199,7 @@ export default function AboutWhyChooseUs({ data }) {
                           className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/70 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity pointer-events-none" />
-                        
+
                         <div className="absolute top-3 left-3 w-9 h-9 rounded-xl bg-brand-navy/80 backdrop-blur-md text-brand-gold border border-white/10 flex items-center justify-center font-bold shadow-md">
                           <IconComp size={18} />
                         </div>
@@ -293,12 +293,12 @@ export default function AboutWhyChooseUs({ data }) {
                 ? cms.comparisonMatrix
                 : []
               ).map((item, idx) => (
-                <div 
+                <div
                   key={idx}
                   className="rounded-2xl bg-brand-ivory-warm hover:bg-brand-cream border border-brand-cream-border hover:border-brand-gold/40 transition-all duration-300 p-5 sm:p-6 shadow-xs group"
                 >
                   <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-6 items-center">
-                    
+
                     {/* 1. Feature Criterion */}
                     <div className="md:col-span-4 flex items-center gap-3">
                       <div className="w-8 h-8 rounded-xl bg-white border border-brand-cream-border text-brand-gold flex items-center justify-center shrink-0 group-hover:scale-105 transition-transform shadow-xs">

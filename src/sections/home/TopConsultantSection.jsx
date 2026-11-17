@@ -23,9 +23,30 @@ export default function TopConsultantSection({ initialData = null }) {
     ? sections.topConsultant
     : (initialData || {});
 
-  const badge = data.badge;
-  const headlineMain = data.headlineMain;
-  const headlineItalic = data.headlineItalic;
+  const badge = data.badge || 'Advisory Leadership';
+
+  // Robust parsing: handles "Top Real Estate Consultant DLF Gurgaon", "Top Rated Real Estate Consultant DLF Gurugram", etc.
+  const rawMain = (data.headlineMain || 'Top Real Estate Consultant').trim();
+  const rawItalic = (data.headlineItalic || 'DLF Gurgaon').trim();
+
+  let combinedHeadline = rawMain;
+  if (rawItalic && !combinedHeadline.toLowerCase().includes(rawItalic.toLowerCase())) {
+    combinedHeadline = `${combinedHeadline} ${rawItalic}`.trim();
+  }
+
+  let headlineMain = 'Top Real Estate Consultant';
+  let headlineItalic = 'DLF Gurgaon';
+
+  // Find where "DLF", "in DLF", "Gurgaon", or "Gurugram" starts
+  const dlfMatch = combinedHeadline.match(/^(.*?)(?:\s+(?:in\s+)?(DLF(?:\s+(?:Gurgaon|Gurugram))?.*))$/i);
+  if (dlfMatch) {
+    headlineMain = dlfMatch[1].trim();
+    headlineItalic = dlfMatch[2].trim();
+  } else {
+    headlineMain = rawMain;
+    headlineItalic = rawItalic;
+  }
+
   const summaryQuote = data.summaryQuote;
   const cardBadge = data.cardBadge;
   const paragraph1 = data.paragraph1;
@@ -157,7 +178,8 @@ export default function TopConsultantSection({ initialData = null }) {
             <LuxuryTextReveal
               text={headlineMain}
               highlightText={headlineItalic}
-              className="text-3xl md:text-5xl lg:text-6xl text-brand-navy leading-[1.15]"
+              className="text-3xl md:text-5xl lg:text-6xl text-black leading-[1.15]"
+              style={{ color: '#000000' }}
             />
           </div>
 

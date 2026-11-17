@@ -4,15 +4,15 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { 
-  Building2, 
-  MapPin, 
-  PhoneCall, 
-  ShieldCheck, 
-  CheckCircle2, 
-  ArrowRight, 
-  Sparkles, 
-  Key, 
+import {
+  Building2,
+  MapPin,
+  PhoneCall,
+  ShieldCheck,
+  CheckCircle2,
+  ArrowRight,
+  Sparkles,
+  Key,
   Award,
   ChevronRight,
   Send,
@@ -33,9 +33,9 @@ const fadeUpVariant = {
   })
 };
 
-export default function ResidentialServiceView({ 
+export default function ResidentialServiceView({
   initialData = null,
-  residentialListings = [], 
+  residentialListings = [],
   breadcrumbs = [],
   typologies = [],
   microMarkets = [],
@@ -79,7 +79,7 @@ export default function ResidentialServiceView({
   return (
     <div className="w-full min-h-screen bg-brand-ivory text-brand-navy">
       <BreadcrumbJsonLd items={breadcrumbs} />
-      
+
       {/* ================= HERO SECTION ================= */}
       <section className="relative w-full bg-brand-obsidian text-white pt-32 sm:pt-36 pb-20 md:pb-24 overflow-hidden border-b border-white/10">
         <div className="absolute inset-0 z-0 opacity-80 pointer-events-none">
@@ -92,15 +92,15 @@ export default function ResidentialServiceView({
             className="w-full h-full object-cover filter brightness-[0.90] contrast-[1.05]"
           />
         </div>
-        
+
         <div className="absolute inset-0 bg-gradient-to-r from-brand-obsidian/85 via-brand-obsidian/50 to-transparent z-0 pointer-events-none" />
-        <div 
+        <div
           className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full pointer-events-none"
           style={{ background: 'radial-gradient(ellipse at center, rgba(208,154,22,0.15) 0%, rgba(208,154,22,0) 70%)' }}
         />
 
         <div className="max-w-7xl mx-auto px-5 sm:px-8 relative z-10">
-          
+
           {/* Breadcrumb Navigation */}
           <div className="flex items-center gap-2.5 text-xs font-semibold uppercase tracking-[0.2em] text-slate-400 mb-8">
             <Link href="/" className="hover:text-brand-gold transition-colors">Home</Link>
@@ -114,8 +114,8 @@ export default function ResidentialServiceView({
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-            
-            <motion.div 
+
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6 }}
@@ -155,7 +155,7 @@ export default function ResidentialServiceView({
             </motion.div>
 
             {/* Right Hero Feature Card */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.15 }}
@@ -206,7 +206,7 @@ export default function ResidentialServiceView({
                     </div>
                     <div>
                       <h4 className="text-sm font-semibold text-white">
-                        {heroCardData.feature3Title || "25+ Years DLF Leadership"}
+                        {heroCardData.feature3Title || "27+ Years DLF Leadership"}
                       </h4>
                       <p className="text-xs text-brand-text-dim mt-0.5">
                         {heroCardData.feature3Desc || "Trusted advisors to Gurgaon’s leading business families, doctors, and CXOs."}
@@ -231,7 +231,7 @@ export default function ResidentialServiceView({
       {/* ================= 4 KEY PERFORMANCE METRICS STRIP ================= */}
       {activeMetrics && activeMetrics.length > 0 && (
         <section className="relative z-20 max-w-7xl mx-auto px-5 sm:px-8 -mt-8 sm:-mt-10">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
@@ -263,7 +263,7 @@ export default function ResidentialServiceView({
 
       {/* ================= RESIDENTIAL ASSET CLASSES ================= */}
       <section className="py-20 md:py-28 max-w-7xl mx-auto px-5 sm:px-8">
-        <motion.div 
+        <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: '-50px' }}
@@ -283,7 +283,7 @@ export default function ResidentialServiceView({
 
         <div className="space-y-10">
           {activeTypologies.map((item, index) => (
-            <motion.div 
+            <motion.div
               key={index}
               initial="hidden"
               whileInView="visible"
@@ -366,7 +366,7 @@ export default function ResidentialServiceView({
       {/* ================= MICRO-MARKET CORRIDOR MATRIX ================= */}
       <section className="py-20 md:py-24 bg-brand-cream/60 border-y border-brand-cream-border">
         <div className="max-w-7xl mx-auto px-5 sm:px-8">
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -388,7 +388,7 @@ export default function ResidentialServiceView({
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {activeMicroMarkets.map((market, idx) => (
-              <motion.div 
+              <motion.div
                 key={idx}
                 initial="hidden"
                 whileInView="visible"
@@ -446,7 +446,7 @@ export default function ResidentialServiceView({
 
       {/* ================= 7-POINT DUE DILIGENCE ROADMAP ================= */}
       <section className="py-20 md:py-28 max-w-7xl mx-auto px-5 sm:px-8">
-        <motion.div 
+        <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -466,7 +466,7 @@ export default function ResidentialServiceView({
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {activeDueDiligenceSteps.map((step, idx) => (
-            <motion.div 
+            <motion.div
               key={idx}
               initial="hidden"
               whileInView="visible"
@@ -474,9 +474,8 @@ export default function ResidentialServiceView({
               custom={idx}
               variants={fadeUpVariant}
               whileHover={{ y: -3 }}
-              className={`p-7 rounded-2xl bg-white border border-brand-cream-border shadow-sm hover:border-brand-gold hover:shadow-md transition-all duration-300 flex flex-col justify-between ${
-                idx === 6 ? 'md:col-span-2 lg:col-span-3 bg-gradient-to-r from-white via-white to-brand-ivory-warm' : ''
-              }`}
+              className={`p-7 rounded-2xl bg-white border border-brand-cream-border shadow-sm hover:border-brand-gold hover:shadow-md transition-all duration-300 flex flex-col justify-between ${idx === 6 ? 'md:col-span-2 lg:col-span-3 bg-gradient-to-r from-white via-white to-brand-ivory-warm' : ''
+                }`}
             >
               <div>
                 <div className="flex items-center justify-between mb-4">
@@ -493,14 +492,14 @@ export default function ResidentialServiceView({
 
       {/* ================= ARCHITECTURAL & ENGINEERING SPECIFICATIONS ================= */}
       <section className="py-20 bg-brand-obsidian text-white border-y border-white/10 relative overflow-hidden">
-        <div 
-          aria-hidden="true" 
+        <div
+          aria-hidden="true"
           className="absolute top-1/2 right-1/4 -translate-y-1/2 w-[500px] h-[300px] rounded-full pointer-events-none"
           style={{ background: 'radial-gradient(ellipse at center, rgba(208, 154, 22, 0.12) 0%, rgba(208, 154, 22, 0) 70%)' }}
         />
 
         <div className="max-w-7xl mx-auto px-5 sm:px-8 relative z-10">
-          <motion.div 
+          <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
@@ -520,7 +519,7 @@ export default function ResidentialServiceView({
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {(activeSpecificationStandards || []).map((spec, sIdx) => (
-              <motion.div 
+              <motion.div
                 key={sIdx}
                 initial="hidden"
                 whileInView="visible"
@@ -572,7 +571,7 @@ export default function ResidentialServiceView({
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
           {residentialListings.map((prop, i) => (
-            <motion.div 
+            <motion.div
               key={prop._id || prop.id || i}
               initial="hidden"
               whileInView="visible"

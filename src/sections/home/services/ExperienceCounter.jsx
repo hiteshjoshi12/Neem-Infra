@@ -49,12 +49,17 @@ export default function ExperienceCounter() {
   const currentCalculatedYears = Math.max(1, new Date().getFullYear() - 1999);
   const target = Number(expData.yearsCount) || currentCalculatedYears;
 
-  const badge = expData.badge;
-  const headline = expData.headline;
-  const description = expData.description;
+  const badge = expData.badge || 'Decades of Market Leadership';
+  const headline = expData.headline || 'Unrivalled Track Record in DLF Prime Micro-Markets';
+  const expDlfMatch = (headline || '').match(/^(.*?)(?:\s+(?:in\s+)?(DLF(?:\s+(?:Gurgaon|Gurugram))?.*))$/i);
+  const expHeadlineMain = expDlfMatch ? expDlfMatch[1].trim() : headline;
+  const expHeadlineGold = expDlfMatch ? expDlfMatch[2].trim() : null;
+  const description = expData.description || "Since 1999, Saudagar Properties has stood as the definitive fiduciary standard for high-net-worth acquisitions across DLF Phase 1–5 and Gurugram's prime golf corridors.";
+  const eyebrow = expData.eyebrow || 'THE SAUDAGAR ADVANTAGE';
+  const tagline = expData.tagline || 'Premier Real Estate Consultancy · DLF Gurugram';
   const statsList = (expData.statsList && Array.isArray(expData.statsList) && expData.statsList.length > 0) ? expData.statsList : DEFAULT_STATS_DATA;
-  const counterLabel = expData.counterLabel;
-  const counterSublabel = expData.counterSublabel;
+  const counterLabel = expData.counterLabel || 'Years of Fiduciary Trust';
+  const counterSublabel = expData.counterSublabel || "Advising Gurugram's Top Investors & Families";
 
   const [count, setCount] = useState(1);
   const [mouseOffset, setMouseOffset] = useState({ x: 0, y: 0 });
@@ -254,7 +259,7 @@ export default function ExperienceCounter() {
 
             <div className="inline-flex items-center gap-2 rounded-full border border-brand-gold/40 bg-brand-gold/10 px-3.5 py-1 text-[8px] font-bold uppercase tracking-[0.22em] text-brand-navy shadow-xs sm:text-[9px]">
               <Sparkles size={11} className="text-brand-gold" />
-              <span>THE SAUDAGAR ADVANTAGE</span>
+              <span>{eyebrow}</span>
             </div>
 
             <span className="h-px flex-1 max-w-[60px] bg-brand-gold/30" />
@@ -418,7 +423,15 @@ export default function ExperienceCounter() {
                   lg:text-[38px]
                 "
               >
-                {headline}
+                <span style={{ color: '#000000' }}>{expHeadlineMain}</span>
+                {expHeadlineGold && (
+                  <>
+                    {' '}
+                    <span className="italic font-normal text-brand-gold" style={{ color: '#c59b27' }}>
+                      {expHeadlineGold}
+                    </span>
+                  </>
+                )}
               </h3>
 
               <p className="mt-3.5 max-w-2xl text-xs leading-relaxed text-brand-slate sm:text-[13px] sm:leading-6">
@@ -428,7 +441,7 @@ export default function ExperienceCounter() {
               {/* Authority tag line */}
               <div className="mt-4 flex items-center gap-2 text-[9px] font-bold uppercase tracking-[0.18em] text-brand-slate">
                 <span className="h-1.5 w-1.5 rounded-full bg-brand-gold" />
-                <span>Premier Real Estate Consultancy · DLF Gurugram</span>
+                <span>{tagline}</span>
               </div>
             </div>
 

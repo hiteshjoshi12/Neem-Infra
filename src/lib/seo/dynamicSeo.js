@@ -58,7 +58,7 @@ export async function ensureDefaultSeoData() {
         siteTitleTemplate: '%s | Saudagar Properties',
         defaultMetaTitle: 'Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram',
         defaultMetaDescription:
-          'Find luxury builder floors, independent villas, penthouses, and commercial offices in DLF Phase 1–5, Sushant Lok, and Golf Course Road. 25+ years of trusted advisory in Gurugram.',
+          'Find luxury builder floors, independent villas, penthouses, and commercial offices in DLF Phase 1–5, Sushant Lok, and Golf Course Road. 27+ years of trusted advisory in Gurugram.',
         defaultOgImage: 'https://ik.imagekit.io/saudagarproperties/saudagar-properties/branding/logo.png?updatedAt=1792302925853',
         defaultKeywords: [
           'Real Estate Consultant Gurugram',
@@ -87,7 +87,7 @@ export async function ensureDefaultSeoData() {
         pageType: 'system',
         status: 'published',
         h1: 'Premier Real Estate Consultancy in DLF Gurugram',
-        h2: '25+ Years of Dedicated Authority in Luxury Builder Floors, Independent Villas & Corporate Assets',
+        h2: '27+ Years of Dedicated Authority in Luxury Builder Floors, Independent Villas & Corporate Assets',
         metaTitle: PAGE_SEO['/']?.title || 'Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram',
         metaDescription: PAGE_SEO['/']?.description || '',
         canonicalUrl: defaultBaseUrl,
@@ -491,14 +491,14 @@ export async function getDynamicPageSeo(path = '/', fallbackData = {}) {
     if (!t || typeof t !== 'string' || !t.trim()) return true;
     const clean = t.trim();
     return clean === 'Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram' ||
-           clean === PAGE_SEO['/']?.title;
+      clean === PAGE_SEO['/']?.title;
   };
 
   const isPlaceholderDesc = (d) => {
     if (!d || typeof d !== 'string' || !d.trim()) return true;
     const clean = d.trim();
     return clean.startsWith('Find luxury builder floors, independent villas, penthouses') ||
-           clean === PAGE_SEO['/']?.description;
+      clean === PAGE_SEO['/']?.description;
   };
 
   // Rule: page-level override > global default > hardcoded fallback

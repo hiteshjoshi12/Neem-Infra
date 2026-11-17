@@ -72,7 +72,7 @@ export const BUSINESS_INFO = {
 export const DEFAULT_META = {
   title: 'Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram',
   description:
-    'Saudagar Properties is a trusted real estate consultancy in Gurugram with 25+ years of experience. Explore luxury builder floors, villas, commercial offices, and plots in DLF Phase 1–5, Sushant Lok, and Golf Course Road.',
+    'Saudagar Properties is a trusted real estate consultancy in Gurugram with 27+ years of experience. Explore luxury builder floors, villas, commercial offices, and plots in DLF Phase 1–5, Sushant Lok, and Golf Course Road.',
   ogType: 'website',
   ogImage: 'https://ik.imagekit.io/saudagarproperties/saudagar-properties/branding/logo.png?updatedAt=1792302925853', // Place an OG image (1200×630px)
   twitterCard: 'summary_large_image',
@@ -83,12 +83,12 @@ export const PAGE_SEO = {
   '/': {
     title: 'Saudagar Properties — Premier Real Estate Consultant in DLF Gurugram',
     description:
-      'Find luxury builder floors, independent villas, penthouses, and commercial offices in DLF Phase 1–5, Sushant Lok, and Golf Course Road. Saudagar Properties — 25+ years of trusted real estate advisory in Gurugram.',
+      'Find luxury builder floors, independent villas, penthouses, and commercial offices in DLF Phase 1–5, Sushant Lok, and Golf Course Road. Saudagar Properties — 27+ years of trusted real estate advisory in Gurugram.',
     canonical: '/',
     ogType: 'website',
   },
   '/about': {
-    title: 'About Us — Saudagar Properties | 25+ Years of Real Estate Excellence in Gurugram',
+    title: 'About Us — Saudagar Properties | 27+ Years of Real Estate Excellence in Gurugram',
     description:
       'Learn about Saudagar Properties — founded in 1999, we are Gurugram\'s most trusted real estate consultancy. Meet our leadership team and discover our commitment to transparent, client-first property advisory.',
     canonical: '/about',
@@ -97,7 +97,7 @@ export const PAGE_SEO = {
   '/team': {
     title: 'Leadership & Real Estate Advisory Team | Saudagar Properties Gurugram',
     description:
-      'Meet the leadership, founders, and senior luxury real estate specialists behind Saudagar Properties with 25+ years of authority in DLF Phase 1–5.',
+      'Meet the leadership, founders, and senior luxury real estate specialists behind Saudagar Properties with 27+ years of authority in DLF Phase 1–5.',
     canonical: '/team',
     ogType: 'website',
   },

@@ -28,7 +28,7 @@ const seoSettingsSchema = new mongoose.Schema(
     defaultMetaDescription: {
       type: String,
       default:
-        'Find luxury builder floors, independent villas, penthouses, and commercial offices in DLF Phase 1–5, Sushant Lok, and Golf Course Road. 25+ years of trusted advisory in Gurugram.',
+        'Find luxury builder floors, independent villas, penthouses, and commercial offices in DLF Phase 1–5, Sushant Lok, and Golf Course Road. 27+ years of trusted advisory in Gurugram.',
     },
     defaultOgImage: {
       type: String,

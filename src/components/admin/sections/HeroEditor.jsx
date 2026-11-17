@@ -31,20 +31,20 @@ export default function HeroEditor({ formData, updateField }) {
           onChange={(e) => updateField('badge', e.target.value)}
         />
         <FormInput
-          label="Headline Line 1"
-          placeholder="Gurgaon's Premier"
+          label="Headline Line 1 / Main (Black Text)"
+          placeholder="Top Real Estate Consultant"
           value={formData.headlinePrefix}
           onChange={(e) => updateField('headlinePrefix', e.target.value)}
         />
         <FormInput
-          label="Headline Italic (Gold Accent)"
-          placeholder="Real Estate"
+          label="Headline Highlight (Gold Text Accent)"
+          placeholder="DLF Gurgaon"
           value={formData.headlineHighlight}
           onChange={(e) => updateField('headlineHighlight', e.target.value)}
         />
         <FormInput
-          label="Headline Line 2 Suffix"
-          placeholder="Partner."
+          label="Headline Line 2 Suffix (Optional)"
+          placeholder=""
           value={formData.headlineSuffix}
           onChange={(e) => updateField('headlineSuffix', e.target.value)}
         />
