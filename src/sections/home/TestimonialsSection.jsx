@@ -537,7 +537,7 @@ export default function TestimonialsSection({ initialTestimonials = [], initialS
             </div>
             <div>
               <span className="block text-[8px] font-bold uppercase tracking-[0.22em] text-brand-slate">
-                CLIENT EXPERIENCE
+                {testData.subBadge || "CLIENT EXPERIENCE"}
               </span>
               <span className="mt-1 block font-serif text-base text-brand-navy font-bold">
                 Gurgaon · Gurugram

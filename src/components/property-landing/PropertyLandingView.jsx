@@ -27,6 +27,7 @@ import {
 import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
 import LuxuryTextReveal from '@/components/ui/LuxuryTextReveal';
 import api from '@/services/api';
+import { useCms } from '@/context/CmsContext';
 
 const fadeUpVariant = {
   hidden: { opacity: 0, y: 24 },
@@ -122,6 +123,14 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
   const faqsInfo = corridor.faqsInfo || corridor.faqsHeader || {};
   const mapShowcase = corridor.mapShowcase || {};
   const faqs = corridor.faqs || [];
+
+  const { sections } = useCms();
+  const navData = sections?.navbar || {};
+  const widgetData = sections?.floatingWidgets || {};
+
+  const defaultDirectPhone = navData.phone || '+91 98112 21207';
+  const defaultWhatsappNumber = (widgetData.whatsappNumber || hero.whatsappNumber || '919718511207').replace(/\D/g, '');
+  const defaultFoundersName = whyChooseSaudagar.founderName || 'Arun Sharma & Suneeta Chawla';
 
   const galleryImages = (hero.galleryImages && hero.galleryImages.length > 0)
     ? hero.galleryImages
@@ -250,15 +259,15 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
               {/* Action Buttons Bar */}
               <div className="flex flex-wrap items-center gap-3.5 pt-2">
                 <a
-                  href={`tel:${hero.directPhone?.replace(/[\s-]/g, '') || '+919811221207'}`}
+                  href={`tel:${(hero.directPhone || defaultDirectPhone).replace(/[\s-]/g, '')}`}
                   className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-brand-gold to-brand-gold-light hover:brightness-105 text-brand-obsidian font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all shadow-[0_10px_25px_rgba(197,154,39,0.3)] active:scale-95 cursor-pointer"
                 >
                   <Phone size={14} className="text-brand-obsidian" />
-                  <span>Call Direct: {hero.directPhone || '+91 98112 21207'}</span>
+                  <span>Call Direct: {hero.directPhone || defaultDirectPhone}</span>
                 </a>
 
                 <a
-                  href={quickCallout.whatsappUrl || `https://wa.me/${hero.whatsappNumber || '919718511207'}?text=Hello%20Saudagar%20Properties%2C%20I%20am%20interested%20in%20${encodeURIComponent(corridor.corridorName)}.`}
+                  href={quickCallout.whatsappUrl || `https://wa.me/${(hero.whatsappNumber?.replace(/\D/g, '') || defaultWhatsappNumber)}?text=Hello%20Saudagar%20Properties%2C%20I%20am%20interested%20in%20${encodeURIComponent(corridor.corridorName)}.`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-6 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#20ba59] text-white font-bold text-xs uppercase tracking-wider flex items-center gap-2 transition-all cursor-pointer shadow-md active:scale-95"
@@ -901,7 +910,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                   <ArrowRight size={14} />
                 </a>
                 <a
-                  href="https://wa.me/919718511207?text=Hello%20Saudagar%20Properties%2C%20I%20would%20like%20to%20consult%20regarding%20property%20acquisitions."
+                  href={whyChooseSaudagar.whatsappUrl || howWeHelp.whatsappUrl || quickCallout.whatsappUrl || `https://wa.me/${(whyChooseSaudagar.whatsappNumber?.replace(/\D/g, '') || defaultWhatsappNumber)}?text=Hello%20Saudagar%20Properties%2C%20I%20would%20like%20to%20consult%20regarding%20${encodeURIComponent(corridor.corridorName || 'property acquisitions')}.`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-5 py-3 rounded-xl bg-white hover:bg-brand-cream text-brand-navy font-bold text-xs uppercase tracking-wider border border-brand-cream-border transition-all inline-flex items-center gap-2 shadow-xs cursor-pointer"
@@ -982,7 +991,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                 <div className="absolute bottom-4 left-4 right-4 p-4 rounded-2xl bg-white/95 backdrop-blur-md border border-brand-cream-border text-brand-navy shadow-lg flex items-center justify-between">
                   <div>
                     <span className="block text-xs font-bold text-brand-navy">
-                      {whyChooseSaudagar.founderName || 'Arun Sharma & Suneeta Chawla'}
+                      {whyChooseSaudagar.founderName || defaultFoundersName}
                     </span>
                     <span className="text-[11px] text-slate-500">
                       {whyChooseSaudagar.founderTitle || 'Founders, Saudagar Properties Pvt Ltd'}
@@ -1119,7 +1128,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                         Details
                       </Link>
                       <a
-                        href={`https://wa.me/919718511207?text=Hello%20Saudagar%20Properties%2C%20I%20am%20interested%20in%20${encodeURIComponent(p.title)}`}
+                        href={`https://wa.me/${(inquiryForm.whatsappNumber?.replace(/\D/g, '') || defaultWhatsappNumber)}?text=Hello%20Saudagar%20Properties%2C%20I%20am%20interested%20in%20${encodeURIComponent(p.title)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="p-2.5 rounded-xl bg-emerald-50 hover:bg-[#25D366] text-[#0A5C28] hover:text-white border border-emerald-200 transition-all cursor-pointer shadow-xs"
@@ -1155,7 +1164,7 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
               />
 
               <p className="text-xs sm:text-sm text-brand-slate mt-2 font-sans">
-                {inquiryForm.description || 'Fill out the form below. Arun Sharma or our senior partners will contact you within 2 business hours.'}
+                {inquiryForm.description || `Fill out the form below. ${whyChooseSaudagar.founderName || 'Our senior advisory leadership'} will contact you within 2 business hours.`}
               </p>
             </div>
 
@@ -1525,9 +1534,11 @@ export default function PropertyLandingView({ corridor, properties = [] }) {
                   </button>
                 </div>
                 <div className="relative w-full h-[72vh] bg-brand-ivory overflow-auto flex items-center justify-center p-4">
-                  <img
+                  <Image
                     src={mapShowcase.staticMapImage || 'https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1600&q=85'}
                     alt={mapShowcase.staticMapImageAlt || `${corridor.corridorName} Master Plan`}
+                    width={1600}
+                    height={1200}
                     className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
                   />
                 </div>

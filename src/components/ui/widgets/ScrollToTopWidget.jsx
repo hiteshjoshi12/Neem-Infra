@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
 
-export default function ScrollToTopWidget({ isHidden }) {
+export default function ScrollToTopWidget({ isHidden, tooltip = "Back to top" }) {
   const [showTopBtn, setShowTopBtn] = useState(false);
   const progressCircleRef = useRef(null);
   const radius = 18;
@@ -55,7 +55,7 @@ export default function ScrollToTopWidget({ isHidden }) {
           className="pointer-events-auto group relative flex items-center mb-4"
         >
           <span className="hidden sm:block absolute right-full mr-3.5 px-3 py-1 rounded-full bg-brand-navy/90 backdrop-blur-md text-[11px] font-medium tracking-wide text-brand-text-on-dark shadow-lg border border-white/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap">
-            Back to top
+            {tooltip || "Back to top"}
           </span>
           <button
             onClick={scrollToTop}

@@ -1,4 +1,5 @@
 "use client";
+/* eslint-disable react-hooks/set-state-in-effect */
 
 import React, { createContext, useContext, useState, useEffect, useCallback, useRef } from 'react';
 import api from '../services/api';
@@ -12,6 +13,7 @@ export const CmsProvider = ({ children, initialData = {} }) => {
   const [sections, setSections] = useState(() => initialData?.sections || {});
   const [properties, setProperties] = useState(() => initialData?.properties || []);
   const [testimonials, setTestimonials] = useState(() => initialData?.testimonials || []);
+  const [businessProfile, setBusinessProfile] = useState(() => initialData?.businessProfile || null);
   const [loading, setLoading] = useState(() => !initialData?.sections);
 
   const lastFetchRef = useRef(0);
@@ -27,6 +29,9 @@ export const CmsProvider = ({ children, initialData = {} }) => {
     }
     if (initialData?.testimonials && initialData.testimonials.length > 0) {
       setTestimonials(initialData.testimonials);
+    }
+    if (initialData?.businessProfile) {
+      setBusinessProfile(initialData.businessProfile);
     }
   }, [initialData]);
 
@@ -57,10 +62,11 @@ export const CmsProvider = ({ children, initialData = {} }) => {
 
     isFetchingRef.current = true;
     try {
-      const [secResult, propResult, testResult] = await Promise.allSettled([
+      const [secResult, propResult, testResult, profileResult] = await Promise.allSettled([
         api.getSections(force),
         api.getProperties({ all: false }),
-        api.getTestimonials()
+        api.getTestimonials(),
+        api.getBusinessProfile(),
       ]);
 
       lastFetchRef.current = Date.now();
@@ -78,6 +84,10 @@ export const CmsProvider = ({ children, initialData = {} }) => {
 
       if (testResult.status === 'fulfilled' && testResult.value?.success && Array.isArray(testResult.value?.data)) {
         setTestimonials(testResult.value.data);
+      }
+
+      if (profileResult.status === 'fulfilled' && profileResult.value?.success && profileResult.value?.data) {
+        setBusinessProfile(profileResult.value.data);
       }
     } catch (err) {
       console.warn('[CmsContext] Network fetch error, using current state:', err?.message);
@@ -118,6 +128,7 @@ export const CmsProvider = ({ children, initialData = {} }) => {
         sections,
         properties,
         testimonials,
+        businessProfile,
         loading,
         refetch: () => fetchCmsData(true),
         updateLocalSection
@@ -134,4 +145,39 @@ export const useCms = () => {
     throw new Error('useCms must be used within a CmsProvider');
   }
   return context;
+};
+
+export const useBusinessProfile = () => {
+  const context = useContext(CmsContext);
+  const profile = context?.businessProfile || {};
+  const sections = context?.sections || {};
+  const nav = sections?.navbar || {};
+  const footer = sections?.footer || {};
+  const loc = sections?.location || {};
+  const widgets = sections?.floatingWidgets || {};
+
+  const primaryPhone = profile.primaryPhone || loc.phones?.[0] || '+91 97185 11207';
+  const secondaryPhone = profile.secondaryPhone || nav.phone || loc.phones?.[1] || '+91 98112 21207';
+  const whatsappNumber = profile.whatsappNumber || widgets.whatsappNumber || '919718511207';
+  const primaryEmail = profile.primaryEmail || loc.email || footer.email || 'Saudagar.Properties@Yahoo.In';
+  const address = profile.address || loc.address || '38, Akashneem Marg, DLF Phase 2, Gurugram, Haryana 122002';
+  const founders = Array.isArray(profile.founders) && profile.founders.length > 0
+    ? profile.founders
+    : [
+        { name: 'Arun Sharma', role: 'Founder & Managing Director' },
+        { name: 'Suneeta Chawla', role: 'Co-Founder & Director' },
+      ];
+
+  return {
+    profile,
+    name: profile.name || 'Saudagar Properties',
+    legalName: profile.legalName || 'Saudagar Properties Pvt. Ltd',
+    primaryPhone,
+    secondaryPhone,
+    whatsappNumber,
+    primaryEmail,
+    address,
+    founders,
+    foundingYear: profile.foundingYear || 1999,
+  };
 };

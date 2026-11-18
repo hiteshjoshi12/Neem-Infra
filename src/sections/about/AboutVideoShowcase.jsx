@@ -205,7 +205,7 @@ export default function AboutVideoShowcase({ data }) {
               muted={isMuted}
               loop
               preload="none"
-              poster="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80"
+              poster={cms?.posterImage || cms?.posterUrl || cms?.bgImage || "https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/poster.jpg?tr=f-auto,q-80"}
               onTimeUpdate={handleTimeUpdate}
               onLoadedMetadata={handleLoadedMetadata}
               className="w-full h-full object-cover"

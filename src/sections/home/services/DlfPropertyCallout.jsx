@@ -199,6 +199,7 @@ export default function DlfPropertyCallout() {
 
   const phone =
     callout.phone ||
+    sections?.navbar?.phone ||
     "+91 98112 21207";
 
   const phoneRaw =

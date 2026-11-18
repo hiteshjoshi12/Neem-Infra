@@ -232,7 +232,7 @@ export default function Hero() {
             >
               {isDlfHeadline ? (
                 <span className="block">
-                  <span className="text-black font-semibold drop-shadow-[0_2px_12px_rgba(255,255,255,0.7)]" style={{ color: '#000000' }}>
+                  <span className="text-white font-semibold drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]" style={{ color: '#ffffff' }}>
                     {headlineBlack}
                   </span>{" "}
                   <span className="italic font-normal text-brand-gold" style={{ color: '#c59b27' }}>

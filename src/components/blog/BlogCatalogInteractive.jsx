@@ -22,7 +22,7 @@ import {
   Loader2
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
-import { useCms } from '@/context/CmsContext';
+import { useCms, useBusinessProfile } from '@/context/CmsContext';
 
 const CORRIDOR_CHIPS = [
   { name: 'DLF Phase 1', slug: 'dlf-phase-1', tag: 'Flagship Freehold' },
@@ -37,6 +37,7 @@ const BATCH_SIZE = 6;
 
 export default function BlogCatalogInteractive({ initialData, allPosts = [], categories = [] }) {
   const { sections } = useCms();
+  const bp = useBusinessProfile();
   const cms = sections?.page_blog || initialData || {};
   const [selectedCategory, setSelectedCategory] = useState('all');
   const [viewMode, setViewMode] = useState('expanded'); // 'expanded' | 'grid'
@@ -832,7 +833,7 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
 
                     <div className="space-y-3">
                       <a
-                        href={`https://wa.me/${(cms.newsletter?.whatsappNumber || '919718511207').replace(/[^0-9]/g, '')}`}
+                        href={`https://wa.me/${(cms.newsletter?.whatsappNumber || bp.whatsappNumber).replace(/[^0-9]/g, '')}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full py-3 px-4 rounded-xl bg-brand-gold hover:bg-brand-gold-light text-brand-obsidian text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-all shadow-md cursor-pointer"
@@ -842,11 +843,11 @@ export default function BlogCatalogInteractive({ initialData, allPosts = [], cat
                       </a>
 
                       <a
-                        href="tel:+919811221207"
+                        href={`tel:${(cms.newsletter?.phone || bp.secondaryPhone || bp.primaryPhone).replace(/[^0-9+]/g, '')}`}
                         className="w-full py-3 px-4 rounded-xl bg-white/10 hover:bg-white/20 text-white border border-white/20 text-xs font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors cursor-pointer"
                       >
                         <PhoneCall size={14} className="text-brand-gold" />
-                        <span>Direct Line (+91 98112 21207)</span>
+                        <span>Direct Line ({cms.newsletter?.phone || bp.secondaryPhone || bp.primaryPhone})</span>
                       </a>
                     </div>
                 </div>

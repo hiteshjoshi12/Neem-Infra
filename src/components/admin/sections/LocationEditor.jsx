@@ -62,6 +62,44 @@ export default function LocationEditor({ formData, updateField }) {
           value={formData.directionsText}
           onChange={(e) => updateField('directionsText', e.target.value)}
         />
+        <FormInput
+          label="Direct Telephone 1"
+          placeholder="+91 97185 11207"
+          value={Array.isArray(formData.phones) ? formData.phones[0] : (formData.phone || '')}
+          onChange={(e) => {
+            const arr = Array.isArray(formData.phones) ? [...formData.phones] : [];
+            arr[0] = e.target.value;
+            updateField('phones', arr);
+          }}
+        />
+        <FormInput
+          label="Direct Telephone 2"
+          placeholder="+91 98112 21207"
+          value={Array.isArray(formData.phones) ? formData.phones[1] : ''}
+          onChange={(e) => {
+            const arr = Array.isArray(formData.phones) ? [...formData.phones] : [];
+            arr[1] = e.target.value;
+            updateField('phones', arr);
+          }}
+        />
+        <FormInput
+          label="Contact Email"
+          placeholder="Saudagar.Properties@Yahoo.In"
+          value={formData.email}
+          onChange={(e) => updateField('email', e.target.value)}
+        />
+        <FormInput
+          label="Operational Hours"
+          placeholder="Monday – Saturday: 10:00 AM – 7:30 PM (Sunday by Appointment)"
+          value={formData.hours}
+          onChange={(e) => updateField('hours', e.target.value)}
+        />
+        <FormInput
+          label="Landmark / Proximity"
+          placeholder="Near DLF Cybercity & MG Road"
+          value={formData.landmark}
+          onChange={(e) => updateField('landmark', e.target.value)}
+        />
       </div>
 
       <FormTextarea

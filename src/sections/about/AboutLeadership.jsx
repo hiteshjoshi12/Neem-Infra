@@ -333,7 +333,7 @@ export default function AboutLeadership({ data }) {
                     <span>Personal Consultation Guaranteed</span>
                   </span>
                   <a
-                    href="tel:+919811221207"
+                    href={leader.phone ? `tel:${leader.phone.replace(/[^0-9+]/g, '')}` : (sections?.navbar?.phone ? `tel:${sections.navbar.phone.replace(/[^0-9+]/g, '')}` : "tel:+919811221207")}
                     className="text-brand-gold hover:text-brand-gold-deep font-bold uppercase tracking-wider transition-colors inline-flex items-center gap-1"
                   >
                     <span>Direct Call</span>

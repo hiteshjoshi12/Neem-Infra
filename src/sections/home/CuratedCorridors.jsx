@@ -133,16 +133,22 @@ export default function CuratedCorridors({ initialProperties = [], initialSectio
           <div className="flex items-center gap-3 mb-3">
             <span className="w-8 h-[1px] bg-brand-gold" />
             <span className="text-[11px] sm:text-xs tracking-[0.25em] text-brand-gold uppercase font-semibold">
-              {corridorData.badge}
+              {corridorData.badge || "PRIME ASSETS & VERIFIED INVENTORY"}
             </span>
           </div>
 
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-serif text-brand-navy leading-tight mb-4">
-            {corridorData.titleMain} <span className="italic text-brand-gold font-light">{corridorData.titleItalic}</span>
+            {corridorData.titleMain || "Explore Curated"} <span className="italic text-brand-gold font-light">{corridorData.titleItalic || "Corridors"}</span>
           </h2>
 
+          {corridorData.subtitle && (
+            <p className="text-xs sm:text-sm font-semibold uppercase tracking-wider text-brand-gold-deep mb-2">
+              {corridorData.subtitle}
+            </p>
+          )}
+
           <p className="text-brand-slate font-normal text-sm sm:text-base md:text-lg leading-relaxed">
-            {corridorData.description}
+            {corridorData.description || "Discover handpicked ultra-luxury properties across Gurugram's finest addresses."}
           </p>
         </div>
 
@@ -285,11 +291,11 @@ export default function CuratedCorridors({ initialProperties = [], initialSectio
 
       {/* Master Directory CTA */}
       <div ref={ctaRef} className="container mx-auto px-5 md:px-12 mt-6 sm:mt-8 flex justify-center">
-        <Link href={corridorData.ctaLink || "/properties"}
+        <Link href={corridorData.ctaLink || corridorData.viewAllHref || "/properties"}
           className="group relative px-6 py-3.5 sm:px-8 sm:py-4 bg-brand-navy hover:bg-brand-navy-deep text-white border border-brand-gold/40 hover:border-brand-gold overflow-hidden rounded-full flex items-center gap-3 sm:gap-4 shadow-md hover:shadow-xl transition-all duration-300"
         >
           <span className="relative z-10 text-[11px] sm:text-xs font-semibold tracking-widest uppercase text-brand-ivory">
-            {corridorData.ctaText}
+            {corridorData.ctaText || corridorData.viewAllText || "View Complete Featured Properties"}
           </span>
           <div className="relative z-10 w-7 h-7 rounded-full bg-brand-gold text-brand-navy-deep flex items-center justify-center transition-transform group-hover:scale-105">
             <ArrowUpRight size={14} />

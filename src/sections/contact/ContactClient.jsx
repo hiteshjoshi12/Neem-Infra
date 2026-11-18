@@ -8,10 +8,11 @@ import { Mail, Phone, MapPin, Send, CheckCircle2, Clock } from 'lucide-react';
 import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
 import { animate, inView, stagger } from 'framer-motion';
 import api from '@/services/api';
-import { useCms } from '@/context/CmsContext';
+import { useCms, useBusinessProfile } from '@/context/CmsContext';
 
 export default function ContactClient({ initialData }) {
   const { sections } = useCms();
+  const bp = useBusinessProfile();
   const cms = sections?.page_contact || initialData || {};
   const [formData, setFormData] = useState({
     name: '',
@@ -112,7 +113,7 @@ export default function ContactClient({ initialData }) {
   };
 
   const formattedMessage = `*New Inquiry from Website*%0A%0A*Name:* ${formData.name}%0A*Email:* ${formData.email}%0A*Phone:* ${formData.phone}%0A*Purpose:* ${formData.purpose}%0A*Property Type:* ${formData.propertyType}%0A*Budget:* ${formData.budget}%0A*Message:* ${formData.message}`;
-  const targetWhatsapp = (cms.form?.whatsappNumber || cms.contactInfo?.phone1 || '919718511207').replace(/[^0-9]/g, '');
+  const targetWhatsapp = (cms.form?.whatsappNumber || cms.contactInfo?.phone1 || bp.whatsappNumber).replace(/[^0-9]/g, '');
   const whatsappUrl = `https://wa.me/${targetWhatsapp}?text=${formattedMessage}`;
 
   return (
@@ -200,11 +201,11 @@ export default function ContactClient({ initialData }) {
                   {cms.contactInfo?.phoneBadge}
                 </h4>
                 <div className="flex flex-col gap-1">
-                  <a href={`tel:${cms.contactInfo?.phone1 || '+919718511207'}`} className="text-sm text-brand-slate hover:text-brand-gold transition-colors">
-                    {cms.contactInfo?.phone1}
+                  <a href={`tel:${(cms.contactInfo?.phone1 || bp.primaryPhone).replace(/[^0-9+]/g, '')}`} className="text-sm text-brand-slate hover:text-brand-gold transition-colors">
+                    {cms.contactInfo?.phone1 || bp.primaryPhone}
                   </a>
-                  <a href={`tel:${cms.contactInfo?.phone2 || '+919811221207'}`} className="text-sm text-brand-slate hover:text-brand-gold transition-colors">
-                    {cms.contactInfo?.phone2}
+                  <a href={`tel:${(cms.contactInfo?.phone2 || bp.secondaryPhone).replace(/[^0-9+]/g, '')}`} className="text-sm text-brand-slate hover:text-brand-gold transition-colors">
+                    {cms.contactInfo?.phone2 || bp.secondaryPhone}
                   </a>
                 </div>
               </div>
@@ -218,8 +219,8 @@ export default function ContactClient({ initialData }) {
                 <h4 className="text-base font-bold text-brand-navy mb-1">
                   {cms.contactInfo?.emailBadge}
                 </h4>
-                <a href={`mailto:${cms.contactInfo?.email || 'Saudagar.Properties@Yahoo.In'}`} className="text-sm text-brand-slate hover:text-brand-gold transition-colors">
-                  {cms.contactInfo?.email}
+                <a href={`mailto:${cms.contactInfo?.email || bp.primaryEmail}`} className="text-sm text-brand-slate hover:text-brand-gold transition-colors">
+                  {cms.contactInfo?.email || bp.primaryEmail}
                 </a>
               </div>
             </div>

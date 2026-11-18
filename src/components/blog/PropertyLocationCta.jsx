@@ -2,7 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import { Phone, ArrowRight, ShieldCheck, MapPin } from 'lucide-react';
 
-export default function PropertyLocationCta({ locationName = 'DLF Phase 1–5 Gurugram' }) {
+export default function PropertyLocationCta({ locationName = 'DLF Phase 1–5 Gurugram', phone = '+91 98112 21207' }) {
   return (
     <div className="relative overflow-hidden bg-brand-navy-deep text-brand-ivory rounded-3xl p-8 sm:p-10 my-12 border border-brand-gold/30 shadow-[0_20px_50px_-15px_rgba(14,22,43,0.5)]">
       {/* Subtle architectural background grid */}
@@ -31,11 +31,11 @@ export default function PropertyLocationCta({ locationName = 'DLF Phase 1–5 Gu
 
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4">
           <a
-            href="tel:+919811221207"
+            href={`tel:${phone.replace(/[^0-9+]/g, '')}`}
             className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-brand-gold hover:bg-brand-gold text-brand-navy-deep font-bold text-xs uppercase tracking-wider transition-all shadow-md active:scale-95"
           >
             <Phone size={15} />
-            <span>Call Advisory (+91 98112 21207)</span>
+            <span>Call Advisory ({phone})</span>
           </a>
 
           <Link

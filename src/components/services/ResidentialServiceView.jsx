@@ -137,10 +137,10 @@ export default function ResidentialServiceView({
 
               <div className="flex flex-wrap items-center gap-4">
                 <a
-                  href="#inventory"
+                  href={heroData?.ctaHref || heroData?.ctaLink || "#inventory"}
                   className="px-7 py-3.5 rounded-xl bg-brand-gold hover:bg-brand-gold-light text-brand-navy-deep font-bold text-xs uppercase tracking-widest shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2"
                 >
-                  <span>Explore Residential Portfolio</span>
+                  <span>{heroData?.ctaText || "Explore Residential Portfolio"}</span>
                   <ArrowRight size={14} />
                 </a>
 
@@ -635,10 +635,10 @@ export default function ResidentialServiceView({
 
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
-              href="/contact"
+              href={cms?.cta?.buttonHref || "/contact"}
               className="px-8 py-3.5 rounded-xl bg-brand-gold hover:bg-brand-gold-light text-brand-navy-deep font-bold text-xs uppercase tracking-widest shadow-lg transition-all flex items-center gap-2 cursor-pointer"
             >
-              <span>Book Private Consultation</span>
+              <span>{cms?.cta?.buttonText || "Book Private Consultation"}</span>
               <Send size={13} />
             </Link>
 

@@ -69,6 +69,7 @@ export default function TopConsultantSection({ initialData = null }) {
     buttonText: "Connect Now",
     buttonHref: "/contact"
   };
+  const activePhone = ctaBanner.phone || sections?.navbar?.phone || "+91 98112 21207";
 
   const sectionRef = useRef(null);
   const headerRef = useRef(null);
@@ -178,8 +179,7 @@ export default function TopConsultantSection({ initialData = null }) {
             <LuxuryTextReveal
               text={headlineMain}
               highlightText={headlineItalic}
-              className="text-3xl md:text-5xl lg:text-6xl text-black leading-[1.15]"
-              style={{ color: '#000000' }}
+              className="text-3xl md:text-5xl lg:text-6xl text-brand-navy leading-[1.15]"
             />
           </div>
 
@@ -338,11 +338,11 @@ export default function TopConsultantSection({ initialData = null }) {
 
           <div className="flex flex-col sm:flex-row items-center gap-4 w-full md:w-auto flex-shrink-0 z-10">
             <a
-              href={`tel:${(ctaBanner.phone || '+919811221207').replace(/\s+/g, '')}`}
+              href={`tel:${activePhone.replace(/[^0-9+]/g, '')}`}
               className="w-full sm:w-auto px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-xs uppercase tracking-widest font-semibold flex items-center justify-center gap-2.5 transition-colors duration-300"
             >
               <PhoneCall size={14} className="text-brand-gold" />
-              <span>{ctaBanner.phone}</span>
+              <span>{activePhone}</span>
             </a>
 
             <Link href={ctaBanner.buttonHref || "/contact"}

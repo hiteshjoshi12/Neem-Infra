@@ -61,6 +61,7 @@ export default function Navbar() {
   const corridorsBadge = navData.corridorsBadge;
   const mobileNavHeader = navData.mobileNavHeader;
   const mobileConsultationTitle = navData.mobileConsultationTitle;
+  const activeLogo = navData?.logoUrl || logoImg;
 
   const sanitizeNavHref = (href) => {
     if (!href) return '#';
@@ -79,36 +80,30 @@ export default function Navbar() {
         <div className="w-full flex justify-center pointer-events-auto">
           <div
             className={`relative flex items-center justify-between transition-all duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] bg-white/95 backdrop-blur-xl ${isScrolled
-              ? 'w-full max-w-full rounded-none py-2.5 px-4 md:px-8 border-b border-brand-navy/[0.08] shadow-[0_10px_30px_-10px_rgba(14,22,43,0.08)] ring-0'
-              : 'w-full lg:w-fit lg:gap-4 xl:gap-8 rounded-full py-2 px-3 md:px-5 border border-white/90 shadow-[0_20px_45px_-8px_rgba(14,22,43,0.12),_inset_0_1px_1px_rgba(255,255,255,1)] ring-1 ring-brand-navy/[0.06]'
+              ? 'w-full max-w-full rounded-none py-1.5 md:py-2 px-4 md:px-8 border-b border-brand-navy/[0.08] shadow-[0_10px_30px_-10px_rgba(14,22,43,0.08)] ring-0 min-h-[60px] md:min-h-[68px]'
+              : 'w-full lg:w-fit lg:gap-4 xl:gap-8 rounded-full py-1.5 md:py-2 px-3.5 md:px-6 border border-white/90 shadow-[0_20px_45px_-8px_rgba(14,22,43,0.12),_inset_0_1px_1px_rgba(255,255,255,1)] ring-1 ring-brand-navy/[0.06] min-h-[70px] sm:min-h-[78px] md:min-h-[86px]'
               }`}
           >
             {/* Left: Prominent Luxury Brand Logo */}
             <Link
               href="/"
-              className="flex items-center gap-2.5 sm:gap-3.5 group select-none flex-shrink-0"
+              className="flex items-center gap-2 sm:gap-3 group select-none flex-shrink-0"
               aria-label="Saudagar Properties Home"
             >
-              <div className="relative flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+              <div className="relative flex items-center justify-center transition-transform duration-300 group-hover:scale-[1.02] shrink-0">
                 <Image
-                  width={200}
-                  height={70}
+                  width={320}
+                  height={120}
                   priority
-                  src={logoImg}
-                  alt={navData?.logoAlt || "Saudagar Properties"}
-                  className={`w-auto object-contain transition-all duration-500 ${
-                    isScrolled ? 'h-9 md:h-11' : 'h-11 md:h-13'
-                  }`}
+                  src={activeLogo}
+                  alt={navData?.logoUrlAlt || navData?.logoAlt || "Saudagar Properties"}
+                  className={`w-auto object-contain transition-all duration-500 drop-shadow-[0_2px_8px_rgba(23,33,61,0.04)] ${isScrolled
+                    ? 'h-10 sm:h-11 md:h-13 lg:h-[54px] xl:h-[58px]'
+                    : 'h-13 sm:h-15 md:h-16 lg:h-[72px] xl:h-[76px]'
+                    }`}
                 />
               </div>
-              <div className="flex flex-col justify-center font-serif">
-                <span className="text-sm sm:text-base md:text-lg font-bold tracking-wider uppercase text-brand-navy group-hover:text-brand-gold transition-colors leading-tight">
-                  Saudagar
-                </span>
-                <span className="text-[8px] sm:text-[9px] md:text-[10px] font-bold tracking-[0.28em] uppercase text-brand-gold mt-0.5 leading-none">
-                  Properties
-                </span>
-              </div>
+
             </Link>
 
             {/* Center: Desktop Navigation */}
@@ -141,13 +136,12 @@ export default function Navbar() {
                       onMouseLeave={handleMouseLeave}
                     >
                       <button
-                        className={`relative flex items-center gap-1 px-3 py-1.5 text-[10px] xl:text-[11px] font-semibold tracking-[0.16em] uppercase rounded-full transition-all duration-300 z-10 cursor-pointer ${
-                          isActive
-                            ? 'text-white'
-                            : activeDropdown === link.label
+                        className={`relative flex items-center gap-1 px-3 py-1.5 text-[10px] xl:text-[11px] font-semibold tracking-[0.16em] uppercase rounded-full transition-all duration-300 z-10 cursor-pointer ${isActive
+                          ? 'text-white'
+                          : activeDropdown === link.label
                             ? 'text-brand-gold bg-brand-gold/10'
                             : 'text-brand-navy hover:text-brand-gold hover:bg-brand-ivory'
-                        }`}
+                          }`}
                       >
                         {isActive && (
                           <motion.div
@@ -162,13 +156,12 @@ export default function Navbar() {
                         <span>{link.label}</span>
                         <ChevronDown
                           size={13}
-                          className={`transition-transform duration-300 ${
-                            activeDropdown === link.label 
-                              ? 'rotate-180 text-brand-gold' 
-                              : isActive 
-                              ? 'text-brand-gold' 
+                          className={`transition-transform duration-300 ${activeDropdown === link.label
+                            ? 'rotate-180 text-brand-gold'
+                            : isActive
+                              ? 'text-brand-gold'
                               : 'opacity-70'
-                          }`}
+                            }`}
                         />
                       </button>
 
@@ -193,26 +186,23 @@ export default function Navbar() {
                                   return (
                                     <Link key={item.label}
                                       href={sanitizeNavHref(item.href)}
-                                      className={`group flex flex-col px-3.5 py-2.5 rounded-xl transition-all duration-200 ${
-                                        isSubActive
-                                          ? 'bg-brand-ivory border border-brand-gold/30'
-                                          : 'hover:bg-brand-ivory'
-                                      }`}
+                                      className={`group flex flex-col px-3.5 py-2.5 rounded-xl transition-all duration-200 ${isSubActive
+                                        ? 'bg-brand-ivory border border-brand-gold/30'
+                                        : 'hover:bg-brand-ivory'
+                                        }`}
                                     >
                                       <div className="flex items-center justify-between">
-                                        <span className={`text-xs font-medium transition-colors flex items-center gap-1.5 ${
-                                          isSubActive ? 'text-brand-gold font-bold' : 'text-brand-navy group-hover:text-brand-gold'
-                                        }`}>
+                                        <span className={`text-xs font-medium transition-colors flex items-center gap-1.5 ${isSubActive ? 'text-brand-gold font-bold' : 'text-brand-navy group-hover:text-brand-gold'
+                                          }`}>
                                           {isSubActive && <span className="w-1.5 h-1.5 rounded-full bg-brand-gold" />}
                                           <span>{item.label}</span>
                                         </span>
                                         <ArrowUpRight
                                           size={13}
-                                          className={`transition-all duration-200 ${
-                                            isSubActive
-                                              ? 'text-brand-gold opacity-100'
-                                              : 'text-brand-slate-light opacity-0 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:text-brand-gold'
-                                          }`}
+                                          className={`transition-all duration-200 ${isSubActive
+                                            ? 'text-brand-gold opacity-100'
+                                            : 'text-brand-slate-light opacity-0 -translate-x-1 translate-y-1 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 group-hover:text-brand-gold'
+                                            }`}
                                         />
                                       </div>
                                       {item.desc && (
@@ -235,11 +225,10 @@ export default function Navbar() {
                 return (
                   <Link key={link.label}
                     href={link.href}
-                    className={`relative flex items-center gap-1.5 px-3 py-1.5 text-[10px] xl:text-[11px] font-semibold tracking-[0.16em] uppercase rounded-full transition-all duration-300 z-10 ${
-                      isActive
-                        ? 'text-white'
-                        : 'text-brand-navy hover:text-brand-gold hover:bg-brand-ivory'
-                    }`}
+                    className={`relative flex items-center gap-1.5 px-3 py-1.5 text-[10px] xl:text-[11px] font-semibold tracking-[0.16em] uppercase rounded-full transition-all duration-300 z-10 ${isActive
+                      ? 'text-white'
+                      : 'text-brand-navy hover:text-brand-gold hover:bg-brand-ivory'
+                      }`}
                   >
                     {isActive && (
                       <motion.div
@@ -349,9 +338,8 @@ export default function Navbar() {
                     <div key={link.label} className="py-2.5">
                       <button
                         onClick={() => setActiveDropdown(activeDropdown === link.label ? null : link.label)}
-                        className={`w-full flex items-center justify-between text-xs font-bold tracking-[0.12em] uppercase rounded-xl px-2.5 py-1.5 transition-colors ${
-                          isActive ? 'text-brand-gold bg-brand-navy' : 'text-brand-navy'
-                        }`}
+                        className={`w-full flex items-center justify-between text-xs font-bold tracking-[0.12em] uppercase rounded-xl px-2.5 py-1.5 transition-colors ${isActive ? 'text-brand-gold bg-brand-navy' : 'text-brand-navy'
+                          }`}
                       >
                         <span className="flex items-center gap-2">
                           {isActive && <span className="w-1.5 h-1.5 rounded-full bg-brand-gold" />}
@@ -377,11 +365,10 @@ export default function Navbar() {
                               return (
                                 <Link key={sub.label}
                                   href={sanitizeNavHref(sub.href)}
-                                  className={`block py-1.5 px-2.5 rounded-lg text-xs transition-colors ${
-                                    isSubActive
-                                      ? 'text-brand-gold font-bold bg-brand-navy/5'
-                                      : 'text-brand-slate hover:text-brand-gold'
-                                  }`}
+                                  className={`block py-1.5 px-2.5 rounded-lg text-xs transition-colors ${isSubActive
+                                    ? 'text-brand-gold font-bold bg-brand-navy/5'
+                                    : 'text-brand-slate hover:text-brand-gold'
+                                    }`}
                                 >
                                   {sub.label}
                                 </Link>
@@ -397,11 +384,10 @@ export default function Navbar() {
                 return (
                   <Link key={link.label}
                     href={link.href}
-                    className={`py-2.5 px-2.5 rounded-xl text-xs font-bold tracking-[0.12em] uppercase transition-all flex items-center justify-between ${
-                      isActive
-                        ? 'bg-brand-navy text-white shadow-xs'
-                        : 'text-brand-navy hover:text-brand-gold'
-                    }`}
+                    className={`py-2.5 px-2.5 rounded-xl text-xs font-bold tracking-[0.12em] uppercase transition-all flex items-center justify-between ${isActive
+                      ? 'bg-brand-navy text-white shadow-xs'
+                      : 'text-brand-navy hover:text-brand-gold'
+                      }`}
                   >
                     <span className="flex items-center gap-2">
                       {isActive && <span className="w-1.5 h-1.5 rounded-full bg-brand-gold" />}

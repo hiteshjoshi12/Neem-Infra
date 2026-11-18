@@ -41,7 +41,7 @@ export default function Footer() {
 
   const emailTitle = footerData.emailTitle;
   const emailSubtitle = footerData.emailSubtitle;
-  const email = footerData.email;
+  const email = footerData.email || footerData.emailAddress;
 
   const aboutText = footerData.aboutText;
 
@@ -280,7 +280,7 @@ export default function Footer() {
                   height={80}
                   loading="lazy"
                   src={footerData.logoUrl || logoImg}
-                  alt={footerData?.logoAlt || "Saudagar Properties"}
+                  alt={footerData?.logoUrlAlt || footerData?.logoAlt || "Saudagar Properties"}
                   className="h-12 sm:h-14 w-auto object-contain"
                 />
               </div>

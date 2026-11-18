@@ -109,10 +109,12 @@ export default function HowWeWorkProcess() {
   const howData =
     sections?.services?.howWeWork || {};
 
-  const badge = howData.badge;
-  const titleMain = howData.titleMain;
-  const titleItalic = howData.titleItalic;
-  const description = howData.description;
+  const badge = howData.badge || "TRANSPARENT ADVISORY JOURNEY";
+  const titleMain = howData.titleMain || "How We";
+  const titleItalic = howData.titleItalic || "Work";
+  const description = howData.description || "Our fiduciary engagement process is designed to protect capital, eliminate middlemen distortion, and secure prime DLF Gurugram properties through rigorous legal and commercial protocols.";
+  const fullViewText = howData.fullViewText || "Explore Stage Protocol";
+  const briefViewText = howData.briefViewText || "Close Protocol Brief";
 
   const steps = useMemo(() => {
     const rawSteps = howData.steps;
@@ -125,16 +127,48 @@ export default function HowWeWorkProcess() {
       return DEFAULT_PROCESS_STEPS;
     }
 
-    return DEFAULT_PROCESS_STEPS.map(
-      (defaultStep, index) => ({
-        ...defaultStep,
-        ...(rawSteps[index] || {}),
+    const fallbackIcons = [Compass, Users, Key];
+
+    return rawSteps.map((rawStep, index) => {
+      const defaultStep = DEFAULT_PROCESS_STEPS[index] || {};
+      const fallbackIcon = fallbackIcons[index % fallbackIcons.length];
+
+      return {
+        step: rawStep.step || defaultStep.step || String(index + 1).padStart(2, "0"),
+        phaseTag:
+          rawStep.phase ||
+          rawStep.phaseTag ||
+          defaultStep.phaseTag ||
+          `STEP ${String(index + 1).padStart(2, "0")}`,
+        title: rawStep.title || defaultStep.title || "",
+        badge:
+          rawStep.tagline ||
+          rawStep.badge ||
+          defaultStep.badge ||
+          "Advisory Protocol",
+        icon: defaultStep.icon || fallbackIcon,
         image:
-          rawSteps[index]?.image ||
+          rawStep.image ||
           defaultStep.image ||
-          DEFAULT_IMAGES[index],
-      })
-    );
+          DEFAULT_IMAGES[index % DEFAULT_IMAGES.length],
+        imageAlt:
+          rawStep.imageAlt ||
+          defaultStep.imageAlt ||
+          rawStep.title ||
+          defaultStep.title ||
+          "",
+        imageText:
+          rawStep.shortDesc ||
+          rawStep.imageText ||
+          defaultStep.imageText ||
+          "",
+        chatText:
+          rawStep.fullDesc ||
+          rawStep.chatText ||
+          defaultStep.chatText ||
+          "",
+      };
+    });
   }, [howData.steps]);
 
   const sectionRef = useRef(null);
@@ -379,9 +413,7 @@ export default function HowWeWorkProcess() {
                       className="flex w-full cursor-pointer items-center justify-between text-[9px] font-bold uppercase tracking-[0.18em] text-brand-navy transition-colors duration-300 hover:text-brand-gold-deep"
                     >
                       <span>
-                        {expandedIndex === index
-                          ? "Close Protocol Brief"
-                          : "Explore Stage Protocol"}
+                        {expandedIndex === index ? briefViewText : fullViewText}
                       </span>
 
                       <span className="flex h-6 w-6 items-center justify-center rounded-full border border-brand-gold/30 text-brand-gold-deep transition-all duration-300 group-hover:border-brand-gold">
@@ -412,7 +444,7 @@ export default function HowWeWorkProcess() {
                   <div className="mt-6 flex items-center justify-between font-mono text-[8px] font-semibold uppercase tracking-[0.22em] text-brand-slate">
                     <span>SAUDAGAR PROPERTIES</span>
                     <span className="text-brand-gold-deep font-bold">
-                      STAGE {step.step} / 03
+                      STAGE {step.step} / {String(steps.length).padStart(2, "0")}
                     </span>
                   </div>
                 </div>

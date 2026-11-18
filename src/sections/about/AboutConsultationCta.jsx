@@ -13,10 +13,18 @@ import { useCms } from '@/context/CmsContext';
 export default function AboutConsultationCta({ data }) {
   const { sections } = useCms();
   const cms = data || sections?.page_about?.consultationCta || {};
+  const loc = sections?.location || {};
+  const nav = sections?.navbar || {};
+  const footer = sections?.footer || {};
+  const widgetData = sections?.floatingWidgets || {};
 
-  const whatsappUrl = cms?.whatsappUrl;
-  const phone = cms?.phone;
-  const gmapsUrl = "https://www.google.com/maps/place/Saudagar+Properties+Pvt.Ltd/@28.4847851,77.0842655,17z/data=!3m1!4b1!4m6!3m5!1s0x390d193a8eabbb6b:0x3d99d3fce74198d5!8m2!3d28.4847851!4d77.0842655!16s%2Fg%2F11f03pch1x";
+  const whatsappNumber = cms?.whatsappNumber || widgetData?.whatsappNumber || "919718511207";
+  const whatsappUrl = cms?.whatsappUrl || `https://wa.me/${whatsappNumber.replace(/\D/g, '')}?text=Hello%20Saudagar%20Properties%2C%20I%20would%20like%20to%20request%20a%20consultation.`;
+  const phone = cms?.phone || nav?.phone || "+91 98112 21207";
+  const phoneDisplay = cms?.phone || (loc?.phones?.join(' / ')) || "+91 98112 21207 / +91 97185 11207";
+  const emailDisplay = cms?.email || loc?.email || footer?.email || "Saudagar.Properties@Yahoo.In";
+  const addressDisplay = loc?.address || "38, Akashneem Marg, DLF Phase 2";
+  const gmapsUrl = loc?.gmapsUrl || "https://www.google.com/maps/place/Saudagar+Properties+Pvt.Ltd/@28.4847851,77.0842655,17z/data=!3m1!4b1!4m6!3m5!1s0x390d193a8eabbb6b:0x3d99d3fce74198d5!8m2!3d28.4847851!4d77.0842655!16s%2Fg%2F11f03pch1x";
 
   const containerRef = useRef(null);
   const chassisRef = useRef(null);
@@ -163,7 +171,7 @@ export default function AboutConsultationCta({ data }) {
                       Headquarters & Lounge
                     </div>
                     <div className="text-xs sm:text-sm font-semibold text-brand-navy group-hover:text-brand-gold-deep transition-colors">
-                      38, Akashneem Marg, DLF Phase 2
+                      {addressDisplay}
                     </div>
                     <div className="text-[11px] text-brand-slate">Gurugram, Haryana 122002</div>
                   </div>
@@ -182,7 +190,7 @@ export default function AboutConsultationCta({ data }) {
                       Founders&apos; Direct Hotlines
                     </div>
                     <div className="text-xs sm:text-sm font-semibold text-brand-navy">
-                      +91 98112 21207 / +91 97185 11207
+                      {phoneDisplay}
                     </div>
                   </div>
                 </div>
@@ -190,7 +198,7 @@ export default function AboutConsultationCta({ data }) {
 
               {/* Email Pod */}
               <a
-                href="mailto:saudagar.properties@yahoo.in"
+                href={`mailto:${emailDisplay}`}
                 className="group p-4 rounded-2xl bg-white/80 hover:bg-white border border-brand-cream-border hover:border-brand-gold/60 shadow-sm transition-all duration-300 flex items-center justify-between cursor-pointer"
               >
                 <div className="flex items-center gap-4">
@@ -202,7 +210,7 @@ export default function AboutConsultationCta({ data }) {
                       Direct Email Inquiries
                     </div>
                     <div className="text-xs sm:text-sm font-semibold text-brand-navy group-hover:text-brand-gold-deep transition-colors">
-                      saudagar.properties@yahoo.in
+                      {emailDisplay}
                     </div>
                   </div>
                 </div>

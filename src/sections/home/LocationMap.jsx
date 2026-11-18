@@ -8,6 +8,9 @@ import {
   ExternalLink,
   ArrowUpRight,
   Sparkles,
+  Phone,
+  Mail,
+  Clock,
 } from "lucide-react";
 import { useCms } from "../../context/CmsContext";
 
@@ -46,6 +49,15 @@ export default function LocationMap({ data = null }) {
   const openMapsText = locData.openMapsText;
   const officeBadge = locData.officeBadge;
   const directionsText = locData.directionsText;
+
+  // Contact & Operational metadata from DB
+  const rawPhones = locData.phones || (locData.phone ? [locData.phone] : []);
+  const phones = Array.isArray(rawPhones) && rawPhones.length > 0
+    ? rawPhones
+    : ["+91 97185 11207", "+91 98112 21207"];
+  const email = locData.email || locData.emailAddress || "Saudagar.Properties@Yahoo.In";
+  const hours = locData.hours || "";
+  const landmark = locData.landmark || "";
 
 
   /*
@@ -544,6 +556,7 @@ export default function LocationMap({ data = null }) {
                 right-5
                 z-10
                 max-w-md
+                md:max-w-lg
                 rounded-[22px]
                 border
                 border-white/80
@@ -651,20 +664,61 @@ export default function LocationMap({ data = null }) {
 
               <address
                 className="
-                  mt-4
+                  mt-3
                   max-w-sm
                   not-italic
                   text-xs
-                  leading-5
+                  leading-relaxed
                   text-brand-slate
                 "
               >
-
                 <span>
                   {address}
                 </span>
-
               </address>
+
+              {/* Landmark / Operational Hours from DB */}
+              {(landmark || hours) && (
+                <div className="mt-2.5 flex flex-col gap-1 text-[11px] text-brand-slate">
+                  {landmark && (
+                    <div className="flex items-center gap-1.5 font-medium text-brand-gold-deep">
+                      <span className="text-[10px]">✦</span>
+                      <span>{landmark}</span>
+                    </div>
+                  )}
+                  {hours && (
+                    <div className="flex items-center gap-1.5 text-brand-slate">
+                      <Clock size={11} className="shrink-0 text-brand-gold" />
+                      <span>{hours}</span>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Direct Telephone and Email from DB */}
+              {(phones?.length > 0 || email) && (
+                <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-1.5 border-t border-brand-navy/[0.08] pt-2.5 text-xs text-brand-slate">
+                  {phones?.map((p, idx) => (
+                    <a
+                      key={idx}
+                      href={`tel:${p.replace(/[^\d+]/g, '')}`}
+                      className="inline-flex items-center gap-1.5 font-medium text-brand-navy transition-colors hover:text-brand-gold"
+                    >
+                      <Phone size={11} className="shrink-0 text-brand-gold" />
+                      <span>{p}</span>
+                    </a>
+                  ))}
+                  {email && (
+                    <a
+                      href={`mailto:${email}`}
+                      className="inline-flex items-center gap-1.5 font-medium text-brand-navy transition-colors hover:text-brand-gold"
+                    >
+                      <Mail size={11} className="shrink-0 text-brand-gold" />
+                      <span>{email}</span>
+                    </a>
+                  )}
+                </div>
+              )}
 
 
               {/* Bottom */}

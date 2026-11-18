@@ -93,8 +93,8 @@ export default function HeroCopy({ initialProperties = [], initialHeroData = nul
   const propertyDetailUrl = currentProperty?.slug
     ? `/properties/${currentProperty.slug}`
     : (currentProperty?._id || currentProperty?.id
-        ? `/properties/${currentProperty._id || currentProperty.id}`
-        : (currentProperty?.link || '/properties'));
+      ? `/properties/${currentProperty._id || currentProperty.id}`
+      : (currentProperty?.link || '/properties'));
 
   const rawSpotlightImage = currentProperty?.img || (currentProperty?.images && currentProperty.images[0]) || heroData.spotlight?.image;
 
@@ -221,7 +221,7 @@ export default function HeroCopy({ initialProperties = [], initialHeroData = nul
     const video = videoRef.current;
     if (!video) return;
     if (video.paused) {
-      video.play().then(() => setIsPlaying(true)).catch(() => {});
+      video.play().then(() => setIsPlaying(true)).catch(() => { });
     } else {
       video.pause();
       setIsPlaying(false);
@@ -250,6 +250,7 @@ export default function HeroCopy({ initialProperties = [], initialHeroData = nul
         videoUrl={primaryVideoUrl}
         videoMobileUrl={heroData.videoMobileUrl || "https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/saudagar-hero-mobile.mp4"}
         customPoster={heroData.bgImage || "https://ik.imagekit.io/saudagarproperties/saudagar-properties/videos/poster.jpg?tr=f-auto,q-80"}
+        posterAlt={heroData.bgImageAlt || "Home: Hero Masthead DLF Phase 1–4 Sushant Lok Golf Course E"}
         onPlay={() => setIsPlaying(true)}
         onPause={() => setIsPlaying(false)}
         onMuteChange={(muted) => setIsMuted(muted)}
@@ -260,7 +261,7 @@ export default function HeroCopy({ initialProperties = [], initialHeroData = nul
 
       {/* ================= MAIN EDITORIAL HERO CONTENT (COMPACT LUXURY SCALE, ELEVATED Z-50) ================= */}
       <div className="w-full max-w-[840px] mx-auto px-5 sm:px-6 relative z-50 flex flex-col items-center text-center mt-auto mb-8 md:my-auto py-1 sm:py-2">
-        
+
         {/* Eyebrow: Subtle Brand Badge */}
         <div
           className="mb-2 sm:mb-2.5 flex items-center justify-center gap-2.5 transform-gpu"
@@ -280,9 +281,9 @@ export default function HeroCopy({ initialProperties = [], initialHeroData = nul
         >
           {isDlfHeadline ? (
             <span className="block">
-              <span className="text-black font-semibold drop-shadow-[0_2px_12px_rgba(255,255,255,0.7)]" style={{ color: '#000000' }}>
+              <span className="text-white font-semibold drop-shadow-[0_2px_12px_rgba(0,0,0,0.85)]" style={{ color: '#ffffff' }}>
                 {headlineBlack}
-              </span>{" "}
+              </span>{" "}<br />
               <span className="italic font-normal text-brand-gold" style={{ color: '#c59b27' }}>
                 {headlineGold}
               </span>
@@ -443,11 +444,10 @@ export default function HeroCopy({ initialProperties = [], initialHeroData = nul
                   key={tag}
                   type="button"
                   onClick={() => handleTagClick(tag)}
-                  className={`px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] transition-all duration-300 cursor-pointer flex items-center gap-1.5 backdrop-blur-md ${
-                    isSelected
-                      ? 'bg-brand-gold text-brand-navy-deep font-bold shadow-[0_0_15px_rgba(208,154,22,0.4)] border border-brand-gold'
-                      : 'bg-black/40 text-brand-text-on-dark-muted hover:bg-brand-gold/20 hover:text-white border border-white/15'
-                  }`}
+                  className={`px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] transition-all duration-300 cursor-pointer flex items-center gap-1.5 backdrop-blur-md ${isSelected
+                    ? 'bg-brand-gold text-brand-navy-deep font-bold shadow-[0_0_15px_rgba(208,154,22,0.4)] border border-brand-gold'
+                    : 'bg-black/40 text-brand-text-on-dark-muted hover:bg-brand-gold/20 hover:text-white border border-white/15'
+                    }`}
                   title={`Filter by ${tag}`}
                 >
                   <span>{tag}</span>
@@ -462,7 +462,7 @@ export default function HeroCopy({ initialProperties = [], initialHeroData = nul
 
       {/* ================= AMBIENT BOTTOM DOCK (RELATIVE Z-10 TO PREVENT OVERLAPPING DROPDOWN) ================= */}
       <div className="relative z-10 container mx-auto px-6 sm:px-8 lg:px-12 pb-6 pt-2 h-0">
-        
+
         {/* Discreet Video Controls (Bottom Center) */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-brand-obsidian/80 backdrop-blur-xl border border-white/20 text-white text-[11px] shadow-lg">
           <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />

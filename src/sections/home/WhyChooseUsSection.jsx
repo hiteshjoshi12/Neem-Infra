@@ -103,7 +103,7 @@ function TrustCard({ trustCard }) {
             </div>
 
             <Link
-              href={trustCard.cta || "/about"}
+              href={trustCard.cta || trustCard.ctaLink || "/about"}
               className="group/link inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-brand-gold to-brand-gold-light px-5 py-3 text-[10px] font-bold uppercase tracking-[0.16em] text-brand-obsidian transition-all hover:brightness-105 shadow-sm hover:shadow-md cursor-pointer shrink-0"
             >
               <span>{trustCard.ctaText}</span>

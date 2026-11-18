@@ -72,8 +72,7 @@ export default function LuxuryTextReveal({
               <motion.span
                 initial={false}
                 variants={wordVariants}
-                className="inline-block origin-bottom text-black"
-                style={{ color: '#000000' }}
+                className="inline-block origin-bottom"
               >
                 {word}
               </motion.span>

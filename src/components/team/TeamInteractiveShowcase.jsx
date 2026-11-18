@@ -24,6 +24,7 @@ import {
   Scale
 } from 'lucide-react';
 import WhatsAppIcon from '@/components/ui/icons/WhatsAppIcon';
+import { useCms } from '@/context/CmsContext';
 
 const PILLAR_ICONS = {
   ShieldCheck,
@@ -45,6 +46,11 @@ export default function TeamInteractiveShowcase({
   specialistsSection,
   pillarsSection
 }) {
+  const { sections } = useCms();
+  const navPhone = sections?.navbar?.phone || '+91 98112 21207';
+  const defaultWhatsapp = sections?.floatingWidgets?.whatsappNumber || '919718511207';
+  const defaultWhatsappUrl = `https://wa.me/${defaultWhatsapp.replace(/\D/g, '')}`;
+
   const [advisorIndex, setAdvisorIndex] = useState(0);
   const safeTeam = Array.isArray(teamMembers) ? teamMembers : [];
   const maxAdvisorIndex = Math.max(0, safeTeam.length - 3);
@@ -180,7 +186,7 @@ export default function TeamInteractiveShowcase({
                 {/* Direct Connect Action Row */}
                 <div className="pt-5 border-t border-brand-navy/10 flex flex-wrap items-center gap-2.5">
                   <a
-                    href={leader?.whatsappUrl || cta?.whatsappUrl || "https://wa.me/919718511207"}
+                    href={leader?.whatsappUrl || cta?.whatsappUrl || defaultWhatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="flex-1 min-w-[150px] px-4 py-2.5 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white text-xs font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer"
@@ -190,7 +196,7 @@ export default function TeamInteractiveShowcase({
                   </a>
 
                   <a
-                    href={`tel:${(leader?.phone || cta?.phone || '+919811221207').replace(/[^0-9+]/g, '')}`}
+                    href={`tel:${(leader?.phone || cta?.phone || navPhone).replace(/[^0-9+]/g, '')}`}
                     className="px-4 py-2.5 rounded-xl bg-brand-ivory hover:bg-brand-cream border border-brand-navy/15 text-brand-navy text-xs font-bold uppercase tracking-wider transition-colors flex items-center gap-2 cursor-pointer"
                   >
                     <Phone size={13} className="text-brand-gold" />
@@ -324,7 +330,7 @@ export default function TeamInteractiveShowcase({
                   {/* Direct Action Strip */}
                   <div className="pt-6 mt-6 border-t border-brand-cream-border flex items-center justify-between">
                     <a
-                      href={`tel:${(member?.phone || '+919811221207').replace(/[^0-9+]/g, '')}`}
+                      href={`tel:${(member?.phone || navPhone).replace(/[^0-9+]/g, '')}`}
                       className="inline-flex items-center gap-1.5 text-xs font-bold text-brand-gold-deep hover:text-brand-navy transition-colors"
                     >
                       <Phone size={12} />
@@ -433,7 +439,7 @@ export default function TeamInteractiveShowcase({
             </Link>
 
             <a
-              href={cta?.whatsappUrl || "https://wa.me/919718511207"}
+              href={cta?.whatsappUrl || defaultWhatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
               className="px-8 py-3.5 rounded-xl bg-[#25D366] hover:bg-[#1EBE5D] text-white font-bold text-xs uppercase tracking-wider backdrop-blur-md transition-all flex items-center gap-2 shadow-sm cursor-pointer"

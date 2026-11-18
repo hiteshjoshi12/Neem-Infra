@@ -19,6 +19,8 @@ export default function FloatingWidgets() {
   // Configuration values
   const whatsappNumber = widgetData.whatsappNumber || "919718511207";
   const whatsappPrefill = widgetData.whatsappPrefill || "Hello Saudagar Properties, I am interested in luxury properties in DLF Gurugram.";
+  const whatsappTooltip = widgetData.whatsappTooltip || "Chat on WhatsApp";
+  const backToTopTooltip = widgetData.backToTopTooltip || "Back to top";
   const whatsappUrlLink = `https://wa.me/${whatsappNumber.replace(/\D/g, '')}?text=${encodeURIComponent(whatsappPrefill)}`;
   const gmapsUrl = locData.gmapsUrl || "https://www.google.com/maps/place/Saudagar+Properties+Pvt.Ltd/@28.4847851,77.0842655,17z";
 
@@ -28,13 +30,13 @@ export default function FloatingWidgets() {
       <aside aria-label="Contact Links" className="fixed bottom-6 left-4 sm:left-6 z-[60] flex flex-col items-start gap-3 pointer-events-none">
         <div className="flex flex-col items-start gap-3 pointer-events-auto">
           <MapsWidget gmapsUrl={gmapsUrl} />
-          <WhatsAppWidget whatsappUrlLink={whatsappUrlLink} />
+          <WhatsAppWidget whatsappUrlLink={whatsappUrlLink} tooltip={whatsappTooltip} />
         </div>
       </aside>
 
       {/* RIGHT SIDE WIDGETS */}
       <aside aria-label="Page Actions" className="fixed bottom-6 right-4 sm:right-6 z-[60] flex flex-col items-end gap-4 pointer-events-none">
-        <ScrollToTopWidget isHidden={chatOpen} />
+        <ScrollToTopWidget isHidden={chatOpen} tooltip={backToTopTooltip} />
         <React.Suspense fallback={null}>
           <ChatbotWidget chatOpen={chatOpen} setChatOpen={setChatOpen} />
         </React.Suspense>

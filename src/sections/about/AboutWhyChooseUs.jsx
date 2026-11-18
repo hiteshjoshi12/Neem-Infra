@@ -36,6 +36,8 @@ const PILLAR_ICONS = [
 export default function AboutWhyChooseUs({ data }) {
   const { sections } = useCms();
   const cms = data || sections?.page_about?.whyChooseUs || {};
+  const whatsappNumber = cms.whatsappNumber || sections?.floatingWidgets?.whatsappNumber || "919718511207";
+  const whatsappUrl = cms.whatsappUrl || `https://wa.me/${whatsappNumber.replace(/\D/g, '')}`;
   const pillarsList = (cms?.pillars && Array.isArray(cms.pillars) && cms.pillars.length > 0)
     ? cms.pillars
     : [];
@@ -365,7 +367,7 @@ export default function AboutWhyChooseUs({ data }) {
               </span>
               <div className="flex items-center gap-3">
                 <a
-                  href="https://wa.me/919718511207"
+                  href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="px-5 py-3 rounded-xl bg-[#25D366] hover:bg-[#20bd5a] text-white text-xs font-bold uppercase tracking-wider transition-all inline-flex items-center gap-2 shadow-[0_4px_15px_rgba(37,211,102,0.3)] hover:shadow-[0_6px_20px_rgba(37,211,102,0.4)] hover:-translate-y-0.5 cursor-pointer"

@@ -276,16 +276,18 @@ export async function getPageBySlug(slug) {
 // ─── 8. Root CMS Hydration Payload ───────────────────────────────────────────
 export async function getInitialCmsPayload() {
   try {
-    const [sections, properties, testimonials] = await Promise.all([
+    const [sections, properties, testimonials, businessProfile] = await Promise.all([
       getAllSections(),
       getFeaturedProperties(8),
       getTestimonials(10),
+      getBusinessProfile(),
     ]);
 
     return {
       sections,
       properties,
       testimonials,
+      businessProfile,
     };
   } catch (err) {
     console.error('[DAL] Error fetching initial CMS payload:', err.message);
@@ -293,6 +295,7 @@ export async function getInitialCmsPayload() {
       sections: {},
       properties: [],
       testimonials: [],
+      businessProfile: null,
     };
   }
 }

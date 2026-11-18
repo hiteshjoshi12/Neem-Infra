@@ -142,10 +142,10 @@ export default function IndustrialServiceView({
 
               <div className="flex flex-wrap items-center gap-4">
                 <a
-                  href="#asset-classes"
+                  href={heroData?.ctaHref || heroData?.ctaLink || "#asset-classes"}
                   className="px-7 py-3.5 rounded-xl bg-brand-gold hover:bg-brand-gold-light text-brand-navy-deep font-bold text-xs uppercase tracking-widest shadow-lg hover:shadow-xl transition-all duration-300 flex items-center gap-2 cursor-pointer"
                 >
-                  <span>Explore Industrial Assets</span>
+                  <span>{heroData?.ctaText || "Explore Industrial Assets"}</span>
                   <ArrowRight size={14} />
                 </a>
 
@@ -633,10 +633,10 @@ export default function IndustrialServiceView({
 
           <div className="flex flex-wrap items-center justify-center gap-4">
             <Link
-              href="/contact"
+              href={cms?.cta?.buttonHref || "/contact"}
               className="px-8 py-3.5 rounded-xl bg-brand-gold hover:bg-brand-gold-light text-brand-navy-deep font-bold text-xs uppercase tracking-widest shadow-lg transition-all flex items-center gap-2 cursor-pointer"
             >
-              <span>Schedule Industrial Briefing</span>
+              <span>{cms?.cta?.buttonText || "Schedule Industrial Briefing"}</span>
               <Send size={13} />
             </Link>
 

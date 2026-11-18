@@ -21,6 +21,7 @@ import {
   getBlogPosts, 
   getCategories 
 } from '@/services/blogService';
+import { getBusinessProfile } from '@/lib/dal';
 import { BREADCRUMBS } from '@/lib/seo/seoConfig';
 import { buildPageMetadata } from '@/lib/seo/metadataHelper';
 import { connectDB } from '@/lib/mongodb';
@@ -57,12 +58,16 @@ export async function generateMetadata() {
   });
 }
 export default async function BlogIndexPage() {
-  const [allPosts, categories, blogCms, breadcrumbs] = await Promise.all([
+  const [allPosts, categories, blogCms, breadcrumbs, businessProfile] = await Promise.all([
     getBlogPosts({ limit: 100 }),
     getCategories(),
     getBlogPageCms(),
     getDynamicBreadcrumbs('/blog'),
+    getBusinessProfile(),
   ]);
+
+  const rawWa = blogCms.newsletter?.whatsappNumber || businessProfile?.contact?.whatsapp || businessProfile?.contact?.phone || '919718511207';
+  const cleanWa = String(rawWa).replace(/[^0-9]/g, '');
 
   return (
     <PublicLayout asMain={false}>
@@ -201,7 +206,7 @@ export default async function BlogIndexPage() {
                 <span>{blogCms.newsletter?.privacyText || "Zero spam. Strict client privacy protocol."}</span>
               </span>
               <a 
-                href={`https://wa.me/${blogCms.newsletter?.whatsappNumber || '919718511207'}`} 
+                href={`https://wa.me/${cleanWa}`} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="text-brand-gold hover:underline flex items-center gap-1.5"
